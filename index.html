@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Your existing CSS remains unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -668,26 +669,27 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <!-- Firebase SDK (Updated to 10.14.1) -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
     <script>
+        // Firebase Configuration (using environment variables)
         const firebaseConfig = {
-        apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
-        authDomain: "contra-e-crime.firebaseapp.com",
-        projectId: "contra-e-crime",
-        storageBucket: "contra-e-crime.firebasestorage.app",
-        messagingSenderId: "198995444405",
-        appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-        measurementId: "G-7Y2E24DD42"
+            apiKey: process.env.FIREBASE_API_KEY || "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
+            authDomain: process.env.FIREBASE_AUTH_DOMAIN || "contra-e-crime.firebaseapp.com",
+            projectId: process.env.FIREBASE_PROJECT_ID || "contra-e-crime",
+            storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "contra-e-crime.firebasestorage.app",
+            messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || "198995444405",
+            appId: process.env.FIREBASE_APP_ID || "1:198995444405:web:5f8c6eed561461b36034fc",
+            measurementId: process.env.FIREBASE_MEASUREMENT_ID || "G-7Y2E24DD42"
         };
 
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Ensure DOM is fully loaded before running scripts
+        // Ensure DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function () {
             // Toggle Password Visibility
             const toggleLoginPassword = document.querySelector('#toggleLoginPassword');
@@ -711,7 +713,7 @@
                 });
             }
 
-            // Slide Transition Between Login and Signup Forms
+            // Slide Transition Between Forms
             const toggleButtons = document.querySelectorAll('.toggle-btn');
             const toggleLinks = document.querySelectorAll('.toggle-link');
             const loginForm = document.getElementById('loginForm');
@@ -719,19 +721,14 @@
             const formWrapper = document.querySelector('.form-wrapper');
             let currentForm = 'login';
 
-            // Function to adjust form wrapper height dynamically
             function adjustFormWrapperHeight() {
                 const activeForm = currentForm === 'login' ? loginForm : signupForm;
                 formWrapper.style.height = `${activeForm.offsetHeight}px`;
             }
 
-            // Initial height adjustment
             adjustFormWrapperHeight();
-
-            // Adjust height on window resize
             window.addEventListener('resize', adjustFormWrapperHeight);
 
-            // Toggle form visibility
             function toggleForm(formToShow) {
                 if (formToShow === currentForm) return;
 
@@ -745,12 +742,12 @@
                     loginForm.classList.add('slide-in-left');
                 } else {
                     loginForm.classList.remove('slide-in-left');
-                    loginForm.classList.add('slide-out-left');
+                    loginForm.classList.add('(`slide-out-left`);
                     signupForm.classList.remove('slide-out-right');
                     signupForm.classList.add('slide-in-right');
                 }
                 currentForm = formToShow;
-                setTimeout(adjustFormWrapperHeight, 500); // Adjust height after transition
+                setTimeout(adjustFormWrapperHeight, 500);
             }
 
             if (toggleButtons && loginForm && signupForm) {
@@ -795,90 +792,76 @@
                 });
             }
 
-            // Form Submission Handling with localStorage and Loading Animation
+            // Form Submission Handling with Firebase
             const loginErrorMessage = document.getElementById('loginErrorMessage');
             const signupErrorMessage = document.getElementById('signupErrorMessage');
 
             if (signupForm) {
-                signupForm.addEventListener('submit', (event) => {
+                signupForm.addEventListener('submit', async (event) => {
                     event.preventDefault();
 
                     const submitButton = signupForm.querySelector('.action-btn');
                     submitButton.classList.add('loading');
                     submitButton.disabled = true;
 
-                    setTimeout(() => {
-                        const email = document.getElementById('signup-email').value.trim();
-                        const username = document.getElementById('signup-username').value.trim();
-                        const passwordValue = signupPassword.value.trim();
+                    const email = document.getElementById('signup-email').value.trim();
+                    const username = document.getElementById('signup-username').value.trim();
+                    const password = signupPassword.value.trim();
 
-                        if (passwordValue.length < 6) {
-                            signupErrorMessage.style.display = 'block';
-                            signupErrorMessage.classList.add('show');
-                            signupErrorMessage.textContent = 'Password must be at least 6 characters long.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
+                    try {
+                        // Validate password
+                        if (password.length < 6) {
+                            throw new Error('Password must be at least 6 characters long.');
                         }
 
-                        let users = JSON.parse(localStorage.getItem('users')) || [];
-                        const emailExists = users.some(user => user.email === email);
-                        if (emailExists) {
-                            signupErrorMessage.style.display = 'block';
-                            signupErrorMessage.classList.add('show');
-                            signupErrorMessage.textContent = 'Email already exists. Please use a different email.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
+                        // Create user with Firebase
+                        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                        const user = userCredential.user;
 
-                        users.push({ email, username, password: passwordValue });
-                        localStorage.setItem('users', JSON.stringify(users));
+                        // Update user profile with display name
+                        await user.updateProfile({ displayName: username });
+
+                        // Store additional user info (optional, if needed elsewhere)
+                        localStorage.setItem('currentUser', JSON.stringify({ email, username }));
 
                         submitButton.classList.remove('loading');
                         submitButton.disabled = false;
-
-                        toggleForm('login');
                         signupErrorMessage.style.display = 'none';
-                    }, 1500);
+
+                        // Redirect to homepage
+                        window.location.href = "HomePage.html";
+                    } catch (error) {
+                        signupErrorMessage.style.display = 'block';
+                        signupErrorMessage.classList.add('show');
+                        signupErrorMessage.textContent = error.message;
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                    }
                 });
             }
 
             if (loginForm) {
-                loginForm.addEventListener('submit', (event) => {
+                loginForm.addEventListener('submit', async (event) => {
                     event.preventDefault();
 
                     const submitButton = loginForm.querySelector('.action-btn');
                     submitButton.classList.add('loading');
                     submitButton.disabled = true;
 
-                    setTimeout(() => {
-                        const email = document.getElementById('login-email').value.trim();
-                        const passwordValue = loginPassword.value.trim();
-                        const rememberMe = document.getElementById('rememberme').checked;
+                    const email = document.getElementById('login-email').value.trim();
+                    const password = loginPassword.value.trim();
+                    const rememberMe = document.getElementById('rememberme').checked;
 
-                        const users = JSON.parse(localStorage.getItem('users')) || [];
-                        const user = users.find(user => user.email === email);
+                    try {
+                        // Sign in with Firebase
+                        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                        const user = userCredential.user;
 
-                        if (!user) {
-                            loginErrorMessage.style.display = 'block';
-                            loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = 'Email not found. Please sign up.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        if (user.password !== passwordValue) {
-                            loginErrorMessage.style.display = 'block';
-                            loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = 'Incorrect password. Please try again.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        localStorage.setItem('currentUser', JSON.stringify({ email, username: user.username }));
+                        // Store user info
+                        localStorage.setItem('currentUser', JSON.stringify({
+                            email: user.email,
+                            username: user.displayName || 'User'
+                        }));
 
                         if (rememberMe) {
                             localStorage.setItem('rememberMe', 'true');
@@ -888,44 +871,49 @@
 
                         submitButton.classList.remove('loading');
                         submitButton.disabled = false;
+                        loginErrorMessage.style.display = 'none';
 
+                        // Redirect to homepage
                         window.location.href = "HomePage.html";
-                    }, 1500);
+                    } catch (error) {
+                        loginErrorMessage.style.display = 'block';
+                        loginErrorMessage.classList.add('show');
+                        loginErrorMessage.textContent = error.message;
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                    }
                 });
             }
 
             // Google Sign-In Handling
             const googleSignInBtn = document.getElementById('googleSignInBtn');
             if (googleSignInBtn) {
-                googleSignInBtn.addEventListener('click', () => {
+                googleSignInBtn.addEventListener('click', async () => {
                     googleSignInBtn.classList.add('loading');
-                    const provider = new firebase.auth.GoogleAuthProvider();
-                    auth.signInWithPopup(provider)
-                        .then((result) => {
-                            const user = result.user;
-                            const email = user.email;
-                            const username = user.displayName || 'Google User';
 
-                            // Store user in localStorage (for consistency with your existing setup)
-                            let users = JSON.parse(localStorage.getItem('users')) || [];
-                            const emailExists = users.some(u => u.email === email);
-                            if (!emailExists) {
-                                users.push({ email, username, password: '' }); // Password not needed for Google users
-                                localStorage.setItem('users', JSON.stringify(users));
-                            }
+                    try {
+                        const provider = new firebase.auth.GoogleAuthProvider();
+                        const result = await auth.signInWithPopup(provider);
+                        const user = result.user;
 
-                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
-                            localStorage.setItem('rememberMe', 'true'); // Persist Google login
+                        // Store user info
+                        localStorage.setItem('currentUser', JSON.stringify({
+                            email: user.email,
+                            username: user.displayName || 'Google User'
+                        }));
+                        localStorage.setItem('rememberMe', 'true');
 
-                            googleSignInBtn.classList.remove('loading');
-                            window.location.href = "HomePage.html";
-                        })
-                        .catch((error) => {
-                            googleSignInBtn.classList.remove('loading');
-                            loginErrorMessage.style.display = 'block';
-                            loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = 'Google Sign-In failed: ' + error.message;
-                        });
+                        googleSignInBtn.classList.remove('loading');
+                        loginErrorMessage.style.display = 'none';
+
+                        // Redirect to homepage
+                        window.location.href = "HomePage.html";
+                    } catch (error) {
+                        googleSignInBtn.classList.remove('loading');
+                        loginErrorMessage.style.display = 'block';
+                        loginErrorMessage.classList.add('show');
+                        loginErrorMessage.textContent = `Google Sign-In failed: ${error.message}`;
+                    }
                 });
             }
 
