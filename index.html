@@ -181,6 +181,11 @@
             outline: none;
         }
 
+        input[readonly] {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
+
         .toggle-password {
             position: absolute;
             right: 10px;
@@ -381,6 +386,48 @@
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
         @media (max-width: 1024px) {
             .text-typewriter {
                 font-size: 3vw;
@@ -452,6 +499,11 @@
                 padding: 10px 30px;
                 font-size: 14px;
             }
+
+            .modal-content {
+                width: 90%;
+                margin: 20% auto;
+            }
         }
     </style>
 </head>
@@ -487,7 +539,7 @@
                 </div>
 
                 <div class="signup-prompt">
-                    Don't have an account? <a href="Signup.html">Sign Up</a>
+                    Don't have an account? <a href="SignUp.html">Sign Up</a>
                 </div>
                 
                 <div class="buttons-container">
@@ -501,6 +553,25 @@
                     </button>
                 </div>
                 <div class="error-message" id="loginErrorMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Google Sign-In Confirmation Modal -->
+    <div id="googleSignInModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Confirm Your Details</h2>
+            <form id="googleSignInForm">
+                <label for="google-email">Email (read-only)</label>
+                <input type="email" id="google-email" readonly required>
+                
+                <label for="google-username">Username</label>
+                <input type="text" id="google-username" placeholder="Enter your username" required>
+                
+                <div class="buttons-container">
+                    <button type="submit" class="action-btn">Confirm</button>
+                </div>
             </form>
         </div>
     </div>
@@ -592,31 +663,32 @@
                 });
             }
 
-            // Google Sign-In Handling
+            // Google Sign-In Handling with Confirmation Modal
             const googleSignInBtn = document.getElementById('googleSignInBtn');
+            const googleSignInModal = document.getElementById('googleSignInModal');
+            const googleSignInForm = document.getElementById('googleSignInForm');
+            const closeBtn = googleSignInModal.querySelector('.close-btn');
+            let googleUserData = null;
+
             if (googleSignInBtn) {
                 googleSignInBtn.addEventListener('click', () => {
                     googleSignInBtn.classList.add('loading');
                     const provider = new firebase.auth.GoogleAuthProvider();
                     auth.signInWithPopup(provider)
                         .then((result) => {
-                            const user = result.user;
-                            const email = user.email;
-                            const username = user.displayName || 'Google User'; // Fallback if displayName is not provided
-
-                            // Store user in localStorage (consistent with signup)
-                            let users = JSON.parse(localStorage.getItem('users')) || [];
-                            const emailExists = users.some(u => u.email === email);
-                            if (!emailExists) {
-                                users.push({ email, username, password: '' }); // Password not needed for Google users
-                                localStorage.setItem('users', JSON.stringify(users));
-                            }
-
-                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
-                            localStorage.setItem('rememberMe', 'true'); // Persist Google login
-
                             googleSignInBtn.classList.remove('loading');
-                            window.location.href = "HomePage.html";
+                            const user = result.user;
+                            googleUserData = {
+                                email: user.email,
+                                username: user.displayName || 'Google User'
+                            };
+
+                            // Populate the modal with Google data
+                            document.getElementById('google-email').value = googleUserData.email;
+                            document.getElementById('google-username').value = googleUserData.username;
+
+                            // Show the confirmation modal
+                            googleSignInModal.style.display = 'block';
                         })
                         .catch((error) => {
                             googleSignInBtn.classList.remove('loading');
@@ -627,14 +699,76 @@
                 });
             }
 
-            // Continuous Typewriter Animation
+            // Handle modal form submission
+            if (googleSignInForm) {
+                googleSignInForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    const submitButton = googleSignInForm.querySelector('.action-btn');
+                    submitButton.classList.add('loading');
+                    submitButton.disabled = true;
+
+                    setTimeout(() => {
+                        const email = document.getElementById('google-email').value.trim();
+                        const username = document.getElementById('google-username').value.trim();
+
+                        if (!username) {
+                            alert('Please enter a username.');
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        // Store user in localStorage (consistent with signup)
+                        let users = JSON.parse(localStorage.getItem('users')) || [];
+                        const emailExists = users.some(u => u.email === email);
+                        if (!emailExists) {
+                            users.push({ email, username, password: '' }); // Password not needed for Google users
+                            localStorage.setItem('users', JSON.stringify(users));
+                        } else {
+                            // Update username if email already exists
+                            users = users.map(u => u.email === email ? { ...u, username } : u);
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+
+                        localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+                        localStorage.setItem('rememberMe', 'true'); // Persist Google login
+
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                        googleSignInModal.style.display = 'none';
+
+                        window.location.href = "HomePage.html";
+                    }, 1500);
+                });
+            }
+
+            // Close the modal
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    googleSignInModal.style.display = 'none';
+                    googleUserData = null;
+                });
+
+                window.addEventListener('click', (event) => {
+                    if (event.target === googleSignInModal) {
+                        googleSignInModal.style.display = 'none';
+                        googleUserData = null;
+                    }
+                });
+            }
             const phrases = [
-                "A righteous one deserves a precise outcome.",
-                "Protect yourself from cybercrime today.",
-                "Contra E-Crime: Your shield online.",
-                "Stay safe, stay informed, stay secure.",
-                "Empowering you against digital threats."
-            ];
+            "Protect yourself from cybercrime today.",
+            "Contra E-Crime: Your shield online.",
+            "Stay safe, stay informed, stay secure.",
+            "A righteous one deserves a precise outcome.",
+            "Empowering you against digital threats.",
+            "I’m here to help you navigate cybercrime laws.",
+            "Let’s find the legal answers you need, fast.",
+            "Your trusted guide to cybercrime justice.",
+            "Uncover the law, defeat the threat.",
+            "Defending your digital rights, step by step."
+        ];
             const typewriterText = document.getElementById('typewriterText');
             let currentPhraseIndex = 0;
             let charIndex = 0;
