@@ -514,7 +514,40 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
+            authDomain: "contra-e-crime.firebaseapp.com",
+            projectId: "contra-e-crime",
+            storageBucket: "contra-e-crime.firebasestorage.app",
+            messagingSenderId: "198995444405",
+            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
+            measurementId: "G-7Y2E24DD42"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Helper function to log login events to Firestore
+        async function logLoginEvent(userEmail) {
+            try {
+                const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+                await db.collection('loginEvents').add({
+                    userEmail: userEmail,
+                    timestamp: timestamp
+                });
+                console.log('Login event logged for:', userEmail);
+            } catch (error) {
+                console.error('Error logging login event:', error);
+                throw error;
+            }
+        }
+
         // Ensure DOM is fully loaded before running scripts
         document.addEventListener('DOMContentLoaded', function () {
             try {
@@ -559,23 +592,24 @@
                     console.error('Close button or modal not found.');
                 }
 
-                // Form Submission Handling with localStorage and Loading Animation
+                // Form Submission Handling with Firestore, localStorage, and Loading Animation
                 const signupForm = document.getElementById('signupForm');
                 const signupErrorMessage = document.getElementById('signupErrorMessage');
 
                 if (signupForm) {
-                    signupForm.addEventListener('submit', (event) => {
+                    signupForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
 
                         const submitButton = signupForm.querySelector('.action-btn');
                         submitButton.classList.add('loading');
                         submitButton.disabled = true;
 
-                        setTimeout(() => {
+                        try {
                             const email = document.getElementById('signup-email').value.trim();
                             const username = document.getElementById('signup-username').value.trim();
                             const passwordValue = signupPassword.value.trim();
 
+                            // Validate password length
                             if (passwordValue.length < 6) {
                                 signupErrorMessage.style.display = 'block';
                                 signupErrorMessage.classList.add('show');
@@ -585,9 +619,9 @@
                                 return;
                             }
 
-                            let users = JSON.parse(localStorage.getItem('users')) || [];
-                            const emailExists = users.some(user => user.email === email);
-                            if (emailExists) {
+                            // Check if email already exists in Firestore
+                            const userDoc = await db.collection('users').doc(email).get();
+                            if (userDoc.exists) {
                                 signupErrorMessage.style.display = 'block';
                                 signupErrorMessage.classList.add('show');
                                 signupErrorMessage.textContent = 'Email already exists. Please use a different email.';
@@ -596,15 +630,39 @@
                                 return;
                             }
 
+                            // Store user in Firestore
+                            await db.collection('users').doc(email).set({
+                                email: email,
+                                username: username,
+                                password: passwordValue, // In production, hash this!
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+
+                            // Also store in localStorage for compatibility with index.html
+                            let users = JSON.parse(localStorage.getItem('users')) || [];
                             users.push({ email, username, password: passwordValue });
                             localStorage.setItem('users', JSON.stringify(users));
 
+                            // Log the login event
+                            await logLoginEvent(email);
+
+                            // Set current user and redirect to HomePage
+                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+                            localStorage.setItem('rememberMe', 'true');
+
                             submitButton.classList.remove('loading');
                             submitButton.disabled = false;
-
-                            window.location.href = "index.html";
                             signupErrorMessage.style.display = 'none';
-                        }, 1500);
+
+                            window.location.href = "HomePage.html";
+                        } catch (error) {
+                            console.error('Sign-up error:', error);
+                            signupErrorMessage.style.display = 'block';
+                            signupErrorMessage.classList.add('show');
+                            signupErrorMessage.textContent = 'An error occurred during sign-up. Please try again.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                        }
                     });
                 } else {
                     console.error('Signup form not found.');

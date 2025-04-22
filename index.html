@@ -355,14 +355,14 @@
             border-color: #580100;
         }
 
-        .google-btn img {
-            width: 20px;
-            height: 20px;
-        }
-
         .google-btn.loading {
             pointer-events: none;
             opacity: 0.7;
+        }
+
+        .google-btn img {
+            width: 20px;
+            height: 20px;
         }
 
         .error-message {
@@ -585,6 +585,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
         const firebaseConfig = {
@@ -600,6 +601,22 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Helper function to log login events to Firestore
+        async function logLoginEvent(userEmail) {
+            try {
+                const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+                await db.collection('loginEvents').add({
+                    userEmail: userEmail,
+                    timestamp: timestamp
+                });
+                console.log('Login event logged for:', userEmail);
+            } catch (error) {
+                console.error('Error logging login event:', error);
+                throw error; // Re-throw to handle in the calling function
+            }
+        }
 
         // Ensure DOM is fully loaded before running scripts
         document.addEventListener('DOMContentLoaded', function () {
@@ -628,23 +645,24 @@
                     });
                 }
 
-                // Form Submission Handling with localStorage and Loading Animation
+                // Form Submission Handling with localStorage, Firestore, and Loading Animation
                 const loginForm = document.getElementById('loginForm');
                 const loginErrorMessage = document.getElementById('loginErrorMessage');
 
                 if (loginForm) {
-                    loginForm.addEventListener('submit', (event) => {
+                    loginForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
 
                         const submitButton = loginForm.querySelector('.action-btn');
                         submitButton.classList.add('loading');
                         submitButton.disabled = true;
 
-                        setTimeout(() => {
+                        try {
                             const email = document.getElementById('login-email').value.trim();
                             const passwordValue = loginPassword.value.trim();
                             const rememberMe = document.getElementById('rememberme').checked;
 
+                            // Check if user exists in localStorage (for email/password login)
                             const users = JSON.parse(localStorage.getItem('users')) || [];
                             const user = users.find(user => user.email === email);
 
@@ -666,6 +684,10 @@
                                 return;
                             }
 
+                            // Log the login event to Firestore
+                            await logLoginEvent(email);
+
+                            // Store current user in localStorage
                             localStorage.setItem('currentUser', JSON.stringify({ email, username: user.username }));
 
                             if (rememberMe) {
@@ -678,7 +700,14 @@
                             submitButton.disabled = false;
 
                             window.location.href = "HomePage.html";
-                        }, 1500);
+                        } catch (error) {
+                            console.error('Login error:', error);
+                            loginErrorMessage.style.display = 'block';
+                            loginErrorMessage.classList.add('show');
+                            loginErrorMessage.textContent = 'An error occurred during login. Please try again.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                        }
                     });
                 }
 
@@ -694,7 +723,7 @@
                         googleSignInBtn.classList.add('loading');
                         const provider = new firebase.auth.GoogleAuthProvider();
                         auth.signInWithPopup(provider)
-                            .then((result) => {
+                            .then(async (result) => {
                                 googleSignInBtn.classList.remove('loading');
                                 const user = result.user;
                                 googleUserData = {
@@ -702,15 +731,14 @@
                                     username: user.displayName || 'Google User'
                                 };
 
-                                // Check if the user already exists in localStorage
-                                const users = JSON.parse(localStorage.getItem('users')) || [];
-                                const existingUser = users.find(u => u.email === googleUserData.email);
-
-                                if (existingUser) {
-                                    // User already exists, redirect directly to HomePage
+                                // Check if the user already exists in Firestore
+                                const userDoc = await db.collection('users').doc(googleUserData.email).get();
+                                if (userDoc.exists) {
+                                    // User already exists, log the login event and redirect
+                                    await logLoginEvent(googleUserData.email);
                                     localStorage.setItem('currentUser', JSON.stringify({
-                                        email: existingUser.email,
-                                        username: existingUser.username
+                                        email: userDoc.data().email,
+                                        username: userDoc.data().username
                                     }));
                                     localStorage.setItem('rememberMe', 'true');
                                     window.location.href = "HomePage.html";
@@ -730,16 +758,16 @@
                     });
                 }
 
-                // Handle modal form submission for new users
+                // Handle modal form submission for new Google Sign-In users
                 if (googleSignInForm) {
-                    googleSignInForm.addEventListener('submit', (event) => {
+                    googleSignInForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
 
                         const submitButton = googleSignInForm.querySelector('.action-btn');
                         submitButton.classList.add('loading');
                         submitButton.disabled = true;
 
-                        setTimeout(() => {
+                        try {
                             const email = document.getElementById('google-email').value.trim();
                             const username = document.getElementById('google-username').value.trim();
                             const password = document.getElementById('google-password').value.trim();
@@ -762,10 +790,21 @@
                                 return;
                             }
 
-                            // Store new user in localStorage with password
+                            // Store new user in Firestore
+                            await db.collection('users').doc(email).set({
+                                email: email,
+                                username: username,
+                                password: password, // In production, hash this!
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+
+                            // Also store in localStorage for compatibility with email/password login
                             let users = JSON.parse(localStorage.getItem('users')) || [];
                             users.push({ email, username, password });
                             localStorage.setItem('users', JSON.stringify(users));
+
+                            // Log the login event
+                            await logLoginEvent(email);
 
                             localStorage.setItem('currentUser', JSON.stringify({ email, username }));
                             localStorage.setItem('rememberMe', 'true');
@@ -775,7 +814,14 @@
                             googleSignInModal.style.display = 'none';
 
                             window.location.href = "HomePage.html";
-                        }, 1500);
+                        } catch (error) {
+                            console.error('Google Sign-In submission error:', error);
+                            loginErrorMessage.style.display = 'block';
+                            loginErrorMessage.classList.add('show');
+                            loginErrorMessage.textContent = 'An error occurred during sign-up. Please try again.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                        }
                     });
                 }
 
