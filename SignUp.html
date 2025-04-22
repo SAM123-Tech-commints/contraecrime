@@ -464,8 +464,8 @@
                 <label for="signup-email">Email Address</label>
                 <input type="email" id="signup-email" placeholder="Your email address" required>
                 
-                <label for="signup-username">Full Name</label>
-                <input type="text" id="signup-username" placeholder="Your full name" required>
+                <label for="signup-username">Username</label>
+                <input type="text" id="signup-username" placeholder="Your username" required>
                 
                 <label for="signup-password">Password</label>
                 <div class="input-container">
@@ -517,136 +517,151 @@
     <script>
         // Ensure DOM is fully loaded before running scripts
         document.addEventListener('DOMContentLoaded', function () {
-            // Toggle Password Visibility
-            const toggleSignupPassword = document.querySelector('#toggleSignupPassword');
-            const signupPassword = document.querySelector('#signup-password');
+            try {
+                // Toggle Password Visibility
+                const toggleSignupPassword = document.querySelector('#toggleSignupPassword');
+                const signupPassword = document.querySelector('#signup-password');
 
-            if (toggleSignupPassword && signupPassword) {
-                toggleSignupPassword.addEventListener('click', function () {
-                    const type = signupPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                    signupPassword.setAttribute('type', type);
-                    this.classList.toggle('fa-eye-slash');
-                });
-            }
-
-            // Terms and Conditions Modal
-            const termsModal = document.getElementById('termsModal');
-            const termsLabel = document.getElementById('termsLabel');
-            const closeBtn = document.querySelector('.close-btn');
-
-            if (termsLabel && termsModal) {
-                termsLabel.addEventListener('click', function () {
-                    termsModal.style.display = 'block';
-                });
-            }
-
-            if (closeBtn && termsModal) {
-                closeBtn.addEventListener('click', function () {
-                    termsModal.style.display = 'none';
-                });
-
-                window.addEventListener('click', function (event) {
-                    if (event.target === termsModal) {
-                        termsModal.style.display = 'none';
-                    }
-                });
-            }
-
-            // Form Submission Handling with localStorage and Loading Animation
-            const signupForm = document.getElementById('signupForm');
-            const signupErrorMessage = document.getElementById('signupErrorMessage');
-
-            if (signupForm) {
-                signupForm.addEventListener('submit', (event) => {
-                    event.preventDefault();
-
-                    const submitButton = signupForm.querySelector('.action-btn');
-                    submitButton.classList.add('loading');
-                    submitButton.disabled = true;
-
-                    setTimeout(() => {
-                        const email = document.getElementById('signup-email').value.trim();
-                        const username = document.getElementById('signup-username').value.trim();
-                        const passwordValue = signupPassword.value.trim();
-
-                        if (passwordValue.length < 6) {
-                            signupErrorMessage.style.display = 'block';
-                            signupErrorMessage.classList.add('show');
-                            signupErrorMessage.textContent = 'Password must be at least 6 characters long.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        let users = JSON.parse(localStorage.getItem('users')) || [];
-                        const emailExists = users.some(user => user.email === email);
-                        if (emailExists) {
-                            signupErrorMessage.style.display = 'block';
-                            signupErrorMessage.classList.add('show');
-                            signupErrorMessage.textContent = 'Email already exists. Please use a different email.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        users.push({ email, username, password: passwordValue });
-                        localStorage.setItem('users', JSON.stringify(users));
-
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-
-                        window.location.href = "index.html";
-                        signupErrorMessage.style.display = 'none';
-                    }, 1500);
-                });
-            }
-
-            const phrases = [
-            "Protect yourself from cybercrime today.",
-            "Contra E-Crime: Your shield online.",
-            "Stay safe, stay informed, stay secure.",
-            "A righteous one deserves a precise outcome.",
-            "Empowering you against digital threats.",
-            "I’m here to help you navigate cybercrime laws.",
-            "Let’s find the legal answers you need, fast.",
-            "Your trusted guide to cybercrime justice.",
-            "Uncover the law, defeat the threat.",
-            "Defending your digital rights, step by step."
-        ];
-            const typewriterText = document.getElementById('typewriterText');
-            let currentPhraseIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-
-            function typeWriter() {
-                const currentPhrase = phrases[currentPhraseIndex];
-
-                if (!isDeleting) {
-                    if (charIndex < currentPhrase.length) {
-                        typewriterText.innerHTML = currentPhrase.substring(0, charIndex + 1);
-                        charIndex++;
-                        setTimeout(typeWriter, 100);
-                    } else {
-                        setTimeout(() => {
-                            isDeleting = true;
-                            typeWriter();
-                        }, 2000);
-                    }
+                if (toggleSignupPassword && signupPassword) {
+                    toggleSignupPassword.addEventListener('click', function () {
+                        const type = signupPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                        signupPassword.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
                 } else {
-                    if (charIndex > 0) {
-                        typewriterText.innerHTML = currentPhrase.substring(0, charIndex - 1);
-                        charIndex--;
-                        setTimeout(typeWriter, 50);
+                    console.error('Toggle password elements not found.');
+                }
+
+                // Terms and Conditions Modal
+                const termsModal = document.getElementById('termsModal');
+                const termsLabel = document.getElementById('termsLabel');
+                const closeBtn = document.querySelector('.close-btn');
+
+                if (termsLabel && termsModal) {
+                    termsLabel.addEventListener('click', function () {
+                        termsModal.style.display = 'block';
+                    });
+                } else {
+                    console.error('Terms label or modal not found.');
+                }
+
+                if (closeBtn && termsModal) {
+                    closeBtn.addEventListener('click', function () {
+                        termsModal.style.display = 'none';
+                    });
+
+                    window.addEventListener('click', function (event) {
+                        if (event.target === termsModal) {
+                            termsModal.style.display = 'none';
+                        }
+                    });
+                } else {
+                    console.error('Close button or modal not found.');
+                }
+
+                // Form Submission Handling with localStorage and Loading Animation
+                const signupForm = document.getElementById('signupForm');
+                const signupErrorMessage = document.getElementById('signupErrorMessage');
+
+                if (signupForm) {
+                    signupForm.addEventListener('submit', (event) => {
+                        event.preventDefault();
+
+                        const submitButton = signupForm.querySelector('.action-btn');
+                        submitButton.classList.add('loading');
+                        submitButton.disabled = true;
+
+                        setTimeout(() => {
+                            const email = document.getElementById('signup-email').value.trim();
+                            const username = document.getElementById('signup-username').value.trim();
+                            const passwordValue = signupPassword.value.trim();
+
+                            if (passwordValue.length < 6) {
+                                signupErrorMessage.style.display = 'block';
+                                signupErrorMessage.classList.add('show');
+                                signupErrorMessage.textContent = 'Password must be at least 6 characters long.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            let users = JSON.parse(localStorage.getItem('users')) || [];
+                            const emailExists = users.some(user => user.email === email);
+                            if (emailExists) {
+                                signupErrorMessage.style.display = 'block';
+                                signupErrorMessage.classList.add('show');
+                                signupErrorMessage.textContent = 'Email already exists. Please use a different email.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            users.push({ email, username, password: passwordValue });
+                            localStorage.setItem('users', JSON.stringify(users));
+
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+
+                            window.location.href = "index.html";
+                            signupErrorMessage.style.display = 'none';
+                        }, 1500);
+                    });
+                } else {
+                    console.error('Signup form not found.');
+                }
+
+                // Continuous Typewriter Animation
+                const phrases = [
+                    "Protect yourself from cybercrime today.",
+                    "Contra E-Crime: Your shield online.",
+                    "Stay safe, stay informed, stay secure.",
+                    "A righteous one deserves a precise outcome.",
+                    "Empowering you against digital threats.",
+                    "I’m here to help you navigate cybercrime laws.",
+                    "Let’s find the legal answers you need, fast.",
+                    "Your trusted guide to cybercrime justice.",
+                    "Uncover the law, defeat the threat.",
+                    "Defending your digital rights, step by step."
+                ];
+                const typewriterText = document.getElementById('typewriterText');
+                let currentPhraseIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+
+                function typeWriter() {
+                    const currentPhrase = phrases[currentPhraseIndex];
+
+                    if (!isDeleting) {
+                        if (charIndex < currentPhrase.length) {
+                            typewriterText.innerHTML = currentPhrase.substring(0, charIndex + 1);
+                            charIndex++;
+                            setTimeout(typeWriter, 100);
+                        } else {
+                            setTimeout(() => {
+                                isDeleting = true;
+                                typeWriter();
+                            }, 2000);
+                        }
                     } else {
-                        isDeleting = false;
-                        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                        setTimeout(typeWriter, 500);
+                        if (charIndex > 0) {
+                            typewriterText.innerHTML = currentPhrase.substring(0, charIndex - 1);
+                            charIndex--;
+                            setTimeout(typeWriter, 50);
+                        } else {
+                            isDeleting = false;
+                            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                            setTimeout(typeWriter, 500);
+                        }
                     }
                 }
-            }
 
-            if (typewriterText) {
-                typeWriter();
+                if (typewriterText) {
+                    typeWriter();
+                } else {
+                    console.error('Typewriter text element not found.');
+                }
+            } catch (error) {
+                console.error('An error occurred in the script:', error);
             }
         });
     </script>
