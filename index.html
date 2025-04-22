@@ -182,8 +182,8 @@
         }
 
         input[readonly] {
-            background-color: #f0f0f0;
-            cursor: not-allowed;
+            background-color: #ffffff;
+            cursor: allowed;
         }
 
         .toggle-password {
@@ -560,7 +560,7 @@
     <!-- Google Sign-In Confirmation Modal -->
     <div id="googleSignInModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="close-btn">×</span>
             <h2>Confirm Your Details</h2>
             <form id="googleSignInForm">
                 <label for="google-email">Email (read-only)</label>
@@ -597,212 +597,225 @@
 
         // Ensure DOM is fully loaded before running scripts
         document.addEventListener('DOMContentLoaded', function () {
-            // Toggle Password Visibility
-            const toggleLoginPassword = document.querySelector('#toggleLoginPassword');
-            const loginPassword = document.querySelector('#login-password');
+            try {
+                // Toggle Password Visibility
+                const toggleLoginPassword = document.querySelector('#toggleLoginPassword');
+                const loginPassword = document.querySelector('#login-password');
 
-            if (toggleLoginPassword && loginPassword) {
-                toggleLoginPassword.addEventListener('click', function () {
-                    const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                    loginPassword.setAttribute('type', type);
-                    this.classList.toggle('fa-eye-slash');
-                });
-            }
+                if (toggleLoginPassword && loginPassword) {
+                    toggleLoginPassword.addEventListener('click', function () {
+                        const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                        loginPassword.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                }
 
-            // Form Submission Handling with localStorage and Loading Animation
-            const loginForm = document.getElementById('loginForm');
-            const loginErrorMessage = document.getElementById('loginErrorMessage');
+                // Form Submission Handling with localStorage and Loading Animation
+                const loginForm = document.getElementById('loginForm');
+                const loginErrorMessage = document.getElementById('loginErrorMessage');
 
-            if (loginForm) {
-                loginForm.addEventListener('submit', (event) => {
-                    event.preventDefault();
+                if (loginForm) {
+                    loginForm.addEventListener('submit', (event) => {
+                        event.preventDefault();
 
-                    const submitButton = loginForm.querySelector('.action-btn');
-                    submitButton.classList.add('loading');
-                    submitButton.disabled = true;
+                        const submitButton = loginForm.querySelector('.action-btn');
+                        submitButton.classList.add('loading');
+                        submitButton.disabled = true;
 
-                    setTimeout(() => {
-                        const email = document.getElementById('login-email').value.trim();
-                        const passwordValue = loginPassword.value.trim();
-                        const rememberMe = document.getElementById('rememberme').checked;
+                        setTimeout(() => {
+                            const email = document.getElementById('login-email').value.trim();
+                            const passwordValue = loginPassword.value.trim();
+                            const rememberMe = document.getElementById('rememberme').checked;
 
-                        const users = JSON.parse(localStorage.getItem('users')) || [];
-                        const user = users.find(user => user.email === email);
+                            const users = JSON.parse(localStorage.getItem('users')) || [];
+                            const user = users.find(user => user.email === email);
 
-                        if (!user) {
-                            loginErrorMessage.style.display = 'block';
-                            loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = 'Email not found. Please sign up.';
+                            if (!user) {
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Email not found. Please sign up.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            if (user.password !== passwordValue) {
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Incorrect password. Please try again.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            localStorage.setItem('currentUser', JSON.stringify({ email, username: user.username }));
+
+                            if (rememberMe) {
+                                localStorage.setItem('rememberMe', 'true');
+                            } else {
+                                localStorage.removeItem('rememberMe');
+                            }
+
                             submitButton.classList.remove('loading');
                             submitButton.disabled = false;
-                            return;
-                        }
 
-                        if (user.password !== passwordValue) {
-                            loginErrorMessage.style.display = 'block';
-                            loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = 'Incorrect password. Please try again.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
+                            window.location.href = "HomePage.html";
+                        }, 1500);
+                    });
+                }
 
-                        localStorage.setItem('currentUser', JSON.stringify({ email, username: user.username }));
+                // Google Sign-In Handling
+                const googleSignInBtn = document.getElementById('googleSignInBtn');
+                const googleSignInModal = document.getElementById('googleSignInModal');
+                const googleSignInForm = document.getElementById('googleSignInForm');
+                const closeBtn = googleSignInModal.querySelector('.close-btn');
+                let googleUserData = null;
 
-                        if (rememberMe) {
+                if (googleSignInBtn) {
+                    googleSignInBtn.addEventListener('click', () => {
+                        googleSignInBtn.classList.add('loading');
+                        const provider = new firebase.auth.GoogleAuthProvider();
+                        auth.signInWithPopup(provider)
+                            .then((result) => {
+                                googleSignInBtn.classList.remove('loading');
+                                const user = result.user;
+                                googleUserData = {
+                                    email: user.email,
+                                    username: user.displayName || 'Google User'
+                                };
+
+                                // Check if the user already exists in localStorage
+                                const users = JSON.parse(localStorage.getItem('users')) || [];
+                                const existingUser = users.find(u => u.email === googleUserData.email);
+
+                                if (existingUser) {
+                                    // User already exists, redirect directly to HomePage
+                                    localStorage.setItem('currentUser', JSON.stringify({
+                                        email: existingUser.email,
+                                        username: existingUser.username
+                                    }));
+                                    localStorage.setItem('rememberMe', 'true');
+                                    window.location.href = "HomePage.html";
+                                } else {
+                                    // New user, show the confirmation modal
+                                    document.getElementById('google-email').value = googleUserData.email;
+                                    document.getElementById('google-username').value = googleUserData.username;
+                                    googleSignInModal.style.display = 'block';
+                                }
+                            })
+                            .catch((error) => {
+                                googleSignInBtn.classList.remove('loading');
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Google Sign-In failed: ' + error.message;
+                            });
+                    });
+                }
+
+                // Handle modal form submission for new users
+                if (googleSignInForm) {
+                    googleSignInForm.addEventListener('submit', (event) => {
+                        event.preventDefault();
+
+                        const submitButton = googleSignInForm.querySelector('.action-btn');
+                        submitButton.classList.add('loading');
+                        submitButton.disabled = true;
+
+                        setTimeout(() => {
+                            const email = document.getElementById('google-email').value.trim();
+                            const username = document.getElementById('google-username').value.trim();
+
+                            if (!username) {
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Please enter a username.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            // Store new user in localStorage
+                            let users = JSON.parse(localStorage.getItem('users')) || [];
+                            users.push({ email, username, password: '' });
+                            localStorage.setItem('users', JSON.stringify(users));
+
+                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
                             localStorage.setItem('rememberMe', 'true');
-                        } else {
-                            localStorage.removeItem('rememberMe');
-                        }
 
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-
-                        window.location.href = "HomePage.html";
-                    }, 1500);
-                });
-            }
-
-            // Google Sign-In Handling with Confirmation Modal
-            const googleSignInBtn = document.getElementById('googleSignInBtn');
-            const googleSignInModal = document.getElementById('googleSignInModal');
-            const googleSignInForm = document.getElementById('googleSignInForm');
-            const closeBtn = googleSignInModal.querySelector('.close-btn');
-            let googleUserData = null;
-
-            if (googleSignInBtn) {
-                googleSignInBtn.addEventListener('click', () => {
-                    googleSignInBtn.classList.add('loading');
-                    const provider = new firebase.auth.GoogleAuthProvider();
-                    auth.signInWithPopup(provider)
-                        .then((result) => {
-                            googleSignInBtn.classList.remove('loading');
-                            const user = result.user;
-                            googleUserData = {
-                                email: user.email,
-                                username: user.displayName || 'Google User'
-                            };
-
-                            // Populate the modal with Google data
-                            document.getElementById('google-email').value = googleUserData.email;
-                            document.getElementById('google-username').value = googleUserData.username;
-
-                            // Show the confirmation modal
-                            googleSignInModal.style.display = 'block';
-                        })
-                        .catch((error) => {
-                            googleSignInBtn.classList.remove('loading');
-                            loginErrorMessage.style.display = 'block';
-                            loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = 'Google Sign-In failed: ' + error.message;
-                        });
-                });
-            }
-
-            // Handle modal form submission
-            if (googleSignInForm) {
-                googleSignInForm.addEventListener('submit', (event) => {
-                    event.preventDefault();
-
-                    const submitButton = googleSignInForm.querySelector('.action-btn');
-                    submitButton.classList.add('loading');
-                    submitButton.disabled = true;
-
-                    setTimeout(() => {
-                        const email = document.getElementById('google-email').value.trim();
-                        const username = document.getElementById('google-username').value.trim();
-
-                        if (!username) {
-                            alert('Please enter a username.');
                             submitButton.classList.remove('loading');
                             submitButton.disabled = false;
-                            return;
-                        }
+                            googleSignInModal.style.display = 'none';
 
-                        // Store user in localStorage (consistent with signup)
-                        let users = JSON.parse(localStorage.getItem('users')) || [];
-                        const emailExists = users.some(u => u.email === email);
-                        if (!emailExists) {
-                            users.push({ email, username, password: '' }); // Password not needed for Google users
-                            localStorage.setItem('users', JSON.stringify(users));
-                        } else {
-                            // Update username if email already exists
-                            users = users.map(u => u.email === email ? { ...u, username } : u);
-                            localStorage.setItem('users', JSON.stringify(users));
-                        }
+                            window.location.href = "HomePage.html";
+                        }, 1500);
+                    });
+                }
 
-                        localStorage.setItem('currentUser', JSON.stringify({ email, username }));
-                        localStorage.setItem('rememberMe', 'true'); // Persist Google login
-
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-                        googleSignInModal.style.display = 'none';
-
-                        window.location.href = "HomePage.html";
-                    }, 1500);
-                });
-            }
-
-            // Close the modal
-            if (closeBtn) {
-                closeBtn.addEventListener('click', () => {
-                    googleSignInModal.style.display = 'none';
-                    googleUserData = null;
-                });
-
-                window.addEventListener('click', (event) => {
-                    if (event.target === googleSignInModal) {
+                // Close the modal
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
                         googleSignInModal.style.display = 'none';
                         googleUserData = null;
-                    }
-                });
-            }
-            const phrases = [
-            "Protect yourself from cybercrime today.",
-            "Contra E-Crime: Your shield online.",
-            "Stay safe, stay informed, stay secure.",
-            "A righteous one deserves a precise outcome.",
-            "Empowering you against digital threats.",
-            "I’m here to help you navigate cybercrime laws.",
-            "Let’s find the legal answers you need, fast.",
-            "Your trusted guide to cybercrime justice.",
-            "Uncover the law, defeat the threat.",
-            "Defending your digital rights, step by step."
-        ];
-            const typewriterText = document.getElementById('typewriterText');
-            let currentPhraseIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
+                    });
 
-            function typeWriter() {
-                const currentPhrase = phrases[currentPhraseIndex];
+                    window.addEventListener('click', (event) => {
+                        if (event.target === googleSignInModal) {
+                            googleSignInModal.style.display = 'none';
+                            googleUserData = null;
+                        }
+                    });
+                }
 
-                if (!isDeleting) {
-                    if (charIndex < currentPhrase.length) {
-                        typewriterText.innerHTML = currentPhrase.substring(0, charIndex + 1);
-                        charIndex++;
-                        setTimeout(typeWriter, 100);
+                // Continuous Typewriter Animation
+                const phrases = [
+                    "Protect yourself from cybercrime today.",
+                    "Contra E-Crime: Your shield online.",
+                    "Stay safe, stay informed, stay secure.",
+                    "A righteous one deserves a precise outcome.",
+                    "Empowering you against digital threats.",
+                    "I’m here to help you navigate cybercrime laws.",
+                    "Let’s find the legal answers you need, fast.",
+                    "Your trusted guide to cybercrime justice.",
+                    "Uncover the law, defeat the threat.",
+                    "Defending your digital rights, step by step."
+                ];
+                const typewriterText = document.getElementById('typewriterText');
+                let currentPhraseIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+
+                function typeWriter() {
+                    const currentPhrase = phrases[currentPhraseIndex];
+
+                    if (!isDeleting) {
+                        if (charIndex < currentPhrase.length) {
+                            typewriterText.innerHTML = currentPhrase.substring(0, charIndex + 1);
+                            charIndex++;
+                            setTimeout(typeWriter, 100);
+                        } else {
+                            setTimeout(() => {
+                                isDeleting = true;
+                                typeWriter();
+                            }, 2000);
+                        }
                     } else {
-                        setTimeout(() => {
-                            isDeleting = true;
-                            typeWriter();
-                        }, 2000);
-                    }
-                } else {
-                    if (charIndex > 0) {
-                        typewriterText.innerHTML = currentPhrase.substring(0, charIndex - 1);
-                        charIndex--;
-                        setTimeout(typeWriter, 50);
-                    } else {
-                        isDeleting = false;
-                        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                        setTimeout(typeWriter, 500);
+                        if (charIndex > 0) {
+                            typewriterText.innerHTML = currentPhrase.substring(0, charIndex - 1);
+                            charIndex--;
+                            setTimeout(typeWriter, 50);
+                        } else {
+                            isDeleting = false;
+                            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                            setTimeout(typeWriter, 500);
+                        }
                     }
                 }
-            }
 
-            if (typewriterText) {
-                typeWriter();
+                if (typewriterText) {
+                    typeWriter();
+                }
+            } catch (error) {
+                console.error('An error occurred in the script:', error);
             }
         });
     </script>
