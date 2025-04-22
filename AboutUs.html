@@ -1016,6 +1016,7 @@
                         <p>Educational Partner</p>
                     </div>
                 </div>
+                <button onclick="updateUserCounts()" style="margin-top: 20px; padding: 10px 20px; background-color: #8B0000; color: white; border: none; border-radius: 5px; cursor: pointer;">Refresh Counts</button>
             </section>
 
             <!-- Careers Section -->
@@ -1096,43 +1097,20 @@
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Helper function to log login events
-        async function logLoginEvent() {
-            try {
-                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                if (!currentUser || !currentUser.email) {
-                    console.warn('No user logged in, skipping login event log.');
-                    return;
-                }
-
-                const userEmail = currentUser.email;
-                const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-                // Log the login event in Firestore
-                await db.collection('loginEvents').add({
-                    userEmail: userEmail,
-                    timestamp: timestamp
-                });
-                console.log('Login event logged:', userEmail);
-            } catch (error) {
-                console.error('Error logging login event:', error);
-            }
-        }
-
         // Helper function to calculate daily login users (total logins today)
         async function calculateDailyLoginUsers() {
             try {
                 const now = new Date();
-                // Set to start of the current day (00:00:00)
-                const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                // Set to end of the current day (23:59:59)
-                const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+                // Use UTC to avoid timezone mismatches
+                const startOfDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+                const endOfDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 23, 59, 59));
 
                 const querySnapshot = await db.collection('loginEvents')
                     .where('timestamp', '>=', firebase.firestore.Timestamp.fromDate(startOfDay))
                     .where('timestamp', '<=', firebase.firestore.Timestamp.fromDate(endOfDay))
                     .get();
 
+                console.log('Daily Login Users:', querySnapshot.size);
                 return querySnapshot.size; // Total number of login events today
             } catch (error) {
                 console.error('Error calculating daily login users:', error);
@@ -1144,6 +1122,7 @@
         async function calculateActiveUsers() {
             try {
                 const querySnapshot = await db.collection('users').get();
+                console.log('Active Users:', querySnapshot.size);
                 return querySnapshot.size; // Total number of registered users
             } catch (error) {
                 console.error('Error calculating active users:', error);
@@ -1153,12 +1132,18 @@
 
         // Function to update the UI with user counts
         async function updateUserCounts() {
-            const dailyLoginUsers = await calculateDailyLoginUsers();
-            const activeUsers = await calculateActiveUsers();
+            try {
+                const dailyLoginUsers = await calculateDailyLoginUsers();
+                const activeUsers = await calculateActiveUsers();
 
-            // Update the DOM
-            document.getElementById('dailyLoginUsers').textContent = dailyLoginUsers.toString().padStart(3, '0');
-            document.getElementById('activeUsers').textContent = activeUsers.toString().padStart(3, '0');
+                console.log('Updating UI - Daily Login Users:', dailyLoginUsers, 'Active Users:', activeUsers);
+
+                // Update the DOM
+                document.getElementById('dailyLoginUsers').textContent = dailyLoginUsers.toString().padStart(3, '0');
+                document.getElementById('activeUsers').textContent = activeUsers.toString().padStart(3, '0');
+            } catch (error) {
+                console.error('Error updating user counts:', error);
+            }
         }
 
         // Main script
@@ -1225,9 +1210,9 @@
             observer.observe(item);
         });
 
-        // Log login event and update user counts on page load
+        // Update user counts on page load
         document.addEventListener('DOMContentLoaded', async () => {
-            await logLoginEvent();
+            console.log('Page loaded, updating user counts');
             await updateUserCounts();
         });
     </script>
