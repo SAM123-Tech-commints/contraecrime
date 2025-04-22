@@ -478,6 +478,14 @@
             text-decoration: none;
         }
 
+        #googleSignupForm label {
+            margin-top: 10px;
+        }
+
+        #googleSignupForm input {
+            margin-bottom: 15px;
+        }
+
         @media (max-width: 1024px) {
             .text-typewriter {
                 font-size: 3vw;
@@ -668,19 +676,47 @@
         </div>
     </div>
 
+    <!-- Google Sign-In Additional Info Modal -->
+    <div id="googleSignupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="googleModalCloseBtn">×</span>
+            <h2>Complete Your Registration</h2>
+            <p>Please confirm your email and provide your full name to complete the registration.</p>
+            <form id="googleSignupForm">
+                <label for="google-email">Email Address</label>
+                <input type="email" id="google-email" placeholder="Your email address" required>
+                
+                <label for="google-username">Full Name</label>
+                <input type="text" id="google-username" placeholder="Your full name" required>
+                
+                <div class="checkbox-container">
+                    <div class="checkbox">
+                        <input type="checkbox" id="google-terms" required>
+                        <label for="google-terms" id="googleTermsLabel">I agree to the Terms & Conditions</label>
+                    </div>
+                </div>
+                
+                <div class="buttons-container">
+                    <button type="submit" class="action-btn">Submit</button>
+                </div>
+                <div class="error-message" id="googleErrorMessage"></div>
+            </form>
+        </div>
+    </div>
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
     <script>
         const firebaseConfig = {
-        apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
-        authDomain: "contra-e-crime.firebaseapp.com",
-        projectId: "contra-e-crime",
-        storageBucket: "contra-e-crime.firebasestorage.app",
-        messagingSenderId: "198995444405",
-        appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-        measurementId: "G-7Y2E24DD42"
+            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
+            authDomain: "contra-e-crime.firebaseapp.com",
+            projectId: "contra-e-crime",
+            storageBucket: "contra-e-crime.firebasestorage.app",
+            messagingSenderId: "198995444405",
+            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
+            measurementId: "G-7Y2E24DD42"
         };
 
         // Initialize Firebase
@@ -894,8 +930,15 @@
                 });
             }
 
-            // Google Sign-In Handling
+            // Google Sign-In Handling with Additional Info Modal
             const googleSignInBtn = document.getElementById('googleSignInBtn');
+            const googleSignupModal = document.getElementById('googleSignupModal');
+            const googleSignupForm = document.getElementById('googleSignupForm');
+            const googleModalCloseBtn = document.getElementById('googleModalCloseBtn');
+            const googleTermsLabel = document.getElementById('googleTermsLabel');
+            const googleErrorMessage = document.getElementById('googleErrorMessage');
+            let googleUserData = null;
+
             if (googleSignInBtn) {
                 googleSignInBtn.addEventListener('click', () => {
                     googleSignInBtn.classList.add('loading');
@@ -904,21 +947,25 @@
                         .then((result) => {
                             const user = result.user;
                             const email = user.email;
-                            const username = user.displayName || 'Google User';
+                            const username = user.displayName || '';
 
-                            // Store user in localStorage (for consistency with your existing setup)
                             let users = JSON.parse(localStorage.getItem('users')) || [];
                             const emailExists = users.some(u => u.email === email);
-                            if (!emailExists) {
-                                users.push({ email, username, password: '' }); // Password not needed for Google users
-                                localStorage.setItem('users', JSON.stringify(users));
+
+                            if (emailExists) {
+                                // User exists, proceed to login
+                                localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+                                localStorage.setItem('rememberMe', 'true');
+                                googleSignInBtn.classList.remove('loading');
+                                window.location.href = "HomePage.html";
+                            } else {
+                                // New user, show modal to collect additional info
+                                googleUserData = { email, username };
+                                document.getElementById('google-email').value = email;
+                                document.getElementById('google-username').value = username || '';
+                                googleSignupModal.style.display = 'block';
+                                googleSignInBtn.classList.remove('loading');
                             }
-
-                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
-                            localStorage.setItem('rememberMe', 'true'); // Persist Google login
-
-                            googleSignInBtn.classList.remove('loading');
-                            window.location.href = "HomePage.html";
                         })
                         .catch((error) => {
                             googleSignInBtn.classList.remove('loading');
@@ -926,6 +973,73 @@
                             loginErrorMessage.classList.add('show');
                             loginErrorMessage.textContent = 'Google Sign-In failed: ' + error.message;
                         });
+                });
+            }
+
+            // Handle Google Signup Modal Submission
+            if (googleSignupForm) {
+                googleSignupForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    const submitButton = googleSignupForm.querySelector('.action-btn');
+                    submitButton.classList.add('loading');
+                    submitButton.disabled = true;
+
+                    setTimeout(() => {
+                        const email = document.getElementById('google-email').value.trim();
+                        const username = document.getElementById('google-username').value.trim();
+
+                        if (!username) {
+                            googleErrorMessage.style.display = 'block';
+                            googleErrorMessage.classList.add('show');
+                            googleErrorMessage.textContent = 'Full name is required.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        let users = JSON.parse(localStorage.getItem('users')) || [];
+                        const emailExists = users.some(u => u.email === email && u.email !== googleUserData.email);
+                        if (emailExists) {
+                            googleErrorMessage.style.display = 'block';
+                            googleErrorMessage.classList.add('show');
+                            googleErrorMessage.textContent = 'Email already exists. Please use a different email.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        users.push({ email, username, password: '' }); // Password not needed for Google users
+                        localStorage.setItem('users', JSON.stringify(users));
+                        localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+                        localStorage.setItem('rememberMe', 'true');
+
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                        googleSignupModal.style.display = 'none';
+                        window.location.href = "HomePage.html";
+                    }, 1500);
+                });
+            }
+
+            // Google Modal Close Button and Terms Link
+            if (googleModalCloseBtn) {
+                googleModalCloseBtn.addEventListener('click', () => {
+                    googleSignupModal.style.display = 'none';
+                    auth.signOut(); // Sign out the Google user if they close the modal
+                });
+
+                window.addEventListener('click', (event) => {
+                    if (event.target === googleSignupModal) {
+                        googleSignupModal.style.display = 'none';
+                        auth.signOut();
+                    }
+                });
+            }
+
+            if (googleTermsLabel) {
+                googleTermsLabel.addEventListener('click', () => {
+                    termsModal.style.display = 'block';
                 });
             }
 
