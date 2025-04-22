@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Contra E-Crime - Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -18,6 +18,8 @@
             display: flex;
             height: 100vh;
             background-color: #f4f4f4;
+            position: relative;
+            overflow: hidden;
         }
 
         .container {
@@ -38,6 +40,17 @@
             position: relative;
         }
 
+        .background-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(88, 1, 0, 0.4), rgba(0, 0, 0, 0.3));
+            z-index: 1;
+        }
+
         .text-container {
             position: absolute;
             top: 50%;
@@ -47,11 +60,13 @@
             padding: 20px;
             border-radius: 10px;
             background-color: transparent;
+            z-index: 2;
         }
 
         .text-typewriter {
             font-size: 2vw;
-            color: white;
+            font-weight: 500;
+            color: #fff;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
             white-space: nowrap;
@@ -59,6 +74,7 @@
             letter-spacing: .15em;
             border-right: .15em solid rgb(255, 0, 0);
             animation: blink-caret .75s step-end infinite;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         @keyframes blink-caret {
@@ -72,6 +88,7 @@
             left: 20px;
             width: 275px;
             height: auto;
+            z-index: 2;
         }
 
         .form-container {
@@ -82,44 +99,86 @@
             flex-direction: column;
             justify-content: center;
             max-width: 500px;
+            position: relative;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .halftone-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.imgur.com/MR5VoVn.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
         }
 
         .logoname {
             font-size: 36px;
-            font-weight: bold;
+            font-weight: 700;
             text-align: center;
             margin-bottom: 20px;
             color: #580100;
+            position: relative;
+            z-index: 1;
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: #333;
+            font-size: 24px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
         }
 
         label {
             display: block;
             margin-top: 15px;
-            font-weight: bold;
+            font-weight: 500;
             color: #333;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
         }
 
         .input-container {
             position: relative;
             width: 100%;
             margin-top: 5px;
+            z-index: 1;
         }
 
         input[type="text"],
         input[type="password"],
         input[type="email"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus {
+            border-color: #580100;
+            box-shadow: 0 0 5px rgba(88, 1, 0, 0.3);
+            outline: none;
         }
 
         .toggle-password {
@@ -129,6 +188,11 @@
             transform: translateY(-50%);
             cursor: pointer;
             color: #580100;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #8B0000;
         }
 
         .checkbox-container {
@@ -136,6 +200,8 @@
             justify-content: flex-start;
             align-items: center;
             margin: 15px 0;
+            position: relative;
+            z-index: 1;
         }
 
         .checkbox {
@@ -154,10 +220,30 @@
         .checkbox label {
             color: #580100;
             font-size: 14px;
-            font-weight: normal;
+            font-weight: 500;
             margin-left: 5px;
             margin-top: 10px;
             line-height: 18px;
+            cursor: pointer;
+        }
+
+        .login-prompt {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #580100;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-prompt a {
+            color: #8B0000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-prompt a:hover {
+            text-decoration: underline;
         }
 
         .buttons-container {
@@ -165,31 +251,125 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        .login-btn {
-            background-color: #fff;
-            border: 2px solid #580100;
-            border-radius: 25px;
-            padding: 13px 42px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 18px;
-            font-weight: bold;
-            color: #580100;
+        .action-btn {
+            padding: 12px 40px;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #580100, #8B0000);
+            color: white;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .login-btn:hover {
-            background-color: #580100;
-            color: #fff;
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Media Queries for Responsive Design */
+        .action-btn.loading {
+            pointer-events: none;
+            background: linear-gradient(135deg, #8B0000, #580100);
+        }
+
+        .action-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            border: 3px solid #fff;
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .error-message {
+            color: #ff0000;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
         @media (max-width: 1024px) {
             .text-typewriter {
-                font-size: 3vw; /* Adjust font size for smaller screens */
+                font-size: 3vw;
             }
 
             .website-logo {
@@ -197,7 +377,7 @@
             }
 
             .form-container {
-                padding: 20px;
+                padding: 30px;
             }
 
             .logoname {
@@ -205,7 +385,7 @@
             }
 
             h2 {
-                font-size: 24px;
+                font-size: 22px;
             }
         }
 
@@ -222,11 +402,12 @@
             .form-container {
                 flex: 1;
                 max-width: 100%;
-                padding: 40px 20px;
+                padding: 30px 20px;
+                box-shadow: none;
             }
 
             .text-typewriter {
-                font-size: 2.5vw; /* Adjust font size for tablets */
+                font-size: 2.5vw;
             }
 
             .website-logo {
@@ -236,9 +417,9 @@
             }
         }
 
-        @media (min-width: 320px) and (max-width: 480px){
+        @media (min-width: 320px) and (max-width: 480px) {
             .text-typewriter {
-                font-size: 3vw; /* Adjust font size for mobile */
+                font-size: 3vw;
             }
 
             .website-logo {
@@ -253,9 +434,14 @@
                 font-size: 20px;
             }
 
-            .login-btn {
+            .action-btn {
                 padding: 10px 30px;
-                font-size: 16px;
+                font-size: 14px;
+            }
+
+            .modal-content {
+                width: 90%;
+                margin: 20% auto;
             }
         }
     </style>
@@ -269,67 +455,196 @@
             </div>
         </div>
         <div class="form-container">
+            <div class="halftone-background"></div>
             <div class="logoname">
                 Contra E-Crime
             </div>
-            <h2>Sign Up</h2>
             <form id="signupForm">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="Your email address" required>
+                <h2>Sign Up</h2>
+                <label for="signup-email">Email Address</label>
+                <input type="email" id="signup-email" placeholder="Your email address" required>
                 
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Your username" required>
+                <label for="signup-username">Full Name</label>
+                <input type="text" id="signup-username" placeholder="Your full name" required>
                 
-                <label for="password">Password</label>
+                <label for="signup-password">Password</label>
                 <div class="input-container">
-                    <input type="password" id="password" placeholder="********" required>
-                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                    <input type="password" id="signup-password" placeholder="********" required>
+                    <i class="fas fa-eye toggle-password" id="toggleSignupPassword"></i>
                 </div>
                 
                 <div class="checkbox-container">
                     <div class="checkbox">
                         <input type="checkbox" id="terms" required>
-                        <label for="terms">I agree to the Terms & Conditions</label>
+                        <label for="terms" id="termsLabel">I agree to the Terms & Conditions</label>
                     </div>
                 </div>
                 
-                <div class="buttons-container">
-                    <button type="submit" class="login-btn">Create Account</button>
+                <div class="login-prompt">
+                    Already have an account? <a href="index.html">Log In</a>
                 </div>
+                
+                <div class="buttons-container">
+                    <button type="submit" class="action-btn">Create Account</button>
+                </div>
+                <div class="error-message" id="signupErrorMessage"></div>
             </form>
         </div>
     </div>
 
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h2>Terms & Conditions</h2>
+            <p>
+                By using Contra E-Crime, you agree to the following terms and conditions:
+                <br><br>
+                1. <strong>User Responsibility</strong>: You are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer to prevent unauthorized access to your account.
+                <br><br>
+                2. <strong>Prohibited Activities</strong>: You agree not to use the service for any unlawful purpose or in any way that interrupts, damages, or impairs the service.
+                <br><br>
+                3. <strong>Data Privacy</strong>: We collect and store your personal information as outlined in our Privacy Policy. Your data will be used solely for the purpose of providing and improving the service.
+                <br><br>
+                4. <strong>Limitation of Liability</strong>: Contra E-Crime is not liable for any damages resulting from the use of this service, including but not limited to direct, indirect, incidental, or consequential damages.
+                <br><br>
+                5. <strong>Termination</strong>: We reserve the right to terminate or suspend your account at our sole discretion, without notice, for conduct that we believe violates these Terms or is harmful to other users.
+                <br><br>
+                Please read these terms carefully. By checking the box, you agree to be bound by these Terms & Conditions.
+            </p>
+        </div>
+    </div>
+
     <script>
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#password');
+        // Ensure DOM is fully loaded before running scripts
+        document.addEventListener('DOMContentLoaded', function () {
+            // Toggle Password Visibility
+            const toggleSignupPassword = document.querySelector('#toggleSignupPassword');
+            const signupPassword = document.querySelector('#signup-password');
 
-        togglePassword.addEventListener('click', function () {
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            window.location.href = "index.html";
-        });
-
-        const text = "A righteous one deserves a precise outcome.";
-        const typewriterText = document.getElementById('typewriterText');
-        let index = 0;
-
-        function typeWriter() {
-            if (index < text.length) {
-                typewriterText.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typeWriter, 100);
-            } else {
-                typewriterText.style.borderRight = '.15em solid red';
+            if (toggleSignupPassword && signupPassword) {
+                toggleSignupPassword.addEventListener('click', function () {
+                    const type = signupPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                    signupPassword.setAttribute('type', type);
+                    this.classList.toggle('fa-eye-slash');
+                });
             }
-        }
 
-        typeWriter();
+            // Terms and Conditions Modal
+            const termsModal = document.getElementById('termsModal');
+            const termsLabel = document.getElementById('termsLabel');
+            const closeBtn = document.querySelector('.close-btn');
+
+            if (termsLabel && termsModal) {
+                termsLabel.addEventListener('click', function () {
+                    termsModal.style.display = 'block';
+                });
+            }
+
+            if (closeBtn && termsModal) {
+                closeBtn.addEventListener('click', function () {
+                    termsModal.style.display = 'none';
+                });
+
+                window.addEventListener('click', function (event) {
+                    if (event.target === termsModal) {
+                        termsModal.style.display = 'none';
+                    }
+                });
+            }
+
+            // Form Submission Handling with localStorage and Loading Animation
+            const signupForm = document.getElementById('signupForm');
+            const signupErrorMessage = document.getElementById('signupErrorMessage');
+
+            if (signupForm) {
+                signupForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    const submitButton = signupForm.querySelector('.action-btn');
+                    submitButton.classList.add('loading');
+                    submitButton.disabled = true;
+
+                    setTimeout(() => {
+                        const email = document.getElementById('signup-email').value.trim();
+                        const username = document.getElementById('signup-username').value.trim();
+                        const passwordValue = signupPassword.value.trim();
+
+                        if (passwordValue.length < 6) {
+                            signupErrorMessage.style.display = 'block';
+                            signupErrorMessage.classList.add('show');
+                            signupErrorMessage.textContent = 'Password must be at least 6 characters long.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        let users = JSON.parse(localStorage.getItem('users')) || [];
+                        const emailExists = users.some(user => user.email === email);
+                        if (emailExists) {
+                            signupErrorMessage.style.display = 'block';
+                            signupErrorMessage.classList.add('show');
+                            signupErrorMessage.textContent = 'Email already exists. Please use a different email.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        users.push({ email, username, password: passwordValue });
+                        localStorage.setItem('users', JSON.stringify(users));
+
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+
+                        window.location.href = "index.html";
+                        signupErrorMessage.style.display = 'none';
+                    }, 1500);
+                });
+            }
+
+            // Continuous Typewriter Animation
+            const phrases = [
+                "A righteous one deserves a precise outcome.",
+                "Protect yourself from cybercrime today.",
+                "Contra E-Crime: Your shield online.",
+                "Stay safe, stay informed, stay secure.",
+                "Empowering you against digital threats."
+            ];
+            const typewriterText = document.getElementById('typewriterText');
+            let currentPhraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function typeWriter() {
+                const currentPhrase = phrases[currentPhraseIndex];
+
+                if (!isDeleting) {
+                    if (charIndex < currentPhrase.length) {
+                        typewriterText.innerHTML = currentPhrase.substring(0, charIndex + 1);
+                        charIndex++;
+                        setTimeout(typeWriter, 100);
+                    } else {
+                        setTimeout(() => {
+                            isDeleting = true;
+                            typeWriter();
+                        }, 2000);
+                    }
+                } else {
+                    if (charIndex > 0) {
+                        typewriterText.innerHTML = currentPhrase.substring(0, charIndex - 1);
+                        charIndex--;
+                        setTimeout(typeWriter, 50);
+                    } else {
+                        isDeleting = false;
+                        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                        setTimeout(typeWriter, 500);
+                    }
+                }
+            }
+
+            if (typewriterText) {
+                typeWriter();
+            }
+        });
     </script>
 </body>
 </html>
