@@ -852,11 +852,12 @@
 
         .mobile-nav {
             display: none;
-            background-color: #8B0000;
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            background-size: cover;
+            background-position: center;
+            background-color: #1a1a1a;
             padding: 15px;
             position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             z-index: 1000;
         }
@@ -998,20 +999,19 @@
 
             .sidebar {
                 width: 100%;
-                height: auto;
+                height: 100vh; /* Full viewport height */
                 position: fixed;
                 padding: 15px;
                 transform: translateX(-100%);
                 z-index: 999;
                 top: 60px;
-                height: calc(100vh - 60px);
-                overflow-y: auto;
                 background-size: cover;
                 background-position: center;
                 background-color: #1a1a1a;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                overflow-y: hidden; /* Disable scrolling within sidebar */
             }
 
             .sidebar.active {
@@ -1024,10 +1024,15 @@
 
             .sidebar ul {
                 margin: 0;
+                padding: 0;
+                flex-grow: 1; /* Allow the menu to take available space */
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* Center menu items vertically */
             }
 
             .sidebar ul li {
-                margin: 20px 0;
+                margin: 15px 0; /* Reduced margin for better spacing */
             }
 
             .sidebar ul li a {
