@@ -247,11 +247,91 @@
             height: 40px;
             border-radius: 50%;
             background-color: #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid #000;
+        }
+
+        .avatar-customization {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 200px;
+        }
+
+        .avatar-customization.active {
+            display: block;
+        }
+
+        .avatar-customization label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .avatar-customization select,
+        .avatar-customization input[type="file"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .avatar-customization input[type="file"] {
+            padding: 3px;
+        }
+
+        .avatar-customization button {
+            width: 100%;
+            padding: 8px;
+            background-color: #580100;
             color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .avatar-customization button:hover {
+            background-color: #8B0000;
+        }
+
+        .dark-theme .avatar-customization {
+            background-color: #3a3b3c;
+            border-color: #555;
+        }
+
+        .dark-theme .avatar-customization label {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .avatar-customization select,
+        .dark-theme .avatar-customization input[type="file"] {
+            background-color: #555;
+            color: #e0e0e0;
+            border-color: #777;
+        }
+
+        .dark-theme .avatar-customization button {
+            background-color: #d7b15c;
+            color: #28292c;
+        }
+
+        .dark-theme .avatar-customization button:hover {
+            background-color: #e0c680;
         }
 
         .user-info .user-details {
@@ -764,6 +844,13 @@
                 width: 100%;
                 max-width: 100%;
             }
+
+            .avatar-customization {
+                top: 60px;
+                right: 50%;
+                transform: translateX(50%);
+                width: 180px;
+            }
         }
     </style>
 </head>
@@ -844,7 +931,32 @@
         <main class="content">
             <div class="header">
                 <div class="user-info">
-                    <div class="profile-pic"></div>
+                    <div class="profile-pic" id="profilePic"></div>
+                    <div class="avatar-customization" id="avatarCustomization">
+                        <label for="avatarImage">Upload Image:</label>
+                        <input type="file" id="avatarImage" accept="image/*">
+                        <label for="avatarSelect">Select Avatar:</label>
+                        <select id="avatarSelect">
+                            <option value="avatar1">Avatar 1 (Robot)</option>
+                            <option value="avatar2">Avatar 2 (Cat)</option>
+                            <option value="avatar3">Avatar 3 (Astronaut)</option>
+                        </select>
+                        <label for="avatarColor">Background Color:</label>
+                        <select id="avatarColor">
+                            <option value="#ff4d4d">Red</option>
+                            <option value="#4d79ff">Blue</option>
+                            <option value="#4dff4d">Green</option>
+                            <option value="#ffff4d">Yellow</option>
+                        </select>
+                        <label for="borderColor">Border Color:</label>
+                        <select id="borderColor">
+                            <option value="#000000">Black</option>
+                            <option value="#ffffff">White</option>
+                            <option value="#ff0000">Red</option>
+                            <option value="#0000ff">Blue</option>
+                        </select>
+                        <button id="saveAvatar">Save</button>
+                    </div>
                     <div class="user-details">
                         <span class="username">User</span>
                         <span class="email">email@example.com</span>
@@ -957,9 +1069,32 @@
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
+        const profilePic = document.getElementById('profilePic');
+        const avatarCustomization = document.getElementById('avatarCustomization');
+        const avatarImage = document.getElementById('avatarImage');
+        const avatarSelect = document.getElementById('avatarSelect');
+        const avatarColor = document.getElementById('avatarColor');
+        const borderColor = document.getElementById('borderColor');
+        const saveAvatar = document.getElementById('saveAvatar');
 
-        // Load user data from localStorage and update the user info section
+        // Avatar customization functionality
+        const avatarImages = {
+            avatar1: 'https://i.imgur.com/8Km9tLL.png', // Robot
+            avatar2: 'https://i.imgur.com/5q0dY2s.png', // Cat
+            avatar3: 'https://i.imgur.com/5q8tY2s.png'  // Astronaut
+        };
+
+        // Load saved avatar settings
         document.addEventListener('DOMContentLoaded', () => {
+            const savedAvatar = JSON.parse(localStorage.getItem('avatarSettings'));
+            if (savedAvatar) {
+                avatarSelect.value = savedAvatar.avatar;
+                avatarColor.value = savedAvatar.color;
+                borderColor.value = savedAvatar.borderColor || '#000000';
+                updateAvatar(savedAvatar.avatar, savedAvatar.color, savedAvatar.borderColor, savedAvatar.customImage);
+            }
+
+            // Load user data
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             const usernameElement = document.querySelector('.user-info .username');
             const emailElement = document.querySelector('.user-info .email');
@@ -968,11 +1103,69 @@
                 usernameElement.textContent = currentUser.username;
                 emailElement.textContent = currentUser.email;
             } else {
-                // Fallback if user data is not available
                 usernameElement.textContent = 'Guest';
                 emailElement.textContent = 'guest@example.com';
-                // Optionally redirect to login page
-                // window.location.href = 'index.html';
+            }
+        });
+
+        // Toggle customization panel
+        profilePic.addEventListener('click', () => {
+            avatarCustomization.classList.toggle('active');
+        });
+
+        // Handle image upload
+        avatarImage.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const imageData = event.target.result;
+                    updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, imageData);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Update avatar preview
+        function updateAvatar(avatar, color, border, customImage) {
+            if (customImage) {
+                profilePic.style.backgroundImage = `url(${customImage})`;
+            } else {
+                profilePic.style.backgroundImage = `url(${avatarImages[avatar]})`;
+            }
+            profilePic.style.backgroundColor = color;
+            profilePic.style.borderColor = border;
+        }
+
+        // Update avatar on selection change
+        avatarSelect.addEventListener('change', () => {
+            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
+        });
+
+        avatarColor.addEventListener('change', () => {
+            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
+        });
+
+        borderColor.addEventListener('change', () => {
+            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
+        });
+
+        // Save avatar settings
+        saveAvatar.addEventListener('click', () => {
+            const avatarSettings = {
+                avatar: avatarSelect.value,
+                color: avatarColor.value,
+                borderColor: borderColor.value,
+                customImage: profilePic.style.backgroundImage.includes('data:image') ? profilePic.style.backgroundImage.slice(5, -2) : null
+            };
+            localStorage.setItem('avatarSettings', JSON.stringify(avatarSettings));
+            avatarCustomization.classList.remove('active');
+        });
+
+        // Close customization panel when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!avatarCustomization.contains(e.target) && e.target !== profilePic) {
+                avatarCustomization.classList.remove('active');
             }
         });
 
