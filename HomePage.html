@@ -69,19 +69,20 @@
 
         .container {
             display: flex;
-            height: 100%;
+            min-height: 100vh;
+            flex-direction: column;
         }
 
         .sidebar {
-        width: 290px;
-        background-image: url('https://i.imgur.com/bNRxAhZ.png');
-        background-size: cover;
-        background-position: center;
-        color: white;
-        padding: 20px;
-        height: 100vh;
-        position: fixed;
-        transition: transform 0.3s ease;
+            width: 290px;
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            transition: transform 0.3s ease;
         }
 
         .sidebar h1 {
@@ -111,12 +112,12 @@
         .sidebar ul li a:not(.dark-theme-label a) {
             transition: all 0.3s ease;
             position: relative;
-}
+        }
 
         .sidebar ul li a:not(.dark-theme-label a):hover {
-            color: #d7b15c; 
+            color: #d7b15c;
             transform: translateX(5px);
-}
+        }
 
         .sidebar ul li a:not(.dark-theme-label a)::after {
             content: '';
@@ -127,15 +128,15 @@
             left: 0;
             background-color: #d7b15c;
             transition: width 0.3s ease;
-}
+        }
 
         .sidebar ul li a:not(.dark-theme-label a):hover::after {
             width: 95%;
-}
+        }
 
         .dark-theme .sidebar ul li a:not(.dark-theme-label a):hover {
             color: #d7b15c;
-}
+        }
 
         .sidebar ul li a img {
             width: 30px;
@@ -219,7 +220,6 @@
             padding: 20px;
             margin-left: 290px;
             overflow-y: auto;
-            height: 100vh;
             transition: background-color 0.3s ease, margin-left 0.3s ease;
         }
 
@@ -446,6 +446,40 @@
             transform: translateY(0px);
         }
 
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            margin-left: 290px;
+            z-index: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            margin-top: 5px;
+        }
+
+        .footer-links a {
+            color: #d7b15c;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-theme footer {
+            background-color: #1a1a1a;
+        }
+
         /* Dark Theme */
         body.dark-theme {
             background-color: #121212;
@@ -525,6 +559,10 @@
                 margin-left: 250px;
             }
 
+            footer {
+                margin-left: 250px;
+            }
+
             .card {
                 width: 300px;
             }
@@ -560,6 +598,10 @@
             .content {
                 margin-left: 200px;
                 padding: 10px;
+            }
+
+            footer {
+                margin-left: 200px;
             }
 
             .card {
@@ -625,6 +667,21 @@
             .content {
                 margin-left: 0;
                 padding: 80px 10px 10px;
+            }
+
+            footer {
+                margin-left: 0;
+                padding: 10px 20px;
+                text-align: center;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+
+            .footer-links a {
+                font-size: 12px;
+                margin: 0 8px;
             }
 
             .user-info {
@@ -829,6 +886,14 @@
                 </div>
             </section>
         </main>
+        <footer>
+            <p>© 2025 Contra E-Crime. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="PrivacyPolicy.html">Privacy Policy</a>
+                <a href="TermsOfUse.html">Terms of Use</a>
+                <a href="ContactUs.html">Contact Us</a>
+            </div>
+        </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
@@ -869,7 +934,6 @@
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
-
                     if (!this.href.includes(window.location.hostname)) return;
                     
                     e.preventDefault();

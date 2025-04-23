@@ -127,6 +127,7 @@
             background-position: center;
             opacity: 0.3;
             z-index: 0;
+            pointer-events: none; /* Prevent background from intercepting clicks */
         }
 
         .logoname {
@@ -157,6 +158,7 @@
             font-size: 14px;
             position: relative;
             z-index: 1;
+            cursor: pointer; /* Make label clickable to focus input */
         }
 
         .input-container {
@@ -177,6 +179,9 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 2; /* Ensure inputs are above other elements */
+            background-color: #fff; /* Ensure background is not transparent */
         }
 
         input[type="text"]:focus,
@@ -185,6 +190,7 @@
             border-color: #580100;
             box-shadow: 0 0 5px rgba(88, 1, 0, 0.3);
             outline: none;
+            z-index: 2; /* Keep focus state above other elements */
         }
 
         .toggle-password {
@@ -195,6 +201,7 @@
             cursor: pointer;
             color: #580100;
             transition: color 0.3s ease;
+            z-index: 3; /* Ensure toggle icon is clickable */
         }
 
         .toggle-password:hover {
@@ -221,6 +228,7 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
+            z-index: 2; /* Ensure checkbox is clickable */
         }
 
         .checkbox label {
@@ -274,6 +282,7 @@
             position: relative;
             transition: transform 0.2s ease, box-shadow 0.3s ease;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
         }
 
         .action-btn:hover {
@@ -362,12 +371,12 @@
         .close-btn {
             color: #aaa;
             float: right;
-            font-size: 36px; /* Increased from 28px for better visibility */
+            font-size: 36px;
             font-weight: bold;
             cursor: pointer;
-            padding: 10px; /* Added padding for larger touch area */
-            line-height: 1; /* Ensure the "X" is centered vertically */
-            margin: -10px -10px 0 0; /* Adjust position to account for padding */
+            padding: 10px;
+            line-height: 1;
+            margin: -10px -10px 0 0;
         }
 
         .close-btn:hover,
@@ -482,9 +491,9 @@
             }
 
             .close-btn {
-                font-size: 40px; /* Larger on mobile for better tap target */
-                padding: 12px; /* Larger touch area */
-                margin: -12px -12px 0 0; /* Adjust position */
+                font-size: 40px;
+                padding: 12px;
+                margin: -12px -12px 0 0;
             }
         }
     </style>
@@ -603,6 +612,16 @@
                     console.error('Toggle password elements not found.');
                 }
 
+                // Ensure inputs are clickable by adding a click handler to labels
+                document.querySelectorAll('label[for]').forEach(label => {
+                    label.addEventListener('click', () => {
+                        const input = document.getElementById(label.getAttribute('for'));
+                        if (input) {
+                            input.focus();
+                        }
+                    });
+                });
+
                 const termsModal = document.getElementById('termsModal');
                 const termsLabel = document.getElementById('termsLabel');
                 const closeBtn = document.querySelector('.close-btn');
@@ -699,15 +718,15 @@
                 }
 
                 const phrases = [
-                    "Protect yourself from cybercrime today.",
-                    "Contra E-Crime: Your shield online.",
                     "Stay safe, stay informed, stay secure.",
                     "A righteous one deserves a precise outcome.",
+                    "Contra E-Crime: Your shield online.",
                     "Empowering you against digital threats.",
                     "I’m here to help you navigate cybercrime laws.",
                     "Let’s find the legal answers you need, fast.",
                     "Your trusted guide to cybercrime justice.",
                     "Uncover the law, defeat the threat.",
+                    "Protect yourself from cybercrime today.",
                     "Defending your digital rights, step by step."
                 ];
                 const typewriterText = document.getElementById('typewriterText');

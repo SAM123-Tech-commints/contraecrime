@@ -63,7 +63,7 @@
             border-radius: 10px;
             background-color: transparent;
             z-index: 2;
-            max-width: 90%; /* Prevent overflow on smaller screens */
+            max-width: 90%;
         }
 
         .text-typewriter {
@@ -72,10 +72,10 @@
             color: #fff;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
-            white-space: normal; /* Allow text to wrap naturally */
-            overflow-wrap: break-word; /* Ensure words break cleanly */
+            white-space: normal;
+            overflow-wrap: break-word;
             margin: 0 auto;
-            letter-spacing: .05em; /* Reduced for better readability */
+            letter-spacing: .05em;
             border-right: .15em solid rgb(255, 0, 0);
             animation: blink-caret .75s step-end infinite;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -126,7 +126,8 @@
             background-size: cover;
             background-position: center;
             opacity: 0.3;
-            z-index: 0;
+            z-index: 0; /* Ensure background stays behind form elements */
+            pointer-events: none; /* Prevent background from intercepting clicks */
         }
 
         .logoname {
@@ -157,6 +158,7 @@
             font-size: 14px;
             position: relative;
             z-index: 1;
+            cursor: pointer; /* Make label clickable to focus input */
         }
 
         .input-container {
@@ -177,6 +179,9 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 2; /* Ensure inputs are above other elements */
+            background-color: #fff; /* Ensure background is not transparent */
         }
 
         input[type="text"]:focus,
@@ -185,11 +190,12 @@
             border-color: #580100;
             box-shadow: 0 0 5px rgba(88, 1, 0, 0.3);
             outline: none;
+            z-index: 2; /* Keep focus state above other elements */
         }
 
         input[readonly] {
             background-color: #ffffff;
-            cursor: allowed;
+            cursor: default; /* Corrected from 'allowed' to 'default' */
         }
 
         .toggle-password {
@@ -200,6 +206,7 @@
             cursor: pointer;
             color: #580100;
             transition: color 0.3s ease;
+            z-index: 3; /* Ensure toggle icon is clickable */
         }
 
         .toggle-password:hover {
@@ -226,6 +233,7 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
+            z-index: 2; /* Ensure checkbox is clickable */
         }
 
         .checkbox label {
@@ -279,6 +287,7 @@
             position: relative;
             transition: transform 0.2s ease, box-shadow 0.3s ease;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
         }
 
         .action-btn:hover {
@@ -353,6 +362,7 @@
             gap: 10px;
             transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
         }
 
         .google-btn:hover {
@@ -476,7 +486,7 @@
 
         @media (max-width: 768px) {
             .background-image {
-                min-height: 40vh; /* Increased height for better text visibility */
+                min-height: 40vh;
             }
 
             .form-container {
@@ -486,7 +496,7 @@
             }
 
             .text-typewriter {
-                font-size: 1.8rem; /* Fixed size for better readability */
+                font-size: 1.8rem;
             }
 
             .website-logo {
@@ -502,11 +512,11 @@
 
         @media (min-width: 320px) and (max-width: 480px) {
             .background-image {
-                min-height: 50vh; /* More space for text */
+                min-height: 50vh;
             }
 
             .text-typewriter {
-                font-size: 1.2rem; /* Slightly smaller but readable */
+                font-size: 1.2rem;
             }
 
             .website-logo {
@@ -671,6 +681,16 @@
                         this.classList.toggle('fa-eye-slash');
                     });
                 }
+
+                // Ensure inputs are clickable by adding a click handler to labels
+                document.querySelectorAll('label[for]').forEach(label => {
+                    label.addEventListener('click', () => {
+                        const input = document.getElementById(label.getAttribute('for'));
+                        if (input) {
+                            input.focus();
+                        }
+                    });
+                });
 
                 const loginForm = document.getElementById('loginForm');
                 const loginErrorMessage = document.getElementById('loginErrorMessage');

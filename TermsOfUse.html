@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime</title>
+    <title>Terms of Use - Contra E-Crime</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -79,6 +78,7 @@
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
             background-size: cover;
             background-position: center;
+            background-color: #1a1a1a;
             color: white;
             padding: 20px;
             height: 100vh;
@@ -219,14 +219,10 @@
         .content {
             flex: 1;
             margin-left: 290px;
-            padding: 30px;
+            padding: 50px 30px 30px 30px;
             position: relative;
-            background: url('https://i.imgur.com/yytZfZz.png') no-repeat center center;
-            background-size: cover;
+            background: linear-gradient(135deg, #f7f7f7 0%, #e0e0e0 100%);
             transition: background-color 0.3s ease, margin-left 0.3s ease;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         .content::before {
@@ -236,199 +232,213 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(247, 247, 247, 0.9);
+            background-color: rgba(200, 200, 200, 0.1);
             z-index: 0;
         }
 
         .header {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 1;
         }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 20px;
-            color: #333;
-        }
-
-        .user-info i {
-            font-size: 24px;
-        }
-
-        .contact-section {
-            max-width: 1300px;
+        .terms-section {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
         }
 
-        .contact-section h1 {
-            font-size: 60px;
+        .terms-section h1 {
+            font-size: 36px;
             color: #333;
-            text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #8B0000;
+            padding-bottom: 10px;
         }
 
-        .contact-section p.tagline {
-            font-size: 22px;
+        .toc {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .toc h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc ul li {
+            margin: 10px 0;
+        }
+
+        .toc ul li a {
+            color: #8B0000;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .toc ul li a:hover {
+            text-decoration: underline;
+            color: #580100;
+        }
+
+        .terms-section-section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .terms-section-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .terms-section-section h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+            border-left: 4px solid #8B0000;
+            padding-left: 10px;
+        }
+
+        .terms-section-section p {
+            font-size: 16px;
             color: #666;
-            margin-bottom: 50px;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
-        .contact-grid {
+        .terms-section-section ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .terms-section-section ul li {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .contact-icons {
             display: flex;
-            gap: 50px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
-        .contact-details, .contact-form {
-            flex: 1;
-            min-width: 350px;
-        }
-
-        .contact-details .detail-item {
+        .contact-icons a {
+            color: #666;
+            font-size: 16px;
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 18px;
-            margin-bottom: 25px;
+            gap: 8px;
+            transition: color 0.3s ease;
         }
 
-        .contact-details .detail-item i {
-            font-size: 28px;
+        .contact-icons a:hover {
             color: #8B0000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .contact-details .detail-item p {
-            margin: 0;
+        .contact-icons i {
             font-size: 20px;
-            color: #333;
         }
 
-        .contact-details .social-media {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-            padding: 15px;
-            background: url('https://i.imgur.com/yytZfZz.png') no-repeat center center;
-            background-size: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        .dark-theme .contact-icons a {
+            color: #b0b0b0;
         }
 
-        .contact-details .social-media a {
-            color: #8B0000;
-            font-size: 32px;
-            transition: transform 0.3s ease, color 0.3s ease, background-color 0.3s ease;
-            padding: 10px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
+        .dark-theme .contact-icons a:hover {
+            color: #d7b15c;
         }
 
-        .contact-details .social-media a:hover {
-            transform: translateY(-5px) scale(1.1);
-            background-color: rgba(255, 255, 255, 1);
+        body.dark-theme {
+            background-color: #121212;
+            color: #e0e0e0;
         }
 
-        .contact-details .social-media a[href*="facebook"]:hover {
-            color: #1877F2;
+        .dark-theme .content {
+            background: linear-gradient(135deg, #28292c 0%, #1a1a1a 100%);
         }
 
-        .contact-details .social-media a[href*="github"]:hover {
-            color: #333;
+        .dark-theme .content::before {
+            background-color: rgba(40, 41, 44, 0.9);
         }
 
-        .contact-details .social-media a[href*="mailto"]:hover {
-            color: #D44638;
+        .dark-theme .terms-section {
+            background: #333;
         }
 
-        .contact-details .social-media a[href*="twitter"]:hover {
-            color: #1DA1F2;
+        .dark-theme .terms-section h1 {
+            color: #d8dbe0;
         }
 
-        .contact-form form {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
+        .dark-theme .toc {
+            background-color: #444;
         }
 
-        .contact-form input,
-        .contact-form textarea {
-            padding: 12px;
-            font-size: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            width: 100%;
-            font-family: 'Montserrat', sans-serif;
+        .dark-theme .toc h2 {
+            color: #d8dbe0;
         }
 
-        .contact-form textarea {
-            height: 200px;
-            resize: none;
+        .dark-theme .toc ul li a {
+            color: #d7b15c;
         }
 
-        .contact-form button {
-            padding: 12px;
+        .dark-theme .toc ul li a:hover {
+            color: #b08d3e;
+        }
+
+        .dark-theme .terms-section-section h2 {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .terms-section-section p,
+        .dark-theme .terms-section-section ul li {
+            color: #b0b0b0;
+        }
+
+        .mobile-nav {
+            display: none;
             background-color: #8B0000;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .mobile-nav .logo {
             color: white;
-            border: none;
-            border-radius: 6px;
             font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .mobile-nav .menu-icon {
+            color: white;
+            font-size: 24px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .contact-form button:hover {
-            background-color: #580100;
-        }
-
-        .confirmation-message {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #e0f7e0;
-            border: 1px solid #c3e6c3;
-            border-radius: 6px;
-            font-size: 18px;
-            color: #2e7d32;
-            text-align: center;
-        }
-
-        .confirmation-message.visible {
-            display: block;
-        }
-
-        .error-message {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 6px;
-            font-size: 18px;
-            color: #721c24;
-            text-align: center;
-        }
-
-        .error-message.visible {
-            display: block;
+            position: absolute;
+            right: 15px;
+            top: 15px;
         }
 
         footer {
@@ -465,105 +475,6 @@
             background-color: #1a1a1a;
         }
 
-        /* Dark Theme Styles */
-        body.dark-theme {
-            background-color: #28292c;
-            color: #d8dbe0;
-        }
-
-        .dark-theme .content::before {
-            background-color: rgba(40, 41, 44, 0.9);
-        }
-
-        .dark-theme .user-info {
-            color: #d8dbe0;
-        }
-
-        .dark-theme .contact-section h1 {
-            color: #d8dbe0;
-        }
-
-        .dark-theme .contact-section p.tagline {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .contact-details .detail-item i {
-            color: #d7b15c;
-        }
-
-        .dark-theme .contact-details .detail-item p {
-            color: #d8dbe0;
-        }
-
-        .dark-theme .contact-details .social-media {
-            background: url('https://i.imgur.com/bNRxAhZ.png') no-repeat center center;
-            background-size: cover;
-        }
-
-        .dark-theme .contact-details .social-media a {
-            color: #d7b15c;
-            background-color: rgba(40, 41, 44, 0.8);
-        }
-
-        .dark-theme .contact-details .social-media a:hover {
-            background-color: rgba(40, 41, 44, 1);
-        }
-
-        .dark-theme .contact-form input,
-        .dark-theme .contact-form textarea {
-            background-color: #333;
-            color: #d8dbe0;
-            border-color: #555;
-        }
-
-        .dark-theme .contact-form button {
-            background-color: #d7b15c;
-            color: #121212;
-        }
-
-        .dark-theme .contact-form button:hover {
-            background-color: #c19d4f;
-        }
-
-        .dark-theme .confirmation-message {
-            background-color: #2e4b2e;
-            border-color: #4a704a;
-            color: #a5d6a7;
-        }
-
-        .dark-theme .error-message {
-            background-color: #5a1e24;
-            border-color: #80343a;
-            color: #f5c6cb;
-        }
-
-        /* Mobile Navigation Styles */
-        .mobile-nav {
-            display: none;
-            background-image: url('https://i.imgur.com/bNRxAhZ.png');
-            padding: 15px;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .mobile-nav .logo {
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .mobile-nav .menu-icon {
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            position: absolute;
-            right: 15px;
-            top: 15px;
-        }
-
-        /* Media Queries for Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -589,40 +500,17 @@
                 margin-left: 250px;
             }
 
-            .contact-section h1 {
-                font-size: 48px;
+            .terms-section h1 {
+                font-size: 32px;
             }
 
-            .contact-section p.tagline {
-                font-size: 18px;
-            }
-
-            .contact-details .detail-item i {
+            .terms-section-section h2 {
                 font-size: 24px;
             }
 
-            .contact-details .detail-item p {
-                font-size: 18px;
-            }
-
-            .contact-details .social-media a {
-                font-size: 28px;
-                width: 45px;
-                height: 45px;
-            }
-
-            .contact-form input,
-            .contact-form textarea {
-                font-size: 18px;
-            }
-
-            .contact-form button {
-                font-size: 18px;
-            }
-
-            .confirmation-message,
-            .error-message {
-                font-size: 16px;
+            .terms-section-section p,
+            .terms-section-section ul li {
+                font-size: 15px;
             }
         }
 
@@ -646,29 +534,14 @@
 
             .content {
                 margin-left: 200px;
-                padding: 20px;
             }
 
             footer {
                 margin-left: 200px;
             }
 
-            .contact-grid {
-                flex-direction: column;
-            }
-
-            .contact-details .detail-item i {
-                font-size: 20px;
-            }
-
-            .contact-details .detail-item p {
-                font-size: 16px;
-            }
-
-            .contact-details .social-media a {
-                font-size: 24px;
-                width: 40px;
-                height: 40px;
+            .terms-section {
+                padding: 30px;
             }
         }
 
@@ -685,12 +558,18 @@
                 width: 100%;
                 height: auto;
                 position: fixed;
-                padding: 10px;
+                padding: 15px;
                 transform: translateX(-100%);
                 z-index: 999;
                 top: 60px;
                 height: calc(100vh - 60px);
                 overflow-y: auto;
+                background-size: cover;
+                background-position: center;
+                background-color: #1a1a1a;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
 
             .sidebar.active {
@@ -701,6 +580,10 @@
                 display: none;
             }
 
+            .sidebar ul {
+                margin: 0;
+            }
+
             .sidebar ul li {
                 margin: 20px 0;
             }
@@ -709,13 +592,17 @@
                 font-size: 16px;
             }
 
+            .dark-theme-container {
+                margin-top: 20px;
+                margin-bottom: 15px;
+            }
+
             .dark-theme-label {
                 font-size: 16px;
             }
 
             .content {
                 margin-left: 0;
-                padding: 80px 15px 15px;
             }
 
             footer {
@@ -737,43 +624,28 @@
                 justify-content: center;
             }
 
-            .contact-section h1 {
-                font-size: 36px;
+            .terms-section {
+                padding: 20px;
             }
 
-            .contact-section p.tagline {
-                font-size: 16px;
+            .terms-section h1 {
+                font-size: 28px;
             }
 
-            .contact-details .detail-item i {
+            .toc h2 {
                 font-size: 20px;
             }
 
-            .contact-details .detail-item p {
+            .toc ul li a {
                 font-size: 14px;
             }
 
-            .contact-details .social-media a {
-                font-size: 20px;
-                width: 35px;
-                height: 35px;
+            .terms-section-section h2 {
+                font-size: 22px;
             }
 
-            .contact-form input,
-            .contact-form textarea {
-                font-size: 16px;
-            }
-
-            .contact-form textarea {
-                height: 150px;
-            }
-
-            .contact-form button {
-                font-size: 16px;
-            }
-
-            .confirmation-message,
-            .error-message {
+            .terms-section-section p,
+            .terms-section-section ul li {
                 font-size: 14px;
             }
         }
@@ -783,7 +655,6 @@
     <div class="loader-overlay" id="loaderOverlay">
         <div class="loader"></div>
     </div>
-    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="#" class="logo">Contra E-Crime</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -839,7 +710,6 @@
                 </li>
             </ul>
 
-            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -854,60 +724,112 @@
             </div>
         </nav>
         <main class="content">
-            <section class="contact-section">
-                <h1>CONTACT US</h1>
-                <p class="tagline">We’re here to help you!</p>
-                <div class="contact-grid">
-                    <div class="contact-details">
-                        <div class="detail-item">
-                            <i class="fas fa-phone"></i>
-                            <p>+63 936 365 4043</p>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-globe"></i>
-                            <p>contraecrime.vercel.app</p>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-envelope"></i>
-                            <p>contraecrimecc@gmail.com</p>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-location-dot"></i>
-                            <p>Regalado Hwy, Novaliches, Quezon City, Metro Manila</p>
-                        </div>
-                        <div class="social-media">
-                            <a href="https://www.facebook.com/share/18cj7f1m6L/" target="_blank">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="https://github.com/contraecrime" target="_blank">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contraecrimecc@gmail.com" target="_blank">
-                                <i class="fab fa-google"></i>
-                            </a>
-                            <a href="https://twitter.com/contraecrime" target="_blank">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="contact-form">
-                        <form id="contactForm">
-                            <input type="text" name="name" placeholder="Name" required>
-                            <input type="email" name="email" placeholder="E-Mail" required>
-                            <input type="tel" name="phone" placeholder="Phone Number" required>
-                            <textarea name="message" placeholder="Message" required></textarea>
-                            <button type="submit">Send Messages</button>
-                        </form>
-                        <div class="confirmation-message" id="confirmationMessage">
-                            Your message has been submitted and will be sent to our Official Members.
-                        </div>
-                        <div class="error-message" id="errorMessage">
-                            There was an error sending your message. Please try again later.
-                        </div>
-                    </div>
+            <div class="header">
+            </div>
+            <section class="terms-section">
+                <h1>Terms of Use</h1>
+                <div class="toc">
+                    <h2>Table of Contents</h2>
+                    <ul>
+                        <li><a href="#introduction">Introduction</a></li>
+                        <li><a href="#acceptance-terms">Acceptance of Terms</a></li>
+                        <li><a href="#use-service">Use of the Service</a></li>
+                        <li><a href="#user-accounts">User Accounts</a></li>
+                        <li><a href="#prohibited-activities">Prohibited Activities</a></li>
+                        <li><a href="#intellectual-property">Intellectual Property</a></li>
+                        <li><a href="#termination">Termination</a></li>
+                        <li><a href="#disclaimer-warranties">Disclaimer of Warranties</a></li>
+                        <li><a href="#limitation-liability">Limitation of Liability</a></li>
+                        <li><a href="#changes-terms">Changes to These Terms</a></li>
+                        <li><a href="#contact-us">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="terms-section-section" id="introduction">
+                    <h2>Introduction</h2>
+                    <p>Welcome to Contra E-Crime. These Terms of Use ("Terms") govern your access to and use of our website and services, including our platform "Weigh the Right," which provides information on cybercrime laws in the Philippines. By accessing or using our services, you agree to be bound by these Terms.</p>
+                    <p>If you do not agree with these Terms, you must not use our services. We reserve the right to update these Terms at any time, and your continued use of the service constitutes acceptance of those changes.</p>
+                </div>
+
+                <div class="terms-section-section" id="acceptance-terms">
+                    <h2>Acceptance of Terms</h2>
+                    <p>By creating an account or using our services, you confirm that you are at least 13 years of age and that you have the legal capacity to enter into this agreement. If you are using the services on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.</p>
+                </div>
+
+                <div class="terms-section-section" id="use-service">
+                    <h2>Use of the Service</h2>
+                    <p>You may use our services for lawful purposes only, including accessing cybercrime law information for educational use. You agree to:</p>
+                    <ul>
+                        <li>Provide accurate and complete information when creating an account.</li>
+                        <li>Use the services in compliance with all applicable laws and regulations.</li>
+                        <li>Not use the services to harm others or engage in illegal activities.</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section-section" id="user-accounts">
+                    <h2>User Accounts</h2>
+                    <p>To access certain features of our services, you must create an account. You are responsible for:</p>
+                    <ul>
+                        <li>Maintaining the confidentiality of your account credentials.</li>
+                        <li>All activities that occur under your account.</li>
+                        <li>Notifying us immediately of any unauthorized use of your account.</li>
+                    </ul>
+                    <p>We reserve the right to suspend or terminate your account if we suspect any violation of these Terms.</p>
+                </div>
+
+                <div class="terms-section-section" id="prohibited-activities">
+                    <h2>Prohibited Activities</h2>
+                    <p>You agree not to engage in any of the following activities:</p>
+                    <ul>
+                        <li>Attempting to gain unauthorized access to our systems or data.</li>
+                        <li>Using the services to distribute malware or other harmful content.</li>
+                        <li>Interfering with the proper functioning of the services, including through denial-of-service attacks.</li>
+                        <li>Using automated systems (e.g., bots) to access the services without permission.</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section-section" id="intellectual-property">
+                    <h2>Intellectual Property</h2>
+                    <p>All content on our platform, including text, graphics, logos, and software, is the property of Contra E-Crime or its licensors and is protected by intellectual property laws. You may not:</p>
+                    <ul>
+                        <li>Reproduce, distribute, or modify any content without our prior written consent.</li>
+                        <li>Use our trademarks or logos without permission.</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section-section" id="termination">
+                    <h2>Termination</h2>
+                    <p>We may suspend or terminate your access to the services at our discretion, with or without notice, if you violate these Terms or for any other reason. Upon termination, your right to use the services will cease immediately.</p>
+                </div>
+
+                <div class="terms-section-section" id="disclaimer-warranties">
+                    <h2>Disclaimer of Warranties</h2>
+                    <p>Our services are provided on an "as is" and "as available" basis. We do not guarantee that the services will be uninterrupted, error-free, or secure. We disclaim all warranties, express or implied, including warranties of merchantability and fitness for a particular purpose.</p>
+                </div>
+
+                <div class="terms-section-section" id="limitation-liability">
+                    <h2>Limitation of Liability</h2>
+                    <p>To the fullest extent permitted by law, Contra E-Crime shall not be liable for any indirect, incidental, or consequential damages arising from your use of the services, including but not limited to loss of data or profits.</p>
+                </div>
+
+                <div class="terms-section-section" id="changes-terms">
+                    <h2>Changes to These Terms</h2>
+                    <p>We may update these Terms from time to time. We will notify you of significant changes by posting the updated Terms on our website with a new effective date. Your continued use of the services after such changes constitutes your acceptance of the updated Terms.</p>
+                </div>
+
+                <div class="terms-section-section" id="contact-us">
+                    <h2>Contact Us</h2>
+                    <p>If you have any questions or concerns about these Terms, please contact us:</p>
+                    <div class="contact-icons">
+                        <a href="https://www.facebook.com/share/1EMXPAiePS/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contraecrimecc@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+                        <a href="https://x.com/contraecrime" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                        <a href="https://github.com/contraecrime" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                    </div>                    
                 </div>
             </section>
         </main>
+
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
             <div class="footer-links">
@@ -919,18 +841,11 @@
     </div>
 
     <script>
-        (function() {
-            emailjs.init("xhI4LOp07Z_Z80qHU");
-        })();
-
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
-        const contactForm = document.getElementById('contactForm');
-        const confirmationMessage = document.getElementById('confirmationMessage');
-        const errorMessage = document.getElementById('errorMessage');
 
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
@@ -959,43 +874,47 @@
             }
         });
 
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-                    
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-                    
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
+        // Handle TOC links for smooth scrolling
+        document.querySelectorAll('.toc a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
 
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+        // Handle external navigation links with loader
+        document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:')) return;
+                
+                e.preventDefault();
+                loaderOverlay.classList.add('active');
+                
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 150);
+            });
+        });
 
-            confirmationMessage.classList.remove('visible');
-            errorMessage.classList.remove('visible');
+        const sections = document.querySelectorAll('.terms-section-section');
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
 
-            const formData = {
-                name: contactForm.querySelector('input[name="name"]').value,
-                email: contactForm.querySelector('input[name="email"]').value,
-                phone: contactForm.querySelector('input[name="phone"]').value,
-                message: contactForm.querySelector('textarea[name="message"]').value
-            };
-
-            emailjs.send("service_u73ui1i", "template_ctzw4rk", formData)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    confirmationMessage.classList.add('visible');
-                    contactForm.reset();
-                }, function(error) {
-                    console.log('FAILED...', error);
-                    errorMessage.classList.add('visible');
-                });
+        sections.forEach(section => {
+            observer.observe(section);
         });
     </script>
 </body>

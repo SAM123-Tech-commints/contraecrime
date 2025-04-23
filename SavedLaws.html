@@ -69,20 +69,20 @@
 
         .container {
             display: flex;
-            height: 100%;
+            min-height: 100vh;
+            flex-direction: column;
         }
 
-
         .sidebar {
-        width: 290px;
-        background-image: url('https://i.imgur.com/bNRxAhZ.png');
-        background-size: cover;
-        background-position: center;
-        color: white;
-        padding: 20px;
-        height: 100vh;
-        position: fixed;
-        transition: transform 0.3s ease;
+            width: 290px;
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            transition: transform 0.3s ease;
         }
 
         .sidebar h1 {
@@ -120,7 +120,7 @@
         }
 
         .sidebar ul li a:not(.dark-theme-label a):hover {
-            color: #d7b15c; 
+            color: #d7b15c;
             transform: translateX(5px);
         }
 
@@ -252,6 +252,40 @@
             transform: scale(1.05);
         }
 
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            margin-left: 290px;
+            z-index: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            margin-top: 5px;
+        }
+
+        .footer-links a {
+            color: #d7b15c;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-theme footer {
+            background-color: #1a1a1a;
+        }
+
         /* Dark Theme */
         body.dark-theme {
             background-color: #121212;
@@ -313,6 +347,10 @@
             .content {
                 margin-left: 250px;
             }
+
+            footer {
+                margin-left: 250px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -336,6 +374,10 @@
             .content {
                 margin-left: 200px;
                 padding: 10px;
+            }
+
+            footer {
+                margin-left: 200px;
             }
         }
 
@@ -383,6 +425,21 @@
             .content {
                 margin-left: 0;
                 padding: 80px 15px 15px;
+            }
+
+            footer {
+                margin-left: 0;
+                padding: 10px 20px;
+                text-align: center;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+
+            .footer-links a {
+                font-size: 12px;
+                margin: 0 8px;
             }
 
             .main-image {
@@ -469,6 +526,14 @@
         <main class="content">
             <img src="https://i.imgur.com/DxNf9ES.png" alt="Contra E-Crime" class="main-image">
         </main>
+        <footer>
+            <p>© 2025 Contra E-Crime. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="PrivacyPolicy.html">Privacy Policy</a>
+                <a href="TermsOfUse.html">Terms of Use</a>
+                <a href="ContactUs.html">Contact Us</a>
+            </div>
+        </footer>
     </div>
 
     <script>
@@ -508,7 +573,6 @@
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
-
                     if (!this.href.includes(window.location.hostname)) return;
                     
                     e.preventDefault();
