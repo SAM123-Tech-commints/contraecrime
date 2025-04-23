@@ -21,6 +21,11 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        body.dark-theme {
+            background-color: #121212;
+            color: #fff;
+        }
+
         .loader-overlay {
             position: fixed;
             top: 0;
@@ -52,6 +57,7 @@
             justify-content: center;
             align-items: center;
             animation: pulse 1.5s infinite ease-in-out;
+            filter: brightness(1);
         }
 
         .fingerprint-loader::before {
@@ -59,15 +65,19 @@
             position: absolute;
             width: 138px;
             height: 140px;
-            border: 3px solid;
+            border: 3px solid #d7b15c; 
             border-radius: 50%;
             z-index: 0;
-            color: #ffffff;
             animation: pulseBorder 1.5s infinite ease-in-out;
         }
 
+        .dark-theme .fingerprint-loader {
+            filter: brightness(2) invert(1); 
+        }
+
         .dark-theme .fingerprint-loader::before {
-            color: #d7b15c;
+            border: 3px solid #FFFF00;
+            filter: none; 
         }
 
         @keyframes pulse {
@@ -77,9 +87,9 @@
         }
 
         @keyframes pulseBorder {
-            0% { transform: scale(1); opacity: 0.7; }
+            0% { transform: scale(1); opacity: 1; } 
             50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .container {
@@ -88,15 +98,15 @@
         }
 
         .sidebar {
-        width: 290px;
-        background-image: url('https://i.imgur.com/bNRxAhZ.png');
-        background-size: cover;
-        background-position: center;
-        color: white;
-        padding: 20px;
-        height: 100vh;
-        position: fixed;
-        transition: transform 0.3s ease;
+            width: 290px;
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            transition: transform 0.3s ease;
         }
 
         .sidebar h1 {
@@ -134,7 +144,7 @@
         }
 
         .sidebar ul li a:not(.dark-theme-label a):hover {
-            color: #d7b15c; 
+            color: #d7b15c;
             transform: translateX(5px);
         }
 
@@ -279,6 +289,11 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, background-color 0.3s ease;
+            display: none;
+        }
+
+        .news-item.active {
+            display: block;
         }
 
         .news-item:hover {
@@ -342,7 +357,6 @@
             overflow-y: auto;
         }
 
-        /* Custom scrollbar styles */
         .news-details.active::-webkit-scrollbar {
             width: 8px;
         }
@@ -381,7 +395,64 @@
             text-decoration: underline;
         }
 
-        /* Dark Theme */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background-color: #6d0000;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .pagination .page-numbers {
+            display: flex;
+            gap: 5px;
+        }
+
+        .pagination .page-number {
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .pagination .page-number.active {
+            background-color: #8B0000;
+            color: white;
+        }
+
+        .pagination .page-number:hover:not(.active) {
+            background-color: #f0f0f0;
+        }
+
         body.dark-theme {
             background-color: #121212;
             color: #e0e0e0;
@@ -404,6 +475,18 @@
         body.dark-theme .news-section p.tagline,
         body.dark-theme .news-meta {
             color: #b0b0b0;
+        }
+
+        body.dark-theme .pagination span {
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .pagination .page-number {
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .pagination .page-number:hover:not(.active) {
+            background-color: #444;
         }
 
         body.dark-theme .news-item {
@@ -436,7 +519,6 @@
             background: #fff;
         }
 
-        /* Mobile Navigation Styles */
         .mobile-nav {
             display: none;
             background-color: #8B0000;
@@ -462,7 +544,6 @@
             top: 15px;
         }
 
-        /* Media Queries for Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -591,9 +672,8 @@
 </head>
 <body>
     <div class="loader-overlay" id="loaderOverlay">
-        <div class="loader"></div>
+        <div class="fingerprint-loader"></div>
     </div>
-    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="#" class="logo">Contra e-Laws</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -649,7 +729,6 @@
                 </li>
             </ul>
 
-            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -670,11 +749,157 @@
                 </h1>
                 <p class="tagline">Stay updated with the latest in cybercrime</p>
 
-                <div class="news-item">
+                <!-- Page 1 Articles -->
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>UN: Asian Scam Calls Now a Global Export</h2>
+                            <div class="news-meta">The Register | April 22, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry.</p>
+                        <p>The UNODC report, published today, highlights how Southeast Asian cybercrime groups, initially focused on regional targets, have expanded their operations worldwide, using advanced technology and human trafficking to scale their fraudulent activities.</p>
+                        <p>"These groups operate like multinational corporations, with sophisticated structures and global reach," the report states. It estimates that such scams generated $40 billion in 2024 alone, with call centers in countries like Cambodia, Myanmar, and the Philippines playing a central role.</p>
+                        <p>The report also notes the role of forced labor, with tens of thousands of people trafficked into scam compounds, where they are coerced into making fraudulent calls under threat of violence.</p>
+                        <a href="https://www.theregister.com/2025/04/22/un_asian_scam_calls/" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway</h2>
+                            <div class="news-meta">SC Media | April 22, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>The United Nations Office on Drugs and Crime (UNODC) released a report today detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent.</p>
+                        <p>According to the UNODC, these operations, often based in countries like Cambodia, Laos, and the Philippines, have grown from local scams into a $40 billion industry in 2024, driven by advanced technology and the exploitation of trafficked labor.</p>
+                        <p>"The scale of these operations is unprecedented," said a UNODC spokesperson. "They use everything from fake investment schemes to romance scams, targeting victims globally through phone calls, text messages, and online platforms."</p>
+                        <p>The report also highlights the human cost, with an estimated 200,000 people trafficked into scam compounds across Southeast Asia, forced to perpetrate fraud under brutal conditions.</p>
+                        <a href="https://www.scworld.com/brief/un-global-expansion-of-southeast-asian-cyber-fraud-operations-underway" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global</h2>
+                            <div class="news-meta">The Record | April 22, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an "inflection point," with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers.</p>
+                        <p>The UN Office on Drugs and Crime (UNODC) report, released on April 22, details how scam operations in countries like Cambodia, Myanmar, and the Philippines have scaled up, using advanced tech to target victims worldwide with fraudulent calls, texts, and online schemes.</p>
+                        <p>"These are not small-time operations anymore," the report notes. "They are highly organized, transnational crime syndicates that generated an estimated $40 billion in 2024, with no signs of slowing down."</p>
+                        <p>The UNODC also emphasizes the human trafficking element, noting that many workers in these scam centers are victims themselves, forced to participate under threat of violence or death.</p>
+                        <a href="https://therecord.media/southeast-asia-cyber-fraud-at-inflection-point" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://files01.pna.gov.ph/category-list/2023/08/22/holiday-08212023rn.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>Public Warned vs. Online Booking Scams Amid Travel Season</h2>
+                            <div class="news-meta">Christopher Lloyd Caliwan - PNA | April 22, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>MANILA – The Philippine National Police (PNP) on Tuesday warned the public against online scammers offering tour packages that appear too good to be true as the summer travel season peaks.</p>
+                        <p>PNP Chief Gen. Rommel Francisco Marbil issued the reminder as the police force’s Anti-Cybercrime Group (ACG) arrested 45 persons for cybercrimes from April 11 to 17 in line with President Ferdinand R. Marcos Jr.’s directive to intensify the campaign against cybercrimes.</p>
+                        <p>“We urge everyone to verify the legitimacy of travel agencies and booking platforms before making any transactions,” Marbil said in a statement.</p>
+                        <p>“To cybercriminals preying on innocent citizens, especially during this peak travel season, be warned: the PNP is actively monitoring, patrolling, and ready to act. There will be no safe space for scammers in the digital world,” he added.</p>
+                        <p>The PNP-ACG conducted 313 cyber patrolling activities and carried out 13 digital forensic examinations from April 11 to 17, resulting in the arrest of 45, including 32 through entrapment operations.</p>
+                        <p>The ACG called on the public to stay vigilant and immediately report any suspicious or harmful online activity through the ACG’s official hotlines and verified social media accounts.</p>
+                        <p>Marbil said the PNP remains steadfast in its mission to ensure that every Filipino enjoys a safer and more secure cyberspace under the Bagong Pilipinas framework.</p>
+                        <p>He lauded ACG’s consistent and high-impact performance, emphasizing the importance of public trust and law enforcement’s evolving role in cyberspace.</p>
+                        <p>The PNP chief also commended the Criminal Investigation and Detection Group’s (CIDG) intensified operations in apprehending the 37 wanted individuals and fugitives on April 14.</p>
+                        <p>“I salute our CIDG teams nationwide for their relentless commitment and swift action in taking 37 fugitives off the streets in just one day. Your bravery and perseverance in carrying out this difficult task not only strengthen public safety but also bring hope to victims still waiting for justice,” he said.</p>
+                        <p>He assured the public that the CIDG remains relentless in its efforts to account for and arrest all wanted persons and criminals nationwide.</p>
+                        <a href="https://www.pna.gov.ph/articles/1248432" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://www.arabnews.com/sites/default/files/styles/n_670_395/public/2025/04/22/4594721-1806509363.png?itok=b3e0SAG-" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>Philippines, UAE Sign Security Pact to Combat Cybercrime, Trafficking</h2>
+                            <div class="news-meta">Ellie Aben - Arab News | April 22, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>MANILA: The Philippines has signed a new security agreement with the UAE to tackle transnational and organized crime, officials said on Tuesday.</p>
+                        <p>Signed by Philippine Interior Secretary Juanito Victor Remulla and UAE Interior Minister Sheikh Saif bin Zayed Al-Nahyan, the new deal focuses on cybercrime, drug trafficking, and human trafficking.</p>
+                        <p>“Transnational crimes with global networks powered by new technologies and the ease of cross-border movement of persons and criminal syndicates need more international cooperation and partnerships,” Alfonso Ver, Philippine ambassador to the UAE, told Arab News on Tuesday.</p>
+                        <p>“This is one concrete step to address the growing menace above … We have gone into new and heretofore unexplored areas of bilateral cooperation, moving beyond the issues of OFWs (Overseas Filipino Workers), migration, and oil,” Ver added.</p>
+                        <p>The Philippines and the UAE celebrated 50 years of diplomatic relations last year. The two countries have been working to expand security ties over the past few years, with discussions ongoing for a wide-ranging bilateral defense pact.</p>
+                        <p>In 2021, the Philippines posted a defense attache in the UAE, making it the only country in the Middle East where Manila has such representation. The two countries also signed several treaties on extradition, mutual legal assistance, and transfer of prisoners in February.</p>
+                        <p>Ver said the new agreement was a “milestone” that provides a “strategic framework” that will help guide Philippine-UAE “future engagements in a more structured, sustainable, and effective” manner. It is also expected to promote the exchange of best practices and expertise.</p>
+                        <p>“We discussed ways to strengthen bilateral relations between the two friendly countries and develop cooperation in the security and police fields,” Sheikh Saif said in a post on X, referring to his meeting with Remulla.</p>
+                        <p>“This underscores our shared commitment to supporting effective international institutional cooperation to enhance the security and stability of societies,” he added.</p>
+                        <p>Cybercrime and trafficking have been growing concerns for countries like the Philippines. More than 200 Filipinos were among several thousand people freed in late February and March from online scam centers run by syndicates operating along Myanmar’s border with Thailand, where many of them are believed to have been recruited and trafficked by criminal gangs.</p>
+                        <p>Lured by well-paid job offers in Thailand, they were released in a weeks-long, highly publicized crackdown by Thai, Myanmar, and Chinese forces.</p>
+                        <a href="https://arab.news/v2jem" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://files01.pna.gov.ph/category-list/2025/04/10/040325-dict-secretary-henry-aguda.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>DICT Comprehensive Policy to Counter Online Disinformation, Threats</h2>
+                            <div class="news-meta">Raymond Carl Dela Cruz - PNA | April 21, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>MANILA – Department of Information and Communications Technology (DICT) Secretary Henry Aguda on Monday endorsed a sweeping policy that targets online disinformation, cyber scams, and other online threats.</p>
+                        <p>The policy is part of the upcoming “Good Vibes sa Internet” initiative that aims to build a safer and more trustworthy online environment by eliminating digital threats and protecting the public from online abuse, according to a news release.</p>
+                        <p>“We must create a safer and more responsible cyberspace for every Filipino. We can no longer stand idly by as false information erodes the trust that binds our nation,” Aguda said during his first meeting with the executive committee as chair of the Cybercrime Investigation and Coordinating Center (CICC).</p>
+                        <p>The policy builds on the Cybercrime Prevention Act and introduces new measures such as the formation of a multi-agency task force to “swiftly respond” against online disinformation.</p>
+                        <p>“Through digital bayanihan (cooperation), the DICT will work closely with social media platforms, law enforcement, and civil society to detect and dismantle digital lies before they spread,” he said.</p>
+                        <p>Aside from disinformation or fake news, the policy will address the escalating threats of cyberterrorism by reclassifying certain cybercrimes as acts of cyberterrorism.</p>
+                        <p>“This move aims to deter malicious actors, recognize cybercrimes as continuing offenses, and strengthen national security and public safety in today’s increasingly digital landscape,” he said.</p>
+                        <p>Aguda said the policies form part of the government’s broader commitment to shaping an online space that “fosters meaningful engagement, upholds truth, and safeguards the collective well-being of every Filipino online.”</p>
+                        <p>“Cybercriminals must be held accountable with the full force of the law. We are taking a strong stance to ensure that the digital space is no place for fear, fraud, or extremism,” he said.</p>
+                        <a href="https://www.pna.gov.ph/articles/1248375" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://pia.gov.ph/wp-content/uploads/2025/04/Thumbnail-photo-10-1024x769.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>Smishing, Quishing, Phishing, Vishing: Visayas Media Navigate ‘Shing-a-Ling’ of Cyber Threats</h2>
+                            <div class="news-meta">PIA | April 18, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>CEBU CITY – Media practitioners across the Visayas gathered for a cybersecurity forum to tackle the growing wave of cyber threats, including smishing (SMS phishing), quishing (QR code phishing), phishing (email scams), and vishing (voice phishing), collectively dubbed the "shing-a-ling" of digital fraud.</p>
+                        <p>The forum, organized by the Philippine Information Agency (PIA), featured experts from the Department of Information and Communications Technology (DICT) who warned of the increasing sophistication of these scams, often targeting unsuspecting individuals through fake messages and fraudulent links.</p>
+                        <p>"These threats are evolving rapidly, and media professionals need to be equipped to identify and report them," said a DICT spokesperson. The event also included workshops on spotting fraudulent communications and protecting personal data online.</p>
+                        <p>Participants were urged to educate the public on safe digital practices, such as avoiding suspicious links and verifying the authenticity of messages before taking action.</p>
+                        <a href="https://pia.gov.ph/smishing-quishing-phishing-vishing-visayas-media-navigate-shing-a-ling-of-cyber-threats/" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://od2-image-api.abs-cbn.com/prod/2025041608048/9e80e1ba82e2cb61282f70495a648388ce7198356dfaed65f77628d465429e35.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>Cybercrime council eyes task force against online and text scams</h2>
+                            <h2>Cybercrime Council Eyes Task Force Against Online and Text Scams</h2>
                             <div class="news-meta">Pia Gutierrez - ABS-CBN News | April 16, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
@@ -682,22 +907,76 @@
                     <div class="news-details">
                         <p>MANILA – The Cybercrime Investigation Coordination Council (CICC) is considering forming a dedicated task force to go after online and text scammers, an official said Wednesday.</p>
                         <p>Department of Information and Communications Technology (DICT) Assistant Secretary Renato Paraiso said the council would meet later in the day to discuss the plan.</p>
-                        <p>“We're strengthening the CICC in terms of investigation and apprehension. The council, led by the DICT Secretary and joined by other agencies, will meet today to discuss forming a task force to crack down on online and text scams,” Paraiso said in a televised interview.</p>
+                        <p>"We're strengthening the CICC in terms of investigation and apprehension. The council, led by the DICT Secretary and joined by other agencies, will meet today to discuss forming a task force to crack down on online and text scams," Paraiso said in a televised interview.</p>
                         <p>He also said the CICC is enhancing its Inter-Agency Response Center (I-ARC) Hotline 1326, where the public can report online scam incidents.</p>
                         <p>According to Paraiso, while the SIM Card Registration Act has helped discourage text scams by removing anonymity, many scammers have adapted by shifting to online messaging apps that don't require SIM registration.</p>
-                        <p>“The SIM card registration removed their anonymity, but scammers have adapted. They no longer use calls or texts. They've moved to internet-based services like Viber and Messenger, which don't require valid SIM cards,” he said.</p>
+                        <p>"The SIM card registration removed their anonymity, but scammers have adapted. They no longer use calls or texts. They've moved to internet-based services like Viber and Messenger, which don't require valid SIM cards," he said.</p>
                         <p>Paraiso reminded the public to stay alert for online scams, avoid clicking suspicious links, and never share one-time passwords (OTPs), which scammers can use to access financial accounts and records.</p>
-
                         <a href="https://www.abs-cbn.com/news/business/2025/4/16/cybercrime-council-studying-task-force-against-online-and-text-scams-1509" target="_blank">Read more</a>
                     </div>
                 </div>
 
-                <div class="news-item">
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://od2-image-api.abs-cbn.com/prod/2025041613040/d27eef3ab9282c58f9d73b2b496fec6bc80f684f0c33b0f9323360e4ce42a303.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>Publiko, Pinag-iingat sa Vacation Scam</h2>
+                            <div class="news-meta">ABS-CBN News | April 16, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>MANILA – Pinag-iingat ng Cybercrime Investigation and Coordination Center (CICC) ang publiko laban sa mga scam na gumagamit ng mga pekeng promo ng bakasyon, lalo na ngayong panahon ng tag-init.</p>
+                        <p>Ayon sa CICC, maraming insidente na ng panloloko ang naiulat kung saan ang mga biktima ay hinikayat na magbayad para sa mga discounted travel packages na hindi naman totoo.</p>
+                        <p>"Huwag basta-basta magbibigay ng personal na impormasyon o magbabayad online nang hindi na-verify ang legitimacy ng offer," babala ng CICC sa isang pahayag.</p>
+                        <p>Hinihikayat din ng ahensya ang publiko na i-report ang anumang kahina-hinalang mensahe o tawag sa kanilang hotline upang mapigilan ang mga ganitong uri ng scam.</p>
+                        <a href="https://www.abs-cbn.com/news/business/2025/4/16/tv-patrol-publiko-pinag-iingat-sa-vacation-scam-2005" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="1">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://newsinfo.inquirer.net/files/2025/04/Jaime-Santiago-23April2025.jpg.avif" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>NBI Files Raps vs Vloggers Outside PH for Disinformation</h2>
+                            <div class="news-meta">Inquirer.net | April 15, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>MANILA, Philippines — The National Bureau of Investigation (NBI) has filed charges against several vloggers based abroad for allegedly spreading disinformation that caused public alarm in the Philippines.</p>
+                        <p>The NBI Cybercrime Division identified the suspects after a months-long investigation into fake news videos that went viral, falsely claiming a national emergency involving government officials.</p>
+                        <p>"These vloggers used their platforms to spread lies, causing panic and mistrust," said an NBI official. The charges include violations of the Cybercrime Prevention Act of 2012, specifically for online libel and spreading false information.</p>
+                        <p>The NBI is coordinating with international authorities to apprehend the suspects, who are believed to be operating from countries like the United States and Canada.</p>
+                        <a href="https://newsinfo.inquirer.net/2055033/nbi-files-raps-vs-vloggers-outside-ph-for-disinformation" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <!-- Page 2 Articles -->
+                <div class="news-item" data-page="2">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://i.imgur.com/y0ZVR1S.jpeg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>Philippine Cybercrime Center Gains Global Recognition for Anti-Scam Efforts</h2>
+                            <div class="news-meta">Bilyonaryo | April 1, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>The Cybercrime Investigation and Coordinating Center (CICC) has earned international praise for its robust efforts in combating online scams, positioning the Philippines as a leader in Southeast Asia’s fight against cybercrime.</p>
+                        <p>At a recent global cybersecurity conference, the CICC was lauded for its innovative strategies, including the use of advanced technology to track and dismantle scam networks, as well as its public awareness campaigns that have educated millions on how to avoid online fraud.</p>
+                        <p>"The Philippines is setting a benchmark in the region," said an international cybersecurity expert at the conference. The CICC’s efforts have led to a significant reduction in scam-related losses, with several high-profile arrests made in the past year.</p>
+                        <p>The agency continues to collaborate with global partners to tackle transnational cybercrime, focusing on emerging threats like AI-driven fraud and deepfake scams.</p>
+                        <a href="https://bilyonaryo.com/2025/04/01/philippine-cybercrime-center-gains-global-recognition-for-anti-scam-efforts/scams/" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://media.philstar.com/photos/2025/03/18/fake_2025-03-18_23-29-47.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>How is 'fake news' punishable by law? Anti-cybercrime officers explain</h2>
-                            <div class="news-meta">Dominique Nicole Flores – Philstar.com | March 21, 2025</div>
+                            <h2>How is 'Fake News' Punishable by Law? Anti-Cybercrime Officers Explain</h2>
+                            <div class="news-meta">Dominique Nicole Flores - Philstar.com | March 21, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
@@ -707,18 +986,18 @@
                         <p>Many are familiar with the Cybercrime Prevention Act of 2012 (Republic Act 10175), which penalizes online libel — defamatory statements made through digital platforms — under Article 355 of the Revised Penal Code.</p>
                         <p>However, police colonel Andres Simbajon Jr., deputy director for administration of the PNP-ACG, told the committee that "fake news" can still be legally addressed, as it is classified as a crime under the Revised Penal Code.</p>
                         <p>One in particular is Article 154, which penalizes the "unlawful use of means of publication and unlawful utterances."</p>
-                        <p>The Revised Penal Code prescribes a penalty of arresto mayor — imprisonment ranging from one month and one day to six months — for unlawful publication of false information. This comes with an additional fine ranging from P40,000 to P200,000.</p>
+                        <p>The Revised Penal Code prescribes a penalty of arresto mayor — imprisonment ranging from one month and one day to six months — for unlawful publication perspective, this comes with an additional fine ranging from P40,000 to P200,000.</p>
                         <p>Police lieutenant colonel Anacleto Daliva, assistant chief of the PNP-ACG's legal affairs division, explained that false information can also be penalized under the Cybercrime Prevention Act through Section 6, which covers crimes under the Revised Penal Code and special laws when committed through a computer system.</p>
                         <p>Meanwhile, core cybercrimes such as libel and online fraud fall under Section 4. "These are crimes where perpetrators use IT equipment, such as a cellphone or computer," Daliva said.</p>
                         <a href="https://www.philstar.com/headlines/2025/03/21/2430091/how-fake-news-punishable-law-anti-cybercrime-officers-explain" target="_blank">Read more</a>
                     </div>
                 </div>
 
-                <div class="news-item">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://radyopilipinas.ph/wp-content/uploads/2023/09/Digital-Wallet-Security-Updates-How-to-Report-a-Cybercrime-to-PNP-ACG.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>ACG nabs 126 for cybercrimes</h2>
+                            <h2>ACG Nabs 126 for Cybercrimes</h2>
                             <div class="news-meta">Emmanuel Tupas - The Philippine Star | March 19, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
@@ -736,12 +1015,30 @@
                     </div>
                 </div>
 
-                <div class="news-item">
+                <div class="news-item" data-page="2">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://itbutler.sa/wp-content/uploads/2025/04/The-Role-of-Proactive-Cybersecurity-in-Saudi-Digital-Transformation.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>Saudi Arabia Among Top Cybercrime Targets in 2024 as Digital Fraud Surges: Report</h2>
+                            <div class="news-meta">Arab News | March 13, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>RIYADH: Saudi Arabia was among the top 10 countries targeted by cybercriminals in 2024, with digital fraud attempts surging by 35 percent compared to the previous year, according to a new report by cybersecurity firm Kaspersky.</p>
+                        <p>The report, released on Wednesday, highlighted that the Kingdom faced over 20 million cyber attacks last year, with phishing emails, ransomware, and online scams being the most common threats.</p>
+                        <p>"The rapid digital transformation in Saudi Arabia has made it a lucrative target for cybercriminals," said a Kaspersky spokesperson. The report noted that many attacks were linked to international crime syndicates operating out of Southeast Asia and Eastern Europe.</p>
+                        <p>Saudi authorities have responded by strengthening cybersecurity measures, including public awareness campaigns and increased collaboration with global tech firms to combat digital fraud.</p>
+                        <a href="https://www.arabnews.com/node/2597991/amp" target="_blank">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2022/07/11/doj-seal.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>DOJ, UNODC link up for capacity building vs. cybercrime</h2>
-                            <div class="news-meta">Benjamin Pulta - Philippine News Agency | February 13, 2025</div>
+                            <h2>DOJ, UNODC Link Up for Capacity Building vs. Cybercrime</h2>
+                            <div class="news-meta">Benjamin Pulta - PNA | February 13, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
@@ -761,12 +1058,12 @@
                     </div>
                 </div>
 
-                <div class="news-item">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://venturebeat.com/wp-content/uploads/2024/06/Deepfakes-will-cost-40B-by-2027-as-adversarial-AI-gains-momentum-hero-image.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
                             <h2>Guarding Against Cybercrime and Fraud in the Age of Deepfakes</h2>
-                            <div class="news-meta">Justin Herring, Gina M. Parlovecchio, Rajesh De – Mayer Brown | February 5, 2025</div>
+                            <div class="news-meta">Justin Herring, Gina M. Parlovecchio, Rajesh De - Mayer Brown | February 5, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
@@ -783,11 +1080,11 @@
                     </div>
                 </div>
 
-                <div class="news-item">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://od2-image-api.abs-cbn.com/prod/2025013108014/fbd75639688f7cff92a9bfe441dd9b9dcba5dbacd973d286d076ec0309a9c443.png?w=1200&h=800" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>CICC records over 10,000 cybercrime complaints in 2024</h2>
+                            <h2>CICC Records Over 10,000 Cybercrime Complaints in 2024</h2>
                             <div class="news-meta">Ched Rick Gatchalian - ABS-CBN News | January 31, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
@@ -797,17 +1094,16 @@
                         <p>The agency also announced P198 million in losses from the recorded cybercrime incidents.</p>
                         <p>But this does not necessarily translate to a rise in cybercrime prevalence, as CICC Executive Director Alexander K. Ramos described the increase as an indicator of "growing cybercrime awareness of the public and their willingness to report".</p>
                         <p>"In previous years, people were not aware that they were being scammed and many were not also aware of where to file their complaints," he said.</p>
-
                         <a href="https://www.abs-cbn.com/news/technology/2025/1/31/cicc-records-over-10-000-cybercrime-complaints-in-2024-1628" target="_blank">Read more</a>
                     </div>
                 </div>
 
-                <div class="news-item">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2024/08/03/doj-usec-vasquez-satnewsforum-2024aug3-jbondoc-2.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>DOJ to improve anti-cybercrime capacity in 2025</h2>
-                            <div class="news-meta">Benjamin Pulta – PNA | January 23, 2025</div>
+                            <h2>DOJ to Improve Anti-Cybercrime Capacity in 2025</h2>
+                            <div class="news-meta">Benjamin Pulta - PNA | January 23, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
@@ -818,16 +1114,16 @@
                         <p>The OOC also acts as "the focal agency in formulating and implementing law enforcement investigation and prosecution strategies in curbing cybercrime and cyber-related offenses nationwide," according to the DOJ.</p>
                         <p>Vasquez made the statement following the arrest of a foreign national and two Filipinos suspected of engaging in months-long electronic intelligence-surveillance-reconnaissance (ISR) operations in key military and civilian infrastructures in the country.</p>
                         <p>The DOJ confirmed that it is pursuing other members of the group who may have procured equipment used in the eavesdropping operations, even as the military said it is monitoring the role played by Philippine Online Gaming Operators (POGOs) in the alleged spying activities.</p>
-                        <p>The National Bureau of Investigation (NBI) on Wednesday likewise announced the arrest of eight foreigners in Parañaque City allegedly engaged in online phishing operations.</p>                      
+                        <p>The National Bureau of Investigation (NBI) on Wednesday likewise announced the arrest of eight foreigners in Parañaque City allegedly engaged in online phishing operations.</p>
                         <a href="https://www.pna.gov.ph/articles/1242480" target="_blank">Read more</a>
                     </div>
                 </div>
 
-                <div class="news-item">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://bilyonaryo.com/wp-content/uploads/2025/01/Thiang-Choon-Wee.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>Malaysian supplier of text scam device arrested in cybercrime sting</h2>
+                            <h2>Malaysian Supplier of Text Scam Device Arrested in Cybercrime Sting</h2>
                             <div class="news-meta">Max Torres Anaten - Brigada News | January 22, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
@@ -844,12 +1140,12 @@
                     </div>
                 </div>
 
-                <div class="news-item">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2025/01/17/4-nabbed-for-sale-of-pre-registered-sim-cards.png" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>4 nabbed in 2-day crackdown vs. sale of pre-registered SIM cards</h2>
-                            <div class="news-meta">Christopher Lloyd Caliwan - Philippine News Agency | January 17, 2025</div>
+                            <h2>4 Nabbed in 2-Day Crackdown vs. Sale of Pre-Registered SIM Cards</h2>
+                            <div class="news-meta">Christopher Lloyd Caliwan - PNA | January 17, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
@@ -866,29 +1162,14 @@
                         <p>The SIM card can be used for text scams or to create a social media account for scamming activities.</p>
                         <p>Yang reminded the public that the illegal online sale of SIM cards is punishable by law, with significant fines and imprisonment.</p>
                         <p>"It is crucial to adhere to the law and avoid involvement in such online illegal transactions to protect oneself and prevent the spread of cybercrime," he added. (PNA)</p>
-
                         <a href="https://www.pna.gov.ph/articles/1242003" target="_blank">Read more</a>
                     </div>
                 </div>
 
-                <div class="news-item">
-                    <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://files01.pna.gov.ph/category-list/2023/01/25/0010.jpg" alt="News Image" class="news-image">
-                        <div class="news-title">
-                            <h2>DICT seeks to amend cybercrime law as scammers upgrade</h2>
-                            <div class="news-meta">Darryl John Esguerra – PNA | January 7, 2025</div>
-                        </div>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="news-details">
-                        <p>MANILA – The Department of Information and Communications Technology (DICT) is pushing for changes to the cybercrime law to better address the evolving tactics of scammers.</p>
-                        <p>In a press briefing at Malacañang on Tuesday, DICT Secretary Ivan John Uy acknowledged that scam text messages have resurfaced despite the implementation of the SIM Card Registration law.</p>
-                        <p>He noted that while the registration had helped deter scammers, these criminals have adapted, using new techniques and equipment.</p>
-                        <p>"So, ngayon, dahil marami tayong na-raid at dismantle na mga malalaking operations na ganoon, naging guerilla warfare ngayon (Since we have raided and dismantled a lot of big operations, it has become guerilla warfare now)," Uy said.</p>
-                        <p>"They have reduced them into smaller teams, very mobile, they moved around and so, we have to respond accordingly and also change our tactics in going after them."</p>
-                        <p>To combat these evolving threats, the DICT is strengthening its on-the-ground operations while working with Congress to update the cybercrime law.</p>
-                        <a href="https://www.pna.gov.ph/articles/1241199" target="_blank">Read more</a>
-                    </div>
+                <div class="pagination">
+                    <button id="prevPage" onclick="changePage(-1)">Previous</button>
+                    <div class="page-numbers" id="pageNumbers"></div>
+                    <button id="nextPage" onclick="changePage(1)">Next</button>
                 </div>
             </section>
         </main>
@@ -900,6 +1181,60 @@
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
+        const newsItems = document.querySelectorAll('.news-item');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const pageNumbersContainer = document.getElementById('pageNumbers');
+        const totalPages = 2;
+        let currentPage = 1;
+
+        function toggleDetails(header) {
+            const details = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            details.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        function updatePagination() {
+            newsItems.forEach(item => {
+                if (parseInt(item.getAttribute('data-page')) === currentPage) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                    const details = item.querySelector('.news-details');
+                    const icon = item.querySelector('.toggle-icon');
+                    details.classList.remove('active');
+                    icon.classList.remove('active');
+                }
+            });
+
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages;
+
+            pageNumbersContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const pageNum = document.createElement('span');
+                pageNum.classList.add('page-number');
+                pageNum.textContent = i;
+                if (i === currentPage) {
+                    pageNum.classList.add('active');
+                }
+                pageNum.addEventListener('click', () => {
+                    currentPage = i;
+                    updatePagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                pageNumbersContainer.appendChild(pageNum);
+            }
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            updatePagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
@@ -931,12 +1266,9 @@
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
-
                     if (!this.href.includes(window.location.hostname)) return;
-                    
                     e.preventDefault();
                     loaderOverlay.classList.add('active');
-
                     setTimeout(() => {
                         window.location.href = this.href;
                     }, 150);
@@ -944,12 +1276,9 @@
             }
         });
 
-        function toggleDetails(header) {
-            const details = header.nextElementSibling;
-            const icon = header.querySelector('.toggle-icon');
-            details.classList.toggle('active');
-            icon.classList.toggle('active');
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            updatePagination();
+        });
     </script>
 </body>
 </html>

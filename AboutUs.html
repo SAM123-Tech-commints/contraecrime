@@ -73,15 +73,15 @@
         }
 
         .sidebar {
-        width: 290px;
-        background-image: url('https://i.imgur.com/bNRxAhZ.png');
-        background-size: cover;
-        background-position: center;
-        color: white;
-        padding: 20px;
-        height: 100vh;
-        position: fixed;
-        transition: transform 0.3s ease;
+            width: 290px;
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            transition: transform 0.3s ease;
         }
 
         .sidebar h1 {
@@ -255,7 +255,6 @@
             font-size: 24px;
         }
 
-        /* Ensure sections are above the overlay */
         .hero-section,
         .timeline-section,
         .growth-section,
@@ -265,7 +264,6 @@
             z-index: 1;
         }
 
-        /* Hero Section */
         .hero-section {
             padding: 10px 20px;
             text-align: center;
@@ -317,7 +315,6 @@
             animation: fadeInUp 1s forwards 0.6s;
         }
 
-        /* Timeline Section */
         .timeline-section {
             padding: 60px 20px;
             text-align: center;
@@ -404,7 +401,6 @@
             z-index: 1;
         }
 
-        /* Growth Section */
         .growth-section {
             padding: 60px 20px;
             text-align: center;
@@ -455,7 +451,6 @@
             color: #666;
         }
 
-        /* Careers Section */
         .careers-section {
             padding: 60px 20px;
             text-align: center;
@@ -488,7 +483,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(139, 0, 0, 0.7);
+            background-color: rgba(139, 0, 0, 0.858);
             border-radius: 10px;
         }
 
@@ -521,7 +516,6 @@
             background-color: #580100;
         }
 
-        /* Leaders Section */
         .leaders-section {
             padding: 60px 20px;
             text-align: center;
@@ -573,7 +567,6 @@
             color: #666;
         }
 
-        /* Dark Theme */
         body.dark-theme {
             background-color: #121212;
             color: #e0e0e0;
@@ -659,7 +652,6 @@
             color: #b0b0b0;
         }
 
-        /* Animations */
         @keyframes fadeInUp {
             to {
                 opacity: 1;
@@ -667,7 +659,6 @@
             }
         }
 
-        /* Mobile Navigation Styles */
         .mobile-nav {
             display: none;
             background-color: #8B0000;
@@ -693,7 +684,6 @@
             top: 15px;
         }
 
-        /* Media Queries for Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -886,7 +876,6 @@
     <div class="loader-overlay" id="loaderOverlay">
         <div class="loader"></div>
     </div>
-    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="#" class="logo">Contra e-Laws</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -942,7 +931,6 @@
                 </li>
             </ul>
 
-            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -957,14 +945,12 @@
             </div>
         </nav>
         <main class="content">
-            <!-- Hero Section -->
             <section class="hero-section">
                 <h1>A world where anyone can navigate <span>cybercrime laws with ease</span></h1>
                 <p>In 2025, a group of Grade 12 students from STI College Fairview created Cybercrime e-Laws to simplify access to cybercrime laws for students and non-experts. Our platform, Weigh the Right, helps users in the Philippines understand their digital rights.</p>
                 <div class="hero-image"></div>
             </section>
 
-            <!-- Timeline Section -->
             <section class="timeline-section">
                 <h2>Our Story</h2>
                 <div class="timeline">
@@ -992,14 +978,13 @@
                 </div>
             </section>
 
-            <!-- Growth Section -->
             <section class="growth-section">
                 <h2>We’ve Grown To</h2>
                 <div class="growth-grid">
                     <div class="growth-item">
                         <i class="fas fa-sign-in-alt fa-2x"></i>
                         <h3 id="dailyLoginUsers">000</h3>
-                        <p>Daily Login Users</p>
+                        <p>Total Login Users</p>
                     </div>
                     <div class="growth-item">
                         <i class="fas fa-users fa-2x"></i>
@@ -1017,10 +1002,9 @@
                         <p>Educational Partner</p>
                     </div>
                 </div>
-                <button onclick="updateUserCounts()" style="margin-top: 20px; padding: 10px 20px; background-color: #8B0000; color: white; border: none; border-radius: 5px; cursor: pointer;">Refresh Counts</button>
+                <button onclick="updateUserCounts()" style="margin-top: 20px; padding: 10px 20px; background-color: #8B0000; color: white; border: none; border-radius: 5px; cursor: pointer; font-family: 'Montserrat', sans-serif;">Refresh Counts</button>
             </section>
 
-            <!-- Careers Section -->
             <section class="careers-section">
                 <div class="careers-card">
                     <h2>Product</h2>
@@ -1029,7 +1013,6 @@
                 </div>
             </section>
 
-            <!-- Leaders Section -->
             <section class="leaders-section">
                 <h2>Our Members</h2>
                 <div class="leaders-grid">
@@ -1078,12 +1061,10 @@
         </main>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
@@ -1094,52 +1075,38 @@
             measurementId: "G-7Y2E24DD42"
         };
 
-        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Helper function to calculate daily login users (total logins today)
         async function calculateDailyLoginUsers() {
             try {
-                const now = new Date();
-                // Use UTC to avoid timezone mismatches
-                const startOfDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-                const endOfDay = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 23, 59, 59));
-
-                const querySnapshot = await db.collection('loginEvents')
-                    .where('timestamp', '>=', firebase.firestore.Timestamp.fromDate(startOfDay))
-                    .where('timestamp', '<=', firebase.firestore.Timestamp.fromDate(endOfDay))
-                    .get();
-
-                console.log('Daily Login Users:', querySnapshot.size);
-                return querySnapshot.size; // Total number of login events today
+                const querySnapshot = await db.collection('loginEvents').get();
+                console.log('Total Login Events:', querySnapshot.size);
+                return querySnapshot.size;
             } catch (error) {
-                console.error('Error calculating daily login users:', error);
+                console.error('Error calculating total login events:', error);
                 return 0;
             }
         }
 
-        // Helper function to calculate active users (total registered users)
         async function calculateActiveUsers() {
             try {
                 const querySnapshot = await db.collection('users').get();
                 console.log('Active Users:', querySnapshot.size);
-                return querySnapshot.size; // Total number of registered users
+                return querySnapshot.size;
             } catch (error) {
                 console.error('Error calculating active users:', error);
                 return 0;
             }
         }
 
-        // Function to update the UI with user counts
         async function updateUserCounts() {
             try {
                 const dailyLoginUsers = await calculateDailyLoginUsers();
                 const activeUsers = await calculateActiveUsers();
 
-                console.log('Updating UI - Daily Login Users:', dailyLoginUsers, 'Active Users:', activeUsers);
+                console.log('Updating UI - Total Login Events:', dailyLoginUsers, 'Active Users:', activeUsers);
 
-                // Update the DOM
                 document.getElementById('dailyLoginUsers').textContent = dailyLoginUsers.toString().padStart(3, '0');
                 document.getElementById('activeUsers').textContent = activeUsers.toString().padStart(3, '0');
             } catch (error) {
@@ -1147,7 +1114,6 @@
             }
         }
 
-        // Main script
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1196,7 +1162,6 @@
             }
         });
 
-        // Intersection Observer for animations
         const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item');
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -1211,7 +1176,6 @@
             observer.observe(item);
         });
 
-        // Update user counts on page load
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('Page loaded, updating user counts');
             await updateUserCounts();

@@ -20,14 +20,14 @@
             min-height: 100vh;
             background-color: #f4f4f4;
             position: relative;
-            overflow-y: auto; /* Enable scrolling */
+            overflow-y: auto;
         }
 
         .container {
             display: flex;
             width: 100%;
             min-height: 100vh;
-            flex-direction: column; /* Stack vertically by default */
+            flex-direction: column;
         }
 
         .background-image {
@@ -39,7 +39,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            min-height: 30vh; 
+            min-height: 30vh;
         }
 
         .background-image::before {
@@ -63,6 +63,7 @@
             border-radius: 10px;
             background-color: transparent;
             z-index: 2;
+            max-width: 90%; /* Prevent overflow on smaller screens */
         }
 
         .text-typewriter {
@@ -71,9 +72,10 @@
             color: #fff;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
-            white-space: nowrap;
+            white-space: normal; /* Allow text to wrap naturally */
+            overflow-wrap: break-word; /* Ensure words break cleanly */
             margin: 0 auto;
-            letter-spacing: .15em;
+            letter-spacing: .05em; /* Reduced for better readability */
             border-right: .15em solid rgb(255, 0, 0);
             animation: blink-caret .75s step-end infinite;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -105,8 +107,8 @@
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             opacity: 0;
             animation: fadeIn 1s ease-in forwards;
-            overflow-y: auto; /* Allow scrolling within form */
-            min-height: 70vh; /* Ensure enough height */
+            overflow-y: auto;
+            min-height: 70vh;
         }
 
         @keyframes fadeIn {
@@ -371,24 +373,27 @@
             text-decoration: none;
         }
 
-        /* Desktop layout */
         @media (min-width: 769px) {
             .container {
-                flex-direction: row; /* Side by side on desktop */
+                flex-direction: row;
             }
 
             .background-image {
-                min-height: 100vh; /* Full height on desktop */
+                min-height: 100vh;
             }
 
             .form-container {
-                min-height: 100vh; /* Full height on desktop */
+                min-height: 100vh;
+            }
+
+            .text-typewriter {
+                font-size: 2vw;
             }
         }
 
         @media (max-width: 1024px) {
             .text-typewriter {
-                font-size: 3vw;
+                font-size: 2.5vw;
             }
 
             .website-logo {
@@ -410,7 +415,7 @@
 
         @media (max-width: 768px) {
             .background-image {
-                min-height: 30vh; /* Adjusted height */
+                min-height: 40vh; /* Increased height for better text visibility */
             }
 
             .form-container {
@@ -420,7 +425,7 @@
             }
 
             .text-typewriter {
-                font-size: 4vw; /* Larger text for readability */
+                font-size: 1.8rem; /* Fixed size for better readability */
             }
 
             .website-logo {
@@ -428,11 +433,19 @@
                 top: 10px;
                 left: 10px;
             }
+
+            .text-container {
+                padding: 10px;
+            }
         }
 
         @media (min-width: 320px) and (max-width: 480px) {
+            .background-image {
+                min-height: 50vh; /* More space for text */
+            }
+
             .text-typewriter {
-                font-size: 5vw; /* Even larger for small screens */
+                font-size: 1.2rem; /* Slightly smaller but readable */
             }
 
             .website-logo {
@@ -453,12 +466,16 @@
             }
 
             .form-container {
-                padding: 15px; /* More compact padding */
+                padding: 15px;
             }
 
             .modal-content {
                 width: 90%;
                 margin: 20% auto;
+            }
+
+            .text-container {
+                padding: 5px;
             }
         }
     </style>
@@ -641,19 +658,16 @@
                             await db.collection('users').doc(email).set({
                                 email: email,
                                 username: username,
-                                password: passwordValue, 
+                                password: passwordValue,
                                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
                             });
 
-    
                             let users = JSON.parse(localStorage.getItem('users')) || [];
                             users.push({ email, username, password: passwordValue });
                             localStorage.setItem('users', JSON.stringify(users));
 
-            
                             await logLoginEvent(email);
 
-                      
                             localStorage.setItem('currentUser', JSON.stringify({ email, username }));
                             localStorage.setItem('rememberMe', 'true');
 
