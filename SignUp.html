@@ -63,7 +63,7 @@
             border-radius: 10px;
             background-color: transparent;
             z-index: 2;
-            max-width: 90%; /* Prevent overflow on smaller screens */
+            max-width: 90%;
         }
 
         .text-typewriter {
@@ -72,10 +72,10 @@
             color: #fff;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
-            white-space: normal; /* Allow text to wrap naturally */
-            overflow-wrap: break-word; /* Ensure words break cleanly */
+            white-space: normal;
+            overflow-wrap: break-word;
             margin: 0 auto;
-            letter-spacing: .05em; /* Reduced for better readability */
+            letter-spacing: .05em;
             border-right: .15em solid rgb(255, 0, 0);
             animation: blink-caret .75s step-end infinite;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -362,9 +362,12 @@
         .close-btn {
             color: #aaa;
             float: right;
-            font-size: 28px;
+            font-size: 36px; /* Increased from 28px for better visibility */
             font-weight: bold;
             cursor: pointer;
+            padding: 10px; /* Added padding for larger touch area */
+            line-height: 1; /* Ensure the "X" is centered vertically */
+            margin: -10px -10px 0 0; /* Adjust position to account for padding */
         }
 
         .close-btn:hover,
@@ -415,7 +418,7 @@
 
         @media (max-width: 768px) {
             .background-image {
-                min-height: 40vh; /* Increased height for better text visibility */
+                min-height: 40vh;
             }
 
             .form-container {
@@ -425,7 +428,7 @@
             }
 
             .text-typewriter {
-                font-size: 1.8rem; /* Fixed size for better readability */
+                font-size: 1.8rem;
             }
 
             .website-logo {
@@ -441,11 +444,11 @@
 
         @media (min-width: 320px) and (max-width: 480px) {
             .background-image {
-                min-height: 50vh; /* More space for text */
+                min-height: 50vh;
             }
 
             .text-typewriter {
-                font-size: 1.2rem; /* Slightly smaller but readable */
+                font-size: 1.2rem;
             }
 
             .website-logo {
@@ -476,6 +479,12 @@
 
             .text-container {
                 padding: 5px;
+            }
+
+            .close-btn {
+                font-size: 40px; /* Larger on mobile for better tap target */
+                padding: 12px; /* Larger touch area */
+                margin: -12px -12px 0 0; /* Adjust position */
             }
         }
     </style>
