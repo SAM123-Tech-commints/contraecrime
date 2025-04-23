@@ -377,6 +377,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: left;
+            position: relative;
         }
 
         .timeline-content h3 {
@@ -661,12 +662,11 @@
 
         .mobile-nav {
             display: none;
-            background-color: #8B0000; /* Changed to solid color for better readability */
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
             padding: 15px;
             position: fixed;
             width: 100%;
             z-index: 1000;
-            height: 60px; /* Fixed height for consistency */
         }
 
         .mobile-nav .logo {
@@ -674,7 +674,6 @@
             font-size: 20px;
             font-weight: bold;
             text-decoration: none;
-            line-height: 30px; /* Vertically center the logo */
         }
 
         .mobile-nav .menu-icon {
@@ -795,7 +794,7 @@
                 width: 100%;
                 height: auto;
                 position: fixed;
-                padding: 20px; /* Increased padding for better spacing */
+                padding: 10px;
                 transform: translateX(-100%);
                 z-index: 999;
                 top: 60px;
@@ -812,7 +811,7 @@
             }
 
             .sidebar ul li {
-                margin: 30px 0; /* Adjusted spacing between list items */
+                margin: 20px 0;
             }
 
             .sidebar ul li a {
@@ -825,7 +824,6 @@
 
             .content {
                 margin-left: 0;
-                padding: 80px 15px 30px 15px; /* Increased top padding to account for mobile nav */
             }
 
             .header {
@@ -833,72 +831,86 @@
             }
 
             .hero-section {
-                padding: 40px 15px; /* Adjusted padding for better spacing */
+                padding: 40px 10px;
             }
 
             .hero-section h1 {
-                font-size: 30px; /* Slightly larger for better readability */
+                font-size: 28px;
             }
 
             .hero-section p {
-                font-size: 16px; /* Increased for readability */
+                font-size: 14px;
             }
 
             .hero-image {
-                height: 180px; /* Slightly larger for better proportion */
-                width: 70%; /* Adjusted width for better fit */
+                height: 150px;
             }
 
             .timeline-section,
             .growth-section,
             .careers-section,
             .leaders-section {
-                padding: 50px 15px; /* Adjusted padding for better spacing */
+                padding: 40px 10px;
             }
 
             .timeline-section h2,
             .growth-section h2,
             .leaders-section h2 {
-                font-size: 26px; /* Slightly larger for readability */
+                font-size: 24px;
             }
 
             .timeline::before {
-                left: 15px; /* Adjusted for smaller screens */
+                left: 20px; /* Adjusted for better spacing */
             }
 
             .timeline-item {
-                margin-bottom: 50px; /* Increased spacing between timeline items */
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 60px; /* Increased for better spacing between items */
+            }
+
+            .timeline-item.right {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
             .timeline-content {
-                margin-left: 35px; /* Adjusted for better alignment */
-                padding: 15px; /* Adjusted padding for readability */
+                width: 100%;
+                margin-left: 50px; /* Adjusted to align better with marker */
+                padding: 25px; /* Increased padding for readability */
+            }
+
+            .timeline-content::before {
+                content: '';
+                position: absolute;
+                left: -30px; /* Position the connector line */
+                top: 50%;
+                transform: translateY(-50%);
+                width: 30px;
+                height: 2px;
+                background-color: #8B0000; /* Match marker color */
             }
 
             .timeline-marker {
-                left: 15px; /* Adjusted to match the timeline line */
+                left: 20px; /* Adjusted to match the timeline line */
+                transform: none;
             }
 
             .growth-grid,
             .leaders-grid {
-                gap: 30px; /* Increased gap for better spacing */
-            }
-
-            .growth-item,
-            .leader-item {
-                padding: 10px; /* Added padding for better spacing */
+                gap: 20px;
             }
 
             .careers-card {
-                padding: 30px; /* Increased padding for better readability */
+                padding: 20px;
             }
 
             .careers-card h2 {
-                font-size: 22px; /* Slightly larger for readability */
+                font-size: 20px;
             }
 
             .careers-card p {
-                font-size: 15px; /* Increased for readability */
+                font-size: 14px;
             }
         }
     </style>
