@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contra E-Crime - Sign Up</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -16,16 +17,17 @@
         body {
             font-family: 'Montserrat', sans-serif;
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f4f4f4;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto; /* Enable scrolling */
         }
 
         .container {
             display: flex;
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
+            flex-direction: column; /* Stack vertically by default */
         }
 
         .background-image {
@@ -36,8 +38,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             position: relative;
+            min-height: 30vh; 
         }
 
         .background-image::before {
@@ -103,6 +105,8 @@
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             opacity: 0;
             animation: fadeIn 1s ease-in forwards;
+            overflow-y: auto; /* Allow scrolling within form */
+            min-height: 70vh; /* Ensure enough height */
         }
 
         @keyframes fadeIn {
@@ -367,6 +371,21 @@
             text-decoration: none;
         }
 
+        /* Desktop layout */
+        @media (min-width: 769px) {
+            .container {
+                flex-direction: row; /* Side by side on desktop */
+            }
+
+            .background-image {
+                min-height: 100vh; /* Full height on desktop */
+            }
+
+            .form-container {
+                min-height: 100vh; /* Full height on desktop */
+            }
+        }
+
         @media (max-width: 1024px) {
             .text-typewriter {
                 font-size: 3vw;
@@ -390,24 +409,18 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
             .background-image {
-                flex: 1;
-                height: 40vh;
+                min-height: 30vh; /* Adjusted height */
             }
 
             .form-container {
-                flex: 1;
                 max-width: 100%;
-                padding: 30px 20px;
+                padding: 20px;
                 box-shadow: none;
             }
 
             .text-typewriter {
-                font-size: 2.5vw;
+                font-size: 4vw; /* Larger text for readability */
             }
 
             .website-logo {
@@ -419,7 +432,7 @@
 
         @media (min-width: 320px) and (max-width: 480px) {
             .text-typewriter {
-                font-size: 3vw;
+                font-size: 5vw; /* Even larger for small screens */
             }
 
             .website-logo {
@@ -437,6 +450,10 @@
             .action-btn {
                 padding: 10px 30px;
                 font-size: 14px;
+            }
+
+            .form-container {
+                padding: 15px; /* More compact padding */
             }
 
             .modal-content {
@@ -514,7 +531,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
@@ -529,11 +545,9 @@
             measurementId: "G-7Y2E24DD42"
         };
 
-        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Helper function to log login events to Firestore
         async function logLoginEvent(userEmail) {
             try {
                 const timestamp = firebase.firestore.FieldValue.serverTimestamp();
@@ -548,10 +562,8 @@
             }
         }
 
-        // Ensure DOM is fully loaded before running scripts
         document.addEventListener('DOMContentLoaded', function () {
             try {
-                // Toggle Password Visibility
                 const toggleSignupPassword = document.querySelector('#toggleSignupPassword');
                 const signupPassword = document.querySelector('#signup-password');
 
@@ -565,7 +577,6 @@
                     console.error('Toggle password elements not found.');
                 }
 
-                // Terms and Conditions Modal
                 const termsModal = document.getElementById('termsModal');
                 const termsLabel = document.getElementById('termsLabel');
                 const closeBtn = document.querySelector('.close-btn');
@@ -592,7 +603,6 @@
                     console.error('Close button or modal not found.');
                 }
 
-                // Form Submission Handling with Firestore, localStorage, and Loading Animation
                 const signupForm = document.getElementById('signupForm');
                 const signupErrorMessage = document.getElementById('signupErrorMessage');
 
@@ -609,7 +619,6 @@
                             const username = document.getElementById('signup-username').value.trim();
                             const passwordValue = signupPassword.value.trim();
 
-                            // Validate password length
                             if (passwordValue.length < 6) {
                                 signupErrorMessage.style.display = 'block';
                                 signupErrorMessage.classList.add('show');
@@ -619,7 +628,6 @@
                                 return;
                             }
 
-                            // Check if email already exists in Firestore
                             const userDoc = await db.collection('users').doc(email).get();
                             if (userDoc.exists) {
                                 signupErrorMessage.style.display = 'block';
@@ -630,23 +638,22 @@
                                 return;
                             }
 
-                            // Store user in Firestore
                             await db.collection('users').doc(email).set({
                                 email: email,
                                 username: username,
-                                password: passwordValue, // In production, hash this!
+                                password: passwordValue, 
                                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
                             });
 
-                            // Also store in localStorage for compatibility with index.html
+    
                             let users = JSON.parse(localStorage.getItem('users')) || [];
                             users.push({ email, username, password: passwordValue });
                             localStorage.setItem('users', JSON.stringify(users));
 
-                            // Log the login event
+            
                             await logLoginEvent(email);
 
-                            // Set current user and redirect to HomePage
+                      
                             localStorage.setItem('currentUser', JSON.stringify({ email, username }));
                             localStorage.setItem('rememberMe', 'true');
 
@@ -668,7 +675,6 @@
                     console.error('Signup form not found.');
                 }
 
-                // Continuous Typewriter Animation
                 const phrases = [
                     "Protect yourself from cybercrime today.",
                     "Contra E-Crime: Your shield online.",

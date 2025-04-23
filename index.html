@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime - Login</title>
+    <title>Contra E-Crime</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -16,16 +17,17 @@
         body {
             font-family: 'Montserrat', sans-serif;
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f4f4f4;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto; 
         }
 
         .container {
             display: flex;
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
+            flex-direction: column; 
         }
 
         .background-image {
@@ -36,8 +38,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             position: relative;
+            min-height: 30vh;
         }
 
         .background-image::before {
@@ -103,6 +105,8 @@
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             opacity: 0;
             animation: fadeIn 1s ease-in forwards;
+            overflow-y: auto; /* Allow scrolling within form */
+            min-height: 70vh; /* Ensure enough height */
         }
 
         @keyframes fadeIn {
@@ -428,6 +432,21 @@
             text-decoration: none;
         }
 
+        /* Desktop layout */
+        @media (min-width: 769px) {
+            .container {
+                flex-direction: row; /* Side by side on desktop */
+            }
+
+            .background-image {
+                min-height: 100vh; /* Full height on desktop */
+            }
+
+            .form-container {
+                min-height: 100vh; /* Full height on desktop */
+            }
+        }
+
         @media (max-width: 1024px) {
             .text-typewriter {
                 font-size: 3vw;
@@ -451,24 +470,18 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
             .background-image {
-                flex: 1;
-                height: 40vh;
+                min-height: 30vh; 
             }
 
             .form-container {
-                flex: 1;
                 max-width: 100%;
-                padding: 30px 20px;
+                padding: 20px;
                 box-shadow: none;
             }
 
             .text-typewriter {
-                font-size: 2.5vw;
+                font-size: 4vw; 
             }
 
             .website-logo {
@@ -480,7 +493,7 @@
 
         @media (min-width: 320px) and (max-width: 480px) {
             .text-typewriter {
-                font-size: 3vw;
+                font-size: 5vw; 
             }
 
             .website-logo {
@@ -498,6 +511,10 @@
             .action-btn, .google-btn {
                 padding: 10px 30px;
                 font-size: 14px;
+            }
+
+            .form-container {
+                padding: 15px; 
             }
 
             .modal-content {
@@ -598,12 +615,10 @@
             measurementId: "G-7Y2E24DD42"
         };
 
-        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Helper function to log login events to Firestore
         async function logLoginEvent(userEmail) {
             try {
                 const timestamp = firebase.firestore.FieldValue.serverTimestamp();
@@ -614,14 +629,13 @@
                 console.log('Login event logged for:', userEmail);
             } catch (error) {
                 console.error('Error logging login event:', error);
-                throw error; // Re-throw to handle in the calling function
+                throw error;
             }
         }
 
-        // Ensure DOM is fully loaded before running scripts
         document.addEventListener('DOMContentLoaded', function () {
             try {
-                // Toggle Password Visibility for Login Form
+ 
                 const toggleLoginPassword = document.querySelector('#toggleLoginPassword');
                 const loginPassword = document.querySelector('#login-password');
 
@@ -633,7 +647,7 @@
                     });
                 }
 
-                // Toggle Password Visibility for Google Sign-In Modal
+          
                 const toggleGooglePassword = document.querySelector('#toggleGooglePassword');
                 const googlePassword = document.querySelector('#google-password');
 
@@ -645,7 +659,7 @@
                     });
                 }
 
-                // Form Submission Handling with localStorage, Firestore, and Loading Animation
+              
                 const loginForm = document.getElementById('loginForm');
                 const loginErrorMessage = document.getElementById('loginErrorMessage');
 
@@ -662,7 +676,7 @@
                             const passwordValue = loginPassword.value.trim();
                             const rememberMe = document.getElementById('rememberme').checked;
 
-                            // Check if user exists in localStorage (for email/password login)
+                            
                             const users = JSON.parse(localStorage.getItem('users')) || [];
                             const user = users.find(user => user.email === email);
 
@@ -684,10 +698,10 @@
                                 return;
                             }
 
-                            // Log the login event to Firestore
+                            
                             await logLoginEvent(email);
 
-                            // Store current user in localStorage
+                        
                             localStorage.setItem('currentUser', JSON.stringify({ email, username: user.username }));
 
                             if (rememberMe) {
@@ -711,7 +725,6 @@
                     });
                 }
 
-                // Google Sign-In Handling
                 const googleSignInBtn = document.getElementById('googleSignInBtn');
                 const googleSignInModal = document.getElementById('googleSignInModal');
                 const googleSignInForm = document.getElementById('googleSignInForm');
@@ -731,10 +744,10 @@
                                     username: user.displayName || 'Google User'
                                 };
 
-                                // Check if the user already exists in Firestore
+                         
                                 const userDoc = await db.collection('users').doc(googleUserData.email).get();
                                 if (userDoc.exists) {
-                                    // User already exists, log the login event and redirect
+                                    
                                     await logLoginEvent(googleUserData.email);
                                     localStorage.setItem('currentUser', JSON.stringify({
                                         email: userDoc.data().email,
@@ -743,7 +756,7 @@
                                     localStorage.setItem('rememberMe', 'true');
                                     window.location.href = "HomePage.html";
                                 } else {
-                                    // New user, show the confirmation modal
+                                   
                                     document.getElementById('google-email').value = googleUserData.email;
                                     document.getElementById('google-username').value = googleUserData.username;
                                     googleSignInModal.style.display = 'block';
@@ -758,7 +771,7 @@
                     });
                 }
 
-                // Handle modal form submission for new Google Sign-In users
+            
                 if (googleSignInForm) {
                     googleSignInForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
@@ -790,20 +803,20 @@
                                 return;
                             }
 
-                            // Store new user in Firestore
+                         
                             await db.collection('users').doc(email).set({
                                 email: email,
                                 username: username,
-                                password: password, // In production, hash this!
+                                password: password, 
                                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
                             });
 
-                            // Also store in localStorage for compatibility with email/password login
+                          
                             let users = JSON.parse(localStorage.getItem('users')) || [];
                             users.push({ email, username, password });
                             localStorage.setItem('users', JSON.stringify(users));
 
-                            // Log the login event
+                         
                             await logLoginEvent(email);
 
                             localStorage.setItem('currentUser', JSON.stringify({ email, username }));
@@ -825,7 +838,7 @@
                     });
                 }
 
-                // Close the modal
+         
                 if (closeBtn) {
                     closeBtn.addEventListener('click', () => {
                         googleSignInModal.style.display = 'none';
@@ -840,7 +853,6 @@
                     });
                 }
 
-                // Continuous Typewriter Animation
                 const phrases = [
                     "Protect yourself from cybercrime today.",
                     "Contra E-Crime: Your shield online.",
