@@ -661,11 +661,12 @@
 
         .mobile-nav {
             display: none;
-            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            background-color: #8B0000; /* Changed to solid color for better readability */
             padding: 15px;
             position: fixed;
             width: 100%;
             z-index: 1000;
+            height: 60px; /* Fixed height for consistency */
         }
 
         .mobile-nav .logo {
@@ -673,6 +674,7 @@
             font-size: 20px;
             font-weight: bold;
             text-decoration: none;
+            line-height: 30px; /* Vertically center the logo */
         }
 
         .mobile-nav .menu-icon {
@@ -793,7 +795,7 @@
                 width: 100%;
                 height: auto;
                 position: fixed;
-                padding: 10px;
+                padding: 20px; /* Increased padding for better spacing */
                 transform: translateX(-100%);
                 z-index: 999;
                 top: 60px;
@@ -810,7 +812,7 @@
             }
 
             .sidebar ul li {
-                margin: 20px 0;
+                margin: 30px 0; /* Adjusted spacing between list items */
             }
 
             .sidebar ul li a {
@@ -823,6 +825,7 @@
 
             .content {
                 margin-left: 0;
+                padding: 80px 15px 30px 15px; /* Increased top padding to account for mobile nav */
             }
 
             .header {
@@ -830,44 +833,72 @@
             }
 
             .hero-section {
-                padding: 40px 10px;
+                padding: 40px 15px; /* Adjusted padding for better spacing */
             }
 
             .hero-section h1 {
-                font-size: 28px;
+                font-size: 30px; /* Slightly larger for better readability */
             }
 
             .hero-section p {
-                font-size: 14px;
+                font-size: 16px; /* Increased for readability */
             }
 
             .hero-image {
-                height: 150px;
+                height: 180px; /* Slightly larger for better proportion */
+                width: 70%; /* Adjusted width for better fit */
             }
 
             .timeline-section,
             .growth-section,
             .careers-section,
             .leaders-section {
-                padding: 40px 10px;
+                padding: 50px 15px; /* Adjusted padding for better spacing */
             }
 
             .timeline-section h2,
             .growth-section h2,
             .leaders-section h2 {
-                font-size: 24px;
+                font-size: 26px; /* Slightly larger for readability */
+            }
+
+            .timeline::before {
+                left: 15px; /* Adjusted for smaller screens */
+            }
+
+            .timeline-item {
+                margin-bottom: 50px; /* Increased spacing between timeline items */
+            }
+
+            .timeline-content {
+                margin-left: 35px; /* Adjusted for better alignment */
+                padding: 15px; /* Adjusted padding for readability */
+            }
+
+            .timeline-marker {
+                left: 15px; /* Adjusted to match the timeline line */
+            }
+
+            .growth-grid,
+            .leaders-grid {
+                gap: 30px; /* Increased gap for better spacing */
+            }
+
+            .growth-item,
+            .leader-item {
+                padding: 10px; /* Added padding for better spacing */
             }
 
             .careers-card {
-                padding: 20px;
+                padding: 30px; /* Increased padding for better readability */
             }
 
             .careers-card h2 {
-                font-size: 20px;
+                font-size: 22px; /* Slightly larger for readability */
             }
 
             .careers-card p {
-                font-size: 14px;
+                font-size: 15px; /* Increased for readability */
             }
         }
     </style>
