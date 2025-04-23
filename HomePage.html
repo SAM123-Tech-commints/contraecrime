@@ -303,10 +303,19 @@
             cursor: pointer;
             font-size: 14px;
             transition: background-color 0.3s ease;
+            margin-bottom: 5px;
         }
 
         .avatar-customization button:hover {
             background-color: #8B0000;
+        }
+
+        .avatar-customization #resetAvatar {
+            background-color: #666;
+        }
+
+        .avatar-customization #resetAvatar:hover {
+            background-color: #888;
         }
 
         .dark-theme .avatar-customization {
@@ -332,6 +341,14 @@
 
         .dark-theme .avatar-customization button:hover {
             background-color: #e0c680;
+        }
+
+        .dark-theme .avatar-customization #resetAvatar {
+            background-color: #777;
+        }
+
+        .dark-theme .avatar-customization #resetAvatar:hover {
+            background-color: #999;
         }
 
         .user-info .user-details {
@@ -956,6 +973,7 @@
                             <option value="#0000ff">Blue</option>
                         </select>
                         <button id="saveAvatar">Save</button>
+                        <button id="resetAvatar">Reset Avatar</button>
                     </div>
                     <div class="user-details">
                         <span class="username">User</span>
@@ -1062,8 +1080,29 @@
         </footer>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script>
+        // Firebase configuration (replace with your own config)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        const auth = firebase.auth();
+
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1076,6 +1115,7 @@
         const avatarColor = document.getElementById('avatarColor');
         const borderColor = document.getElementById('borderColor');
         const saveAvatar = document.getElementById('saveAvatar');
+        const resetAvatar = document.getElementById('resetAvatar');
 
         // Avatar customization functionality
         const avatarImages = {
@@ -1084,27 +1124,28 @@
             avatar3: 'https://i.imgur.com/5q8tY2s.png'  // Astronaut
         };
 
-        // Load saved avatar settings
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedAvatar = JSON.parse(localStorage.getItem('avatarSettings'));
-            if (savedAvatar) {
-                avatarSelect.value = savedAvatar.avatar;
-                avatarColor.value = savedAvatar.color;
-                borderColor.value = savedAvatar.borderColor || '#000000';
-                updateAvatar(savedAvatar.avatar, savedAvatar.color, savedAvatar.borderColor, savedAvatar.customImage);
-            }
+        // Load saved avatar settings from Firebase
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user && user.email) {
+                const userId = user.email.replace(/[^a-zA-Z0-9]/g, "_"); // Sanitize email for Firestore doc ID
+                const docRef = db.collection('users').doc(userId);
+                const doc = await docRef.get();
+                if (doc.exists) {
+                    const savedAvatar = doc.data().avatarSettings;
+                    if (savedAvatar) {
+                        avatarSelect.value = savedAvatar.avatar || 'avatar1';
+                        avatarColor.value = savedAvatar.color || '#ff4d4d';
+                        borderColor.value = savedAvatar.borderColor || '#000000';
+                        updateAvatar(savedAvatar.avatar, savedAvatar.color, savedAvatar.borderColor, savedAvatar.customImageUrl);
+                    }
+                }
 
-            // Load user data
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            const usernameElement = document.querySelector('.user-info .username');
-            const emailElement = document.querySelector('.user-info .email');
-
-            if (currentUser && currentUser.username && currentUser.email) {
-                usernameElement.textContent = currentUser.username;
-                emailElement.textContent = currentUser.email;
-            } else {
-                usernameElement.textContent = 'Guest';
-                emailElement.textContent = 'guest@example.com';
+                // Load user data
+                const usernameElement = document.querySelector('.user-info .username');
+                const emailElement = document.querySelector('.user-info .email');
+                usernameElement.textContent = user.username || 'Guest';
+                emailElement.textContent = user.email || 'guest@example.com';
             }
         });
 
@@ -1127,9 +1168,9 @@
         });
 
         // Update avatar preview
-        function updateAvatar(avatar, color, border, customImage) {
-            if (customImage) {
-                profilePic.style.backgroundImage = `url(${customImage})`;
+        function updateAvatar(avatar, color, border, customImageUrl) {
+            if (customImageUrl) {
+                profilePic.style.backgroundImage = `url(${customImageUrl})`;
             } else {
                 profilePic.style.backgroundImage = `url(${avatarImages[avatar]})`;
             }
@@ -1137,28 +1178,80 @@
             profilePic.style.borderColor = border;
         }
 
-        // Update avatar on selection change
+        // Update avatar on selection change (preview only)
         avatarSelect.addEventListener('change', () => {
-            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
+            const currentImage = profilePic.style.backgroundImage.includes('data:image') || profilePic.style.backgroundImage.includes('firebasestorage') ? null : null;
+            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, currentImage);
         });
 
         avatarColor.addEventListener('change', () => {
-            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
+            const currentImage = profilePic.style.backgroundImage.includes('data:image') || profilePic.style.backgroundImage.includes('firebasestorage') ? profilePic.style.backgroundImage.slice(5, -2) : null;
+            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, currentImage);
         });
 
         borderColor.addEventListener('change', () => {
-            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
+            const currentImage = profilePic.style.backgroundImage.includes('data:image') || profilePic.style.backgroundImage.includes('firebasestorage') ? profilePic.style.backgroundImage.slice(5, -2) : null;
+            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, currentImage);
         });
 
-        // Save avatar settings
-        saveAvatar.addEventListener('click', () => {
+        // Save avatar settings to Firebase
+        saveAvatar.addEventListener('click', async () => {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user || !user.email) {
+                alert('Please log in to save avatar settings.');
+                return;
+            }
+
+            const userId = user.email.replace(/[^a-zA-Z0-9]/g, "_");
+            let customImageUrl = null;
+
+            // Check if a new image was uploaded
+            if (avatarImage.files[0]) {
+                const file = avatarImage.files[0];
+                const storageRef = storage.ref(`avatars/${userId}/${file.name}`);
+                await storageRef.put(file);
+                customImageUrl = await storageRef.getDownloadURL();
+            } else if (profilePic.style.backgroundImage.includes('firebasestorage')) {
+                customImageUrl = profilePic.style.backgroundImage.slice(5, -2);
+            }
+
             const avatarSettings = {
                 avatar: avatarSelect.value,
                 color: avatarColor.value,
                 borderColor: borderColor.value,
-                customImage: profilePic.style.backgroundImage.includes('data:image') ? profilePic.style.backgroundImage.slice(5, -2) : null
+                customImageUrl: customImageUrl
             };
-            localStorage.setItem('avatarSettings', JSON.stringify(avatarSettings));
+
+            await db.collection('users').doc(userId).set({
+                avatarSettings: avatarSettings
+            }, { merge: true });
+
+            updateAvatar(avatarSettings.avatar, avatarSettings.color, avatarSettings.borderColor, avatarSettings.customImageUrl);
+            avatarCustomization.classList.remove('active');
+        });
+
+        // Reset avatar settings in Firebase
+        resetAvatar.addEventListener('click', async () => {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user || !user.email) {
+                alert('Please log in to reset avatar settings.');
+                return;
+            }
+
+            const userId = user.email.replace(/[^a-zA-Z0-9]/g, "_");
+            const avatarSettings = {
+                avatar: avatarSelect.value,
+                color: avatarColor.value,
+                borderColor: borderColor.value,
+                customImageUrl: null
+            };
+
+            await db.collection('users').doc(userId).set({
+                avatarSettings: avatarSettings
+            }, { merge: true });
+
+            updateAvatar(avatarSettings.avatar, avatarSettings.color, avatarSettings.borderColor, null);
+            avatarImage.value = ''; // Clear the file input
             avatarCustomization.classList.remove('active');
         });
 
