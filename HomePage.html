@@ -217,7 +217,7 @@
 
         .content {
             flex: 1;
-            padding: 20px;
+            padding: 40px;
             margin-left: 290px;
             overflow-y: auto;
             transition: background-color 0.3s ease, margin-left 0.3s ease;
@@ -227,45 +227,45 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             position: relative;
         }
 
         .user-info {
             position: absolute;
             top: 0;
-            right: 20px;
+            right: 40px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 16px;
+            gap: 20px;
+            font-size: 20px;
             color: #333;
         }
 
         .user-info .profile-pic {
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background-color: #ccc;
             background-size: cover;
             background-position: center;
             cursor: pointer;
             position: relative;
-            border: 2px solid #000;
+            border: 4px solid #000;
         }
 
         .avatar-customization {
             display: none;
             position: absolute;
-            top: 50px;
+            top: 70px;
             right: 0;
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 5px;
-            padding: 10px;
+            padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            width: 200px;
+            width: 300px;
         }
 
         .avatar-customization.active {
@@ -274,34 +274,34 @@
 
         .avatar-customization label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-size: 16px;
             color: #333;
         }
 
-        .avatar-customization select,
+        .avatar-customization select–
         .avatar-customization input[type="file"] {
             width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .avatar-customization input[type="file"] {
-            padding: 3px;
+            padding: 5px;
         }
 
         .avatar-customization button {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             background-color: #580100;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             transition: background-color 0.3s ease;
         }
 
@@ -318,7 +318,7 @@
             color: #e0e0e0;
         }
 
-        .dark-theme .avatar-customization select,
+        .dark-theme .avatar-customization select–
         .dark-theme .avatar-customization input[type="file"] {
             background-color: #555;
             color: #e0e0e0;
@@ -341,10 +341,11 @@
 
         .user-info .user-details .username {
             font-weight: 600;
+            font-size: 22px;
         }
 
         .user-info .user-details .email {
-            font-size: 14px;
+            font-size: 18px;
             color: #666;
         }
 
@@ -357,11 +358,11 @@
         }
 
         .fingerprint-icon {
-            width: 150px;
-            height: 150px;
+            width: 220px;
+            height: 220px;
             background: url('https://static.thenounproject.com/png/1238269-200.png') no-repeat center center;
             background-size: contain;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             position: relative;
             display: flex;
             justify-content: center;
@@ -373,43 +374,42 @@
             position: absolute;
             margin-right: 4px;
             margin-top: 4px;
-            width: 138px;
-            height: 140px;
-            border: 3px solid;
+            width: 200px;
+            height: 200px;
+            border: 4px solid;
             border-radius: 50%;
             z-index: 0;
             color: #000000;
         }
 
-        /* Search Bar */
         .search-container {
-            width: 40%;
+            width: 60%;
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
 
         .search-icon {
             position: absolute;
-            right: 10px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
         }
 
         .search-input {
             width: 100%;
-            height: 40px;
-            padding: 10px;
+            height: 60px;
+            padding: 15px;
             transition: .2s linear;
-            border: 2.5px solid black;
-            font-size: 14px;
+            border: 3px solid black;
+            font-size: 18px;
             letter-spacing: 1px;
-            border-radius: 5px;
+            border-radius: 8px;
         }
 
         .search-input:focus {
             outline: none;
-            border: 0.5px solid black;
-            box-shadow: -2px -1px 0px black;
+            border: 1px solid black;
+            box-shadow: -3px -2px 0px black;
         }
 
         .search-container:hover > .search-icon {
@@ -443,19 +443,19 @@
         }
 
         .articles {
-            margin-top: 20px;
+            margin-top: 40px;
             color: #000000;
             text-align: center;
         }
 
         .articles h2 {
-            margin-bottom: 30px;
-            font-size: 24px;
+            margin-bottom: 50px;
+            font-size: 36px;
         }
 
         .cards-container {
             display: flex;
-            gap: 35px;
+            gap: 60px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -472,11 +472,11 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            padding: 1rem;
-            width: 350px;
+            gap: 1.2rem;
+            padding: 2rem;
+            width: 500px;
             background-color: var(--bg-card);
-            border-radius: 1rem;
+            border-radius: 1.5rem;
             justify-content: space-between;
         }
 
@@ -485,7 +485,7 @@
         }
 
         .card.highlight {
-            box-shadow: 0 0 10px 5px rgba(230, 207, 5, 0.5);
+            box-shadow: 0 0 15px 8px rgba(230, 207, 5, 0.5);
         }
 
         .image_container {
@@ -494,9 +494,9 @@
             position: relative;
             z-index: 5;
             width: 100%;
-            height: 200px;
+            height: 350px;
             background-color: var(--primary-800);
-            border-radius: 0.5rem;
+            border-radius: 1rem;
         }
 
         .image_container img {
@@ -508,7 +508,7 @@
         .cybercrime-title {
             overflow: clip;
             width: 100%;
-            font-size: 1.2rem;
+            font-size: 1.8rem;
             font-weight: 600;
             color: var(--light);
             text-transform: capitalize;
@@ -517,40 +517,39 @@
         }
 
         .cybercrime-description {
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             color: var(--light);
-            line-height: 1.4;
+            line-height: 1.5;
             text-align: justify;
         }
 
-        /* Read More */
         .border-button {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 6px 5px;
-            border-radius: 10px;
-            border: 1px solid rgb(255, 255, 255);
+            gap: 12px;
+            padding: 10px 8px;
+            border-radius: 12px;
+            border: 2px solid rgb(255, 255, 255);
             overflow: hidden;
             background: transparent;
             color: rgb(255, 255, 255);
             cursor: pointer;
             align-self: flex-end;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             transition: all 0.3s ease;
             text-decoration: none;
         }
 
         .border-button .button-text {
-            transform: translateX(17px);
-            font-size: 0.9em;
+            transform: translateX(20px);
+            font-size: 1.1em;
             font-weight: 500;
             transition-duration: 0.3s;
             margin: 0;
         }
 
         .border-button .iconer {
-            transform: translateY(35px);
+            transform: translateY(40px);
             transition-duration: 0.3s;
             margin: 0;
             display: flex;
@@ -558,7 +557,7 @@
         }
 
         .border-button:hover .button-text {
-            transform: translateX(5px);
+            transform: translateX(6px);
         }
 
         .border-button:hover .iconer {
@@ -568,7 +567,7 @@
         footer {
             background-color: #333;
             color: white;
-            padding: 15px 30px;
+            padding: 25px 40px;
             text-align: center;
             margin-left: 290px;
             z-index: 1;
@@ -577,18 +576,18 @@
 
         footer p {
             margin: 0;
-            font-size: 14px;
+            font-size: 18px;
         }
 
         .footer-links {
-            margin-top: 5px;
+            margin-top: 15px;
         }
 
         .footer-links a {
             color: #d7b15c;
             text-decoration: none;
-            margin: 0 10px;
-            font-size: 14px;
+            margin: 0 15px;
+            font-size: 18px;
         }
 
         .footer-links a:hover {
@@ -599,7 +598,6 @@
             background-color: #1a1a1a;
         }
 
-        /* Dark Theme */
         body.dark-theme {
             background-color: #121212;
             color: #e0e0e0;
@@ -631,7 +629,6 @@
             color: #ffffff;
         }
 
-        /* Mobile Navigation Styles */
         .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
@@ -683,25 +680,25 @@
             }
 
             .card {
-                width: 300px;
+                width: 450px;
             }
 
             .user-info {
-                right: 10px;
-                font-size: 14px;
+                right: 30px;
+                font-size: 18px;
             }
 
             .user-info .profile-pic {
-                width: 35px;
-                height: 35px;
+                width: 55px;
+                height: 55px;
             }
 
             .user-info .user-details .email {
-                font-size: 12px;
+                font-size: 16px;
             }
 
             .search-container {
-                width: 50%;
+                width: 70%;
             }
         }
 
@@ -725,7 +722,7 @@
 
             .content {
                 margin-left: 200px;
-                padding: 10px;
+                padding: 30px;
             }
 
             footer {
@@ -734,20 +731,20 @@
 
             .card {
                 width: 100%;
-                max-width: 350px;
+                max-width: 450px;
             }
 
             .user-info {
-                font-size: 14px;
+                font-size: 16px;
             }
 
             .fingerprint-icon {
-                width: 120px;
-                height: 120px;
+                width: 180px;
+                height: 180px;
             }
 
             .search-container {
-                width: 70%;
+                width: 80%;
             }
         }
 
@@ -794,46 +791,38 @@
 
             .content {
                 margin-left: 0;
-                padding: 80px 10px 10px;
+                padding: 80px 15px 15px;
             }
 
             footer {
                 margin-left: 0;
-                padding: 10px 20px;
+                padding: 15px 20px;
                 text-align: center;
             }
 
             footer p {
-                font-size: 12px;
+                font-size: 14px;
             }
 
             .footer-links a {
-                font-size: 12px;
+                font-size: 14px;
                 margin: 0 8px;
             }
 
             .user-info {
                 position: static;
-                margin: 10px auto;
+                margin: 15px auto;
                 justify-content: center;
             }
 
             .fingerprint-icon {
-                width: 90px;
-                height: 90px;
+                width: 140px;
+                height: 140px;
             }
 
             .fingerprint-icon::before {
-                content: "";
-                position: absolute;
-                margin-right: 4px;
-                margin-top: 4px;
-                width: 96px;
-                height: 93px;
-                border: 3px solid;
-                border-radius: 50%;
-                z-index: 0;
-                color: #000000;
+                width: 120px;
+                height: 120px;
             }
 
             .search-container {
@@ -846,10 +835,10 @@
             }
 
             .avatar-customization {
-                top: 60px;
+                top: 70px;
                 right: 50%;
                 transform: translateX(50%);
-                width: 180px;
+                width: 220px;
             }
         }
     </style>
@@ -858,7 +847,6 @@
     <div class="loader-overlay" id="loaderOverlay">
         <div class="loader"></div>
     </div>
-    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="#" class="logo">Contra E-Crime</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -907,14 +895,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="#" id="logoutLink">
                         <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
                         Logout
                     </a>
                 </li>
             </ul>
 
-            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -974,7 +961,6 @@
             <section class="articles">
                 <h2>TOP ARTICLES</h2>
                 <div class="cards-container" id="cardsContainer">
-                    <!-- Card 1 -->
                     <div class="card" data-title="Hacking">
                         <div class="image_container">
                             <img src="https://static.toiimg.com/thumb/msid-117988403,width-1280,height-720,resizemode-4/117988403.jpg" alt="Cybercrime Image">
@@ -993,7 +979,6 @@
                         </a>
                     </div>
             
-                    <!-- Card 2 -->
                     <div class="card" data-title="Phishing and Scam">
                         <div class="image_container">
                             <img src="https://safeonline.security.vt.edu/content/safeonline_security_vt_edu/en/phishing/_jcr_content/article-image.transform/m-medium/image.jpeg" alt="Cybercrime Image">
@@ -1012,7 +997,6 @@
                         </a>
                     </div>
             
-                    <!-- Card 3 -->
                     <div class="card" data-title="Internet Fraud">
                         <div class="image_container">
                             <img src="https://gdprinformer.com/wp-content/uploads/2017/09/fraud-laptop.jpg" alt="Cybercrime Image">
@@ -1031,7 +1015,6 @@
                         </a>
                     </div>
             
-                    <!-- Card 4 -->
                     <div class="card" data-title="Ransomware Attack">
                         <div class="image_container">
                             <img src="https://riskonnect.com/wp-content/uploads/2024/09/Blog-Image-How-to-Lessen-the-Pain-of-Ransomware-Attacks-3.webp" alt="Cybercrime Image">
@@ -1062,8 +1045,28 @@
         </footer>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
+            authDomain: "contra-e-crime.firebaseapp.com",
+            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com",
+            projectId: "contra-e-crime",
+            storageBucket: "contra-e-crime.firebasestorage.app",
+            messagingSenderId: "198995444405",
+            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
+            measurementId: "G-7Y2E24DD42"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+        const storage = firebase.storage();
+
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1076,44 +1079,60 @@
         const avatarColor = document.getElementById('avatarColor');
         const borderColor = document.getElementById('borderColor');
         const saveAvatar = document.getElementById('saveAvatar');
+        const logoutLink = document.getElementById('logoutLink');
 
-        // Avatar customization functionality
         const avatarImages = {
-            avatar1: 'https://i.imgur.com/8Km9tLL.png', // Robot
-            avatar2: 'https://i.imgur.com/5q0dY2s.png', // Cat
-            avatar3: 'https://i.imgur.com/5q8tY2s.png'  // Astronaut
+            avatar1: 'https://i.imgur.com/8Km9tLL.png',
+            avatar2: 'https://i.imgur.com/5q0dY2s.png',
+            avatar3: 'https://i.imgur.com/5q8tY2s.png'
         };
 
-        // Load saved avatar settings
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedAvatar = JSON.parse(localStorage.getItem('avatarSettings'));
-            if (savedAvatar) {
-                avatarSelect.value = savedAvatar.avatar;
-                avatarColor.value = savedAvatar.color;
-                borderColor.value = savedAvatar.borderColor || '#000000';
-                updateAvatar(savedAvatar.avatar, savedAvatar.color, savedAvatar.borderColor, savedAvatar.customImage);
-            }
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                const userRef = db.ref('users/' + user.uid);
+                userRef.once('value', (snapshot) => {
+                    const userData = snapshot.val();
+                    if (userData) {
+                        document.querySelector('.user-info .username').textContent = userData.username || 'User';
+                        document.querySelector('.user-info .email').textContent = userData.email || 'email@example.com';
 
-            // Load user data
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            const usernameElement = document.querySelector('.user-info .username');
-            const emailElement = document.querySelector('.user-info .email');
-
-            if (currentUser && currentUser.username && currentUser.email) {
-                usernameElement.textContent = currentUser.username;
-                emailElement.textContent = currentUser.email;
+                        if (userData.avatarSettings) {
+                            avatarSelect.value = userData.avatarSettings.avatar;
+                            avatarColor.value = userData.avatarSettings.color;
+                            borderColor.value = userData.avatarSettings.borderColor || '#000000';
+                            updateAvatar(
+                                userData.avatarSettings.avatar,
+                                userData.avatarSettings.color,
+                                userData.avatarSettings.borderColor,
+                                userData.avatarSettings.customImage
+                            );
+                        }
+                    } else {
+                        document.querySelector('.user-info .username').textContent = 'Guest';
+                        document.querySelector('.user-info .email').textContent = 'guest@example.com';
+                    }
+                });
             } else {
-                usernameElement.textContent = 'Guest';
-                emailElement.textContent = 'guest@example.com';
+                window.location.href = 'index.html';
             }
         });
 
-        // Toggle customization panel
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loaderOverlay.classList.add('active');
+            auth.signOut().then(() => {
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 150);
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        });
+
         profilePic.addEventListener('click', () => {
             avatarCustomization.classList.toggle('active');
         });
 
-        // Handle image upload
         avatarImage.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
@@ -1126,7 +1145,6 @@
             }
         });
 
-        // Update avatar preview
         function updateAvatar(avatar, color, border, customImage) {
             if (customImage) {
                 profilePic.style.backgroundImage = `url(${customImage})`;
@@ -1137,7 +1155,6 @@
             profilePic.style.borderColor = border;
         }
 
-        // Update avatar on selection change
         avatarSelect.addEventListener('change', () => {
             updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
         });
@@ -1150,19 +1167,29 @@
             updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
         });
 
-        // Save avatar settings
-        saveAvatar.addEventListener('click', () => {
-            const avatarSettings = {
-                avatar: avatarSelect.value,
-                color: avatarColor.value,
-                borderColor: borderColor.value,
-                customImage: profilePic.style.backgroundImage.includes('data:image') ? profilePic.style.backgroundImage.slice(5, -2) : null
-            };
-            localStorage.setItem('avatarSettings', JSON.stringify(avatarSettings));
-            avatarCustomization.classList.remove('active');
+        saveAvatar.addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (user) {
+                let customImageUrl = null;
+                const file = avatarImage.files[0];
+                if (file) {
+                    const storageRef = storage.ref(`profileImages/${user.uid}/${file.name}`);
+                    await storageRef.put(file);
+                    customImageUrl = await storageRef.getDownloadURL();
+                }
+
+                const avatarSettings = {
+                    avatar: avatarSelect.value,
+                    color: avatarColor.value,
+                    borderColor: borderColor.value,
+                    customImage: customImageUrl
+                };
+                await db.ref('users/' + user.uid + '/avatarSettings').set(avatarSettings);
+                updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, customImageUrl);
+                avatarCustomization.classList.remove('active');
+            }
         });
 
-        // Close customization panel when clicking outside
         document.addEventListener('click', (e) => {
             if (!avatarCustomization.contains(e.target) && e.target !== profilePic) {
                 avatarCustomization.classList.remove('active');
@@ -1197,7 +1224,7 @@
         });
 
         document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#') && link.id !== 'logoutLink') {
                 link.addEventListener('click', function(e) {
                     if (!this.href.includes(window.location.hostname)) return;
                     
@@ -1221,7 +1248,7 @@
 
             const fuse = new Fuse(list, {
                 keys: ['title'],
-                threshold: 0.4,      
+                threshold: 0.4,
                 distance: 100
             });
 
