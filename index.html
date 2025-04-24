@@ -126,8 +126,8 @@
             background-size: cover;
             background-position: center;
             opacity: 0.3;
-            z-index: 0;
-            pointer-events: none;
+            z-index: 0; /* Ensure background stays behind form elements */
+            pointer-events: none; /* Prevent background from intercepting clicks */
         }
 
         .logoname {
@@ -158,7 +158,7 @@
             font-size: 14px;
             position: relative;
             z-index: 1;
-            cursor: pointer;
+            cursor: pointer; /* Make label clickable to focus input */
         }
 
         .input-container {
@@ -180,8 +180,8 @@
             font-size: 14px;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
             position: relative;
-            z-index: 2;
-            background-color: #fff;
+            z-index: 2; /* Ensure inputs are above other elements */
+            background-color: #fff; /* Ensure background is not transparent */
         }
 
         input[type="text"]:focus,
@@ -190,12 +190,12 @@
             border-color: #580100;
             box-shadow: 0 0 5px rgba(88, 1, 0, 0.3);
             outline: none;
-            z-index: 2;
+            z-index: 2; /* Keep focus state above other elements */
         }
 
         input[readonly] {
             background-color: #ffffff;
-            cursor: default;
+            cursor: default; /* Corrected from 'allowed' to 'default' */
         }
 
         .toggle-password {
@@ -206,7 +206,7 @@
             cursor: pointer;
             color: #580100;
             transition: color 0.3s ease;
-            z-index: 3;
+            z-index: 3; /* Ensure toggle icon is clickable */
         }
 
         .toggle-password:hover {
@@ -233,7 +233,7 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
-            z-index: 2;
+            z-index: 2; /* Ensure checkbox is clickable */
         }
 
         .checkbox label {
@@ -612,6 +612,12 @@
                 <label for="google-username">Username</label>
                 <input type="text" id="google-username" placeholder="Enter your username" required>
                 
+                <label for="google-password">Password</label>
+                <div class="input-container">
+                    <input type="password" id="google-password" placeholder="Enter your password" required>
+                    <i class="fas fa-eye toggle-password" id="toggleGooglePassword"></i>
+                </div>
+                
                 <div class="buttons-container">
                     <button type="submit" class="action-btn">Sign Up</button>
                 </div>
@@ -621,13 +627,12 @@
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
-            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com",
             projectId: "contra-e-crime",
             storageBucket: "contra-e-crime.firebasestorage.app",
             messagingSenderId: "198995444405",
@@ -637,18 +642,12 @@
 
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const db = firebase.database();
-
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                window.location.href = "HomePage.html";
-            }
-        });
+        const db = firebase.firestore();
 
         async function logLoginEvent(userEmail) {
             try {
-                const timestamp = new Date().toISOString();
-                await db.ref('loginEvents').push({
+                const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+                await db.collection('loginEvents').add({
                     userEmail: userEmail,
                     timestamp: timestamp
                 });
@@ -672,6 +671,18 @@
                     });
                 }
 
+                const toggleGooglePassword = document.querySelector('#toggleGooglePassword');
+                const googlePassword = document.querySelector('#google-password');
+
+                if (toggleGooglePassword && googlePassword) {
+                    toggleGooglePassword.addEventListener('click', function () {
+                        const type = googlePassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                        googlePassword.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                }
+
+                // Ensure inputs are clickable by adding a click handler to labels
                 document.querySelectorAll('label[for]').forEach(label => {
                     label.addEventListener('click', () => {
                         const input = document.getElementById(label.getAttribute('for'));
@@ -697,14 +708,35 @@
                             const passwordValue = loginPassword.value.trim();
                             const rememberMe = document.getElementById('rememberme').checked;
 
-                            await auth.signInWithEmailAndPassword(email, passwordValue);
+                            const users = JSON.parse(localStorage.getItem('users')) || [];
+                            const user = users.find(user => user.email === email);
+
+                            if (!user) {
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Email not found. Please sign up.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            if (user.password !== passwordValue) {
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Incorrect password. Please try again.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
 
                             await logLoginEvent(email);
 
+                            localStorage.setItem('currentUser', JSON.stringify({ email, username: user.username }));
+
                             if (rememberMe) {
-                                await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                                localStorage.setItem('rememberMe', 'true');
                             } else {
-                                await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+                                localStorage.removeItem('rememberMe');
                             }
 
                             submitButton.classList.remove('loading');
@@ -715,7 +747,7 @@
                             console.error('Login error:', error);
                             loginErrorMessage.style.display = 'block';
                             loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = error.message;
+                            loginErrorMessage.textContent = 'An error occurred during login. Please try again.';
                             submitButton.classList.remove('loading');
                             submitButton.disabled = false;
                         }
@@ -741,17 +773,20 @@
                                     username: user.displayName || 'Google User'
                                 };
 
-                                const userRef = db.ref('users/' + user.uid);
-                                userRef.once('value', (snapshot) => {
-                                    if (snapshot.exists()) {
-                                        logLoginEvent(googleUserData.email);
-                                        window.location.href = "HomePage.html";
-                                    } else {
-                                        document.getElementById('google-email').value = googleUserData.email;
-                                        document.getElementById('google-username').value = googleUserData.username;
-                                        googleSignInModal.style.display = 'block';
-                                    }
-                                });
+                                const userDoc = await db.collection('users').doc(googleUserData.email).get();
+                                if (userDoc.exists) {
+                                    await logLoginEvent(googleUserData.email);
+                                    localStorage.setItem('currentUser', JSON.stringify({
+                                        email: userDoc.data().email,
+                                        username: userDoc.data().username
+                                    }));
+                                    localStorage.setItem('rememberMe', 'true');
+                                    window.location.href = "HomePage.html";
+                                } else {
+                                    document.getElementById('google-email').value = googleUserData.email;
+                                    document.getElementById('google-username').value = googleUserData.username;
+                                    googleSignInModal.style.display = 'block';
+                                }
                             })
                             .catch((error) => {
                                 googleSignInBtn.classList.remove('loading');
@@ -773,6 +808,7 @@
                         try {
                             const email = document.getElementById('google-email').value.trim();
                             const username = document.getElementById('google-username').value.trim();
+                            const password = document.getElementById('google-password').value.trim();
 
                             if (!username) {
                                 loginErrorMessage.style.display = 'block';
@@ -783,24 +819,36 @@
                                 return;
                             }
 
-                            const user = auth.currentUser;
-                            if (user) {
-                                await db.ref('users/' + user.uid).set({
-                                    email: email,
-                                    username: username,
-                                    createdAt: new Date().toISOString()
-                                });
-
-                                await logLoginEvent(email);
-
+                            if (!password) {
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Please enter a password.';
                                 submitButton.classList.remove('loading');
                                 submitButton.disabled = false;
-                                googleSignInModal.style.display = 'none';
-
-                                window.location.href = "HomePage.html";
-                            } else {
-                                throw new Error('User not authenticated');
+                                return;
                             }
+
+                            await db.collection('users').doc(email).set({
+                                email: email,
+                                username: username,
+                                password: password,
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+
+                            let users = JSON.parse(localStorage.getItem('users')) || [];
+                            users.push({ email, username, password });
+                            localStorage.setItem('users', JSON.stringify(users));
+
+                            await logLoginEvent(email);
+
+                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+                            localStorage.setItem('rememberMe', 'true');
+
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            googleSignInModal.style.display = 'none';
+
+                            window.location.href = "HomePage.html";
                         } catch (error) {
                             console.error('Google Sign-In submission error:', error);
                             loginErrorMessage.style.display = 'block';
