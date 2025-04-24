@@ -204,7 +204,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            box-shadow: inset 8px -3px 0px 0px #d8dbe0;
+            box-shadow: inset 8px - 3px 0px 0px #d8dbe0;
             background-color: #28292c;
             transition: 0.3s;
         }
@@ -217,7 +217,7 @@
 
         .content {
             flex: 1;
-            padding: 40px;
+            padding: 20px;
             margin-left: 290px;
             overflow-y: auto;
             transition: background-color 0.3s ease, margin-left 0.3s ease;
@@ -227,19 +227,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             position: relative;
         }
 
         .user-info {
             position: absolute;
             top: 0;
-            right: 40px;
+            right: 20px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            font-size: 20px;
+            gap: 15px;
+            font-size: 18px;
             color: #333;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .user-info:hover {
+            background-color: #f0f0f0;
         }
 
         .user-info .profile-pic {
@@ -247,91 +256,12 @@
             height: 60px;
             border-radius: 50%;
             background-color: #ccc;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-            position: relative;
-            border: 4px solid #000;
-        }
-
-        .avatar-customization {
-            display: none;
-            position: absolute;
-            top: 70px;
-            right: 0;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            width: 300px;
-        }
-
-        .avatar-customization.active {
-            display: block;
-        }
-
-        .avatar-customization label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .avatar-customization select–
-        .avatar-customization input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .avatar-customization input[type="file"] {
-            padding: 5px;
-        }
-
-        .avatar-customization button {
-            width: 100%;
-            padding: 12px;
-            background-color: #580100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
             color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .avatar-customization button:hover {
-            background-color: #8B0000;
-        }
-
-        .dark-theme .avatar-customization {
-            background-color: #3a3b3c;
-            border-color: #555;
-        }
-
-        .dark-theme .avatar-customization label {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .avatar-customization select–
-        .dark-theme .avatar-customization input[type="file"] {
-            background-color: #555;
-            color: #e0e0e0;
-            border-color: #777;
-        }
-
-        .dark-theme .avatar-customization button {
-            background-color: #d7b15c;
-            color: #28292c;
-        }
-
-        .dark-theme .avatar-customization button:hover {
-            background-color: #e0c680;
+            object-fit: cover;
         }
 
         .user-info .user-details {
@@ -341,28 +271,121 @@
 
         .user-info .user-details .username {
             font-weight: 600;
-            font-size: 22px;
         }
 
         .user-info .user-details .email {
-            font-size: 18px;
+            font-size: 14px;
             color: #666;
         }
 
         .dark-theme .user-info {
             color: #e0e0e0;
+            background-color: #3a3b3c;
+        }
+
+        .dark-theme .user-info:hover {
+            background-color: #4a4b4c;
         }
 
         .dark-theme .user-info .user-details .email {
             color: #b0b0b0;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+            position: relative;
+        }
+
+        .dark-theme .modal-content {
+            background-color: #3a3b3c;
+            color: #e0e0e0;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .dark-theme .close-modal {
+            color: #e0e0e0;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+        }
+
+        .modal-content select, .modal-content input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .dark-theme .modal-content select, .dark-theme .modal-content input[type="file"] {
+            background-color: #4a4b4c;
+            color: #e0e0e0;
+            border-color: #666;
+        }
+
+        .modal-content button {
+            padding: 10px 20px;
+            background-color: #d7b15c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        .modal-content button:hover {
+            background-color: #b7b90d;
+        }
+
+        .saved-configs {
+            margin-top: 20px;
+        }
+
+        .saved-configs div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dark-theme .saved-configs div {
+            border-bottom-color: #666;
+        }
+
         .fingerprint-icon {
-            width: 220px;
-            height: 220px;
+            width: 150px;
+            height: 150px;
             background: url('https://static.thenounproject.com/png/1238269-200.png') no-repeat center center;
             background-size: contain;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             position: relative;
             display: flex;
             justify-content: center;
@@ -374,47 +397,50 @@
             position: absolute;
             margin-right: 4px;
             margin-top: 4px;
-            width: 200px;
-            height: 200px;
-            border: 4px solid;
+            width: 138px;
+            height: 140px;
+            border: 3px solid;
             border-radius: 50%;
             z-index: 0;
             color: #000000;
         }
 
+        /* Search Bar */
         .search-container {
-            width: 60%;
+            width: 40%;
             position: relative;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .search-icon {
             position: absolute;
-            right: 15px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
         }
 
         .search-input {
             width: 100%;
-            height: 60px;
-            padding: 15px;
+            height: 40px;
+            padding: 10px;
             transition: .2s linear;
-            border: 3px solid black;
-            font-size: 18px;
+            border: 2.5px solid black;
+            font-size: 14px;
             letter-spacing: 1px;
-            border-radius: 8px;
+            border-radius: 5px;
         }
 
         .search-input:focus {
             outline: none;
-            border: 1px solid black;
-            box-shadow: -3px -2px 0px black;
+            border: 0.5px solid black;
+            box-shadow: -2px -1px 0px black;
         }
 
         .search-container:hover > .search-icon {
             animation: anim 1s linear infinite;
         }
+
+
 
         @keyframes anim {
             0%,
@@ -443,19 +469,19 @@
         }
 
         .articles {
-            margin-top: 40px;
+            margin-top: 20px;
             color: #000000;
             text-align: center;
         }
 
         .articles h2 {
-            margin-bottom: 50px;
-            font-size: 36px;
+            margin-bottom: 30px;
+            font-size: 24px;
         }
 
         .cards-container {
             display: flex;
-            gap: 60px;
+            gap: 35px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -472,11 +498,11 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
-            padding: 2rem;
-            width: 500px;
+            gap: 0.75rem;
+            padding: 1rem;
+            width: 350px;
             background-color: var(--bg-card);
-            border-radius: 1.5rem;
+            border-radius: 1rem;
             justify-content: space-between;
         }
 
@@ -485,7 +511,7 @@
         }
 
         .card.highlight {
-            box-shadow: 0 0 15px 8px rgba(230, 207, 5, 0.5);
+            box-shadow: 0 0 10px 5px rgba(230, 207, 5, 0.5);
         }
 
         .image_container {
@@ -494,9 +520,9 @@
             position: relative;
             z-index: 5;
             width: 100%;
-            height: 350px;
+            height: 200px;
             background-color: var(--primary-800);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
         }
 
         .image_container img {
@@ -508,7 +534,7 @@
         .cybercrime-title {
             overflow: clip;
             width: 100%;
-            font-size: 1.8rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--light);
             text-transform: capitalize;
@@ -517,39 +543,40 @@
         }
 
         .cybercrime-description {
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             color: var(--light);
-            line-height: 1.5;
+            line-height: 1.4;
             text-align: justify;
         }
 
+        /* Read More */
         .border-button {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 8px;
-            border-radius: 12px;
-            border: 2px solid rgb(255, 255, 255);
+            gap: 10px;
+            padding: 6px 5px;
+            border-radius: 10px;
+            border: 1px solid rgb(255, 255, 255);
             overflow: hidden;
             background: transparent;
             color: rgb(255, 255, 255);
             cursor: pointer;
             align-self: flex-end;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             transition: all 0.3s ease;
             text-decoration: none;
         }
 
         .border-button .button-text {
-            transform: translateX(20px);
-            font-size: 1.1em;
+            transform: translateX(17px);
+            font-size: 0.9em;
             font-weight: 500;
             transition-duration: 0.3s;
             margin: 0;
         }
 
         .border-button .iconer {
-            transform: translateY(40px);
+            transform: translateY(35px);
             transition-duration: 0.3s;
             margin: 0;
             display: flex;
@@ -557,7 +584,7 @@
         }
 
         .border-button:hover .button-text {
-            transform: translateX(6px);
+            transform: translateX(5px);
         }
 
         .border-button:hover .iconer {
@@ -567,7 +594,7 @@
         footer {
             background-color: #333;
             color: white;
-            padding: 25px 40px;
+            padding: 15px 30px;
             text-align: center;
             margin-left: 290px;
             z-index: 1;
@@ -576,18 +603,18 @@
 
         footer p {
             margin: 0;
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .footer-links {
-            margin-top: 15px;
+            margin-top: 5px;
         }
 
         .footer-links a {
             color: #d7b15c;
             text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
+            margin: 0 10px;
+            font-size: 14px;
         }
 
         .footer-links a:hover {
@@ -598,6 +625,7 @@
             background-color: #1a1a1a;
         }
 
+        /* Dark Theme */
         body.dark-theme {
             background-color: #121212;
             color: #e0e0e0;
@@ -629,6 +657,7 @@
             color: #ffffff;
         }
 
+        /* Mobile Navigation Styles */
         .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
@@ -680,25 +709,26 @@
             }
 
             .card {
-                width: 450px;
+                width: 300px;
             }
 
             .user-info {
-                right: 30px;
-                font-size: 18px;
+                right: 10px;
+                font-size: 16px;
+                padding: 10px;
             }
 
             .user-info .profile-pic {
-                width: 55px;
-                height: 55px;
+                width: 50px;
+                height: 50px;
             }
 
             .user-info .user-details .email {
-                font-size: 16px;
+                font-size: 12px;
             }
 
             .search-container {
-                width: 70%;
+                width: 50%;
             }
         }
 
@@ -722,7 +752,7 @@
 
             .content {
                 margin-left: 200px;
-                padding: 30px;
+                padding: 10px;
             }
 
             footer {
@@ -731,20 +761,26 @@
 
             .card {
                 width: 100%;
-                max-width: 450px;
+                max-width: 350px;
             }
 
             .user-info {
-                font-size: 16px;
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .user-info .profile-pic {
+                width: 45px;
+                height: 45px;
             }
 
             .fingerprint-icon {
-                width: 180px;
-                height: 180px;
+                width: 120px;
+                height: 120px;
             }
 
             .search-container {
-                width: 80%;
+                width: 70%;
             }
         }
 
@@ -791,38 +827,45 @@
 
             .content {
                 margin-left: 0;
-                padding: 80px 15px 15px;
+                padding: 80px 10px 10px;
             }
 
             footer {
                 margin-left: 0;
-                padding: 15px 20px;
+                padding: 10px 20px;
                 text-align: center;
             }
 
             footer p {
-                font-size: 14px;
+                font-size: 12px;
             }
 
             .footer-links a {
-                font-size: 14px;
+                font-size: 12px;
                 margin: 0 8px;
             }
 
             .user-info {
                 position: static;
-                margin: 15px auto;
+                margin: 10px auto;
                 justify-content: center;
+                width: 90%;
+                font-size: 14px;
+            }
+
+            .user-info .profile-pic {
+                width: 50px;
+                height: 50px;
             }
 
             .fingerprint-icon {
-                width: 140px;
-                height: 140px;
+                width: 90px;
+                height: 90px;
             }
 
             .fingerprint-icon::before {
-                width: 120px;
-                height: 120px;
+                width: 96px;
+                height: 93px;
             }
 
             .search-container {
@@ -833,13 +876,6 @@
                 width: 100%;
                 max-width: 100%;
             }
-
-            .avatar-customization {
-                top: 70px;
-                right: 50%;
-                transform: translateX(50%);
-                width: 220px;
-            }
         }
     </style>
 </head>
@@ -847,6 +883,7 @@
     <div class="loader-overlay" id="loaderOverlay">
         <div class="loader"></div>
     </div>
+    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="#" class="logo">Contra E-Crime</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -895,13 +932,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" id="logoutLink">
+                    <a href="index.html">
                         <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
                         Logout
                     </a>
                 </li>
             </ul>
 
+            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -917,36 +955,11 @@
         </nav>
         <main class="content">
             <div class="header">
-                <div class="user-info">
-                    <div class="profile-pic" id="profilePic"></div>
-                    <div class="avatar-customization" id="avatarCustomization">
-                        <label for="avatarImage">Upload Image:</label>
-                        <input type="file" id="avatarImage" accept="image/*">
-                        <label for="avatarSelect">Select Avatar:</label>
-                        <select id="avatarSelect">
-                            <option value="avatar1">Avatar 1 (Robot)</option>
-                            <option value="avatar2">Avatar 2 (Cat)</option>
-                            <option value="avatar3">Avatar 3 (Astronaut)</option>
-                        </select>
-                        <label for="avatarColor">Background Color:</label>
-                        <select id="avatarColor">
-                            <option value="#ff4d4d">Red</option>
-                            <option value="#4d79ff">Blue</option>
-                            <option value="#4dff4d">Green</option>
-                            <option value="#ffff4d">Yellow</option>
-                        </select>
-                        <label for="borderColor">Border Color:</label>
-                        <select id="borderColor">
-                            <option value="#000000">Black</option>
-                            <option value="#ffffff">White</option>
-                            <option value="#ff0000">Red</option>
-                            <option value="#0000ff">Blue</option>
-                        </select>
-                        <button id="saveAvatar">Save</button>
-                    </div>
+                <div class="user-info" id="userInfo">
+                    <img class="profile-pic" id="profilePic" src="" alt="Profile">
                     <div class="user-details">
-                        <span class="username">User</span>
-                        <span class="email">email@example.com</span>
+                        <span class="username" id="username">User</span>
+                        <span class="email" id="email">email@example.com</span>
                     </div>
                 </div>
                 <div class="fingerprint-icon"></div>
@@ -961,6 +974,7 @@
             <section class="articles">
                 <h2>TOP ARTICLES</h2>
                 <div class="cards-container" id="cardsContainer">
+                    <!-- Card 1 -->
                     <div class="card" data-title="Hacking">
                         <div class="image_container">
                             <img src="https://static.toiimg.com/thumb/msid-117988403,width-1280,height-720,resizemode-4/117988403.jpg" alt="Cybercrime Image">
@@ -979,6 +993,7 @@
                         </a>
                     </div>
             
+                    <!-- Card 2 -->
                     <div class="card" data-title="Phishing and Scam">
                         <div class="image_container">
                             <img src="https://safeonline.security.vt.edu/content/safeonline_security_vt_edu/en/phishing/_jcr_content/article-image.transform/m-medium/image.jpeg" alt="Cybercrime Image">
@@ -997,6 +1012,7 @@
                         </a>
                     </div>
             
+                    <!-- Card 3 -->
                     <div class="card" data-title="Internet Fraud">
                         <div class="image_container">
                             <img src="https://gdprinformer.com/wp-content/uploads/2017/09/fraud-laptop.jpg" alt="Cybercrime Image">
@@ -1015,6 +1031,7 @@
                         </a>
                     </div>
             
+                    <!-- Card 4 -->
                     <div class="card" data-title="Ransomware Attack">
                         <div class="image_container">
                             <img src="https://riskonnect.com/wp-content/uploads/2024/09/Blog-Image-How-to-Lessen-the-Pain-of-Ransomware-Attacks-3.webp" alt="Cybercrime Image">
@@ -1035,6 +1052,33 @@
                 </div>
             </section>
         </main>
+        <!-- Customization Modal -->
+        <div class="modal" id="customizeModal">
+            <div class="modal-content">
+                <span class="close-modal" id="closeModal">&times;</span>
+                <h2>Customize Profile</h2>
+                <label for="avatarSelect">Avatar:</label>
+                <select id="avatarSelect">
+                    <option value="">None</option>
+                    <!-- Populated dynamically -->
+                </select>
+                <input type="file" id="avatarUpload" accept="image/*">
+                <label for="bgColorSelect">Background Color:</label>
+                <select id="bgColorSelect">
+                    <option value="">None</option>
+                    <option value="#f0f0f0">Light Gray</option>
+                    <option value="#d7b15c">Gold</option>
+                    <option value="#3a3b3c">Dark Gray</option>
+                    <option value="#e6f3ff">Light Blue</option>
+                    <option value="#ffe6e6">Light Red</option>
+                </select>
+                <button id="saveConfig">Save Configuration</button>
+                <button id="applyConfig">Apply</button>
+                <div class="saved-configs" id="savedConfigs">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
             <div class="footer-links">
@@ -1045,26 +1089,27 @@
         </footer>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
     <script>
+        // Firebase Configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
-            authDomain: "contra-e-crime.firebaseapp.com",
-            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com",
-            projectId: "contra-e-crime",
-            storageBucket: "contra-e-crime.firebasestorage.app",
-            messagingSenderId: "198995444405",
-            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-            measurementId: "G-7Y2E24DD42"
+            // Replace with your Firebase project configuration
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
-        const app = firebase.initializeApp(firebaseConfig);
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const db = firebase.database();
+        const db = firebase.firestore();
         const storage = firebase.storage();
 
         const themeToggle = document.getElementById('themeToggle');
@@ -1072,130 +1117,20 @@
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
-        const profilePic = document.getElementById('profilePic');
-        const avatarCustomization = document.getElementById('avatarCustomization');
-        const avatarImage = document.getElementById('avatarImage');
+        const userInfo = document.getElementById('userInfo');
+        const customizeModal = document.getElementById('customizeModal');
+        const closeModal = document.getElementById('closeModal');
         const avatarSelect = document.getElementById('avatarSelect');
-        const avatarColor = document.getElementById('avatarColor');
-        const borderColor = document.getElementById('borderColor');
-        const saveAvatar = document.getElementById('saveAvatar');
-        const logoutLink = document.getElementById('logoutLink');
+        const avatarUpload = document.getElementById('avatarUpload');
+        const bgColorSelect = document.getElementById('bgColorSelect');
+        const saveConfig = document.getElementById('saveConfig');
+        const applyConfig = document.getElementById('applyConfig');
+        const savedConfigs = document.getElementById('savedConfigs');
+        const profilePic = document.getElementById('profilePic');
+        const usernameElement = document.getElementById('username');
+        const emailElement = document.getElementById('email');
 
-        const avatarImages = {
-            avatar1: 'https://i.imgur.com/8Km9tLL.png',
-            avatar2: 'https://i.imgur.com/5q0dY2s.png',
-            avatar3: 'https://i.imgur.com/5q8tY2s.png'
-        };
-
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const userRef = db.ref('users/' + user.uid);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        document.querySelector('.user-info .username').textContent = userData.username || 'User';
-                        document.querySelector('.user-info .email').textContent = userData.email || 'email@example.com';
-
-                        if (userData.avatarSettings) {
-                            avatarSelect.value = userData.avatarSettings.avatar;
-                            avatarColor.value = userData.avatarSettings.color;
-                            borderColor.value = userData.avatarSettings.borderColor || '#000000';
-                            updateAvatar(
-                                userData.avatarSettings.avatar,
-                                userData.avatarSettings.color,
-                                userData.avatarSettings.borderColor,
-                                userData.avatarSettings.customImage
-                            );
-                        }
-                    } else {
-                        document.querySelector('.user-info .username').textContent = 'Guest';
-                        document.querySelector('.user-info .email').textContent = 'guest@example.com';
-                    }
-                });
-            } else {
-                window.location.href = 'index.html';
-            }
-        });
-
-        logoutLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            loaderOverlay.classList.add('active');
-            auth.signOut().then(() => {
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 150);
-            }).catch((error) => {
-                console.error('Logout error:', error);
-            });
-        });
-
-        profilePic.addEventListener('click', () => {
-            avatarCustomization.classList.toggle('active');
-        });
-
-        avatarImage.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const imageData = event.target.result;
-                    updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, imageData);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        function updateAvatar(avatar, color, border, customImage) {
-            if (customImage) {
-                profilePic.style.backgroundImage = `url(${customImage})`;
-            } else {
-                profilePic.style.backgroundImage = `url(${avatarImages[avatar]})`;
-            }
-            profilePic.style.backgroundColor = color;
-            profilePic.style.borderColor = border;
-        }
-
-        avatarSelect.addEventListener('change', () => {
-            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
-        });
-
-        avatarColor.addEventListener('change', () => {
-            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
-        });
-
-        borderColor.addEventListener('change', () => {
-            updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
-        });
-
-        saveAvatar.addEventListener('click', async () => {
-            const user = auth.currentUser;
-            if (user) {
-                let customImageUrl = null;
-                const file = avatarImage.files[0];
-                if (file) {
-                    const storageRef = storage.ref(`profileImages/${user.uid}/${file.name}`);
-                    await storageRef.put(file);
-                    customImageUrl = await storageRef.getDownloadURL();
-                }
-
-                const avatarSettings = {
-                    avatar: avatarSelect.value,
-                    color: avatarColor.value,
-                    borderColor: borderColor.value,
-                    customImage: customImageUrl
-                };
-                await db.ref('users/' + user.uid + '/avatarSettings').set(avatarSettings);
-                updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, customImageUrl);
-                avatarCustomization.classList.remove('active');
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!avatarCustomization.contains(e.target) && e.target !== profilePic) {
-                avatarCustomization.classList.remove('active');
-            }
-        });
-
+        // Load theme
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1211,6 +1146,7 @@
             }
         });
 
+        // Mobile menu toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -1223,8 +1159,9 @@
             }
         });
 
+        // Page transition loader
         document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#') && link.id !== 'logoutLink') {
+            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
                     if (!this.href.includes(window.location.hostname)) return;
                     
@@ -1238,6 +1175,7 @@
             }
         });
 
+        // Search functionality
         document.addEventListener('DOMContentLoaded', () => {
             const cards = Array.from(document.querySelectorAll('.card'));
 
@@ -1280,7 +1218,195 @@
                     card.style.order = -index;
                 });
             });
+
+            // Load user data and configurations
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    usernameElement.textContent = user.displayName || 'User';
+                    emailElement.textContent = user.email;
+                    loadUserConfigs(user.uid);
+                    loadUserAvatars(user.uid);
+                } else {
+                    usernameElement.textContent = 'Guest';
+                    emailElement.textContent = 'guest@example.com';
+                    // Optionally redirect to login
+                    // window.location.href = 'index.html';
+                }
+            });
         });
+
+        // Open customization modal
+        userInfo.addEventListener('click', () => {
+            customizeModal.style.display = 'flex';
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            customizeModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === customizeModal) {
+                customizeModal.style.display = 'none';
+            }
+        });
+
+        // Upload avatar
+        avatarUpload.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert('Please log in to upload an avatar.');
+                return;
+            }
+
+            loaderOverlay.classList.add('active');
+            try {
+                const storageRef = storage.ref(`avatars/${user.uid}/${file.name}`);
+                await storageRef.put(file);
+                const url = await storageRef.getDownloadURL();
+                
+                // Add to Firestore
+                await db.collection('users').doc(user.uid).collection('avatars').add({
+                    url,
+                    name: file.name,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Refresh avatar list
+                loadUserAvatars(user.uid);
+            } catch (error) {
+                console.error('Error uploading avatar:', error);
+                alert('Failed to upload avatar.');
+            } finally {
+                loaderOverlay.classList.remove('active');
+            }
+        });
+
+        // Load user avatars
+        async function loadUserAvatars(uid) {
+            avatarSelect.innerHTML = '<option value="">None</option>';
+            try {
+                const snapshot = await db.collection('users').doc(uid).collection('avatars').get();
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const option = document.createElement('option');
+                    option.value = data.url;
+                    option.textContent = data.name;
+                    avatarSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading avatars:', error);
+            }
+        }
+
+        // Save configuration
+        saveConfig.addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (!user) {
+                alert('Please log in to save configuration.');
+                return;
+            }
+
+            const avatar = avatarSelect.value;
+            const bgColor = bgColorSelect.value;
+
+            try {
+                // Check number of existing configs
+                const snapshot = await db.collection('users').doc(user.uid).collection('configs').get();
+                if (snapshot.size >= 5) {
+                    alert('Maximum 5 configurations allowed. Delete one to add a new one.');
+                    return;
+                }
+
+                await db.collection('users').doc(user.uid).collection('configs').add({
+                    avatar,
+                    bgColor,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                loadUserConfigs(user.uid);
+                alert('Configuration saved!');
+            } catch (error) {
+                console.error('Error saving configuration:', error);
+                alert('Failed to save configuration.');
+            }
+        });
+
+        // Apply configuration
+        applyConfig.addEventListener('click', () => {
+            const avatar = avatarSelect.value;
+            const bgColor = bgColorSelect.value;
+
+            // Apply avatar
+            if (avatar) {
+                profilePic.src = avatar;
+                profilePic.style.display = 'block';
+            } else {
+                profilePic.src = '';
+                profilePic.style.display = 'block';
+                profilePic.style.backgroundColor = '#ccc';
+            }
+
+            // Apply background color
+            userInfo.style.backgroundColor = bgColor || '';
+
+            // Save to localStorage for immediate effect
+            localStorage.setItem('userConfig', JSON.stringify({ avatar, bgColor }));
+        });
+
+        // Load saved configurations
+        async function loadUserConfigs(uid) {
+            savedConfigs.innerHTML = '';
+            try {
+                const snapshot = await db.collection('users').doc(uid).collection('configs').orderBy('createdAt', 'desc').get();
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const configDiv = document.createElement('div');
+                    configDiv.innerHTML = `
+                        <span>Avatar: ${data.avatar ? 'Custom' : 'None'}, Color: ${data.bgColor || 'None'}</span>
+                        <button onclick="applySavedConfig('${data.avatar}', '${data.bgColor}')">Apply</button>
+                        <button onclick="deleteConfig('${doc.id}')">Delete</button>
+                    `;
+                    savedConfigs.appendChild(configDiv);
+                });
+
+                // Load last applied config from localStorage
+                const savedConfig = JSON.parse(localStorage.getItem('userConfig'));
+                if (savedConfig) {
+                    profilePic.src = savedConfig.avatar || '';
+                    profilePic.style.backgroundColor = savedConfig.avatar ? '' : '#ccc';
+                    userInfo.style.backgroundColor = savedConfig.bgColor || '';
+                }
+            } catch (error) {
+                console.error('Error loading configurations:', error);
+            }
+        }
+
+        // Apply saved configuration
+        window.applySavedConfig = (avatar, bgColor) => {
+            avatarSelect.value = avatar;
+            bgColorSelect.value = bgColor;
+            applyConfig.click();
+        };
+
+        // Delete configuration
+        window.deleteConfig = async (configId) => {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            try {
+                await db.collection('users').doc(user.uid).collection('configs').doc(configId).delete();
+                loadUserConfigs(user.uid);
+                alert('Configuration deleted!');
+            } catch (error) {
+                console.error('Error deleting configuration:', error);
+                alert('Failed to delete configuration.');
+            }
+        };
     </script>
 </body>
 </html>
