@@ -896,7 +896,8 @@
                 </div>
 
                 <div class="policy-section" id="how-use">
-                    <h2>How We Use Your Information</h2>                    <p>We use the information we collect for the following purposes:</p>
+                    <h2>How We Use Your Information</h2>
+                    <p>We use the information we collect for the following purposes:</p>
                     <ul>
                         <li><strong>Provide Services:</strong> To deliver personalized content, such as relevant cybercrime law information, based on your search history and preferences.</li>
                         <li><strong>Improve Our Platform:</strong> To analyze usage patterns and improve the functionality and user experience of our website.</li>
@@ -1143,47 +1144,54 @@
                         throw new Error('Please provide a new username or password.');
                     }
 
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        throw new Error('No user is currently logged in.');
+                    const user = auth.currentUser;
+                    if (!user) {
+                        throw new Error('No user is currently logged in. Please log in again.');
                     }
 
-                    const email = currentUser.email;
+                    // Reauthenticate the user
+                    const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+                    await user.reauthenticateWithCredential(credential);
 
-                    // Verify current password by checking local storage
-                    let users = JSON.parse(localStorage.getItem('users')) || [];
-                    const user = users.find(u => u.email === email);
-
-                    if (!user || user.password !== currentPassword) {
-                        throw new Error('Current password is incorrect.');
-                    }
-
-                    // Update Firestore and local storage
+                    // Update Firestore and Firebase Authentication
                     let updates = {};
                     if (newUsername) {
                         updates.username = newUsername;
+                        // Update display name in Firebase Authentication
+                        await user.updateProfile({ displayName: newUsername });
                     }
                     if (newPassword) {
-                        updates.password = newPassword;
+                        await user.updatePassword(newPassword);
                     }
 
+                    // Update Firestore with the user's UID
                     if (Object.keys(updates).length > 0) {
-                        await db.collection('users').doc(email).update(updates);
-
-                        // Update local storage
-                        users = users.map(u => u.email === email ? { ...u, ...updates } : u);
-                        localStorage.setItem('users', JSON.stringify(users));
-                        localStorage.setItem('currentUser', JSON.stringify({ email, username: newUsername || user.username }));
-
-                        credentialsSuccessMessage.textContent = 'Credentials updated successfully.';
-                        credentialsSuccessMessage.style.display = 'block';
-                        credentialsSuccessMessage.classList.add('show');
-
-                        // Reset form
-                        changeCredentialsForm.reset();
+                        await db.collection('users').doc(user.uid).set(updates, { merge: true });
                     }
+
+                    // Update local storage with the new username
+                    if (newUsername) {
+                        localStorage.setItem('currentUser', JSON.stringify({ email: user.email, username: newUsername }));
+                    }
+
+                    credentialsSuccessMessage.textContent = 'Credentials updated successfully.';
+                    credentialsSuccessMessage.style.display = 'block';
+                    credentialsSuccessMessage.classList.add('show');
+
+                    // Reset form
+                    changeCredentialsForm.reset();
                 } catch (error) {
-                    credentialsErrorMessage.textContent = error.message;
+                    let errorMessage = 'An error occurred. Please try again.';
+                    if (error.code === 'auth/wrong-password') {
+                        errorMessage = 'Current password is incorrect.';
+                    } else if (error.code === 'auth/too-many-requests') {
+                        errorMessage = 'Too many attempts. Please try again later.';
+                    } else if (error.code === 'auth/weak-password') {
+                        errorMessage = 'New password is too weak. Please use a stronger password.';
+                    } else {
+                        console.error('Credential update error:', error);
+                    }
+                    credentialsErrorMessage.textContent = errorMessage;
                     credentialsErrorMessage.style.display = 'block';
                     credentialsErrorMessage.classList.add('show');
                 } finally {
@@ -1192,6 +1200,8 @@
                 }
             });
         }
+
+ 
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9355cd1afb2ced7e',t:'MTc0NTQ5OTgxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
