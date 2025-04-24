@@ -204,7 +204,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            box-shadow: inset 8px - 3px 0px 0px #d8dbe0;
+            box-shadow: inset 8px -3px 0px 0px #d8dbe0;
             background-color: #28292c;
             transition: 0.3s;
         }
@@ -237,31 +237,21 @@
             right: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 18px;
+            gap: 10px;
+            font-size: 16px;
             color: #333;
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            cursor: pointer;
-        }
-
-        .user-info:hover {
-            background-color: #f0f0f0;
         }
 
         .user-info .profile-pic {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background-color: #ccc;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 30px;
+            font-size: 20px;
             color: #fff;
-            object-fit: cover;
         }
 
         .user-info .user-details {
@@ -280,104 +270,10 @@
 
         .dark-theme .user-info {
             color: #e0e0e0;
-            background-color: #3a3b3c;
-        }
-
-        .dark-theme .user-info:hover {
-            background-color: #4a4b4c;
         }
 
         .dark-theme .user-info .user-details .email {
             color: #b0b0b0;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            width: 400px;
-            max-width: 90%;
-            position: relative;
-        }
-
-        .dark-theme .modal-content {
-            background-color: #3a3b3c;
-            color: #e0e0e0;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .dark-theme .close-modal {
-            color: #e0e0e0;
-        }
-
-        .modal-content h2 {
-            margin-top: 0;
-        }
-
-        .modal-content select, .modal-content input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .dark-theme .modal-content select, .dark-theme .modal-content input[type="file"] {
-            background-color: #4a4b4c;
-            color: #e0e0e0;
-            border-color: #666;
-        }
-
-        .modal-content button {
-            padding: 10px 20px;
-            background-color: #d7b15c;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px 5px;
-        }
-
-        .modal-content button:hover {
-            background-color: #b7b90d;
-        }
-
-        .saved-configs {
-            margin-top: 20px;
-        }
-
-        .saved-configs div {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .dark-theme .saved-configs div {
-            border-bottom-color: #666;
         }
 
         .fingerprint-icon {
@@ -439,8 +335,6 @@
         .search-container:hover > .search-icon {
             animation: anim 1s linear infinite;
         }
-
-
 
         @keyframes anim {
             0%,
@@ -714,13 +608,12 @@
 
             .user-info {
                 right: 10px;
-                font-size: 16px;
-                padding: 10px;
+                font-size: 14px;
             }
 
             .user-info .profile-pic {
-                width: 50px;
-                height: 50px;
+                width: 35px;
+                height: 35px;
             }
 
             .user-info .user-details .email {
@@ -766,12 +659,6 @@
 
             .user-info {
                 font-size: 14px;
-                padding: 8px;
-            }
-
-            .user-info .profile-pic {
-                width: 45px;
-                height: 45px;
             }
 
             .fingerprint-icon {
@@ -849,13 +736,6 @@
                 position: static;
                 margin: 10px auto;
                 justify-content: center;
-                width: 90%;
-                font-size: 14px;
-            }
-
-            .user-info .profile-pic {
-                width: 50px;
-                height: 50px;
             }
 
             .fingerprint-icon {
@@ -864,8 +744,16 @@
             }
 
             .fingerprint-icon::before {
+                content: "";
+                position: absolute;
+                margin-right: 4px;
+                margin-top: 4px;
                 width: 96px;
                 height: 93px;
+                border: 3px solid;
+                border-radius: 50%;
+                z-index: 0;
+                color: #000000;
             }
 
             .search-container {
@@ -955,11 +843,11 @@
         </nav>
         <main class="content">
             <div class="header">
-                <div class="user-info" id="userInfo">
-                    <img class="profile-pic" id="profilePic" src="" alt="Profile">
+                <div class="user-info">
+                    <div class="profile-pic"></div>
                     <div class="user-details">
-                        <span class="username" id="username">User</span>
-                        <span class="email" id="email">email@example.com</span>
+                        <span class="username">User</span>
+                        <span class="email">email@example.com</span>
                     </div>
                 </div>
                 <div class="fingerprint-icon"></div>
@@ -1052,33 +940,6 @@
                 </div>
             </section>
         </main>
-        <!-- Customization Modal -->
-        <div class="modal" id="customizeModal">
-            <div class="modal-content">
-                <span class="close-modal" id="closeModal">&times;</span>
-                <h2>Customize Profile</h2>
-                <label for="avatarSelect">Avatar:</label>
-                <select id="avatarSelect">
-                    <option value="">None</option>
-                    <!-- Populated dynamically -->
-                </select>
-                <input type="file" id="avatarUpload" accept="image/*">
-                <label for="bgColorSelect">Background Color:</label>
-                <select id="bgColorSelect">
-                    <option value="">None</option>
-                    <option value="#f0f0f0">Light Gray</option>
-                    <option value="#d7b15c">Gold</option>
-                    <option value="#3a3b3c">Dark Gray</option>
-                    <option value="#e6f3ff">Light Blue</option>
-                    <option value="#ffe6e6">Light Red</option>
-                </select>
-                <button id="saveConfig">Save Configuration</button>
-                <button id="applyConfig">Apply</button>
-                <div class="saved-configs" id="savedConfigs">
-                    <!-- Populated dynamically -->
-                </div>
-            </div>
-        </div>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
             <div class="footer-links">
@@ -1090,47 +951,31 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
     <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            // Replace with your Firebase project configuration
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
-        const userInfo = document.getElementById('userInfo');
-        const customizeModal = document.getElementById('customizeModal');
-        const closeModal = document.getElementById('closeModal');
-        const avatarSelect = document.getElementById('avatarSelect');
-        const avatarUpload = document.getElementById('avatarUpload');
-        const bgColorSelect = document.getElementById('bgColorSelect');
-        const saveConfig = document.getElementById('saveConfig');
-        const applyConfig = document.getElementById('applyConfig');
-        const savedConfigs = document.getElementById('savedConfigs');
-        const profilePic = document.getElementById('profilePic');
-        const usernameElement = document.getElementById('username');
-        const emailElement = document.getElementById('email');
 
-        // Load theme
+        // Load user data from localStorage and update the user info section
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const usernameElement = document.querySelector('.user-info .username');
+            const emailElement = document.querySelector('.user-info .email');
+
+            if (currentUser && currentUser.username && currentUser.email) {
+                usernameElement.textContent = currentUser.username;
+                emailElement.textContent = currentUser.email;
+            } else {
+                // Fallback if user data is not available
+                usernameElement.textContent = 'Guest';
+                emailElement.textContent = 'guest@example.com';
+                // Optionally redirect to login page
+                // window.location.href = 'index.html';
+            }
+        });
+
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1146,7 +991,6 @@
             }
         });
 
-        // Mobile menu toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -1159,7 +1003,6 @@
             }
         });
 
-        // Page transition loader
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
@@ -1175,7 +1018,6 @@
             }
         });
 
-        // Search functionality
         document.addEventListener('DOMContentLoaded', () => {
             const cards = Array.from(document.querySelectorAll('.card'));
 
@@ -1186,7 +1028,7 @@
 
             const fuse = new Fuse(list, {
                 keys: ['title'],
-                threshold: 0.4,
+                threshold: 0.4,      
                 distance: 100
             });
 
@@ -1218,195 +1060,7 @@
                     card.style.order = -index;
                 });
             });
-
-            // Load user data and configurations
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    usernameElement.textContent = user.displayName || 'User';
-                    emailElement.textContent = user.email;
-                    loadUserConfigs(user.uid);
-                    loadUserAvatars(user.uid);
-                } else {
-                    usernameElement.textContent = 'Guest';
-                    emailElement.textContent = 'guest@example.com';
-                    // Optionally redirect to login
-                    // window.location.href = 'index.html';
-                }
-            });
         });
-
-        // Open customization modal
-        userInfo.addEventListener('click', () => {
-            customizeModal.style.display = 'flex';
-        });
-
-        // Close modal
-        closeModal.addEventListener('click', () => {
-            customizeModal.style.display = 'none';
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === customizeModal) {
-                customizeModal.style.display = 'none';
-            }
-        });
-
-        // Upload avatar
-        avatarUpload.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Please log in to upload an avatar.');
-                return;
-            }
-
-            loaderOverlay.classList.add('active');
-            try {
-                const storageRef = storage.ref(`avatars/${user.uid}/${file.name}`);
-                await storageRef.put(file);
-                const url = await storageRef.getDownloadURL();
-                
-                // Add to Firestore
-                await db.collection('users').doc(user.uid).collection('avatars').add({
-                    url,
-                    name: file.name,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                // Refresh avatar list
-                loadUserAvatars(user.uid);
-            } catch (error) {
-                console.error('Error uploading avatar:', error);
-                alert('Failed to upload avatar.');
-            } finally {
-                loaderOverlay.classList.remove('active');
-            }
-        });
-
-        // Load user avatars
-        async function loadUserAvatars(uid) {
-            avatarSelect.innerHTML = '<option value="">None</option>';
-            try {
-                const snapshot = await db.collection('users').doc(uid).collection('avatars').get();
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const option = document.createElement('option');
-                    option.value = data.url;
-                    option.textContent = data.name;
-                    avatarSelect.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading avatars:', error);
-            }
-        }
-
-        // Save configuration
-        saveConfig.addEventListener('click', async () => {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Please log in to save configuration.');
-                return;
-            }
-
-            const avatar = avatarSelect.value;
-            const bgColor = bgColorSelect.value;
-
-            try {
-                // Check number of existing configs
-                const snapshot = await db.collection('users').doc(user.uid).collection('configs').get();
-                if (snapshot.size >= 5) {
-                    alert('Maximum 5 configurations allowed. Delete one to add a new one.');
-                    return;
-                }
-
-                await db.collection('users').doc(user.uid).collection('configs').add({
-                    avatar,
-                    bgColor,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                loadUserConfigs(user.uid);
-                alert('Configuration saved!');
-            } catch (error) {
-                console.error('Error saving configuration:', error);
-                alert('Failed to save configuration.');
-            }
-        });
-
-        // Apply configuration
-        applyConfig.addEventListener('click', () => {
-            const avatar = avatarSelect.value;
-            const bgColor = bgColorSelect.value;
-
-            // Apply avatar
-            if (avatar) {
-                profilePic.src = avatar;
-                profilePic.style.display = 'block';
-            } else {
-                profilePic.src = '';
-                profilePic.style.display = 'block';
-                profilePic.style.backgroundColor = '#ccc';
-            }
-
-            // Apply background color
-            userInfo.style.backgroundColor = bgColor || '';
-
-            // Save to localStorage for immediate effect
-            localStorage.setItem('userConfig', JSON.stringify({ avatar, bgColor }));
-        });
-
-        // Load saved configurations
-        async function loadUserConfigs(uid) {
-            savedConfigs.innerHTML = '';
-            try {
-                const snapshot = await db.collection('users').doc(uid).collection('configs').orderBy('createdAt', 'desc').get();
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const configDiv = document.createElement('div');
-                    configDiv.innerHTML = `
-                        <span>Avatar: ${data.avatar ? 'Custom' : 'None'}, Color: ${data.bgColor || 'None'}</span>
-                        <button onclick="applySavedConfig('${data.avatar}', '${data.bgColor}')">Apply</button>
-                        <button onclick="deleteConfig('${doc.id}')">Delete</button>
-                    `;
-                    savedConfigs.appendChild(configDiv);
-                });
-
-                // Load last applied config from localStorage
-                const savedConfig = JSON.parse(localStorage.getItem('userConfig'));
-                if (savedConfig) {
-                    profilePic.src = savedConfig.avatar || '';
-                    profilePic.style.backgroundColor = savedConfig.avatar ? '' : '#ccc';
-                    userInfo.style.backgroundColor = savedConfig.bgColor || '';
-                }
-            } catch (error) {
-                console.error('Error loading configurations:', error);
-            }
-        }
-
-        // Apply saved configuration
-        window.applySavedConfig = (avatar, bgColor) => {
-            avatarSelect.value = avatar;
-            bgColorSelect.value = bgColor;
-            applyConfig.click();
-        };
-
-        // Delete configuration
-        window.deleteConfig = async (configId) => {
-            const user = auth.currentUser;
-            if (!user) return;
-
-            try {
-                await db.collection('users').doc(user.uid).collection('configs').doc(configId).delete();
-                loadUserConfigs(user.uid);
-                alert('Configuration deleted!');
-            } catch (error) {
-                console.error('Error deleting configuration:', error);
-                alert('Failed to delete configuration.');
-            }
-        };
     </script>
 </body>
 </html>
