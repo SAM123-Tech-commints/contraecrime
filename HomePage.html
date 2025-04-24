@@ -217,7 +217,7 @@
 
         .content {
             flex: 1;
-            padding: 30px;
+            padding: 20px;
             margin-left: 290px;
             overflow-y: auto;
             transition: background-color 0.3s ease, margin-left 0.3s ease;
@@ -227,45 +227,45 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             position: relative;
         }
 
         .user-info {
             position: absolute;
             top: 0;
-            right: 30px;
+            right: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 18px;
+            gap: 10px;
+            font-size: 16px;
             color: #333;
         }
 
         .user-info .profile-pic {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background-color: #ccc;
             background-size: cover;
             background-position: center;
             cursor: pointer;
             position: relative;
-            border: 3px solid #000;
+            border: 2px solid #000;
         }
 
         .avatar-customization {
             display: none;
             position: absolute;
-            top: 60px;
+            top: 50px;
             right: 0;
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 5px;
-            padding: 15px;
+            padding: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            width: 250px;
+            width: 200px;
         }
 
         .avatar-customization.active {
@@ -274,34 +274,34 @@
 
         .avatar-customization label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 16px;
+            margin-bottom: 5px;
+            font-size: 14px;
             color: #333;
         }
 
         .avatar-customization select,
         .avatar-customization input[type="file"] {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
+            padding: 5px;
+            margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .avatar-customization input[type="file"] {
-            padding: 5px;
+            padding: 3px;
         }
 
         .avatar-customization button {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             background-color: #580100;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             transition: background-color 0.3s ease;
         }
 
@@ -341,11 +341,10 @@
 
         .user-info .user-details .username {
             font-weight: 600;
-            font-size: 20px;
         }
 
         .user-info .user-details .email {
-            font-size: 16px;
+            font-size: 14px;
             color: #666;
         }
 
@@ -358,11 +357,11 @@
         }
 
         .fingerprint-icon {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             background: url('https://static.thenounproject.com/png/1238269-200.png') no-repeat center center;
             background-size: contain;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             position: relative;
             display: flex;
             justify-content: center;
@@ -374,9 +373,9 @@
             position: absolute;
             margin-right: 4px;
             margin-top: 4px;
-            width: 180px;
-            height: 180px;
-            border: 4px solid;
+            width: 138px;
+            height: 140px;
+            border: 3px solid;
             border-radius: 50%;
             z-index: 0;
             color: #000000;
@@ -384,33 +383,33 @@
 
         /* Search Bar */
         .search-container {
-            width: 50%;
+            width: 40%;
             position: relative;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .search-icon {
             position: absolute;
-            right: 15px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
         }
 
         .search-input {
             width: 100%;
-            height: 50px;
-            padding: 15px;
+            height: 40px;
+            padding: 10px;
             transition: .2s linear;
-            border: 3px solid black;
-            font-size: 16px;
+            border: 2.5px solid black;
+            font-size: 14px;
             letter-spacing: 1px;
-            border-radius: 8px;
+            border-radius: 5px;
         }
 
         .search-input:focus {
             outline: none;
-            border: 1px solid black;
-            box-shadow: -3px -2px 0px black;
+            border: 0.5px solid black;
+            box-shadow: -2px -1px 0px black;
         }
 
         .search-container:hover > .search-icon {
@@ -444,19 +443,19 @@
         }
 
         .articles {
-            margin-top: 30px;
+            margin-top: 20px;
             color: #000000;
             text-align: center;
         }
 
         .articles h2 {
-            margin-bottom: 40px;
-            font-size: 30px;
+            margin-bottom: 30px;
+            font-size: 24px;
         }
 
         .cards-container {
             display: flex;
-            gap: 50px;
+            gap: 35px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -473,11 +472,11 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            padding: 1.5rem;
-            width: 450px;
+            gap: 0.75rem;
+            padding: 1rem;
+            width: 350px;
             background-color: var(--bg-card);
-            border-radius: 1.5rem;
+            border-radius: 1rem;
             justify-content: space-between;
         }
 
@@ -486,7 +485,7 @@
         }
 
         .card.highlight {
-            box-shadow: 0 0 15px 8px rgba(230, 207, 5, 0.5);
+            box-shadow: 0 0 10px 5px rgba(230, 207, 5, 0.5);
         }
 
         .image_container {
@@ -495,9 +494,9 @@
             position: relative;
             z-index: 5;
             width: 100%;
-            height: 300px;
+            height: 200px;
             background-color: var(--primary-800);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
         }
 
         .image_container img {
@@ -509,7 +508,7 @@
         .cybercrime-title {
             overflow: clip;
             width: 100%;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--light);
             text-transform: capitalize;
@@ -518,9 +517,9 @@
         }
 
         .cybercrime-description {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: var(--light);
-            line-height: 1.5;
+            line-height: 1.4;
             text-align: justify;
         }
 
@@ -528,30 +527,30 @@
         .border-button {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 8px 6px;
-            border-radius: 12px;
-            border: 2px solid rgb(255, 255, 255);
+            gap: 10px;
+            padding: 6px 5px;
+            border-radius: 10px;
+            border: 1px solid rgb(255, 255, 255);
             overflow: hidden;
             background: transparent;
             color: rgb(255, 255, 255);
             cursor: pointer;
             align-self: flex-end;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             transition: all 0.3s ease;
             text-decoration: none;
         }
 
         .border-button .button-text {
-            transform: translateX(20px);
-            font-size: 1em;
+            transform: translateX(17px);
+            font-size: 0.9em;
             font-weight: 500;
             transition-duration: 0.3s;
             margin: 0;
         }
 
         .border-button .iconer {
-            transform: translateY(40px);
+            transform: translateY(35px);
             transition-duration: 0.3s;
             margin: 0;
             display: flex;
@@ -559,7 +558,7 @@
         }
 
         .border-button:hover .button-text {
-            transform: translateX(6px);
+            transform: translateX(5px);
         }
 
         .border-button:hover .iconer {
@@ -569,7 +568,7 @@
         footer {
             background-color: #333;
             color: white;
-            padding: 20px 40px;
+            padding: 15px 30px;
             text-align: center;
             margin-left: 290px;
             z-index: 1;
@@ -578,18 +577,18 @@
 
         footer p {
             margin: 0;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .footer-links {
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .footer-links a {
             color: #d7b15c;
             text-decoration: none;
-            margin: 0 15px;
-            font-size: 16px;
+            margin: 0 10px;
+            font-size: 14px;
         }
 
         .footer-links a:hover {
@@ -684,25 +683,25 @@
             }
 
             .card {
-                width: 400px;
+                width: 300px;
             }
 
             .user-info {
-                right: 20px;
-                font-size: 16px;
-            }
-
-            .user-info .profile-pic {
-                width: 45px;
-                height: 45px;
-            }
-
-            .user-info .user-details .email {
+                right: 10px;
                 font-size: 14px;
             }
 
+            .user-info .profile-pic {
+                width: 35px;
+                height: 35px;
+            }
+
+            .user-info .user-details .email {
+                font-size: 12px;
+            }
+
             .search-container {
-                width: 60%;
+                width: 50%;
             }
         }
 
@@ -726,7 +725,7 @@
 
             .content {
                 margin-left: 200px;
-                padding: 20px;
+                padding: 10px;
             }
 
             footer {
@@ -735,7 +734,7 @@
 
             .card {
                 width: 100%;
-                max-width: 400px;
+                max-width: 350px;
             }
 
             .user-info {
@@ -743,12 +742,12 @@
             }
 
             .fingerprint-icon {
-                width: 150px;
-                height: 150px;
+                width: 120px;
+                height: 120px;
             }
 
             .search-container {
-                width: 80%;
+                width: 70%;
             }
         }
 
@@ -820,8 +819,8 @@
             }
 
             .fingerprint-icon {
-                width: 120px;
-                height: 120px;
+                width: 90px;
+                height: 90px;
             }
 
             .fingerprint-icon::before {
@@ -850,7 +849,7 @@
                 top: 60px;
                 right: 50%;
                 transform: translateX(50%);
-                width: 200px;
+                width: 180px;
             }
         }
     </style>
@@ -908,7 +907,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" id="logoutLink">
+                    <a href="index.html">
                         <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
                         Logout
                     </a>
@@ -1063,26 +1062,8 @@
         </footer>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
-            authDomain: "contra-e-crime.firebaseapp.com",
-            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com",
-            projectId: "contra-e-crime",
-            storageBucket: "contra-e-crime.firebasestorage.app",
-            messagingSenderId: "198995444405",
-            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-            measurementId: "G-7Y2E24DD42"
-        };
-
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
-
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1095,7 +1076,6 @@
         const avatarColor = document.getElementById('avatarColor');
         const borderColor = document.getElementById('borderColor');
         const saveAvatar = document.getElementById('saveAvatar');
-        const logoutLink = document.getElementById('logoutLink');
 
         // Avatar customization functionality
         const avatarImages = {
@@ -1104,52 +1084,28 @@
             avatar3: 'https://i.imgur.com/5q8tY2s.png'  // Astronaut
         };
 
-        // Check authentication state
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                // User is logged in, fetch user data
-                const userRef = db.ref('users/' + user.uid);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        // Update username and email
-                        document.querySelector('.user-info .username').textContent = userData.username || 'User';
-                        document.querySelector('.user-info .email').textContent = userData.email || 'email@example.com';
-
-                        // Load saved avatar settings from Firebase
-                        if (userData.avatarSettings) {
-                            avatarSelect.value = userData.avatarSettings.avatar;
-                            avatarColor.value = userData.avatarSettings.color;
-                            borderColor.value = userData.avatarSettings.borderColor || '#000000';
-                            updateAvatar(
-                                userData.avatarSettings.avatar,
-                                userData.avatarSettings.color,
-                                userData.avatarSettings.borderColor,
-                                userData.avatarSettings.customImage
-                            );
-                        }
-                    } else {
-                        document.querySelector('.user-info .username').textContent = 'Guest';
-                        document.querySelector('.user-info .email').textContent = 'guest@example.com';
-                    }
-                });
-            } else {
-                // User is not logged in, redirect to index.html
-                window.location.href = 'index.html';
+        // Load saved avatar settings
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedAvatar = JSON.parse(localStorage.getItem('avatarSettings'));
+            if (savedAvatar) {
+                avatarSelect.value = savedAvatar.avatar;
+                avatarColor.value = savedAvatar.color;
+                borderColor.value = savedAvatar.borderColor || '#000000';
+                updateAvatar(savedAvatar.avatar, savedAvatar.color, savedAvatar.borderColor, savedAvatar.customImage);
             }
-        });
 
-        // Logout functionality
-        logoutLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            loaderOverlay.classList.add('active');
-            auth.signOut().then(() => {
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 150);
-            }).catch((error) => {
-                console.error('Logout error:', error);
-            });
+            // Load user data
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const usernameElement = document.querySelector('.user-info .username');
+            const emailElement = document.querySelector('.user-info .email');
+
+            if (currentUser && currentUser.username && currentUser.email) {
+                usernameElement.textContent = currentUser.username;
+                emailElement.textContent = currentUser.email;
+            } else {
+                usernameElement.textContent = 'Guest';
+                emailElement.textContent = 'guest@example.com';
+            }
         });
 
         // Toggle customization panel
@@ -1194,24 +1150,16 @@
             updateAvatar(avatarSelect.value, avatarColor.value, borderColor.value, null);
         });
 
-        // Save avatar settings to Firebase
+        // Save avatar settings
         saveAvatar.addEventListener('click', () => {
-            const user = auth.currentUser;
-            if (user) {
-                const avatarSettings = {
-                    avatar: avatarSelect.value,
-                    color: avatarColor.value,
-                    borderColor: borderColor.value,
-                    customImage: profilePic.style.backgroundImage.includes('data:image') ? profilePic.style.backgroundImage.slice(5, -2) : null
-                };
-                db.ref('users/' + user.uid + '/avatarSettings').set(avatarSettings)
-                    .then(() => {
-                        avatarCustomization.classList.remove('active');
-                    })
-                    .catch((error) => {
-                        console.error('Error saving avatar settings:', error);
-                    });
-            }
+            const avatarSettings = {
+                avatar: avatarSelect.value,
+                color: avatarColor.value,
+                borderColor: borderColor.value,
+                customImage: profilePic.style.backgroundImage.includes('data:image') ? profilePic.style.backgroundImage.slice(5, -2) : null
+            };
+            localStorage.setItem('avatarSettings', JSON.stringify(avatarSettings));
+            avatarCustomization.classList.remove('active');
         });
 
         // Close customization panel when clicking outside
@@ -1249,7 +1197,7 @@
         });
 
         document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#') && link.id !== 'logoutLink') {
+            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
                     if (!this.href.includes(window.location.hostname)) return;
                     
