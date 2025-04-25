@@ -194,7 +194,7 @@
         }
 
         input[readonly] {
-            background-color: #f0f0f0;
+            background-color: #ffffff;
             cursor: default;
         }
 
@@ -210,22 +210,6 @@
         }
 
         .toggle-password:hover {
-            color: #8B0000;
-        }
-
-        .forgot-password {
-            display: block;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #580100;
-            text-align: right;
-            text-decoration: none;
-            font-weight: 500;
-            z-index: 1;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
             color: #8B0000;
         }
 
@@ -260,6 +244,24 @@
             margin-top: 10px;
             line-height: 18px;
             cursor: pointer;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .forgot-password a {
+            color: #8B0000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
         }
 
         .signup-prompt {
@@ -397,8 +399,8 @@
             height: 20px;
         }
 
-        .error-message {
-            color: #ff0000;
+        .error-message,
+        .success-message {
             text-align: center;
             margin-top: 10px;
             font-size: 14px;
@@ -407,7 +409,16 @@
             z-index: 1;
         }
 
-        .error-message.show {
+        .error-message {
+            color: #ff0000;
+        }
+
+        .success-message {
+            color: #28a745;
+        }
+
+        .error-message.show,
+        .success-message.show {
             display: block;
             animation: shake 0.5s ease;
         }
@@ -458,6 +469,25 @@
         .close-btn:focus {
             color: #000;
             text-decoration: none;
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #580100;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-to-login a {
+            color: #8B0000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-to-login a:hover {
+            text-decoration: underline;
         }
 
         @media (min-width: 769px) {
@@ -580,7 +610,70 @@
             <div class="logoname">
                 Contra E-Crime
             </div>
-            <div id="formContent"></div>
+            <!-- Login Form -->
+            <form id="loginForm" style="display: none;">
+                <h2>Log In</h2>
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="Your email here" required>
+                
+                <label for="login-password">Password</label>
+                <div class="input-container">
+                    <input type="password" id="login-password" placeholder="********" required>
+                    <i class="fas fa-eye toggle-password" id="toggleLoginPassword"></i>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                </div>
+                
+                <div class="checkbox-container">
+                    <div class="checkbox">
+                        <input type="checkbox" id="rememberme">
+                        <label for="rememberme">Remember Me</label>
+                    </div>
+                </div>
+
+                <div class="signup-prompt">
+                    Don't have an account? <a href="SignUp.html">Sign Up</a>
+                </div>
+                
+                <div class="buttons-container">
+                    <button type="submit" class="action-btn">Login</button>
+                </div>
+                <div class="separator">or</div>
+                <div class="buttons-container">
+                    <button type="button" class="google-btn" id="googleSignInBtn">
+                        <img src="https://www.google.com/favicon.ico" alt="Google Icon">
+                        Sign in with Google
+                    </button>
+                </div>
+                <div class="error-message" id="loginErrorMessage"></div>
+            </form>
+
+            <!-- Reset Password Form -->
+            <form id="resetPasswordForm" style="display: none;">
+                <h2>Reset Password</h2>
+                <label for="new-password">New Password</label>
+                <div class="input-container">
+                    <input type="password" id="new-password" placeholder="Enter new password" required>
+                    <i class="fas fa-eye toggle-password" id="toggleNewPassword"></i>
+                </div>
+                
+                <label for="confirm-password">Confirm Password</label>
+                <div class="input-container">
+                    <input type="password" id="confirm-password" placeholder="Confirm new password" required>
+                    <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>
+                </div>
+                
+                <div class="buttons-container">
+                    <button type="submit" class="action-btn">Reset Password</button>
+                </div>
+                <div class="error-message" id="resetErrorMessage"></div>
+                <div class="success-message" id="resetSuccessMessage"></div>
+                <div class="back-to-login">
+                    <a href="index.html">Back to Login</a>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -611,17 +704,17 @@
 
     <div id="forgotPasswordModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" id="closeForgotModal">×</span>
+            <span class="close-btn" id="closeForgotPasswordModal">×</span>
             <h2>Reset Password</h2>
             <form id="forgotPasswordForm">
-                <label for="reset-email">Email</label>
-                <input type="email" id="reset-email" placeholder="Enter your email" required>
+                <label for="forgot-email">Email</label>
+                <input type="email" id="forgot-email" placeholder="Enter your email" required>
                 
                 <div class="buttons-container">
                     <button type="submit" class="action-btn">Send Reset Link</button>
-                    <button type="button" class="action-btn cancel-btn" id="cancelForgotBtn">Cancel</button>
                 </div>
-                <div class="error-message" id="resetErrorMessage"></div>
+                <div class="error-message" id="forgotErrorMessage"></div>
+                <div class="success-message" id="forgotSuccessMessage"></div>
             </form>
         </div>
     </div>
@@ -661,360 +754,38 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             try {
-                const formContent = document.getElementById('formContent');
+                // Check if we're in reset password mode
                 const urlParams = new URLSearchParams(window.location.search);
                 const mode = urlParams.get('mode');
                 const oobCode = urlParams.get('oobCode');
 
-                // Function to render the login form
-                function renderLoginForm() {
-                    formContent.innerHTML = `
-                        <form id="loginForm">
-                            <h2>Log In</h2>
-                            <label for="login-email">Email</label>
-                            <input type="email" id="login-email" placeholder="Your email here" required>
-                            
-                            <label for="login-password">Password</label>
-                            <div class="input-container">
-                                <input type="password" id="login-password" placeholder="********" required>
-                                <i class="fas fa-eye toggle-password" id="toggleLoginPassword"></i>
-                            </div>
-                            <a href="#" class="forgot-password" id="forgotPasswordLink">Forgot Password?</a>
-                            
-                            <div class="checkbox-container">
-                                <div class="checkbox">
-                                    <input type="checkbox" id="rememberme">
-                                    <label for="rememberme">Remember Me</label>
-                                </div>
-                            </div>
+                const loginForm = document.getElementById('loginForm');
+                const resetPasswordForm = document.getElementById('resetPasswordForm');
 
-                            <div class="signup-prompt">
-                                Don't have an account? <a href="SignUp.html">Sign Up</a>
-                            </div>
-                            
-                            <div class="buttons-container">
-                                <button type="submit" class="action-btn">Login</button>
-                            </div>
-                            <div class="separator">or</div>
-                            <div class="buttons-container">
-                                <button type="button" class="google-btn" id="googleSignInBtn">
-                                    <img src="https://www.google.com/favicon.ico" alt="Google Icon">
-                                    Sign in with Google
-                                </button>
-                            </div>
-                            <div class="error-message" id="loginErrorMessage"></div>
-                        </form>
-                    `;
-
-                    // Attach event listeners for the login form
-                    const toggleLoginPassword = document.querySelector('#toggleLoginPassword');
-                    const loginPassword = document.querySelector('#login-password');
-                    if (toggleLoginPassword && loginPassword) {
-                        toggleLoginPassword.addEventListener('click', function () {
-                            const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                            loginPassword.setAttribute('type', type);
-                            this.classList.toggle('fa-eye-slash');
-                        });
-                    }
-
-                    const loginForm = document.getElementById('loginForm');
-                    const loginErrorMessage = document.getElementById('loginErrorMessage');
-                    if (loginForm) {
-                        loginForm.addEventListener('submit', async (event) => {
-                            event.preventDefault();
-
-                            const submitButton = loginForm.querySelector('.action-btn');
-                            submitButton.classList.add('loading');
-                            submitButton.disabled = true;
-
-                            try {
-                                const email = document.getElementById('login-email').value.trim();
-                                const passwordValue = loginPassword.value.trim();
-                                const rememberMe = document.getElementById('rememberme').checked;
-
-                                const users = JSON.parse(localStorage.getItem('users')) || [];
-                                const user = users.find(user => user.email === email);
-
-                                if (!user) {
-                                    loginErrorMessage.style.display = 'block';
-                                    loginErrorMessage.classList.add('show');
-                                    loginErrorMessage.textContent = 'Email not found. Please sign up.';
-                                    submitButton.classList.remove('loading');
-                                    submitButton.disabled = false;
-                                    return;
-                                }
-
-                                if (user.password !== passwordValue) {
-                                    loginErrorMessage.style.display = 'block';
-                                    loginErrorMessage.classList.add('show');
-                                    loginErrorMessage.textContent = 'Incorrect password. Please try again.';
-                                    submitButton.classList.remove('loading');
-                                    submitButton.disabled = false;
-                                    return;
-                                }
-
-                                await logLoginEvent(email);
-
-                                localStorage.setItem('currentUser', JSON.stringify({ email, username: user.username }));
-
-                                if (rememberMe) {
-                                    localStorage.setItem('rememberMe', 'true');
-                                } else {
-                                    localStorage.removeItem('rememberMe');
-                                }
-
-                                submitButton.classList.remove('loading');
-                                submitButton.disabled = false;
-
-                                window.location.href = "HomePage.html";
-                            } catch (error) {
-                                console.error('Login error:', error);
-                                loginErrorMessage.style.display = 'block';
-                                loginErrorMessage.classList.add('show');
-                                loginErrorMessage.textContent = 'An error occurred during login. Please try again.';
-                                submitButton.classList.remove('loading');
-                                submitButton.disabled = false;
-                            }
-                        });
-                    }
-
-                    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-                    const forgotPasswordModal = document.getElementById('forgotPasswordModal');
-                    if (forgotPasswordLink) {
-                        forgotPasswordLink.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            const loginEmail = document.getElementById('login-email').value.trim();
-                            document.getElementById('reset-email').value = loginEmail;
-                            forgotPasswordModal.style.display = 'block';
-                        });
-                    }
-                }
-
-                // Function to render the reset password form
-                function renderResetPasswordForm(email) {
-                    formContent.innerHTML = `
-                        <form id="resetPasswordForm">
-                            <h2>Reset Your Password</h2>
-                            <label for="reset-email">Email</label>
-                            <input type="email" id="reset-email" value="${email}" readonly required>
-                            
-                            <label for="new-password">New Password</label>
-                            <div class="input-container">
-                                <input type="password" id="new-password" placeholder="Enter new password" required>
-                                <i class="fas fa-eye toggle-password" id="toggleNewPassword"></i>
-                            </div>
-                            
-                            <label for="new-username">New Username (Optional)</label>
-                            <input type="text" id="new-username" placeholder="Enter new username (optional)">
-                            
-                            <div class="buttons-container">
-                                <button type="submit" class="action-btn">Update</button>
-                                <button type="button" class="action-btn cancel-btn" id="cancelResetBtn">Cancel</button>
-                            </div>
-                            <div class="error-message" id="resetErrorMessage"></div>
-                        </form>
-                    `;
-
-                    // Attach event listeners for the reset password form
-                    const toggleNewPassword = document.querySelector('#toggleNewPassword');
-                    const newPassword = document.querySelector('#new-password');
-                    if (toggleNewPassword && newPassword) {
-                        toggleNewPassword.addEventListener('click', function () {
-                            const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                            newPassword.setAttribute('type', type);
-                            this.classList.toggle('fa-eye-slash');
-                        });
-                    }
-
-                    const resetPasswordForm = document.getElementById('resetPasswordForm');
-                    const resetErrorMessage = document.getElementById('resetErrorMessage');
-                    if (resetPasswordForm) {
-                        resetPasswordForm.addEventListener('submit', async (event) => {
-                            event.preventDefault();
-
-                            const submitButton = resetPasswordForm.querySelector('.action-btn:not(.cancel-btn)');
-                            submitButton.classList.add('loading');
-                            submitButton.disabled = true;
-
-                            try {
-                                const email = document.getElementById('reset-email').value.trim();
-                                const newPassword = document.getElementById('new-password').value.trim();
-                                const newUsername = document.getElementById('new-username').value.trim();
-
-                                if (!newPassword) {
-                                    resetErrorMessage.style.display = 'block';
-                                    resetErrorMessage.classList.add('show');
-                                    resetErrorMessage.textContent = 'Please enter a new password.';
-                                    submitButton.classList.remove('loading');
-                                    submitButton.disabled = false;
-                                    return;
-                                }
-
-                                // Update password in Firebase Authentication
-                                await auth.confirmPasswordReset(oobCode, newPassword);
-
-                                // Sign in to get the current user for updating displayName
-                                const credential = firebase.auth.EmailAuthProvider.credential(email, newPassword);
-                                const userCredential = await auth.signInWithCredential(credential);
-                                const user = userCredential.user;
-
-                                // Update username if provided
-                                if (newUsername) {
-                                    await user.updateProfile({ displayName: newUsername });
-                                    await db.collection('users').doc(email).update({
-                                        username: newUsername,
-                                        password: newPassword
-                                    });
-
-                                    let users = JSON.parse(localStorage.getItem('users')) || [];
-                                    const userIndex = users.findIndex(u => u.email === email);
-                                    if (userIndex !== -1) {
-                                        users[userIndex] = { ...users[userIndex], username: newUsername, password: newPassword };
-                                        localStorage.setItem('users', JSON.stringify(users));
-                                    }
-                                } else {
-                                    await db.collection('users').doc(email).update({
-                                        password: newPassword
-                                    });
-
-                                    let users = JSON.parse(localStorage.getItem('users')) || [];
-                                    const userIndex = users.findIndex(u => u.email === email);
-                                    if (userIndex !== -1) {
-                                        users[userIndex] = { ...users[userIndex], password: newPassword };
-                                        localStorage.setItem('users', JSON.stringify(users));
-                                    }
-                                }
-
-                                alert('Password updated successfully! You can now log in with your new password.');
-                                window.location.href = 'index.html';
-                            } catch (error) {
-                                console.error('Reset password error:', error);
-                                resetErrorMessage.style.display = 'block';
-                                resetErrorMessage.classList.add('show');
-                                resetErrorMessage.textContent = error.message || 'An error occurred while resetting your password.';
-                                submitButton.classList.remove('loading');
-                                submitButton.disabled = false;
-                            }
-                        });
-                    }
-
-                    const cancelResetBtn = document.getElementById('cancelResetBtn');
-                    if (cancelResetBtn) {
-                        cancelResetBtn.addEventListener('click', () => {
-                            window.location.href = 'index.html';
-                        });
-                    }
-                }
-
-                // Decide which form to render based on URL parameters
                 if (mode === 'resetPassword' && oobCode) {
-                    auth.verifyPasswordResetCode(oobCode)
-                        .then(email => {
-                            // Fetch current username from Firestore
-                            db.collection('users').doc(email).get()
-                                .then(doc => {
-                                    if (doc.exists) {
-                                        const currentUsername = doc.data().username;
-                                        renderResetPasswordForm(email);
-                                        document.getElementById('new-username').value = currentUsername || '';
-                                    } else {
-                                        renderResetPasswordForm(email);
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching username:', error);
-                                    renderResetPasswordForm(email);
-                                });
-                        })
-                        .catch(error => {
-                            console.error('Error verifying reset code:', error);
-                            renderLoginForm();
-                            const loginErrorMessage = document.getElementById('loginErrorMessage');
-                            loginErrorMessage.style.display = 'block';
-                            loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = 'The reset link is invalid or has expired. Please request a new one.';
-                        });
+                    loginForm.style.display = 'none';
+                    resetPasswordForm.style.display = 'block';
                 } else {
-                    renderLoginForm();
+                    loginForm.style.display = 'block';
+                    resetPasswordForm.style.display = 'none';
                 }
 
-                // Forgot Password Modal Logic
-                const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-                const closeForgotModal = document.getElementById('closeForgotModal');
-                const cancelForgotBtn = document.getElementById('cancelForgotBtn');
-                const resetErrorMessage = document.getElementById('resetErrorMessage');
+                // Password toggle for login form
+                const toggleLoginPassword = document.querySelector('#toggleLoginPassword');
+                const loginPassword = document.querySelector('#login-password');
 
-                if (forgotPasswordForm) {
-                    forgotPasswordForm.addEventListener('submit', async (event) => {
-                        event.preventDefault();
-
-                        const submitButton = forgotPasswordForm.querySelector('.action-btn:not(.cancel-btn)');
-                        submitButton.classList.add('loading');
-                        submitButton.disabled = true;
-
-                        try {
-                            const email = document.getElementById('reset-email').value.trim();
-                            if (!email) {
-                                resetErrorMessage.style.display = 'block';
-                                resetErrorMessage.classList.add('show');
-                                resetErrorMessage.textContent = 'Please enter your email.';
-                                submitButton.classList.remove('loading');
-                                submitButton.disabled = false;
-                                return;
-                            }
-
-                            const actionCodeSettings = {
-                                url: 'https://contraecrime.vercel.app/index.html?mode=resetPassword',
-                                handleCodeInApp: true
-                            };
-                            await auth.sendPasswordResetEmail(email, actionCodeSettings);
-                            alert('Password reset email sent. Check your inbox.');
-                            forgotPasswordModal.style.display = 'none';
-                            resetErrorMessage.style.display = 'none';
-                            resetErrorMessage.classList.remove('show');
-
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                        } catch (error) {
-                            console.error('Password reset error:', error);
-                            resetErrorMessage.style.display = 'block';
-                            resetErrorMessage.classList.add('show');
-                            resetErrorMessage.textContent = error.code === 'auth/user-not-found' 
-                                ? 'Email not found. Please sign up.'
-                                : 'Failed to send reset email. Please try again.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                        }
+                if (toggleLoginPassword && loginPassword) {
+                    toggleLoginPassword.addEventListener('click', function () {
+                        const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                        loginPassword.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
                     });
                 }
 
-                if (closeForgotModal) {
-                    closeForgotModal.addEventListener('click', () => {
-                        forgotPasswordModal.style.display = 'none';
-                        resetErrorMessage.style.display = 'none';
-                        resetErrorMessage.classList.remove('show');
-                    });
-                }
-
-                if (cancelForgotBtn) {
-                    cancelForgotBtn.addEventListener('click', () => {
-                        forgotPasswordModal.style.display = 'none';
-                        resetErrorMessage.style.display = 'none';
-                        resetErrorMessage.classList.remove('show');
-                    });
-                }
-
-                window.addEventListener('click', (event) => {
-                    if (event.target === forgotPasswordModal) {
-                        forgotPasswordModal.style.display = 'none';
-                        resetErrorMessage.style.display = 'none';
-                        resetErrorMessage.classList.remove('show');
-                    }
-                });
-
-                // Google Sign-In Modal Logic
+                // Password toggle for Google sign-in form
                 const toggleGooglePassword = document.querySelector('#toggleGooglePassword');
                 const googlePassword = document.querySelector('#google-password');
+
                 if (toggleGooglePassword && googlePassword) {
                     toggleGooglePassword.addEventListener('click', function () {
                         const type = googlePassword.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -1023,6 +794,31 @@
                     });
                 }
 
+                // Password toggle for new password in reset form
+                const toggleNewPassword = document.querySelector('#toggleNewPassword');
+                const newPassword = document.querySelector('#new-password');
+
+                if (toggleNewPassword && newPassword) {
+                    toggleNewPassword.addEventListener('click', function () {
+                        const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                        newPassword.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                }
+
+                // Password toggle for confirm password in reset form
+                const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+                const confirmPassword = document.querySelector('#confirm-password');
+
+                if (toggleConfirmPassword && confirmPassword) {
+                    toggleConfirmPassword.addEventListener('click', function () {
+                        const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                        confirmPassword.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                }
+
+                // Make labels focus inputs when clicked
                 document.querySelectorAll('label[for]').forEach(label => {
                     label.addEventListener('click', () => {
                         const input = document.getElementById(label.getAttribute('for'));
@@ -1032,11 +828,134 @@
                     });
                 });
 
+                // Login form submission
+                if (loginForm) {
+                    loginForm.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+
+                        const submitButton = loginForm.querySelector('.action-btn');
+                        submitButton.classList.add('loading');
+                        submitButton.disabled = true;
+
+                        try {
+                            const email = document.getElementById('login-email').value.trim();
+                            const passwordValue = loginPassword.value.trim();
+                            const rememberMe = document.getElementById('rememberme').checked;
+
+                            // Use Firebase Authentication for login
+                            await auth.signInWithEmailAndPassword(email, passwordValue);
+
+                            await logLoginEvent(email);
+
+                            const userDoc = await db.collection('users').doc(email).get();
+                            const username = userDoc.exists ? userDoc.data().username : 'User';
+
+                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+
+                            if (rememberMe) {
+                                localStorage.setItem('rememberMe', 'true');
+                            } else {
+                                localStorage.removeItem('rememberMe');
+                            }
+
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+
+                            window.location.href = "HomePage.html";
+                        } catch (error) {
+                            console.error('Login error:', error);
+                            const loginErrorMessage = document.getElementById('loginErrorMessage');
+                            loginErrorMessage.style.display = 'block';
+                            loginErrorMessage.classList.add('show');
+                            loginErrorMessage.textContent = error.code === 'auth/user-not-found' 
+                                ? 'Email not found. Please sign up.'
+                                : error.code === 'auth/wrong-password'
+                                ? 'Incorrect password. Please try again.'
+                                : 'An error occurred during login. Please try again.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                        }
+                    });
+                }
+
+                // Reset password form submission
+                if (resetPasswordForm) {
+                    resetPasswordForm.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+
+                        const submitButton = resetPasswordForm.querySelector('.action-btn');
+                        submitButton.classList.add('loading');
+                        submitButton.disabled = true;
+
+                        const newPasswordValue = document.getElementById('new-password').value.trim();
+                        const confirmPasswordValue = document.getElementById('confirm-password').value.trim();
+                        const resetErrorMessage = document.getElementById('resetErrorMessage');
+                        const resetSuccessMessage = document.getElementById('resetSuccessMessage');
+
+                        // Validate passwords match
+                        if (newPasswordValue !== confirmPasswordValue) {
+                            resetErrorMessage.textContent = 'Passwords do not match.';
+                            resetErrorMessage.style.display = 'block';
+                            resetErrorMessage.classList.add('show');
+                            resetSuccessMessage.style.display = 'none';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        // Validate password strength
+                        if (newPasswordValue.length < 6) {
+                            resetErrorMessage.textContent = 'Password must be at least 6 characters long.';
+                            resetErrorMessage.style.display = 'block';
+                            resetErrorMessage.classList.add('show');
+                            resetSuccessMessage.style.display = 'none';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        try {
+                            // Verify the reset code
+                            const email = await auth.verifyPasswordResetCode(oobCode);
+
+                            // Confirm the new password
+                            await auth.confirmPasswordReset(oobCode, newPasswordValue);
+
+                            // Update password in Firestore
+                            await db.collection('users').doc(email).update({
+                                password: newPasswordValue,
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+
+                            resetSuccessMessage.textContent = 'Password reset successful! Redirecting to login...';
+                            resetSuccessMessage.style.display = 'block';
+                            resetSuccessMessage.classList.add('show');
+                            resetErrorMessage.style.display = 'none';
+
+                            // Redirect to login form after 3 seconds
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 3000);
+                        } catch (error) {
+                            console.error('Password reset error:', error);
+                            resetErrorMessage.textContent = error.message.includes('expired') || error.message.includes('invalid')
+                                ? 'The reset link has expired or is invalid. Please request a new one.'
+                                : 'An error occurred. Please try again.';
+                            resetErrorMessage.style.display = 'block';
+                            resetErrorMessage.classList.add('show');
+                            resetSuccessMessage.style.display = 'none';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                        }
+                    });
+                }
+
+                // Google sign-in button
                 const googleSignInBtn = document.getElementById('googleSignInBtn');
                 const googleSignInModal = document.getElementById('googleSignInModal');
                 const googleSignInForm = document.getElementById('googleSignInForm');
-                const closeGoogleModal = document.getElementById('closeGoogleModal');
                 const googleErrorMessage = document.getElementById('googleErrorMessage');
+                const closeGoogleModal = document.getElementById('closeGoogleModal');
                 let googleUserData = null;
 
                 if (googleSignInBtn) {
@@ -1077,6 +996,7 @@
                     });
                 }
 
+                // Google sign-in form submission
                 if (googleSignInForm) {
                     googleSignInForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
@@ -1111,13 +1031,8 @@
                             await db.collection('users').doc(email).set({
                                 email: email,
                                 username: username,
-                                password: password,
                                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
                             });
-
-                            let users = JSON.parse(localStorage.getItem('users')) || [];
-                            users.push({ email, username, password });
-                            localStorage.setItem('users', JSON.stringify(users));
 
                             await logLoginEvent(email);
 
@@ -1140,6 +1055,7 @@
                     });
                 }
 
+                // Close Google sign-in modal
                 if (closeGoogleModal) {
                     closeGoogleModal.addEventListener('click', () => {
                         googleSignInModal.style.display = 'none';
@@ -1154,6 +1070,74 @@
                     });
                 }
 
+                // Forgot password functionality
+                const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+                const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+                const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+                const forgotErrorMessage = document.getElementById('forgotErrorMessage');
+                const forgotSuccessMessage = document.getElementById('forgotSuccessMessage');
+                const closeForgotPasswordModal = document.getElementById('closeForgotPasswordModal');
+
+                if (forgotPasswordLink) {
+                    forgotPasswordLink.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        forgotPasswordModal.style.display = 'block';
+                    });
+                }
+
+                if (forgotPasswordForm) {
+                    forgotPasswordForm.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+
+                        const submitButton = forgotPasswordForm.querySelector('.action-btn');
+                        submitButton.classList.add('loading');
+                        submitButton.disabled = true;
+
+                        const email = document.getElementById('forgot-email').value.trim();
+
+                        try {
+                            await auth.sendPasswordResetEmail(email, {
+                                url: `${window.location.origin}/`
+                            });
+                            forgotSuccessMessage.textContent = 'Password reset email sent! Check your inbox and click the link promptly.';
+                            forgotSuccessMessage.style.display = 'block';
+                            forgotSuccessMessage.classList.add('show');
+                            forgotErrorMessage.style.display = 'none';
+                            forgotPasswordForm.reset();
+                        } catch (error) {
+                            console.error('Password reset error:', error);
+                            forgotErrorMessage.textContent = error.code === 'auth/user-not-found'
+                                ? 'No user found with this email.'
+                                : 'An error occurred. Please try again.';
+                            forgotErrorMessage.style.display = 'block';
+                            forgotErrorMessage.classList.add('show');
+                            forgotSuccessMessage.style.display = 'none';
+                        } finally {
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                        }
+                    });
+                }
+
+                if (closeForgotPasswordModal) {
+                    closeForgotPasswordModal.addEventListener('click', () => {
+                        forgotPasswordModal.style.display = 'none';
+                        forgotErrorMessage.style.display = 'none';
+                        forgotSuccessMessage.style.display = 'none';
+                        forgotPasswordForm.reset();
+                    });
+
+                    window.addEventListener('click', (event) => {
+                        if (event.target === forgotPasswordModal) {
+                            forgotPasswordModal.style.display = 'none';
+                            forgotErrorMessage.style.display = 'none';
+                            forgotSuccessMessage.style.display = 'none';
+                            forgotPasswordForm.reset();
+                        }
+                    });
+                }
+
+                // Typewriter effect
                 const phrases = [
                     "Protect yourself from cybercrime today.",
                     "Contra E-Crime: Your shield online.",
