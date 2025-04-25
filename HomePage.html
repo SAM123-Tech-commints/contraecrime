@@ -1017,7 +1017,7 @@
                             <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
                             <label for="avatarBgColorPicker">Avatar Background Color</label>
                             <input type="color" id="avatarBgColorPicker" value="#cccccc">
-                            <label for="border registryColorPicker">Border Color</label>
+                            <label for="borderColorPicker">Border Color</label>
                             <input type="color" id="borderColorPicker" value="#000000">
                             <label for="borderTypeSelect">Border Type</label>
                             <select id="borderTypeSelect">
@@ -1155,8 +1155,8 @@
         const borderColorPicker = document.getElementById('borderColorPicker');
         const borderTypeSelect = document.getElementById('borderTypeSelect');
 
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbutka';
-        const CLOUDINARY_UPLOAD_PRESET = 'Contra-Ecrime'; 
+        const CLOUDINARY_CLOUD_NAME = 'your-cloud-name'; // Replace with your actual Cloudinary cloud name
+        const CLOUDINARY_UPLOAD_PRESET = 'your-upload-preset'; // Replace with your actual Cloudinary upload preset
 
         // Load user data and customization settings
         document.addEventListener('DOMContentLoaded', () => {
