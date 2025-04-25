@@ -1158,13 +1158,18 @@
         const CLOUDINARY_CLOUD_NAME = 'dkxtbutka';
         const CLOUDINARY_UPLOAD_PRESET = 'Contra-Ecrime';
 
-        // Load user data and customization settings
-        document.addEventListener('DOMContentLoaded', () => {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        // Monitor authentication state and load user data
+        auth.onAuthStateChanged((user) => {
             const usernameElement = document.querySelector('.user-details .username');
             const emailElement = document.querySelector('.user-details .email');
 
-            if (currentUser && currentUser.username && currentUser.email) {
+            if (user) {
+                // User is signed in
+                const currentUser = {
+                    username: user.displayName || 'User',
+                    email: user.email
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 usernameElement.textContent = currentUser.username;
                 emailElement.textContent = currentUser.email;
 
@@ -1203,8 +1208,11 @@
                     alert('Failed to load user customization: ' + error.message);
                 });
             } else {
+                // No user is signed in
+                localStorage.removeItem('currentUser');
                 usernameElement.textContent = 'Guest';
                 emailElement.textContent = 'guest@example.com';
+                window.location.href = 'index.html'; // Redirect to login page
             }
         });
 
@@ -1234,6 +1242,14 @@
             }
             if (file.size > maxSize) {
                 alert('Image size must be less than 2MB.');
+                return;
+            }
+
+            // Check if user is authenticated
+            const user = auth.currentUser;
+            if (!user) {
+                alert('You must be logged in to upload an avatar.');
+                avatarLoading.classList.remove('active');
                 return;
             }
 
@@ -1341,9 +1357,9 @@
             const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
 
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser && currentUser.email) {
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
                 database.ref(`users/${sanitizedEmail}`).update({
                     avatarBgColor: color,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
@@ -1352,6 +1368,8 @@
                     console.error('Error saving avatar background color:', error);
                     alert('Failed to save avatar background color: ' + error.message);
                 });
+            } else {
+                alert('You must be logged in to change the avatar background color.');
             }
         });
 
@@ -1360,9 +1378,9 @@
             const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
 
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser && currentUser.email) {
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
                 database.ref(`users/${sanitizedEmail}`).update({
                     borderColor: color,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
@@ -1371,6 +1389,8 @@
                     console.error('Error saving border color:', error);
                     alert('Failed to save border color: ' + error.message);
                 });
+            } else {
+                alert('You must be logged in to change the border color.');
             }
         });
 
@@ -1379,9 +1399,9 @@
             const borderType = borderTypeSelect.value;
             profilePic.style.borderStyle = borderType;
 
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUser && currentUser.email) {
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
                 database.ref(`users/${sanitizedEmail}`).update({
                     borderType: borderType,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
@@ -1390,6 +1410,8 @@
                     console.error('Error saving border type:', error);
                     alert('Failed to save border type: ' + error.message);
                 });
+            } else {
+                alert('You must be logged in to change the border type.');
             }
         });
 
