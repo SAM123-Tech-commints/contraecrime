@@ -677,9 +677,6 @@
                 <label for="login-email">Email</label>
                 <input type="email" id="login-email" placeholder="Your email here" required>
                 
-                <label for="login-username">New Username (optional)</label>
-                <input type="text" id="login-username" placeholder="Enter new username (leave blank to keep current)">
-                
                 <label for="login-password">Password</label>
                 <div class="input-container">
                     <input type="password" id="login-password" placeholder="********" required>
@@ -776,6 +773,9 @@
             <form id="forgotPasswordForm">
                 <label for="forgot-email">Email</label>
                 <input type="email" id="forgot-email" placeholder="Enter your email" required>
+                
+                <label for="forgot-username">New Username (optional)</label>
+                <input type="text" id="forgot-username" placeholder="Enter new username (leave blank to keep current)">
                 
                 <div class="buttons-container">
                     <button type="submit" class="action-btn">Send Reset Link</button>
@@ -907,7 +907,6 @@
                         try {
                             const email = document.getElementById('login-email').value.trim();
                             const passwordValue = loginPassword.value.trim();
-                            const newUsername = document.getElementById('login-username').value.trim();
                             const rememberMe = document.getElementById('rememberme').checked;
                             const loginErrorMessage = document.getElementById('loginErrorMessage');
 
@@ -925,19 +924,10 @@
                             // Use Firebase Authentication for login
                             await auth.signInWithEmailAndPassword(email, passwordValue);
 
-                            // Update username in Firestore if a new one is provided
-                            let username;
-                            if (newUsername) {
-                                await db.collection('users').doc(email).update({
-                                    username: newUsername
-                                });
-                                username = newUsername;
-                            } else {
-                                const userDoc = await db.collection('users').doc(email).get();
-                                username = userDoc.exists ? userDoc.data().username : 'User';
-                            }
-
                             await logLoginEvent(email);
+
+                            const userDoc = await db.collection('users').doc(email).get();
+                            const username = userDoc.exists ? userDoc.data().username : 'User';
 
                             localStorage.setItem('currentUser', JSON.stringify({ email, username }));
 
@@ -1207,12 +1197,36 @@
                         submitButton.disabled = true;
 
                         const email = document.getElementById('forgot-email').value.trim();
+                        const newUsername = document.getElementById('forgot-username').value.trim();
 
                         try {
+                            // Check if the user exists before proceeding
+                            const userDoc = await db.collection('users').doc(email).get();
+                            if (!userDoc.exists) {
+                                forgotErrorMessage.textContent = 'No user found with this email.';
+                                forgotErrorMessage.style.display = 'block';
+                                forgotErrorMessage.classList.add('show');
+                                forgotSuccessMessage.style.display = 'none';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            // Send the password reset email
                             await auth.sendPasswordResetEmail(email, {
                                 url: `${window.location.origin}/`
                             });
-                            forgotSuccessMessage.textContent = 'Password reset email sent! Check your inbox and click the link promptly.';
+
+                            // Update username in Firestore if a new one is provided
+                            if (newUsername) {
+                                await db.collection('users').doc(email).update({
+                                    username: newUsername
+                                });
+                                forgotSuccessMessage.textContent = 'Password reset email sent and username updated! Check your inbox and click the link promptly.';
+                            } else {
+                                forgotSuccessMessage.textContent = 'Password reset email sent! Check your inbox and click the link promptly.';
+                            }
+
                             forgotSuccessMessage.style.display = 'block';
                             forgotSuccessMessage.classList.add('show');
                             forgotErrorMessage.style.display = 'none';
