@@ -261,8 +261,8 @@
             top: 0;
             right: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+            flex-direction: row; /* Changed to row to align user details and avatar side by side */
+            align-items: center; /* Center vertically */
             gap: 10px;
             font-size: 16px;
             color: #333;
@@ -285,9 +285,7 @@
 
         .avatar-container {
             position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: inline-block; /* Changed to inline-block to fit alongside user details */
         }
 
         .avatar-container .profile-pic {
@@ -307,7 +305,7 @@
 
         .customization-options {
             position: absolute;
-            top: 90px;
+            top: 90px; /* Adjusted to position below the avatar */
             right: 0;
             background-color: #fff;
             border: 1px solid #ddd;
@@ -886,6 +884,7 @@
 
             .account-customization {
                 position: static;
+                flex-direction: column; /* Stack vertically on mobile */
                 align-items: center;
                 margin: 10px auto;
             }
@@ -1018,7 +1017,7 @@
                             <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
                             <label for="avatarBgColorPicker">Avatar Background Color</label>
                             <input type="color" id="avatarBgColorPicker" value="#cccccc">
-                            <label for="borderColorPicker">Border Color</label>
+                            <label for="border registryColorPicker">Border Color</label>
                             <input type="color" id="borderColorPicker" value="#000000">
                             <label for="borderTypeSelect">Border Type</label>
                             <select id="borderTypeSelect">
@@ -1156,8 +1155,8 @@
         const borderColorPicker = document.getElementById('borderColorPicker');
         const borderTypeSelect = document.getElementById('borderTypeSelect');
 
-        const CLOUDINARY_CLOUD_NAME = 'your-cloud-name'; // Replace with your Cloudinary cloud name
-        const CLOUDINARY_UPLOAD_PRESET = 'avatar_upload'; // Replace with your upload preset name
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbutka';
+        const CLOUDINARY_UPLOAD_PRESET = 'Contra-Ecrime'; 
 
         // Load user data and customization settings
         document.addEventListener('DOMContentLoaded', () => {
@@ -1201,6 +1200,7 @@
                     }
                 }, (error) => {
                     console.error('Error loading user customization:', error);
+                    alert('Failed to load user customization: ' + error.message);
                 });
             } else {
                 usernameElement.textContent = 'Guest';
@@ -1291,7 +1291,12 @@
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Cloudinary upload failed with status: ' + response.status);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         if (data.error) {
                             throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
@@ -1313,17 +1318,21 @@
                             avatarLoading.classList.remove('active');
                         })
                         .catch(error => {
-                            console.error('Error saving avatar URL:', error);
-                            alert('Failed to save avatar URL. Please try again.');
+                            console.error('Error saving avatar URL to Firebase:', error);
+                            alert('Failed to save avatar URL to Firebase: ' + error.message);
                             avatarLoading.classList.remove('active');
                         });
                     })
                     .catch(error => {
-                        console.error('Error uploading avatar:', error);
-                        alert('Failed to upload avatar. Please try again.');
+                        console.error('Error uploading avatar to Cloudinary:', error);
+                        alert('Failed to upload avatar to Cloudinary: ' + error.message);
                         avatarLoading.classList.remove('active');
                     });
                 }, file.type, 0.6); // Reduced quality to 60% for faster upload
+            };
+            img.onerror = () => {
+                alert('Failed to process the image. Please try a different file.');
+                avatarLoading.classList.remove('active');
             };
         });
 
@@ -1341,6 +1350,7 @@
                 })
                 .catch(error => {
                     console.error('Error saving avatar background color:', error);
+                    alert('Failed to save avatar background color: ' + error.message);
                 });
             }
         });
@@ -1359,6 +1369,7 @@
                 })
                 .catch(error => {
                     console.error('Error saving border color:', error);
+                    alert('Failed to save border color: ' + error.message);
                 });
             }
         });
@@ -1377,6 +1388,7 @@
                 })
                 .catch(error => {
                     console.error('Error saving border type:', error);
+                    alert('Failed to save border type: ' + error.message);
                 });
             }
         });
