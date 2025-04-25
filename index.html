@@ -20,14 +20,14 @@
             min-height: 100vh;
             background-color: #f4f4f4;
             position: relative;
-            overflow-y: auto; 
+            overflow-y: auto;
         }
 
         .container {
             display: flex;
             width: 100%;
             min-height: 100vh;
-            flex-direction: column; 
+            flex-direction: column;
         }
 
         .background-image {
@@ -64,6 +64,7 @@
             background-color: transparent;
             z-index: 2;
             max-width: 90%;
+            overflow: hidden;
         }
 
         .text-typewriter {
@@ -72,8 +73,7 @@
             color: #fff;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
-            white-space: normal;
-            overflow-wrap: break-word;
+            white-space: nowrap;
             margin: 0 auto;
             letter-spacing: .05em;
             border-right: .15em solid rgb(255, 0, 0);
@@ -539,6 +539,7 @@
                 max-width: 100%;
                 padding: 20px;
                 box-shadow: none;
+                min-height: auto;
             }
 
             .text-typewriter {
@@ -557,16 +558,39 @@
         }
 
         @media (min-width: 320px) and (max-width: 480px) {
+            body {
+                overflow-y: hidden;
+            }
+
+            .container {
+                min-height: 100vh;
+                height: 100vh;
+                overflow: hidden;
+            }
+
             .background-image {
-                min-height: 50vh;
+                min-height: 40vh;
+                height: 40vh;
+            }
+
+            .form-container {
+                padding: 15px;
+                min-height: 60vh;
+                height: 60vh;
+                overflow-y: auto;
             }
 
             .text-typewriter {
-                font-size: 1.2rem;
+                font-size: 1rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .website-logo {
                 width: 120px;
+                top: 5px;
+                left: 5px;
             }
 
             .logoname {
@@ -578,17 +602,14 @@
             }
 
             .action-btn, .google-btn {
-                padding: 10px 30px;
+                padding: 10px 20px;
                 font-size: 14px;
-            }
-
-            .form-container {
-                padding: 15px;
             }
 
             .modal-content {
                 width: 90%;
-                margin: 20% auto;
+                margin: 10% auto;
+                padding: 15px;
             }
 
             .text-container {
@@ -841,6 +862,18 @@
                             const email = document.getElementById('login-email').value.trim();
                             const passwordValue = loginPassword.value.trim();
                             const rememberMe = document.getElementById('rememberme').checked;
+                            const loginErrorMessage = document.getElementById('loginErrorMessage');
+
+                            // Validate password format before attempting login
+                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                            if (!passwordRegex.test(passwordValue)) {
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
 
                             // Use Firebase Authentication for login
                             await auth.signInWithEmailAndPassword(email, passwordValue);
@@ -867,11 +900,22 @@
                             const loginErrorMessage = document.getElementById('loginErrorMessage');
                             loginErrorMessage.style.display = 'block';
                             loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = error.code === 'auth/user-not-found' 
-                                ? 'Email not found. Please sign up.'
-                                : error.code === 'auth/wrong-password'
-                                ? 'Incorrect password. Please try again.'
-                                : 'An error occurred during login. Please try again.';
+                            switch (error.code) {
+                                case 'auth/user-not-found':
+                                    loginErrorMessage.textContent = 'Email not found. Please sign up.';
+                                    break;
+                                case 'auth/wrong-password':
+                                    loginErrorMessage.textContent = 'Incorrect password. Please try again.';
+                                    break;
+                                case 'auth/invalid-email':
+                                    loginErrorMessage.textContent = 'Invalid email format. Please check your email.';
+                                    break;
+                                case 'auth/too-many-requests':
+                                    loginErrorMessage.textContent = 'Too many login attempts. Please try again later.';
+                                    break;
+                                default:
+                                    loginErrorMessage.textContent = 'An error occurred during login. Please try again.';
+                            }
                             submitButton.classList.remove('loading');
                             submitButton.disabled = false;
                         }
@@ -904,8 +948,9 @@
                         }
 
                         // Validate password strength
-                        if (newPasswordValue.length < 6) {
-                            resetErrorMessage.textContent = 'Password must be at least 6 characters long.';
+                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                        if (!passwordRegex.test(newPasswordValue)) {
+                            resetErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
                             resetErrorMessage.style.display = 'block';
                             resetErrorMessage.classList.add('show');
                             resetSuccessMessage.style.display = 'none';
@@ -1017,6 +1062,16 @@
                                 googleErrorMessage.style.display = 'block';
                                 googleErrorMessage.classList.add('show');
                                 googleErrorMessage.textContent = 'Please enter a password.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                            if (!passwordRegex.test(password)) {
+                                googleErrorMessage.style.display = 'block';
+                                googleErrorMessage.classList.add('show');
+                                googleErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
                                 submitButton.classList.remove('loading');
                                 submitButton.disabled = false;
                                 return;
