@@ -1159,8 +1159,9 @@
         const borderColorPicker = document.getElementById('borderColorPicker');
         const borderTypeSelect = document.getElementById('borderTypeSelect');
 
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbutka';
-        const CLOUDINARY_UPLOAD_PRESET = 'Contra-Ecrime';
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbutka'; // Verify this in your Cloudinary Dashboard
+        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+        const CLOUDINARY_API_KEY = '197592453449171'; // Your Cloudinary API key
 
         // Monitor authentication state and load user data
         auth.onAuthStateChanged((user) => {
@@ -1301,22 +1302,33 @@
                         return;
                     }
 
-                    // Upload to Cloudinary
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                    // Fetch signature from backend (you'll need to set up a backend server)
+                    fetch('https://your-backend-url/generate-signature', {
                         method: 'POST',
-                        body: formData
+                        body: JSON.stringify({ folder: `avatars/${currentUser.email}` }),
+                        headers: { 'Content-Type': 'application/json' }
+                    })
+                    .then(response => response.json())
+                    .then(({ timestamp, signature }) => {
+                        // Upload to Cloudinary
+                        const formData = new FormData();
+                        formData.append('file', blob);
+                        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                        formData.append('folder', `avatars/${currentUser.email}`);
+                        formData.append('api_key', CLOUDINARY_API_KEY);
+                        formData.append('timestamp', timestamp);
+                        formData.append('signature', signature);
+
+                        return fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                            method: 'POST',
+                            body: formData
+                        });
                     })
                     .then(response => {
                         // Capture the response text for detailed error messages
                         const contentType = response.headers.get('content-type');
                         if (!response.ok) {
                             return response.text().then(text => {
-                                // If the response is HTML, extract a meaningful message
                                 const errorMessage = contentType && contentType.includes('application/json')
                                     ? JSON.parse(text).error?.message
                                     : text.includes('Unsigned uploads are not allowed')
