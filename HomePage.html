@@ -1126,7 +1126,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
@@ -1157,21 +1156,7 @@
         const borderTypeSelect = document.getElementById('borderTypeSelect');
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbutka';
-        const CLOUDINARY_API_KEY = '197592453449171';
-        const CLOUDINARY_API_SECRET = 'zTPBrMM-h1QwruGktkkQYJg23dM'; // WARNING: Exposing API secret in client-side code is insecure!
-
-        // Function to generate Cloudinary signature (client-side, insecure)
-        function generateSignature(params, apiSecret) {
-            const sortedParams = Object.keys(params).sort().reduce((acc, key) => {
-                acc[key] = params[key];
-                return acc;
-            }, {});
-            const paramString = Object.keys(sortedParams)
-                .map(key => `${key}=${sortedParams[key]}`)
-                .join('&');
-            const signature = CryptoJS.SHA1(paramString + apiSecret).toString();
-            return signature;
-        }
+        const CLOUDINARY_UPLOAD_PRESET = 'Contra-Ecrime';
 
         // Monitor authentication state and load user data
         auth.onAuthStateChanged((user) => {
@@ -1243,7 +1228,7 @@
             }
         });
 
-        // Handle avatar upload using Cloudinary (Signed Upload)
+        // Handle avatar upload using Cloudinary
         avatarInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
@@ -1312,20 +1297,10 @@
                         return;
                     }
 
-                    // Generate signature for signed upload (insecure, client-side)
-                    const timestamp = Math.round(new Date().getTime() / 1000);
-                    const paramsToSign = {
-                        timestamp: timestamp,
-                        folder: `avatars/${currentUser.email}`
-                    };
-                    const signature = generateSignature(paramsToSign, CLOUDINARY_API_SECRET);
-
-                    // Upload to Cloudinary using signed upload
+                    // Upload to Cloudinary
                     const formData = new FormData();
                     formData.append('file', blob);
-                    formData.append('api_key', CLOUDINARY_API_KEY);
-                    formData.append('timestamp', timestamp);
-                    formData.append('signature', signature);
+                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
                     formData.append('folder', `avatars/${currentUser.email}`);
 
                     fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
@@ -1334,9 +1309,7 @@
                     })
                     .then(response => {
                         if (!response.ok) {
-                            return response.text().then(text => {
-                                throw new Error(`Cloudinary upload failed with status: ${response.status}, Response: ${text}`);
-                            });
+                            throw new Error('Cloudinary upload failed with status: ' + response.status);
                         }
                         return response.json();
                     })
