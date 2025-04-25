@@ -714,9 +714,6 @@
             <!-- Reset Password Form -->
             <form id="resetPasswordForm" style="display: none;">
                 <h2>Reset Password</h2>
-                <label for="new-username">New Username (optional)</label>
-                <input type="text" id="new-username" placeholder="Enter new username (leave blank to keep current)">
-                
                 <label for="new-password">New Password</label>
                 <div class="input-container">
                     <input type="password" id="new-password" placeholder="Enter new password" required>
@@ -974,7 +971,6 @@
                         submitButton.classList.add('loading');
                         submitButton.disabled = true;
 
-                        const newUsername = document.getElementById('new-username').value.trim();
                         const newPasswordValue = document.getElementById('new-password').value.trim();
                         const confirmPasswordValue = document.getElementById('confirm-password').value.trim();
                         const resetErrorMessage = document.getElementById('resetErrorMessage');
@@ -1010,16 +1006,7 @@
                             // Confirm the new password
                             await auth.confirmPasswordReset(oobCode, newPasswordValue);
 
-                            // Update username in Firestore if a new one is provided
-                            if (newUsername) {
-                                await db.collection('users').doc(email).update({
-                                    username: newUsername
-                                });
-                                resetSuccessMessage.textContent = 'Password and username reset successful! Redirecting to login...';
-                            } else {
-                                resetSuccessMessage.textContent = 'Password reset successful! Redirecting to login...';
-                            }
-
+                            resetSuccessMessage.textContent = 'Password reset successful! Redirecting to login...';
                             resetSuccessMessage.style.display = 'block';
                             resetSuccessMessage.classList.add('show');
                             resetErrorMessage.style.display = 'none';
