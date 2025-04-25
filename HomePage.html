@@ -298,11 +298,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 30px;
-            color: #fff;
             object-fit: cover;
             border: 2px solid #000;
             cursor: pointer;
+            color: transparent;
+            font-size: 0;
         }
 
         .customization-options {
@@ -359,7 +359,6 @@
             width: 100%;
         }
 
-        /* Style the file input to look like a button */
         .customization-options input[type="file"] {
             display: none;
         }
@@ -435,7 +434,6 @@
             color: #000000;
         }
 
-        /* Search Bar */
         .search-container {
             width: 40%;
             position: relative;
@@ -577,7 +575,6 @@
             text-align: justify;
         }
 
-        /* Read More */
         .border-button {
             display: flex;
             align-items: center;
@@ -653,7 +650,6 @@
             background-color: #1a1a1a;
         }
 
-        /* Dark Theme */
         body.dark-theme {
             background-color: #121212;
             color: #e0e0e0;
@@ -685,7 +681,6 @@
             color: #ffffff;
         }
 
-        /* Mobile Navigation Styles */
         .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
@@ -939,7 +934,6 @@
     <div class="loader-overlay" id="loaderOverlay">
         <div class="loader"></div>
     </div>
-    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="#" class="logo">Contra E-Crime</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -994,8 +988,6 @@
                     </a>
                 </li>
             </ul>
-
-            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -1017,7 +1009,7 @@
                         <span class="email">email@example.com</span>
                     </div>
                     <div class="avatar-container">
-                        <img class="profile-pic" id="profilePic" src="" alt="Profile Picture">
+                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
                         <div class="avatar-loading" id="avatarLoading">
                             <div class="loader"></div>
                         </div>
@@ -1050,7 +1042,6 @@
             <section class="articles">
                 <h2>TOP ARTICLES</h2>
                 <div class="cards-container" id="cardsContainer">
-                    <!-- Card 1 -->
                     <div class="card" data-title="Hacking">
                         <div class="image_container">
                             <img src="https://static.toiimg.com/thumb/msid-117988403,width-1280,height-720,resizemode-4/117988403.jpg" alt="Cybercrime Image">
@@ -1068,8 +1059,6 @@
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>  
                         </a>
                     </div>
-            
-                    <!-- Card 2 -->
                     <div class="card" data-title="Phishing and Scam">
                         <div class="image_container">
                             <img src="https://safeonline.security.vt.edu/content/safeonline_security_vt_edu/en/phishing/_jcr_content/article-image.transform/m-medium/image.jpeg" alt="Cybercrime Image">
@@ -1087,8 +1076,6 @@
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>  
                         </a>
                     </div>
-            
-                    <!-- Card 3 -->
                     <div class="card" data-title="Internet Fraud">
                         <div class="image_container">
                             <img src="https://gdprinformer.com/wp-content/uploads/2017/09/fraud-laptop.jpg" alt="Cybercrime Image">
@@ -1106,8 +1093,6 @@
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>  
                         </a>
                     </div>
-            
-                    <!-- Card 4 -->
                     <div class="card" data-title="Ransomware Attack">
                         <div class="image_container">
                             <img src="https://riskonnect.com/wp-content/uploads/2024/09/Blog-Image-How-to-Lessen-the-Pain-of-Ransomware-Attacks-3.webp" alt="Cybercrime Image">
@@ -1141,8 +1126,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
@@ -1151,13 +1135,13 @@
             storageBucket: "contra-e-crime.firebasestorage.app",
             messagingSenderId: "198995444405",
             appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-            measurementId: "G-7Y2E24DD42"
+            measurementId: "G-7Y2E24DD42",
+            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
         };
 
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const db = firebase.firestore();
-        const storage = firebase.storage();
+        const database = firebase.database();
 
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
@@ -1172,8 +1156,11 @@
         const borderColorPicker = document.getElementById('borderColorPicker');
         const borderTypeSelect = document.getElementById('borderTypeSelect');
 
+        const CLOUDINARY_CLOUD_NAME = 'your-cloud-name'; // Replace with your Cloudinary cloud name
+        const CLOUDINARY_UPLOAD_PRESET = 'avatar_upload'; // Replace with your upload preset name
+
         // Load user data and customization settings
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             const usernameElement = document.querySelector('.user-details .username');
             const emailElement = document.querySelector('.user-details .email');
@@ -1182,18 +1169,19 @@
                 usernameElement.textContent = currentUser.username;
                 emailElement.textContent = currentUser.email;
 
-                // Load user customization settings from Firestore
-                try {
-                    const userDoc = await db.collection('users').doc(currentUser.email).get();
-                    if (userDoc.exists) {
-                        const userData = userDoc.data();
+                // Sanitize email for Firebase Realtime Database key (replace '.' with ',')
+                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+                // Load user customization settings from Realtime Database
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.once('value', (snapshot) => {
+                    const userData = snapshot.val();
+                    if (userData) {
                         // Set avatar if exists
                         if (userData.avatarUrl) {
                             profilePic.src = userData.avatarUrl;
-                            profilePic.style.backgroundColor = userData.avatarBgColor || '#ccc';
                         } else {
-                            const initials = currentUser.username.charAt(0).toUpperCase();
-                            profilePic.textContent = initials;
+                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
                         }
                         // Set avatar background color
                         if (userData.avatarBgColor) {
@@ -1211,14 +1199,12 @@
                             borderTypeSelect.value = userData.borderType;
                         }
                     }
-                } catch (error) {
+                }, (error) => {
                     console.error('Error loading user customization:', error);
-                }
+                });
             } else {
                 usernameElement.textContent = 'Guest';
                 emailElement.textContent = 'guest@example.com';
-                // Optionally redirect to login page
-                // window.location.href = 'index.html';
             }
         });
 
@@ -1234,8 +1220,8 @@
             }
         });
 
-        // Handle avatar upload using Firebase Storage
-        avatarInput.addEventListener('change', async (event) => {
+        // Handle avatar upload using Cloudinary
+        avatarInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
 
@@ -1254,128 +1240,144 @@
             // Show loading indicator
             avatarLoading.classList.add('active');
 
-            try {
-                // Create a canvas to resize the image
-                const img = new Image();
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+            // Create a canvas to resize the image
+            const img = new Image();
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
 
-                img.onload = async () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    const maxDimension = 500;
-                    let width = img.width;
-                    let height = img.height;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const maxDimension = 300; // Reduced for faster upload
+                let width = img.width;
+                let height = img.height;
 
-                    // Resize image to max 500x500 while maintaining aspect ratio
-                    if (width > height) {
-                        if (width > maxDimension) {
-                            height = Math.round((height * maxDimension) / width);
-                            width = maxDimension;
-                        }
-                    } else {
-                        if (height > maxDimension) {
-                            width = Math.round((width * maxDimension) / height);
-                            height = maxDimension;
-                        }
+                // Resize image to max 300x300 while maintaining aspect ratio
+                if (width > height) {
+                    if (width > maxDimension) {
+                        height = Math.round((height * maxDimension) / width);
+                        width = maxDimension;
+                    }
+                } else {
+                    if (height > maxDimension) {
+                        width = Math.round((width * maxDimension) / height);
+                        height = maxDimension;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Convert canvas to blob
+                canvas.toBlob((blob) => {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (!currentUser || !currentUser.email) {
+                        alert('User not logged in.');
+                        avatarLoading.classList.remove('active');
+                        return;
                     }
 
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(img, 0, 0, width, height);
+                    // Upload to Cloudinary
+                    const formData = new FormData();
+                    formData.append('file', blob);
+                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                    formData.append('folder', `avatars/${currentUser.email}`);
 
-                    // Convert canvas to blob
-                    canvas.toBlob(async (blob) => {
-                        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                        if (!currentUser || !currentUser.email) {
-                            alert('User not logged in.');
-                            avatarLoading.classList.remove('active');
-                            return;
+                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
                         }
 
-                        // Upload to Firebase Storage
-                        const storageRef = storage.ref(`avatars/${currentUser.email}/${Date.now()}_${file.name}`);
-                        const snapshot = await storageRef.put(blob);
-                        const avatarUrl = await snapshot.ref.getDownloadURL();
+                        const avatarUrl = data.secure_url;
 
-                        // Update Firestore with new avatar URL
-                        await db.collection('users').doc(currentUser.email).update({
+                        // Sanitize email for Firebase Realtime Database key
+                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+                        // Update Realtime Database with new avatar URL
+                        database.ref(`users/${sanitizedEmail}`).update({
                             avatarUrl: avatarUrl,
-                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            updatedAt: firebase.database.ServerValue.TIMESTAMP
+                        })
+                        .then(() => {
+                            // Update UI
+                            profilePic.src = avatarUrl;
+                            avatarLoading.classList.remove('active');
+                        })
+                        .catch(error => {
+                            console.error('Error saving avatar URL:', error);
+                            alert('Failed to save avatar URL. Please try again.');
+                            avatarLoading.classList.remove('active');
                         });
-
-                        // Update UI
-                        profilePic.src = avatarUrl;
-                        profilePic.textContent = '';
-
-                        // Hide loading indicator
+                    })
+                    .catch(error => {
+                        console.error('Error uploading avatar:', error);
+                        alert('Failed to upload avatar. Please try again.');
                         avatarLoading.classList.remove('active');
-                    }, file.type, 0.8); // 80% quality to reduce size
-                };
-            } catch (error) {
-                console.error('Error uploading avatar:', error);
-                alert('Failed to upload avatar. Please try again.');
-                avatarLoading.classList.remove('active');
-            }
+                    });
+                }, file.type, 0.6); // Reduced quality to 60% for faster upload
+            };
         });
 
         // Avatar background color picker
-        avatarBgColorPicker.addEventListener('change', async () => {
+        avatarBgColorPicker.addEventListener('change', () => {
             const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
 
-            // Save to Firestore
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser && currentUser.email) {
-                try {
-                    await db.collection('users').doc(currentUser.email).update({
-                        avatarBgColor: color,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                } catch (error) {
+                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    avatarBgColor: color,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
                     console.error('Error saving avatar background color:', error);
-                }
+                });
             }
         });
 
         // Border color picker
-        borderColorPicker.addEventListener('change', async () => {
+        borderColorPicker.addEventListener('change', () => {
             const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
 
-            // Save to Firestore
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser && currentUser.email) {
-                try {
-                    await db.collection('users').doc(currentUser.email).update({
-                        borderColor: color,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                } catch (error) {
+                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderColor: color,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
                     console.error('Error saving border color:', error);
-                }
+                });
             }
         });
 
         // Border type selector
-        borderTypeSelect.addEventListener('change', async () => {
+        borderTypeSelect.addEventListener('change', () => {
             const borderType = borderTypeSelect.value;
             profilePic.style.borderStyle = borderType;
 
-            // Save to Firestore
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser && currentUser.email) {
-                try {
-                    await db.collection('users').doc(currentUser.email).update({
-                        borderType: borderType,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                } catch (error) {
+                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderType: borderType,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
                     console.error('Error saving border type:', error);
-                }
+                });
             }
         });
 
