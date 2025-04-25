@@ -108,7 +108,6 @@
             height: 100vh;
             position: fixed;
             transition: transform 0.3s ease;
-            z-index: 1000;
         }
 
         .sidebar h1 {
@@ -317,7 +316,7 @@
             padding: 8px;
             z-index: 100;
             align-items: flex-start;
-            width: 200px;
+            width: 200px; /* Smaller width for compactness */
         }
 
         .customization-options.active {
@@ -325,12 +324,12 @@
         }
 
         .customization-options label {
-            font-size: 12px;
+            font-size: 12px; /* Smaller font size */
             color: #333;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 4px 8px; /* Reduced padding */
             transition: background-color 0.3s ease;
             width: 100%;
             text-align: left;
@@ -343,7 +342,7 @@
 
         .customization-options input[type="color"] {
             width: 100%;
-            height: 25px;
+            height: 25px; /* Slightly smaller height */
             padding: 0;
             border: none;
             cursor: pointer;
@@ -351,8 +350,8 @@
         }
 
         .customization-options select {
-            font-size: 12px;
-            padding: 4px;
+            font-size: 12px; /* Smaller font size */
+            padding: 4px; /* Reduced padding */
             border-radius: 5px;
             border: 1px solid #ccc;
             cursor: pointer;
@@ -364,12 +363,12 @@
         }
 
         .customization-options .file-input-label {
-            font-size: 12px;
+            font-size: 12px; /* Smaller font size */
             color: #333;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 4px 8px; /* Reduced padding */
             transition: background-color 0.3s ease;
             width: 100%;
             text-align: left;
@@ -473,6 +472,7 @@
             100% {
                 transform: translateY(-50%) scale(1);
             }
+
             50% {
                 transform: translateY(-50%) scale(1.1);
             }
@@ -686,9 +686,7 @@
             padding: 15px;
             position: fixed;
             width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1001;
+            z-index: 1000;
         }
 
         .mobile-nav .logo {
@@ -707,7 +705,6 @@
             top: 15px;
         }
 
-        /* Media Queries for Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -758,7 +755,7 @@
 
             .customization-options {
                 top: 80px;
-                width: 180px;
+                width: 180px; /* Slightly smaller on medium screens */
             }
 
             .search-container {
@@ -768,46 +765,29 @@
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 220px;
-                padding: 15px;
-                transform: translateX(-100%);
-                top: 60px;
-                height: calc(100vh - 60px);
-                overflow-y: auto;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
+                width: 200px;
+                padding: 10px;
             }
 
             .sidebar h1 {
                 font-size: 20px;
             }
 
-            .sidebar ul li {
-                margin: 30px 0;
-            }
-
             .sidebar ul li a {
-                font-size: 16px;
+                font-size: 14px;
             }
 
             .dark-theme-label {
-                font-size: 16px;
-            }
-
-            .mobile-nav {
-                display: block;
+                font-size: 14px;
             }
 
             .content {
-                margin-left: 0;
-                padding: 80px 15px 15px;
+                margin-left: 200px;
+                padding: 10px;
             }
 
             footer {
-                margin-left: 0;
-                padding: 10px 20px;
+                margin-left: 200px;
             }
 
             .card {
@@ -816,16 +796,7 @@
             }
 
             .account-customization {
-                position: static;
-                flex-direction: column;
-                align-items: center;
-                margin: 10px auto;
                 font-size: 14px;
-            }
-
-            .user-details {
-                align-items: center;
-                margin-bottom: 10px;
             }
 
             .avatar-container .profile-pic {
@@ -839,11 +810,8 @@
             }
 
             .customization-options {
-                top: auto;
-                bottom: 70px;
-                right: 50%;
-                transform: translateX(50%);
-                width: 160px;
+                top: 70px;
+                width: 160px; /* Smaller on smaller screens */
             }
 
             .fingerprint-icon {
@@ -851,13 +819,8 @@
                 height: 120px;
             }
 
-            .fingerprint-icon::before {
-                width: 108px;
-                height: 110px;
-            }
-
             .search-container {
-                width: 80%;
+                width: 70%;
             }
         }
 
@@ -871,19 +834,15 @@
             }
 
             .sidebar {
-                width: 70%;
-                max-width: 250px;
+                width: 100%;
                 height: auto;
                 position: fixed;
-                padding: 15px;
+                padding: 10px;
                 transform: translateX(-100%);
                 z-index: 999;
                 top: 60px;
                 height: calc(100vh - 60px);
                 overflow-y: auto;
-                background-image: url('https://i.imgur.com/bNRxAhZ.png');
-                background-size: cover;
-                background-position: center;
             }
 
             .sidebar.active {
@@ -894,22 +853,12 @@
                 display: none;
             }
 
-            .sidebar ul {
-                padding: 0;
-            }
-
             .sidebar ul li {
                 margin: 20px 0;
             }
 
             .sidebar ul li a {
                 font-size: 16px;
-                padding: 10px;
-            }
-
-            .dark-theme-container {
-                margin-top: 20px;
-                padding: 10px;
             }
 
             .dark-theme-label {
@@ -919,12 +868,11 @@
             .content {
                 margin-left: 0;
                 padding: 80px 10px 10px;
-                width: 100%;
             }
 
             footer {
                 margin-left: 0;
-                padding: 10px 15px;
+                padding: 10px 20px;
                 text-align: center;
             }
 
@@ -946,7 +894,6 @@
 
             .user-details {
                 align-items: center;
-                margin-bottom: 10px;
             }
 
             .customization-options {
@@ -954,7 +901,7 @@
                 bottom: 60px;
                 right: 50%;
                 transform: translateX(50%);
-                width: 140px;
+                width: 140px; /* Even smaller on mobile */
             }
 
             .fingerprint-icon {
@@ -963,138 +910,25 @@
             }
 
             .fingerprint-icon::before {
-                width: 78px;
-                height: 80px;
+                content: "";
+                position: absolute;
+                margin-right: 4px;
+                margin-top: 4px;
+                width: 96px;
+                height: 93px;
+                border: 3px solid;
+                border-radius: 50%;
+                z-index: 0;
+                color: #000000;
             }
 
             .search-container {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .search-input {
-                font-size: 14px;
-                padding: 8px;
+                width: 90%;
             }
 
             .card {
                 width: 100%;
                 max-width: 100%;
-            }
-
-            .articles h2 {
-                font-size: 20px;
-            }
-
-            .cybercrime-title {
-                font-size: 1.1rem;
-            }
-
-            .cybercrime-description {
-                font-size: 0.85rem;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .mobile-nav {
-                padding: 10px;
-            }
-
-            .mobile-nav .logo {
-                font-size: 18px;
-            }
-
-            .mobile-nav .menu-icon {
-                font-size: 20px;
-                right: 10px;
-                top: 12px;
-            }
-
-            .sidebar {
-                width: 80%;
-                max-width: 220px;
-                padding: 10px;
-            }
-
-            .sidebar ul li a {
-                font-size: 14px;
-                padding: 8px;
-            }
-
-            .dark-theme-label {
-                font-size: 14px;
-            }
-
-            .toggle-switch {
-                width: 50px;
-                height: 25px;
-            }
-
-            .slider::before {
-                width: 18px;
-                height: 18px;
-                top: 2px;
-                left: 2px;
-            }
-
-            .checkbox:checked ~ .slider::before {
-                transform: translateX(25px);
-            }
-
-            .content {
-                padding: 70px 8px 8px;
-            }
-
-            .account-customization {
-                font-size: 12px;
-            }
-
-            .avatar-container .profile-pic {
-                width: 50px;
-                height: 50px;
-            }
-
-            .avatar-loading {
-                width: 50px;
-                height: 50px;
-            }
-
-            .customization-options {
-                width: 120px;
-                padding: 6px;
-            }
-
-            .customization-options label,
-            .customization-options .file-input-label {
-                font-size: 10px;
-                padding: 3px 6px;
-            }
-
-            .customization-options select {
-                font-size: 10px;
-            }
-
-            .fingerprint-icon {
-                width: 80px;
-                height: 80px;
-            }
-
-            .fingerprint-icon::before {
-                width: 68px;
-                height: 70px;
-            }
-
-            .search-container {
-                max-width: 250px;
-            }
-
-            .search-input {
-                font-size: 12px;
-                height: 35px;
-            }
-
-            .articles h2 {
-                font-size: 18px;
             }
         }
     </style>
