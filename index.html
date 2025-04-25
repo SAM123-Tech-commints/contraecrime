@@ -921,12 +921,6 @@
                             // Confirm the new password
                             await auth.confirmPasswordReset(oobCode, newPasswordValue);
 
-                            // Update password in Firestore
-                            await db.collection('users').doc(email).update({
-                                password: newPasswordValue,
-                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                            });
-
                             resetSuccessMessage.textContent = 'Password reset successful! Redirecting to login...';
                             resetSuccessMessage.style.display = 'block';
                             resetSuccessMessage.classList.add('show');
@@ -940,7 +934,7 @@
                             console.error('Password reset error:', error);
                             resetErrorMessage.textContent = error.message.includes('expired') || error.message.includes('invalid')
                                 ? 'The reset link has expired or is invalid. Please request a new one.'
-                                : 'An error occurred. Please try again.';
+                                : 'An error occurred. Please try again: ' + error.message;
                             resetErrorMessage.style.display = 'block';
                             resetErrorMessage.classList.add('show');
                             resetSuccessMessage.style.display = 'none';
