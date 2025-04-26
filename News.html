@@ -90,6 +90,48 @@
             animation: spin 1s linear infinite;
         }
 
+        /* Local Loading Indicator for Avatar Upload */
+        .avatar-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 101;
+        }
+
+        .avatar-loading.active {
+            display: flex;
+        }
+
+        .avatar-loading .loader {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #FFF;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            animation: rotation 1s linear infinite;
+        }
+
+        .dark-theme .avatar-loading .loader {
+            border-color: #d7b15c;
+            border-bottom-color: transparent;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -282,6 +324,158 @@
             margin: 0 auto;
             position: relative;
             z-index: 1;
+        }
+
+        .account-customization {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .user-details .username {
+            font-weight: 600;
+        }
+
+        .user-details .email {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar-container .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: cover;
+            border: 2px solid #000;
+            cursor: pointer;
+            color: transparent;
+            font-size: 0;
+        }
+
+        .customization-options {
+            position: absolute;
+            top: 90px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            padding: 8px;
+            z-index: 100;
+            align-items: flex-start;
+            width: 200px;
+        }
+
+        .customization-options.active {
+            display: flex;
+        }
+
+        .customization-options label {
+            font-size: 12px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .customization-options label:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .customization-options input[type="color"] {
+            width: 100%;
+            height: 25px;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            background: none;
+        }
+
+        .customization-options select {
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .customization-options input[type="file"] {
+            display: none;
+        }
+
+        .customization-options .file-input-label {
+            font-size: 12px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .customization-options .file-input-label:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .dark-theme .account-customization {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .user-details .email {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .customization-options {
+            background-color: #3a3b3c;
+            border-color: #555;
+        }
+
+        .dark-theme .customization-options label,
+        .dark-theme .customization-options .file-input-label {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .customization-options label:hover,
+        .dark-theme .customization-options .file-input-label:hover {
+            background-color: #4a4b4c;
+        }
+
+        .dark-theme .customization-options select {
+            background-color: #3a3b3c;
+            color: #e0e0e0;
+            border-color: #555;
         }
 
         .news-section h1 {
@@ -626,6 +820,30 @@
             .news-section p.tagline {
                 font-size: 18px;
             }
+
+            .account-customization {
+                right: 10px;
+                font-size: 14px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 70px;
+                height: 70px;
+            }
+
+            .avatar-loading {
+                width: 70px;
+                height: 70px;
+            }
+
+            .user-details .email {
+                font-size: 12px;
+            }
+
+            .customization-options {
+                top: 80px;
+                width: 180px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -665,6 +883,25 @@
                 height: 150px;
                 margin-right: 0;
                 margin-bottom: 10px;
+            }
+
+            .account-customization {
+                font-size: 14px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 60px;
+                height: 60px;
+            }
+
+            .avatar-loading {
+                width: 60px;
+                height: 60px;
+            }
+
+            .customization-options {
+                top: 70px;
+                width: 160px;
             }
         }
 
@@ -739,6 +976,28 @@
 
             .news-section p.tagline {
                 font-size: 16px;
+            }
+
+            .account-customization {
+                position: relative;
+                flex-direction: column;
+                align-items: center;
+                margin: 20px auto;
+                width: 100%;
+                max-width: 300px;
+                padding-top: 10px;
+            }
+
+            .user-details {
+                align-items: center;
+            }
+
+            .customization-options {
+                top: auto;
+                bottom: 60px;
+                right: 50%;
+                transform: translateX(50%);
+                width: 140px;
             }
         }
     </style>
@@ -818,6 +1077,33 @@
         </nav>
         <main class="content">
             <section class="news-section">
+                <div class="account-customization">
+                    <div class="user-details">
+                        <span class="username">User</span>
+                        <span class="email">email@example.com</span>
+                    </div>
+                    <div class="avatar-container">
+                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                        <div class="avatar-loading" id="avatarLoading">
+                            <div class="loader"></div>
+                        </div>
+                        <div class="customization-options" id="customizationMenu">
+                            <label class="file-input-label" for="avatarInput">Change Avatar</label>
+                            <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
+                            <label for="avatarBgColorPicker">Avatar Background Color</label>
+                            <input type="color" id="avatarBgColorPicker" value="#cccccc">
+                            <label for="borderColorPicker">Border Color</label>
+                            <input type="color" id="borderColorPicker" value="#000000">
+                            <label for="borderTypeSelect">Border Type</label>
+                            <select id="borderTypeSelect">
+                                <option value="solid">Solid</option>
+                                <option value="dashed">Dashed</option>
+                                <option value="dotted">Dotted</option>
+                                <option value="double">Double</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <h1>
                     TRENDING CYBERCRIME NEWS <img src="https://i.imgur.com/VStcaPo.png" alt="Logo" style="width: 200px; height: 200px; vertical-align: middle; margin-right: 10px;">
                 </h1>
@@ -961,7 +1247,7 @@
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="news-details">
-                        <p>CEBU CITY – Media practitioners across the Visayas gathered for a cybersecurity forum to tackle the growing wave of cyber threats, including smishing (SMS phishing), quishing (QR code phishing), phishing (email scams), and vishing (voice phishing), collectively dubbed the "shing-a-ling" of digital fraud.</p>
+                        <p>CEBU CITY – Media practitioners across the Vis Forteayas gathered for a cybersecurity forum to tackle the growing wave of cyber threats, including smishing (SMS phishing), quishing (QR code phishing), phishing (email scams), and vishing (voice phishing), collectively dubbed the "shing-a-ling" of digital fraud.</p>
                         <p>The forum, organized by the Philippine Information Agency (PIA), featured experts from the Department of Information and Communications Technology (DICT) who warned of the increasing sophistication of these scams, often targeting unsuspecting individuals through fake messages and fraudulent links.</p>
                         <p>"These threats are evolving rapidly, and media professionals need to be equipped to identify and report them," said a DICT spokesperson. The event also included workshops on spotting fraudulent communications and protecting personal data online.</p>
                         <p>Participants were urged to educate the public on safe digital practices, such as avoiding suspicious links and verifying the authenticity of messages before taking action.</p>
