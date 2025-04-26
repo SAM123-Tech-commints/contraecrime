@@ -316,7 +316,7 @@
             padding: 8px;
             z-index: 100;
             align-items: flex-start;
-            width: 200px; /* Smaller width for compactness */
+            width: 200px;
         }
 
         .customization-options.active {
@@ -324,12 +324,12 @@
         }
 
         .customization-options label {
-            font-size: 12px; /* Smaller font size */
+            font-size: 12px;
             color: #333;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 4px 8px; /* Reduced padding */
+            padding: 4px 8px;
             transition: background-color 0.3s ease;
             width: 100%;
             text-align: left;
@@ -342,7 +342,7 @@
 
         .customization-options input[type="color"] {
             width: 100%;
-            height: 25px; /* Slightly smaller height */
+            height: 25px;
             padding: 0;
             border: none;
             cursor: pointer;
@@ -350,8 +350,8 @@
         }
 
         .customization-options select {
-            font-size: 12px; /* Smaller font size */
-            padding: 4px; /* Reduced padding */
+            font-size: 12px;
+            padding: 4px;
             border-radius: 5px;
             border: 1px solid #ccc;
             cursor: pointer;
@@ -363,12 +363,12 @@
         }
 
         .customization-options .file-input-label {
-            font-size: 12px; /* Smaller font size */
+            font-size: 12px;
             color: #333;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 4px 8px; /* Reduced padding */
+            padding: 4px 8px;
             transition: background-color 0.3s ease;
             width: 100%;
             text-align: left;
@@ -755,7 +755,7 @@
 
             .customization-options {
                 top: 80px;
-                width: 180px; /* Slightly smaller on medium screens */
+                width: 180px;
             }
 
             .search-container {
@@ -811,7 +811,7 @@
 
             .customization-options {
                 top: 70px;
-                width: 160px; /* Smaller on smaller screens */
+                width: 160px;
             }
 
             .fingerprint-icon {
@@ -901,7 +901,7 @@
                 bottom: 60px;
                 right: 50%;
                 transform: translateX(50%);
-                width: 140px; /* Even smaller on mobile */
+                width: 140px;
             }
 
             .fingerprint-icon {
@@ -1131,6 +1131,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script>
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
@@ -1138,14 +1139,15 @@
             storageBucket: "contra-e-crime.firebasestorage.app",
             messagingSenderId: "198995444405",
             appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-            measurementId: "G-7Y2E24DD42",
             databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
         };
 
+        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
 
+        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1159,7 +1161,8 @@
         const borderColorPicker = document.getElementById('borderColorPicker');
         const borderTypeSelect = document.getElementById('borderTypeSelect');
 
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbutka';
+        // Cloudinary Configuration
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta'; // Corrected from 'dkxtbutka'
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
         // Monitor authentication state and load user data
@@ -1312,28 +1315,25 @@
                         body: formData
                     })
                     .then(response => {
-                        // Capture the response text for detailed error messages
-                        const contentType = response.headers.get('content-type');
                         if (!response.ok) {
                             return response.text().then(text => {
-                                // If the response is HTML, extract a meaningful message
-                                const errorMessage = contentType && contentType.includes('application/json')
-                                    ? JSON.parse(text).error?.message
-                                    : text.includes('Unsigned uploads are not allowed')
-                                    ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                    : text.includes('Invalid upload preset')
-                                    ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                    : `Cloudinary upload failed with status: ${response.status}, Response: ${text}`;
+                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                                try {
+                                    const parsed = JSON.parse(text);
+                                    errorMessage = parsed.error?.message || text;
+                                } catch (e) {
+                                    errorMessage = text.includes('Invalid cloud name')
+                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                        : text.includes('Invalid upload preset')
+                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                        : text.includes('Unsigned uploads are not allowed')
+                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                        : text || 'Unknown error occurred';
+                                }
                                 throw new Error(errorMessage);
                             });
                         }
-                        if (contentType && contentType.includes('application/json')) {
-                            return response.json();
-                        } else {
-                            return response.text().then(text => {
-                                throw new Error(`Unexpected response format: ${text}`);
-                            });
-                        }
+                        return response.json();
                     })
                     .then(data => {
                         if (data.error) {
@@ -1363,7 +1363,7 @@
                     })
                     .catch(error => {
                         console.error('Error uploading avatar to Cloudinary:', error);
-                        alert('Failed to upload avatar to Cloudinary: ' + error.message);
+                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
                         avatarLoading.classList.remove('active');
                     });
                 }, file.type, 0.6); // Reduced quality to 60% for faster upload
@@ -1437,6 +1437,7 @@
             }
         });
 
+        // Theme toggle functionality
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1452,6 +1453,7 @@
             }
         });
 
+        // Mobile menu toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -1464,6 +1466,7 @@
             }
         });
 
+        // Add loading overlay for page transitions
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
@@ -1479,6 +1482,7 @@
             }
         });
 
+        // Search functionality using Fuse.js
         document.addEventListener('DOMContentLoaded', () => {
             const cards = Array.from(document.querySelectorAll('.card'));
 
@@ -1487,9 +1491,15 @@
                 element: card
             }));
 
+            // Check if Fuse.js is loaded
+            if (typeof Fuse === 'undefined') {
+                console.error('Fuse.js failed to load. Search functionality will not work.');
+                return;
+            }
+
             const fuse = new Fuse(list, {
                 keys: ['title'],
-                threshold: 0.4,      
+                threshold: 0.4,
                 distance: 100
             });
 
@@ -1512,13 +1522,14 @@
                 cards.forEach(card => {
                     card.classList.add('hidden');
                     card.classList.remove('highlight');
+                    card.style.order = '';
                 });
 
                 results.forEach((res, index) => {
                     const card = res.item.element;
                     card.classList.remove('hidden');
                     card.classList.add('highlight');
-                    card.style.order = -index;
+                    card.style.order = -index; // Prioritize search results by reordering
                 });
             });
         });
