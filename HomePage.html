@@ -886,10 +886,13 @@
             }
 
             .account-customization {
-                position: static;
+                position: relative;
                 flex-direction: column;
                 align-items: center;
-                margin: 10px auto;
+                margin: 20px auto;
+                width: 100%;
+                max-width: 300px;
+                padding-top: 10px;
             }
 
             .user-details {
@@ -1162,7 +1165,7 @@
         const borderTypeSelect = document.getElementById('borderTypeSelect');
 
         // Cloudinary Configuration
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta'; // Corrected from 'dkxtbutka'
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
         // Monitor authentication state and load user data
@@ -1171,7 +1174,6 @@
             const emailElement = document.querySelector('.user-details .email');
 
             if (user) {
-                // User is signed in
                 const currentUser = {
                     username: user.displayName || 'User',
                     email: user.email
@@ -1180,31 +1182,25 @@
                 usernameElement.textContent = currentUser.username;
                 emailElement.textContent = currentUser.email;
 
-                // Sanitize email for Firebase Realtime Database key (replace '.' with ',')
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
-                // Load user customization settings from Realtime Database
                 const userRef = database.ref(`users/${sanitizedEmail}`);
                 userRef.once('value', (snapshot) => {
                     const userData = snapshot.val();
                     if (userData) {
-                        // Set avatar if exists
                         if (userData.avatarUrl) {
                             profilePic.src = userData.avatarUrl;
                         } else {
                             profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
                         }
-                        // Set avatar background color
                         if (userData.avatarBgColor) {
                             profilePic.style.backgroundColor = userData.avatarBgColor;
                             avatarBgColorPicker.value = userData.avatarBgColor;
                         }
-                        // Set border color
                         if (userData.borderColor) {
                             profilePic.style.borderColor = userData.borderColor;
                             borderColorPicker.value = userData.borderColor;
                         }
-                        // Set border type
                         if (userData.borderType) {
                             profilePic.style.borderStyle = userData.borderType;
                             borderTypeSelect.value = userData.borderType;
@@ -1215,34 +1211,29 @@
                     alert('Failed to load user customization: ' + error.message);
                 });
             } else {
-                // No user is signed in
                 localStorage.removeItem('currentUser');
                 usernameElement.textContent = 'Guest';
                 emailElement.textContent = 'guest@example.com';
-                window.location.href = 'index.html'; // Redirect to login page
+                window.location.href = 'index.html';
             }
         });
 
-        // Toggle customization menu
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
 
-        // Close customization menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
                 customizationMenu.classList.remove('active');
             }
         });
 
-        // Handle avatar upload using Cloudinary
         avatarInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
 
-            // Validate file type and size
             const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024; // 2MB
+            const maxSize = 2 * 1024 * 1024;
             if (!validTypes.includes(file.type)) {
                 alert('Please upload a valid image (JPG, JPEG, PNG).');
                 return;
@@ -1252,7 +1243,6 @@
                 return;
             }
 
-            // Check if user is authenticated
             const user = auth.currentUser;
             if (!user) {
                 alert('You must be logged in to upload an avatar.');
@@ -1260,10 +1250,8 @@
                 return;
             }
 
-            // Show loading indicator
             avatarLoading.classList.add('active');
 
-            // Create a canvas to resize the image
             const img = new Image();
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -1274,11 +1262,10 @@
             img.onload = () => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                const maxDimension = 300; // Reduced for faster upload
+                const maxDimension = 300;
                 let width = img.width;
                 let height = img.height;
 
-                // Resize image to max 300x300 while maintaining aspect ratio
                 if (width > height) {
                     if (width > maxDimension) {
                         height = Math.round((height * maxDimension) / width);
@@ -1295,7 +1282,6 @@
                 canvas.height = height;
                 ctx.drawImage(img, 0, 0, width, height);
 
-                // Convert canvas to blob
                 canvas.toBlob((blob) => {
                     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                     if (!currentUser || !currentUser.email) {
@@ -1304,7 +1290,6 @@
                         return;
                     }
 
-                    // Upload to Cloudinary
                     const formData = new FormData();
                     formData.append('file', blob);
                     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
@@ -1341,17 +1326,13 @@
                         }
 
                         const avatarUrl = data.secure_url;
-
-                        // Sanitize email for Firebase Realtime Database key
                         const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
-                        // Update Realtime Database with new avatar URL
                         database.ref(`users/${sanitizedEmail}`).update({
                             avatarUrl: avatarUrl,
                             updatedAt: firebase.database.ServerValue.TIMESTAMP
                         })
                         .then(() => {
-                            // Update UI
                             profilePic.src = avatarUrl;
                             avatarLoading.classList.remove('active');
                         })
@@ -1366,7 +1347,7 @@
                         alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
                         avatarLoading.classList.remove('active');
                     });
-                }, file.type, 0.6); // Reduced quality to 60% for faster upload
+                }, file.type, 0.6);
             };
             img.onerror = () => {
                 alert('Failed to process the image. Please try a different file.');
@@ -1374,7 +1355,6 @@
             };
         });
 
-        // Avatar background color picker
         avatarBgColorPicker.addEventListener('change', () => {
             const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
@@ -1395,7 +1375,6 @@
             }
         });
 
-        // Border color picker
         borderColorPicker.addEventListener('change', () => {
             const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
@@ -1416,7 +1395,6 @@
             }
         });
 
-        // Border type selector
         borderTypeSelect.addEventListener('change', () => {
             const borderType = borderTypeSelect.value;
             profilePic.style.borderStyle = borderType;
@@ -1437,7 +1415,6 @@
             }
         });
 
-        // Theme toggle functionality
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1453,7 +1430,6 @@
             }
         });
 
-        // Mobile menu toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -1466,7 +1442,6 @@
             }
         });
 
-        // Add loading overlay for page transitions
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
@@ -1482,7 +1457,6 @@
             }
         });
 
-        // Search functionality using Fuse.js
         document.addEventListener('DOMContentLoaded', () => {
             const cards = Array.from(document.querySelectorAll('.card'));
 
@@ -1491,7 +1465,6 @@
                 element: card
             }));
 
-            // Check if Fuse.js is loaded
             if (typeof Fuse === 'undefined') {
                 console.error('Fuse.js failed to load. Search functionality will not work.');
                 return;
@@ -1529,7 +1502,7 @@
                     const card = res.item.element;
                     card.classList.remove('hidden');
                     card.classList.add('highlight');
-                    card.style.order = -index; // Prioritize search results by reordering
+                    card.style.order = -index;
                 });
             });
         });
