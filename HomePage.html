@@ -886,25 +886,64 @@
             }
 
             .account-customization {
-                position: relative;
-                flex-direction: column;
+                position: absolute;
+                top: 70px; /* Adjusted to position below the mobile nav */
+                right: 10px;
+                display: flex;
+                flex-direction: row;
                 align-items: center;
-                margin: 20px auto;
-                width: 100%;
-                max-width: 300px;
-                padding-top: 10px;
+                gap: 5px;
+                font-size: 12px;
+                margin: 0;
+                width: auto;
+                padding: 0;
             }
 
             .user-details {
-                align-items: center;
+                align-items: flex-end;
+            }
+
+            .user-details .username {
+                font-size: 12px;
+            }
+
+            .user-details .email {
+                font-size: 10px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 40px;
+                height: 40px;
+                border-width: 1px;
+            }
+
+            .avatar-loading {
+                width: 40px;
+                height: 40px;
+            }
+
+            .avatar-loading .loader {
+                width: 20px;
+                height: 20px;
+                border-width: 2px;
             }
 
             .customization-options {
-                top: auto;
-                bottom: 60px;
-                right: 50%;
-                transform: translateX(50%);
-                width: 140px;
+                top: 50px; /* Adjusted for smaller avatar */
+                right: 0;
+                width: 120px;
+                transform: none;
+            }
+
+            .customization-options label,
+            .customization-options .file-input-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .customization-options select {
+                font-size: 10px;
+                padding: 3px;
             }
 
             .fingerprint-icon {
