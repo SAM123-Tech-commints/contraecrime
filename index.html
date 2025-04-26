@@ -491,16 +491,24 @@
         }
 
         @media (min-width: 769px) {
+            body {
+                overflow-y: hidden;
+            }
+
             .container {
                 flex-direction: row;
+                height: 100vh;
             }
 
             .background-image {
                 min-height: 100vh;
+                height: 100vh;
             }
 
             .form-container {
                 min-height: 100vh;
+                height: 100vh;
+                overflow-y: hidden;
             }
 
             .text-typewriter {
