@@ -246,16 +246,14 @@
         .content {
             flex: 1;
             margin-left: 290px;
-            padding: 0 30px; /* Remove top padding */
+            padding: 0 30px 15px; /* Remove top padding */
             position: relative;
             background: url('https://i.imgur.com/yytZfZz.png') no-repeat center center;
             background-size: cover;
             transition: background-color 0.3s ease, margin-left 0.3s ease;
-            min-height: calc(100vh - 60px); /* Adjust for footer height (approx 60px) */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center horizontally */
-            justify-content: flex-start; /* Align to top */
         }
 
         .content::before {
@@ -272,16 +270,16 @@
         .header {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 0; /* Remove margin to eliminate space */
+            margin-bottom: 0; /* Remove margin-bottom to eliminate space */
             position: relative;
-            z-index: 3000;
+            z-index: 3000; 
         }
 
         .account-customization {
             position: fixed;
             top: 10px;
             right: 20px;
-            z-index: 3001;
+            z-index: 3001; 
         }
 
         .user-details {
@@ -364,7 +362,7 @@
         .customization-options .user-info p::before {
             content: attr(data-label);
             font-weight: 700;
-            color: #ff3333;
+            color: #ff3333; 
             margin-right: 5px;
         }
 
@@ -431,7 +429,7 @@
 
         .dark-theme .customization-options .user-info {
             background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-            color: #e0e0e0;
+            color: #e0e0e0; 
         }
 
         .dark-theme .customization-options .user-info p {
@@ -463,12 +461,10 @@
             margin: 0 auto;
             position: relative;
             z-index: 1;
-            flex: 0; /* Prevent stretching */
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align to top */
-            align-items: center; /* Center horizontally */
-            text-align: center;
+            justify-content: flex-start;
         }
 
         .contact-section h1 {
@@ -488,7 +484,6 @@
             display: flex;
             gap: 50px;
             flex-wrap: wrap;
-            justify-content: center;
         }
 
         .contact-details, .contact-form {
@@ -780,7 +775,6 @@
 
             .content {
                 margin-left: 250px;
-                padding: 0 20px; /* Remove top padding */
             }
 
             footer {
@@ -863,7 +857,7 @@
 
             .content {
                 margin-left: 200px;
-                padding: 0 20px; /* Remove top padding */
+                padding: 20px;
             }
 
             footer {
@@ -947,8 +941,7 @@
 
             .content {
                 margin-left: 0;
-                padding: 60px 15px 15px; /* Keep top padding for mobile nav */
-                min-height: calc(100vh - 120px); /* Adjust for mobile nav (60px) and footer (60px) */
+                padding: 80px 15px 15px;
             }
 
             footer {
