@@ -1265,7 +1265,6 @@
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
-        // Monitor authentication state and load user data
         auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
@@ -1275,10 +1274,9 @@
                 };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                // Update customization menu with user info
-                usernameDisplay.textContent = `Username: ${currentUser.username}`;
-                emailDisplay.textContent = `Email: ${currentUser.email}`;
-                createdAtDisplay.textContent = `Account Created: ${new Date(currentUser.createdAt).toLocaleString()}`;
+                usernameDisplay.textContent = `${currentUser.username}`; 
+                emailDisplay.textContent = `${currentUser.email}`; 
+                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`; 
 
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
