@@ -72,8 +72,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 80px;
-            height: 80px;
+            width: 40px;
+            height: 40px;
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             display: none;
@@ -87,9 +87,9 @@
         }
 
         .avatar-loading .loader {
-            width: 30px;
-            height: 30px;
-            border-width: 3px;
+            width: 20px;
+            height: 20px;
+            border-width: 2px;
         }
 
         .container {
@@ -257,30 +257,14 @@
         }
 
         .account-customization {
-            position: absolute;
-            top: 0;
+            position: fixed;
+            top: 10px;
             right: 20px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 10px;
-            font-size: 16px;
-            color: #333;
+            z-index: 1000;
         }
 
         .user-details {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .user-details .username {
-            font-weight: 600;
-        }
-
-        .user-details .email {
-            font-size: 14px;
-            color: #666;
+            display: none;
         }
 
         .avatar-container {
@@ -289,8 +273,8 @@
         }
 
         .avatar-container .profile-pic {
-            width: 80px;
-            height: 80px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background-color: #ccc;
             display: flex;
@@ -305,7 +289,7 @@
 
         .customization-options {
             position: absolute;
-            top: 90px;
+            top: 50px;
             right: 0;
             background-color: #fff;
             border: 1px solid #ddd;
@@ -316,11 +300,22 @@
             padding: 8px;
             z-index: 100;
             align-items: flex-start;
-            width: 200px;
+            width: 250px;
         }
 
         .customization-options.active {
             display: flex;
+        }
+
+        .customization-options .user-info {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .customization-options .user-info p {
+            margin: 5px 0;
+            font-size: 12px;
+            color: #333;
         }
 
         .customization-options label {
@@ -379,19 +374,12 @@
             border-radius: 5px;
         }
 
-        .dark-theme .account-customization {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .user-details .email {
-            color: #b0b0b0;
-        }
-
         .dark-theme .customization-options {
             background-color: #3a3b3c;
             border-color: #555;
         }
 
+        .dark-theme .customization-options .user-info p,
         .dark-theme .customization-options label,
         .dark-theme .customization-options .file-input-label {
             color: #e0e0e0;
@@ -736,26 +724,21 @@
 
             .account-customization {
                 right: 10px;
-                font-size: 14px;
             }
 
             .avatar-container .profile-pic {
-                width: 70px;
-                height: 70px;
+                width: 35px;
+                height: 35px;
             }
 
             .avatar-loading {
-                width: 70px;
-                height: 70px;
-            }
-
-            .user-details .email {
-                font-size: 12px;
+                width: 35px;
+                height: 35px;
             }
 
             .customization-options {
-                top: 80px;
-                width: 180px;
+                top: 45px;
+                width: 220px;
             }
 
             .search-container {
@@ -795,23 +778,19 @@
                 max-width: 350px;
             }
 
-            .account-customization {
-                font-size: 14px;
-            }
-
             .avatar-container .profile-pic {
-                width: 60px;
-                height: 60px;
+                width: 30px;
+                height: 30px;
             }
 
             .avatar-loading {
-                width: 60px;
-                height: 60px;
+                width: 30px;
+                height: 30px;
             }
 
             .customization-options {
-                top: 70px;
-                width: 160px;
+                top: 40px;
+                width: 200px;
             }
 
             .fingerprint-icon {
@@ -886,53 +865,34 @@
             }
 
             .account-customization {
-                position: absolute;
-                top: 30px; 
+                top: 10px;
                 right: 10px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                gap: 5px;
-                font-size: 12px;
-                margin: 0;
-                width: auto;
-                padding: 0;
-            }
-
-            .user-details {
-                align-items: flex-end;
-            }
-
-            .user-details .username {
-                font-size: 12px;
-            }
-
-            .user-details .email {
-                font-size: 10px;
             }
 
             .avatar-container .profile-pic {
-                width: 40px;
-                height: 40px;
+                width: 30px;
+                height: 30px;
                 border-width: 1px;
             }
 
             .avatar-loading {
-                width: 40px;
-                height: 40px;
+                width: 30px;
+                height: 30px;
             }
 
             .avatar-loading .loader {
-                width: 20px;
-                height: 20px;
+                width: 15px;
+                height: 15px;
                 border-width: 2px;
             }
 
             .customization-options {
-                top: 50px; /* Adjusted for smaller avatar */
-                right: 0;
-                width: 120px;
-                transform: none;
+                top: 40px;
+                width: 180px;
+            }
+
+            .customization-options .user-info p {
+                font-size: 10px;
             }
 
             .customization-options label,
@@ -952,16 +912,8 @@
             }
 
             .fingerprint-icon::before {
-                content: "";
-                position: absolute;
-                margin-right: 4px;
-                margin-top: 4px;
                 width: 96px;
                 height: 93px;
-                border: 3px solid;
-                border-radius: 50%;
-                z-index: 0;
-                color: #000000;
             }
 
             .search-container {
@@ -1050,8 +1002,7 @@
             <div class="header">
                 <div class="account-customization">
                     <div class="user-details">
-                        <span class="username">User</span>
-                        <span class="email">email@example.com</span>
+                        <!-- Hidden by default -->
                     </div>
                     <div class="avatar-container">
                         <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
@@ -1059,6 +1010,11 @@
                             <div class="loader"></div>
                         </div>
                         <div class="customization-options" id="customizationMenu">
+                            <div class="user-info" id="userInfo">
+                                <p id="usernameDisplay">Username: Loading...</p>
+                                <p id="emailDisplay">Email: Loading...</p>
+                                <p id="createdAtDisplay">Account Created: Loading...</p>
+                            </div>
                             <label class="file-input-label" for="avatarInput">Change Avatar</label>
                             <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
                             <label for="avatarBgColorPicker">Avatar Background Color</label>
@@ -1202,6 +1158,9 @@
         const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
         const borderColorPicker = document.getElementById('borderColorPicker');
         const borderTypeSelect = document.getElementById('borderTypeSelect');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const emailDisplay = document.getElementById('emailDisplay');
+        const createdAtDisplay = document.getElementById('createdAtDisplay');
 
         // Cloudinary Configuration
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
@@ -1209,17 +1168,18 @@
 
         // Monitor authentication state and load user data
         auth.onAuthStateChanged((user) => {
-            const usernameElement = document.querySelector('.user-details .username');
-            const emailElement = document.querySelector('.user-details .email');
-
             if (user) {
                 const currentUser = {
                     username: user.displayName || 'User',
-                    email: user.email
+                    email: user.email,
+                    createdAt: user.metadata.creationTime
                 };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                usernameElement.textContent = currentUser.username;
-                emailElement.textContent = currentUser.email;
+                
+                // Update customization menu with user info
+                usernameDisplay.textContent = `Username: ${currentUser.username}`;
+                emailDisplay.textContent = `Email: ${currentUser.email}`;
+                createdAtDisplay.textContent = `Account Created: ${new Date(currentUser.createdAt).toLocaleString()}`;
 
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
@@ -1251,8 +1211,6 @@
                 });
             } else {
                 localStorage.removeItem('currentUser');
-                usernameElement.textContent = 'Guest';
-                emailElement.textContent = 'guest@example.com';
                 window.location.href = 'index.html';
             }
         });
