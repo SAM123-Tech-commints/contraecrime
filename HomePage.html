@@ -72,8 +72,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 80px;
-            height: 80px;
+            width: 50px;
+            height: 50px;
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             display: none;
@@ -87,8 +87,8 @@
         }
 
         .avatar-loading .loader {
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             border-width: 3px;
         }
 
@@ -257,29 +257,28 @@
         }
 
         .account-customization {
-            position: absolute;
-            top: 0;
-            right: 20px;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
             font-size: 16px;
             color: #333;
+            margin: 10px 0;
         }
 
         .user-details {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: center;
         }
 
         .user-details .username {
             font-weight: 600;
+            font-size: 16px;
         }
 
         .user-details .email {
-            font-size: 14px;
+            font-size: 12px;
             color: #666;
         }
 
@@ -289,8 +288,8 @@
         }
 
         .avatar-container .profile-pic {
-            width: 80px;
-            height: 80px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background-color: #ccc;
             display: flex;
@@ -305,8 +304,9 @@
 
         .customization-options {
             position: absolute;
-            top: 90px;
-            right: 0;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -316,7 +316,7 @@
             padding: 8px;
             z-index: 100;
             align-items: flex-start;
-            width: 200px;
+            width: 180px;
         }
 
         .customization-options.active {
@@ -734,19 +734,26 @@
                 width: 300px;
             }
 
+            .search-container {
+                width: 50%;
+            }
+
             .account-customization {
-                right: 10px;
-                font-size: 14px;
+                margin: 10px 0;
             }
 
             .avatar-container .profile-pic {
-                width: 70px;
-                height: 70px;
+                width: 50px;
+                height: 50px;
             }
 
             .avatar-loading {
-                width: 70px;
-                height: 70px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .user-details .username {
+                font-size: 14px;
             }
 
             .user-details .email {
@@ -754,12 +761,8 @@
             }
 
             .customization-options {
-                top: 80px;
+                top: 60px;
                 width: 180px;
-            }
-
-            .search-container {
-                width: 50%;
             }
         }
 
@@ -793,25 +796,6 @@
             .card {
                 width: 100%;
                 max-width: 350px;
-            }
-
-            .account-customization {
-                font-size: 14px;
-            }
-
-            .avatar-container .profile-pic {
-                width: 60px;
-                height: 60px;
-            }
-
-            .avatar-loading {
-                width: 60px;
-                height: 60px;
-            }
-
-            .customization-options {
-                top: 70px;
-                width: 160px;
             }
 
             .fingerprint-icon {
@@ -885,28 +869,6 @@
                 margin: 0 8px;
             }
 
-            .account-customization {
-                position: relative;
-                flex-direction: column;
-                align-items: center;
-                margin: 20px auto;
-                width: 100%;
-                max-width: 300px;
-                padding-top: 10px;
-            }
-
-            .user-details {
-                align-items: center;
-            }
-
-            .customization-options {
-                top: auto;
-                bottom: 60px;
-                right: 50%;
-                transform: translateX(50%);
-                width: 140px;
-            }
-
             .fingerprint-icon {
                 width: 90px;
                 height: 90px;
@@ -932,6 +894,17 @@
             .card {
                 width: 100%;
                 max-width: 100%;
+            }
+
+            .account-customization {
+                margin: 10px auto;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .customization-options {
+                top: 60px;
+                width: 140px;
             }
         }
     </style>
@@ -1009,10 +982,11 @@
         </nav>
         <main class="content">
             <div class="header">
+                <div class="fingerprint-icon"></div>
                 <div class="account-customization">
                     <div class="user-details">
-                        <span class="username">User</span>
-                        <span class="email">email@example.com</span>
+                        <span class="username">Sam</span>
+                        <span class="email">samothanielpascua@gmail.com</span>
                     </div>
                     <div class="avatar-container">
                         <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
@@ -1036,7 +1010,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="fingerprint-icon"></div>
                 <div class="search-container">
                     <input type="text" class="search-input" id="searchInput" placeholder="Ask anything...">
                     <span class="search-icon"> 
@@ -1175,7 +1148,7 @@
 
             if (user) {
                 const currentUser = {
-                    username: user.displayName || 'User',
+                    username: user.displayName || 'Sam',
                     email: user.email
                 };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
