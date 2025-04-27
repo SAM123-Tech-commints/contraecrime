@@ -677,6 +677,19 @@
             stroke: #ffffff;
         }
 
+        #currentQuery {
+            font-size: 16px;
+            color: #333;
+            margin: 10px 0;
+            font-style: italic;
+            text-align: center;
+            display: none;
+        }
+
+        .dark-theme #currentQuery {
+            color: #e0e0e0;
+        }
+
         .header p {
             font-size: 18px;
             font-weight: 500;
@@ -845,6 +858,14 @@
 
         .border-button:hover .iconer {
             transform: translateY(0px);
+        }
+
+        .save-law:disabled .button-text {
+            color: #888;
+        }
+
+        .save-law:disabled .iconer i {
+            color: #d7b15c; /* Gold color for saved state */
         }
 
         .alternatives-container {
@@ -1324,6 +1345,7 @@
                         <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </span>
                 </div>
+                <p id="currentQuery"></p>
                 <p>Find the right law for you!</p>
             </div>
             <section class="articles">
@@ -1369,7 +1391,7 @@
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
-        const HUGGINGFACE_API_TOKEN = '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'; 
+        const HUGGINGFACE_API_TOKEN = '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'; 
 
         const laws = [
     {
@@ -1671,368 +1693,176 @@
     {
         title: "Rules on Cybercrime Warrants (Supreme Court A.M. No. 17-11-03-SC)",
         description: "Outlines procedures for obtaining and executing cybercrime warrants, including search, seizure, and data disclosure.",
-        scenario: "Law enforcement uses a Warrant to Disclose Computer Data to obtain a fraud suspect’s online activity from an ISP.",
-        punishment: "Non-compliance or obstruction penalized under the Cybercrime Prevention Act, with imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
-        image: "https://elegal.ph/site/wp-content/uploads/2018/07/security.jpg",
-        pdf: "https://wipolex-resources-eu-central-1-358922420655.s3.amazonaws.com/edocs/lexdocs/laws/en/ph/ph208en_1.pdf"
-    },
-    {
-        title: "Rules on Electronic Evidence (Supreme Court A.M. No. 01-7-01-SC)",
-        description: "Establishes the admissibility of electronic signatures and documents in legal proceedings, requiring proper authentication.",
-        scenario: "An electronically signed contract in an email is admitted as evidence after verifying the signer’s control and signature integrity.",
-        punishment: "Exclusion of unauthenticated evidence. False information may lead to perjury or fraud charges.",
-        image: "https://s3.ap-south-1.amazonaws.com/novojuris/image/1603091279991_it__1_.jpg",
-        pdf: "https://www.doj.gov.ph/files/rules%20on%20electronic%20evidence.pdf"
-    },
-    {
-        title: "Revised Rules of Civil Procedure (Supreme Court A.M. No. 19-08-06-SC)",
-        description: "Outlines procedures for PCC administrative searches and inspections to investigate violations of the Philippine Competition Act.",
-        scenario: "A dispute over property or debt within a first-level court’s jurisdiction follows revised procedural rules.",
-        punishment: "Fines, compliance orders, or payment of attorney’s fees and expenses for procedural violations.",
-        image: "https://cdn.sanity.io/images/anl9abaw/production/cca237f4771a8e6802e1f4bf490ca2b827268c84-768x512.png?w=3840&q=75&fit=clip&auto=format",
-        pdf: "https://lpr.adb.org/sites/default/files/2024-07/philippines-supreme-court-19-08-06.pdf"
-    },
-    {
-        title: "Rule on Cybercrime Investigation (Supreme Court A.M. No. 17-11-03-SC)",
-        description: "Outlines procedures for obtaining and executing cybercrime warrants, including search, seizure, and data disclosure (same as Rules on Cybercrime Warrants).",
-        scenario: "Police secure a warrant to intercept data from a suspect’s device in a cyber fraud investigation.",
-        punishment: "Non-compliance penalized under the Cybercrime Prevention Act, with imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
-        image: "https://elegal.ph/site/wp-content/uploads/2018/07/security.jpg",
-        pdf: "https://wipolex-resources-eu-central-1-358922420655.s3.amazonaws.com/edocs/lexdocs/laws/en/ph/ph208en_1.pdf"
-    },
-    {
-        title: "Guidelines on Consumer Protection in E-Commerce (DTI Department Order No. 18-05)",
-        description: "Ensures consumer protection in e-commerce through rules on transparency, fair practices, and post-purchase services.",
-        scenario: "A consumer receives a product significantly different from its online description, violating transparency requirements.",
-        punishment: "Fines, permit revocation, or legal action for deceptive practices. Criminal charges possible for fraud.",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIiIwRhqssOUqs0rWBTlk3HZBcUKp29_Dxig&s",
-        pdf: "https://dtiwebfiles.s3-ap-southeast-1.amazonaws.com/Laws+and+Policies/DTi+Compendium+laws/Private+Emission+Testing+Centers/Department+Administative+Order+18-05.pdf"
+        scenario: "Law enforcement uses a Warrant to Disclose Data (WDD) to access a suspect’s cloud storage for evidence of a cybercrime.",
+        punishment: "Penalties for cybercrimes under the Cybercrime Prevention Act, such as imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
+        image: "https://images.app.goo.gl/9nL5fZxWvJ5pYkZ27",
+        pdf: "https://sc.judiciary.gov.ph/pio/am/2017/A.M.%20No.%2017-11-03-SC.pdf"
     }
 ];
 
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
-        const loaderOverlay = document.getElementById('loaderOverlay');
+        const themeToggle = document.getElementById('themeToggle');
+        const searchInput = document.getElementById('searchInput');
+        const mainLawContainer = document.getElementById('mainLawContainer');
+        const alternativeLawsContainer = document.getElementById('alternativeLawsContainer');
         const profilePic = document.getElementById('profilePic');
         const customizationMenu = document.getElementById('customizationMenu');
         const avatarInput = document.getElementById('avatarInput');
-        const avatarLoading = document.getElementById('avatarLoading');
         const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
         const borderColorPicker = document.getElementById('borderColorPicker');
         const borderTypeSelect = document.getElementById('borderTypeSelect');
+        const userInfo = document.getElementById('userInfo');
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
-        const searchInput = document.getElementById('searchInput');
+        const loaderOverlay = document.getElementById('loaderOverlay');
+        const avatarLoading = document.getElementById('avatarLoading');
         const fingerprintIcon = document.getElementById('fingerprintIcon');
-        const mainLawContainer = document.getElementById('mainLawContainer');
-        const alternativeLawsContainer = document.getElementById('alternativeLawsContainer');
 
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentUser = {
-                    username: user.displayName || 'User',
-                    email: user.email,
-                    createdAt: user.metadata.creationTime
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                usernameDisplay.textContent = `${currentUser.username}`;
-                emailDisplay.textContent = `${currentUser.email}`;
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
-
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        }
-                        if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
-                            avatarBgColorPicker.value = userData.avatarBgColor;
-                        }
-                        if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
-                            borderColorPicker.value = userData.borderColor;
-                        }
-                        if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
-                            borderTypeSelect.value = userData.borderType;
-                        }
-                    }
-                }, (error) => {
-                    console.error('Error loading user customization:', error);
-                    alert('Failed to load user customization: ' + error.message);
-                });
-            } else {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'index.html';
-            }
+        mobileMenuIcon.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
         });
+
+        themeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
+
+        let userAvatar = localStorage.getItem('userAvatar') || "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=";
+        let avatarBgColor = localStorage.getItem('avatarBgColor') || '#cccccc';
+        let borderColor = localStorage.getItem('borderColor') || '#000000';
+        let borderType = localStorage.getItem('borderType') || 'solid';
+
+        profilePic.src = userAvatar;
+        profilePic.style.backgroundColor = avatarBgColor;
+        profilePic.style.borderColor = borderColor;
+        profilePic.style.borderStyle = borderType;
+
+        avatarBgColorPicker.value = avatarBgColor;
+        borderColorPicker.value = borderColor;
+        borderTypeSelect.value = borderType;
 
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
 
-        document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
-            }
-        });
-
-        avatarInput.addEventListener('change', (event) => {
+        avatarInput.addEventListener('change', async (event) => {
             const file = event.target.files[0];
-            if (!file) return;
+            if (file) {
+                avatarLoading.classList.add('active');
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPG, JPEG, PNG).');
-                return;
-            }
-            if (file.size > maxSize) {
-                alert('Image size must be less than 2MB.');
-                return;
-            }
-
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to upload an avatar.');
-                avatarLoading.classList.remove('active');
-                return;
-            }
-
-            avatarLoading.classList.add('active');
-
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxDimension = 300;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxDimension) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    }
-                } else {
-                    if (height > maxDimension) {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        alert('User not logged in.');
-                        avatarLoading.classList.remove('active');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                try {
+                    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
                         method: 'POST',
                         body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        const avatarUrl = data.secure_url;
-                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                        database.ref(`users/${sanitizedEmail}`).update({
-                            avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
-                        })
-                        .then(() => {
-                            profilePic.src = avatarUrl;
-                            avatarLoading.classList.remove('active');
-                        })
-                        .catch(error => {
-                            console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
-                            avatarLoading.classList.remove('active');
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error uploading avatar to Cloudinary:', error);
-                        alert('Failed to upload avatar to Cloudinary: ' + error.message);
-                        avatarLoading.classList.remove('active');
                     });
-                }, file.type, 0.6);
-            };
+                    const data = await response.json();
+                    if (data.secure_url) {
+                        userAvatar = data.secure_url;
+                        profilePic.src = userAvatar;
+                        localStorage.setItem('userAvatar', userAvatar);
+
+                        const user = auth.currentUser;
+                        if (user) {
+                            const sanitizedEmail = user.email.replace(/\./g, ',');
+                            database.ref(`users/${sanitizedEmail}/avatar`).set(userAvatar);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error uploading avatar:', error);
+                    alert('Failed to upload avatar. Please try again.');
+                } finally {
+                    avatarLoading.classList.remove('active');
+                }
+            }
         });
 
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
+        avatarBgColorPicker.addEventListener('input', (event) => {
+            const color = event.target.value;
             profilePic.style.backgroundColor = color;
+            localStorage.setItem('avatarBgColor', color);
 
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                });
+                database.ref(`users/${sanitizedEmail}/avatarBgColor`).set(color);
             }
         });
 
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
+        borderColorPicker.addEventListener('input', (event) => {
+            const color = event.target.value;
             profilePic.style.borderColor = color;
+            localStorage.setItem('borderColor', color);
 
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                });
+                database.ref(`users/${sanitizedEmail}/borderColor`).set(color);
             }
         });
 
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
+        borderTypeSelect.addEventListener('change', (event) => {
+            const type = event.target.value;
+            profilePic.style.borderStyle = type;
+            localStorage.setItem('borderType', type);
 
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: borderType,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                database.ref(`users/${sanitizedEmail}/borderType`).set(type);
+            }
+        });
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+
+                userRef.once('value', (snapshot) => {
+                    const userData = snapshot.val();
+                    if (userData) {
+                        userAvatar = userData.avatar || userAvatar;
+                        avatarBgColor = userData.avatarBgColor || avatarBgColor;
+                        borderColor = userData.borderColor || borderColor;
+                        borderType = userData.borderType || borderType;
+
+                        profilePic.src = userAvatar;
+                        profilePic.style.backgroundColor = avatarBgColor;
+                        profilePic.style.borderColor = borderColor;
+                        profilePic.style.borderStyle = borderType;
+
+                        avatarBgColorPicker.value = avatarBgColor;
+                        borderColorPicker.value = borderColor;
+                        borderTypeSelect.value = borderType;
+
+                        usernameDisplay.textContent = user.displayName || 'Anonymous';
+                        emailDisplay.textContent = user.email;
+                        createdAtDisplay.textContent = new Date(user.metadata.creationTime).toLocaleDateString();
+
+                        usernameDisplay.setAttribute('data-label', 'Username: ');
+                        emailDisplay.setAttribute('data-label', 'Email: ');
+                        createdAtDisplay.setAttribute('data-label', 'Account Created: ');
+                    }
                 });
-            }
-        });
-
-        if (localStorage.getItem('darkTheme') === 'enabled') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
             } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
+                window.location.href = 'index.html';
             }
         });
-
-        mobileMenuIcon.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
-        });
-
-        async function getEmbedding(text) {
-            const response = await fetch('https://api-inference.huggingface.co/models/sentence-transformers/paraphrase-MiniLM-L3-v2', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${HUGGINGFACE_API_TOKEN}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    inputs: text,
-                    options: { wait_for_model: true }
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to get embedding from Hugging Face API');
-            }
-
-            return await response.json();
-        }
-
-        function cosineSimilarity(vecA, vecB) {
-            if (!vecA || !vecB || vecA.length !== vecB.length) return 0;
-            let dotProduct = 0, normA = 0, normB = 0;
-            for (let i = 0; i < vecA.length; i++) {
-                dotProduct += vecA[i] * vecB[i];
-                normA += vecA[i] * vecA[i];
-                normB += vecB[i] * vecB[i];
-            }
-            return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-        }
-
-        async function findBestLaws(userScenario) {
-            try {
-                const userEmbedding = await getEmbedding(userScenario);
-
-                const lawScores = await Promise.all(laws.map(async (law, index) => {
-                    const lawText = `${law.description} ${law.scenario}`;
-                    const lawEmbedding = await getEmbedding(lawText);
-                    const similarity = cosineSimilarity(userEmbedding, lawEmbedding);
-                    return { index, similarity };
-                }));
-
-                lawScores.sort((a, b) => b.similarity - a.similarity);
-
-                const topLaws = lawScores.slice(0, 5).map(score => ({
-                    law: laws[score.index],
-                    similarity: score.similarity
-                }));
-
-                return topLaws;
-            } catch (error) {
-                console.error('Error finding best laws:', error);
-                alert('Failed to process scenario: ' + error.message);
-                return [];
-            }
-        }
 
         function renderLawCard(law, isMainLaw = false) {
             const card = document.createElement('div');
             card.classList.add('card');
             if (isMainLaw) {
                 card.classList.add('main-law');
-            }
-
-            if (isMainLaw) {
                 card.innerHTML = `
                     <div class="image_container">
                         <img src="${law.image}" alt="${law.title}">
@@ -2049,8 +1879,8 @@
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>
                         <button class="border-button save-law" data-title="${law.title}">
-                            <span class="button-text">Save Law</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                            <span class="button-text">GOES TO SAVED LAWS</span>
+                            <span class="iconer"><i class="fas fa-bookmark"></i></span>
                         </button>
                     </div>
                 `;
@@ -2078,21 +1908,35 @@
                     if (user) {
                         const sanitizedEmail = user.email.replace(/\./g, ',');
                         const savedLawsRef = database.ref(`users/${sanitizedEmail}/savedLaws`);
-                        savedLawsRef.push({
-                            title: law.title,
-                            description: law.description,
-                            scenario: law.scenario,
-                            punishment: law.punishment,
-                            image: law.image,
-                            pdf: law.pdf,
-                            savedAt: firebase.database.ServerValue.TIMESTAMP
-                        })
-                        .then(() => {
-                            alert('Law saved successfully!');
-                        })
-                        .catch(error => {
-                            console.error('Error saving law:', error);
-                            alert('Failed to save law: ' + error.message);
+
+                        savedLawsRef.once('value', (snapshot) => {
+                            const savedLaws = snapshot.val();
+                            const isAlreadySaved = savedLaws && Object.values(savedLaws).some(savedLaw => savedLaw.title === law.title);
+
+                            if (isAlreadySaved) {
+                                alert('This law is already saved!');
+                                return;
+                            }
+
+                            savedLawsRef.push({
+                                title: law.title,
+                                description: law.description,
+                                scenario: law.scenario,
+                                punishment: law.punishment,
+                                image: law.image,
+                                pdf: law.pdf,
+                                savedAt: firebase.database.ServerValue.TIMESTAMP
+                            })
+                            .then(() => {
+                                alert('Law saved successfully!');
+                                const saveButton = card.querySelector('.save-law');
+                                saveButton.querySelector('.iconer i').classList.add('saved');
+                                saveButton.disabled = true;
+                            })
+                            .catch(error => {
+                                console.error('Error saving law:', error);
+                                alert('Failed to save law: ' + error.message);
+                            });
                         });
                     }
                 });
@@ -2101,48 +1945,115 @@
             return card;
         }
 
-        searchInput.addEventListener('input', async () => {
-            const query = searchInput.value.trim();
-
-            if (query) {
-                fingerprintIcon.classList.add('scanning');
+        async function searchLaws(query) {
+            try {
                 loaderOverlay.classList.add('active');
+                fingerprintIcon.classList.add('scanning');
 
-                const user = auth.currentUser;
-                if (user) {
-                    const sanitizedEmail = user.email.replace(/\./g, ',');
-                    const searchHistoryRef = database.ref(`users/${sanitizedEmail}/searchHistory`);
-                    searchHistoryRef.push({
-                        query: query,
-                        timestamp: firebase.database.ServerValue.TIMESTAMP
-                    });
+                const response = await fetch('https://api-inference.huggingface.co/models/bert-base-uncased', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${HUGGINGFACE_API_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        inputs: query,
+                        task: 'feature-extraction'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Hugging Face API request failed');
                 }
 
-                const topLaws = await findBestLaws(query);
+                const embeddings = await response.json();
+                const queryEmbedding = embeddings[0].slice(0, 768);
+
+                const lawEmbeddings = laws.map(law => {
+                    const text = `${law.title} ${law.description} ${law.scenario} ${law.punishment}`;
+                    return { law, text };
+                });
+
+                const similarities = lawEmbeddings.map(({ law, text }) => {
+                    const lawEmbedding = Array(768).fill(0);
+                    const dotProduct = queryEmbedding.reduce((sum, val, i) => sum + val * lawEmbedding[i], 0);
+                    const queryNorm = Math.sqrt(queryEmbedding.reduce((sum, val) => sum + val * val, 0));
+                    const lawNorm = Math.sqrt(lawEmbedding.reduce((sum, val) => sum + val * val, 0));
+                    const similarity = dotProduct / (queryNorm * lawNorm || 1);
+                    return { law, similarity };
+                });
+
+                similarities.sort((a, b) => b.similarity - a.similarity);
 
                 mainLawContainer.innerHTML = '';
                 alternativeLawsContainer.innerHTML = '';
 
-                if (topLaws.length > 0) {
-                    const mainLaw = topLaws[0].law;
-                    mainLawContainer.appendChild(renderLawCard(mainLaw, true));
+                if (similarities.length > 0) {
+                    const mainLaw = similarities[0].law;
+                    const mainLawCard = renderLawCard(mainLaw, true);
+                    mainLawContainer.appendChild(mainLawCard);
 
-                    const alternativeLaws = topLaws.slice(1, 5).map(item => item.law);
+                    const alternativeLaws = similarities.slice(1, 5).map(item => item.law);
                     alternativeLaws.forEach(law => {
-                        alternativeLawsContainer.appendChild(renderLawCard(law));
+                        const card = renderLawCard(law, false);
+                        alternativeLawsContainer.appendChild(card);
                     });
-                } else {
-                    mainLawContainer.innerHTML = '<p>No matching laws found.</p>';
-                }
 
+                    const user = auth.currentUser;
+                    if (user) {
+                        const sanitizedEmail = user.email.replace(/\./g, ',');
+                        const searchHistoryRef = database.ref(`users/${sanitizedEmail}/searchHistory`);
+                        searchHistoryRef.push({
+                            query: query,
+                            timestamp: firebase.database.ServerValue.TIMESTAMP,
+                            results: {
+                                mainLaw: mainLaw.title,
+                                alternativeLaws: alternativeLaws.map(law => law.title)
+                            }
+                        });
+                    }
+                } else {
+                    mainLawContainer.innerHTML = '<p>No laws found matching your query.</p>';
+                }
+            } catch (error) {
+                console.error('Error searching laws:', error);
+                mainLawContainer.innerHTML = '<p>Error occurred while searching. Please try again.</p>';
+                alert('Failed to search laws: ' + error.message);
+            } finally {
                 loaderOverlay.classList.remove('active');
                 fingerprintIcon.classList.remove('scanning');
+            }
+        }
+
+        searchInput.addEventListener('input', async () => {
+            const query = searchInput.value.trim();
+            const currentQueryDisplay = document.getElementById('currentQuery');
+
+            if (query) {
+                currentQueryDisplay.style.display = 'block';
+                currentQueryDisplay.textContent = `Search: ${query}`;
+                await searchLaws(query);
             } else {
-                fingerprintIcon.classList.remove('scanning');
+                currentQueryDisplay.style.display = 'none';
+                currentQueryDisplay.textContent = '';
                 mainLawContainer.innerHTML = '';
                 alternativeLawsContainer.innerHTML = '';
             }
         });
+
+        document.addEventListener('click', (event) => {
+            if (!customizationMenu.contains(event.target) && event.target !== profilePic) {
+                customizationMenu.classList.remove('active');
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        searchInput.focus();
     </script>
 </body>
 </html>
