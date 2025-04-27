@@ -21,6 +21,11 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        body.dark-theme {
+            background-color: #121212;
+            color: #fff;
+        }
+
         .loader-overlay {
             position: fixed;
             top: 0;
@@ -63,6 +68,39 @@
         }
 
         .dark-theme .loader {
+            border-color: #d7b15c;
+            border-bottom-color: transparent;
+        }
+
+        .avatar-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 101;
+        }
+
+        .avatar-loading.active {
+            display: flex;
+        }
+
+        .avatar-loading .loader {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #FFF;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        .dark-theme .avatar-loading .loader {
             border-color: #d7b15c;
             border-bottom-color: transparent;
         }
@@ -220,8 +258,6 @@
             margin-left: 290px;
             padding: 30px;
             position: relative;
-            background: url('https://via.placeholder.com/1920x1080?text=Cityscape+Background') no-repeat center center;
-            background-size: cover;
             transition: background-color 0.3s ease, margin-left 0.3s ease;
             display: flex;
             justify-content: center;
@@ -241,15 +277,185 @@
             transition: background-color 0.3s ease;
         }
 
-        .main-image {
-            max-width: 80%;
-            max-height: 80%;
-            z-index: 1;
-            transition: transform 0.3s ease;
+        .account-customization {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            z-index: 1000;
         }
 
-        .main-image:hover {
-            transform: scale(1.05);
+        .user-details {
+            display: none;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar-container .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: cover;
+            border: 2px solid #000;
+            cursor: pointer;
+            color: transparent;
+            font-size: 0;
+        }
+
+        .customization-options {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            padding: 8px;
+            z-index: 100;
+            align-items: flex-start;
+            width: 300px;
+        }
+
+        .customization-options.active {
+            display: flex;
+        }
+
+        .customization-options .user-info {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #d32f2f 100%);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .customization-options .user-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/circuit.png');
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .customization-options .user-info p {
+            margin: 5px 0;
+            font-size: 12px;
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            overflow-wrap: break-word;
+        }
+
+        .customization-options .user-info p::before {
+            content: attr(data-label);
+            font-weight: 700;
+            color: #ff3333; 
+            margin-right: 5px;
+        }
+
+        .customization-options label {
+            font-size: 12px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .customization-options label:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .customization-options input[type="color"] {
+            width: 100%;
+            height: 25px;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            background: none;
+        }
+
+        .customization-options select {
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .customization-options input[type="file"] {
+            display: none;
+        }
+
+        .customization-options .file-input-label {
+            font-size: 12px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .customization-options .file-input-label:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .dark-theme .customization-options {
+            background-color: #3a3b3c;
+            border-color: #555;
+        }
+
+        .dark-theme .customization-options .user-info {
+            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            color: #e0e0e0; 
+        }
+
+        .dark-theme .customization-options .user-info p {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .customization-options .user-info p::before {
+            color: #ffeb3b; 
+        }
+
+        .dark-theme .customization-options label,
+        .dark-theme .customization-options .file-input-label {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .customization-options label:hover,
+        .dark-theme .customization-options .file-input-label:hover {
+            background-color: #4a4b4c;
+        }
+
+        .dark-theme .customization-options select {
+            background-color: #3a3b3c;
+            color: #e0e0e0;
+            border-color: #555;
         }
 
         footer {
@@ -286,7 +492,6 @@
             background-color: #1a1a1a;
         }
 
-        /* Dark Theme */
         body.dark-theme {
             background-color: #121212;
             color: #e0e0e0;
@@ -300,7 +505,6 @@
             background-color: rgba(40, 41, 44, 0.9);
         }
 
-        /* Mobile Navigation Styles */
         .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
@@ -326,7 +530,6 @@
             top: 15px;
         }
 
-        /* Media Queries for Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -350,6 +553,25 @@
 
             footer {
                 margin-left: 250px;
+            }
+
+            .account-customization {
+                right: 10px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 35px;
+                height: 35px;
+            }
+
+            .avatar-loading {
+                width: 35px;
+                height: 35px;
+            }
+
+            .customization-options {
+                top: 45px;
+                width: 220px;
             }
         }
 
@@ -378,6 +600,21 @@
 
             footer {
                 margin-left: 200px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
+
+            .customization-options {
+                top: 40px;
+                width: 200px;
             }
         }
 
@@ -442,9 +679,47 @@
                 margin: 0 8px;
             }
 
-            .main-image {
-                max-width: 100%;
-                margin-top: 40px;
+            .account-customization {
+                top: 70px;
+                right: 10px;
+                z-index: 998;
+            }
+
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+                border-width: 1px;
+            }
+
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
+
+            .customization-options {
+                top: 40px;
+                width: 180px;
+            }
+
+            .customization-options .user-info p {
+                font-size: 10px;
+            }
+
+            .customization-options label,
+            .customization-options .file-input-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .customization-options select {
+                font-size: 10px;
+                padding: 3px;
             }
         }
     </style>
@@ -453,7 +728,6 @@
     <div class="loader-overlay" id="loaderOverlay">
         <div class="loader"></div>
     </div>
-    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="#" class="logo">Contra E-Crime</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -509,7 +783,6 @@
                 </li>
             </ul>
 
-            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -524,7 +797,35 @@
             </div>
         </nav>
         <main class="content">
-            <img src="https://i.imgur.com/DxNf9ES.png" alt="Contra E-Crime" class="main-image">
+            <div class="account-customization">
+                <div class="user-details"></div>
+                <div class="avatar-container">
+                    <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                    <div class="avatar-loading" id="avatarLoading">
+                        <div class="loader"></div>
+                    </div>
+                    <div class="customization-options" id="customizationMenu">
+                        <div class="user-info" id="userInfo">
+                            <p id="usernameDisplay" data-label="Username:">Loading...</p>
+                            <p id="emailDisplay" data-label="Email:">Loading...</p>
+                            <p id="createdAtDisplay" data-label="Account Created:">Loading...</p>
+                        </div>
+                        <label class="file-input-label" for="avatarInput">Change Avatar</label>
+                        <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
+                        <label for="avatarBgColorPicker">Avatar Background Color</label>
+                        <input type="color" id="avatarBgColorPicker" value="#cccccc">
+                        <label for="borderColorPicker">Border Color</label>
+                        <input type="color" id="borderColorPicker" value="#000000">
+                        <label for="borderTypeSelect">Border Type</label>
+                        <select id="borderTypeSelect">
+                            <option value="solid">Solid</option>
+                            <option value="dashed">Dashed</option>
+                            <option value="dotted">Dotted</option>
+                            <option value="double">Double</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
@@ -542,6 +843,16 @@
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
+        const profilePic = document.getElementById('profilePic');
+        const customizationMenu = document.getElementById('customizationMenu');
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+        const borderColorPicker = document.getElementById('borderColorPicker');
+        const borderTypeSelect = document.getElementById('borderTypeSelect');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const emailDisplay = document.getElementById('emailDisplay');
+        const createdAtDisplay = document.getElementById('createdAtDisplay');
+        const avatarLoading = document.getElementById('avatarLoading');
 
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
@@ -583,6 +894,72 @@
                     }, 150);
                 });
             }
+        });
+
+        profilePic.addEventListener('click', () => {
+            customizationMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+                customizationMenu.classList.remove('active');
+            }
+        });
+
+        avatarInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                avatarLoading.classList.add('active');
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    setTimeout(() => {
+                        profilePic.src = event.target.result;
+                        localStorage.setItem('avatarSrc', event.target.result);
+                        avatarLoading.classList.remove('active');
+                    }, 1000);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        avatarBgColorPicker.addEventListener('input', (e) => {
+            profilePic.style.backgroundColor = e.target.value;
+            localStorage.setItem('avatarBgColor', e.target.value);
+        });
+
+        borderColorPicker.addEventListener('input', (e) => {
+            profilePic.style.borderColor = e.target.value;
+            localStorage.setItem('borderColor', e.target.value);
+        });
+
+        borderTypeSelect.addEventListener('change', (e) => {
+            profilePic.style.borderStyle = e.target.value;
+            localStorage.setItem('borderType', e.target.value);
+        });
+
+        window.addEventListener('load', () => {
+            const savedAvatarSrc = localStorage.getItem('avatarSrc');
+            const savedBgColor = localStorage.getItem('avatarBgColor');
+            const savedBorderColor = localStorage.getItem('borderColor');
+            const savedBorderType = localStorage.getItem('borderType');
+
+            if (savedAvatarSrc) profilePic.src = savedAvatarSrc;
+            if (savedBgColor) {
+                profilePic.style.backgroundColor = savedBgColor;
+                avatarBgColorPicker.value = savedBgColor;
+            }
+            if (savedBorderColor) {
+                profilePic.style.borderColor = savedBorderColor;
+                borderColorPicker.value = savedBorderColor;
+            }
+            if (savedBorderType) {
+                profilePic.style.borderStyle = savedBorderType;
+                borderTypeSelect.value = savedBorderType;
+            }
+
+            usernameDisplay.textContent = 'User123';
+            emailDisplay.textContent = 'user123@example.com';
+            createdAtDisplay.textContent = 'Jan 1, 2025';
         });
     </script>
 </body>
