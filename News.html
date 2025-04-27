@@ -1913,11 +1913,30 @@
                 e.preventDefault();
                 loaderOverlay.classList.add('active');
                 document.querySelector('.fingerprint-loader').style.display = 'flex';
+                document.querySelector('.simple-loader').style.display = 'none';
     
                 setTimeout(() => {
                     window.location.href = this.href;
                 }, 150);
             });
+        });
+    
+        // Event listener for sidebar links to show simple loader
+        document.querySelectorAll('.sidebar a[href]:not(.read-more)').forEach(link => {
+            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+                link.addEventListener('click', function(e) {
+                    if (!this.href.includes(window.location.hostname)) return;
+    
+                    e.preventDefault();
+                    loaderOverlay.classList.add('active');
+                    document.querySelector('.fingerprint-loader').style.display = 'none';
+                    document.querySelector('.simple-loader').style.display = 'block';
+    
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 150);
+                });
+            }
         });
     
         // News pagination
@@ -1975,5 +1994,3 @@
         // Initial display
         displayNewsItems(currentPage);
     </script>
-</body>
-</html>
