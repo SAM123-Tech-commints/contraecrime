@@ -113,8 +113,30 @@
 
         .sidebar h1 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-size: 24px;
+        }
+
+        .sidebar .avatar-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .avatar-container .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: cover;
+            border: 2px solid #000;
+            cursor: pointer;
+            color: transparent;
+            font-size: 0;
         }
 
         .sidebar ul {
@@ -337,7 +359,7 @@
             margin-bottom: 10px;
             width: 100%;
             padding: 10px;
-            background: linear-gradient(135deg, #d9dfe3 0%, #b8c2cc 50%, #97a5b0 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #d32f2f 100%);
             border-radius: 5px;
             position: relative;
             overflow: hidden;
@@ -436,7 +458,7 @@
         }
 
         .dark-theme .customization-options .user-info {
-            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            background: linear-gradient(135deg, #0f1c3a 0%, #1a315f 50%, #a62626 100%);
             color: #e0e0e0;
         }
 
@@ -1105,6 +1127,11 @@
                 font-size: 22px;
             }
 
+            .sidebar .avatar-container .profile-pic {
+                width: 50px;
+                height: 50px;
+            }
+
             .sidebar ul li a {
                 font-size: 16px;
             }
@@ -1172,6 +1199,11 @@
 
             .sidebar h1 {
                 font-size: 20px;
+            }
+
+            .sidebar .avatar-container .profile-pic {
+                width: 45px;
+                height: 45px;
             }
 
             .sidebar ul li a {
@@ -1273,6 +1305,15 @@
 
             .sidebar h1 {
                 display: none;
+            }
+
+            .sidebar .avatar-container {
+                margin-top: 10px;
+            }
+
+            .sidebar .avatar-container .profile-pic {
+                width: 50px;
+                height: 50px;
             }
 
             .sidebar ul {
@@ -1501,6 +1542,35 @@
     <div class="container">
         <nav class="sidebar" id="sidebar">
             <h1>Contra E-Crime</h1>
+            <div class="avatar-container">
+                <img class="profile-pic" id="sidebarProfilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                <div class="avatar-loading" id="avatarLoading">
+                    <div class="loader"></div>
+                </div>
+                <div class="customization-options" id="customizationMenu">
+                    <div class="avatar-container customization-avatar">
+                        <img class="profile-pic" id="profilePicDisplay" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                    </div>
+                    <div class="user-info" id="userInfo">
+                        <p id="usernameDisplay" data-label="Username:">Username: Loading...</p>
+                        <p id="emailDisplay" data-label="Email:">Email: Loading...</p>
+                        <p id="createdAtDisplay" data-label="Account Created:">Account Created: Loading...</p>
+                    </div>
+                    <label class="file-input-label" for="avatarInput">Change Avatar</label>
+                    <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
+                    <label for="avatarBgColorPicker">Avatar Background Color</label>
+                    <input type="color" id="avatarBgColorPicker" value="#cccccc">
+                    <label for="borderColorPicker">Border Color</label>
+                    <input type="color" id="borderColorPicker" value="#000000">
+                    <label for="borderTypeSelect">Border Type</label>
+                    <select id="borderTypeSelect">
+                        <option value="solid">Solid</option>
+                        <option value="dashed">Dashed</option>
+                        <option value="dotted">Dotted</option>
+                        <option value="double">Double</option>
+                    </select>
+                </div>
+            </div>
             <ul>
                 <li>
                     <a href="HomePage.html">
@@ -1563,27 +1633,27 @@
             <header class="header">
                 <div class="account-customization">
                     <div class="avatar-container">
-                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
-                        <div class="avatar-loading" id="avatarLoading">
+                        <img class="profile-pic" id="headerProfilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                        <div class="avatar-loading" id="headerAvatarLoading">
                             <div class="loader"></div>
                         </div>
-                        <div class="customization-options" id="customizationMenu">
+                        <div class="customization-options" id="headerCustomizationMenu">
                             <div class="avatar-container customization-avatar">
-                                <img class="profile-pic" id="profilePicDisplay" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                                <img class="profile-pic" id="headerProfilePicDisplay" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
                             </div>
-                            <div class="user-info" id="userInfo">
-                                <p id="usernameDisplay" data-label="Username:">Username: Loading...</p>
-                                <p id="emailDisplay" data-label="Email:">Email: Loading...</p>
-                                <p id="createdAtDisplay" data-label="Account Created:">Account Created: Loading...</p>
+                            <div class="user-info" id="headerUserInfo">
+                                <p id="headerUsernameDisplay" data-label="Username:">Username: Loading...</p>
+                                <p id="headerEmailDisplay" data-label="Email:">Email: Loading...</p>
+                                <p id="headerCreatedAtDisplay" data-label="Account Created:">Account Created: Loading...</p>
                             </div>
-                            <label class="file-input-label" for="avatarInput">Change Avatar</label>
-                            <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
-                            <label for="avatarBgColorPicker">Avatar Background Color</label>
-                            <input type="color" id="avatarBgColorPicker" value="#cccccc">
-                            <label for="borderColorPicker">Border Color</label>
-                            <input type="color" id="borderColorPicker" value="#000000">
-                            <label for="borderTypeSelect">Border Type</label>
-                            <select id="borderTypeSelect">
+                            <label class="file-input-label" for="headerAvatarInput">Change Avatar</label>
+                            <input type="file" id="headerAvatarInput" accept="image/jpeg,image/png,image/jpg">
+                            <label for="headerAvatarBgColorPicker">Avatar Background Color</label>
+                            <input type="color" id="headerAvatarBgColorPicker" value="#cccccc">
+                            <label for="headerBorderColorPicker">Border Color</label>
+                            <input type="color" id="headerBorderColorPicker" value="#000000">
+                            <label for="headerBorderTypeSelect">Border Type</label>
+                            <select id="headerBorderTypeSelect">
                                 <option value="solid">Solid</option>
                                 <option value="dashed">Dashed</option>
                                 <option value="dotted">Dotted</option>
@@ -1790,16 +1860,26 @@
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
-        const profilePic = document.getElementById('profilePic');
+        const sidebarProfilePic = document.getElementById('sidebarProfilePic');
+        const headerProfilePic = document.getElementById('headerProfilePic');
         const customizationMenu = document.getElementById('customizationMenu');
+        const headerCustomizationMenu = document.getElementById('headerCustomizationMenu');
         const avatarInput = document.getElementById('avatarInput');
+        const headerAvatarInput = document.getElementById('headerAvatarInput');
         const avatarLoading = document.getElementById('avatarLoading');
+        const headerAvatarLoading = document.getElementById('headerAvatarLoading');
         const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+        const headerAvatarBgColorPicker = document.getElementById('headerAvatarBgColorPicker');
         const borderColorPicker = document.getElementById('borderColorPicker');
+        const headerBorderColorPicker = document.getElementById('headerBorderColorPicker');
         const borderTypeSelect = document.getElementById('borderTypeSelect');
+        const headerBorderTypeSelect = document.getElementById('headerBorderTypeSelect');
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
+        const headerUsernameDisplay = document.getElementById('headerUsernameDisplay');
+        const headerEmailDisplay = document.getElementById('headerEmailDisplay');
+        const headerCreatedAtDisplay = document.getElementById('headerCreatedAtDisplay');
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
@@ -1816,6 +1896,9 @@
                 usernameDisplay.textContent = `${currentUser.username}`;
                 emailDisplay.textContent = `${currentUser.email}`;
                 createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
+                headerUsernameDisplay.textContent = `${currentUser.username}`;
+                headerEmailDisplay.textContent = `${currentUser.email}`;
+                headerCreatedAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
 
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
@@ -1824,26 +1907,39 @@
                     const userData = snapshot.val();
                     if (userData) {
                         if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
+                            sidebarProfilePic.src = userData.avatarUrl;
+                            headerProfilePic.src = userData.avatarUrl;
                             document.getElementById('profilePicDisplay').src = userData.avatarUrl;
+                            document.getElementById('headerProfilePicDisplay').src = userData.avatarUrl;
                         } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                            sidebarProfilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                            headerProfilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
                             document.getElementById('profilePicDisplay').src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                            document.getElementById('headerProfilePicDisplay').src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
                         }
                         if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
+                            sidebarProfilePic.style.backgroundColor = userData.avatarBgColor;
+                            headerProfilePic.style.backgroundColor = userData.avatarBgColor;
                             document.getElementById('profilePicDisplay').style.backgroundColor = userData.avatarBgColor;
+                            document.getElementById('headerProfilePicDisplay').style.backgroundColor = userData.avatarBgColor;
                             avatarBgColorPicker.value = userData.avatarBgColor;
+                            headerAvatarBgColorPicker.value = userData.avatarBgColor;
                         }
                         if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
+                            sidebarProfilePic.style.borderColor = userData.borderColor;
+                            headerProfilePic.style.borderColor = userData.borderColor;
                             document.getElementById('profilePicDisplay').style.borderColor = userData.borderColor;
+                            document.getElementById('headerProfilePicDisplay').style.borderColor = userData.borderColor;
                             borderColorPicker.value = userData.borderColor;
+                            headerBorderColorPicker.value = userData.borderColor;
                         }
                         if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
+                            sidebarProfilePic.style.borderStyle = userData.borderType;
+                            headerProfilePic.style.borderStyle = userData.borderType;
                             document.getElementById('profilePicDisplay').style.borderStyle = userData.borderType;
+                            document.getElementById('headerProfilePicDisplay').style.borderStyle = userData.borderType;
                             borderTypeSelect.value = userData.borderType;
+                            headerBorderTypeSelect.value = userData.borderType;
                         }
                     }
                 }, (error) => {
@@ -1856,17 +1952,410 @@
             }
         });
 
-        profilePic.addEventListener('click', () => {
-            customizationMenu.classList.toggle('active');
+        function setupAvatarListeners(profilePic, customizationMenu, avatarInput, avatarLoading, avatarBgColorPicker, borderColorPicker, borderTypeSelect, profilePicDisplay) {
+            profilePic.addEventListener('click', () => {
+                customizationMenu.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+                    customizationMenu.classList.remove('active');
+                }
+            });
+
+            avatarInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                const maxSize = 2 * 1024 * 1024;
+                if (!validTypes.includes(file.type)) {
+                    alert('Please upload a valid image (JPG, JPEG, PNG).');
+                    return;
+                }
+                if (file.size > maxSize) {
+                    alert('Image size must be less than 2MB.');
+                    return;
+                }
+
+                const user = auth.currentUser;
+                if (!user) {
+                    alert('You must be logged in to upload an avatar.');
+                    avatarLoading.classList.remove('active');
+                    return;
+                }
+
+                avatarLoading.classList.add('active');
+
+                const img = new Image();
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const maxDimension = 300;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxDimension) {
+                            height = Math.round((height * maxDimension) / width);
+                            width = maxDimension;
+                        }
+                    } else {
+                        if (height > maxDimension) {
+                            width = Math.round((width * maxDimension) / height);
+                            height = maxDimension;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob((blob) => {
+                        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                        if (!currentUser || !currentUser.email) {
+                            alert('User not logged in.');
+                            avatarLoading.classList.remove('active');
+                            return;
+                        }
+
+                        const formData = new FormData();
+                        formData.append('file', blob);
+                        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                        formData.append('folder', `avatars/${currentUser.email}`);
+
+                        fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.text().then(text => {
+                                    let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                                    try {
+                                        const parsed = JSON.parse(text);
+                                        errorMessage = parsed.error?.message || text;
+                                    } catch (e) {
+                                        errorMessage = text.includes('Invalid cloud name')
+                                            ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                            : text.includes('Invalid upload preset')
+                                            ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                            : text.includes('Unsigned uploads are not allowed')
+                                            ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                            : text || 'Unknown error occurred';
+                                    }
+                                    throw new Error(errorMessage);
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.error) {
+                                throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                            }
+
+                            const avatarUrl = data.secure_url;
+                            const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+                            database.ref(`users/${sanitizedEmail}`).update({
+                                avatarUrl: avatarUrl,
+                                updatedAt: firebase.database.ServerValue.TIMESTAMP
+                            })
+                            .then(() => {
+                                sidebarProfilePic.src = avatarUrl;
+                                headerProfilePic.src = avatarUrl;
+                                document.getElementById('profilePicDisplay').src = avatarUrl;
+                                document.getElementById('headerProfilePicDisplay').src = avatarUrl;
+                                avatarLoading.classList.remove('active');
+                            })
+                            .catch(error => {
+                                console.error('Error saving avatar URL to Firebase:', error);
+                                alert('Failed to save avatar URL to Firebase: ' + error.message);
+                                avatarLoading.classList.remove('active');
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error uploading avatar to Cloudinary:', error);
+                            alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                            avatarLoading.classList.remove('active');
+                        });
+                    }, file.type, 0.6);
+                };
+                img.onerror = () => {
+                    alert('Failed to process the image. Please try a different file.');
+                    avatarLoading.classList.remove('active');
+                };
+            });
+
+            avatarBgColorPicker.addEventListener('change', () => {
+                const color = avatarBgColorPicker.value;
+                sidebarProfilePic.style.backgroundColor = color;
+                headerProfilePic.style.backgroundColor = color;
+                profilePicDisplay.style.backgroundColor = color;
+                document.getElementById('headerProfilePicDisplay').style.backgroundColor = color;
+                headerAvatarBgColorPicker.value = color;
+
+                const user = auth.currentUser;
+                if (user) {
+                    const sanitizedEmail = user.email.replace(/\./g, ',');
+                    database.ref(`users/${sanitizedEmail}`).update({
+                        avatarBgColor: color,
+                        updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    })
+                    .catch(error => {
+                        console.error('Error saving avatar background color:', error);
+                        alert('Failed to save avatar background color: ' + error.message);
+                    });
+                } else {
+                    alert('You must be logged in to change the avatar background color.');
+                }
+            });
+
+            borderColorPicker.addEventListener('change', () => {
+                const color = borderColorPicker.value;
+                sidebarProfilePic.style.borderColor = color;
+                headerProfilePic.style.borderColor = color;
+                profilePicDisplay.style.borderColor = color;
+                document.getElementById('headerProfilePicDisplay').style.borderColor = color;
+                headerBorderColorPicker.value = color;
+
+                const user = auth.currentUser;
+                if (user) {
+                    const sanitizedEmail = user.email.replace(/\./g, ',');
+                    database.ref(`users/${sanitizedEmail}`).update({
+                        borderColor: color,
+                        updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    })
+                    .catch(error => {
+                        console.error('Error saving border color:', error);
+                        alert('Failed to save border color: ' + error.message);
+                    });
+                } else {
+                    alert('You must be logged in to change the border color.');
+                }
+            });
+
+            borderTypeSelect.addEventListener('change', () => {
+                const borderType = borderTypeSelect.value;
+                sidebarProfilePic.style.borderStyle = borderType;
+                headerProfilePic.style.borderStyle = borderType;
+                profilePicDisplay.style.borderStyle = borderType;
+                document.getElementById('headerProfilePicDisplay').style.borderStyle = borderType;
+                headerBorderTypeSelect.value = borderType;
+
+                const user = auth.currentUser;
+                if (user) {
+                    const sanitizedEmail = user.email.replace(/\./g, ',');
+                    database.ref(`users/${sanitizedEmail}`).update({
+                        borderType: borderType,
+                        updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    })
+                    .catch(error => {
+                        console.error('Error saving border type:', error);
+                        alert('Failed to save border type: ' + error.message);
+                    });
+                } else {
+                    alert('You must be logged in to change the border type.');
+                }
+            });
+
+            avatarBgColorPicker.addEventListener('change', () => {
+                const color = avatarBgColorPicker.value;
+                sidebarProfilePic.style.backgroundColor = color;
+                headerProfilePic.style.backgroundColor = color;
+                profilePicDisplay.style.backgroundColor = color;
+                document.getElementById('headerProfilePicDisplay').style.backgroundColor = color;
+                headerAvatarBgColorPicker.value = color;
+
+                const user = auth.currentUser;
+                if (user) {
+                    const sanitizedEmail = user.email.replace(/\./g, ',');
+                    database.ref(`users/${sanitizedEmail}`).update({
+                        avatarBgColor: color,
+                        updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    })
+                    .catch(error => {
+                        console.error('Error saving avatar background color:', error);
+                        alert('Failed to save avatar background color: ' + error.message);
+                    });
+                } else {
+                    alert('You must be logged in to change the avatar background color.');
+                }
+            });
+
+            borderColorPicker.addEventListener('change', () => {
+                const color = borderColorPicker.value;
+                sidebarProfilePic.style.borderColor = color;
+                headerProfilePic.style.borderColor = color;
+                profilePicDisplay.style.borderColor = color;
+                document.getElementById('headerProfilePicDisplay').style.borderColor = color;
+                headerBorderColorPicker.value = color;
+
+                const user = auth.currentUser;
+                if (user) {
+                    const sanitizedEmail = user.email.replace(/\./g, ',');
+                    database.ref(`users/${sanitizedEmail}`).update({
+                        borderColor: color,
+                        updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    })
+                    .catch(error => {
+                        console.error('Error saving border color:', error);
+                        alert('Failed to save border color: ' + error.message);
+                    });
+                } else {
+                    alert('You must be logged in to change the border color.');
+                }
+            });
+
+            avatarInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                const maxSize = 2 * 1024 * 1024;
+                if (!validTypes.includes(file.type)) {
+                    alert('Please upload a valid image (JPG, JPEG, PNG).');
+                    return;
+                }
+                if (file.size > maxSize) {
+                    alert('Image size must be less than 2MB.');
+                    return;
+                }
+
+                const user = auth.currentUser;
+                if (!user) {
+                    alert('You must be logged in to upload an avatar.');
+                    avatarLoading.classList.remove('active');
+                    return;
+                }
+
+                avatarLoading.classList.add('active');
+
+                const img = new Image();
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const maxDimension = 300;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxDimension) {
+                            height = Math.round((height * maxDimension) / width);
+                            width = maxDimension;
+                        }
+                    } else {
+                        if (height > maxDimension) {
+                            width = Math.round((width * maxDimension) / height);
+                            height = maxDimension;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob((blob) => {
+                        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                        if (!currentUser || !currentUser.email) {
+                            alert('User not logged in.');
+                            avatarLoading.classList.remove('active');
+                            return;
+                        }
+
+                        const formData = new FormData();
+                        formData.append('file', blob);
+                        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                        formData.append('folder', `avatars/${currentUser.email}`);
+
+                        fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.text().then(text => {
+                                    let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                                    try {
+                                        const parsed = JSON.parse(text);
+                                        errorMessage = parsed.error?.message || text;
+                                    } catch (e) {
+                                        errorMessage = text.includes('Invalid cloud name')
+                                            ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                            : text.includes('Invalid upload preset')
+                                            ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                            : text.includes('Unsigned uploads are not allowed')
+                                            ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                            : text || 'Unknown error occurred';
+                                    }
+                                    throw new Error(errorMessage);
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.error) {
+                                throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                            }
+
+                            const avatarUrl = data.secure_url;
+                            const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+                            database.ref(`users/${sanitizedEmail}`).update({
+                                avatarUrl: avatarUrl,
+                                updatedAt: firebase.database.ServerValue.TIMESTAMP
+                            })
+                            .then(() => {
+                                sidebarProfilePic.src = avatarUrl;
+                                headerProfilePic.src = avatarUrl;
+                                document.getElementById('profilePicDisplay').src = avatarUrl;
+                                document.getElementById('headerProfilePicDisplay').src = avatarUrl;
+                                avatarLoading.classList.remove('active');
+                            })
+                            .catch(error => {
+                                console.error('Error saving avatar URL to Firebase:', error);
+                                alert('Failed to save avatar URL to Firebase: ' + error.message);
+                                avatarLoading.classList.remove('active');
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error uploading avatar to Cloudinary:', error);
+                            alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                            avatarLoading.classList.remove('active');
+                        });
+                    }, file.type, 0.6);
+                };
+                img.onerror = () => {
+                    alert('Failed to process the image. Please try a different file.');
+                    avatarLoading.classList.remove('active');
+                };
+            });
+        }
+
+        // Setup listeners for header avatar
+        headerProfilePic.addEventListener('click', () => {
+            headerCustomizationMenu.classList.toggle('active');
         });
 
         document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
+            if (!headerCustomizationMenu.contains(e.target) && e.target !== headerProfilePic) {
+                headerCustomizationMenu.classList.remove('active');
             }
         });
 
-        avatarInput.addEventListener('change', (event) => {
+        headerAvatarInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
 
@@ -1884,11 +2373,11 @@
             const user = auth.currentUser;
             if (!user) {
                 alert('You must be logged in to upload an avatar.');
-                avatarLoading.classList.remove('active');
+                headerAvatarLoading.classList.remove('active');
                 return;
             }
 
-            avatarLoading.classList.add('active');
+            headerAvatarLoading.classList.add('active');
 
             const img = new Image();
             const reader = new FileReader();
@@ -1924,7 +2413,7 @@
                     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                     if (!currentUser || !currentUser.email) {
                         alert('User not logged in.');
-                        avatarLoading.classList.remove('active');
+                        headerAvatarLoading.classList.remove('active');
                         return;
                     }
 
@@ -1971,33 +2460,38 @@
                             updatedAt: firebase.database.ServerValue.TIMESTAMP
                         })
                         .then(() => {
-                            profilePic.src = avatarUrl;
+                            sidebarProfilePic.src = avatarUrl;
+                            headerProfilePic.src = avatarUrl;
                             document.getElementById('profilePicDisplay').src = avatarUrl;
-                            avatarLoading.classList.remove('active');
+                            document.getElementById('headerProfilePicDisplay').src = avatarUrl;
+                            headerAvatarLoading.classList.remove('active');
                         })
                         .catch(error => {
                             console.error('Error saving avatar URL to Firebase:', error);
                             alert('Failed to save avatar URL to Firebase: ' + error.message);
-                            avatarLoading.classList.remove('active');
+                            headerAvatarLoading.classList.remove('active');
                         });
                     })
                     .catch(error => {
                         console.error('Error uploading avatar to Cloudinary:', error);
                         alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
-                        avatarLoading.classList.remove('active');
+                        headerAvatarLoading.classList.remove('active');
                     });
                 }, file.type, 0.6);
             };
             img.onerror = () => {
                 alert('Failed to process the image. Please try a different file.');
-                avatarLoading.classList.remove('active');
+                headerAvatarLoading.classList.remove('active');
             };
         });
 
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
-            profilePic.style.backgroundColor = color;
+        headerAvatarBgColorPicker.addEventListener('change', () => {
+            const color = headerAvatarBgColorPicker.value;
+            sidebarProfilePic.style.backgroundColor = color;
+            headerProfilePic.style.backgroundColor = color;
             document.getElementById('profilePicDisplay').style.backgroundColor = color;
+            document.getElementById('headerProfilePicDisplay').style.backgroundColor = color;
+            avatarBgColorPicker.value = color;
 
             const user = auth.currentUser;
             if (user) {
@@ -2015,10 +2509,13 @@
             }
         });
 
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
-            profilePic.style.borderColor = color;
+        headerBorderColorPicker.addEventListener('change', () => {
+            const color = headerBorderColorPicker.value;
+            sidebarProfilePic.style.borderColor = color;
+            headerProfilePic.style.borderColor = color;
             document.getElementById('profilePicDisplay').style.borderColor = color;
+            document.getElementById('headerProfilePicDisplay').style.borderColor = color;
+            borderColorPicker.value = color;
 
             const user = auth.currentUser;
             if (user) {
@@ -2036,10 +2533,13 @@
             }
         });
 
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
+        headerBorderTypeSelect.addEventListener('change', () => {
+            const borderType = headerBorderTypeSelect.value;
+            sidebarProfilePic.style.borderStyle = borderType;
+            headerProfilePic.style.borderStyle = borderType;
             document.getElementById('profilePicDisplay').style.borderStyle = borderType;
+            document.getElementById('headerProfilePicDisplay').style.borderStyle = borderType;
+            borderTypeSelect.value = borderType;
 
             const user = auth.currentUser;
             if (user) {
