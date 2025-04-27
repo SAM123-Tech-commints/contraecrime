@@ -299,6 +299,25 @@
             transition: color 0.3s ease;
         }
 
+        .avatar-container {
+            position: absolute;
+            top: 80px;
+            right: 0;
+            z-index: 2;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #8B0000;
+            transition: border-color 0.3s ease;
+        }
+
+        .dark-theme .avatar {
+            border-color: #ff6b6b;
+        }
+
         .news-item {
             background-color: #fff;
             border-radius: 8px;
@@ -626,6 +645,11 @@
             .news-section p.tagline {
                 font-size: 18px;
             }
+
+            .avatar {
+                width: 50px;
+                height: 50px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -665,6 +689,11 @@
                 height: 150px;
                 margin-right: 0;
                 margin-bottom: 10px;
+            }
+
+            .avatar {
+                width: 45px;
+                height: 45px;
             }
         }
 
@@ -739,6 +768,16 @@
 
             .news-section p.tagline {
                 font-size: 16px;
+            }
+
+            .avatar-container {
+                top: 80px;
+                right: 15px;
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
@@ -821,6 +860,9 @@
                 <h1>
                     TRENDING CYBERCRIME NEWS <img src="https://i.imgur.com/VStcaPo.png" alt="Logo" style="width: 200px; height: 200px; vertical-align: middle; margin-right: 10px;">
                 </h1>
+                <div class="avatar-container">
+                    <img src="https://i.imgur.com/vEKpOsq.png" alt="Avatar" class="avatar">
+                </div>
                 <p class="tagline">Stay updated with the latest in cybercrime</p>
 
                 <!-- Page 1 Articles -->
@@ -1347,31 +1389,17 @@
             }
         });
 
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const href = this.getAttribute('href');
-                    const isReadMore = this.classList.contains('read-more');
-
-                    loaderOverlay.classList.add('active');
-                    if (isReadMore) {
-                        fingerprintLoader.style.display = 'flex';
-                        simpleLoader.style.display = 'none';
-                    } else {
-                        fingerprintLoader.style.display = 'none';
-                        simpleLoader.style.display = 'block';
-                    }
-
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 150);
-                });
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updatePagination();
+        window.addEventListener('load', function() {
+            loaderOverlay.classList.add('active');
+            fingerprintLoader.style.display = 'flex';
+            setTimeout(() => {
+                fingerprintLoader.style.display = 'none';
+                simpleLoader.style.display = 'block';
+                setTimeout(() => {
+                    loaderOverlay.classList.remove('active');
+                    updatePagination();
+                }, 1000);
+            }, 2000);
         });
     </script>
 </body>
