@@ -1386,7 +1386,7 @@
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="news-details">
-                        <p>During the third House Tri-Committee hearing on Friday, March 21, Rep. Zia Alonto Adiong (Lanao del Sur, 1st District) asked government agencies responsible for investigating false information on social media to explain how an ordinary citizen can report and navigate the process.</p>
+                        <p>During the third House Tri-Committee hearing on Friday, March 21, Rep. Zia Alonto Adiong (Lanao del Sur, 1st District) asked government agencies responsible for investigating false information on social media to explain how an ordinary citizen can report BPSFand navigate the process.</p>
                         <p>Agencies with this capability include the National Bureau of Investigation (NBI), the PNP Anti-Cybercrime Group (PNP-ACG) and the Department of Information and Communications Technology (DICT).</p>
                         <p>Many are familiar with the Cybercrime Prevention Act of 2012 (Republic Act 10175), which penalizes online libel — defamatory statements made through digital platforms — under Article 355 of the Revised Penal Code.</p>
                         <p>However, police colonel Andres Simbajon Jr., deputy director for administration of the PNP-ACG, told the committee that "fake news" can still be legally addressed, as it is classified as a crime under the Revised Penal Code.</p>
@@ -1503,6 +1503,7 @@
                     </div>
                 </div>
 
+                ...
                 <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2024/08/03/doj-usec-vasquez-satnewsforum-2024aug3-jbondoc-2.jpg" alt="News Image" class="news-image">
@@ -1518,34 +1519,18 @@
                         <p>The DOJ has an Office of Cybercrime (OOC) created under Republic Act No. 10175 or the Cybercrime Prevention Act of 2012 that serves as the central authority in all matters relating to international mutual assistance and extradition for cybercrime and cyber-related matters.</p>
                         <p>The OOC also acts as "the focal agency in formulating and implementing law enforcement investigation and prosecution strategies in curbing cybercrime and cyber-related offenses nationwide," according to the DOJ.</p>
                         <p>Vasquez made the statement following the arrest of a foreign national and two Filipinos suspected of engaging in months-long electronic intelligence-surveillance-reconnaissance (ISR) operations in key military and civilian infrastructures in the country.</p>
-                        <p>The DOJ confirmed that it is pursuing other members of the group who may have procured equipment used in the eavesdropping operations, even as the military said it is monitoring the role played by Philippine Online Gaming Operators (POGOs) in the alleged spying activities.</p>
-                        <p>The National Bureau of Investigation (NBI) on Wednesday likewise announced the arrest of eight foreigners in Parañaque City allegedly engaged in online phishing operations.</p>
-                        <a href="https://www.pna.gov.ph/articles/1242480" target="_blank" class="read-more">Read more</a>
-                    </div>
-                </div>
-
-                <div class="news-item" data-page="2">
-                    <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://bilyonaryo.com/wp-content/uploads/2025/01/Thiang-Choon-Wee.jpg" alt="News Image" class="news-image">
-                        <div class="news-title">
-                            <h2>Malaysian Supplier of Text Scam Device Arrested in Cybercrime Crackdown</h2>
-                            <div class="news-meta">Bilyonaryo | January 15, 2025</div>
-                        </div>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="news-details">
-                        <p>A Malaysian national, identified as Thiang Choon Wee, was arrested by Philippine authorities for allegedly supplying devices used in large-scale text scam operations across Southeast Asia.</p>
-                        <p>The arrest, conducted in a joint operation by the National Bureau of Investigation (NBI) and the Cybercrime Investigation and Coordinating Center (CICC), uncovered a warehouse containing thousands of SIM cards and SMS blasting devices used to send fraudulent messages.</p>
-                        <p>"This is a significant breakthrough in our fight against cybercrime," said an NBI spokesperson. The devices were linked to scams that defrauded victims of millions of pesos, often through fake job offers and investment schemes.</p>
-                        <p>Authorities are now investigating Thiang’s network, which is believed to have ties to international crime syndicates operating in Malaysia, Thailand, and the Philippines.</p>
-                        <a href="https://bilyonaryo.com/2025/01/15/malaysian-supplier-of-text-scam-device-arrested-in-cybercrime-crackdown/" target="_blank" class="read-more">Read more</a>
+                        <p>The DOJ confirmed that it is pursuing other suspects involved in similar activities, with plans to enhance international cooperation to address the growing threat of cyber espionage.</p>
+                        <a href="https://www.pna.gov.ph/articles/1244021" target="_blank" class="read-more">Read more</a>
                     </div>
                 </div>
 
                 <div class="pagination" id="pagination">
-                    <button onclick="changePage('prev')" id="prevPage">Previous</button>
-                    <div class="page-numbers" id="pageNumbers"></div>
-                    <button onclick="changePage('next')" id="nextPage">Next</button>
+                    <button id="prevPage" disabled>Previous</button>
+                    <div class="page-numbers" id="pageNumbers">
+                        <span class="page-number active" data-page="1">1</span>
+                        <span class="page-number" data-page="2">2</span>
+                    </div>
+                    <button id="nextPage">Next</button>
                 </div>
             </section>
         </main>
@@ -1555,93 +1540,36 @@
             <div class="footer-links">
                 <a href="PrivacyPolicy.html">Privacy Policy</a>
                 <a href="TermsOfService.html">Terms of Service</a>
-                <a href="ContactUs.html">Contact Us</a>
             </div>
         </footer>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
     <script>
-    
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_FY8M0eXdhgq8k5d-YXh2KBQXcZSee0",
+            authDomain: "contra-e-crime.firebaseapp.com",
+            projectId: "contra-e-crime",
+            storageBucket: "contra-e-crime.appspot.com",
+            messagingSenderId: "910165698688",
+            appId: "1:910165698688:web:df21e54b3e33903ebfa1bd",
+            measurementId: "G-XW4VVR3SKL"
+        };
 
-        // Dark theme toggle
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-        });
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
 
-        // Apply saved theme on load
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        // Mobile menu toggle
-        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+        const loaderOverlay = document.getElementById('loaderOverlay');
+        const fingerprintLoader = document.querySelector('.fingerprint-loader');
+        const simpleLoader = document.querySelector('.simple-loader');
         const sidebar = document.getElementById('sidebar');
-        mobileMenuIcon.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            mobileMenuIcon.innerHTML = sidebar.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
-
-        // News details toggle
-        function toggleDetails(header) {
-            const details = header.nextElementSibling;
-            const icon = header.querySelector('.toggle-icon');
-            details.classList.toggle('active');
-            icon.classList.toggle('active');
-        }
-
-        // Pagination logic
-        const newsItems = document.querySelectorAll('.news-item');
-        const pageNumbersContainer = document.getElementById('pageNumbers');
-        const prevPageBtn = document.getElementById('prevPage');
-        const nextPageBtn = document.getElementById('nextPage');
-        const itemsPerPage = 10;
-        let currentPage = 1;
-        const totalPages = Math.ceil(newsItems.length / itemsPerPage);
-
-        function updatePagination() {
-            newsItems.forEach(item => {
-                item.classList.remove('active');
-                const page = parseInt(item.getAttribute('data-page'));
-                if (page === currentPage) {
-                    item.classList.add('active');
-                }
-            });
-
-            pageNumbersContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const pageNumber = document.createElement('span');
-                pageNumber.className = 'page-number';
-                pageNumber.textContent = i;
-                if (i === currentPage) {
-                    pageNumber.classList.add('active');
-                }
-                pageNumber.addEventListener('click', () => {
-                    currentPage = i;
-                    updatePagination();
-                });
-                pageNumbersContainer.appendChild(pageNumber);
-            }
-
-            prevPageBtn.disabled = currentPage === 1;
-            nextPageBtn.disabled = currentPage === totalPages;
-        }
-
-        function changePage(direction) {
-            if (direction === 'prev' && currentPage > 1) {
-                currentPage--;
-            } else if (direction === 'next' && currentPage < totalPages) {
-                currentPage++;
-            }
-            updatePagination();
-        }
-
-        // Initialize pagination
-        updatePagination();
-
-        // Avatar customization
+        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+        const themeToggle = document.getElementById('themeToggle');
         const profilePic = document.getElementById('profilePic');
         const customizationMenu = document.getElementById('customizationMenu');
         const avatarInput = document.getElementById('avatarInput');
@@ -1653,106 +1581,192 @@
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
 
-        // Simulated user data (replace with actual user data fetching if needed)
-        const userData = {
-            username: "CyberGuardian",
-            email: "guardian@example.com",
-            createdAt: "2023-01-15"
-        };
+        let currentPage = 1;
+        const itemsPerPage = 10;
 
-        // Display user info
-        usernameDisplay.textContent = userData.username;
-        emailDisplay.textContent = userData.email;
-        createdAtDisplay.textContent = userData.createdAt;
+        function showLoader(loaderType) {
+            loaderOverlay.classList.add('active');
+            if (loaderType === 'fingerprint') {
+                fingerprintLoader.style.display = 'flex';
+                simpleLoader.style.display = 'none';
+            } else {
+                fingerprintLoader.style.display = 'none';
+                simpleLoader.style.display = 'block';
+            }
+        }
 
-        // Toggle customization menu
+        function hideLoader() {
+            loaderOverlay.classList.remove('active');
+            fingerprintLoader.style.display = 'none';
+            simpleLoader.style.display = 'none';
+        }
+
+        mobileMenuIcon.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        themeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
+
+        function toggleDetails(header) {
+            const details = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            details.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+
+        function showPage(page) {
+            const newsItems = document.querySelectorAll('.news-item');
+            newsItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') == page) {
+                    item.classList.add('active');
+                }
+            });
+
+            const pageNumbers = document.querySelectorAll('.page-number');
+            pageNumbers.forEach(number => {
+                number.classList.remove('active');
+                if (number.getAttribute('data-page') == page) {
+                    number.classList.add('active');
+                }
+            });
+
+            document.getElementById('prevPage').disabled = page === 1;
+            document.getElementById('nextPage').disabled = page === Math.ceil(newsItems.length / itemsPerPage);
+        }
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            const totalPages = Math.ceil(document.querySelectorAll('.news-item').length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        document.getElementById('pageNumbers').addEventListener('click', (e) => {
+            if (e.target.classList.contains('page-number')) {
+                currentPage = parseInt(e.target.getAttribute('data-page'));
+                showPage(currentPage);
+            }
+        });
+
+        showPage(currentPage);
+
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
 
-        // Close menu if clicking outside
-        document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                showLoader('fingerprint');
+
+                try {
+                    const userDoc = await db.collection('users').doc(user.uid).get();
+                    if (userDoc.exists) {
+                        const userData = userDoc.data();
+                        usernameDisplay.textContent = userData.username || 'N/A';
+                        emailDisplay.textContent = user.email || 'N/A';
+                        const createdAt = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString() : 'N/A';
+                        createdAtDisplay.textContent = createdAt;
+
+                        const avatarData = userData.avatar || {};
+                        if (avatarData.url) {
+                            profilePic.src = avatarData.url;
+                        }
+                        if (avatarData.bgColor) {
+                            profilePic.style.backgroundColor = avatarData.bgColor;
+                            avatarBgColorPicker.value = avatarData.bgColor;
+                        }
+                        if (avatarData.borderColor) {
+                            profilePic.style.borderColor = avatarData.borderColor;
+                            borderColorPicker.value = avatarData.borderColor;
+                        }
+                        if (avatarData.borderType) {
+                            profilePic.style.borderStyle = avatarData.borderType;
+                            borderTypeSelect.value = avatarData.borderType;
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                } finally {
+                    hideLoader();
+                }
+            } else {
+                window.location.href = 'index.html';
             }
         });
 
-        // Load saved avatar settings
-        const savedAvatar = localStorage.getItem('avatar');
-        const savedBgColor = localStorage.getItem('avatarBgColor') || '#cccccc';
-        const savedBorderColor = localStorage.getItem('borderColor') || '#000000';
-        const savedBorderType = localStorage.getItem('borderType') || 'solid';
-
-        if (savedAvatar) {
-            profilePic.src = savedAvatar;
-        }
-        profilePic.style.backgroundColor = savedBgColor;
-        profilePic.style.borderColor = savedBorderColor;
-        profilePic.style.borderStyle = savedBorderType;
-
-        avatarBgColorPicker.value = savedBgColor;
-        borderColorPicker.value = savedBorderColor;
-        borderTypeSelect.value = savedBorderType;
-
-        // Handle avatar image upload
-        avatarInput.addEventListener('change', (e) => {
+        avatarInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file) {
-                const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-                if (!validTypes.includes(file.type)) {
-                    alert('Please upload a valid image (JPEG, PNG, or JPG).');
-                    return;
-                }
-
                 avatarLoading.classList.add('active');
-                setTimeout(() => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        profilePic.src = reader.result;
-                        localStorage.setItem('avatar', reader.result);
-                        avatarLoading.classList.remove('active');
-                    };
-                    reader.readAsDataURL(file);
-                }, 1500);
+                try {
+                    const user = auth.currentUser;
+                    if (user) {
+                        const storageRef = storage.ref(`avatars/${user.uid}/${file.name}`);
+                        await storageRef.put(file);
+                        const downloadURL = await storageRef.getDownloadURL();
+
+                        await db.collection('users').doc(user.uid).update({
+                            'avatar.url': downloadURL
+                        });
+
+                        profilePic.src = downloadURL;
+                    }
+                } catch (error) {
+                    console.error("Error uploading avatar:", error);
+                } finally {
+                    avatarLoading.classList.remove('active');
+                }
             }
         });
 
-        // Handle background color change
-        avatarBgColorPicker.addEventListener('input', (e) => {
-            profilePic.style.backgroundColor = e.target.value;
-            localStorage.setItem('avatarBgColor', e.target.value);
+        avatarBgColorPicker.addEventListener('input', async (e) => {
+            const color = e.target.value;
+            profilePic.style.backgroundColor = color;
+            const user = auth.currentUser;
+            if (user) {
+                await db.collection('users').doc(user.uid).update({
+                    'avatar.bgColor': color
+                });
+            }
         });
 
-        // Handle border color change
-        borderColorPicker.addEventListener('input', (e) => {
-            profilePic.style.borderColor = e.target.value;
-            localStorage.setItem('borderColor', e.target.value);
+        borderColorPicker.addEventListener('input', async (e) => {
+            const color = e.target.value;
+            profilePic.style.borderColor = color;
+            const user = auth.currentUser;
+            if (user) {
+                await db.collection('users').doc(user.uid).update({
+                    'avatar.borderColor': color
+                });
+            }
         });
 
-        borderTypeSelect.addEventListener('change', (e) => {
-            profilePic.style.borderStyle = e.target.value;
-            localStorage.setItem('borderType', e.target.value);
-        });
-
-        document.querySelectorAll('.read-more').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault(); 
-                const loaderOverlay = document.getElementById('loaderOverlay');
-                const fingerprintLoader = document.querySelector('.fingerprint-loader');
-                const simpleLoader = document.querySelector('.simple-loader');
-
-                loaderOverlay.classList.add('active');
-                if (window.innerWidth <= 480) {
-                    simpleLoader.style.display = 'block';
-                } else {
-                    fingerprintLoader.style.display = 'flex';
-                }
-
-                setTimeout(() => {
-                    loaderOverlay.classList.remove('active');
-                    window.open(link.href, '_blank'); 
-                }, 2000);
-            });
+        borderTypeSelect.addEventListener('change', async (e) => {
+            const borderType = e.target.value;
+            profilePic.style.borderStyle = borderType;
+            const user = auth.currentUser;
+            if (user) {
+                await db.collection('users').doc(user.uid).update({
+                    'avatar.borderType': borderType
+                });
+            }
         });
     </script>
 </body>
