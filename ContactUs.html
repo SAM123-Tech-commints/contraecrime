@@ -362,7 +362,7 @@
         .customization-options .user-info p::before {
             content: attr(data-label);
             font-weight: 700;
-            color: #ffd700;
+            color: #ff3333; 
             margin-right: 5px;
         }
 
@@ -428,8 +428,9 @@
         }
 
         .dark-theme .customization-options .user-info {
-            background: linear-gradient(135deg, #0f1c3a 0%, #1a315f 50%, #a62626 100%);
-        }
+    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+    color: #e0e0e0; 
+}
 
         .dark-theme .customization-options .user-info p {
             color: #e0e0e0;
@@ -1153,9 +1154,9 @@
                         </div>
                         <div class="customization-options" id="customizationMenu">
                             <div class="user-info" id="userInfo">
-                                <p id="usernameDisplay" data-label="Username:">Username: Loading...</p>
-                                <p id="emailDisplay" data-label="Email:">Email: Loading...</p>
-                                <p id="createdAtDisplay" data-label="Account Created:">Account Created: Loading...</p>
+                                <p id="usernameDisplay" data-label="Username:">Loading...</p>
+                                <p id="emailDisplay" data-label="Email:">Loading...</p>
+                                <p id="createdAtDisplay" data-label="Account Created:">Loading...</p>
                             </div>
                             <label class="file-input-label" for="avatarInput">Change Avatar</label>
                             <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
@@ -1293,9 +1294,9 @@
                 };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                usernameDisplay.textContent = `Username: ${currentUser.username}`;
-                emailDisplay.textContent = `Email: ${currentUser.email}`;
-                createdAtDisplay.textContent = `Account Created: ${new Date(currentUser.createdAt).toLocaleString()}`;
+                usernameDisplay.textContent = `${currentUser.username}`;
+                emailDisplay.textContent = `${currentUser.email}`;
+                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
 
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
