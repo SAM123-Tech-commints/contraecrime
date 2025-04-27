@@ -54,12 +54,8 @@
         }
 
         @keyframes rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .dark-theme .loader {
@@ -651,12 +647,8 @@
         }
 
         @keyframes anim {
-            0%, 100% {
-                transform: translateY(-50%) scale(1);
-            }
-            50% {
-                transform: translateY(-50%) scale(1.2);
-            }
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.2); }
         }
 
         .dark-theme .search-container {
@@ -717,23 +709,16 @@
         }
 
         .card {
-            --bg-card: #27272a;
-            --primary: #d9cd28;
-            --primary-800: #d7b15c;
-            --primary-shadow: #b7b90d;
-            --light: #d9d9d9;
-            --zinc-800: #18181b;
-            --bg-linear: linear-gradient(0deg, var(--primary) 50%, var(--light) 125%);
-
             position: relative;
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             padding: 1rem;
             width: 350px;
-            background-color: var(--bg-card);
+            background-color: #27272a;
             border-radius: 1rem;
             justify-content: space-between;
+            color: #d9d9d9;
         }
 
         .card.main-law {
@@ -756,7 +741,7 @@
             z-index: 5;
             width: 100%;
             height: 200px;
-            background-color: var(--primary-800);
+            background-color: #d7b15c;
             border-radius: 0.5rem;
         }
 
@@ -767,21 +752,26 @@
         }
 
         .cybercrime-title {
-            overflow: clip;
-            width: 100%;
             font-size: 1.2rem;
             font-weight: 600;
-            color: var(--light);
+            color: #d9d9d9;
             text-transform: capitalize;
-            text-wrap: nowrap;
-            text-overflow: ellipsis;
+            margin-bottom: 0.5rem;
         }
 
-        .cybercrime-description {
+        .cybercrime-details {
             font-size: 0.9rem;
-            color: var(--light);
+            color: #d9d9d9;
             line-height: 1.4;
             text-align: justify;
+        }
+
+        .cybercrime-details p {
+            margin: 0.5rem 0;
+        }
+
+        .cybercrime-details strong {
+            color: #d7b15c;
         }
 
         .border-button {
@@ -791,7 +781,6 @@
             padding: 6px 5px;
             border-radius: 10px;
             border: 1px solid rgb(255, 255, 255);
-            overflow: hidden;
             background: transparent;
             color: rgb(255, 255, 255);
             cursor: pointer;
@@ -832,7 +821,6 @@
             padding: 6px 5px;
             border-radius: 10px;
             border: 1px solid rgb(255, 255, 255);
-            overflow: hidden;
             background: transparent;
             color: rgb(255, 255, 255);
             cursor: pointer;
@@ -927,8 +915,12 @@
         }
 
         .dark-theme .cybercrime-title,
-        .dark-theme .cybercrime-description {
+        .dark-theme .cybercrime-details {
             color: #ffffff;
+        }
+
+        .dark-theme .cybercrime-details strong {
+            color: #d7b15c;
         }
 
         .mobile-nav {
@@ -1331,15 +1323,15 @@
                     </div>
                 </div>
                 <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Ask anything...">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Describe the scenario...">
                     <span class="search-icon">
                         <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </span>
                 </div>
-                <p>Find the right law for you!</p>
+                <p>Find the right law for your scenario!</p>
             </div>
             <section class="articles">
-                <h2 id="sectionTitle">TOP ARTICLES</h2>
+                <h2 id="sectionTitle">TOP LAWS</h2>
                 <div class="cards-container" id="cardsContainer">
                     <!-- Laws will be dynamically populated here -->
                 </div>
@@ -1397,7 +1389,7 @@
         const cardsContainer = document.getElementById('cardsContainer');
         const sectionTitle = document.getElementById('sectionTitle');
 
-        // Laws data (simplified for brevity)
+        // Updated laws data with scenario, description, and punishment
         const laws = [
     {
         title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
@@ -1736,7 +1728,6 @@
         pdf: "https://dtiwebfiles.s3-ap-southeast-1.amazonaws.com/Laws+and+Policies/DTi+Compendium+laws/Private+Emission+Testing+Centers/Department+Administative+Order+18-05.pdf"
     }
 ];
-
         auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
@@ -2064,7 +2055,7 @@
                         laws: laws.map(law => ({
                             title: law.title,
                             description: law.description,
-                            scenarios: law.scenarios
+                            scenario: law.scenario
                         }))
                     })
                 });
@@ -2082,7 +2073,7 @@
                 console.error('Error fetching laws from AI:', error);
                 // Fallback to local fuzzy search if AI API fails
                 const fuse = new Fuse(laws, {
-                    keys: ['title', 'description', 'scenarios'],
+                    keys: ['title', 'description', 'scenario'],
                     threshold: 0.4,
                     distance: 100
                 });
@@ -2109,10 +2100,12 @@
                         <img src="${mainLaw.image}" alt="Law Image">
                     </div>
                     <div class="cybercrime-title">
-                        <span>${mainLaw.title}</span>
+                        ${mainLaw.title}
                     </div>
-                    <div class="cybercrime-description">
-                        <p>${mainLaw.description}</p>
+                    <div class="cybercrime-details">
+                        <p><strong>Description:</strong> ${mainLaw.description}</p>
+                        <p><strong>Scenario:</strong> ${mainLaw.scenario}</p>
+                        <p><strong>Punishment:</strong> ${mainLaw.punishment}</p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end;">
                         <a href="${mainLaw.pdf}" class="border-button" target="_blank">
@@ -2148,10 +2141,12 @@
                             <img src="${law.image}" alt="Law Image">
                         </div>
                         <div class="cybercrime-title">
-                            <span>${law.title}</span>
+                            ${law.title}
                         </div>
-                        <div class="cybercrime-description">
-                            <p>${law.description}</p>
+                        <div class="cybercrime-details">
+                            <p><strong>Description:</strong> ${law.description}</p>
+                            <p><strong>Scenario:</strong> ${law.scenario}</p>
+                            <p><strong>Punishment:</strong> ${law.punishment}</p>
                         </div>
                         <div style="display: flex; gap: 10px; justify-content: flex-end;">
                             <a href="${law.pdf}" class="border-button" target="_blank">
@@ -2178,43 +2173,33 @@
             });
         }
 
-        
-        const defaultCards = [
-    {
-        title: "UN: Asian Scam Calls Now a Global Export",
-        image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
-        description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
-    },
-    {
-        title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
-        image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
-        description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
-    },
-    {
-        title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
-        image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
-        description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
-    }
-];
-
-        defaultCards.forEach(cardData => {
+        // Initial render of default cards (scenario-based)
+        const defaultLaws = laws.slice(0, 4); // Show first 4 laws as default
+        defaultLaws.forEach(law => {
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
                 <div class="image_container">
-                    <img src="${cardData.image}" alt="Cybercrime Image">
+                    <img src="${law.image}" alt="Law Image">
                 </div>
                 <div class="cybercrime-title">
-                    <span>${cardData.title}</span>
+                    ${law.title}
                 </div>
-                <div class="cybercrime-description">
-                    <p>Cybercrime</p>
-                    <p>${cardData.description}</p>
+                <div class="cybercrime-details">
+                    <p><strong>Description:</strong> ${law.description}</p>
+                    <p><strong>Scenario:</strong> ${law.scenario}</p>
+                    <p><strong>Punishment:</strong> ${law.punishment}</p>
                 </div>
-                <a href="News.html" class="border-button">
-                    <span class="button-text">Read More</span>
-                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                </a>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <a href="${law.pdf}" class="border-button" target="_blank">
+                        <span class="button-text">Read PDF</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                    </a>
+                    <button class="save-button" data-title="${law.title}">
+                        <span class="button-text">Save Law</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                    </button>
+                </div>
             `;
             cardsContainer.appendChild(card);
         });
@@ -2252,28 +2237,43 @@
                 }
             } else {
                 fingerprintIcon.classList.remove('scanning');
-                sectionTitle.textContent = 'TOP ARTICLES';
+                sectionTitle.textContent = 'TOP LAWS';
                 cardsContainer.innerHTML = '';
-                defaultCards.forEach(cardData => {
+                defaultLaws.forEach(law => {
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.innerHTML = `
                         <div class="image_container">
-                            <img src="${cardData.image}" alt="Cybercrime Image">
+                            <img src="${law.image}" alt="Law Image">
                         </div>
                         <div class="cybercrime-title">
-                            <span>${cardData.title}</span>
+                            ${law.title}
                         </div>
-                        <div class="cybercrime-description">
-                            <p>Cybercrime</p>
-                            <p>${cardData.description}</p>
+                        <div class="cybercrime-details">
+                            <p><strong>Description:</strong> ${law.description}</p>
+                            <p><strong>Scenario:</strong> ${law.scenario}</p>
+                            <p><strong>Punishment:</strong> ${law.punishment}</p>
                         </div>
-                        <a href="News.html" class="border-button">
-                            <span class="button-text">Read More</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                        </a>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <a href="${law.pdf}" class="border-button" target="_blank">
+                                <span class="button-text">Read PDF</span>
+                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                            </a>
+                            <button class="save-button" data-title="${law.title}">
+                                <span class="button-text">Save Law</span>
+                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                            </button>
+                        </div>
                     `;
                     cardsContainer.appendChild(card);
+                });
+
+                // Reattach event listeners for save buttons
+                document.querySelectorAll('.save-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const lawTitle = button.getAttribute('data-title');
+                        saveLaw(lawTitle);
+                    });
                 });
             }
         });
