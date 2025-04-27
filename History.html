@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime</title>
+    <title>Contra E-Crime - Search History</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -535,6 +535,101 @@
             top: 15px;
         }
 
+        /* Search History Styles */
+        .search-history {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .search-history h2 {
+            font-size: 24px;
+            color: #d32f2f;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-history h2 i {
+            color: #d32f2f;
+        }
+
+        .dark-theme .search-history h2,
+        .dark-theme .search-history h2 i {
+            color: #ffeb3b;
+        }
+
+        .search-history ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-history ul li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #d7b15c;
+            color: #333;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-history ul li:hover {
+            background-color: #c9a048;
+        }
+
+        .search-history ul li i.fa-history {
+            margin-right: 10px;
+            color: #d32f2f;
+        }
+
+        .search-history ul li button {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-history ul li button:hover {
+            background-color: #b71c1c;
+        }
+
+        .dark-theme .search-history ul li {
+            background-color: #4a4b4c;
+            color: #e0e0e0;
+        }
+
+        .dark-theme .search-history ul li:hover {
+            background-color: #5a5b5c;
+        }
+
+        .dark-theme .search-history ul li i.fa-history {
+            color: #ffeb3b;
+        }
+
+        .dark-theme .search-history ul li button {
+            background-color: #ffeb3b;
+            color: #333;
+        }
+
+        .dark-theme .search-history ul li button:hover {
+            background-color: #ffd700;
+        }
+
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -584,6 +679,20 @@
                 top: 45px;
                 width: 220px;
             }
+
+            .search-history h2 {
+                font-size: 22px;
+            }
+
+            .search-history ul li {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            .search-history ul li button {
+                width: 25px;
+                height: 25px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -632,6 +741,15 @@
             .customization-options {
                 top: 40px;
                 width: 200px;
+            }
+
+            .search-history h2 {
+                font-size: 20px;
+            }
+
+            .search-history ul li {
+                font-size: 13px;
+                padding: 7px 10px;
             }
         }
 
@@ -740,6 +858,21 @@
                 font-size: 10px;
                 padding: 3px;
             }
+
+            .search-history h2 {
+                font-size: 18px;
+            }
+
+            .search-history ul li {
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+
+            .search-history ul li button {
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -819,7 +952,7 @@
                 <div class="account-customization">
                     <div class="user-details"></div>
                     <div class="avatar-container">
-                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt=" Otobarsan avatar">
+                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User avatar">
                         <div class="avatar-loading" id="avatarLoading">
                             <div class="loader"></div>
                         </div>
@@ -846,6 +979,10 @@
                     </div>
                 </div>
             </header>
+            <section class="search-history">
+                <h2><i class="fas fa-history"></i>Recent Searches</h2>
+                <ul id="searchHistoryList"></ul>
+            </section>
         </main>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
@@ -890,7 +1027,9 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
+        const searchHistoryList = document.getElementById('searchHistoryList');
 
+        // Load user data, avatar settings, and search history
         auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
@@ -932,11 +1071,51 @@
                     console.error('Error loading user customization:', error);
                     alert('Failed to load user customization: ' + error.message);
                 });
+
+                // Load search history
+                const historyRef = database.ref(`users/${user.uid}/searchHistory`);
+                historyRef.orderByChild('timestamp').limitToLast(40).on('value', snapshot => {
+                    searchHistoryList.innerHTML = '';
+                    const searches = [];
+                    snapshot.forEach(child => {
+                        const search = child.val();
+                        search.key = child.key;
+                        searches.push(search);
+                    });
+
+                    // Reverse to show most recent first
+                    searches.reverse().forEach(search => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <span><i class="fas fa-history"></i>${search.scenario}</span>
+                            <button onclick="deleteSearch('${search.key}')"><i class="fas fa-trash"></i></button>
+                        `;
+                        searchHistoryList.appendChild(li);
+                    });
+                });
             } else {
                 localStorage.removeItem('currentUser');
                 window.location.href = 'index.html';
             }
         });
+
+        // Function to delete a search entry
+        function deleteSearch(searchKey) {
+            const user = auth.currentUser;
+            if (!user) {
+                alert('Please log in to delete searches.');
+                return;
+            }
+
+            const historyRef = database.ref(`users/${user.uid}/searchHistory/${searchKey}`);
+            historyRef.remove()
+                .then(() => {
+                    console.log('Search deleted successfully');
+                })
+                .catch(error => {
+                    alert('Error deleting search: ' + error.message);
+                });
+        }
 
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
