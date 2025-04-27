@@ -67,7 +67,6 @@
             border-bottom-color: transparent;
         }
 
-
         .avatar-loading {
             position: absolute;
             top: 0;
@@ -409,9 +408,9 @@
         }
 
         .dark-theme .customization-options .user-info {
-    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-    color: #e0e0e0; 
-}
+            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            color: #e0e0e0; 
+        }
 
         .dark-theme .customization-options .user-info p {
             color: #e0e0e0;
@@ -460,6 +459,55 @@
             border-radius: 50%;
             z-index: 0;
             color: #000000;
+        }
+
+        .dark-theme .fingerprint-icon {
+            background-image: url('https://static.thenounproject.com/png/1238269-200.png');
+            filter: brightness(0) invert(1);
+        }
+
+        .dark-theme .fingerprint-icon::before {
+            border-color: #ffffff;
+        }
+
+        .fingerprint-icon.scanning {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .fingerprint-icon.scanning::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, #00ff00, transparent);
+            top: 50%;
+            left: 0;
+            animation: scan 1.5s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateY(-50px);
+            }
+            100% {
+                transform: translateY(50px);
+            }
+        }
+
+        .dark-theme .fingerprint-icon.scanning::after {
+            background: linear-gradient(to right, transparent, #d7b15c, transparent);
         }
 
         .search-container {
@@ -844,129 +892,129 @@
             }
         }
 
-            @media (max-width: 480px) {
-        .container {
-            flex-direction: column;
-        }
+        @media (max-width: 480px) {
+            .container {
+                flex-direction: column;
+            }
 
-        .mobile-nav {
-            display: block;
-        }
+            .mobile-nav {
+                display: block;
+            }
 
-        .sidebar {
-            width: 100%;
-            height: auto;
-            position: fixed;
-            padding: 10px;
-            transform: translateX(-100%);
-            z-index: 999;
-            top: 60px;
-            height: calc(100vh - 60px);
-            overflow-y: auto;
-        }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                padding: 10px;
+                transform: translateX(-100%);
+                z-index: 999;
+                top: 60px;
+                height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
 
-        .sidebar.active {
-            transform: translateX(0);
-        }
+            .sidebar.active {
+                transform: translateX(0);
+            }
 
-        .sidebar h1 {
-            display: none;
-        }
+            .sidebar h1 {
+                display: none;
+            }
 
-        .sidebar ul li {
-            margin: 20px 0;
-        }
+            .sidebar ul li {
+                margin: 20px 0;
+            }
 
-        .sidebar ul li a {
-            font-size: 16px;
-        }
+            .sidebar ul li a {
+                font-size: 16px;
+            }
 
-        .dark-theme-label {
-            font-size: 16px;
-        }
+            .dark-theme-label {
+                font-size: 16px;
+            }
 
-        .content {
-            margin-left: 0;
-            padding: 80px 10px 10px;
-        }
+            .content {
+                margin-left: 0;
+                padding: 80px 10px 10px;
+            }
 
-        footer {
-            margin-left: 0;
-            padding: 10px 20px;
-            text-align: center;
-        }
+            footer {
+                margin-left: 0;
+                padding: 10px 20px;
+                text-align: center;
+            }
 
-        footer p {
-            font-size: 12px;
-        }
+            footer p {
+                font-size: 12px;
+            }
 
-        .footer-links a {
-            font-size: 12px;
-            margin: 0 8px;
-        }
+            .footer-links a {
+                font-size: 12px;
+                margin: 0 8px;
+            }
 
-        .account-customization {
-            top: 70px; 
-            right: 10px;
-            z-index: 998; 
-        }
+            .account-customization {
+                top: 70px; 
+                right: 10px;
+                z-index: 998; 
+            }
 
-        .avatar-container .profile-pic {
-            width: 30px;
-            height: 30px;
-            border-width: 1px;
-        }
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+                border-width: 1px;
+            }
 
-        .avatar-loading {
-            width: 30px;
-            height: 30px;
-        }
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
 
-        .avatar-loading .loader {
-            width: 15px;
-            height: 15px;
-            border-width: 2px;
-        }
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
 
-        .customization-options {
-            top: 40px;
-            width: 180px;
-        }
+            .customization-options {
+                top: 40px;
+                width: 180px;
+            }
 
-        .customization-options .user-info p {
-            font-size: 10px;
-        }
+            .customization-options .user-info p {
+                font-size: 10px;
+            }
 
-        .customization-options label,
-        .customization-options .file-input-label {
-            font-size: 10px;
-            padding: 3px 6px;
-        }
+            .customization-options label,
+            .customization-options .file-input-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
 
-        .customization-options select {
-            font-size: 10px;
-            padding: 3px;
-        }
+            .customization-options select {
+                font-size: 10px;
+                padding: 3px;
+            }
 
-        .fingerprint-icon {
-            width: 90px;
-            height: 90px;
-        }
+            .fingerprint-icon {
+                width: 90px;
+                height: 90px;
+            }
 
-        .fingerprint-icon::before {
-            width: 96px;
-            height: 93px;
-        }
+            .fingerprint-icon::before {
+                width: 96px;
+                height: 93px;
+            }
 
-        .search-container {
-            width: 90%;
-        }
+            .search-container {
+                width: 90%;
+            }
 
-        .card {
-            width: 100%;
-            max-width: 100%;
+            .card {
+                width: 100%;
+                max-width: 100%;
+            }
         }
-    }
     </style>
 </head>
 <body>
@@ -1073,7 +1121,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="fingerprint-icon"></div>
+                <div class="fingerprint-icon" id="fingerprintIcon"></div>
                 <div class="search-container">
                     <input type="text" class="search-input" id="searchInput" placeholder="Ask anything...">
                     <span class="search-icon"> 
@@ -1171,7 +1219,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script>
-        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
@@ -1182,12 +1229,13 @@
             databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
         };
 
-        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
 
-        // DOM Elements
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
+        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1203,10 +1251,8 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
-
-        // Cloudinary Configuration
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
-        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+        const searchInput = document.getElementById('searchInput');
+        const fingerprintIcon = document.getElementById('fingerprintIcon');
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -1518,6 +1564,12 @@
 
             input.addEventListener('input', () => {
                 const query = input.value.trim();
+
+                if (query) {
+                    fingerprintIcon.classList.add('scanning');
+                } else {
+                    fingerprintIcon.classList.remove('scanning');
+                }
 
                 if (!query) {
                     cards.forEach(card => {
