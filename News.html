@@ -47,6 +47,31 @@
             pointer-events: all;
         }
 
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #FFF;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .dark-theme .loader {
+            border-color: #d7b15c;
+            border-bottom-color: transparent;
+        }
+
         .fingerprint-loader {
             width: 150px;
             height: 150px;
@@ -1913,7 +1938,7 @@
                 e.preventDefault();
                 loaderOverlay.classList.add('active');
                 document.querySelector('.fingerprint-loader').style.display = 'flex';
-                document.querySelector('.simple-loader').style.display = 'none';
+                document.querySelector('.loader').style.display = 'none';
     
                 setTimeout(() => {
                     window.location.href = this.href;
@@ -1921,7 +1946,7 @@
             });
         });
     
-        // Event listener for sidebar links to show simple loader
+        // Event listener for sidebar links to show simple loader (yellow spinner)
         document.querySelectorAll('.sidebar a[href]:not(.read-more)').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
@@ -1930,7 +1955,7 @@
                     e.preventDefault();
                     loaderOverlay.classList.add('active');
                     document.querySelector('.fingerprint-loader').style.display = 'none';
-                    document.querySelector('.simple-loader').style.display = 'block';
+                    document.querySelector('.loader').style.display = 'block';
     
                     setTimeout(() => {
                         window.location.href = this.href;
