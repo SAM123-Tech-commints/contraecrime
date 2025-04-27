@@ -487,7 +487,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0, 255, 0, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.3) 0%, transparent 70%);
             opacity: 0;
             animation: ripple 2s infinite ease-in-out;
             z-index: -1;
@@ -524,7 +524,7 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: #ff4400;
+            background: #ff0000;
             border-radius: 50%;
             opacity: 0;
             z-index: 2;
@@ -540,8 +540,8 @@
         .fingerprint-icon .particle:nth-child(6) { top: 60%; left: 10%; animation-delay: 1.5s; }
 
         @keyframes glow {
-            0%, 100% { filter: brightness(1) drop-shadow(0 0 5px rgba(0, 255, 0, 0.5)); }
-            50% { filter: brightness(1.2) drop-shadow(0 0 15px rgba(0, 255, 0, 0.8)); }
+            0%, 100% { filter: brightness(1) drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)); }
+            50% { filter: brightness(1.2) drop-shadow(0 0 15px rgba(255, 0, 0, 0.8)); }
         }
 
         @keyframes rotate3D {
@@ -575,19 +575,19 @@
         }
 
         .dark-theme .fingerprint-icon.scanning::after {
-            background: radial-gradient(circle, rgba(215, 177, 92, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(204, 0, 0, 0.3) 0%, transparent 70%);
         }
 
         .dark-theme .fingerprint-icon .scan-line {
-            background: linear-gradient(to right, transparent, #d7b15c, transparent);
+            background: linear-gradient(to right, transparent, #cc0000, transparent);
         }
 
         .dark-theme .fingerprint-icon .scan-line:nth-child(2) {
-            background: linear-gradient(to bottom, transparent, #d7b15c, transparent);
+            background: linear-gradient(to bottom, transparent, #cc0000, transparent);
         }
 
         .dark-theme .fingerprint-icon .particle {
-            background: #d7b15c;
+            background: #cc0000;
         }
 
         .dark-theme .fingerprint-icon.scanning {
@@ -595,8 +595,8 @@
         }
 
         @keyframes glowDark {
-            0%, 100% { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(215, 177, 92, 0.5)); }
-            50% { filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(215, 177, 92, 0.8)); }
+            0%, 100% { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(204, 0, 0, 0.5)); }
+            50% { filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(204, 0, 0, 0.8)); }
         }
 
         .search-container {
