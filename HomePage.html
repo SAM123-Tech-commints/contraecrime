@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -156,11 +157,6 @@
 
         .dark-theme .sidebar ul li a:not(.dark-theme-label a):hover {
             color: #d7b15c;
-        }
-
-        .sidebar ul li a img {
-            width: 30px;
-            height: 30px;
         }
 
         .dark-theme-container {
@@ -709,21 +705,45 @@
         }
 
         .card {
+            --bg-card: #27272a;
+            --primary: #d9cd28;
+            --primary-800: #d7b15c;
+            --primary-shadow: #b7b90d;
+            --light: #d9d9d9;
+            --zinc-800: #18181b;
+            --bg-linear: linear-gradient(0deg, var(--primary) 50%, var(--light) 125%);
+
             position: relative;
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
             padding: 1rem;
             width: 350px;
-            background-color: #27272a;
+            background-color: var(--bg-card);
             border-radius: 1rem;
             justify-content: space-between;
-            color: #d9d9d9;
         }
 
         .card.main-law {
             width: 100%;
             max-width: 800px;
+            flex-direction: row;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .card.main-law .image_container {
+            width: 200px;
+            height: 200px;
+            flex-shrink: 0;
+        }
+
+        .card.main-law .content-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-left: 1rem;
         }
 
         .card.hidden {
@@ -741,7 +761,7 @@
             z-index: 5;
             width: 100%;
             height: 200px;
-            background-color: #d7b15c;
+            background-color: var(--primary-800);
             border-radius: 0.5rem;
         }
 
@@ -752,26 +772,29 @@
         }
 
         .cybercrime-title {
+            overflow: clip;
+            width: 100%;
             font-size: 1.2rem;
             font-weight: 600;
-            color: #d9d9d9;
+            color: var(--light);
             text-transform: capitalize;
-            margin-bottom: 0.5rem;
+            text-wrap: nowrap;
+            text-overflow: ellipsis;
         }
 
-        .cybercrime-details {
+        .card.main-law .cybercrime-title {
+            font-size: 1.5rem;
+        }
+
+        .cybercrime-description {
             font-size: 0.9rem;
-            color: #d9d9d9;
+            color: var(--light);
             line-height: 1.4;
             text-align: justify;
         }
 
-        .cybercrime-details p {
-            margin: 0.5rem 0;
-        }
-
-        .cybercrime-details strong {
-            color: #d7b15c;
+        .card.main-law .cybercrime-description {
+            font-size: 1rem;
         }
 
         .border-button {
@@ -781,6 +804,7 @@
             padding: 6px 5px;
             border-radius: 10px;
             border: 1px solid rgb(255, 255, 255);
+            overflow: hidden;
             background: transparent;
             color: rgb(255, 255, 255);
             cursor: pointer;
@@ -788,6 +812,11 @@
             margin-top: 1rem;
             transition: all 0.3s ease;
             text-decoration: none;
+        }
+
+        .border-button.save-law {
+            align-self: flex-start;
+            margin-top: 0;
         }
 
         .border-button .button-text {
@@ -814,44 +843,13 @@
             transform: translateY(0px);
         }
 
-        .save-button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 5px;
-            border-radius: 10px;
-            border: 1px solid rgb(255, 255, 255);
-            background: transparent;
-            color: rgb(255, 255, 255);
-            cursor: pointer;
-            align-self: flex-end;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
+        .alternatives-container {
+            margin-top: 40px;
         }
 
-        .save-button .button-text {
-            transform: translateX(17px);
-            font-size: 0.9em;
-            font-weight: 500;
-            transition-duration: 0.3s;
-            margin: 0;
-        }
-
-        .save-button .iconer {
-            transform: translateY(35px);
-            transition-duration: 0.3s;
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .save-button:hover .button-text {
-            transform: translateX(5px);
-        }
-
-        .save-button:hover .iconer {
-            transform: translateY(0px);
+        .alternatives-container h2 {
+            margin-bottom: 30px;
+            font-size: 24px;
         }
 
         footer {
@@ -915,12 +913,8 @@
         }
 
         .dark-theme .cybercrime-title,
-        .dark-theme .cybercrime-details {
+        .dark-theme .cybercrime-description {
             color: #ffffff;
-        }
-
-        .dark-theme .cybercrime-details strong {
-            color: #d7b15c;
         }
 
         .mobile-nav {
@@ -978,8 +972,16 @@
             }
 
             .card.main-law {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .card.main-law .image_container {
                 width: 100%;
-                max-width: 600px;
+            }
+
+            .card.main-law .content-container {
+                padding-left: 0;
             }
 
             .account-customization {
@@ -1046,11 +1048,6 @@
             .card {
                 width: 100%;
                 max-width: 350px;
-            }
-
-            .card.main-law {
-                width: 100%;
-                max-width: 500px;
             }
 
             .avatar-container .profile-pic {
@@ -1200,11 +1197,6 @@
                 width: 100%;
                 max-width: 100%;
             }
-
-            .card.main-law {
-                width: 100%;
-                max-width: 100%;
-            }
         }
     </style>
 </head>
@@ -1323,17 +1315,23 @@
                     </div>
                 </div>
                 <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Describe the scenario...">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Ask anything...">
                     <span class="search-icon">
                         <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </span>
                 </div>
-                <p>Find the right law for your scenario!</p>
+                <p>Find the right law for you!</p>
             </div>
             <section class="articles">
-                <h2 id="sectionTitle">TOP LAWS</h2>
-                <div class="cards-container" id="cardsContainer">
-                    <!-- Laws will be dynamically populated here -->
+                <h2>RECOMMENDED LAW</h2>
+                <div class="cards-container" id="mainLawContainer">
+                    <!-- Main law will be dynamically inserted here -->
+                </div>
+                <div class="alternatives-container">
+                    <h2>ALTERNATIVE LAWS SUGGESTED</h2>
+                    <div class="cards-container" id="alternativeLawsContainer">
+                        <!-- Alternative laws will be dynamically inserted here -->
+                    </div>
                 </div>
             </section>
         </main>
@@ -1347,7 +1345,6 @@
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -1368,913 +1365,744 @@
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+        const HUGGINGFACE_API_TOKEN = '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';
 
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
-        const sidebar = document.getElementById('sidebar');
-        const loaderOverlay = document.getElementById('loaderOverlay');
-        const profilePic = document.getElementById('profilePic');
-        const customizationMenu = document.getElementById('customizationMenu');
-        const avatarInput = document.getElementById('avatarInput');
-        const avatarLoading = document.getElementById('avatarLoading');
-        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
-        const borderColorPicker = document.getElementById('borderColorPicker');
-        const borderTypeSelect = document.getElementById('borderTypeSelect');
-        const usernameDisplay = document.getElementById('usernameDisplay');
-        const emailDisplay = document.getElementById('emailDisplay');
-        const createdAtDisplay = document.getElementById('createdAtDisplay');
-        const searchInput = document.getElementById('searchInput');
-        const fingerprintIcon = document.getElementById('fingerprintIcon');
-        const cardsContainer = document.getElementById('cardsContainer');
-        const sectionTitle = document.getElementById('sectionTitle');
-
-        // Updated laws data with scenario, description, and punishment
         const laws = [
-    {
-        title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
-        description: "Protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs.",
-        scenario: "A business using a copyrighted song in its marketing materials without permission from the copyright holder.",
-        punishment: "For the first offense: Imprisonment of 1 to 3 years and a fine of ₱50,000 to ₱150,000. For the second offense: Imprisonment of 3 years and 1 day to 6 years and a fine of ₱150,000 to ₱500,000. For third and subsequent offenses: Imprisonment of 6 years and 1 day to 9 years and a fine of ₱500,000 to ₱1,500,000.",
-        image: "https://newsline.ph/wp-content/uploads/2024/10/IPO.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4371"
-    },
-    {
-        title: "Terrorism Financing Prevention and Suppression Act (Republic Act No. 10168)",
-        description: "Criminalizes the financing of terrorism and related offenses, aiming to prevent and suppress such acts by freezing and forfeiting associated properties or funds.",
-        scenario: "A group of individuals using a legitimate business to funnel funds to terrorist organizations.",
-        punishment: "Imprisonment from reclusion temporal (maximum period) to reclusion perpetua and fines of ₱500,000 to ₱1,000,000. Administrative penalties include fines from ₱100,000 to ₱500,000.",
-        image: "https://api.phkule.org/storage/photos/mLOPcQRdubQOvWmnMTqX0mUMYlawV5eXGY4EqyEl.png",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/37689"
-    },
-    {
-        title: "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
-        description: "Defines and criminalizes money laundering, preventing the use of the financial system for laundering proceeds of illegal activities, with provisions for asset freezing and international cooperation.",
-        scenario: "A criminal deposits drug trafficking proceeds into a legitimate business account, using it to purchase real estate and assets.",
-        punishment: "Imprisonment of 7 to 14 years and a fine of at least ₱3,000,000 or up to twice the asset value for transacting illicit funds. Facilitation carries 4 to 7 years and a fine of ₱1,500,000 to ₱3,000,000.",
-        image: "https://bitpinas.com/wp-content/uploads/2017/11/anti-money-laundering-3.png",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/10/44124"
-    },
-    {
-        title: "National Bureau of Investigation Reorganization Act (Republic Act No. 10867)",
-        description: "Enhances the NBI's investigative capabilities by reorganizing and modernizing the agency, establishing a clear structure, and expanding its powers and functions.",
-        scenario: "The NBI Cybercrime Division raids a group operating a phishing scam using fake online banking portals.",
-        punishment: "Penalties depend on specific cybercrimes investigated, as outlined in relevant laws like the Cybercrime Prevention Act (e.g., imprisonment of 6 to 12 years and fines of ₱200,000 or more).",
-        image: "https://assistance.ph/wp-content/uploads/2023/12/nbi.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/67908"
-    },
-    {
-        title: "Mobile Number Portability Act (Republic Act No. 11202)",
-        description: "Allows mobile subscribers to switch telecommunications providers while retaining their numbers, promoting consumer welfare and choice.",
-        scenario: "A scammer ports a number associated with a legitimate business to perpetrate scams or identity theft.",
-        punishment: "Fines of ₱10,000 for initial delays, ₱40,000 to ₱1,000,000 for unjust refusal, and ₱400,000 to ₱1,000,000 with possible franchise revocation for repeated offenses.",
-        image: "https://static.tripzilla.ph/media/102907/conversions/mobile-number-portability-2-w768.webp",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/64176"
-    },
-    {
-        title: "Safe Spaces Act (Republic Act No. 11313)",
-        description: "Protects individuals from gender-based sexual harassment in public spaces, online, workplaces, and educational institutions, defining and penalizing various forms of harassment.",
-        scenario: "A person receives inappropriate, sexual messages in a group chat despite not expressing interest.",
-        punishment: "Verbal harassment: ₱1,000 fine and community service for first offense, up to 30 days imprisonment and ₱10,000 fine for third offense. Lewd acts: ₱10,000 fine for first offense, up to 6 months imprisonment and ₱20,000 fine for third offense.",
-        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirkYMjV2TfdB0Bow9Ogb4SrlNynpEH1ZLrRa6JImmu5cBs80cBzVCc9ctM1O69ly9pDLg08qk2185e2z9uNueciTzn0dnBsuK2BD1V4GWDHPwTdjBTSbgisQrJfbmHcLh6zB9s7zRSG7y_IZu-Cx7eQCr451ep8cN5hR2Ab6wmC5IRLYjeK23EiQ/w640-h360/Tara%20Kape!%20(SITE)%20(4).png",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/96805"
-    },
-    {
-        title: "New Central Bank Act (Republic Act No. 7653)",
-        description: "Establishes the Bangko Sentral ng Pilipinas as the central monetary authority, promoting price and financial stability with fiscal and administrative autonomy.",
-        scenario: "A bank director takes an undisclosed loan from their bank, violating Monetary Board regulations.",
-        punishment: "Imprisonment of 5 to 10 years for unauthorized note issuance. Fines up to ₱2,000,000 and imprisonment up to 5 years for false statements.",
-        image: "https://cdn.slidesharecdn.com/ss_thumbnails/bsp-banking-law-150818155013-lva1-app6891-thumbnail.jpg?width=560&fit=bounds",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/2027"
-    },
-    {
-        title: "Anti-Wire Tapping Act (Republic Act No. 4200)",
-        description: "Prohibits unauthorized wiretapping and violations of communication privacy, including intercepting or recording communications without consent.",
-        scenario: "A person secretly records a confidential business meeting using a dictaphone without participants' consent.",
-        punishment: "Imprisonment of 6 months to 6 years, with perpetual disqualification from public office for public officials and deportation for aliens.",
-        image: "https://philippinelawfirm.com/wp-content/uploads/2023/10/gen12-wiretapping_2018-12-02_21-43-46.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4442"
-    },
-    {
-        title: "Human Security Act of 2007 (Republic Act No. 9372)",
-        description: "Protects the Philippines from terrorism by defining terrorism crimes and providing prevention and suppression mechanisms.",
-        scenario: "A bomb threat at a public event leads to the arrest of a suspect under the law’s provisions.",
-        punishment: "Joining terrorist organizations: 12 years imprisonment. Assisting terrorists: 10 years and 1 day to 12 years. Conspiracy to commit terrorism: Life imprisonment without parole.",
-        image: "https://media.philstar.com/images/articles/marawi-clashes_2018-02-07_15-04-35.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/5340"
-    },
-    {
-        title: "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
-        description: "Aims to prevent, prohibit, and penalize terrorism, defining terrorism offenses and providing for detention, surveillance, and asset forfeiture.",
-        scenario: "Individuals release dangerous substances to intimidate the public, violating terrorism laws.",
-        punishment: "Terrorism and conspiracy to commit terrorism: Life imprisonment without parole and fines of ₱1,000,000 to ₱5,000,000. Financing terrorism: Reclusion temporal to reclusion perpetua and fines of ₱500,000 to ₱1,000,000.",
-        image: "https://files01.pna.gov.ph/category-list/2020/07/07/anti-terror-law.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/92597"
-    },
-    {
-        title: "Anti-Bullying Act of 2013 (Republic Act No. 10627)",
-        description: "Requires schools to implement anti-bullying policies, defining bullying as severe or repeated acts causing fear or disrupting education.",
-        scenario: "An elementary student is teased by classmates for poor penmanship, with peers disrupting their notebook during lessons.",
-        punishment: "School employees: Fines of ₱50,000 to ₱100,000 or imprisonment of 6 months to 1 year. Private schools: Suspension or revocation of permits. Public school personnel: Administrative disciplinary proceedings.",
-        image: "https://images.app.goo.gl/HPxWVGGP1gTZnfpc6",
-        pdf: "https://elegal.ph/site/wp-content/uploads/2015/07/RA-10627.pdf"
-    },
-    {
-        title: "Department of Information and Communications Technology Act (Republic Act No. 10844)",
-        description: "Establishes the DICT to develop and implement ICT policies, ensuring consumer protection, data privacy, and sector growth.",
-        scenario: "A local government unit in Fairview, Quezon City, faces phishing attacks targeting employees, risking public safety and data confidentiality.",
-        punishment: "Unauthorized data processing: Imprisonment of 3 to 6 years and fines of ₱500,000 to ₱4,000,000. Cybercrime penalties vary by offense.",
-        image: "https://images.app.goo.gl/63vCtVZjWfn9ENr28",
-        pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/RA10844_DICT.pdf"
-    },
-    {
-        title: "Strategic Trade Management Act (Republic Act No. 10697)",
-        description: "Prevents the proliferation of weapons of mass destruction by managing trade in strategic goods and related services.",
-        scenario: "A company exports a dual-use computer chip without proper authorization, risking military misuse.",
-        punishment: "Fines up to ₱250,000 or twice the value of the strategic good. Imprisonment from 6 months to 12 years. Suspension or cancellation of business registration.",
-        image: "https://images.app.goo.gl/LzxspNHJEgFpxohn7",
-        pdf: "https://233773342789-lic.s3.eu-central-1.amazonaws.com/attachments/legislation/philippines/Implementing%20Rules%20of%20the%20Strategic%20Trade%20Management%20Act_25.09.2018.pdf"
-    },
-    {
-        title: "Energy Virtual One-Stop Shop Act (Republic Act No. 11234)",
-        description: "Establishes a web-based system for filing and monitoring energy-related applications and permits.",
-        scenario: "A company uses EVOSS to submit documents and track progress for a solar power plant application.",
-        punishment: "A fine of ₱100,000 for every day of delay.",
-        image: "https://images.app.goo.gl/K1QNfksaXf2FFqPx7",
-        pdf: "https://evoss.ph/Home/Download/135253"
-    },
-    {
-        title: "Consumer Act of the Philippines (Republic Act No. 7394)",
-        description: "Protects consumers from health hazards, deceptive practices, and unfair sales, providing education and redress mechanisms.",
-        scenario: "A consumer purchases a defective product with a 'No Return, No Exchange' policy, entitled to repair, replacement, or refund under the Act.",
-        punishment: "Deceptive sales: Fines of ₱500 to ₱10,000 or imprisonment of 5 months to 1 year. Weights and measures violations: Fines of ₱50,000 to ₱300,000 or imprisonment of 1 to 5 years.",
-        image: "https://images.app.goo.gl/1FYipzHQygJ1DYU19",
-        pdf: "https://aseanconsumer.org/file/pdf_file/Republic%20Act%20No.%207394%20-%20The%20Consumer%20Act%20of%201992.pdf"
-    },
-    {
-        title: "Optical Media Act of 2003 (Republic Act No. 9239)",
-        description: "Protects intellectual property rights by regulating the mastering, manufacture, and distribution of optical media, preventing piracy.",
-        scenario: "An unregistered company illegally manufactures and distributes pirated DVDs without an OMB license.",
-        punishment: "Imprisonment of 3 to 6 years and fines of ₱500,000 to ₱1,500,000.",
-        image: "https://images.app.goo.gl/qpGKLPRPxvqbE3zE8",
-        pdf: "https://www.pntr.gov.ph/wp-content/uploads/2021/04/RA-9239.pdf"
-    },
-    {
-        title: "National Cybersecurity Plan Framework (Executive Order No. 189, 2015)",
-        description: "Addresses cyber threats by establishing a framework for safeguarding government and commercial information systems.",
-        scenario: "The NCIAC assesses a cyberattack’s impact on critical systems, identifying the source and coordinating responses.",
-        punishment: "Hacking: Imprisonment of 6 to 12 years and fines up to ₱500,000. Identity theft: Imprisonment up to 12 years and fines of ₱50,000 to ₱500,000.",
-        image: "https://images.app.goo.gl/8bCWhFxQJzQTp3Jh6",
-        pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/NCSP-2023-2028-FINAL-DICT.pdf"
-    },
-    {
-        title: "Strengthening DICT’s Cybersecurity Role (Executive Order No. 82, 2022)",
-        description: "Bolsters digital defenses and fosters cybersecurity awareness and responsibility across the Philippines.",
-        scenario: "A government agency conducts cybersecurity training to protect against phishing attacks targeting employees.",
-        punishment: "Penalties align with the Cybercrime Prevention Act, including imprisonment of 6 to 12 years and fines of ₱200,000 or more for cybercrimes.",
-        image: "https://images.app.goo.gl/R8JVMBaQbYLUWYED6",
-        pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/NCSP-2023-2028-FINAL-DICT.pdf"
-    },
-    {
-        title: "National Cybersecurity Inter-Agency Committee (Executive Order No. 95, 2019)",
-        description: "Coordinates government efforts to safeguard ICT infrastructure, harmonizing cybersecurity initiatives.",
-        scenario: "The committee strengthens defenses during phishing attacks targeting government email systems.",
-        punishment: "Cybercrime penalties include imprisonment of 6 to 12 years and fines of ₱200,000 or more, as per the Cybercrime Prevention Act.",
-        image: "https://cdn.opengovasia.com/wp-content/uploads/2023/05/PH_2_1270-39.jpg",
-        pdf: "https://lawphil.net/executive/execord/eo2019/pdf/eo_95_2019.pdf"
-    },
-    {
-        title: "Guidelines on IT Risk Management (BSP Circular No. 808, 2013)",
-        description: "Strengthens risk management and consumer protection in banks and BSP-supervised institutions through IT security measures.",
-        scenario: "A bank implements multi-factor authentication and updates firewalls to protect customer data from cyber threats.",
-        punishment: "Monetary fines, operational restrictions, or contract invalidation for non-compliance.",
-        image: "https://www.gmanews.tv/v3/webpics/v3/2015/04/2015_04_17_16_53_36_0.jpg",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2013/c808.pdf"
-    },
-    {
-        title: "Enhanced Information Security Management (BSP Circular No. 982, 2017)",
-        description: "Requires BSFIs to establish robust technology risk management, governance, and cybersecurity controls.",
-        scenario: "A bank appoints an Information Security Officer and conducts regular risk assessments to secure online transactions.",
-        punishment: "Fines, license suspension/revocation, or actions against responsible officers for non-compliance.",
-        image: "https://www.securitymagazine.com/ext/resources/Issues/2019/September/SEC0919-Mobile-Feat-slide1_900px.jpg?1567784812",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2017/c982.pdf"
-    },
-    {
-        title: "Technology and Cyber-Risk Reporting (BSP Circular No. 1019, 2018)",
-        description: "Tightens reporting of technology and cyber-risk incidents to enhance BSP’s cyber-threat surveillance and protect payment systems.",
-        scenario: "A financial institution reports cyber incidents to senior management for timely response and decision-making.",
-        punishment: "Fines per MORB/MORNBFI, suspension of product offerings, license revocation, or settlement authority suspension.",
-        image: "https://www.bworldonline.com/wp-content/uploads/2024/10/cybersecurity.jpg",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2018/c1019.pdf"
-    },
-    {
-        title: "Guidelines on Operational Risk Management (BSP Circular No. 900, 2015)",
-        description: "Promotes effective risk management systems in BSFIs to address operational risks from processes, people, systems, or external events.",
-        scenario: "A bank employee accidentally emails confidential client data to the wrong address, highlighting the need for robust data handling.",
-        punishment: "Suspension of rediscounting, dividend declaration, branching privileges, or other non-monetary sanctions.",
-        image: "https://www.riskpro.in/sites/default/files/styles/large/public/Operational%20Risk%20Management_1.jpg?itok=N4UoME9w",
-        pdf: "https://rbap.org/wp-content/uploads/2016/01/c900-Guidelines-on-Operational-Risk-Management.pdf"
-    },
-    {
-        title: "Guidelines on Business Continuity Management (BSP Circular No. 951, 2017)",
-        description: "Emphasizes robust business continuity management to ensure critical operations during disruptions, with clear roles for management.",
-        scenario: "A company develops a disaster recovery plan to maintain operations during a natural disaster.",
-        punishment: "Fines or operational restrictions for non-compliance, as determined by the BSP.",
-        image: "https://www.asisonline.org/globalassets/standards-and-guidelines/bcm-2021/business-continuity-banner-1536px.jpg",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2017/c951.pdf"
-    },
-    {
-        title: "Guidelines on Outsourcing Risk Management (BSP Circular No. 1039, 2019)",
-        description: "Outlines requirements for pawnshops and MSBs, including licensing and electronic reporting for remittance and virtual currency transactions.",
-        scenario: "A bank assesses an external provider’s security protocols before outsourcing customer support operations.",
-        punishment: "Monetary fines for reporting infractions or license revocation for severe non-compliance.",
-        image: "https://resourcecenter.infinit-o.com/wp-content/uploads/2020/01/Infinit-O-Finance-Accounting-Outsourcing-Risk-Management.png",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2019/c1039.pdf"
-    },
-    {
-        title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
-        description: "Mandates adoption of international security standards to protect Critical Information Infrastructure under the National Cybersecurity Plan.",
-        scenario: "A government agency adopts standardized security protocols and conducts risk assessments to protect ICT systems.",
-        punishment: "Penalties align with the Cybercrime Prevention Act, including imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
-        image: "https://trendsresearch.org/wp-content/uploads/2025/01/Cybersecurity-in-a-World-increasingly-in-Crisis-V1-copy.jpg",
-        pdf: "https://www.scribd.com/document/668954225/Memorandum-Circular-005"
-    },
-    {
-        title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
-        description: "Promotes cybersecurity awareness and security measures to protect individuals, including campaigns and adoption of cybersecurity practices.",
-        scenario: "A government agency launches a campaign teaching citizens to avoid phishing scams and report cyber incidents.",
-        punishment: "Penalties align with the Cybercrime Prevention Act, including imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQ4GS9KMQg29NRva5dGI4sBS_bJBZu_YZkA&s",
-        pdf: "https://law.upd.edu.ph/wp-content/uploads/2020/05/DICT-DC-007-2020.pdf"
-    },
-    {
-        title: "Cloud First Policy (DICT Department Circular No. 2017-002)",
-        description: "Mandates government agencies to prioritize cloud computing solutions for IT infrastructure while adhering to security standards.",
-        scenario: "The DSWD implements a cloud-based system for managing social welfare programs.",
-        punishment: "Administrative sanctions for non-compliance, as determined by DICT regulations.",
-        image: "https://elegal.ph/site/wp-content/uploads/2017/02/cloud.jpg",
-        pdf: "https://www.jetro.go.jp/ext_images/jetro/activities/support/aseanjapan/report/3-6.pdf"
-    },
-    {
-        title: "Guidelines on Government Email System (DICT Memorandum Circular No. 003, 2020)",
-        description: "Establishes standards for secure and efficient government email systems to enhance communication and data protection.",
-        scenario: "A government agency implements encrypted email systems to protect sensitive communications from cyber threats.",
-        punishment: "Penalties align with the Data Privacy Act, including imprisonment of 3 to 6 years and fines of ₱500,000 to ₱4,000,000 for unauthorized data processing.",
-        image: "https://elegal.ph/site/wp-content/uploads/2017/02/cloud.jpg",
-        pdf: "https://dict.gov.ph/wp-content/uploads/2020/07/MC-003-2020.pdf"
-    },
-    {
-        title: "Value-Added Services Regulation (NTC Memorandum Circular No. 02-05-2008)",
-        description: "Regulates enhanced telecommunications services like messaging and VoIP, outlining registration and compliance for VAS providers.",
-        scenario: "A VoIP provider offers internet-based voice calls without NTC registration, violating VAS regulations.",
-        punishment: "Revocation or cancellation of VAS provider registration for violations.",
-        image: "https://images.app.goo.gl/pwhoMYMUUE6MUc5G9",
-        pdf: "https://region7.ntc.gov.ph/wp-content/uploads/2024/01/MC_02-05-2008_VAS.pdf"
-    },
-    {
-        title: "Broadcast Messaging Regulation (NTC Memorandum Circular No. 03-03-2005-A)",
-        description: "Sets guidelines for sending broadcast messages, requiring explicit opt-in consent from subscribers.",
-        scenario: "A bank sends promotional texts without customer consent, violating opt-in requirements.",
-        punishment: "Fines for less than 50 violations, blacklisting, and permit revocation for over 50 violations per quarter.",
-        image: "https://images.app.goo.gl/Fbc63YjxjkrFci5Y6",
-        pdf: "https://region7.ntc.gov.ph/wp-content/uploads/2024/01/MC_03-03-2005.pdf"
-    },
-    {
-        title: "Guidelines on Prepaid Load Expiry (NTC Memorandum Circular No. 01-04-2019)",
-        description: "Mandates a one-year expiration period for all prepaid loads, covering telecommunications and ICT providers.",
-        scenario: "A user’s ₱100 prepaid load purchased on April 1, 2025, expires on April 1, 2026, per NTC guidelines.",
-        punishment: "Penalties per the Public Telecommunications Policy Act and DICT Act, including fines and sanctions.",
-        image: "https://images.app.goo.gl/hHoAc5rnDu44BBZ87",
-        pdf: "https://region7.ntc.gov.ph/wp-content/uploads/2024/01/MC_03-07-2009.pdf"
-    },
-    {
-        title: "Social Media and AI Election Guidelines (COMELEC Resolution No. 11064, 2024)",
-        description: "Mandates registration of digital campaign platforms by December 13, 2024, ensuring transparency in AI usage and monitoring disinformation.",
-        scenario: "A candidate uses AI-generated content without disclosing its use, violating transparency requirements.",
-        punishment: "Penalties for coordinated inauthentic behavior, deep fakes, and unregistered accounts, as per COMELEC regulations.",
-        image: "https://images.app.goo.gl/YTCcpHT2MeTVFfUWA",
-        pdf: "https://comelec.gov.ph/php-tpls-attachments/2025NLE/Resolutions/com_res_11064.pdf"
-    },
-    {
-        title: "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
-        description: "Regulates pharmaceutical distribution and storage, including online sales, to ensure quality and compliance with international standards.",
-        scenario: "An online pharmacy sells substandard drugs without proper storage, violating FDA regulations.",
-        punishment: "Fines, license suspension, or other sanctions per RA 9711 and related regulations.",
-        image: "https://images.app.goo.gl/9jZGSGUy5a1SYH118",
-        pdf: "https://www.fda.gov.ph/wp-content/uploads/2021/04/Administrative-Order-No.-2013-0027.pdf"
-    },
-    {
-        title: "E-Commerce Protection Guidelines (DTI Administrative Order No. 22-01)",
-        description: "Ensures consumer protection in e-commerce by mandating fair practices and transparency for online businesses.",
-        scenario: "A consumer receives a counterfeit product from an online seller who refuses a refund, violating transparency rules.",
-        punishment: "Fines, permit revocation, or legal action for violations, as per the Joint Administrative Order.",
-        image: "https://images.app.goo.gl/FPThS1qkqmuRPyDv5",
-        pdf: "https://www.aseanconsumer.org/file/post_image/JAO%20NO.%2022-01.Guidelines%20on%20Online%20Businesses.pdf"
-    },
-    {
-        title: "Guidelines on Cybercrime Prosecution (DOJ Circular No. 027, 2018)",
-        description: "Focuses on prosecuting cybercrimes affecting data confidentiality, integrity, and availability, including illegal access and data interference.",
-        scenario: "A suspect charged with illegal drug sales under RA 9165 faces prosecution without plea bargaining, per DOJ guidelines.",
-        punishment: "Imprisonment from prision correccional (6 months and 1 day to 6 years) to prision mayor (6 years and 1 day to 12 years), depending on the offense.",
-        image: "https://images.app.goo.gl/2Quowehw8U4pqCPH8",
-        pdf: "https://www.doj.gov.ph/files/2018/DC/DC027-2018JUN%20Amended%20Guidelines%20for%20Plea%20Bargaining%20dtd%2026%20Jun%202018(1).pdf"
-    },
-    {
-        title: "PNP Anti-Cybercrime Group Operational Guidelines (PNP Circular No. 2019-001)",
-        description: "Outlines operational procedures for the PNP Anti-Cybercrime Group to investigate and address cybercrimes.",
-        scenario: "A social media page spreads false information causing public panic, investigated by the PNP ACG.",
-        punishment: "Cybercrime penalties include imprisonment of prision mayor (6 years and 1 day to 12 years) and fines, per relevant laws.",
-        image: "https://images.app.goo.gl/Nt5MrE1TZcHvjAi79",
-        pdf: "https://napolcom.gov.ph/pdf/MC2019-001.pdf"
-    },
-    {
-        title: "Rules on Cybercrime Warrants (Supreme Court A.M. No. 17-11-03-SC)",
-        description: "Outlines procedures for obtaining and executing cybercrime warrants, including search, seizure, and data disclosure.",
-        scenario: "Law enforcement uses a Warrant to Disclose Computer Data to obtain a fraud suspect’s online activity from an ISP.",
-        punishment: "Non-compliance or obstruction penalized under the Cybercrime Prevention Act, with imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
-        image: "https://elegal.ph/site/wp-content/uploads/2018/07/security.jpg",
-        pdf: "https://wipolex-resources-eu-central-1-358922420655.s3.amazonaws.com/edocs/lexdocs/laws/en/ph/ph208en_1.pdf"
-    },
-    {
-        title: "Rules on Electronic Evidence (Supreme Court A.M. No. 01-7-01-SC)",
-        description: "Establishes the admissibility of electronic signatures and documents in legal proceedings, requiring proper authentication.",
-        scenario: "An electronically signed contract in an email is admitted as evidence after verifying the signer’s control and signature integrity.",
-        punishment: "Exclusion of unauthenticated evidence. False information may lead to perjury or fraud charges.",
-        image: "https://s3.ap-south-1.amazonaws.com/novojuris/image/1603091279991_it__1_.jpg",
-        pdf: "https://www.doj.gov.ph/files/rules%20on%20electronic%20evidence.pdf"
-    },
-    {
-        title: "Revised Rules of Civil Procedure (Supreme Court A.M. No. 19-08-06-SC)",
-        description: "Outlines procedures for PCC administrative searches and inspections to investigate violations of the Philippine Competition Act.",
-        scenario: "A dispute over property or debt within a first-level court’s jurisdiction follows revised procedural rules.",
-        punishment: "Fines, compliance orders, or payment of attorney’s fees and expenses for procedural violations.",
-        image: "https://cdn.sanity.io/images/anl9abaw/production/cca237f4771a8e6802e1f4bf490ca2b827268c84-768x512.png?w=3840&q=75&fit=clip&auto=format",
-        pdf: "https://lpr.adb.org/sites/default/files/2024-07/philippines-supreme-court-19-08-06.pdf"
-    },
-    {
-        title: "Rule on Cybercrime Investigation (Supreme Court A.M. No. 17-11-03-SC)",
-        description: "Outlines procedures for obtaining and executing cybercrime warrants, including search, seizure, and data disclosure (same as Rules on Cybercrime Warrants).",
-        scenario: "Police secure a warrant to intercept data from a suspect’s device in a cyber fraud investigation.",
-        punishment: "Non-compliance penalized under the Cybercrime Prevention Act, with imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
-        image: "https://elegal.ph/site/wp-content/uploads/2018/07/security.jpg",
-        pdf: "https://wipolex-resources-eu-central-1-358922420655.s3.amazonaws.com/edocs/lexdocs/laws/en/ph/ph208en_1.pdf"
-    },
-    {
-        title: "Guidelines on Consumer Protection in E-Commerce (DTI Department Order No. 18-05)",
-        description: "Ensures consumer protection in e-commerce through rules on transparency, fair practices, and post-purchase services.",
-        scenario: "A consumer receives a product significantly different from its online description, violating transparency requirements.",
-        punishment: "Fines, permit revocation, or legal action for deceptive practices. Criminal charges possible for fraud.",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIiIwRhqssOUqs0rWBTlk3HZBcUKp29_Dxig&s",
-        pdf: "https://dtiwebfiles.s3-ap-southeast-1.amazonaws.com/Laws+and+Policies/DTi+Compendium+laws/Private+Emission+Testing+Centers/Department+Administative+Order+18-05.pdf"
-    }
-];
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentUser = {
-                    username: user.displayName || 'User',
-                    email: user.email,
-                    createdAt: user.metadata.creationTime
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            {
+                title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
+                description: "Protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs.",
+                scenario: "A business using a copyrighted song in its marketing materials without permission from the copyright holder.",
+                punishment: "For the first offense: Imprisonment of 1 to 3 years and a fine of ₱50,000 to ₱150,000. For the second offense: Imprisonment of 3 years and 1 day to 6 years and a fine of ₱150,000 to ₱500,000. For third and subsequent offenses: Imprisonment of 6 years and 1 day to 9 years and a fine of ₱500,000 to ₱1,500,000.",
+                image: "https://newsline.ph/wp-content/uploads/2024/10/IPO.jpg",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4371"
+            },
+            {
+                title: "Terrorism Financing Prevention and Suppression Act (Republic Act No. 10168)",
+                description: "Criminalizes the financing of terrorism and related offenses, aiming to prevent and suppress such acts by freezing and forfeiting associated properties or funds.",
+                scenario: "A group of individuals using a legitimate business to funnel funds to terrorist organizations.",
+                punishment: "Imprisonment from reclusion temporal (maximum period) to reclusion perpetua and fines of ₱500,000 to ₱1,000,000. Administrative penalties include fines from ₱100,000 to ₱500,000.",
+                image: "https://api.phkule.org/storage/photos/mLOPcQRdubQOvWmnMTqX0mUMYlawV5eXGY4EqyEl.png",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/37689"
+            },
+            {
+                title: "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
+                description: "Defines and criminalizes money laundering, preventing the use of the financial system for laundering proceeds of illegal activities, with provisions for asset freezing and international cooperation.",
+                scenario: "A criminal deposits drug trafficking proceeds into a legitimate business account, using it to purchase real estate and assets.",
+                punishment: "Imprisonment of 7 to 14 years and a fine of at least ₱3,000,000 or up to twice the asset value for transacting illicit funds. Facilitation carries 4 to 7 years and a fine of ₱1,500,000 to ₱3,000,000.",
+                image: "https://bitpinas.com/wp-content/uploads/2017/11/anti-money-laundering-3.png",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/10/44124"
+            },
+            {
+                title: "National Bureau of Investigation Reorganization Act (Republic Act No. 10867)",
+                description: "Enhances the NBI's investigative capabilities by reorganizing and modernizing the agency, establishing a clear structure, and expanding its powers and functions.",
+                scenario: "The NBI Cybercrime Division raids a group operating a phishing scam using fake online banking portals.",
+                punishment: "Penalties depend on specific cybercrimes investigated, as outlined in relevant laws like the Cybercrime Prevention Act (e.g., imprisonment of 6 to 12 years and fines of ₱200,000 or more).",
+                image: "https://assistance.ph/wp-content/uploads/2023/12/nbi.jpg",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/67908"
+            },
+            {
+                title: "Mobile Number Portability Act (Republic Act No. 11202)",
+                description: "Allows mobile subscribers to switch telecommunications providers while retaining their numbers, promoting consumer welfare and choice.",
+                scenario: "A scammer ports a number associated with a legitimate business to perpetrate scams or identity theft.",
+                punishment: "Fines of ₱10,000 for initial delays, ₱40,000 to ₱1,000,000 for unjust refusal, and ₱400,000 to ₱1,000,000 with possible franchise revocation for repeated offenses.",
+                image: "https://static.tripzilla.ph/media/102907/conversions/mobile-number-portability-2-w768.webp",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/64176"
+            },
+            {
+                title: "Safe Spaces Act (Republic Act No. 11313)",
+                description: "Protects individuals from gender-based sexual harassment in public spaces, online, workplaces, and educational institutions, defining and penalizing various forms of harassment.",
+                scenario: "A person receives inappropriate, sexual messages in a group chat despite not expressing interest.",
+                punishment: "Verbal harassment: ₱1,000 fine and community service for first offense, up to 30 days imprisonment and ₱10,000 fine for third offense. Lewd acts: ₱10,000 fine for first offense, up to 6 months imprisonment and ₱20,000 fine for third offense.",
+                image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirkYMjV2TfdB0Bow9Ogb4SrlNynpEH1ZLrRa6JImmu5cBs80cBzVCc9ctM1O69ly9pDLg08qk2185e2z9uNueciTzn0dnBsuK2BD1V4GWDHPwTdjBTSbgisQrJfbmHcLh6zB9s7zRSG7y_IZu-Cx7eQCr451ep8cN5hR2Ab6wmC5IRLYjeK23EiQ/w640-h360/Tara%20Kape!%20(SITE)%20(4).png",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/96805"
+            },
+            {
+                title: "New Central Bank Act (Republic Act No. 7653)",
+                description: "Establishes the Bangko Sentral ng Pilipinas as the central monetary authority, promoting price and financial stability with fiscal and administrative autonomy.",
+                scenario: "A bank director takes an undisclosed loan from their bank, violating Monetary Board regulations.",
+                punishment: "Imprisonment of 5 to 10 years for unauthorized note issuance. Fines up to ₱2,000,000 and imprisonment up to 5 years for false statements.",
+                image: "https://cdn.slidesharecdn.com/ss_thumbnails/bsp-banking-law-150818155013-lva1-app6891-thumbnail.jpg?width=560&fit=bounds",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/2027"
+            },
+            {
+                title: "Anti-Wire Tapping Act (Republic Act No. 4200)",
+                description: "Prohibits unauthorized wiretapping and violations of communication privacy, including intercepting or recording communications without consent.",
+                scenario: "A person secretly records a confidential business meeting using a dictaphone without participants' consent.",
+                punishment: "Imprisonment of 6 months to 6 years, with perpetual disqualification from public office for public officials and deportation for aliens.",
+                image: "https://philippinelawfirm.com/wp-content/uploads/2023/10/gen12-wiretapping_2018-12-02_21-43-46.jpg",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4442"
+            },
+            {
+                title: "Human Security Act of 2007 (Republic Act No. 9372)",
+                description: "Protects the Philippines from terrorism by defining terrorism crimes and providing prevention and suppression mechanisms.",
+                scenario: "A bomb threat at a public event leads to the arrest of a suspect under the law’s provisions.",
+                punishment: "Joining terrorist organizations: 12 years imprisonment. Assisting terrorists: 10 years and 1 day to 12 years. Conspiracy to commit terrorism: Life imprisonment without parole.",
+                image: "https://media.philstar.com/images/articles/marawi-clashes_2018-02-07_15-04-35.jpg",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/5340"
+            },
+            {
+                title: "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
+                description: "Aims to prevent, prohibit, and penalize terrorism, defining terrorism offenses and providing for detention, surveillance, and asset forfeiture.",
+                scenario: "Individuals release dangerous substances to intimidate the public, violating terrorism laws.",
+                punishment: "Terrorism and conspiracy to commit terrorism: Life imprisonment without parole and fines of ₱1,000,000 to ₱5,000,000. Financing terrorism: Reclusion temporal to reclusion perpetua and fines of ₱500,000 to ₱1,000,000.",
+                image: "https://files01.pna.gov.ph/category-list/2020/07/07/anti-terror-law.jpg",
+                pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/92597"
+            },
+            {
+                title: "Anti-Bullying Act of 2013 (Republic Act No. 10627)",
+                description: "Requires schools to implement anti-bullying policies, defining bullying as severe or repeated acts causing fear or disrupting education.",
+                scenario: "An elementary student is teased by classmates for poor penmanship, with peers disrupting their notebook during lessons.",
+                punishment: "School employees: Fines of ₱50,000 to ₱100,000 or imprisonment of 6 months to 1 year. Private schools: Suspension or revocation of permits. Public school personnel: Administrative disciplinary proceedings.",
+                image: "https://images.app.goo.gl/HPxWVGGP1gTZnfpc6",
+                pdf: "https://elegal.ph/site/wp-content/uploads/2015/07/RA-10627.pdf"
+            },
+            {
+                title: "Department of Information and Communications Technology Act (Republic Act No. 10844)",
+                description: "Establishes the DICT to develop and implement ICT policies, ensuring consumer protection, data privacy, and sector growth.",
+                scenario: "A local government unit in Fairview, Quezon City, faces phishing attacks targeting employees, risking public safety and data confidentiality.",
+                punishment: "Unauthorized data processing: Imprisonment of 3 to 6 years and fines of ₱500,000 to ₱4,000,000. Cybercrime penalties vary by offense.",
+                image: "https://images.app.goo.gl/63vCtVZjWfn9ENr28",
+                pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/RA10844_DICT.pdf"
+            },
+            {
+                title: "Strategic Trade Management Act (Republic Act No. 10697)",
+                description: "Prevents the proliferation of weapons of mass destruction by managing trade in strategic goods and related services.",
+                scenario: "A company exports a dual-use computer chip without proper authorization, risking military misuse.",
+                punishment: "Fines up to ₱250,000 or twice the value of the strategic good. Imprisonment from 6 months to 12 years. Suspension or cancellation of business registration.",
+                image: "https://images.app.goo.gl/LzxspNHJEgFpxohn7",
+                pdf: "https://233773342789-lic.s3.eu-central-1.amazonaws.com/attachments/legislation/philippines/Implementing%20Rules%20of%20the%20Strategic%20Trade%20Management%20Act_25.09.2018.pdf"
+            },
+            {
+                title: "Energy Virtual One-Stop Shop Act (Republic Act No. 11234)",
+                description: "Establishes a web-based system for filing and monitoring energy-related applications and permits.",
+                scenario: "A company uses EVOSS to submit documents and track progress for a solar power plant application.",
+                punishment: "A fine of ₱100,000 for every day of delay.",
+                image: "https://images.app.goo.gl/K1QNfksaXf2FFqPx7",
+                pdf: "https://evoss.ph/Home/Download/135253"
+            },
+            {
+                title: "Consumer Act of the Philippines (Republic Act No. 7394)",
+                description: "Protects consumers from health hazards, deceptive practices, and unfair sales, providing education and redress mechanisms.",
+                scenario: "A consumer purchases a defective product with a 'No Return, No Exchange' policy, entitled to repair, replacement, or refund under the Act.",
+                punishment: "Deceptive sales: Fines of ₱500 to ₱10,000 or imprisonment of 5 months to 1 year. Weights and measures violations: Fines of ₱50,000 to ₱300,000 or imprisonment of 1 to 5 years.",
+                image: "https://images.app.goo.gl/1FYipzHQygJ1DYU19",
+                pdf: "https://aseanconsumer.org/file/pdf_file/Republic%20Act%20No.%207394%20-%20The%20Consumer%20Act%20of%201992.pdf"
+            },
+            {
+                title: "Optical Media Act of 2003 (Republic Act No. 9239)",
+                description: "Protects intellectual property rights by regulating the mastering, manufacture, and distribution of optical media, preventing piracy.",
+                scenario: "An unregistered company illegally manufactures and distributes pirated DVDs without an OMB license.",
+                punishment: "Imprisonment of 3 to 6 years and fines of ₱500,000 to ₱1,500,000.",
+                image: "https://images.app.goo.gl/qpGKLPRPxvqbE3zE8",
+                pdf: "https://www.pntr.gov.ph/wp-content/uploads/2021/04/RA-9239.pdf"
+            },
+            {
+                title: "National Cybersecurity Plan Framework (Executive Order No. 189, 2015)",
+                description: "Addresses cyber threats by establishing a framework for safeguarding government and commercial information systems.",
+                scenario: "The NCIAC assesses a cyberattack’s impact on critical systems, identifying the source and coordinating responses.",
+                punishment: "Hacking: Imprisonment of 6 to 12 years and fines up to ₱500,000. Identity theft: Imprisonment up to 12 years and fines of ₱50,000 to ₱500,000.",
+                image: "https://images.app.goo.gl/8bCWhFxQJzQTp3Jh6",
+                pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/NCSP-2023-2028-FINAL-DICT.pdf"
+            },
+            {
+                title: "Strengthening DICT’s Cybersecurity Role (Executive Order No. 82, 2022)",
+                description: "Bolsters digital defenses and fosters cybersecurity awareness and responsibility across the Philippines.",
+                scenario: "A government agency conducts cybersecurity training to protect against phishing attacks targeting employees.",
+                punishment: "Penalties align with the Cybercrime Prevention Act, including imprisonment of 6 to 12 years and fines of ₱200,000 or more for cybercrimes.",
+                image: "https://images.app.goo.gl/R8JVMBaQbYLUWYED6",
+                pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/NCSP-2023-2028-FINAL-DICT.pdf"
+            },
+            {
+                title: "National Cybersecurity Inter-Agency Committee (Executive Order No. 95, 2019)",
+                description: "Coordinates government efforts to safeguard ICT infrastructure, harmonizing cybersecurity initiatives.",
+                scenario: "The committee strengthens defenses during phishing attacks targeting government email systems.",
+                punishment: "Cybercrime penalties include imprisonment of 6 to 12 years and fines of ₱200,000 or more, as per the Cybercrime Prevention Act.",
+                image: "https://cdn.opengovasia.com/wp-content/uploads/2023/05/PH_2_1270-39.jpg",
+                pdf: "https://lawphil.net/executive/execord/eo2019/pdf/eo_95_2019.pdf"
+            },
+            {
+                title: "Guidelines on IT Risk Management (BSP Circular No. 808, 2013)",
+                description: "Strengthens risk management and consumer protection in banks and BSP-supervised institutions through IT security measures.",
+                scenario: "A bank implements multi-factor authentication and updates firewalls to protect customer data from cyber threats.",
+                punishment: "Monetary fines, operational restrictions, or contract invalidation for non-compliance.",
+                image: "https://www.gmanews.tv/v3/webpics/v3/2015/04/2015_04_17_16_53_36_0.jpg",
+                pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2013/c808.pdf"
+            },
+            {
+                title: "Enhanced Information Security Management (BSP Circular No. 982, 2017)",
+                description: "Requires BSFIs to establish robust technology risk management, governance, and cybersecurity controls.",
+                scenario: "A bank appoints an Information Security Officer and conducts regular risk assessments to secure online transactions.",
+                punishment: "Fines, license suspension/revocation, or actions against responsible officers for non-compliance.",
+                image: "https://www.securitymagazine.com/ext/resources/Issues/2019/September/SEC0919-Mobile-Feat-slide1_900px.jpg?1567784812",
+                pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2017/c982.pdf"
+            },
+            {
+                title: "Technology and Cyber-Risk Reporting (BSP Circular No. 1019, 2018)",
+                description: "Tightens reporting of technology and cyber-risk incidents to enhance BSP’s cyber-threat surveillance and protect payment systems.",
+                scenario: "A financial institution reports cyber incidents to senior management for timely response and decision-making.",
+                punishment: "Fines per MORB/MORNBFI, suspension of product offerings, license revocation, or settlement authority suspension.",
+                image: "https://www.bworldonline.com/wp-content/uploads/2024/10/cybersecurity.jpg",
+                pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2018/c1019.pdf"
+            },
+            {
+                title: "Guidelines on Operational Risk Management (BSP Circular No. 900, 2015)",
+                description: "Promotes effective risk management systems in BSFIs to address operational risks from processes, people, systems, or external events.",
+                scenario: "A bank employee accidentally emails confidential client data to the wrong address, highlighting the need for robust data handling.",
+                punishment: "Suspension of rediscounting, dividend declaration, branching privileges, or other non-monetary sanctions.",
+                image: "https://www.riskpro.in/sites/default/files/styles/large/public/Operational%20Risk%20Management_1.jpg?itok=N4UoME9w",
+                pdf: "https://rbap.org/wp-content/uploads/2016/01/c900-Guidelines-on-Operational-Risk-Management.pdf"
+            },
+            {
+                title: "Guidelines on Business Continuity Management (BSP Circular No. 951, 2017)",
+                description: "Emphasizes robust business continuity management to ensure critical operations during disruptions, with clear roles for management.",
+                scenario: "A company develops a disaster recovery plan to maintain operations during a natural disaster.",
+                punishment: "Fines or operational restrictions for non-compliance, as determined by the BSP.",
+                image: "https://www.asisonline.org/globalassets/standards-and-guidelines/bcm-2021/business-continuity-banner-1536px.jpg",
+                pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2017/c951.pdf"
+            },
+            {
+                title: "Guidelines on Outsourcing Risk Management (BSP Circular No. 1039, 2019)",
+                description: "Outlines requirements for pawnshops and MSBs, including licensing and electronic reporting for remittance and virtual currency transactions.",
+                scenario: "A bank assesses an external provider’s security protocols before outsourcing customer support operations.",
+                punishment: "Monetary fines for reporting infractions or license revocation for severe non-compliance.",
+                image: "https://resourcecenter.infinit-o.com/wp-content/uploads/2020/01/Infinit-O-Finance-Accounting-Outsourcing-Risk-Management.png",
+                pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2019/c1039.pdf"
+            },
+            {
+                title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
+                description: "Mandates adoption of international security standards to protect Critical Information Infrastructure under the National Cybersecurity Plan.",
+                scenario: "A government agency adopts standardized security protocols and conducts risk assessments to protect ICT systems.",
+                punishment: "Penalties align with the Cybercrime Prevention Act, including imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
+                image: "https://trendsresearch.org/wp-content/uploads/2025/01/Cybersecurity-in-a-World-increasingly-in-Crisis-V1-copy.jpg",
+                pdf: "https://www.scribd.com/document/668954225/Memorandum-Circular-005"
+            },
+            {
+                title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
+                description: "Promotes cybersecurity awareness and security measures to protect individuals, including campaigns and adoption of cybersecurity practices.",
+                scenario: "A government agency launches a campaign teaching citizens to avoid phishing scams and report cyber incidents.",
+                punishment: "Penalties align with the Cybercrime Prevention Act, including imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQ4GS9KMQg29NRva5dGI4sBS_bJBZu_YZkA&s",
+                pdf: "https://law.upd.edu.ph/wp-content/uploads/2020/05/DICT-DC-007-2020.pdf"
+            },
+            {
+                title: "Cloud First Policy (DICT Department Circular No. 2017-002)",
+                description: "Mandates government agencies to prioritize cloud computing solutions for IT infrastructure while adhering to security standards.",
+                scenario: "A government agency migrates its data to a cloud service without proper security protocols, leading to a data breach.",
+                punishment: "Penalties align with the Cybercrime Prevention Act, including imprisonment of 6 to 12 years and fines of ₱200,000 or more for related cybercrimes.",
+                image: "https://www.cloudsecuretech.com/wp-content/uploads/2022/07/Cloud-Security-Issues-and-Challenges.png",
+                pdf: "https://dict.gov.ph/wp-content/uploads/2017/07/DICT-DC-2017-002-Cloud-First-Policy.pdf"
+            },
+            {
+                title: "Data Privacy Act of 2012 (Republic Act No. 10173)",
+                description: "Protects individual personal data in information and communications systems, ensuring privacy and security in government and private sectors.",
+                scenario: "A company shares a customer's personal information with a third party without consent, violating privacy laws.",
+                punishment: "Unauthorized processing: Imprisonment of 1 to 3 years and fines of ₱500,000 to ₱2,000,000. Malicious disclosure: Imprisonment of 3 to 6 years and fines of ₱1,000,000 to ₱5,000,000.",
+                image: "https://www.privacy.gov.ph/wp-content/uploads/2020/09/Data-Privacy-Act-Infographic.png",
+                pdf: "https://www.privacy.gov.ph/wp-content/uploads/RA-10173.pdf"
+            },
+            {
+                title: "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
+                description: "Addresses cybercrimes like hacking, identity theft, and online fraud, providing a legal framework for investigation and prosecution.",
+                scenario: "Someone hacks into an online banking system and steals funds from multiple accounts.",
+                punishment: "Hacking: Imprisonment of 6 to 12 years and fines of ₱200,000 or more. Identity theft: Imprisonment of 6 to 12 years and fines of ₱500,000 or more.",
+                image: "https://www.officialgazette.gov.ph/images/uploads/cybercrime-law.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2012/09/12/republic-act-no-10175/"
+            },
+            {
+                title: "E-Commerce Act of 2000 (Republic Act No. 8792)",
+                description: "Promotes e-commerce by providing legal recognition of electronic transactions and penalizing unauthorized access to electronic systems.",
+                scenario: "A hacker gains unauthorized access to an e-commerce website and manipulates transaction data.",
+                punishment: "Hacking or cracking: Fines of ₱100,000 or more and imprisonment of 6 months to 3 years.",
+                image: "https://www.unescap.org/sites/default/files/Ecommerce%20PH.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2000/06/14/republic-act-no-8792/"
+            },
+            {
+                title: "Philippine National Police Reform and Reorganization Act (Republic Act No. 6975)",
+                description: "Reorganizes the Philippine National Police to enhance its capability to combat crime, including cybercrimes, through better structure and training.",
+                scenario: "The PNP Cybercrime Division investigates a large-scale online scam targeting senior citizens.",
+                punishment: "Penalties depend on specific crimes investigated, such as imprisonment of 6 to 12 years and fines of ₱200,000 or more under the Cybercrime Prevention Act.",
+                image: "https://www.pnp.gov.ph/images/LOGO_PNP.png",
+                pdf: "https://www.officialgazette.gov.ph/1990/12/13/republic-act-no-6975/"
+            },
+            {
+                title: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                description: "Prohibits the production, distribution, and possession of child pornography, including online dissemination.",
+                scenario: "An individual uploads child pornography content to a social media platform.",
+                punishment: "Imprisonment of 12 years and 1 day to 20 years and fines of ₱2,000,000 to ₱5,000,000 for production or distribution.",
+                image: "https://www.unicef.org/philippines/sites/unicef.org.philippines/files/2020-07/Child-Protection-Act.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2009/11/17/republic-act-no-9775/"
+            },
+            {
+                title: "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)",
+                description: "Penalizes the act of taking, distributing, or publishing photos or videos of a sexual nature without consent.",
+                scenario: "Someone secretly records a private video of another person and shares it online.",
+                punishment: "Imprisonment of 3 to 7 years and fines of ₱100,000 to ₱500,000.",
+                image: "https://www.philstar.com/images/articles/voyeurism_2018-08-02_22-44-08.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2010/02/09/republic-act-no-9995/"
+            },
+            {
+                title: "Anti-Trafficking in Persons Act of 2003 (Republic Act No. 9208)",
+                description: "Addresses human trafficking, including online exploitation, by defining and penalizing trafficking offenses.",
+                scenario: "A group uses a website to recruit and exploit individuals for forced labor.",
+                punishment: "Imprisonment of 20 years and fines of ₱1,000,000 to ₱2,000,000 for trafficking. Life imprisonment and fines of ₱2,000,000 to ₱5,000,000 for qualified trafficking.",
+                image: "https://www.unodc.org/images/trafficking/Philippines-TIP.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2003/05/26/republic-act-no-9208/"
+            },
+            {
+                title: "Special Protection of Children Against Abuse (Republic Act No. 7610)",
+                description: "Provides special protection to children from abuse, exploitation, and discrimination, including online offenses.",
+                scenario: "A minor is groomed online by an adult through a gaming platform.",
+                punishment: "Imprisonment of 12 years and 1 day to 20 years and fines depending on the offense.",
+                image: "https://www.unicef.org/philippines/sites/unicef.org.philippines/files/2020-07/Child-Protection-Act.jpg",
+                pdf: "https://www.officialgazette.gov.ph/1992/06/17/republic-act-no-7610/"
+            },
+            {
+                title: "Anti-Camcording Act of 2010 (Republic Act No. 10088)",
+                description: "Prohibits the unauthorized recording of films in theaters to prevent piracy and protect the film industry.",
+                scenario: "An individual records a movie in a theater and uploads it to a piracy website.",
+                punishment: "Imprisonment of 6 months to 4 years and fines of ₱50,000 to ₱750,000 for the first offense.",
+                image: "https://www.philstar.com/images/articles/camcording_2018-09-12_22-34-56.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2010/05/13/republic-act-no-10088/"
+            },
+            {
+                title: "Anti-Financial Account Scamming Act (Republic Act No. 12010)",
+                description: "Penalizes financial account scamming activities, including unauthorized access and fraudulent transactions.",
+                scenario: "A scammer uses stolen credit card details to make unauthorized online purchases.",
+                punishment: "Imprisonment of 6 to 12 years and fines of ₱500,000 to ₱1,000,000 for unauthorized transactions.",
+                image: "https://www.philstar.com/images/articles/financial-scam_2023-10-05_22-34-12.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2024/07/02/republic-act-no-12010/"
+            },
+            {
+                title: "Electronic Evidence Rules (A.M. No. 01-7-01-SC)",
+                description: "Establishes rules for the admissibility of electronic evidence in court proceedings, including digital documents and communications.",
+                scenario: "A suspect's incriminating text messages are submitted as evidence in a cybercrime case.",
+                punishment: "Not directly punitive; penalties depend on the underlying crime (e.g., cybercrime laws).",
+                image: "https://www.lawphil.net/images/evidence.jpg",
+                pdf: "https://lawphil.net/courts/supreme/am/am_01-7-01-sc_2001.html"
+            },
+            {
+                title: "Access Devices Regulation Act of 1998 (Republic Act No. 8484)",
+                description: "Regulates the use of access devices like credit cards and prohibits fraudulent use or manufacture of such devices.",
+                scenario: "A fraudster creates counterfeit credit cards to make unauthorized purchases online.",
+                punishment: "Imprisonment of 6 to 12 years and fines of ₱10,000 or twice the value obtained, whichever is greater.",
+                image: "https://www.bworldonline.com/wp-content/uploads/2023/05/credit-card-fraud.jpg",
+                pdf: "https://www.officialgazette.gov.ph/1998/02/11/republic-act-no-8484/"
+            },
+            {
+                title: "Anti-Cyber Squatting Act (Proposed Legislation)",
+                description: "Aims to penalize cyber squatting, the act of registering domain names in bad faith to profit from trademarks.",
+                scenario: "Someone registers a domain name similar to a popular brand to sell counterfeit goods.",
+                punishment: "Proposed penalties include imprisonment of 1 to 5 years and fines of ₱100,000 to ₱500,000.",
+                image: "https://www.ipophil.gov.ph/wp-content/uploads/2023/03/cybersquatting.jpg",
+                pdf: "https://www.ipophil.gov.ph/news/proposed-anti-cyber-squatting-law/"
+            },
+            {
+                title: "Anti-Online Scam Act (Proposed Legislation)",
+                description: "Seeks to address online scams by defining offenses like phishing, smishing, and vishing, with stricter penalties.",
+                scenario: "A scammer sends SMS messages pretending to be a bank, tricking users into revealing their account details.",
+                punishment: "Proposed penalties include imprisonment of 3 to 7 years and fines of ₱200,000 to ₱1,000,000.",
+                image: "https://www.pna.gov.ph/articles/1187654",
+                pdf: "https://www.senate.gov.ph/Bills/18thCongress/SBN-1846.pdf"
+            },
+            {
+                title: "Electronic Commerce Protection Act (Proposed Legislation)",
+                description: "Proposes to enhance consumer protection in e-commerce by addressing fraudulent online transactions and data breaches.",
+                scenario: "An online retailer suffers a data breach, exposing customer payment information to hackers.",
+                punishment: "Proposed penalties include fines of ₱500,000 to ₱2,000,000 and imprisonment of 2 to 6 years for non-compliance.",
+                image: "https://www.unescap.org/sites/default/files/Ecommerce%20PH.jpg",
+                pdf: "https://www.senate.gov.ph/Bills/18thCongress/SBN-1492.pdf"
+            },
+            {
+                title: "Internet Transactions Act of 2022 (Republic Act No. 11967)",
+                description: "Regulates internet transactions to protect consumers and merchants, ensuring fair online trade practices.",
+                scenario: "An online seller fails to deliver a product after receiving payment, violating consumer rights.",
+                punishment: "Fines of ₱50,000 to ₱1,000,000 and imprisonment of 1 to 5 years for fraudulent transactions.",
+                image: "https://www.bworldonline.com/wp-content/uploads/2023/02/internet-transactions.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2022/12/05/republic-act-no-11967/"
+            },
+            {
+                title: "Philippine Identification System Act (Republic Act No. 11055)",
+                description: "Establishes a national ID system to streamline identification, but includes provisions to penalize misuse of ID data.",
+                scenario: "A fraudster uses a stolen PhilSys ID to open a bank account for illegal activities.",
+                punishment: "Imprisonment of 6 months to 3 years and fines of ₱50,000 to ₱500,000 for unauthorized use of ID data.",
+                image: "https://psa.gov.ph/sites/default/files/PhilSys_Logo.png",
+                pdf: "https://www.officialgazette.gov.ph/2018/08/06/republic-act-no-11055/"
+            },
+            {
+                title: "Sim Card Registration Act (Republic Act No. 11934)",
+                description: "Requires registration of SIM cards to curb fraudulent activities, including scams and terrorism-related communications.",
+                scenario: "A scammer uses an unregistered SIM card to send fraudulent messages impersonating a government agency.",
+                punishment: "Imprisonment of 6 months to 6 years and fines of ₱100,000 to ₱300,000 for non-registration or fraudulent registration.",
+                image: "https://www.philstar.com/images/articles/sim-registration_2022-10-10_22-34-56.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2022/10/10/republic-act-no-11934/"
+            },
+            {
+                title: "Anti-Mail Order Bride Act (Republic Act No. 6955)",
+                description: "Prohibits the practice of matching Filipino women for marriage to foreign nationals through mail-order or online platforms.",
+                scenario: "A website facilitates mail-order bride services, exploiting women through online transactions.",
+                punishment: "Imprisonment of 6 to 8 years and fines of ₱20,000 to ₱50,000.",
+                image: "https://www.unwomen.org/sites/default/files/Headquarters/Images/Sections/News/Stories/2020/Philippines-mail-order-bride.jpg",
+                pdf: "https://www.officialgazette.gov.ph/1990/06/13/republic-act-no-6955/"
+            },
+            {
+                title: "Anti-Violence Against Women and Their Children Act (Republic Act No. 9262)",
+                description: "Protects women and children from violence, including online harassment and threats.",
+                scenario: "A woman receives threatening messages from her ex-partner via social media.",
+                punishment: "Imprisonment of 1 month to 20 years and fines of ₱100,000 to ₱300,000, depending on the offense.",
+                image: "https://www.unwomen.org/sites/default/files/Headquarters/Images/Sections/News/Stories/2020/Philippines-VAWC.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2004/03/08/republic-act-no-9262/"
+            },
+            {
+                title: "Anti-Hazing Act of 2018 (Republic Act No. 8049)",
+                description: "Prohibits hazing and other forms of initiation rites that cause physical or psychological harm, including online coordination of such acts.",
+                scenario: "A fraternity uses a private online group to plan a hazing event that results in injury.",
+                punishment: "Life imprisonment and fines of ₱1,000,000 to ₱3,000,000 if death or serious injury occurs.",
+                image: "https://www.philstar.com/images/articles/hazing_2018-07-05_22-34-56.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2018/06/29/republic-act-no-8049/"
+            },
+            {
+                title: "Anti-Graft and Corrupt Practices Act (Republic Act No. 3019)",
+                description: "Penalizes corrupt practices by public officers, including misuse of public resources for personal gain, which can occur online.",
+                scenario: "A government official uses an online platform to solicit bribes for contract approvals.",
+                punishment: "Imprisonment of 1 to 15 years, perpetual disqualification from public office, and confiscation of ill-gotten wealth.",
+                image: "https://www.ombudsman.gov.ph/images/RA3019.jpg",
+                pdf: "https://www.officialgazette.gov.ph/1960/08/17/republic-act-no-3019/"
+            },
+            {
+                title: "Revised Penal Code (Article 315 - Estafa)",
+                description: "Penalizes estafa (swindling), including online fraud through deceit or false pretenses.",
+                scenario: "An individual creates a fake online store to collect payments without delivering products.",
+                punishment: "Imprisonment ranging from 1 month to 20 years, depending on the amount defrauded, and fines.",
+                image: "https://www.lawphil.net/images/estafa.jpg",
+                pdf: "https://www.officialgazette.gov.ph/1930/12/08/act-no-3815/"
+            },
+            {
+                title: "Anti-Fencing Law (Presidential Decree No. 1612)",
+                description: "Penalizes the act of buying, selling, or possessing stolen goods, including those obtained through online theft.",
+                scenario: "A person knowingly buys stolen gadgets from an online marketplace.",
+                punishment: "Imprisonment of 6 years and 1 day to 12 years, and fines up to the value of the stolen goods.",
+                image: "https://www.lawphil.net/images/fencing.jpg",
+                pdf: "https://www.officialgazette.gov.ph/1979/03/02/presidential-decree-no-1612/"
+            },
+            {
+                title: "Cybersecurity Awareness Month (Proclamation No. 1037, 2015)",
+                description: "Designates October as Cybersecurity Awareness Month to promote education and awareness of cyber threats.",
+                scenario: "A school conducts workshops on safe internet use during Cybersecurity Awareness Month.",
+                punishment: "Not directly punitive; focuses on education and awareness.",
+                image: "https://dict.gov.ph/wp-content/uploads/2023/10/cybersecurity-awareness-month.jpg",
+                pdf: "https://www.officialgazette.gov.ph/2015/10/01/proclamation-no-1037-s-2015/"
+            }
+        ];
 
-                usernameDisplay.textContent = `${currentUser.username}`;
-                emailDisplay.textContent = `${currentUser.email}`;
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
+        // Function to compute cosine similarity between two vectors
+        function cosineSimilarity(vecA, vecB) {
+            if (!vecA || !vecB || vecA.length !== vecB.length) return 0;
+            let dotProduct = 0, normA = 0, normB = 0;
+            for (let i = 0; i < vecA.length; i++) {
+                dotProduct += vecA[i] * vecB[i];
+                normA += vecA[i] * vecA[i];
+                normB += vecB[i] * vecB[i];
+            }
+            normA = Math.sqrt(normA);
+            normB = Math.sqrt(normB);
+            return normA * normB ? dotProduct / (normA * normB) : 0;
+        }
 
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
-                        if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
-                            avatarBgColorPicker.value = userData.avatarBgColor;
-                        }
-                        if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
-                            borderColorPicker.value = userData.borderColor;
-                        }
-                        if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
-                            borderTypeSelect.value = userData.borderType;
-                        }
-                    }
-                }, (error) => {
-                    console.error('Error loading user customization:', error);
-                    alert('Failed to load user customization: ' + error.message);
+        // Function to get embedding from Hugging Face API
+        async function getEmbedding(text) {
+            const API_URL = 'https://api-inference.huggingface.co/models/sentence-transformers/paraphrase-MiniLM-L3-v2';
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${HUGGINGFACE_API_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ inputs: text })
                 });
-            } else {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'index.html';
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error('Failed to get embedding from Hugging Face API: ' + errorText);
+                }
+
+                const data = await response.json();
+                if (Array.isArray(data) && data.length > 0 && Array.isArray(data[0])) {
+                    return data[0];
+                } else {
+                    throw new Error('Unexpected response format from Hugging Face API');
+                }
+            } catch (error) {
+                throw new Error('Failed to get embedding: ' + error.message);
+            }
+        }
+
+        // Function to find the best-matching laws
+        async function findBestLaws(userScenario) {
+            try {
+                // Get user scenario embedding
+                const userEmbedding = await getEmbedding(userScenario);
+
+                // Fetch precomputed embeddings from Firebase
+                const snapshot = await database.ref('lawEmbeddings').once('value');
+                const lawEmbeddings = snapshot.val();
+
+                if (!lawEmbeddings) {
+                    throw new Error('No precomputed embeddings found in Firebase');
+                }
+
+                const lawScores = [];
+                for (const [lawTitle, lawEmbedding] of Object.entries(lawEmbeddings)) {
+                    const lawIndex = laws.findIndex(law => law.title === lawTitle);
+                    if (lawIndex === -1) continue;
+                    const similarity = cosineSimilarity(userEmbedding, lawEmbedding);
+                    lawScores.push({ index: lawIndex, similarity });
+                }
+
+                lawScores.sort((a, b) => b.similarity - a.similarity);
+
+                const topLaws = lawScores.slice(0, 5).map(score => ({
+                    law: laws[score.index],
+                    similarity: score.similarity
+                }));
+
+                return topLaws;
+            } catch (error) {
+                // Fallback to Fuse.js if Hugging Face API or Firebase fails
+                console.error('Error with Hugging Face API, falling back to keyword search:', error);
+                alert('Hugging Face API failed. Using keyword search instead.');
+
+                const fuse = new Fuse(laws, {
+                    keys: ['title', 'description', 'scenario', 'punishment'],
+                    threshold: 0.3,
+                    includeScore: true,
+                    minMatchCharLength: 3,
+                    useExtendedSearch: true
+                });
+
+                const results = fuse.search(userScenario);
+                const topLaws = results.slice(0, 5).map(result => ({
+                    law: result.item,
+                    similarity: 1 - result.score
+                }));
+
+                return topLaws;
+            }
+        }
+
+        // Function to display laws in the UI
+        function displayLaws(lawsToDisplay, isMainLaw = false) {
+            const container = isMainLaw ? document.getElementById('mainLawContainer') : document.getElementById('alternativeLawsContainer');
+            container.innerHTML = '';
+
+            lawsToDisplay.forEach(({ law, similarity }) => {
+                const card = document.createElement('div');
+                card.className = `card ${isMainLaw ? 'main-law' : ''} ${similarity > 0.8 ? 'highlight' : ''}`;
+                card.innerHTML = `
+                    <div class="image_container">
+                        <img src="${law.image}" alt="${law.title}">
+                    </div>
+                    <div class="content-container">
+                        <h3 class="cybercrime-title">${law.title}</h3>
+                        <p class="cybercrime-description">${law.description}</p>
+                        <p class="cybercrime-description"><strong>Scenario:</strong> ${law.scenario}</p>
+                        <p class="cybercrime-description"><strong>Punishment:</strong> ${law.punishment}</p>
+                        <div class="button-container">
+                            <a href="${law.pdf}" target="_blank" class="border-button">
+                                <p class="button-text">Read More</p>
+                                <span class="iconer"><i class="fas fa-arrow-right"></i></span>
+                            </a>
+                            <button class="border-button save-law" onclick="saveLaw('${law.title}')">
+                                <p class="button-text">Save Law</p>
+                                <span class="iconer"><i class="fas fa-bookmark"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Function to save a law to Firebase
+        function saveLaw(lawTitle) {
+            const user = auth.currentUser;
+            if (!user) {
+                alert('Please log in to save laws.');
+                return;
+            }
+
+            const law = laws.find(l => l.title === lawTitle);
+            if (!law) return;
+
+            const userRef = database.ref(`users/${user.uid}/savedLaws`);
+            userRef.push(law)
+                .then(() => alert('Law saved successfully!'))
+                .catch(error => alert('Error saving law: ' + error.message));
+        }
+
+        // Event listener for search input
+        document.getElementById('searchInput').addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                const scenario = e.target.value.trim();
+                if (!scenario) {
+                    alert('Please enter a scenario to search.');
+                    return;
+                }
+
+                const loaderOverlay = document.getElementById('loaderOverlay');
+                const fingerprintIcon = document.getElementById('fingerprintIcon');
+                loaderOverlay.classList.add('active');
+                fingerprintIcon.classList.add('scanning');
+
+                const topLaws = await findBestLaws(scenario);
+
+                loaderOverlay.classList.remove('active');
+                fingerprintIcon.classList.remove('scanning');
+
+                if (topLaws.length === 0) {
+                    alert('No matching laws found.');
+                    return;
+                }
+
+                const mainLaw = topLaws[0];
+                const alternativeLaws = topLaws.slice(1);
+
+                displayLaws([mainLaw], true);
+                displayLaws(alternativeLaws, false);
+
+                // Save search history
+                const user = auth.currentUser;
+                if (user) {
+                    const historyRef = database.ref(`users/${user.uid}/searchHistory`);
+                    historyRef.push({ scenario, timestamp: Date.now() });
+                }
             }
         });
 
+        // Theme toggle functionality
+        document.getElementById('themeToggle').addEventListener('change', (e) => {
+            document.body.classList.toggle('dark-theme', e.target.checked);
+            localStorage.setItem('theme', e.target.checked ? 'dark' : 'light');
+        });
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('themeToggle').checked = true;
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuIcon').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        });
+
+        // Avatar customization functionality
+        const profilePic = document.getElementById('profilePic');
+        const customizationMenu = document.getElementById('customizationMenu');
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+        const borderColorPicker = document.getElementById('borderColorPicker');
+        const borderTypeSelect = document.getElementById('borderTypeSelect');
+        const avatarLoading = document.getElementById('avatarLoading');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const emailDisplay = document.getElementById('emailDisplay');
+        const createdAtDisplay = document.getElementById('createdAtDisplay');
+
+        // Toggle customization menu
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
 
+        // Close customization menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+            if (!profilePic.contains(e.target) && !customizationMenu.contains(e.target)) {
                 customizationMenu.classList.remove('active');
             }
         });
 
-        avatarInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
+        // Load user data and avatar settings
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                usernameDisplay.textContent = user.displayName || 'User';
+                emailDisplay.textContent = user.email || 'N/A';
+                createdAtDisplay.textContent = new Date(user.metadata.creationTime).toLocaleDateString() || 'N/A';
+
+                const userRef = database.ref(`users/${user.uid}/avatarSettings`);
+                userRef.once('value', snapshot => {
+                    const settings = snapshot.val();
+                    if (settings) {
+                        profilePic.src = settings.avatarUrl || profilePic.src;
+                        profilePic.style.backgroundColor = settings.backgroundColor || '#ccc';
+                        profilePic.style.borderColor = settings.borderColor || '#000';
+                        profilePic.style.borderStyle = settings.borderStyle || 'solid';
+                        avatarBgColorPicker.value = settings.backgroundColor || '#cccccc';
+                        borderColorPicker.value = settings.borderColor || '#000000';
+                        borderTypeSelect.value = settings.borderStyle || 'solid';
+                    }
+                });
+            } else {
+                window.location.href = 'index.html'; // Redirect to login if not authenticated
+            }
+        });
+
+        // Upload avatar to Cloudinary
+        avatarInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
             if (!file) return;
 
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPG, JPEG, PNG).');
-                return;
-            }
-            if (file.size > maxSize) {
-                alert('Image size must be less than 2MB.');
-                return;
-            }
-
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to upload an avatar.');
-                avatarLoading.classList.remove('active');
-                return;
-            }
-
             avatarLoading.classList.add('active');
-
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxDimension = 300;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxDimension) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    }
-                } else {
-                    if (height > maxDimension) {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        alert('User not logged in.');
-                        avatarLoading.classList.remove('active');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
-                                try {
-                                    const parsed = JSON.parse(text);
-                                    errorMessage = parsed.error?.message || text;
-                                } catch (e) {
-                                    errorMessage = text.includes('Invalid cloud name')
-                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
-                                        : text.includes('Invalid upload preset')
-                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                        : text.includes('Unsigned uploads are not allowed')
-                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                        : text || 'Unknown error occurred';
-                                }
-                                throw new Error(errorMessage);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.error) {
-                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
-                        }
-
-                        const avatarUrl = data.secure_url;
-                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                        database.ref(`users/${sanitizedEmail}`).update({
-                            avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
-                        })
-                        .then(() => {
-                            profilePic.src = avatarUrl;
-                            avatarLoading.classList.remove('active');
-                        })
-                        .catch(error => {
-                            console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
-                            avatarLoading.classList.remove('active');
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error uploading avatar to Cloudinary:', error);
-                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
-                        avatarLoading.classList.remove('active');
-                    });
-                }, file.type, 0.6);
-            };
-            img.onerror = () => {
-                alert('Failed to process the image. Please try a different file.');
-                avatarLoading.classList.remove('active');
-            };
-        });
-
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
-            profilePic.style.backgroundColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving avatar background color:', error);
-                    alert('Failed to save avatar background color: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the avatar background color.');
-            }
-        });
-
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
-            profilePic.style.borderColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border color:', error);
-                    alert('Failed to save border color: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the border color.');
-            }
-        });
-
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: borderType,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the border type.');
-            }
-        });
-
-        if (localStorage.getItem('darkTheme') === 'enabled') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
-        });
-
-        mobileMenuIcon.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
-        });
-
-        // Function to save law to Firebase
-        function saveLaw(lawTitle) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to save a law.');
-                return;
-            }
-
-            const sanitizedEmail = user.email.replace(/\./g, ',');
-            const lawRef = database.ref(`users/${sanitizedEmail}/savedLaws`).push();
-            lawRef.set({
-                title: lawTitle,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            })
-            .then(() => {
-                alert('Law saved successfully!');
-            })
-            .catch(error => {
-                console.error('Error saving law:', error);
-                alert('Failed to save law: ' + error.message);
-            });
-        }
-
-        // Function to fetch laws from AI API (placeholder)
-        async function fetchLawsFromAI(query) {
-            // Replace this with a real free AI API endpoint
-            const AI_API_URL = 'https://hypothetical-ai-api.com/classify-laws'; // Placeholder
-            const AI_API_KEY = 'your-api-key'; // Replace with actual API key
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
             try {
-                const response = await fetch(AI_API_URL, {
+                const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${AI_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        query: query,
-                        laws: laws.map(law => ({
-                            title: law.title,
-                            description: law.description,
-                            scenario: law.scenario
-                        }))
-                    })
+                    body: formData
                 });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch laws from AI API');
-                }
-
                 const data = await response.json();
-                return {
-                    mainLaw: data.mainLaw, // Expected to return the title of the main law
-                    alternativeLaws: data.alternativeLaws // Expected to return an array of 4 alternative law titles
-                };
-            } catch (error) {
-                console.error('Error fetching laws from AI:', error);
-                // Fallback to local fuzzy search if AI API fails
-                const fuse = new Fuse(laws, {
-                    keys: ['title', 'description', 'scenario'],
-                    threshold: 0.4,
-                    distance: 100
-                });
-
-                const results = fuse.search(query);
-                const mainLaw = results[0]?.item.title;
-                const alternativeLaws = results.slice(1, 5).map(res => res.item.title);
-
-                return { mainLaw, alternativeLaws };
-            }
-        }
-
-        // Function to render law cards
-        function renderLawCards(mainLawTitle, alternativeLawTitles) {
-            cardsContainer.innerHTML = '';
-
-            // Render main law (wide card)
-            const mainLaw = laws.find(law => law.title === mainLawTitle);
-            if (mainLaw) {
-                const mainCard = document.createElement('div');
-                mainCard.className = 'card main-law';
-                mainCard.innerHTML = `
-                    <div class="image_container">
-                        <img src="${mainLaw.image}" alt="Law Image">
-                    </div>
-                    <div class="cybercrime-title">
-                        ${mainLaw.title}
-                    </div>
-                    <div class="cybercrime-details">
-                        <p><strong>Description:</strong> ${mainLaw.description}</p>
-                        <p><strong>Scenario:</strong> ${mainLaw.scenario}</p>
-                        <p><strong>Punishment:</strong> ${mainLaw.punishment}</p>
-                    </div>
-                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                        <a href="${mainLaw.pdf}" class="border-button" target="_blank">
-                            <span class="button-text">Read PDF</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                        </a>
-                        <button class="save-button" data-title="${mainLaw.title}">
-                            <span class="button-text">Save Law</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                        </button>
-                    </div>
-                `;
-                cardsContainer.appendChild(mainCard);
-            }
-
-            // Render alternative laws (4 smaller cards)
-            const alternativesSection = document.createElement('div');
-            alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
-            alternativesSection.style.width = '100%';
-            alternativesSection.style.textAlign = 'center';
-            alternativesSection.style.marginTop = '40px';
-            cardsContainer.appendChild(alternativesSection);
-
-            const alternativesContainer = document.createElement('div');
-            alternativesContainer.className = 'cards-container';
-            alternativeLawTitles.forEach(title => {
-                const law = laws.find(l => l.title === title);
-                if (law) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="image_container">
-                            <img src="${law.image}" alt="Law Image">
-                        </div>
-                        <div class="cybercrime-title">
-                            ${law.title}
-                        </div>
-                        <div class="cybercrime-details">
-                            <p><strong>Description:</strong> ${law.description}</p>
-                            <p><strong>Scenario:</strong> ${law.scenario}</p>
-                            <p><strong>Punishment:</strong> ${law.punishment}</p>
-                        </div>
-                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                            <a href="${law.pdf}" class="border-button" target="_blank">
-                                <span class="button-text">Read PDF</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                            </a>
-                            <button class="save-button" data-title="${law.title}">
-                                <span class="button-text">Save Law</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                            </button>
-                        </div>
-                    `;
-                    alternativesContainer.appendChild(card);
-                }
-            });
-            cardsContainer.appendChild(alternativesContainer);
-
-            // Add event listeners to save buttons
-            document.querySelectorAll('.save-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const lawTitle = button.getAttribute('data-title');
-                    saveLaw(lawTitle);
-                });
-            });
-        }
-
-        // Initial render of default cards (scenario-based)
-        const defaultLaws = laws.slice(0, 4); // Show first 4 laws as default
-        defaultLaws.forEach(law => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div class="image_container">
-                    <img src="${law.image}" alt="Law Image">
-                </div>
-                <div class="cybercrime-title">
-                    ${law.title}
-                </div>
-                <div class="cybercrime-details">
-                    <p><strong>Description:</strong> ${law.description}</p>
-                    <p><strong>Scenario:</strong> ${law.scenario}</p>
-                    <p><strong>Punishment:</strong> ${law.punishment}</p>
-                </div>
-                <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    <a href="${law.pdf}" class="border-button" target="_blank">
-                        <span class="button-text">Read PDF</span>
-                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                    </a>
-                    <button class="save-button" data-title="${law.title}">
-                        <span class="button-text">Save Law</span>
-                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                    </button>
-                </div>
-            `;
-            cardsContainer.appendChild(card);
-        });
-
-        // Search functionality with AI integration
-        searchInput.addEventListener('input', async () => {
-            const query = searchInput.value.trim();
-
-            if (query) {
-                fingerprintIcon.classList.add('scanning');
-                sectionTitle.textContent = 'RELEVANT LAWS';
-                loaderOverlay.classList.add('active');
-
                 const user = auth.currentUser;
                 if (user) {
-                    const sanitizedEmail = user.email.replace(/\./g, ',');
-                    database.ref(`users/${sanitizedEmail}/searchHistory`).push({
-                        query: query,
-                        timestamp: firebase.database.ServerValue.TIMESTAMP
-                    });
+                    const userRef = database.ref(`users/${user.uid}/avatarSettings`);
+                    await userRef.update({ avatarUrl: data.secure_url });
+                    profilePic.src = data.secure_url;
                 }
+            } catch (error) {
+                alert('Error uploading avatar: ' + error.message);
+            } finally {
+                avatarLoading.classList.remove('active');
+            }
+        });
 
-                try {
-                    const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
-                    if (mainLaw && alternativeLaws) {
-                        renderLawCards(mainLaw, alternativeLaws);
-                    } else {
-                        cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
-                    }
-                } catch (error) {
-                    console.error('Error in search:', error);
-                    cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
-                } finally {
-                    loaderOverlay.classList.remove('active');
-                }
-            } else {
-                fingerprintIcon.classList.remove('scanning');
-                sectionTitle.textContent = 'TOP LAWS';
-                cardsContainer.innerHTML = '';
-                defaultLaws.forEach(law => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="image_container">
-                            <img src="${law.image}" alt="Law Image">
-                        </div>
-                        <div class="cybercrime-title">
-                            ${law.title}
-                        </div>
-                        <div class="cybercrime-details">
-                            <p><strong>Description:</strong> ${law.description}</p>
-                            <p><strong>Scenario:</strong> ${law.scenario}</p>
-                            <p><strong>Punishment:</strong> ${law.punishment}</p>
-                        </div>
-                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                            <a href="${law.pdf}" class="border-button" target="_blank">
-                                <span class="button-text">Read PDF</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                            </a>
-                            <button class="save-button" data-title="${law.title}">
-                                <span class="button-text">Save Law</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                            </button>
-                        </div>
-                    `;
-                    cardsContainer.appendChild(card);
-                });
+        // Update avatar background color
+        avatarBgColorPicker.addEventListener('input', async (e) => {
+            profilePic.style.backgroundColor = e.target.value;
+            const user = auth.currentUser;
+            if (user) {
+                const userRef = database.ref(`users/${user.uid}/avatarSettings`);
+                await userRef.update({ backgroundColor: e.target.value });
+            }
+        });
 
-                // Reattach event listeners for save buttons
-                document.querySelectorAll('.save-button').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const lawTitle = button.getAttribute('data-title');
-                        saveLaw(lawTitle);
-                    });
-                });
+        // Update border color
+        borderColorPicker.addEventListener('input', async (e) => {
+            profilePic.style.borderColor = e.target.value;
+            const user = auth.currentUser;
+            if (user) {
+                const userRef = database.ref(`users/${user.uid}/avatarSettings`);
+                await userRef.update({ borderColor: e.target.value });
+            }
+        });
+
+        // Update border type
+        borderTypeSelect.addEventListener('change', async (e) => {
+            profilePic.style.borderStyle = e.target.value;
+            const user = auth.currentUser;
+            if (user) {
+                const userRef = database.ref(`users/${user.uid}/avatarSettings`);
+                await userRef.update({ borderStyle: e.target.value });
             }
         });
     </script>
