@@ -342,7 +342,7 @@
         .customization-options .user-info p::before {
             content: attr(data-label);
             font-weight: 700;
-            color: #ff3333; 
+            color: #ff3333;
             margin-right: 5px;
         }
 
@@ -409,7 +409,7 @@
 
         .dark-theme .customization-options .user-info {
             background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-            color: #e0e0e0; 
+            color: #e0e0e0;
         }
 
         .dark-theme .customization-options .user-info p {
@@ -417,7 +417,7 @@
         }
 
         .dark-theme .customization-options .user-info p::before {
-            color: #ffeb3b; 
+            color: #ffeb3b;
         }
 
         .dark-theme .customization-options label,
@@ -436,16 +436,24 @@
             border-color: #555;
         }
 
-        .fingerprint-icon {
+        .fingerprint-container {
+            position: relative;
             width: 150px;
             height: 150px;
-            background: url('https://static.thenounproject.com/png/1238269-200.png') no-repeat center center;
-            background-size: contain;
             margin-bottom: 20px;
-            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
+            perspective: 1000px;
+        }
+
+        .fingerprint-icon {
+            width: 100%;
+            height: 100%;
+            background: url('https://static.thenounproject.com/png/1238269-200.png') no-repeat center center;
+            background-size: contain;
+            position: relative;
+            transition: transform 0.5s ease;
         }
 
         .fingerprint-icon::before {
@@ -459,10 +467,10 @@
             border-radius: 50%;
             z-index: 0;
             color: #000000;
+            transition: border-color 0.3s ease;
         }
 
         .dark-theme .fingerprint-icon {
-            background-image: url('https://static.thenounproject.com/png/1238269-200.png');
             filter: brightness(0) invert(1);
         }
 
@@ -471,73 +479,171 @@
         }
 
         .fingerprint-icon.scanning {
-            animation: pulse 1.5s infinite ease-in-out;
+            animation: glow 2s infinite ease-in-out, rotate3D 5s infinite linear;
         }
 
         .fingerprint-icon.scanning::after {
             content: "";
             position: absolute;
             width: 100%;
-            height: 4px;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 255, 0, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            animation: ripple 2s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        .fingerprint-icon .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
             background: linear-gradient(to right, transparent, #00ff00, transparent);
             top: 50%;
             left: 0;
-            animation: scan 1.5s infinite linear;
+            opacity: 0;
             z-index: 1;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-            50% {
-                transform: scale(1.05);
-                opacity: 1;
-            }
+        .fingerprint-icon.scanning .scan-line {
+            animation: scanVertical 1.5s infinite linear;
         }
 
-        @keyframes scan {
-            0% {
-                transform: translateY(-50px);
-            }
-            100% {
-                transform: translateY(50px);
-            }
+        .fingerprint-icon .scan-line:nth-child(2) {
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #00ff00, transparent);
+            top: 0;
+            left: 50%;
+        }
+
+        .fingerprint-icon.scanning .scan-line:nth-child(2) {
+            animation: scanHorizontal 1.5s infinite linear;
+        }
+
+        .fingerprint-icon .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ff00;
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 2;
+        }
+
+        .fingerprint-icon.scanning .particle {
+            animation: particleMove 3s infinite ease-in-out;
+        }
+
+        .fingerprint-icon .particle:nth-child(3) { top: 10%; left: 20%; animation-delay: 0s; }
+        .fingerprint-icon .particle:nth-child(4) { top: 80%; left: 30%; animation-delay: 0.5s; }
+        .fingerprint-icon .particle:nth-child(5) { top: 40%; left: 70%; animation-delay: 1s; }
+        .fingerprint-icon .particle:nth-child(6) { top: 60%; left: 10%; animation-delay: 1.5s; }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1) drop-shadow(0 0 5px rgba(0, 255, 0, 0.5)); }
+            50% { filter: brightness(1.2) drop-shadow(0 0 15px rgba(0, 255, 0, 0.8)); }
+        }
+
+        @keyframes rotate3D {
+            0% { transform: rotateY(0deg) rotateX(0deg); }
+            50% { transform: rotateY(10deg) rotateX(5deg); }
+            100% { transform: rotateY(0deg) rotateX(0deg); }
+        }
+
+        @keyframes ripple {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.5; }
+            100% { opacity: 0; transform: scale(1.5); }
+        }
+
+        @keyframes scanVertical {
+            0% { transform: translateY(-60px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(60px); opacity: 0; }
+        }
+
+        @keyframes scanHorizontal {
+            0% { transform: translateX(-60px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(60px); opacity: 0; }
+        }
+
+        @keyframes particleMove {
+            0% { opacity: 0; transform: translate(0, 0); }
+            50% { opacity: 1; transform: translate(10px, -10px); }
+            100% { opacity: 0; transform: translate(-10px, 10px); }
         }
 
         .dark-theme .fingerprint-icon.scanning::after {
+            background: radial-gradient(circle, rgba(215, 177, 92, 0.3) 0%, transparent 70%);
+        }
+
+        .dark-theme .fingerprint-icon .scan-line {
             background: linear-gradient(to right, transparent, #d7b15c, transparent);
+        }
+
+        .dark-theme .fingerprint-icon .scan-line:nth-child(2) {
+            background: linear-gradient(to bottom, transparent, #d7b15c, transparent);
+        }
+
+        .dark-theme .fingerprint-icon .particle {
+            background: #d7b15c;
+        }
+
+        .dark-theme .fingerprint-icon.scanning {
+            animation: glowDark 2s infinite ease-in-out, rotate3D 5s infinite linear;
+        }
+
+        @keyframes glowDark {
+            0%, 100% { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(215, 177, 92, 0.5)); }
+            50% { filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(215, 177, 92, 0.8)); }
         }
 
         .search-container {
             width: 40%;
             position: relative;
             margin-bottom: 20px;
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.7);
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .search-container:hover {
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15), -5px -5px 20px rgba(255, 255, 255, 0.9);
         }
 
         .search-icon {
             position: absolute;
-            right: 10px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
+            transition: transform 0.3s ease;
         }
 
         .search-input {
             width: 100%;
-            height: 40px;
-            padding: 10px;
-            transition: .2s linear;
-            border: 2.5px solid black;
-            font-size: 14px;
+            height: 50px;
+            padding: 10px 40px 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
             letter-spacing: 1px;
-            border-radius: 5px;
+            background: transparent;
+            color: #333;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
         }
 
         .search-input:focus {
             outline: none;
-            border: 0.5px solid black;
-            box-shadow: -2px -1px 0px black;
+            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.15), inset -3px -3px 8px rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input::placeholder {
+            color: #999;
+            font-style: italic;
         }
 
         .search-container:hover > .search-icon {
@@ -545,29 +651,51 @@
         }
 
         @keyframes anim {
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(-50%) scale(1);
             }
-
             50% {
-                transform: translateY(-50%) scale(1.1);
+                transform: translateY(-50%) scale(1.2);
             }
+        }
+
+        .dark-theme .search-container {
+            background: linear-gradient(145deg, #3a3b3c, #2c2d2e);
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-theme .search-container:hover {
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4), -5px -5px 20px rgba(255, 255, 255, 0.15);
         }
 
         .dark-theme .search-input {
-            background-color: #3a3b3c;
             color: #ffffff;
-            border-color: #d8dbe0;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3), inset -2px -2px 5px rgba(255, 255, 255, 0.1);
         }
 
         .dark-theme .search-input:focus {
-            border-color: #d8dbe0;
-            box-shadow: -5px -5px 0px #d8dbe0;
+            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.4), inset -3px -3px 8px rgba(255, 255, 255, 0.15);
+        }
+
+        .dark-theme .search-input::placeholder {
+            color: #bbbbbb;
         }
 
         .dark-theme .search-icon svg path {
             stroke: #ffffff;
+        }
+
+        .header p {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+
+        .dark-theme .header p {
+            color: #e0e0e0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .articles {
@@ -827,11 +955,21 @@
 
             .customization-options {
                 top: 45px;
-                width: 220px;
+                width: (argument0px;
             }
 
             .search-container {
                 width: 50%;
+            }
+
+            .fingerprint-container {
+                width: 120px;
+                height: 120px;
+            }
+
+            .fingerprint-icon::before {
+                width: 108px;
+                height: 110px;
             }
         }
 
@@ -882,7 +1020,7 @@
                 width: 200px;
             }
 
-            .fingerprint-icon {
+            .fingerprint-container {
                 width: 120px;
                 height: 120px;
             }
@@ -954,9 +1092,9 @@
             }
 
             .account-customization {
-                top: 70px; 
+                top: 70px;
                 right: 10px;
-                z-index: 998; 
+                z-index: 998;
             }
 
             .avatar-container .profile-pic {
@@ -996,14 +1134,14 @@
                 padding: 3px;
             }
 
-            .fingerprint-icon {
+            .fingerprint-container {
                 width: 90px;
                 height: 90px;
             }
 
             .fingerprint-icon::before {
-                width: 96px;
-                height: 93px;
+                width: 78px;
+                height: 80px;
             }
 
             .search-container {
@@ -1121,10 +1259,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="fingerprint-icon" id="fingerprintIcon"></div>
+                <div class="fingerprint-container">
+                    <div class="fingerprint-icon" id="fingerprintIcon">
+                        <div class="scan-line"></div>
+                        <div class="scan-line"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+                </div>
                 <div class="search-container">
                     <input type="text" class="search-input" id="searchInput" placeholder="Ask anything...">
-                    <span class="search-icon"> 
+                    <span class="search-icon">
                         <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </span>
                 </div>
@@ -1147,7 +1294,7 @@
                         </div>
                         <a href="News.html" class="border-button">
                             <span class="button-text">Read More</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>  
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>
                     </div>
                     <div class="card" data-title="Phishing and Scam">
@@ -1164,7 +1311,7 @@
                         </div>
                         <a href="News.html" class="border-button">
                             <span class="button-text">Read More</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>  
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>
                     </div>
                     <div class="card" data-title="Internet Fraud">
@@ -1181,7 +1328,7 @@
                         </div>
                         <a href="News.html" class="border-button">
                             <span class="button-text">Read More</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>  
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>
                     </div>
                     <div class="card" data-title="Ransomware Attack">
@@ -1198,7 +1345,7 @@
                         </div>
                         <a href="News.html" class="border-button">
                             <span class="button-text">Read More</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>  
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>
                     </div>
                 </div>
@@ -1263,9 +1410,9 @@
                 };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                usernameDisplay.textContent = `${currentUser.username}`; 
-                emailDisplay.textContent = `${currentUser.email}`; 
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`; 
+                usernameDisplay.textContent = `${currentUser.username}`;
+                emailDisplay.textContent = `${currentUser.email}`;
+                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
 
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
@@ -1529,10 +1676,10 @@
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
                     if (!this.href.includes(window.location.hostname)) return;
-                    
+
                     e.preventDefault();
                     loaderOverlay.classList.add('active');
-                    
+
                     setTimeout(() => {
                         window.location.href = this.href;
                     }, 150);
