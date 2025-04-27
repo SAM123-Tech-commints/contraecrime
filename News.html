@@ -107,6 +107,48 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
+        .avatar-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 101;
+        }
+
+        .avatar-loading.active {
+            display: flex;
+        }
+
+        .avatar-loading .loader {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #FFF;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .dark-theme .avatar-loading .loader {
+            border-color: #d7b15c;
+            border-bottom-color: transparent;
+        }
+
         .container {
             display: flex;
             min-height: 100vh;
@@ -275,6 +317,187 @@
             background-color: rgba(247, 247, 247, 0.9);
             z-index: 0;
             transition: background-color 0.3s ease;
+        }
+
+        .account-customization {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .user-details {
+            display: none;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar-container .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: cover;
+            border: 2px solid #000;
+            cursor: pointer;
+            color: transparent;
+            font-size: 0;
+        }
+
+        .customization-options {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            padding: 8px;
+            z-index: 100;
+            align-items: flex-start;
+            width: 300px;
+        }
+
+        .customization-options.active {
+            display: flex;
+        }
+
+        .customization-options .user-info {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #d32f2f 100%);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .customization-options .user-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/circuit.png');
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .customization-options .user-info p {
+            margin: 5px 0;
+            font-size: 12px;
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            overflow-wrap: break-word;
+        }
+
+        .customization-options .user-info p::before {
+            content: attr(data-label);
+            font-weight: 700;
+            color: #ff3333; 
+            margin-right: 5px;
+        }
+
+        .customization-options label {
+            font-size: 12px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .customization-options label:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .customization-options input[type="color"] {
+            width: 100%;
+            height: 25px;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            background: none;
+        }
+
+        .customization-options select {
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .customization-options input[type="file"] {
+            display: none;
+        }
+
+        .customization-options .file-input-label {
+            font-size: 12px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .customization-options .file-input-label:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .dark-theme .customization-options {
+            background-color: #3a3b3c;
+            border-color: #555;
+        }
+
+        .dark-theme .customization-options .user-info {
+            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            color: #e0e0e0; 
+        }
+
+        .dark-theme .customization-options .user-info p {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .customization-options .user-info p::before {
+            color: #ffeb3b; 
+        }
+
+        .dark-theme .customization-options label,
+        .dark-theme .customization-options .file-input-label {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .customization-options label:hover,
+        .dark-theme .customization-options .file-input-label:hover {
+            background-color: #4a4b4c;
+        }
+
+        .dark-theme .customization-options select {
+            background-color: #3a3b3c;
+            color: #e0e0e0;
+            border-color: #555;
         }
 
         .news-section {
@@ -626,6 +849,25 @@
             .news-section p.tagline {
                 font-size: 18px;
             }
+
+            .account-customization {
+                right: 10px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 35px;
+                height: 35px;
+            }
+
+            .avatar-loading {
+                width: 35px;
+                height: 35px;
+            }
+
+            .customization-options {
+                top: 45px;
+                width: 220px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -665,6 +907,21 @@
                 height: 150px;
                 margin-right: 0;
                 margin-bottom: 10px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
+
+            .customization-options {
+                top: 40px;
+                width: 200px;
             }
         }
 
@@ -739,6 +996,49 @@
 
             .news-section p.tagline {
                 font-size: 16px;
+            }
+
+            .account-customization {
+                top: 70px;
+                right: 10px;
+                z-index: 998;
+            }
+
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+                border-width: 1px;
+            }
+
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
+
+            .customization-options {
+                top: 40px;
+                width: 180px;
+            }
+
+            .customization-options .user-info p {
+                font-size: 10px;
+            }
+
+            .customization-options label,
+            .customization-options .file-input-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .customization-options select {
+                font-size: 10px;
+                padding: 3px;
             }
         }
     </style>
@@ -817,6 +1117,37 @@
             </div>
         </nav>
         <main class="content">
+            <div class="account-customization">
+                <div class="user-details">
+                    <!-- Hidden by default -->
+                </div>
+                <div class="avatar-container">
+                    <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                    <div class="avatar-loading" id="avatarLoading">
+                        <div class="loader"></div>
+                    </div>
+                    <div class="customization-options" id="customizationMenu">
+                        <div class="user-info" id="userInfo">
+                            <p id="usernameDisplay" data-label="Username:">Loading...</p>
+                            <p id="emailDisplay" data-label="Email:">Loading...</p>
+                            <p id="createdAtDisplay" data-label="Account Created:">Loading...</p>
+                        </div>
+                        <label class="file-input-label" for="avatarInput">Change Avatar</label>
+                        <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
+                        <label for="avatarBgColorPicker">Avatar Background Color</label>
+                        <input type="color" id="avatarBgColorPicker" value="#cccccc">
+                        <label for="borderColorPicker">Border Color</label>
+                        <input type="color" id="borderColorPicker" value="#000000">
+                        <label for="borderTypeSelect">Border Type</label>
+                        <select id="borderTypeSelect">
+                            <option value="solid">Solid</option>
+                            <option value="dashed">Dashed</option>
+                            <option value="dotted">Dotted</option>
+                            <option value="double">Double</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <section class="news-section">
                 <h1>
                     TRENDING CYBERCRIME NEWS <img src="https://i.imgur.com/VStcaPo.png" alt="Logo" style="width: 200px; height: 200px; vertical-align: middle; margin-right: 10px;">
@@ -916,8 +1247,9 @@
                         <p>MANILA: The Philippines has signed a new security agreement with the UAE to tackle transnational and organized crime, officials said on Tuesday.</p>
                         <p>Signed by Philippine Interior Secretary Juanito Victor Remulla and UAE Interior Minister Sheikh Saif bin Zayed Al-Nahyan, the new deal focuses on cybercrime, drug trafficking, and human trafficking.</p>
                         <p>“Transnational crimes with global networks powered by new technologies and the ease of cross-border movement of persons and criminal syndicates need more international cooperation and partnerships,” Alfonso Ver, Philippine ambassador to the UAE, told Arab News on Tuesday.</p>
-                        <p>“This is one concrete step to address the growing menace above … We have gone into new and heretofore unexplored areas of bilateral cooperation, moving beyond the issues of OFWs (Overseas Filipino Workers), migration, and oil,” Ver added.</p>
+                        <p>“This is one concrete step to address the growing menace above … We have gone into new and heretofore unexplored areas of bilateral cooperation, moving beyond the issues of OFWs (Overseas Filipino Workers), migration, and oil **[continues below]**
                         <p>The Philippines and the UAE celebrated 50 years of diplomatic relations last year. The two countries have been working to expand security ties over the past few years, with discussions ongoing for a wide-ranging bilateral defense pact.</p>
+                        <p>In 2021, the Philippines posted a defense attache in the United States and Canada.</p>
                         <p>In 2021, the Philippines posted a defense attache in the UAE, making it the only country in the Middle East where Manila has such representation. The two countries also signed several treaties on extradition, mutual legal assistance, and transfer of prisoners in February.</p>
                         <p>Ver said the new agreement was a “milestone” that provides a “strategic framework” that will help guide Philippine-UAE “future engagements in a more structured, sustainable, and effective” manner. It is also expected to promote the exchange of best practices and expertise.</p>
                         <p>“We discussed ways to strengthen bilateral relations between the two friendly countries and develop cooperation in the security and police fields,” Sheikh Saif said in a post on X, referring to his meeting with Remulla.</p>
@@ -1156,7 +1488,7 @@
 
                 <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://od2-image-api.abs-cbn.com/prod/2025013108014/fbd75639688f7cff92a9bfe441dd9b9dcba5dbacd973d286d076ec0309a9c443.png?w=1200&h=800" alt="News Image" class="news-image">
+                        <img src="https://od2-image-api.abs-cbn.com/prod/2025013108014/fbd75639688f7cff92a9bfe441dd9b9dcba5dbacd973d286d0761d2e4b4a303.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
                             <h2>CICC Records Over 10,000 Cybercrime Complaints in 2024</h2>
                             <div class="news-meta">Ched Rick Gatchalian - ABS-CBN News | January 31, 2025</div>
@@ -1187,56 +1519,60 @@
                         <p>The DOJ has an Office of Cybercrime (OOC) created under Republic Act No. 10175 or the Cybercrime Prevention Act of 2012 that serves as the central authority in all matters relating to international mutual assistance and extradition for cybercrime and cyber-related matters.</p>
                         <p>The OOC also acts as "the focal agency in formulating and implementing law enforcement investigation and prosecution strategies in curbing cybercrime and cyber-related offenses nationwide," according to the DOJ.</p>
                         <p>Vasquez made the statement following the arrest of a foreign national and two Filipinos suspected of engaging in months-long electronic intelligence-surveillance-reconnaissance (ISR) operations in key military and civilian infrastructures in the country.</p>
-                        <p>The DOJ confirmed that it is pursuing other members of the group who may have procured equipment used in the eavesdropping operations, even as the military said it is monitoring the role played by Philippine Online Gaming Operators (POGOs) in the alleged spying activities.</p>
-                        <p>The National Bureau of Investigation (NBI) on Wednesday likewise announced the arrest of eight foreigners in Parañaque City allegedly engaged in online phishing operations.</p>
-                        <a href="https://www.pna.gov.ph/articles/1242480" target="_blank" class="read-more">Read more</a>
+                        <p>The DOJ confirmed that it is pursuing other members of the group who may have procured equipment used in the eavesdropping operations, even as the military said it is monitoring the role played by Philippine Online Gaming Operators (POGOs) in the incident.</p>
+                        <a href="https://www.pna.gov.ph/articles/1244021" target="_blank" class="read-more">Read more</a>
                     </div>
                 </div>
 
-                <div class="news-item" data-page="2">
+                <!-- Page 3 Articles -->
+                <div class="news-item" data-page="3">
                     <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://bilyonaryo.com/wp-content/uploads/2025/01/Thiang-Choon-Wee.jpg" alt="News Image" class="news-image">
+                        <img src="https://www.csoonline.com/wp-content/uploads/2024/12/ai-cybercrime-100981137-orig.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>Malaysian Supplier of Text Scam Device Arrested in Cybercrime Sting</h2>
-                            <div class="news-meta">Max Torres Anaten - Brigada News | January 22, 2025</div>
+                            <h2>AI-Powered Cybercrime on the Rise: How to Protect Your Business</h2>
+                            <div class="news-meta">CSO Online | January 10, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="news-details">
-                        <p>A Malaysian national believed to be a key supplier of a device used in large-scale text scams was arrested in a joint operation by the Philippine National Police Anti-Cybercrime Group (PNP-ACG) and the Cybercrime Investigation and Coordinating Center (CICC).</p>
-                        <p>Authorities identified the suspect as the alleged leader of a syndicate selling International Mobile Subscriber Identity (IMSI) catchers, electronic tools designed to trace and intercept mobile phone communications.</p>
-                        <p>The CICC began monitoring the suspect's company in October last year, carefully tracking its activities until they were certain of the suspect's involvement before executing the operation.</p>
-                        <p>IMSI catchers, also known as "Stingrays" or rogue cell towers, function by imitating legitimate cell towers to deceive nearby mobile devices into connecting with them. Once connected, the device collects IMSI numbers, enabling the operator to track location, monitor activity, and intercept text messages, calls, and data traffic.</p>
-                        <p>Investigators revealed that these devices are commonly used in text scams, tricking victims into sharing personal information and enabling large-scale fraud operations.</p>
-                        <p>"This arrest is a significant breakthrough in our fight against cybercrime and text scams that target the public," said a CICC representative.</p>
-                        <p>Authorities vowed to continue cracking down on syndicates using advanced technology to commit crimes, urging the public to remain vigilant against scams.</p>
-                        <a href="https://www.brigadanews.ph/malaysian-supplier-of-text-scam-device-arrested-in-cybercrime-sting/" target="_blank" class="read-more">Read more</a>
+                        <p>AI-powered cybercrime is becoming a major threat to businesses worldwide, with hackers using machine learning to create sophisticated phishing attacks, deepfake scams, and automated hacking tools, according to a new report by CSO Online.</p>
+                        <p>The report highlights a 50% increase in AI-driven attacks in 2024, with small and medium-sized businesses being the most vulnerable due to limited cybersecurity resources.</p>
+                        <p>Experts recommend adopting AI-based defense systems, conducting regular employee training, and implementing multi-factor authentication to mitigate risks.</p>
+                        <a href="https://www.csoonline.com/article/ai-powered-cybercrime-on-the-rise" target="_blank" class="read-more">Read more</a>
                     </div>
                 </div>
 
-                <div class="news-item" data-page="2">
+                <div class="news-item" data-page="3">
                     <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://files01.pna.gov.ph/category-list/2025/01/17/4-nabbed-for-sale-of-pre-registered-sim-cards.png" alt="News Image" class="news-image">
+                        <img src="https://www.securityweek.com/wp-content/uploads/2024/11/ransomware-attacks.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>4 Nabbed in 2-Day Crackdown vs. Sale of Pre-Registered SIM Cards</h2>
-                            <div class="news-meta">Christopher Lloyd Caliwan - PNA | January 17, 2025</div>
+                            <h2>Ransomware Attacks Doubled in 2024, Targeting Healthcare and Education</h2>
+                            <div class="news-meta">SecurityWeek | January 5, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="news-details">
-                        <p>MANILA – Operatives of the Philippine National Police Anti-Cybercrime Group (PNP-ACG) have arrested four persons involved in the illegal online sale of pre-registered subscriber identity module (SIM) cards in separate operations in Laguna province and Quezon City.</p>
-                        <p>In a statement Friday, ACG acting chief Brig. Gen. Bernard Yang said cyberpatrolling activities led to an engagement with the online sellers and their eventual arrest on Jan. 13 to 14.</p>
-                        <p>The Calabarzon police's anti-cybercrime unit spotted a suspect advertising online a bundle of a fully verified e-wallet account and a SIM card priced at PHP800.</p>
-                        <p>An officer arranged to meet up with the suspect and an accomplice, both of whom the ACG did not identify, which resulted in their arrest in Cabuyao town, Laguna at 4:40 p.m. on Jan. 13.</p>
-                        <p>Meanwhile, the ACG's Cyber Financial Crime Unit (CFCU) said another suspect, alias "JP," was selling an e-wallet account with an automated teller machine (ATM) card as well as an online banking account worth PHP3,000.</p>
-                        <p>The suspect was arrested after meeting up with a police officer who acted as a buyer along Mayon Street in Quezon City at around 12:58 p.m. on Jan. 14.</p>
-                        <p>Around 2:32 p.m. on the same date, the anti-cybercrime units of Northern Police District and Quezon City Police District arrested a suspect, alias Arvin, for selling his registered SIM card, along General Araneta Avenue in Cubao, Quezon City.</p>
-                        <p>The SIM card was linked to a verified e-wallet account and was priced at PHP2,300, the ACG said in a separate report.</p>
-                        <p>All four suspects were charged with violations of the SIM Registration Act, the Anti-Financial Account Scamming Act, and the Cybercrime Prevention Act.</p>
-                        <p>The SIM card can be used for text scams or to create a social media account for scamming activities.</p>
-                        <p>Yang reminded the public that the illegal online sale of SIM cards is punishable by law, with significant fines and imprisonment.</p>
-                        <p>"It is crucial to adhere to the law and avoid involvement in such online illegal transactions to protect oneself and prevent the spread of cybercrime," he added. (PNA)</p>
-                        <a href="https://www.pna.gov.ph/articles/1242003" target="_blank" class="read-more">Read more</a>
+                        <p>Ransomware attacks surged in 2024, with a reported 100% increase in incidents compared to the previous year, particularly targeting healthcare and education sectors, according to a SecurityWeek analysis.</p>
+                        <p>Hospitals and schools, often lacking robust cybersecurity measures, were hit hard, with hackers demanding millions in ransom to restore access to critical systems.</p>
+                        <p>The report calls for increased government funding for cybersecurity in public sectors and stricter regulations on cryptocurrency payments, which are often used to pay ransoms anonymously.</p>
+                        <a href="https://www.securityweek.com/ransomware-attacks-doubled-2024" target="_blank" class="read-more">Read more</a>
+                    </div>
+                </div>
+
+                <div class="news-item" data-page="3">
+                    <div class="news-header" onclick="toggleDetails(this)">
+                        <img src="https://www.interpol.int/var/interpol/storage/images/6/1/7/8/8716-3-eng-GB/Cybercrime_operations.jpg" alt="News Image" class="news-image">
+                        <div class="news-title">
+                            <h2>INTERPOL Operation Dismantles Global Cybercrime Network</h2>
+                            <div class="news-meta">INTERPOL | January 3, 2025</div>
+                        </div>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="news-details">
+                        <p>LYON, France – INTERPOL announced the successful dismantling of a global cybercrime network responsible for millions of dollars in losses through online scams, phishing, and identity theft.</p>
+                        <p>The operation, which involved law enforcement agencies from 20 countries, led to the arrest of 150 suspects and the seizure of servers used to orchestrate the attacks.</p>
+                        <p>"This operation sends a strong message to cybercriminals: international cooperation will bring you to justice," said an INTERPOL official.</p>
+                        <a href="https://www.interpol.int/en/News-and-Events/News/2025/INTERPOL-operation-dismantles-global-cybercrime-network" target="_blank" class="read-more">Read more</a>
                     </div>
                 </div>
 
@@ -1251,74 +1587,296 @@
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
             <div class="footer-links">
                 <a href="PrivacyPolicy.html">Privacy Policy</a>
-                <a href="TermsOfUse.html">Terms of Use</a>
-                <a href="ContactUs.html">Contact Us</a>
+                <a href="TermsOfService.html">Terms of Service</a>
             </div>
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
+            authDomain: "contra-e-crime.firebaseapp.com",
+            projectId: "contra-e-crime",
+            storageBucket: "contra-e-crime.firebasestorage.app",
+            messagingSenderId: "198995444405",
+            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
+            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
+        };
+    
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+    
+        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
-        const fingerprintLoader = loaderOverlay.querySelector('.fingerprint-loader');
-        const simpleLoader = loaderOverlay.querySelector('.simple-loader');
-        const newsItems = document.querySelectorAll('.news-item');
-        const prevPageBtn = document.getElementById('prevPage');
-        const nextPageBtn = document.getElementById('nextPage');
-        const pageNumbersContainer = document.getElementById('pageNumbers');
-        const totalPages = 2;
-        let currentPage = 1;
+        const profilePic = document.getElementById('profilePic');
+        const customizationMenu = document.getElementById('customizationMenu');
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarLoading = document.getElementById('avatarLoading');
+        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+        const borderColorPicker = document.getElementById('borderColorPicker');
+        const borderTypeSelect = document.getElementById('borderTypeSelect');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const emailDisplay = document.getElementById('emailDisplay');
+        const createdAtDisplay = document.getElementById('createdAtDisplay');
     
-        function toggleDetails(header) {
-            const details = header.nextElementSibling;
-            const icon = header.querySelector('.toggle-icon');
-            details.classList.toggle('active');
-            icon.classList.toggle('active');
-        }
+        // Cloudinary Configuration
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
+        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
     
-        function updatePagination() {
-            newsItems.forEach(item => {
-                if (parseInt(item.getAttribute('data-page')) === currentPage) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                    const details = item.querySelector('.news-details');
-                    const icon = item.querySelector('.toggle-icon');
-                    details.classList.remove('active');
-                    icon.classList.remove('active');
-                }
-            });
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                const currentUser = {
+                    username: user.displayName || 'User',
+                    email: user.email,
+                    createdAt: user.metadata.creationTime
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
     
-            prevPageBtn.disabled = currentPage === 1;
-            nextPageBtn.disabled = currentPage === totalPages;
+                usernameDisplay.textContent = `${currentUser.username}`; 
+                emailDisplay.textContent = `${currentUser.email}`; 
+                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`; 
     
-            pageNumbersContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const pageNum = document.createElement('span');
-                pageNum.classList.add('page-number');
-                pageNum.textContent = i;
-                if (i === currentPage) {
-                    pageNum.classList.add('active');
-                }
-                pageNum.addEventListener('click', () => {
-                    currentPage = i;
-                    updatePagination();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+    
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.once('value', (snapshot) => {
+                    const userData = snapshot.val();
+                    if (userData) {
+                        if (userData.avatarUrl) {
+                            profilePic.src = userData.avatarUrl;
+                        } else {
+                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                        }
+                        if (userData.avatarBgColor) {
+                            profilePic.style.backgroundColor = userData.avatarBgColor;
+                            avatarBgColorPicker.value = userData.avatarBgColor;
+                        }
+                        if (userData.borderColor) {
+                            profilePic.style.borderColor = userData.borderColor;
+                            borderColorPicker.value = userData.borderColor;
+                        }
+                        if (userData.borderType) {
+                            profilePic.style.borderStyle = userData.borderType;
+                            borderTypeSelect.value = userData.borderType;
+                        }
+                    }
+                }, (error) => {
+                    console.error('Error loading user customization:', error);
+                    alert('Failed to load user customization: ' + error.message);
                 });
-                pageNumbersContainer.appendChild(pageNum);
+            } else {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
             }
-        }
+        });
     
-        function changePage(direction) {
-            currentPage += direction;
-            if (currentPage < 1) currentPage = 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-            updatePagination();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        profilePic.addEventListener('click', () => {
+            customizationMenu.classList.toggle('active');
+        });
+    
+        document.addEventListener('click', (e) => {
+            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+                customizationMenu.classList.remove('active');
+            }
+        });
+    
+        avatarInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+    
+            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            const maxSize = 2 * 1024 * 1024;
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload a valid image (JPG, JPEG, PNG).');
+                return;
+            }
+            if (file.size > maxSize) {
+                alert('Image size must be less than 2MB.');
+                return;
+            }
+    
+            const user = auth.currentUser;
+            if (!user) {
+                alert('You must be logged in to upload an avatar.');
+                avatarLoading.classList.remove('active');
+                return;
+            }
+    
+            avatarLoading.classList.add('active');
+    
+            const img = new Image();
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+    
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const maxDimension = 300;
+                let width = img.width;
+                let height = img.height;
+    
+                if (width > height) {
+                    if (width > maxDimension) {
+                        height = Math.round((height * maxDimension) / width);
+                        width = maxDimension;
+                    }
+                } else {
+                    if (height > maxDimension) {
+                        width = Math.round((width * maxDimension) / height);
+                        height = maxDimension;
+                    }
+                }
+    
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+    
+                canvas.toBlob((blob) => {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (!currentUser || !currentUser.email) {
+                        alert('User not logged in.');
+                        avatarLoading.classList.remove('active');
+                        return;
+                    }
+    
+                    const formData = new FormData();
+                    formData.append('file', blob);
+                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                    formData.append('folder', `avatars/${currentUser.email}`);
+    
+                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                                try {
+                                    const parsed = JSON.parse(text);
+                                    errorMessage = parsed.error?.message || text;
+                                } catch (e) {
+                                    errorMessage = text.includes('Invalid cloud name')
+                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                        : text.includes('Invalid upload preset')
+                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                        : text.includes('Unsigned uploads are not allowed')
+                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                        : text || 'Unknown error occurred';
+                                }
+                                throw new Error(errorMessage);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                        }
+    
+                        const avatarUrl = data.secure_url;
+                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+    
+                        database.ref(`users/${sanitizedEmail}`).update({
+                            avatarUrl: avatarUrl,
+                            updatedAt: firebase.database.ServerValue.TIMESTAMP
+                        })
+                        .then(() => {
+                            profilePic.src = avatarUrl;
+                            avatarLoading.classList.remove('active');
+                        })
+                        .catch(error => {
+                            console.error('Error saving avatar URL to Firebase:', error);
+                            alert('Failed to save avatar URL to Firebase: ' + error.message);
+                            avatarLoading.classList.remove('active');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error uploading avatar to Cloudinary:', error);
+                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                        avatarLoading.classList.remove('active');
+                    });
+                }, file.type, 0.6);
+            };
+            img.onerror = () => {
+                alert('Failed to process the image. Please try a different file.');
+                avatarLoading.classList.remove('active');
+            };
+        });
+    
+        avatarBgColorPicker.addEventListener('change', () => {
+            const color = avatarBgColorPicker.value;
+            profilePic.style.backgroundColor = color;
+    
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    avatarBgColor: color,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving avatar background color:', error);
+                    alert('Failed to save avatar background color: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the avatar background color.');
+            }
+        });
+    
+        borderColorPicker.addEventListener('change', () => {
+            const color = borderColorPicker.value;
+            profilePic.style.borderColor = color;
+    
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderColor: color,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving border color:', error);
+                    alert('Failed to save border color: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the border color.');
+            }
+        });
+    
+        borderTypeSelect.addEventListener('change', () => {
+            const borderType = borderTypeSelect.value;
+            profilePic.style.borderStyle = borderType;
+    
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderType: borderType,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving border type:', error);
+                    alert('Failed to save border type: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the border type.');
+            }
+        });
     
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
@@ -1350,38 +1908,72 @@
         // Event listener for "Read more" links to show fingerprint loader
         document.querySelectorAll('.read-more').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const href = this.getAttribute('href');
+                if (!this.href.includes(window.location.hostname)) return;
     
+                e.preventDefault();
                 loaderOverlay.classList.add('active');
-                fingerprintLoader.style.display = 'flex';
-                simpleLoader.style.display = 'none';
+                document.querySelector('.fingerprint-loader').style.display = 'flex';
     
                 setTimeout(() => {
-                    window.location.href = href;
+                    window.location.href = this.href;
                 }, 150);
             });
         });
     
-        // Optional: Event listener for other links (e.g., sidebar links) to show simple loader
-        document.querySelectorAll('a[href]:not(.read-more)').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const href = this.getAttribute('href');
+        // News pagination
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        const newsItems = document.querySelectorAll('.news-item');
+        const totalPages = Math.ceil(newsItems.length / itemsPerPage);
+        const pageNumbersContainer = document.getElementById('pageNumbers');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
     
-                    loaderOverlay.classList.add('active');
-                    fingerprintLoader.style.display = 'none';
-                    simpleLoader.style.display = 'block';
+        function displayNewsItems(page) {
+            newsItems.forEach(item => {
+                item.classList.remove('active');
+                if (parseInt(item.getAttribute('data-page')) === page) {
+                    item.classList.add('active');
+                }
+            });
     
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 150);
+            prevPageBtn.disabled = page === 1;
+            nextPageBtn.disabled = page === totalPages;
+    
+            // Update page numbers
+            pageNumbersContainer.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const pageNumber = document.createElement('span');
+                pageNumber.classList.add('page-number');
+                pageNumber.textContent = i;
+                if (i === page) {
+                    pageNumber.classList.add('active');
+                }
+                pageNumber.addEventListener('click', () => {
+                    currentPage = i;
+                    displayNewsItems(currentPage);
                 });
+                pageNumbersContainer.appendChild(pageNumber);
             }
-        });
+        }
     
-        document.addEventListener('DOMContentLoaded', () => {
-            updatePagination();
-        });
+        function changePage(direction) {
+            currentPage += direction;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            displayNewsItems(currentPage);
+        }
+    
+        // Toggle news details
+        function toggleDetails(header) {
+            const details = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            details.classList.toggle('active');
+            icon.classList.toggle('active');
+        }
+    
+        // Initial display
+        displayNewsItems(currentPage);
     </script>
+</body>
+</html>
