@@ -278,10 +278,6 @@
             z-index: 3001; 
         }
 
-        .user-details {
-            display: none;
-        }
-
         .avatar-container {
             position: relative;
             display: inline-block;
@@ -320,6 +316,22 @@
 
         .customization-options.active {
             display: flex;
+        }
+
+        .customization-options .customization-avatar {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .customization-options .customization-avatar .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #ccc;
+            border: 2px solid #000;
+            object-fit: cover;
         }
 
         .customization-options .user-info {
@@ -517,7 +529,7 @@
             width: 60%;
             height: 400px;
             background: url('https://i.imgur.com/Rj26r1i.png') no-repeat center center;
-            background-size: cover;
+            background-size: cover AECrime;
             margin: auto;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -1426,6 +1438,11 @@
                 z-index: 3002; /* Ensure it's above all other elements */
             }
 
+            .customization-options .customization-avatar .profile-pic {
+                width: 50px;
+                height: 50px;
+            }
+
             .customization-options .user-info p {
                 font-size: 10px;
             }
@@ -1518,13 +1535,15 @@
         <main class="content">
             <header class="header">
                 <div class="account-customization">
-                    <div class="user-details"></div>
                     <div class="avatar-container">
                         <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
                         <div class="avatar-loading" id="avatarLoading">
                             <div class="loader"></div>
                         </div>
                         <div class="customization-options" id="customizationMenu">
+                            <div class="avatar-container customization-avatar">
+                                <img class="profile-pic" id="profilePicDisplay" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                            </div>
                             <div class="user-info" id="userInfo">
                                 <p id="usernameDisplay" data-label="Username:">Username: Loading...</p>
                                 <p id="emailDisplay" data-label="Email:">Email: Loading...</p>
@@ -1779,19 +1798,24 @@
                     if (userData) {
                         if (userData.avatarUrl) {
                             profilePic.src = userData.avatarUrl;
+                            document.getElementById('profilePicDisplay').src = userData.avatarUrl;
                         } else {
                             profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                            document.getElementById('profilePicDisplay').src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
                         }
                         if (userData.avatarBgColor) {
                             profilePic.style.backgroundColor = userData.avatarBgColor;
+                            document.getElementById('profilePicDisplay').style.backgroundColor = userData.avatarBgColor;
                             avatarBgColorPicker.value = userData.avatarBgColor;
                         }
                         if (userData.borderColor) {
                             profilePic.style.borderColor = userData.borderColor;
+                            document.getElementById('profilePicDisplay').style.borderColor = userData.borderColor;
                             borderColorPicker.value = userData.borderColor;
                         }
                         if (userData.borderType) {
                             profilePic.style.borderStyle = userData.borderType;
+                            document.getElementById('profilePicDisplay').style.borderStyle = userData.borderType;
                             borderTypeSelect.value = userData.borderType;
                         }
                     }
@@ -1921,6 +1945,7 @@
                         })
                         .then(() => {
                             profilePic.src = avatarUrl;
+                            document.getElementById('profilePicDisplay').src = avatarUrl;
                             avatarLoading.classList.remove('active');
                         })
                         .catch(error => {
@@ -1945,6 +1970,7 @@
         avatarBgColorPicker.addEventListener('change', () => {
             const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
+            document.getElementById('profilePicDisplay').style.backgroundColor = color;
 
             const user = auth.currentUser;
             if (user) {
@@ -1965,6 +1991,7 @@
         borderColorPicker.addEventListener('change', () => {
             const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
+            document.getElementById('profilePicDisplay').style.borderColor = color;
 
             const user = auth.currentUser;
             if (user) {
@@ -1985,6 +2012,7 @@
         borderTypeSelect.addEventListener('change', () => {
             const borderType = borderTypeSelect.value;
             profilePic.style.borderStyle = borderType;
+            document.getElementById('profilePicDisplay').style.borderStyle = borderType;
 
             const user = auth.currentUser;
             if (user) {
