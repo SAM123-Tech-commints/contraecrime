@@ -70,6 +70,7 @@
             border-color: #d7b15c;
             border-bottom-color: transparent;
         }
+
         .avatar-loading {
             position: absolute;
             top: 0;
@@ -245,7 +246,7 @@
         .content {
             flex: 1;
             margin-left: 290px;
-            padding: 0 30px 15px; /* Remove top padding */
+            padding: 0 30px 15px;
             position: relative;
             background: url('https://i.imgur.com/yytZfZz.png') no-repeat center center;
             background-size: cover;
@@ -269,16 +270,16 @@
         .header {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 0; /* Remove margin-bottom to eliminate space */
+            margin-bottom: 0;
             position: relative;
-            z-index: 3000; 
+            z-index: 3000;
         }
 
         .account-customization {
             position: fixed;
             top: 10px;
             right: 20px;
-            z-index: 3001; 
+            z-index: 998;
         }
 
         .user-details {
@@ -329,11 +330,10 @@
             margin-bottom: 10px;
             width: 100%;
             padding: 10px;
-            background: linear-gradient(135deg, #d9dfe3 0%, #b8c2cc 50%, #97a5b0 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #d32f2f 100%);
             border-radius: 5px;
             position: relative;
             overflow: hidden;
-            color: #333;
         }
 
         .customization-options .user-info::before {
@@ -362,7 +362,7 @@
         .customization-options .user-info p::before {
             content: attr(data-label);
             font-weight: 700;
-            color: #ff3333; 
+            color: #ffd700;
             margin-right: 5px;
         }
 
@@ -428,8 +428,7 @@
         }
 
         .dark-theme .customization-options .user-info {
-            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-            color: #e0e0e0; 
+            background: linear-gradient(135deg, #0f1c3a 0%, #1a315f 50%, #a62626 100%);
         }
 
         .dark-theme .customization-options .user-info p {
@@ -831,6 +830,12 @@
                 height: 35px;
             }
 
+            .avatar-loading .loader {
+                width: 18px;
+                height: 18px;
+                border-width: 2px;
+            }
+
             .customization-options {
                 top: 45px;
                 width: 220px;
@@ -892,6 +897,12 @@
                 height: 30px;
             }
 
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
+
             .customization-options {
                 top: 40px;
                 width: 200px;
@@ -899,153 +910,160 @@
         }
 
         @media (max-width: 480px) {
-    /* Existing styles */
-    .container {
-        flex-direction: column;
-    }
+            .container {
+                flex-direction: column;
+            }
 
-    .mobile-nav {
-        display: block;
-    }
+            .mobile-nav {
+                display: block;
+            }
 
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: fixed;
-        padding: 10px;
-        transform: translateX(-100%);
-        z-index: 999;
-        top: 60px;
-        height: calc(100vh - 60px);
-        overflow-y: auto;
-    }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                padding: 10px;
+                transform: translateX(-100%);
+                z-index: 999;
+                top: 60px;
+                height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
 
-    .sidebar.active {
-        transform: translateX(0);
-    }
+            .sidebar.active {
+                transform: translateX(0);
+                z-index: 1000;
+            }
 
-    .sidebar h1 {
-        display: none;
-    }
+            .sidebar h1 {
+                display: none;
+            }
 
-    .sidebar ul li {
-        margin: 20px 0;
-    }
+            .sidebar ul li {
+                margin: 20px 0;
+            }
 
-    .sidebar ul li a {
-        font-size: 16px;
-    }
+            .sidebar ul li a {
+                font-size: 16px;
+            }
 
-    .dark-theme-label {
-        font-size: 16px;
-    }
+            .dark-theme-label {
+                font-size: 16px;
+            }
 
-    .content {
-        margin-left: 0;
-        padding: 80px 15px 15px;
-    }
+            .content {
+                margin-left: 0;
+                padding: 80px 15px 15px;
+            }
 
-    footer {
-        margin-left: 0;
-        padding: 10px 20px;
-        text-align: center;
-    }
+            footer {
+                margin-left: 0;
+                padding: 10px 20px;
+                text-align: center;
+            }
 
-    footer p {
-        font-size: 12px;
-    }
+            footer p {
+                font-size: 12px;
+            }
 
-    .footer-links a {
-        font-size: 12px;
-        margin: 0 8px;
-    }
+            .footer-links a {
+                font-size: 12px;
+                margin: 0 8px;
+            }
 
-    .header {
-        justify-content: center;
-    }
+            .header {
+                justify-content: center;
+            }
 
-    .contact-section h1 {
-        font-size: 36px;
-    }
+            .contact-section h1 {
+                font-size: 36px;
+            }
 
-    .contact-section p.tagline {
-        font-size: 16px;
-    }
+            .contact-section p.tagline {
+                font-size: 16px;
+            }
 
-    .contact-details .detail-item i {
-        font-size: 20px;
-    }
+            .contact-details .detail-item i {
+                font-size: 20px;
+            }
 
-    .contact-details .detail-item p {
-        font-size: 14px;
-    }
+            .contact-details .detail-item p {
+                font-size: 14px;
+            }
 
-    .contact-details .social-media a {
-        font-size: 20px;
-        width: 35px;
-        height: 35px;
-    }
+            .contact-details .social-media a {
+                font-size: 20px;
+                width: 35px;
+                height: 35px;
+            }
 
-    .contact-form input,
-    .contact-form textarea {
-        font-size: 16px;
-    }
+            .contact-form input,
+            .contact-form textarea {
+                font-size: 16px;
+            }
 
-    .contact-form textarea {
-        height: 150px;
-    }
+            .contact-form textarea {
+                height: 150px;
+            }
 
-    .contact-form button {
-        font-size: 16px;
-    }
+            .contact-form button {
+                font-size: 16px;
+            }
 
-    .confirmation-message,
-    .error-message {
-        font-size: 14px;
-    }
+            .confirmation-message,
+            .error-message {
+                font-size: 14px;
+            }
 
-    /* Hide the account-customization section in mobile view */
-    .account-customization {
-        display: none;
-    }
+            .account-customization {
+                top: 70px;
+                right: 10px;
+                z-index: 998;
+            }
 
-    .avatar-container .profile-pic {
-        width: 30px;
-        height: 30px;
-        border-width: 1px;
-    }
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+                border-width: 1px;
+            }
 
-    .avatar-loading {
-        width: 30px;
-        height: 30px;
-    }
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
 
-    .avatar-loading .loader {
-        width: 15px;
-        height: 15px;
-        border-width: 2px;
-    }
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
 
-    .customization-options {
-        top: 40px;
-        width: 180px;
-    }
+            .customization-options {
+                top: 40px;
+                width: 180px;
+                z-index: 999;
+            }
 
-    .customization-options .user-info p {
-        font-size: 10px;
-    }
+            .customization-options .user-info p {
+                font-size: 10px;
+            }
 
-    .customization-options label,
-    .customization-options .file-input-label {
-        font-size: 10px;
-        padding: 3px 6px;
-    }
+            .customization-options label,
+            .customization-options .file-input-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
 
-    .customization-options select {
-        font-size: 10px;
-        padding: 3px;
-    }
-}
+            .customization-options select {
+                font-size: 10px;
+                padding: 3px;
+            }
+
+            /* Hide account-customization when sidebar is active */
+            .sidebar.active ~ .content .account-customization {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1275,9 +1293,9 @@
                 };
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                usernameDisplay.textContent = `${currentUser.username}`; 
-                emailDisplay.textContent = `${currentUser.email}`; 
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`; 
+                usernameDisplay.textContent = `Username: ${currentUser.username}`;
+                emailDisplay.textContent = `Email: ${currentUser.email}`;
+                createdAtDisplay.textContent = `Account Created: ${new Date(currentUser.createdAt).toLocaleString()}`;
 
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
