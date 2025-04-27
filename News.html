@@ -90,6 +90,48 @@
             animation: spin 1s linear infinite;
         }
 
+        .avatar-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 101;
+        }
+
+        .avatar-loading.active {
+            display: flex;
+        }
+
+        .avatar-loading .loader {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #FFF;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        .dark-theme .avatar-loading .loader {
+            border-color: #d7b15c;
+            border-bottom-color: transparent;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -297,25 +339,6 @@
             color: #666;
             margin-bottom: 50px;
             transition: color 0.3s ease;
-        }
-
-        .avatar-container {
-            position: absolute;
-            top: 80px;
-            right: 0;
-            z-index: 2;
-        }
-
-        .avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid #8B0000;
-            transition: border-color 0.3s ease;
-        }
-
-        .dark-theme .avatar {
-            border-color: #ff6b6b;
         }
 
         .news-item {
@@ -613,6 +636,187 @@
             top: 15px;
         }
 
+        .account-customization {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .user-details {
+            display: none;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar-container .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: cover;
+            border: 2px solid #000;
+            cursor: pointer;
+            color: transparent;
+            font-size: 0;
+        }
+
+        .customization-options {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            padding: 8px;
+            z-index: 100;
+            align-items: flex-start;
+            width: 300px;
+        }
+
+        .customization-options.active {
+            display: flex;
+        }
+
+        .customization-options .user-info {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #d32f2f 100%);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .customization-options .user-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/circuit.png');
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .customization-options .user-info p {
+            margin: 5px 0;
+            font-size: 12px;
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            overflow-wrap: break-word;
+        }
+
+        .customization-options .user-info p::before {
+            content: attr(data-label);
+            font-weight: 700;
+            color: #ff3333; 
+            margin-right: 5px;
+        }
+
+        .customization-options label {
+            font-size: 12px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .customization-options label:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .customization-options input[type="color"] {
+            width: 100%;
+            height: 25px;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            background: none;
+        }
+
+        .customization-options select {
+            font-size: 12px;
+            padding: 4px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .customization-options input[type="file"] {
+            display: none;
+        }
+
+        .customization-options .file-input-label {
+            font-size: 12px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .customization-options .file-input-label:hover {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .dark-theme .customization-options {
+            background-color: #3a3b3c;
+            border-color: #555;
+        }
+
+        .dark-theme .customization-options .user-info {
+            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            color: #e0e0e0; 
+        }
+
+        .dark-theme .customization-options .user-info p {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .customization-options .user-info p::before {
+            color: #ffeb3b; 
+        }
+
+        .dark-theme .customization-options label,
+        .dark-theme .customization-options .file-input-label {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .customization-options label:hover,
+        .dark-theme .customization-options .file-input-label:hover {
+            background-color: #4a4b4c;
+        }
+
+        .dark-theme .customization-options select {
+            background-color: #3a3b3c;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -646,9 +850,23 @@
                 font-size: 18px;
             }
 
-            .avatar {
-                width: 50px;
-                height: 50px;
+            .account-customization {
+                right: 10px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 35px;
+                height: 35px;
+            }
+
+            .avatar-loading {
+                width: 35px;
+                height: 35px;
+            }
+
+            .customization-options {
+                top: 45px;
+                width: 220px;
             }
         }
 
@@ -691,9 +909,19 @@
                 margin-bottom: 10px;
             }
 
-            .avatar {
-                width: 45px;
-                height: 45px;
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
+
+            .customization-options {
+                top: 40px;
+                width: 200px;
             }
         }
 
@@ -770,14 +998,47 @@
                 font-size: 16px;
             }
 
-            .avatar-container {
-                top: 80px;
-                right: 15px;
+            .account-customization {
+                top: 70px; 
+                right: 10px;
+                z-index: 998; 
             }
 
-            .avatar {
-                width: 40px;
-                height: 40px;
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+                border-width: 1px;
+            }
+
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
+
+            .customization-options {
+                top: 40px;
+                width: 180px;
+            }
+
+            .customization-options .user-info p {
+                font-size: 10px;
+            }
+
+            .customization-options label,
+            .customization-options .file-input-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .customization-options select {
+                font-size: 10px;
+                padding: 3px;
             }
         }
     </style>
@@ -856,13 +1117,41 @@
             </div>
         </nav>
         <main class="content">
+            <div class="account-customization">
+                <div class="user-details">
+                    <!-- Hidden by default -->
+                </div>
+                <div class="avatar-container">
+                    <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                    <div class="avatar-loading" id="avatarLoading">
+                        <div class="loader"></div>
+                    </div>
+                    <div class="customization-options" id="customizationMenu">
+                        <div class="user-info" id="userInfo">
+                            <p id="usernameDisplay" data-label="Username:">Loading...</p>
+                            <p id="emailDisplay" data-label="Email:">Loading...</p>
+                            <p id="createdAtDisplay" data-label="Account Created:">Loading...</p>
+                        </div>
+                        <label class="file-input-label" for="avatarInput">Change Avatar</label>
+                        <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
+                        <label for="avatarBgColorPicker">Avatar Background Color</label>
+                        <input type="color" id="avatarBgColorPicker" value="#cccccc">
+                        <label for="borderColorPicker">Border Color</label>
+                        <input type="color" id="borderColorPicker" value="#000000">
+                        <label for="borderTypeSelect">Border Type</label>
+                        <select id="borderTypeSelect">
+                            <option value="solid">Solid</option>
+                            <option value="dashed">Dashed</option>
+                            <option value="dotted">Dotted</option>
+                            <option value="double">Double</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <section class="news-section">
                 <h1>
                     TRENDING CYBERCRIME NEWS <img src="https://i.imgur.com/VStcaPo.png" alt="Logo" style="width: 200px; height: 200px; vertical-align: middle; margin-right: 10px;">
                 </h1>
-                <div class="avatar-container">
-                    <img src="https://i.imgur.com/vEKpOsq.png" alt="Avatar" class="avatar">
-                </div>
                 <p class="tagline">Stay updated with the latest in cybercrime</p>
 
                 <!-- Page 1 Articles -->
@@ -1103,7 +1392,7 @@
                         <p>However, police colonel Andres Simbajon Jr., deputy director for administration of the PNP-ACG, told the committee that "fake news" can still be legally addressed, as it is classified as a crime under the Revised Penal Code.</p>
                         <p>One in particular is Article 154, which penalizes the "unlawful use of means of publication and unlawful utterances."</p>
                         <p>The Revised Penal Code prescribes a penalty of arresto mayor — imprisonment ranging from one month and one day to six months — for unlawful publication perspective, this comes with an additional fine ranging from P40,000 to P200,000.</p>
-                        <p>Police lieutenant colonel Anacleto Daliva, assistant chief of the PNP-ACG's legal affairs division, explained that false information can also be penalized under the Cybercrime Prevention Act through Section 6, which covers crimes under the Revised Penal Code and special laws when committed through a computer system.</p>
+                        <p>Police lieutenant colonel Anacleto Daliva, assistant chief of the PNP-ACG's legal affairs division, explained that false information can also be penalized under the Cybercrime Prevention Act through Ascertainable through Section 6, which covers crimes under the Revised Penal Code and special laws when committed through a computer system.</p>
                         <p>Meanwhile, core cybercrimes such as libel and online fraud fall under Section 4. "These are crimes where perpetrators use IT equipment, such as a cellphone or computer," Daliva said.</p>
                         <a href="https://www.philstar.com/headlines/2025/03/21/2430091/how-fake-news-punishable-law-anti-cybercrime-officers-explain" target="_blank" class="read-more">Read more</a>
                     </div>
@@ -1239,81 +1528,63 @@
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://bilyonaryo.com/wp-content/uploads/2025/01/Thiang-Choon-Wee.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
-                            <h2>Malaysian Supplier of Text Scam Device Arrested in Cybercrime Sting</h2>
-                            <div class="news-meta">Max Torres Anaten - Brigada News | January 22, 2025</div>
+                            <h2>Malaysian Supplier of Text Scam Device Arrested in Cybercrime Crackdown</h2>
+                            <div class="news-meta">Bilyonaryo | January 15, 2025</div>
                         </div>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="news-details">
-                        <p>A Malaysian national believed to be a key supplier of a device used in large-scale text scams was arrested in a joint operation by the Philippine National Police Anti-Cybercrime Group (PNP-ACG) and the Cybercrime Investigation and Coordinating Center (CICC).</p>
-                        <p>Authorities identified the suspect as the alleged leader of a syndicate selling International Mobile Subscriber Identity (IMSI) catchers, electronic tools designed to trace and intercept mobile phone communications.</p>
-                        <p>The CICC began monitoring the suspect's company in October last year, carefully tracking its activities until they were certain of the suspect's involvement before executing the operation.</p>
-                        <p>IMSI catchers, also known as "Stingrays" or rogue cell towers, function by imitating legitimate cell towers to deceive nearby mobile devices into connecting with them. Once connected, the device collects IMSI numbers, enabling the operator to track location, monitor activity, and intercept text messages, calls, and data traffic.</p>
-                        <p>Investigators revealed that these devices are commonly used in text scams, tricking victims into sharing personal information and enabling large-scale fraud operations.</p>
-                        <p>"This arrest is a significant breakthrough in our fight against cybercrime and text scams that target the public," said a CICC representative.</p>
-                        <p>Authorities vowed to continue cracking down on syndicates using advanced technology to commit crimes, urging the public to remain vigilant against scams.</p>
-                        <a href="https://www.brigadanews.ph/malaysian-supplier-of-text-scam-device-arrested-in-cybercrime-sting/" target="_blank" class="read-more">Read more</a>
+                        <p>A Malaysian national, identified as Thiang Choon Wee, was arrested by Philippine authorities for allegedly supplying devices used in large-scale text scam operations across Southeast Asia.</p>
+                        <p>The arrest, conducted in a joint operation by the National Bureau of Investigation (NBI) and the Cybercrime Investigation and Coordinating Center (CICC), uncovered a warehouse containing thousands of SIM cards and SMS blasting devices used to send fraudulent messages.</p>
+                        <p>"This is a significant breakthrough in our fight against cybercrime," said an NBI spokesperson. The devices were linked to scams that defrauded victims of millions of pesos, often through fake job offers and investment schemes.</p>
+                        <p>Authorities are now investigating Thiang’s network, which is believed to have ties to international crime syndicates operating in Malaysia, Thailand, and the Philippines.</p>
+                        <a href="https://bilyonaryo.com/2025/01/15/malaysian-supplier-of-text-scam-device-arrested-in-cybercrime-crackdown/" target="_blank" class="read-more">Read more</a>
                     </div>
                 </div>
 
-                <div class="news-item" data-page="2">
-                    <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://files01.pna.gov.ph/category-list/2025/01/17/4-nabbed-for-sale-of-pre-registered-sim-cards.png" alt="News Image" class="news-image">
-                        <div class="news-title">
-                            <h2>4 Nabbed in 2-Day Crackdown vs. Sale of Pre-Registered SIM Cards</h2>
-                            <div class="news-meta">Christopher Lloyd Caliwan - PNA | January 17, 2025</div>
-                        </div>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="news-details">
-                        <p>MANILA – Operatives of the Philippine National Police Anti-Cybercrime Group (PNP-ACG) have arrested four persons involved in the illegal online sale of pre-registered subscriber identity module (SIM) cards in separate operations in Laguna province and Quezon City.</p>
-                        <p>In a statement Friday, ACG acting chief Brig. Gen. Bernard Yang said cyberpatrolling activities led to an engagement with the online sellers and their eventual arrest on Jan. 13 to 14.</p>
-                        <p>The Calabarzon police's anti-cybercrime unit spotted a suspect advertising online a bundle of a fully verified e-wallet account and a SIM card priced at PHP800.</p>
-                        <p>An officer arranged to meet up with the suspect and an accomplice, both of whom the ACG did not identify, which resulted in their arrest in Cabuyao town, Laguna at 4:40 p.m. on Jan. 13.</p>
-                        <p>Meanwhile, the ACG's Cyber Financial Crime Unit (CFCU) said another suspect, alias "JP," was selling an e-wallet account with an automated teller machine (ATM) card as well as an online banking account worth PHP3,000.</p>
-                        <p>The suspect was arrested after meeting up with a police officer who acted as a buyer along Mayon Street in Quezon City at around 12:58 p.m. on Jan. 14.</p>
-                        <p>Around 2:32 p.m. on the same date, the anti-cybercrime units of Northern Police District and Quezon City Police District arrested a suspect, alias Arvin, for selling his registered SIM card, along General Araneta Avenue in Cubao, Quezon City.</p>
-                        <p>The SIM card was linked to a verified e-wallet account and was priced at PHP2,300, the ACG said in a separate report.</p>
-                        <p>All four suspects were charged with violations of the SIM Registration Act, the Anti-Financial Account Scamming Act, and the Cybercrime Prevention Act.</p>
-                        <p>The SIM card can be used for text scams or to create a social media account for scamming activities.</p>
-                        <p>Yang reminded the public that the illegal online sale of SIM cards is punishable by law, with significant fines and imprisonment.</p>
-                        <p>"It is crucial to adhere to the law and avoid involvement in such online illegal transactions to protect oneself and prevent the spread of cybercrime," he added. (PNA)</p>
-                        <a href="https://www.pna.gov.ph/articles/1242003" target="_blank" class="read-more">Read more</a>
-                    </div>
-                </div>
-
-                <div class="pagination">
-                    <button id="prevPage" onclick="changePage(-1)">Previous</button>
+                <div class="pagination" id="pagination">
+                    <button onclick="changePage('prev')" id="prevPage">Previous</button>
                     <div class="page-numbers" id="pageNumbers"></div>
-                    <button id="nextPage" onclick="changePage(1)">Next</button>
+                    <button onclick="changePage('next')" id="nextPage">Next</button>
                 </div>
             </section>
         </main>
+
         <footer>
-            <p>© 2025 Contra E-Crime. All rights reserved.</p>
+            <p>&copy; 2025 Contra E-Crime. All rights reserved.</p>
             <div class="footer-links">
                 <a href="PrivacyPolicy.html">Privacy Policy</a>
-                <a href="TermsOfUse.html">Terms of Use</a>
+                <a href="TermsOfService.html">Terms of Service</a>
                 <a href="ContactUs.html">Contact Us</a>
             </div>
         </footer>
     </div>
 
     <script>
+    
+
+        // Dark theme toggle
         const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
+        themeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        });
+
+        // Apply saved theme on load
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
+
+        // Mobile menu toggle
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
-        const loaderOverlay = document.getElementById('loaderOverlay');
-        const fingerprintLoader = loaderOverlay.querySelector('.fingerprint-loader');
-        const simpleLoader = loaderOverlay.querySelector('.simple-loader');
-        const newsItems = document.querySelectorAll('.news-item');
-        const prevPageBtn = document.getElementById('prevPage');
-        const nextPageBtn = document.getElementById('nextPage');
-        const pageNumbersContainer = document.getElementById('pageNumbers');
-        const totalPages = 2;
-        let currentPage = 1;
+        mobileMenuIcon.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            mobileMenuIcon.innerHTML = sidebar.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
 
+        // News details toggle
         function toggleDetails(header) {
             const details = header.nextElementSibling;
             const icon = header.querySelector('.toggle-icon');
@@ -1321,85 +1592,167 @@
             icon.classList.toggle('active');
         }
 
+        // Pagination logic
+        const newsItems = document.querySelectorAll('.news-item');
+        const pageNumbersContainer = document.getElementById('pageNumbers');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const itemsPerPage = 10;
+        let currentPage = 1;
+        const totalPages = Math.ceil(newsItems.length / itemsPerPage);
+
         function updatePagination() {
             newsItems.forEach(item => {
-                if (parseInt(item.getAttribute('data-page')) === currentPage) {
+                item.classList.remove('active');
+                const page = parseInt(item.getAttribute('data-page'));
+                if (page === currentPage) {
                     item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                    const details = item.querySelector('.news-details');
-                    const icon = item.querySelector('.toggle-icon');
-                    details.classList.remove('active');
-                    icon.classList.remove('active');
                 }
             });
 
-            prevPageBtn.disabled = currentPage === 1;
-            nextPageBtn.disabled = currentPage === totalPages;
-
             pageNumbersContainer.innerHTML = '';
             for (let i = 1; i <= totalPages; i++) {
-                const pageNum = document.createElement('span');
-                pageNum.classList.add('page-number');
-                pageNum.textContent = i;
+                const pageNumber = document.createElement('span');
+                pageNumber.className = 'page-number';
+                pageNumber.textContent = i;
                 if (i === currentPage) {
-                    pageNum.classList.add('active');
+                    pageNumber.classList.add('active');
                 }
-                pageNum.addEventListener('click', () => {
+                pageNumber.addEventListener('click', () => {
                     currentPage = i;
                     updatePagination();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
-                pageNumbersContainer.appendChild(pageNum);
+                pageNumbersContainer.appendChild(pageNumber);
             }
+
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages;
         }
 
         function changePage(direction) {
-            currentPage += direction;
-            if (currentPage < 1) currentPage = 1;
-            if (currentPage > totalPages) currentPage = totalPages;
+            if (direction === 'prev' && currentPage > 1) {
+                currentPage--;
+            } else if (direction === 'next' && currentPage < totalPages) {
+                currentPage++;
+            }
             updatePagination();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        if (localStorage.getItem('darkTheme') === 'enabled') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
+        // Initialize pagination
+        updatePagination();
 
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
+        // Avatar customization
+        const profilePic = document.getElementById('profilePic');
+        const customizationMenu = document.getElementById('customizationMenu');
+        const avatarInput = document.getElementById('avatarInput');
+        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+        const borderColorPicker = document.getElementById('borderColorPicker');
+        const borderTypeSelect = document.getElementById('borderTypeSelect');
+        const avatarLoading = document.getElementById('avatarLoading');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const emailDisplay = document.getElementById('emailDisplay');
+        const createdAtDisplay = document.getElementById('createdAtDisplay');
+
+        // Simulated user data (replace with actual user data fetching if needed)
+        const userData = {
+            username: "CyberGuardian",
+            email: "guardian@example.com",
+            createdAt: "2023-01-15"
+        };
+
+        // Display user info
+        usernameDisplay.textContent = userData.username;
+        emailDisplay.textContent = userData.email;
+        createdAtDisplay.textContent = userData.createdAt;
+
+        // Toggle customization menu
+        profilePic.addEventListener('click', () => {
+            customizationMenu.classList.toggle('active');
+        });
+
+        // Close menu if clicking outside
+        document.addEventListener('click', (e) => {
+            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+                customizationMenu.classList.remove('active');
             }
         });
 
-        mobileMenuIcon.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+        // Load saved avatar settings
+        const savedAvatar = localStorage.getItem('avatar');
+        const savedBgColor = localStorage.getItem('avatarBgColor') || '#cccccc';
+        const savedBorderColor = localStorage.getItem('borderColor') || '#000000';
+        const savedBorderType = localStorage.getItem('borderType') || 'solid';
+
+        if (savedAvatar) {
+            profilePic.src = savedAvatar;
+        }
+        profilePic.style.backgroundColor = savedBgColor;
+        profilePic.style.borderColor = savedBorderColor;
+        profilePic.style.borderStyle = savedBorderType;
+
+        avatarBgColorPicker.value = savedBgColor;
+        borderColorPicker.value = savedBorderColor;
+        borderTypeSelect.value = savedBorderType;
+
+        // Handle avatar image upload
+        avatarInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Please upload a valid image (JPEG, PNG, or JPG).');
+                    return;
+                }
+
+                avatarLoading.classList.add('active');
+                setTimeout(() => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        profilePic.src = reader.result;
+                        localStorage.setItem('avatar', reader.result);
+                        avatarLoading.classList.remove('active');
+                    };
+                    reader.readAsDataURL(file);
+                }, 1500);
             }
         });
 
-        window.addEventListener('load', function() {
-            loaderOverlay.classList.add('active');
-            fingerprintLoader.style.display = 'flex';
-            setTimeout(() => {
-                fingerprintLoader.style.display = 'none';
-                simpleLoader.style.display = 'block';
+        // Handle background color change
+        avatarBgColorPicker.addEventListener('input', (e) => {
+            profilePic.style.backgroundColor = e.target.value;
+            localStorage.setItem('avatarBgColor', e.target.value);
+        });
+
+        // Handle border color change
+        borderColorPicker.addEventListener('input', (e) => {
+            profilePic.style.borderColor = e.target.value;
+            localStorage.setItem('borderColor', e.target.value);
+        });
+
+        borderTypeSelect.addEventListener('change', (e) => {
+            profilePic.style.borderStyle = e.target.value;
+            localStorage.setItem('borderType', e.target.value);
+        });
+
+        document.querySelectorAll('.read-more').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); 
+                const loaderOverlay = document.getElementById('loaderOverlay');
+                const fingerprintLoader = document.querySelector('.fingerprint-loader');
+                const simpleLoader = document.querySelector('.simple-loader');
+
+                loaderOverlay.classList.add('active');
+                if (window.innerWidth <= 480) {
+                    simpleLoader.style.display = 'block';
+                } else {
+                    fingerprintLoader.style.display = 'flex';
+                }
+
                 setTimeout(() => {
                     loaderOverlay.classList.remove('active');
-                    updatePagination();
-                }, 1000);
-            }, 2000);
+                    window.open(link.href, '_blank'); 
+                }, 2000);
+            });
         });
     </script>
 </body>
