@@ -109,6 +109,7 @@
             height: 100vh;
             position: fixed;
             transition: transform 0.3s ease;
+            z-index: 1000; /* Ensure sidebar is above most elements but below customization menu */
         }
 
         .sidebar h1 {
@@ -274,7 +275,7 @@
             position: fixed;
             top: 10px;
             right: 20px;
-            z-index: 3001;
+            z-index: 3001; 
         }
 
         .user-details {
@@ -312,7 +313,7 @@
             display: none;
             flex-direction: column;
             padding: 8px;
-            z-index: 3002;
+            z-index: 3002; /* Ensure it's above all other elements */
             align-items: flex-start;
             width: 300px;
         }
@@ -1037,7 +1038,7 @@
             padding: 15px;
             position: fixed;
             width: 100%;
-            z-index: 1000;
+            z-index: 1000; /* Mobile nav should be below customization menu */
         }
 
         .mobile-nav .logo {
@@ -1215,7 +1216,7 @@
                 position: fixed;
                 padding: 15px;
                 transform: translateX(-100%);
-                z-index: 999;
+                z-index: 999; /* Sidebar in mobile view should be below customization menu */
                 top: 60px;
                 height: calc(100vh - 60px);
                 overflow-y: auto;
@@ -1399,7 +1400,7 @@
             .account-customization {
                 top: 70px;
                 right: 10px;
-                z-index: 998;
+                z-index: 3001; /* Ensure it's above mobile nav (1000) and sidebar (999) */
             }
 
             .avatar-container .profile-pic {
@@ -1422,6 +1423,7 @@
             .customization-options {
                 top: 60px;
                 width: 180px;
+                z-index: 3002; /* Ensure it's above all other elements */
             }
 
             .customization-options .user-info p {
