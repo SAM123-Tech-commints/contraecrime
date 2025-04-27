@@ -292,8 +292,8 @@
         }
 
         .avatar-container .profile-pic {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background-color: #ccc;
             display: flex;
@@ -899,153 +899,154 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .mobile-nav {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: fixed;
-                padding: 10px;
-                transform: translateX(-100%);
-                z-index: 999;
-                top: 60px;
-                height: calc(100vh - 60px);
-                overflow-y: auto;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .sidebar h1 {
-                display: none;
-            }
-
-            .sidebar ul li {
-                margin: 20px 0;
-            }
-
-            .sidebar ul li a {
-                font-size: 16px;
-            }
-
-            .dark-theme-label {
-                font-size: 16px;
-            }
-
-            .content {
-                margin-left: 0;
-                padding: 80px 15px 15px;
-            }
-
-            footer {
-                margin-left: 0;
-                padding: 10px 20px;
-                text-align: center;
-            }
-
-            footer p {
-                font-size: 12px;
-            }
-
-            .footer-links a {
-                font-size: 12px;
-                margin: 0 8px;
-            }
-
-            .header {
-                justify-content: center;
-            }
-
-            .contact-section h1 {
-                font-size: 36px;
-            }
-
-            .contact-section p.tagline {
-                font-size: 16px;
-            }
-
-            .contact-details .detail-item i {
-                font-size: 20px;
-            }
-
-            .contact-details .detail-item p {
-                font-size: 14px;
-            }
-
-            .contact-details .social-media a {
-                font-size: 20px;
-                width: 35px;
-                height: 35px;
-            }
-
-            .contact-form input,
-            .contact-form textarea {
-                font-size: 16px;
-            }
-
-            .contact-form textarea {
-                height: 150px;
-            }
-
-            .contact-form button {
-                font-size: 16px;
-            }
-
-            .confirmation-message,
-            .error-message {
-                font-size: 14px;
-            }
-
-            .account-customization {
-                top: 10px;
-                right: 10px;
-            }
-
-            .avatar-container .profile-pic {
-                width: 30px;
-                height: 30px;
-                border-width: 1px;
-            }
-
-            .avatar-loading {
-                width: 30px;
-                height: 30px;
-            }
-
-            .avatar-loading .loader {
-                width: 15px;
-                height: 15px;
-                border-width: 2px;
-            }
-
-            .customization-options {
-                top: 40px;
-                width: 180px;
-            }
-
-            .customization-options .user-info p {
-                font-size: 10px;
-            }
-
-            .customization-options label,
-            .customization-options .file-input-label {
-                font-size: 10px;
-                padding: 3px 6px;
-            }
-
-            .customization-options select {
-                font-size: 10px;
-                padding: 3px;
-            }
+            @media (max-width: 480px) {
+        .container {
+            flex-direction: column;
         }
+
+        .mobile-nav {
+            display: block;
+        }
+
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: fixed;
+            padding: 10px;
+            transform: translateX(-100%);
+            z-index: 999;
+            top: 60px;
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar h1 {
+            display: none;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            font-size: 16px;
+        }
+
+        .dark-theme-label {
+            font-size: 16px;
+        }
+
+        .content {
+            margin-left: 0;
+            padding: 80px 15px 15px;
+        }
+
+        footer {
+            margin-left: 0;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 12px;
+        }
+
+        .footer-links a {
+            font-size: 12px;
+            margin: 0 8px;
+        }
+
+        .header {
+            justify-content: center;
+        }
+
+        .contact-section h1 {
+            font-size: 36px;
+        }
+
+        .contact-section p.tagline {
+            font-size: 16px;
+        }
+
+        .contact-details .detail-item i {
+            font-size: 20px;
+        }
+
+        .contact-details .detail-item p {
+            font-size: 14px;
+        }
+
+        .contact-details .social-media a {
+            font-size: 20px;
+            width: 35px;
+            height: 35px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            font-size: 16px;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+        }
+
+        .contact-form button {
+            font-size: 16px;
+        }
+
+        .confirmation-message,
+        .error-message {
+            font-size: 14px;
+        }
+
+        .account-customization {
+            top: 70px; 
+            right: 10px;
+            z-index: 998; 
+        }
+
+        .avatar-container .profile-pic {
+            width: 30px;
+            height: 30px;
+            border-width: 1px;
+        }
+
+        .avatar-loading {
+            width: 30px;
+            height: 30px;
+        }
+
+        .avatar-loading .loader {
+            width: 15px;
+            height: 15px;
+            border-width: 2px;
+        }
+
+        .customization-options {
+            top: 40px;
+            width: 180px;
+        }
+
+        .customization-options .user-info p {
+            font-size: 10px;
+        }
+
+        .customization-options label,
+        .customization-options .file-input-label {
+            font-size: 10px;
+            padding: 3px 6px;
+        }
+
+        .customization-options select {
+            font-size: 10px;
+            padding: 3px;
+        }
+    }
     </style>
 </head>
 <body>
