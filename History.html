@@ -493,6 +493,26 @@
             margin-bottom: 30px;
         }
 
+        .history-title-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .history-logo {
+            width: 32px;
+            height: 32px;
+            transition: transform 0.3s ease;
+        }
+
+        .history-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .dark-theme .history-logo {
+            filter: brightness(0) invert(1);
+        }
+
         .history-section h2 {
             text-align: left;
             font-size: 28px;
@@ -898,6 +918,11 @@
                 font-size: 24px;
             }
 
+            .history-logo {
+                width: 28px;
+                height: 28px;
+            }
+
             .history-item {
                 padding: 12px 15px;
             }
@@ -970,6 +995,11 @@
 
             .history-section h2 {
                 font-size: 22px;
+            }
+
+            .history-logo {
+                width: 26px;
+                height: 26px;
             }
 
             .clear-all-btn {
@@ -1090,6 +1120,11 @@
 
             .history-section h2 {
                 font-size: 20px;
+            }
+
+            .history-logo {
+                width: 24px;
+                height: 24px;
             }
 
             .history-header {
@@ -1250,7 +1285,10 @@
             </header>
             <section class="history-section">
                 <div class="history-header">
-                    <h2>Search History</h2>
+                    <div class="history-title-container">
+                        <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History Logo" class="history-logo">
+                        <h2>Search History</h2>
+                    </div>
                     <button class="clear-all-btn" id="clearAllBtn">
                         <i class="fas fa-trash-alt"></i> Clear All History
                     </button>
