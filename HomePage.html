@@ -767,14 +767,12 @@
         }
 
         .cybercrime-title {
-            overflow: clip;
             width: 100%;
             font-size: 1.2rem;
             font-weight: 600;
             color: var(--light);
             text-transform: capitalize;
-            text-wrap: nowrap;
-            text-overflow: ellipsis;
+            text-wrap: wrap;
         }
 
         .cybercrime-description {
@@ -2058,12 +2056,11 @@
 
                 const data = await response.json();
                 return {
-                    mainLaw: data.mainLaw, // Expected to return the title of the main law
-                    alternativeLaws: data.alternativeLaws // Expected to return an array of 4 alternative law titles
+                    mainLaw: data.mainLaw, 
+                    alternativeLaws: data.alternativeLaws
                 };
             } catch (error) {
                 console.error('Error fetching laws from AI:', error);
-                // Fallback to local fuzzy search if AI API fails
                 const fuse = new Fuse(laws, {
                     keys: ['title', 'description', 'scenarios'],
                     threshold: 0.4,
