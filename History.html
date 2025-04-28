@@ -45,7 +45,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .loader-overlay.active {
+        .loader-overlay.active g {
             opacity: 1;
             pointer-events: all;
         }
@@ -496,33 +496,37 @@
         .history-title-container {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
-        .history-logo {
-            width: 32px;
-            height: 32px;
-            transition: transform 0.3s ease;
+        .dark-theme .history-title-container {
+            background-color: rgba(45, 55, 72, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .history-logo:hover {
-            transform: scale(1.1);
-        }
-
-        .dark-theme .history-logo {
-            filter: brightness(0) invert(1);
-        }
-
-        .history-section h2 {
-            text-align: left;
+        .history-title-container h2 {
             font-size: 28px;
             font-weight: 700;
             margin: 0;
             color: #2d3748;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
-        .dark-theme .history-section h2 {
+        .dark-theme .history-title-container h2 {
+            color: #e2e8f0;
+        }
+
+        .history-title-container i {
+            font-size: 20px;
+            color: #2d3748;
+        }
+
+        .dark-theme .history-title-container i {
             color: #e2e8f0;
         }
 
@@ -914,13 +918,12 @@
                 width: 220px;
             }
 
-            .history-section h2 {
+            .history-title-container h2 {
                 font-size: 24px;
             }
 
-            .history-logo {
-                width: 28px;
-                height: 28px;
+            .history-title-container i {
+                font-size: 18px;
             }
 
             .history-item {
@@ -993,13 +996,12 @@
                 width: 200px;
             }
 
-            .history-section h2 {
+            .history-title-container h2 {
                 font-size: 22px;
             }
 
-            .history-logo {
-                width: 26px;
-                height: 26px;
+            .history-title-container i {
+                font-size: 16px;
             }
 
             .clear-all-btn {
@@ -1118,13 +1120,12 @@
                 padding: 3px;
             }
 
-            .history-section h2 {
+            .history-title-container h2 {
                 font-size: 20px;
             }
 
-            .history-logo {
-                width: 24px;
-                height: 24px;
+            .history-title-container i {
+                font-size: 14px;
             }
 
             .history-header {
@@ -1286,8 +1287,8 @@
             <section class="history-section">
                 <div class="history-header">
                     <div class="history-title-container">
-                        <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History Logo" class="history-logo">
                         <h2>Search History</h2>
+                        <i class="fas fa-search"></i>
                     </div>
                     <button class="clear-all-btn" id="clearAllBtn">
                         <i class="fas fa-trash-alt"></i> Clear All History
