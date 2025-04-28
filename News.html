@@ -1204,7 +1204,7 @@
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="news-details">
-                        <p>A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an "inflection point," with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers.</p>
+                        <p>United Nations report warns that cyber fraud originating in Southeast Asia has reached an "inflection point," with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers.</p>
                         <p>The UN Office on Drugs and Crime (UNODC) report, released on April 22, details how scam operations in countries like Cambodia, Myanmar, and the Philippines have scaled up, using advanced tech to target victims worldwide with fraudulent calls, texts, and online schemes.</p>
                         <p>"These are not small-time operations anymore," the report notes. "They are highly organized, transnational crime syndicates that generated an estimated $40 billion in 2024, with no signs of slowing down."</p>
                         <p>The UNODC also emphasizes the human trafficking element, noting that many workers in these scam centers are victims themselves, forced to participate under threat of violence or death.</p>
@@ -1613,7 +1613,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script>
-        // Firebase Configuration
+ 
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
@@ -1624,12 +1624,10 @@
             databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
         };
     
-        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
     
-        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1646,7 +1644,6 @@
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
     
-        // Cloudinary Configuration
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
     
@@ -1920,8 +1917,7 @@
                 icon.classList.add('fa-bars');
             }
         });
-    
-        // Event listener for "Read more" links to show fingerprint loader
+ 
         document.querySelectorAll('.read-more').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (!this.href.includes(window.location.hostname)) return;
@@ -1936,8 +1932,7 @@
                 }, 150);
             });
         });
-    
-        // Event listener for sidebar links to show simple loader (yellow spinner)
+
         document.querySelectorAll('.sidebar a[href]:not(.read-more)').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
@@ -1954,8 +1949,7 @@
                 });
             }
         });
-    
-        // News pagination
+
         let currentPage = 1;
         const itemsPerPage = 10;
         const newsItems = document.querySelectorAll('.news-item');
@@ -1974,8 +1968,7 @@
     
             prevPageBtn.disabled = page === 1;
             nextPageBtn.disabled = page === totalPages;
-    
-            // Update page numbers
+ 
             pageNumbersContainer.innerHTML = '';
             for (let i = 1; i <= totalPages; i++) {
                 const pageNumber = document.createElement('span');
@@ -1999,7 +1992,6 @@
             displayNewsItems(currentPage);
         }
     
-        // Toggle news details
         function toggleDetails(header) {
             const details = header.nextElementSibling;
             const icon = header.querySelector('.toggle-icon');
@@ -2007,6 +1999,5 @@
             icon.classList.toggle('active');
         }
     
-        // Initial display
         displayNewsItems(currentPage);
     </script>
