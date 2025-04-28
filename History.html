@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime</title>
+    <title>Contra E-Crime - Search History</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -290,7 +290,7 @@
         .header {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 0;
+            margin-bottom: 20px;
             position: relative;
             z-index: 3000;
         }
@@ -476,6 +476,101 @@
             border-color: #555;
         }
 
+        .history-section {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .history-section h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .dark-theme .history-section h2 {
+            color: #e0e0e0;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #d7b15c;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .dark-theme .history-item {
+            background-color: #5a4b2a;
+        }
+
+        .history-item span {
+            font-size: 16px;
+            color: #333;
+            flex: 1;
+        }
+
+        .dark-theme .history-item span {
+            color: #e0e0e0;
+        }
+
+        .history-item .timestamp {
+            font-size: 14px;
+            color: #666;
+            margin-right: 20px;
+        }
+
+        .dark-theme .history-item .timestamp {
+            color: #bbbbbb;
+        }
+
+        .history-item .delete-btn {
+            background-color: #ff3333;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .history-item .delete-btn:hover {
+            background-color: #e60000;
+        }
+
+        .history-item .delete-btn i {
+            color: white;
+            font-size: 14px;
+        }
+
+        .no-history {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .dark-theme .no-history {
+            color: #bbbbbb;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -584,6 +679,23 @@
                 top: 45px;
                 width: 220px;
             }
+
+            .history-item span {
+                font-size: 14px;
+            }
+
+            .history-item .timestamp {
+                font-size: 12px;
+            }
+
+            .history-item .delete-btn {
+                width: 25px;
+                height: 25px;
+            }
+
+            .history-item .delete-btn i {
+                font-size: 12px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -632,6 +744,10 @@
             .customization-options {
                 top: 40px;
                 width: 200px;
+            }
+
+            .history-section h2 {
+                font-size: 20px;
             }
         }
 
@@ -740,6 +856,32 @@
                 font-size: 10px;
                 padding: 3px;
             }
+
+            .history-section h2 {
+                font-size: 18px;
+            }
+
+            .history-item {
+                padding: 8px 10px;
+            }
+
+            .history-item span {
+                font-size: 12px;
+            }
+
+            .history-item .timestamp {
+                font-size: 10px;
+                margin-right: 10px;
+            }
+
+            .history-item .delete-btn {
+                width: 20px;
+                height: 20px;
+            }
+
+            .history-item .delete-btn i {
+                font-size: 10px;
+            }
         }
     </style>
 </head>
@@ -819,7 +961,7 @@
                 <div class="account-customization">
                     <div class="user-details"></div>
                     <div class="avatar-container">
-                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt=" Otobarsan avatar">
+                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
                         <div class="avatar-loading" id="avatarLoading">
                             <div class="loader"></div>
                         </div>
@@ -846,6 +988,10 @@
                     </div>
                 </div>
             </header>
+            <section class="history-section">
+                <h2>Search History</h2>
+                <ul class="history-list" id="historyList"></ul>
+            </section>
         </main>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
@@ -890,6 +1036,7 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
+        const historyList = document.getElementById('historyList');
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -931,6 +1078,60 @@
                 }, (error) => {
                     console.error('Error loading user customization:', error);
                     alert('Failed to load user customization: ' + error.message);
+                });
+
+                // Load search history
+                const historyRef = database.ref(`users/${sanitizedEmail}/searchHistory`);
+                historyRef.on('value', (snapshot) => {
+                    historyList.innerHTML = '';
+                    const searches = [];
+                    snapshot.forEach((childSnapshot) => {
+                        const search = childSnapshot.val();
+                        search.key = childSnapshot.key;
+                        searches.push(search);
+                    });
+
+                    if (searches.length === 0) {
+                        const noHistory = document.createElement('p');
+                        noHistory.className = 'no-history';
+                        noHistory.textContent = 'No search history found.';
+                        historyList.appendChild(noHistory);
+                        return;
+                    }
+
+                    // Sort searches by timestamp (newest first)
+                    searches.sort((a, b) => b.timestamp - a.timestamp);
+
+                    searches.forEach((search) => {
+                        const li = document.createElement('li');
+                        li.className = 'history-item';
+                        li.innerHTML = `
+                            <span>${search.query}</span>
+                            <span class="timestamp">${new Date(search.timestamp).toLocaleString()}</span>
+                            <button class="delete-btn" data-key="${search.key}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        `;
+                        historyList.appendChild(li);
+                    });
+
+                    // Add event listeners to delete buttons
+                    document.querySelectorAll('.delete-btn').forEach((button) => {
+                        button.addEventListener('click', () => {
+                            const key = button.getAttribute('data-key');
+                            database.ref(`users/${sanitizedEmail}/searchHistory/${key}`).remove()
+                                .then(() => {
+                                    console.log('Search deleted successfully');
+                                })
+                                .catch((error) => {
+                                    console.error('Error deleting search:', error);
+                                    alert('Failed to delete search: ' + error.message);
+                                });
+                        });
+                    });
+                }, (error) => {
+                    console.error('Error loading search history:', error);
+                    historyList.innerHTML = '<p class="no-history">Failed to load search history.</p>';
                 });
             } else {
                 localStorage.removeItem('currentUser');
