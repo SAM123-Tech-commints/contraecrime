@@ -919,155 +919,150 @@
         }
 
         @media (max-width: 480px) {
-    .container {
-        flex-direction: column;
-    }
+            .container {
+                flex-direction: column;
+            }
 
-    .mobile-nav {
-        display: block;
-    }
+            .mobile-nav {
+                display: block;
+            }
 
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: fixed;
-        padding: 10px;
-        transform: translateX(-100%);
-        z-index: 999;
-        top: 60px;
-        height: calc(100vh - 60px);
-        overflow-y: auto;
-    }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                padding: 10px;
+                transform: translateX(-100%);
+                z-index: 2999;
+                top: 60px;
+                height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
 
-    .sidebar.active {
-        transform: translateX(0);
-        z-index: 1000;
-    }
+            .sidebar.active {
+                transform: translateX(0);
+                z-index: 3000;
+            }
 
-    .sidebar h1 {
-        display: none;
-    }
+            .sidebar h1 {
+                display: none;
+            }
 
-    .sidebar ul li {
-        margin: 20px 0;
-    }
+            .sidebar ul li {
+                margin: 20px 0;
+            }
 
-    .sidebar ul li a {
-        font-size: 16px;
-    }
+            .sidebar ul li a {
+                font-size: 16px;
+            }
 
-    .dark-theme-label {
-        font-size: 16px;
-    }
+            .dark-theme-label {
+                font-size: 16px;
+            }
 
-    .content {
-        margin-left: 0;
-        padding: 80px 15px 15px;
-    }
+            .content {
+                margin-left: 0;
+                padding: 80px 15px 15px;
+            }
 
-    footer {
-        margin-left: 0;
-        padding: 10px 20px;
-        text-align: center;
-    }
+            footer {
+                margin-left: 0;
+                padding: 10px 20px;
+                text-align: center;
+            }
 
-    footer p {
-        font-size: 12px;
-    }
+            footer p {
+                font-size: 12px;
+            }
 
-    .footer-links a {
-        font-size: 12px;
-        margin: 0 8px;
-    }
+            .footer-links a {
+                font-size: 12px;
+                margin: 0 8px;
+            }
 
-    .header {
-        justify-content: center;
-    }
+            .account-customization {
+                top: 15px;
+                right: 60px;
+                z-index: 3001;
+            }
 
-    .contact-section h1 {
-        font-size: 36px;
-    }
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+                border-width: 1px;
+            }
 
-    .contact-section p.tagline {
-        font-size: 16px;
-    }
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
 
-    .contact-details .detail-item i {
-        font-size: 20px;
-    }
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
 
-    .contact-details .detail-item p {
-        font-size: 14px;
-    }
+            .customization-options {
+                top: 40px;
+                width: 180px;
+                z-index: 3002;
+            }
 
-    .contact-details .social-media a {
-        font-size: 20px;
-        width: 35px;
-        height: 35px;
-    }
+            .customization-options .user-info p {
+                font-size: 10px;
+            }
 
-    .contact-form input,
-    .contact-form textarea {
-        font-size: 16px;
-    }
+            .customization-options label,
+            .customization-options .file-input-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
 
-    .contact-form textarea {
-        height: 150px;
-    }
+            .customization-options select {
+                font-size: 10px;
+                padding: 3px;
+            }
 
-    .contact-form button {
-        font-size: 16px;
-    }
+            .saved-laws-title {
+                font-size: 20px;
+            }
 
-    .confirmation-message,
-    .error-message {
-        font-size: 14px;
-    }
+            .saved-law-item {
+                min-height: 240px;
+            }
 
-    .account-customization {
-        top: 15px; /* Align vertically with the menu icon */
-        right: 50px; /* Position to the left of the menu icon (menu icon is at right: 15px) */
-        z-index: 1001; /* Ensure it appears above other elements */
-    }
+            .saved-law-image {
+                height: 100px;
+            }
 
-    .avatar-container .profile-pic {
-        width: 30px;
-        height: 30px;
-        border-width: 1px;
-    }
+            .saved-law-title {
+                font-size: 13px;
+            }
 
-    .avatar-loading {
-        width: 30px;
-        height: 30px;
-    }
+            .saved-law-timestamp {
+                font-size: 10px;
+            }
 
-    .avatar-loading .loader {
-        width: 15px;
-        height: 15px;
-        border-width: 2px;
-    }
+            .action-btn {
+                width: 32px;
+                height: 32px;
+            }
 
-    .customization-options {
-        top: 50px; /* Position the dropdown below the avatar */
-        width: 180px;
-        z-index: 1002;
-    }
+            .action-btn i {
+                font-size: 13px;
+            }
 
-    .customization-options .user-info p {
-        font-size: 10px;
-    }
+            .saved-laws-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
 
-    .customization-options label,
-    .customization-options .file-input-label {
-        font-size: 10px;
-        padding: 3px 6px;
-    }
-
-    .customization-options select {
-        font-size: 10px;
-        padding: 3px;
-    }
-}
+            .clear-all-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>
