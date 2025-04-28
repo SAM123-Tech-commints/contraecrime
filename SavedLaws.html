@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime</title>
+    <title>Contra E-Crime - Saved Laws</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -22,11 +22,6 @@
             font-family: 'Montserrat', sans-serif;
             background-color: #f7f7f7;
             transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        body.dark-theme {
-            background-color: #121212;
-            color: #e0e0e0;
         }
 
         .loader-overlay {
@@ -79,8 +74,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 50px;
+            height: 50px;
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             display: none;
@@ -96,16 +91,7 @@
         .avatar-loading .loader {
             width: 24px;
             height: 24px;
-            border: 3px solid #FFF;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-        }
-
-        .dark-theme .avatar-loading .loader {
-            border-color: #d7b15c;
-            border-bottom-color: transparent;
+            border-width: 3px;
         }
 
         .container {
@@ -261,6 +247,8 @@
             margin-left: 290px;
             padding: 0 30px 15px;
             position: relative;
+            background: url('https://i.imgur.com/yytZfZz.png') no-repeat center center;
+            background-size: cover;
             transition: background-color 0.3s ease, margin-left 0.3s ease;
             min-height: 100vh;
             display: flex;
@@ -276,21 +264,12 @@
             height: 100%;
             background-color: rgba(247, 247, 247, 0.9);
             z-index: 0;
-            transition: background-color 0.3s ease;
-        }
-
-        .dark-theme .content {
-            background-color: #28292c;
-        }
-
-        .dark-theme .content::before {
-            background-color: rgba(40, 41, 44, 0.9);
         }
 
         .header {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 20px;
+            margin-bottom: 0;
             position: relative;
             z-index: 3000;
         }
@@ -299,7 +278,7 @@
             position: fixed;
             top: 10px;
             right: 20px;
-            z-index: 3001;
+            z-index: 998;
         }
 
         .user-details {
@@ -328,7 +307,7 @@
 
         .customization-options {
             position: absolute;
-            top: 60px;
+            top: 50px;
             right: 0;
             background-color: #fff;
             border: 1px solid #ddd;
@@ -480,7 +459,7 @@
             flex: 1;
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             width: 100%;
             padding: 20px 0;
@@ -493,119 +472,165 @@
             margin-bottom: 30px;
         }
 
-        .saved-laws-title {
+        .saved-laws-title-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-theme .saved-laws-title-container {
+            background-color: rgba(45, 55, 72, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .saved-laws-title-container h2 {
             font-size: 28px;
             font-weight: 700;
             margin: 0;
             color: #2d3748;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
-            position: relative;
+            text-transform: uppercase;
         }
 
-        .saved-laws-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: #d7b15c;
-        }
-
-        .dark-theme .saved-laws-title {
+        .dark-theme .saved-laws-title-container h2 {
             color: #e2e8f0;
         }
 
-        .dark-theme .saved-laws-title::after {
-            background-color: #ecc94b;
+        .saved-laws-title-container img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .clear-all-btn {
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clear-all-btn:hover {
+            background-color: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .clear-all-btn:active {
+            transform: translateY(0);
+        }
+
+        .dark-theme .clear-all-btn {
+            background-color: #9b2c2c;
+        }
+
+        .dark-theme .clear-all-btn:hover {
+            background-color: #7f2525;
         }
 
         .saved-laws-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
-            padding: 0;
-            margin: 0;
         }
 
-        .saved-law-item {
+        .law-card {
             background-color: #ffffff;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
 
-        .saved-law-item:hover {
-            transform: translateY(-5px);
+        .law-card:hover {
+            transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.15);
         }
 
-        .dark-theme .saved-law-item {
+        .dark-theme .law-card {
             background-color: #2d3748;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
         }
 
-        .dark-theme .saved-law-item:hover {
+        .dark-theme .law-card:hover {
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .saved-law-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-bottom: 3px solid #d7b15c;
+        .law-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: #d7b15c;
+            transition: width 0.3s ease;
         }
 
-        .dark-theme .saved-law-image {
-            border-bottom-color: #ecc94b;
+        .law-card:hover::before {
+            width: 8px;
         }
 
-        .saved-law-content {
-            padding: 15px;
-            flex: 1;
+        .dark-theme .law-card::before {
+            background-color: #ecc94b;
+        }
+
+        .law-card-header {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
-        .saved-law-title {
+        .law-card-header img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .law-card-header h3 {
             font-size: 16px;
             font-weight: 600;
+            margin: 0;
             color: #2d3748;
-            margin: 0 0 8px;
-            text-align: center;
         }
 
-        .dark-theme .saved-law-title {
+        .dark-theme .law-card-header h3 {
             color: #e2e8f0;
         }
 
-        .saved-law-timestamp {
-            font-size: 12px;
+        .law-card p {
+            font-size: 14px;
             color: #718096;
-            margin: 0 0 12px;
-            text-align: center;
+            margin: 5px 0;
         }
 
-        .dark-theme .saved-law-timestamp {
+        .dark-theme .law-card p {
             color: #a0aec0;
         }
 
-        .saved-law-actions {
+        .law-card-actions {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             gap: 10px;
-            margin-top: auto;
+            margin-top: 10px;
         }
 
         .action-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            background-color: transparent;
             border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -614,12 +639,12 @@
         }
 
         .download-btn {
-            background-color: #d7b15c;
-            color: white;
+            color: #d7b15c;
         }
 
         .download-btn:hover {
-            background-color: #b8973e;
+            background-color: #d7b15c;
+            color: white;
             transform: scale(1.1);
         }
 
@@ -628,20 +653,21 @@
         }
 
         .dark-theme .download-btn {
-            background-color: #ecc94b;
+            color: #ecc94b;
         }
 
         .dark-theme .download-btn:hover {
-            background-color: #d4b038;
+            background-color: #ecc94b;
+            color: #121212;
         }
 
         .delete-btn {
-            background-color: #e53e3e;
-            color: white;
+            color: #e53e3e;
         }
 
         .delete-btn:hover {
-            background-color: #c53030;
+            background-color: #e53e3e;
+            color: white;
             transform: scale(1.1);
         }
 
@@ -650,11 +676,11 @@
         }
 
         .dark-theme .delete-btn {
-            background-color: #f56565;
+            color: #f56565;
         }
 
         .dark-theme .delete-btn:hover {
-            background-color: #db4949;
+            background-color: #e53e3e;
         }
 
         .action-btn i {
@@ -713,13 +739,22 @@
             background-color: #1a1a1a;
         }
 
+        body.dark-theme {
+            background-color: #28292c;
+            color: #d8dbe0;
+        }
+
+        .dark-theme .content::before {
+            background-color: rgba(40, 41, 44, 0.9);
+        }
+
         .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
             padding: 15px;
             position: fixed;
             width: 100%;
-            z-index: 3000;
+            z-index: 1000;
         }
 
         .mobile-nav .logo {
@@ -788,29 +823,30 @@
                 width: 220px;
             }
 
-            .saved-laws-title {
+            .saved-laws-title-container h2 {
                 font-size: 24px;
             }
 
-            .saved-law-item {
-                min-height: 280px;
+            .saved-laws-title-container img {
+                width: 18px;
+                height: 18px;
             }
 
-            .saved-law-image {
-                height: 120px;
+            .law-card {
+                padding: 15px;
             }
 
-            .saved-law-title {
-                font-size: 14px;
+            .law-card-header h3 {
+                font-size: 15px;
             }
 
-            .saved-law-timestamp {
-                font-size: 11px;
+            .law-card p {
+                font-size: 13px;
             }
 
             .action-btn {
-                width: 36px;
-                height: 36px;
+                width: 32px;
+                height: 32px;
             }
 
             .action-btn i {
@@ -866,16 +902,22 @@
                 width: 200px;
             }
 
-            .saved-laws-title {
+            .saved-laws-title-container h2 {
                 font-size: 22px;
             }
 
-            .saved-law-item {
-                min-height: 260px;
+            .saved-laws-title-container img {
+                width: 16px;
+                height: 16px;
             }
 
-            .saved-law-image {
-                height: 110px;
+            .clear-all-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .law-card {
+                padding: 12px;
             }
         }
 
@@ -894,7 +936,7 @@
                 position: fixed;
                 padding: 10px;
                 transform: translateX(-100%);
-                z-index: 2999;
+                z-index: 999;
                 top: 60px;
                 height: calc(100vh - 60px);
                 overflow-y: auto;
@@ -902,7 +944,7 @@
 
             .sidebar.active {
                 transform: translateX(0);
-                z-index: 3000;
+                z-index: 1000;
             }
 
             .sidebar h1 {
@@ -941,10 +983,14 @@
                 margin: 0 8px;
             }
 
+            .header {
+                justify-content: center;
+            }
+
             .account-customization {
                 top: 15px;
                 right: 60px;
-                z-index: 3001;
+                z-index: 998;
             }
 
             .avatar-container .profile-pic {
@@ -967,7 +1013,7 @@
             .customization-options {
                 top: 40px;
                 width: 180px;
-                z-index: 3002;
+                z-index: 999;
             }
 
             .customization-options .user-info p {
@@ -985,38 +1031,50 @@
                 padding: 3px;
             }
 
-            .saved-laws-title {
+            .saved-laws-title-container h2 {
                 font-size: 20px;
             }
 
-            .saved-law-item {
-                min-height: 240px;
+            .saved-laws-title-container img {
+                width: 14px;
+                height: 14px;
             }
 
-            .saved-law-image {
-                height: 100px;
+            .saved-laws-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
             }
 
-            .saved-law-title {
-                font-size: 13px;
+            .clear-all-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                width: 100%;
             }
 
-            .saved-law-timestamp {
-                font-size: 10px;
+            .law-card {
+                padding: 10px;
+            }
+
+            .law-card-header h3 {
+                font-size: 14px;
+            }
+
+            .law-card p {
+                font-size: 12px;
             }
 
             .action-btn {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
             }
 
             .action-btn i {
                 font-size: 13px;
             }
 
-            .saved-laws-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 15px;
+            .sidebar.active ~ .content .account-customization {
+                display: none;
             }
         }
     </style>
@@ -1126,7 +1184,13 @@
             </header>
             <section class="saved-laws-section">
                 <div class="saved-laws-header">
-                    <h2 class="saved-laws-title">Saved Legal Bookmarks</h2>
+                    <div class="saved-laws-title-container">
+                        <h2>SAVED LEGAL BOOKMARKS</h2>
+                        <img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">
+                    </div>
+                    <button class="clear-all-btn" id="clearAllBtn">
+                        <i class="fas fa-trash-alt"></i> Clear All
+                    </button>
                 </div>
                 <div class="saved-laws-grid" id="savedLawsGrid"></div>
             </section>
@@ -1175,9 +1239,7 @@
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
         const savedLawsGrid = document.getElementById('savedLawsGrid');
-
-        // Placeholder image (same as used in the example image)
-        const placeholderImage = 'https://via.placeholder.com/300x150?text=Law+Image';
+        const clearAllBtn = document.getElementById('clearAllBtn');
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -1221,7 +1283,6 @@
                     alert('Failed to load user customization: ' + error.message);
                 });
 
-                // Load saved laws
                 const savedLawsRef = database.ref(`users/${sanitizedEmail}/savedLaws`);
                 savedLawsRef.on('value', (snapshot) => {
                     savedLawsGrid.innerHTML = '';
@@ -1233,75 +1294,105 @@
                     });
 
                     if (laws.length === 0) {
-                        const noLaws = document.createElement('p');
-                        noLaws.className = 'no-saved-laws';
-                        noLaws.textContent = 'No saved laws found.';
-                        savedLawsGrid.appendChild(noLaws);
+                        savedLawsGrid.innerHTML = '<p class="no-saved-laws">No saved laws found.</p>';
+                        clearAllBtn.style.display = 'none';
                         return;
                     }
 
-                    // Sort laws by timestamp (newest first)
-                    laws.sort((a, b) => b.timestamp - a.timestamp);
+                    clearAllBtn.style.display = 'block';
+
+                    laws.sort((a, b) => b.savedAt - a.savedAt);
 
                     laws.forEach((law) => {
-                        const lawElement = document.createElement('div');
-                        lawElement.className = 'saved-law-item';
-                        lawElement.innerHTML = `
-                            <img src="${placeholderImage}" alt="Law Image" class="saved-law-image">
-                            <div class="saved-law-content">
-                                <h3 class="saved-law-title">${law.title}</h3>
-                                <p class="saved-law-timestamp">${new Date(law.timestamp).toLocaleString()}</p>
-                                <div class="saved-law-actions">
-                                    <button class="action-btn download-btn" data-title="${law.title}" data-content="${law.content}">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="action-btn delete-btn" data-key="${law.key}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
+                        const lawCard = document.createElement('div');
+                        lawCard.className = 'law-card';
+                        lawCard.innerHTML = `
+                            <div class="law-card-header">
+                                <img src="https://i.imgur.com/VChoqhD.png" alt="Law Icon">
+                                <h3>${law.title}</h3>
+                            </div>
+                            <p>${new Date(law.savedAt).toLocaleString()}</p>
+                            <div class="law-card-actions">
+                                <button class="action-btn download-btn" data-law='${JSON.stringify(law)}'>
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn delete-btn" data-key="${law.key}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
                             </div>
                         `;
-                        savedLawsGrid.appendChild(lawElement);
+                        savedLawsGrid.appendChild(lawCard);
                     });
 
-                    // Add event listeners to download buttons
-                    document.querySelectorAll('.download-btn').forEach((button) => {
-                        button.addEventListener('click', () => {
-                            const title = button.getAttribute('data-title');
-                            const content = button.getAttribute('data-content');
-                            // Mock PDF download (since actual PDF generation requires a library like jsPDF)
-                            const element = document.createElement('a');
-                            const file = new Blob([`${title}\n\n${content}`], { type: 'text/plain' });
-                            element.href = URL.createObjectURL(file);
-                            element.download = `${title}.txt`; // Mock as .txt since we can't generate PDF here
-                            document.body.appendChild(element);
-                            element.click();
-                            document.body.removeChild(element);
-                        });
-                    });
-
-                    // Add event listeners to delete buttons
                     document.querySelectorAll('.delete-btn').forEach((button) => {
                         button.addEventListener('click', () => {
                             const key = button.getAttribute('data-key');
-                            database.ref(`users/${sanitizedEmail}/savedLaws/${key}`).remove()
-                                .then(() => {
-                                    console.log('Law deleted successfully');
-                                })
-                                .catch((error) => {
-                                    console.error('Error deleting law:', error);
-                                    alert('Failed to delete law: ' + error.message);
-                                });
+                            if (confirm('Are you sure you want to delete this saved law?')) {
+                                database.ref(`users/${sanitizedEmail}/savedLaws/${key}`).remove()
+                                    .then(() => {
+                                        console.log('Law deleted successfully');
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error deleting law:', error);
+                                        alert('Failed to delete law: ' + error.message);
+                                    });
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('.download-btn').forEach((button) => {
+                        button.addEventListener('click', () => {
+                            const law = JSON.parse(button.getAttribute('data-law'));
+                            const blob = new Blob([law.content], { type: 'text/plain' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `${law.title}.txt`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
                         });
                     });
                 }, (error) => {
                     console.error('Error loading saved laws:', error);
                     savedLawsGrid.innerHTML = '<p class="no-saved-laws">Failed to load saved laws.</p>';
+                    clearAllBtn.style.display = 'none';
                 });
+
+                clearAllBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to clear all saved laws? This action cannot be undone.')) {
+                        database.ref(`users/${sanitizedEmail}/savedLaws`).remove()
+                            .then(() => {
+                                console.log('All saved laws cleared successfully');
+                                savedLawsGrid.innerHTML = '<p class="no-saved-laws">No saved laws found.</p>';
+                                clearAllBtn.style.display = 'none';
+                            })
+                            .catch((error) => {
+                                console.error('Error clearing saved laws:', error);
+                                alert('Failed to clear saved laws: ' + error.message);
+                            });
+                    }
+                });
+
+                loaderOverlay.classList.remove('active');
             } else {
-                localStorage.removeItem('currentUser');
                 window.location.href = 'index.html';
             }
+        });
+
+        themeToggle.addEventListener('change', () => {
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('darkTheme', themeToggle.checked);
+        });
+
+        if (localStorage.getItem('darkTheme') === 'true') {
+            body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
+
+        mobileMenuIcon.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
         });
 
         profilePic.addEventListener('click', () => {
@@ -1309,238 +1400,84 @@
         });
 
         document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+            if (!profilePic.contains(e.target) && !customizationMenu.contains(e.target)) {
                 customizationMenu.classList.remove('active');
             }
         });
 
-        avatarInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
+        avatarInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPG, JPEG, PNG).');
-                return;
-            }
-            if (file.size > maxSize) {
-                alert('Image size must be less than 2MB.');
-                return;
-            }
+                avatarLoading.classList.add('active');
 
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to upload an avatar.');
-                avatarLoading.classList.remove('active');
-                return;
-            }
-
-            avatarLoading.classList.add('active');
-
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxDimension = 300;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxDimension) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    }
-                } else {
-                    if (height > maxDimension) {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        alert('User not logged in.');
-                        avatarLoading.classList.remove('active');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
-                                try {
-                                    const parsed = JSON.parse(text);
-                                    errorMessage = parsed.error?.message || text;
-                                } catch (e) {
-                                    errorMessage = text.includes('Invalid cloud name')
-                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
-                                        : text.includes('Invalid upload preset')
-                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                        : text.includes('Unsigned uploads are not allowed')
-                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                        : text || 'Unknown error occurred';
-                                }
-                                throw new Error(errorMessage);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.error) {
-                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
-                        }
-
-                        const avatarUrl = data.secure_url;
-                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
+                fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.secure_url) {
+                        profilePic.src = data.secure_url;
+                        const user = auth.currentUser;
+                        const sanitizedEmail = user.email.replace(/\./g, ',');
                         database.ref(`users/${sanitizedEmail}`).update({
-                            avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
-                        })
-                        .then(() => {
-                            profilePic.src = avatarUrl;
-                            avatarLoading.classList.remove('active');
-                        })
-                        .catch(error => {
-                            console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
-                            avatarLoading.classList.remove('active');
+                            avatarUrl: data.secure_url
+                        }).catch(error => {
+                            console.error('Error saving avatar URL:', error);
+                            alert('Failed to save avatar: ' + error.message);
                         });
-                    })
-                    .catch(error => {
-                        console.error('Error uploading avatar to Cloudinary:', error);
-                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
-                        avatarLoading.classList.remove('active');
-                    });
-                }, file.type, 0.6);
-            };
-            img.onerror = () => {
-                alert('Failed to process the image. Please try a different file.');
-                avatarLoading.classList.remove('active');
-            };
-        });
-
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
-            profilePic.style.backgroundColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    } else {
+                        throw new Error('Upload failed');
+                    }
                 })
                 .catch(error => {
-                    console.error('Error saving avatar background color:', error);
-                    alert('Failed to save avatar background color: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the avatar background color.');
-            }
-        });
-
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
-            profilePic.style.borderColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    console.error('Error uploading avatar:', error);
+                    alert('Failed to upload avatar: ' + error.message);
                 })
-                .catch(error => {
-                    console.error('Error saving border color:', error);
-                    alert('Failed to save border color: ' + error.message);
+                .finally(() => {
+                    avatarLoading.classList.remove('active');
                 });
-            } else {
-                alert('You must be logged in to change the border color.');
             }
         });
 
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
-
+        avatarBgColorPicker.addEventListener('input', (e) => {
+            profilePic.style.backgroundColor = e.target.value;
             const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: borderType,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the border type.');
-            }
+            const sanitizedEmail = user.email.replace(/\./g, ',');
+            database.ref(`users/${sanitizedEmail}`).update({
+                avatarBgColor: e.target.value
+            }).catch(error => {
+                console.error('Error saving avatar background color:', error);
+                alert('Failed to save avatar background color: ' + error.message);
+            });
         });
 
-        if (localStorage.getItem('darkTheme') === 'enabled') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
+        borderColorPicker.addEventListener('input', (e) => {
+            profilePic.style.borderColor = e.target.value;
+            const user = auth.currentUser;
+            const sanitizedEmail = user.email.replace(/\./g, ',');
+            database.ref(`users/${sanitizedEmail}`).update({
+                borderColor: e.target.value
+            }).catch(error => {
+                console.error('Error saving border color:', error);
+                alert('Failed to save border color: ' + error.message);
+            });
         });
 
-        mobileMenuIcon.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
+        borderTypeSelect.addEventListener('change', (e) => {
+            profilePic.style.borderStyle = e.target.value;
+            const user = auth.currentUser;
+            const sanitizedEmail = user.email.replace(/\./g, ',');
+            database.ref(`users/${sanitizedEmail}`).update({
+                borderType: e.target.value
+            }).catch(error => {
+                console.error('Error saving border type:', error);
+                alert('Failed to save border type: ' + error.message);
+            });
         });
     </script>
 </body>
