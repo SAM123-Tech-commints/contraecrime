@@ -2222,76 +2222,65 @@
             `;
             cardsContainer.appendChild(card);
         });
-// Search functionality with AI integration
-searchInput.addEventListener('keypress', async (e) => {
-    if (e.key === 'Enter') {
-        const query = searchInput.value.trim();
 
-        if (query) {
-            fingerprintIcon.classList.add('scanning');
-            sectionTitle.textContent = 'RELEVANT LAWS';
-            loaderOverlay.classList.add('active');
+        // Search functionality with AI integration
+        searchInput.addEventListener('input', async () => {
+            const query = searchInput.value.trim();
 
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}/searchHistory`).push({
-                    query: query,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                })
-                .then(() => {
-                    console.log('Search saved successfully:', query);
-                })
-                .catch((error) => {
-                    console.error('Error saving search:', error);
-                    alert('Failed to save search: ' + error.message);
+            if (query) {
+                fingerprintIcon.classList.add('scanning');
+                sectionTitle.textContent = 'RELEVANT LAWS';
+                loaderOverlay.classList.add('active');
+
+                const user = auth.currentUser;
+                if (user) {
+                    const sanitizedEmail = user.email.replace(/\./g, ',');
+                    database.ref(`users/${sanitizedEmail}/searchHistory`).push({
+                        query: query,
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    });
+                }
+
+                try {
+                    const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+                    if (mainLaw && alternativeLaws) {
+                        renderLawCards(mainLaw, alternativeLaws);
+                    } else {
+                        cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error in search:', error);
+                    cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
+                } finally {
+                    loaderOverlay.classList.remove('active');
+                }
+            } else {
+                fingerprintIcon.classList.remove('scanning');
+                sectionTitle.textContent = 'TOP ARTICLES';
+                cardsContainer.innerHTML = '';
+                defaultCards.forEach(cardData => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="image_container">
+                            <img src="${cardData.image}" alt="Cybercrime Image">
+                        </div>
+                        <div class="cybercrime-title">
+                            <span>${cardData.title}</span>
+                        </div>
+                        <div class="cybercrime-description">
+                            <p>Cybercrime</p>
+                            <p>${cardData.description}</p>
+                        </div>
+                        <a href="News.html" class="border-button">
+                            <span class="button-text">Read More</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                        </a>
+                    `;
+                    cardsContainer.appendChild(card);
                 });
             }
-
-            try {
-                const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
-                if (mainLaw && alternativeLaws) {
-                    renderLawCards(mainLaw, alternativeLaws);
-                } else {
-                    cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
-                }
-            } catch (error) {
-                console.error('Error in search:', error);
-                cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
-            } finally {
-                loaderOverlay.classList.remove('active');
-            }
-        }
-    }
-});
-
-// Reset UI when input is cleared
-searchInput.addEventListener('input', () => {
-    const query = searchInput.value.trim();
-    if (!query) {
-        fingerprintIcon.classList.remove('scanning');
-        sectionTitle.textContent = 'TOP ARTICLES';
-        cardsContainer.innerHTML = '';
-        defaultCards.forEach(cardData => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div class="image_container">
-                    <img src="${cardData.image}" alt="Cybercrime Image">
-                </div>
-                <div class="cybercrime-title">
-                    <span>${cardData.title}</span>
-                </div>
-                <div class="cybercrime-description">
-                    <p>Cybercrime</p>
-                    <p>${cardData.description}</p>
-                </div>
-                <a href="News.html" class="border-button">
-                    <span class="button-text">Read More</span>
-                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                </a>
-            `;
-            cardsContainer.appendChild(card);
         });
-    }
-});
+    </script>
+</body>
+</html>
