@@ -487,20 +487,23 @@
         }
 
         .saved-laws-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap; 
+        gap: 20px; 
+        justify-content: flex-start;
         }
 
         .saved-laws-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0;
-            color: #2d3748;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: relative;
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0;
+        color: #2d3748;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        order: 0;
         }
 
         .saved-laws-title::after {
@@ -531,6 +534,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            order: 1;
         }
 
         .clear-all-btn:hover {
