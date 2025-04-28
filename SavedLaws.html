@@ -918,7 +918,7 @@
             }
         }
 
-@media (max-width: 480px) {
+        @media (max-width: 480px) {
     .container {
         flex-direction: column;
     }
@@ -933,7 +933,7 @@
         position: fixed;
         padding: 10px;
         transform: translateX(-100%);
-        z-index: 2999;
+        z-index: 999;
         top: 60px;
         height: calc(100vh - 60px);
         overflow-y: auto;
@@ -941,7 +941,7 @@
 
     .sidebar.active {
         transform: translateX(0);
-        z-index: 3000;
+        z-index: 1000;
     }
 
     .sidebar h1 {
@@ -980,10 +980,54 @@
         margin: 0 8px;
     }
 
+    .header {
+        justify-content: center;
+    }
+
+    .contact-section h1 {
+        font-size: 36px;
+    }
+
+    .contact-section p.tagline {
+        font-size: 16px;
+    }
+
+    .contact-details .detail-item i {
+        font-size: 20px;
+    }
+
+    .contact-details .detail-item p {
+        font-size: 14px;
+    }
+
+    .contact-details .social-media a {
+        font-size: 20px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        font-size: 16px;
+    }
+
+    .contact-form textarea {
+        height: 150px;
+    }
+
+    .contact-form button {
+        font-size: 16px;
+    }
+
+    .confirmation-message,
+    .error-message {
+        font-size: 14px;
+    }
+
     .account-customization {
         top: 15px; /* Align vertically with the menu icon */
         right: 50px; /* Position to the left of the menu icon (menu icon is at right: 15px) */
-        z-index: 3001;
+        z-index: 1001; /* Ensure it appears above other elements */
     }
 
     .avatar-container .profile-pic {
@@ -1006,7 +1050,7 @@
     .customization-options {
         top: 50px; /* Position the dropdown below the avatar */
         width: 180px;
-        z-index: 3002;
+        z-index: 1002;
     }
 
     .customization-options .user-info p {
@@ -1022,45 +1066,6 @@
     .customization-options select {
         font-size: 10px;
         padding: 3px;
-    }
-
-    .saved-laws-title {
-        font-size: 20px;
-    }
-
-    .saved-law-item {
-        min-height: 240px;
-    }
-
-    .saved-law-image {
-        height: 100px;
-    }
-
-    .saved-law-title {
-        font-size: 13px;
-    }
-
-    .saved-law-timestamp {
-        font-size: 10px;
-    }
-
-    .action-btn {
-        width: 32px;
-        height: 32px;
-    }
-
-    .action-btn i {
-        font-size: 13px;
-    }
-
-    .saved-laws-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 15px;
-    }
-
-    .clear-all-btn {
-        padding: 4px 8px;
-        font-size: 11px;
     }
 }
     </style>
