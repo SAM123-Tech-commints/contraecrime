@@ -918,23 +918,13 @@
             }
         }
 
-        @media (max-width: 480px) {
+@media (max-width: 480px) {
     .container {
         flex-direction: column;
     }
 
     .mobile-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .mobile-nav .logo {
-        font-size: 20px;
-    }
-
-    .mobile-nav .menu-icon {
-        font-size: 24px;
+        display: block;
     }
 
     .sidebar {
@@ -991,8 +981,8 @@
     }
 
     .account-customization {
-        top: 65px; /* Position below the mobile-nav */
-        right: 15px;
+        top: 15px; /* Align vertically with the menu icon */
+        right: 50px; /* Position to the left of the menu icon (menu icon is at right: 15px) */
         z-index: 3001;
     }
 
@@ -1014,7 +1004,7 @@
     }
 
     .customization-options {
-        top: 40px;
+        top: 50px; /* Position the dropdown below the avatar */
         width: 180px;
         z-index: 3002;
     }
