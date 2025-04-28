@@ -1736,7 +1736,6 @@
         pdf: "https://dtiwebfiles.s3-ap-southeast-1.amazonaws.com/Laws+and+Policies/DTi+Compendium+laws/Private+Emission+Testing+Centers/Department+Administative+Order+18-05.pdf"
     }
 ];
-
 auth.onAuthStateChanged((user) => {
     if (user) {
         const currentUser = {
@@ -1981,7 +1980,7 @@ borderTypeSelect.addEventListener('change', () => {
     }
 });
 
-if (localStorage.getItem('darkTheme') === 'enabled') {
+if (localStorage.getItem('darkTheme') === 'active') {
     body.classList.add('dark-theme');
     themeToggle.checked = true;
 }
@@ -1989,7 +1988,7 @@ if (localStorage.getItem('darkTheme') === 'enabled') {
 themeToggle.addEventListener('change', function() {
     if (this.checked) {
         body.classList.add('dark-theme');
-        localStorage.setItem('darkTheme', 'enabled');
+        localStorage.setItem('darkTheme', 'active');
     } else {
         body.classList.remove('dark-theme');
         localStorage.setItem('darkTheme', 'disabled');
@@ -2064,7 +2063,7 @@ async function fetchLawsFromAI(query) {
                 laws: laws.map(law => ({
                     title: law.title,
                     description: law.description,
-                    scenarios: law.scenarios
+                    scenario: law.scenario // Fixed mismatch: changed 'scenarios' to 'scenario' to match data structure
                 }))
             })
         });
@@ -2082,7 +2081,7 @@ async function fetchLawsFromAI(query) {
         console.error('Error fetching laws from AI:', error);
         // Fallback to local fuzzy search if AI API fails
         const fuse = new Fuse(laws, {
-            keys: ['title', 'description', 'scenarios'],
+            keys: ['title', 'description', 'scenario'], // Fixed mismatch: changed 'scenarios' to 'scenario'
             threshold: 0.4,
             distance: 100
         });
@@ -2201,34 +2200,56 @@ const defaultCards = [
     }
 ];
 
-defaultCards.forEach(cardData => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-        <div class="image_container">
-            <img src="${cardData.image}" alt="Cybercrime Image">
-        </div>
-        <div class="cybercrime-title">
-            <span>${cardData.title}</span>
-        </div>
-        <div class="cybercrime-description">
-            <p>Cybercrime</p>
-            <p>${cardData.description}</p>
-        </div>
-        <a href="News.html" class="border-button">
-            <span class="button-text">Read More</span>
-            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-        </a>
-    `;
-    cardsContainer.appendChild(card);
-});
+// Verify cardsContainer exists before rendering default cards
+if (!cardsContainer) {
+    console.error("cardsContainer element not found. Ensure <div id='cardsContainer'> exists in your HTML.");
+} else {
+    defaultCards.forEach(cardData => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div class="image_container">
+                <img src="${cardData.image}" alt="Cybercrime Image">
+            </div>
+            <div class="cybercrime-title">
+                <span>${cardData.title}</span>
+            </div>
+            <div class="cybercrime-description">
+                <p>Cybercrime</p>
+                <p>${cardData.description}</p>
+            </div>
+            <a href="News.html" class="border-button">
+                <span class="button-text">Read More</span>
+                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+            </a>
+        `;
+        cardsContainer.appendChild(card);
+    });
+}
 
-// Search functionality with AI integration
-function performSearch(query) {
+// Search functionality with AI integration and debugging
+searchInput.addEventListener('input', async () => {
+    const query = searchInput.value.trim();
+
+    // Verify fingerprintIcon and loaderOverlay exist
+    if (!fingerprintIcon) {
+        console.error("fingerprintIcon element not found. Ensure <span id='fingerprintIcon'> exists in your HTML.");
+    }
+    if (!loaderOverlay) {
+        console.error("loaderOverlay element not found. Ensure <div id='loaderOverlay'> exists in your HTML.");
+    }
+
     if (query) {
-        fingerprintIcon.classList.add('scanning');
+        console.log("Starting search for query:", query);
+        if (fingerprintIcon) {
+            fingerprintIcon.classList.add('scanning');
+            console.log("Added 'scanning' class to fingerprintIcon");
+        }
         sectionTitle.textContent = 'RELEVANT LAWS';
-        loaderOverlay.classList.add('active');
+        if (loaderOverlay) {
+            loaderOverlay.classList.add('active');
+            console.log("Added 'active' class to loaderOverlay");
+        }
 
         const user = auth.currentUser;
         if (user) {
@@ -2236,27 +2257,45 @@ function performSearch(query) {
             database.ref(`users/${sanitizedEmail}/searchHistory`).push({
                 query: query,
                 timestamp: firebase.database.ServerValue.TIMESTAMP
+            })
+            .then(() => {
+                console.log("Search history saved to Firebase");
+            })
+            .catch(error => {
+                console.error("Error saving search history to Firebase:", error);
             });
         }
 
-        fetchLawsFromAI(query)
-            .then(({ mainLaw, alternativeLaws }) => {
-                if (mainLaw && alternativeLaws) {
-                    renderLawCards(mainLaw, alternativeLaws);
-                } else {
-                    cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error in search:', error);
-                cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
-            })
-            .finally(() => {
+        try {
+            console.log("Fetching laws from AI...");
+            const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+            console.log("Fetched laws:", { mainLaw, alternativeLaws });
+            if (mainLaw && alternativeLaws) {
+                renderLawCards(mainLaw, alternativeLaws);
+                console.log("Rendered law cards");
+            } else {
+                cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
+                console.log("No relevant laws found");
+            }
+        } catch (error) {
+            console.error('Error in search:', error);
+            cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
+        } finally {
+            if (loaderOverlay) {
                 loaderOverlay.classList.remove('active');
+                console.log("Removed 'active' class from loaderOverlay");
+            }
+            if (fingerprintIcon) {
                 fingerprintIcon.classList.remove('scanning');
-            });
+                console.log("Removed 'scanning' class from fingerprintIcon");
+            }
+        }
     } else {
-        fingerprintIcon.classList.remove('scanning');
+        console.log("Query is empty, resetting to default articles");
+        if (fingerprintIcon) {
+            fingerprintIcon.classList.remove('scanning');
+            console.log("Removed 'scanning' class from fingerprintIcon (empty query)");
+        }
         sectionTitle.textContent = 'TOP ARTICLES';
         cardsContainer.innerHTML = '';
         defaultCards.forEach(cardData => {
@@ -2280,20 +2319,8 @@ function performSearch(query) {
             `;
             cardsContainer.appendChild(card);
         });
+        console.log("Rendered default cards");
     }
-}
-
-searchInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        const query = searchInput.value.trim();
-        performSearch(query);
-    }
-});
-
-// Add click event for the search icon
-document.querySelector('.search-icon').addEventListener('click', () => {
-    const query = searchInput.value.trim();
-    performSearch(query);
 });
 </script>
 </body>
