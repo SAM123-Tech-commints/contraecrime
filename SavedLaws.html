@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime - Saved Laws</title>
+    <title>Contra E-Crime</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -493,61 +493,73 @@
             margin-bottom: 30px;
         }
 
-        .saved-laws-title {
+        .saved-laws-title-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-theme .saved-laws-title-container {
+            background-color: rgba(45, 55, 72, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .saved-laws-title-container h2 {
             font-size: 28px;
             font-weight: 700;
             margin: 0;
             color: #2d3748;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
-            position: relative;
+            text-transform: uppercase;
         }
 
-        .saved-laws-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: #d7b15c;
-        }
-
-        .dark-theme .saved-laws-title {
+        .dark-theme .saved-laws-title-container h2 {
             color: #e2e8f0;
         }
 
-        .dark-theme .saved-laws-title::after {
-            background-color: #ecc94b;
+        .saved-laws-title-container i {
+            font-size: 20px;
+            color: #2d3748;
+        }
+
+        .dark-theme .saved-laws-title-container i {
+            color: #e2e8f0;
         }
 
         .clear-all-btn {
             background-color: #e53e3e;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
+            border-radius: 6px;
+            padding: 10px 20px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .clear-all-btn:hover {
             background-color: #c53030;
-            transform: scale(1.05);
+            transform: translateY(-2px);
         }
 
         .clear-all-btn:active {
-            transform: scale(0.95);
+            transform: translateY(0);
         }
 
         .dark-theme .clear-all-btn {
-            background-color: #f56565;
+            background-color: #9b2c2c;
         }
 
         .dark-theme .clear-all-btn:hover {
-            background-color: #db4949;
+            background-color: #7f2525;
         }
 
         .saved-laws-grid {
@@ -566,6 +578,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         .saved-law-item:hover {
@@ -582,15 +595,29 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
+        .saved-law-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: #d7b15c;
+            transition: width 0.3s ease;
+        }
+
+        .saved-law-item:hover::before {
+            width: 8px;
+        }
+
+        .dark-theme .saved-law-item::before {
+            background-color: #ecc94b;
+        }
+
         .saved-law-image {
             width: 100%;
             height: 150px;
             object-fit: cover;
-            border-bottom: 3px solid #d7b15c;
-        }
-
-        .dark-theme .saved-law-image {
-            border-bottom-color: #ecc94b;
         }
 
         .saved-law-content {
@@ -602,7 +629,7 @@
 
         .saved-law-title {
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 500;
             color: #2d3748;
             margin: 0 0 8px;
             text-align: center;
@@ -708,6 +735,104 @@
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+        }
+
+        .confirmation-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .dark-theme .modal-content {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 15px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .dark-theme .modal-content h3 {
+            color: #e2e8f0;
+        }
+
+        .modal-content p {
+            margin: 0 0 20px;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .dark-theme .modal-content p {
+            color: #a0aec0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .modal-btn.confirm {
+            background-color: #e53e3e;
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background-color: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn.cancel {
+            background-color: #edf2f7;
+            color: #2d3748;
+        }
+
+        .modal-btn.cancel:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .dark-theme .modal-btn.cancel {
+            background-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        .dark-theme .modal-btn.cancel:hover {
+            background-color: #5a667a;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -788,7 +913,7 @@
                 margin-left: 250px;
             }
 
-            footer {
+            .footer {
                 margin-left: 250px;
             }
 
@@ -817,8 +942,12 @@
                 width: 220px;
             }
 
-            .saved-laws-title {
+            .saved-laws-title-container h2 {
                 font-size: 24px;
+            }
+
+            .saved-laws-title-container i {
+                font-size: 18px;
             }
 
             .saved-law-item {
@@ -847,7 +976,7 @@
             }
 
             .clear-all-btn {
-                padding: 6px 12px;
+                padding: 8px 16px;
                 font-size: 13px;
             }
         }
@@ -875,7 +1004,7 @@
                 padding: 20px;
             }
 
-            footer {
+            .footer {
                 margin-left: 200px;
             }
 
@@ -900,8 +1029,12 @@
                 width: 200px;
             }
 
-            .saved-laws-title {
+            .saved-laws-title-container h2 {
                 font-size: 22px;
+            }
+
+            .saved-laws-title-container i {
+                font-size: 16px;
             }
 
             .saved-law-item {
@@ -913,8 +1046,8 @@
             }
 
             .clear-all-btn {
-                padding: 5px 10px;
-                font-size: 12px;
+                padding: 8px 16px;
+                font-size: 13px;
             }
         }
 
@@ -933,7 +1066,7 @@
                 position: fixed;
                 padding: 10px;
                 transform: translateX(-100%);
-                z-index: 2999;
+                z-index: 999;
                 top: 60px;
                 height: calc(100vh - 60px);
                 overflow-y: auto;
@@ -941,7 +1074,7 @@
 
             .sidebar.active {
                 transform: translateX(0);
-                z-index: 3000;
+                z-index: 1000;
             }
 
             .sidebar h1 {
@@ -965,13 +1098,13 @@
                 padding: 80px 15px 15px;
             }
 
-            footer {
+            .footer {
                 margin-left: 0;
                 padding: 10px 20px;
                 text-align: center;
             }
 
-            footer p {
+            .footer p {
                 font-size: 12px;
             }
 
@@ -982,8 +1115,8 @@
 
             .account-customization {
                 top: 15px;
-                right: 60px;
-                z-index: 3001;
+                right: 50px;
+                z-index: 1001;
             }
 
             .avatar-container .profile-pic {
@@ -1004,9 +1137,9 @@
             }
 
             .customization-options {
-                top: 40px;
+                top: 50px;
                 width: 180px;
-                z-index: 3002;
+                z-index: 1002;
             }
 
             .customization-options .user-info p {
@@ -1024,16 +1157,28 @@
                 padding: 3px;
             }
 
-            .saved-laws-title {
+            .saved-laws-title-container h2 {
                 font-size: 20px;
             }
 
-            .saved-law-item {
-                min-height: 240px;
+            .saved-laws-title-container i {
+                font-size: 14px;
             }
 
-            .saved-law-image {
-                height: 100px;
+            .saved-laws-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .clear-all-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                width: 100%;
+            }
+
+            .saved-law-item {
+                padding: 10px 12px;
             }
 
             .saved-law-title {
@@ -1045,22 +1190,30 @@
             }
 
             .action-btn {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
             }
 
             .action-btn i {
                 font-size: 13px;
             }
 
-            .saved-laws-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 15px;
+            .modal-content {
+                padding: 15px 20px;
+                max-width: 300px;
             }
 
-            .clear-all-btn {
-                padding: 4px 8px;
-                font-size: 11px;
+            .modal-content h3 {
+                font-size: 18px;
+            }
+
+            .modal-content p {
+                font-size: 12px;
+            }
+
+            .modal-btn {
+                padding: 8px 16px;
+                font-size: 12px;
             }
         }
     </style>
@@ -1170,10 +1323,25 @@
             </header>
             <section class="saved-laws-section">
                 <div class="saved-laws-header">
-                    <h2 class="saved-laws-title">Saved Legal Bookmarks</h2>
-                    <button class="clear-all-btn" id="clearAllBtn">Clear All</button>
+                    <div class="saved-laws-title-container">
+                        <h2>SAVED LEGAL BOOKMARKS</h2>
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                    <button class="clear-all-btn" id="clearAllBtn">
+                        <i class="fas fa-trash-alt"></i> Clear All
+                    </button>
                 </div>
                 <div class="saved-laws-grid" id="savedLawsGrid"></div>
+                <div class="confirmation-modal" id="confirmationModal">
+                    <div class="modal-content">
+                        <h3>Clear All Saved Laws</h3>
+                        <p>Are you sure you want to delete all your saved laws? This action cannot be undone.</p>
+                        <div class="modal-buttons">
+                            <button class="modal-btn cancel" id="cancelClear">Cancel</button>
+                            <button class="modal-btn confirm" id="confirmClear">Clear All</button>
+                        </div>
+                    </div>
+                </div>
             </section>
         </main>
         <footer>
@@ -1221,6 +1389,9 @@
         const createdAtDisplay = document.getElementById('createdAtDisplay');
         const savedLawsGrid = document.getElementById('savedLawsGrid');
         const clearAllBtn = document.getElementById('clearAllBtn');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmClear = document.getElementById('confirmClear');
+        const cancelClear = document.getElementById('cancelClear');
 
         // Laws data (simplified for brevity)
         const laws = [
@@ -1483,335 +1654,258 @@
             {
                 title: "Social Media and AI Election Guidelines (COMELEC Resolution No. 11064, 2024)",
                 description: "Mandates registration of digital campaign platforms by December 13, 2024, ensuring transparency in AI usage and monitoring disinformation.",
-                scenario: "A candidate uses AI-generated content without disclosing its use, violating transparency requirements.",
-                punishment: "Penalties for coordinated inauthentic behavior, deep fakes, and unregistered accounts, as per COMELEC regulations.",
-                image: "https://images.app.goo.gl/YTCcpHT2MeTVFfUWA",
-                pdf: "https://comelec.gov.ph/php-tpls-attachments/2025NLE/Resolutions/com_res_11064.pdf"
-            },
-            {
-                title: "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
-                description: "Regulates pharmaceutical distribution and storage, including online sales, to ensure quality and compliance with international standards.",
-                scenario: "An online pharmacy sells substandard drugs without proper storage, violating FDA regulations.",
-                punishment: "Fines, license suspension, or other sanctions per RA 9711 and related regulations.",
-                image: "https://images.app.goo.gl/9jZGSGUy5a1SYH118",
-                pdf: "https://www.fda.gov.ph/wp-content/uploads/2021/04/Administrative-Order-No.-2013-0027.pdf"
-            },
-            {
-                title: "E-Commerce Protection Guidelines (DTI Administrative Order No. 22-01)",
-                description: "Ensures consumer protection in e-commerce by mandating fair practices and transparency for online businesses.",
-                scenario: "A consumer receives a counterfeit product from an online seller who refuses a refund, violating transparency rules.",
-                punishment: "Fines, permit revocation, or legal action for violations, as per the Joint Administrative Order.",
-                image: "https://images.app.goo.gl/FPThS1qkqmuRPyDv5",
-                pdf: "https://www.aseanconsumer.org/file/post_image/JAO%20NO.%2022-01.Guidelines%20on%20Online%20Businesses.pdf"
-            },
-            {
-                title: "Guidelines on Cybercrime Prosecution (DOJ Circular No. 027, 2018)",
-                description: "Focuses on prosecuting cybercrimes affecting data confidentiality, integrity, and availability, including illegal access and data interference.",
-                scenario: "A suspect charged with illegal drug sales under RA 9165 faces prosecution without plea bargaining, per DOJ guidelines.",
-                punishment: "Imprisonment from prision correccional (6 months and 1 day to 6 years) to prision mayor (6 years and 1 day to 12 years), depending on the offense.",
-                image: "https://images.app.goo.gl/2Quowehw8U4pqCPH8",
-                pdf: "https://www.doj.gov.ph/files/2018/DC/DC027-2018JUN%20Amended%20Guidelines%20for%20Plea%20Bargaining%20dtd%2026%20Jun%202018(1).pdf"
-            },
-            {
-                title: "PNP Anti-Cybercrime Group Operational Guidelines (PNP Circular No. 2019-001)",
-                description: "Outlines operational procedures for the PNP Anti-Cybercrime Group to investigate and address cybercrimes.",
-                scenario: "A social media page spreads false information causing public panic, investigated by the PNP ACG.",
-                punishment: "Cybercrime penalties include imprisonment of prision mayor (6 years and 1 day to 12 years) and fines, per relevant laws.",
-                image: "https://images.app.goo.gl/Nt5MrE1TZcHvjAi79",
-                pdf: "https://napolcom.gov.ph/pdf/MC2019-001.pdf"
-            },
-            {
-                title: "Rules on Cybercrime Warrants (Supreme Court A.M. No. 17-11-03-SC)",
-                description: "Outlines procedures for obtaining and executing cybercrime warrants, including search, seizure, and data disclosure.",
-                scenario: "Law enforcement uses a Warrant to Disclose Computer Data to obtain a fraud suspect’s online activity from an ISP.",
-                punishment: "Non-compliance or obstruction penalized under the Cybercrime Prevention Act, with imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
-                image: "https://elegal.ph/site/wp-content/uploads/2018/07/security.jpg",
-                pdf: "https://wipolex-resources-eu-central-1-358922420655.s3.amazonaws.com/edocs/lexdocs/laws/en/ph/ph208en_1.pdf"
-            },
-            {
-                title: "Rules on Electronic Evidence (Supreme Court A.M. No. 01-7-01-SC)",
-                description: "Establishes the admissibility of electronic signatures and documents in legal proceedings, requiring proper authentication.",
-                scenario: "An electronically signed contract in an email is admitted as evidence after verifying the signer’s control and signature integrity.",
-                punishment: "Exclusion of unauthenticated evidence. False information may lead to perjury or fraud charges.",
-                image: "https://s3.ap-south-1.amazonaws.com/novojuris/image/1603091279991_it__1_.jpg",
-                pdf: "https://www.doj.gov.ph/files/rules%20on%20electronic%20evidence.pdf"
-            },
-            {
-                title: "Revised Rules of Civil Procedure (Supreme Court A.M. No. 19-08-06-SC)",
-                description: "Outlines procedures for PCC administrative searches and inspections to investigate violations of the Philippine Competition Act.",
-                scenario: "A dispute over property or debt within a first-level court’s jurisdiction follows revised procedural rules.",
-                punishment: "Fines, compliance orders, or payment of attorney’s fees and expenses for procedural violations.",
-                image: "https://cdn.sanity.io/images/anl9abaw/production/cca237f4771a8e6802e1f4bf490ca2b827268c84-768x512.png?w=3840&q=75&fit=clip&auto=format",
-                pdf: "https://lpr.adb.org/sites/default/files/2024-07/philippines-supreme-court-19-08-06.pdf"
-            },
-            {
-                title: "Rule on Cybercrime Investigation (Supreme Court A.M. No. 17-11-03-SC)",
-                description: "Outlines procedures for obtaining and executing cybercrime warrants, including search, seizure, and data disclosure (same as Rules on Cybercrime Warrants).",
-                scenario: "Police secure a warrant to intercept data from a suspect’s device in a cyber fraud investigation.",
-                punishment: "Non-compliance penalized under the Cybercrime Prevention Act, with imprisonment of 6 to 12 years and fines of ₱200,000 or more.",
-                image: "https://elegal.ph/site/wp-content/uploads/2018/07/security.jpg",
-                pdf: "https://wipolex-resources-eu-central-1-358922420655.s3.amazonaws.com/edocs/lexdocs/laws/en/ph/ph208en_1.pdf"
-            },
-            {
-                title: "Guidelines on Consumer Protection in E-Commerce (DTI Department Order No. 18-05)",
-                description: "Ensures consumer protection in e-commerce through rules on transparency, fair practices, and post-purchase services.",
-                scenario: "A consumer receives a product significantly different from its online description, violating transparency requirements.",
-                punishment: "Fines, permit revocation, or legal action for deceptive practices. Criminal charges possible for fraud.",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIiIwRhqssOUqs0rWBTlk3HZBcUKp29_Dxig&s",
-                pdf: "https://dtiwebfiles.s3-ap-southeast-1.amazonaws.com/Laws+and+Policies/DTi+Compendium+laws/Private+Emission+Testing+Centers/Department+Administative+Order+18-05.pdf"
+                scenario: "A political candidate uses AI-generated deepfake videos on social media to spread false information about an opponent without registering the platform with COMELEC.",
+                punishment: "Fines ranging from ₱50,000 to ₱500,000 per violation, potential disqualification from the election, and imprisonment of 1 to 6 years for serious offenses involving disinformation.",
+                image: "https://images.app.goo.gl/5YkZfLhJqXzP8vT87",
+                pdf: "https://comelec.gov.ph/pdf/resolution/2024/11064.pdf"
             }
         ];
 
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentUser = {
-                    username: user.displayName || 'User',
-                    email: user.email,
-                    createdAt: user.metadata.creationTime
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                usernameDisplay.textContent = `${currentUser.username}`;
-                emailDisplay.textContent = `${currentUser.email}`;
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
-
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
-                        if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
-                            avatarBgColorPicker.value = userData.avatarBgColor;
-                        }
-                        if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
-                            borderColorPicker.value = userData.borderColor;
-                        }
-                        if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
-                            borderTypeSelect.value = userData.borderType;
-                        }
-                    }
-                }, (error) => {
-                    console.error('Error loading user customization:', error);
-                    alert('Failed to load user customization: ' + error.message);
-                });
-
-                // Load saved laws
-                const savedLawsRef = database.ref(`users/${sanitizedEmail}/savedLaws`);
-                savedLawsRef.on('value', (snapshot) => {
-                    savedLawsGrid.innerHTML = '';
-                    const savedLaws = [];
-                    snapshot.forEach((childSnapshot) => {
-                        const law = childSnapshot.val();
-                        law.key = childSnapshot.key;
-                        savedLaws.push(law);
-                    });
-
-                    if (savedLaws.length === 0) {
-                        const noLaws = document.createElement('p');
-                        noLaws.className = 'no-saved-laws';
-                        noLaws.textContent = 'No saved laws found.';
-                        savedLawsGrid.appendChild(noLaws);
-                        clearAllBtn.style.display = 'none';
-                        return;
-                    }
-
-                    clearAllBtn.style.display = 'block';
-
-                    // Sort laws by timestamp (newest first)
-                    savedLaws.sort((a, b) => b.timestamp - a.timestamp);
-
-                    savedLaws.forEach((savedLaw) => {
-                        // Find the corresponding law in the laws array to get the image and pdf
-                        const lawDetails = laws.find(law => law.title === savedLaw.title);
-                        if (!lawDetails) return; // Skip if law not found
-
-                        const lawElement = document.createElement('div');
-                        lawElement.className = 'saved-law-item';
-                        lawElement.innerHTML = `
-                            <img src="${lawDetails.image}" alt="${lawDetails.title}" class="saved-law-image">
-                            <div class="saved-law-content">
-                                <h3 class="saved-law-title">${savedLaw.title}</h3>
-                                <p class="saved-law-timestamp">${new Date(savedLaw.timestamp).toLocaleString()}</p>
-                                <div class="saved-law-actions">
-                                    <button class="action-btn download-btn" data-pdf="${lawDetails.pdf}" data-title="${savedLaw.title}">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="action-btn delete-btn" data-key="${savedLaw.key}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                        savedLawsGrid.appendChild(lawElement);
-                    });
-
-                    // Add event listeners to download buttons
-                    document.querySelectorAll('.download-btn').forEach((button) => {
-                        button.addEventListener('click', () => {
-                            const pdfUrl = button.getAttribute('data-pdf');
-                            const title = button.getAttribute('data-title');
-                            const sanitizedTitle = title.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
-
-                            // Create a hidden link to trigger the download
-                            const link = document.createElement('a');
-                            link.href = pdfUrl;
-                            link.download = `${sanitizedTitle}.pdf`;
-                            link.target = '_blank'; // In case download attribute isn't supported
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                        });
-                    });
-
-                    // Add event listeners to delete buttons
-                    document.querySelectorAll('.delete-btn').forEach((button) => {
-                        button.addEventListener('click', () => {
-                            const key = button.getAttribute('data-key');
-                            database.ref(`users/${sanitizedEmail}/savedLaws/${key}`).remove()
-                                .then(() => {
-                                    console.log('Law deleted successfully');
-                                })
-                                .catch((error) => {
-                                    console.error('Error deleting law:', error);
-                                    alert('Failed to delete law: ' + error.message);
-                                });
-                        });
-                    });
-                }, (error) => {
-                    console.error('Error loading saved laws:', error);
-                    savedLawsGrid.innerHTML = '<p class="no-saved-laws">Failed to load saved laws.</p>';
-                    clearAllBtn.style.display = 'none';
-                });
-
-                // Clear All button functionality
-                clearAllBtn.addEventListener('click', () => {
-                    if (confirm('Are you sure you want to clear all saved laws? This action cannot be undone.'))
-                    if (confirm('Are you sure you want to clear all saved laws? This action cannot be undone.')) {
-                        database.ref(`users/${sanitizedEmail}/savedLaws`).remove()
-                            .then(() => {
-                                console.log('All saved laws cleared successfully');
-                                savedLawsGrid.innerHTML = '<p class="no-saved-laws">No saved laws found.</p>';
-                                clearAllBtn.style.display = 'none';
-                            })
-                            .catch((error) => {
-                                console.error('Error clearing saved laws:', error);
-                                alert('Failed to clear saved laws: ' + error.message);
-                            });
-                    }
-                });
-
-                loaderOverlay.classList.remove('active');
-            } else {
-                window.location.href = 'index.html';
+        // Load theme on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('darkTheme') || 'disabled';
+            if (savedTheme === 'enabled') {
+                body.classList.add('dark-theme');
+                themeToggle.checked = true;
             }
+            loadUserData();
+            loadSavedLaws();
         });
 
+        // Dark theme toggle
         themeToggle.addEventListener('change', () => {
-            body.classList.toggle('dark-theme');
-            localStorage.setItem('darkTheme', themeToggle.checked);
+            const isDarkTheme = themeToggle.checked;
+            localStorage.setItem('darkTheme', isDarkTheme ? 'enabled' : 'disabled');
+            body.classList.toggle('dark-theme', isDarkTheme);
         });
 
-        if (localStorage.getItem('darkTheme') === 'true') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
+        // Mobile menu toggle
         mobileMenuIcon.addEventListener('click', () => {
             sidebar.classList.toggle('active');
         });
 
+        // Show loader
+        function showLoader() {
+            loaderOverlay.classList.add('active');
+        }
+
+        // Hide loader
+        function hideLoader() {
+            loaderOverlay.classList.remove('active');
+        }
+
+        // Load user data
+        function loadUserData() {
+            showLoader();
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    const userRef = database.ref(`users/${user.uid}`);
+                    userRef.once('value', snapshot => {
+                        const userData = snapshot.val();
+                        if (userData) {
+                            usernameDisplay.textContent = userData.username || 'User';
+                            emailDisplay.textContent = user.email || 'No email';
+                            createdAtDisplay.textContent = userData.createdAt || 'Unknown';
+                            if (userData.avatarUrl) {
+                                profilePic.src = userData.avatarUrl;
+                            }
+                            loadAvatarCustomization(user.uid);
+                        }
+                        hideLoader();
+                    });
+                } else {
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+        // Load avatar customization
+        function loadAvatarCustomization(userId) {
+            const userRef = database.ref(`users/${userId}`);
+            userRef.once('value', snapshot => {
+                const userData = snapshot.val();
+                if (userData) {
+                    if (userData.avatarBgColor) {
+                        profilePic.style.backgroundColor = userData.avatarBgColor;
+                        avatarBgColorPicker.value = userData.avatarBgColor;
+                    }
+                    if (userData.borderColor) {
+                        profilePic.style.borderColor = userData.borderColor;
+                        borderColorPicker.value = userData.borderColor;
+                    }
+                    if (userData.borderType) {
+                        profilePic.style.borderStyle = userData.borderType;
+                        borderTypeSelect.value = userData.borderType;
+                    }
+                }
+            });
+        }
+
+        // Toggle customization menu
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
 
-        document.addEventListener('click', (e) => {
-            if (!profilePic.contains(e.target) && !customizationMenu.contains(e.target)) {
+        // Close customization menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!customizationMenu.contains(event.target) && !profilePic.contains(event.target)) {
                 customizationMenu.classList.remove('active');
             }
         });
 
-        avatarInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
+        // Upload avatar
+        avatarInput.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
             if (file) {
+                avatarLoading.classList.add('active');
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-                avatarLoading.classList.add('active');
+                try {
+                    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    const avatarUrl = data.secure_url;
 
-                fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.secure_url) {
-                        profilePic.src = data.secure_url;
-                        const user = auth.currentUser;
-                        const sanitizedEmail = user.email.replace(/\./g, ',');
-                        database.ref(`users/${sanitizedEmail}`).update({
-                            avatarUrl: data.secure_url
-                        }).catch(error => {
-                            console.error('Error saving avatar URL:', error);
-                            alert('Failed to save avatar: ' + error.message);
-                        });
-                    } else {
-                        throw new Error('Upload failed');
+                    const user = auth.currentUser;
+                    if (user) {
+                        await database.ref(`users/${user.uid}`).update({ avatarUrl });
+                        profilePic.src = avatarUrl;
                     }
-                })
-                .catch(error => {
+                } catch (error) {
                     console.error('Error uploading avatar:', error);
-                    alert('Failed to upload avatar: ' + error.message);
-                })
-                .finally(() => {
+                    alert('Failed to upload avatar. Please try again.');
+                } finally {
                     avatarLoading.classList.remove('active');
-                });
+                }
             }
         });
 
-        avatarBgColorPicker.addEventListener('input', (e) => {
-            profilePic.style.backgroundColor = e.target.value;
+        // Update avatar background color
+        avatarBgColorPicker.addEventListener('change', async (event) => {
+            const color = event.target.value;
+            profilePic.style.backgroundColor = color;
             const user = auth.currentUser;
-            const sanitizedEmail = user.email.replace(/\./g, ',');
-            database.ref(`users/${sanitizedEmail}`).update({
-                avatarBgColor: e.target.value
-            }).catch(error => {
-                console.error('Error saving avatar background color:', error);
-                alert('Failed to save avatar background color: ' + error.message);
-            });
+            if (user) {
+                await database.ref(`users/${user.uid}`).update({ avatarBgColor: color });
+            }
         });
 
-        borderColorPicker.addEventListener('input', (e) => {
-            profilePic.style.borderColor = e.target.value;
+        // Update border color
+        borderColorPicker.addEventListener('change', async (event) => {
+            const color = event.target.value;
+            profilePic.style.borderColor = color;
             const user = auth.currentUser;
-            const sanitizedEmail = user.email.replace(/\./g, ',');
-            database.ref(`users/${sanitizedEmail}`).update({
-                borderColor: e.target.value
-            }).catch(error => {
-                console.error('Error saving border color:', error);
-                alert('Failed to save border color: ' + error.message);
-            });
+            if (user) {
+                await database.ref(`users/${user.uid}`).update({ borderColor: color });
+            }
         });
 
-        borderTypeSelect.addEventListener('change', (e) => {
-            profilePic.style.borderStyle = e.target.value;
+        // Update border type
+        borderTypeSelect.addEventListener('change', async (event) => {
+            const borderType = event.target.value;
+            profilePic.style.borderStyle = borderType;
             const user = auth.currentUser;
-            const sanitizedEmail = user.email.replace(/\./g, ',');
-            database.ref(`users/${sanitizedEmail}`).update({
-                borderType: e.target.value
-            }).catch(error => {
-                console.error('Error saving border type:', error);
-                alert('Failed to save border type: ' + error.message);
-            });
+            if (user) {
+                await database.ref(`users/${user.uid}`).update({ borderType });
+            }
+        });
+
+        // Load saved laws
+        function loadSavedLaws() {
+            const user = auth.currentUser;
+            if (user) {
+                const savedLawsRef = database.ref(`users/${user.uid}/savedLaws`);
+                savedLawsRef.on('value', snapshot => {
+                    const savedLaws = snapshot.val();
+                    savedLawsGrid.innerHTML = '';
+                    if (savedLaws && Object.keys(savedLaws).length > 0) {
+                        Object.entries(savedLaws).forEach(([lawId, lawData]) => {
+                            const law = laws.find(l => l.title === lawData.title);
+                            if (law) {
+                                const lawElement = document.createElement('div');
+                                lawElement.classList.add('saved-law-item');
+                                lawElement.innerHTML = `
+                                    <img src="${law.image}" alt="${law.title}" class="saved-law-image">
+                                    <div class="saved-law-content">
+                                        <h3 class="saved-law-title">${law.title}</h3>
+                                        <p class="saved-law-timestamp">Saved on: ${new Date(lawData.timestamp).toLocaleString()}</p>
+                                        <div class="saved-law-actions">
+                                            <button class="action-btn download-btn" data-pdf="${law.pdf}">
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                            <button class="action-btn delete-btn" data-law-id="${lawId}">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                `;
+                                savedLawsGrid.appendChild(lawElement);
+                            }
+                        });
+
+                        // Add event listeners for download buttons
+                        document.querySelectorAll('.download-btn').forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                const pdfUrl = btn.getAttribute('data-pdf');
+                                window.open(pdfUrl, '_blank');
+                            });
+                        });
+
+                        // Add event listeners for delete buttons
+                        document.querySelectorAll('.delete-btn').forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                const lawId = btn.getAttribute('data-law-id');
+                                deleteSavedLaw(lawId);
+                            });
+                        });
+                    } else {
+                        savedLawsGrid.innerHTML = '<div class="no-saved-laws">No saved laws found.</div>';
+                    }
+                });
+            }
+        }
+
+        // Delete a saved law
+        function deleteSavedLaw(lawId) {
+            const user = auth.currentUser;
+            if (user) {
+                database.ref(`users/${user.uid}/savedLaws/${lawId}`).remove()
+                    .then(() => {
+                        console.log('Law deleted successfully');
+                    })
+                    .catch(error => {
+                        console.error('Error deleting law:', error);
+                        alert('Failed to delete law. Please try again.');
+                    });
+            }
+        }
+
+        // Clear all saved laws
+        clearAllBtn.addEventListener('click', () => {
+            confirmationModal.classList.add('active');
+        });
+
+        confirmClear.addEventListener('click', () => {
+            const user = auth.currentUser;
+            if (user) {
+                database.ref(`users/${user.uid}/savedLaws`).remove()
+                    .then(() => {
+                        confirmationModal.classList.remove('active');
+                        console.log('All saved laws cleared');
+                    })
+                    .catch(error => {
+                        console.error('Error clearing saved laws:', error);
+                        alert('Failed to clear saved laws. Please try again.');
+                    });
+            }
+        });
+
+        cancelClear.addEventListener('click', () => {
+            confirmationModal.classList.remove('active');
         });
     </script>
 </body>
