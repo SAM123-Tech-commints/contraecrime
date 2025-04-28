@@ -480,20 +480,62 @@
             flex: 1;
             position: relative;
             z-index: 1;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             width: 100%;
+            padding: 20px 0;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
         .history-section h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
+            text-align: left;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            color: #2d3748;
+            letter-spacing: 0.5px;
         }
 
         .dark-theme .history-section h2 {
-            color: #e0e0e0;
+            color: #e2e8f0;
+        }
+
+        .clear-all-btn {
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clear-all-btn:hover {
+            background-color: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .clear-all-btn:active {
+            transform: translateY(0);
+        }
+
+        .dark-theme .clear-all-btn {
+            background-color: #9b2c2c;
+        }
+
+        .dark-theme .clear-all-btn:hover {
+            background-color: #7f2525;
         }
 
         .history-list {
@@ -506,69 +548,241 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: #d7b15c;
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
+            background-color: #ffffff;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .history-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.15);
         }
 
         .dark-theme .history-item {
-            background-color: #5a4b2a;
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
         }
 
-        .history-item span {
-            font-size: 16px;
-            color: #333;
+        .dark-theme .history-item:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .history-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: #d7b15c;
+            transition: width 0.3s ease;
+        }
+
+        .history-item:hover::before {
+            width: 8px;
+        }
+
+        .dark-theme .history-item::before {
+            background-color: #ecc94b;
+        }
+
+        .history-item-content {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 15px;
+        }
+
+        .history-item-icon {
+            color: #718096;
+            font-size: 20px;
+        }
+
+        .dark-theme .history-item-icon {
+            color: #a0aec0;
+        }
+
+        .history-item-text {
             flex: 1;
         }
 
-        .dark-theme .history-item span {
-            color: #e0e0e0;
+        .history-item span.query {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .dark-theme .history-item span.query {
+            color: #e2e8f0;
         }
 
         .history-item .timestamp {
-            font-size: 14px;
-            color: #666;
-            margin-right: 20px;
+            font-size: 12px;
+            font-weight: 400;
+            color: #718096;
         }
 
         .dark-theme .history-item .timestamp {
-            color: #bbbbbb;
+            color: #a0aec0;
         }
 
         .history-item .delete-btn {
-            background-color: #ff3333;
+            background-color: transparent;
             border: none;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            color: #e53e3e;
         }
 
         .history-item .delete-btn:hover {
-            background-color: #e60000;
+            background-color: #f56565;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .history-item .delete-btn:active {
+            transform: scale(0.95);
+        }
+
+        .dark-theme .history-item .delete-btn {
+            color: #f56565;
+        }
+
+        .dark-theme .history-item .delete-btn:hover {
+            background-color: #c53030;
         }
 
         .history-item .delete-btn i {
-            color: white;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .no-history {
             text-align: center;
             font-size: 16px;
-            color: #666;
-            margin-top: 20px;
+            font-weight: 500;
+            color: #718096;
+            margin-top: 40px;
+            background-color: #edf2f7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .dark-theme .no-history {
-            color: #bbbbbb;
+            color: #a0aec0;
+            background-color: #2d3748;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+        }
+
+        .confirmation-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .dark-theme .modal-content {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 15px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .dark-theme .modal-content h3 {
+            color: #e2e8f0;
+        }
+
+        .modal-content p {
+            margin: 0 0 20px;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .dark-theme .modal-content p {
+            color: #a0aec0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .modal-btn.confirm {
+            background-color: #e53e3e;
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background-color: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn.cancel {
+            background-color: #edf2f7;
+            color: #2d3748;
+        }
+
+        .modal-btn.cancel:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .dark-theme .modal-btn.cancel {
+            background-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        .dark-theme .modal-btn.cancel:hover {
+            background-color: #5a667a;
         }
 
         footer {
@@ -680,21 +894,29 @@
                 width: 220px;
             }
 
-            .history-item span {
+            .history-section h2 {
+                font-size: 24px;
+            }
+
+            .history-item {
+                padding: 12px 15px;
+            }
+
+            .history-item span.query {
                 font-size: 14px;
             }
 
             .history-item .timestamp {
-                font-size: 12px;
+                font-size: 11px;
             }
 
             .history-item .delete-btn {
-                width: 25px;
-                height: 25px;
+                width: 32px;
+                height: 32px;
             }
 
             .history-item .delete-btn i {
-                font-size: 12px;
+                font-size: 14px;
             }
         }
 
@@ -747,7 +969,16 @@
             }
 
             .history-section h2 {
-                font-size: 20px;
+                font-size: 22px;
+            }
+
+            .clear-all-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .history-item {
+                padding: 10px 12px;
             }
         }
 
@@ -858,29 +1089,58 @@
             }
 
             .history-section h2 {
-                font-size: 18px;
+                font-size: 20px;
+            }
+
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .clear-all-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                width: 100%;
             }
 
             .history-item {
-                padding: 8px 10px;
+                padding: 10px 12px;
             }
 
-            .history-item span {
-                font-size: 12px;
+            .history-item span.query {
+                font-size: 13px;
             }
 
             .history-item .timestamp {
                 font-size: 10px;
-                margin-right: 10px;
             }
 
             .history-item .delete-btn {
-                width: 20px;
-                height: 20px;
+                width: 30px;
+                height: 30px;
             }
 
             .history-item .delete-btn i {
-                font-size: 10px;
+                font-size: 13px;
+            }
+
+            .modal-content {
+                padding: 15px 20px;
+                max-width: 300px;
+            }
+
+            .modal-content h3 {
+                font-size: 18px;
+            }
+
+            .modal-content p {
+                font-size: 12px;
+            }
+
+            .modal-btn {
+                padding: 8px 16px;
+                font-size: 12px;
             }
         }
     </style>
@@ -989,9 +1249,24 @@
                 </div>
             </header>
             <section class="history-section">
-                <h2>Search History</h2>
+                <div class="history-header">
+                    <h2>Search History</h2>
+                    <button class="clear-all-btn" id="clearAllBtn">
+                        <i class="fas fa-trash-alt"></i> Clear All History
+                    </button>
+                </div>
                 <ul class="history-list" id="historyList"></ul>
             </section>
+            <div class="confirmation-modal" id="confirmationModal">
+                <div class="modal-content">
+                    <h3>Clear All History</h3>
+                    <p>Are you sure you want to delete all your search history? This action cannot be undone.</p>
+                    <div class="modal-buttons">
+                        <button class="modal-btn cancel" id="cancelClear">Cancel</button>
+                        <button class="modal-btn confirm" id="confirmClear">Clear All</button>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
@@ -1037,6 +1312,10 @@
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
         const historyList = document.getElementById('historyList');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmClear = document.getElementById('confirmClear');
+        const cancelClear = document.getElementById('cancelClear');
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -1096,8 +1375,11 @@
                         noHistory.className = 'no-history';
                         noHistory.textContent = 'No search history found.';
                         historyList.appendChild(noHistory);
+                        clearAllBtn.style.display = 'none';
                         return;
                     }
+
+                    clearAllBtn.style.display = 'block';
 
                     // Sort searches by timestamp (newest first)
                     searches.sort((a, b) => b.timestamp - a.timestamp);
@@ -1106,10 +1388,15 @@
                         const li = document.createElement('li');
                         li.className = 'history-item';
                         li.innerHTML = `
-                            <span>${search.query}</span>
-                            <span class="timestamp">${new Date(search.timestamp).toLocaleString()}</span>
+                            <div class="history-item-content">
+                                <i class="fas fa-search history-item-icon"></i>
+                                <div class="history-item-text">
+                                    <span class="query">${search.query}</span>
+                                    <span class="timestamp">${new Date(search.timestamp).toLocaleString()}</span>
+                                </div>
+                            </div>
                             <button class="delete-btn" data-key="${search.key}">
-                                <i class="fas fa-trash"></i>
+                                <i class="fas fa-trash-alt"></i>
                             </button>
                         `;
                         historyList.appendChild(li);
@@ -1132,6 +1419,29 @@
                 }, (error) => {
                     console.error('Error loading search history:', error);
                     historyList.innerHTML = '<p class="no-history">Failed to load search history.</p>';
+                    clearAllBtn.style.display = 'none';
+                });
+
+                // Clear all history functionality
+                clearAllBtn.addEventListener('click', () => {
+                    confirmationModal.classList.add('active');
+                });
+
+                confirmClear.addEventListener('click', () => {
+                    database.ref(`users/${sanitizedEmail}/searchHistory`).remove()
+                        .then(() => {
+                            console.log('All search history deleted successfully');
+                            confirmationModal.classList.remove('active');
+                        })
+                        .catch((error) => {
+                            console.error('Error deleting all search history:', error);
+                            alert('Failed to delete search history: ' + error.message);
+                            confirmationModal.classList.remove('active');
+                        });
+                });
+
+                cancelClear.addEventListener('click', () => {
+                    confirmationModal.classList.remove('active');
                 });
             } else {
                 localStorage.removeItem('currentUser');
