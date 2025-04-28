@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime</title>
+    <title>Contra E-Crime - Saved Laws</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -290,7 +290,7 @@
         .header {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 0;
+            margin-bottom: 20px;
             position: relative;
             z-index: 3000;
         }
@@ -476,6 +476,209 @@
             border-color: #555;
         }
 
+        .saved-laws-section {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .saved-laws-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .saved-laws-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            color: #2d3748;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .saved-laws-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #d7b15c;
+        }
+
+        .dark-theme .saved-laws-title {
+            color: #e2e8f0;
+        }
+
+        .dark-theme .saved-laws-title::after {
+            background-color: #ecc94b;
+        }
+
+        .saved-laws-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .saved-law-item {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .saved-law-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-theme .saved-law-item {
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-theme .saved-law-item:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .saved-law-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 3px solid #d7b15c;
+        }
+
+        .dark-theme .saved-law-image {
+            border-bottom-color: #ecc94b;
+        }
+
+        .saved-law-content {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .saved-law-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 0 0 8px;
+            text-align: center;
+        }
+
+        .dark-theme .saved-law-title {
+            color: #e2e8f0;
+        }
+
+        .saved-law-timestamp {
+            font-size: 12px;
+            color: #718096;
+            margin: 0 0 12px;
+            text-align: center;
+        }
+
+        .dark-theme .saved-law-timestamp {
+            color: #a0aec0;
+        }
+
+        .saved-law-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .download-btn {
+            background-color: #d7b15c;
+            color: white;
+        }
+
+        .download-btn:hover {
+            background-color: #b8973e;
+            transform: scale(1.1);
+        }
+
+        .download-btn:active {
+            transform: scale(0.95);
+        }
+
+        .dark-theme .download-btn {
+            background-color: #ecc94b;
+        }
+
+        .dark-theme .download-btn:hover {
+            background-color: #d4b038;
+        }
+
+        .delete-btn {
+            background-color: #e53e3e;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #c53030;
+            transform: scale(1.1);
+        }
+
+        .delete-btn:active {
+            transform: scale(0.95);
+        }
+
+        .dark-theme .delete-btn {
+            background-color: #f56565;
+        }
+
+        .dark-theme .delete-btn:hover {
+            background-color: #db4949;
+        }
+
+        .action-btn i {
+            font-size: 16px;
+        }
+
+        .no-saved-laws {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            color: #718096;
+            margin-top: 40px;
+            background-color: #edf2f7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-theme .no-saved-laws {
+            color: #a0aec0;
+            background-color: #2d3748;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -584,6 +787,35 @@
                 top: 45px;
                 width: 220px;
             }
+
+            .saved-laws-title {
+                font-size: 24px;
+            }
+
+            .saved-law-item {
+                min-height: 280px;
+            }
+
+            .saved-law-image {
+                height: 120px;
+            }
+
+            .saved-law-title {
+                font-size: 14px;
+            }
+
+            .saved-law-timestamp {
+                font-size: 11px;
+            }
+
+            .action-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .action-btn i {
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -632,6 +864,18 @@
             .customization-options {
                 top: 40px;
                 width: 200px;
+            }
+
+            .saved-laws-title {
+                font-size: 22px;
+            }
+
+            .saved-law-item {
+                min-height: 260px;
+            }
+
+            .saved-law-image {
+                height: 110px;
             }
         }
 
@@ -740,6 +984,40 @@
                 font-size: 10px;
                 padding: 3px;
             }
+
+            .saved-laws-title {
+                font-size: 20px;
+            }
+
+            .saved-law-item {
+                min-height: 240px;
+            }
+
+            .saved-law-image {
+                height: 100px;
+            }
+
+            .saved-law-title {
+                font-size: 13px;
+            }
+
+            .saved-law-timestamp {
+                font-size: 10px;
+            }
+
+            .action-btn {
+                width: 32px;
+                height: 32px;
+            }
+
+            .action-btn i {
+                font-size: 13px;
+            }
+
+            .saved-laws-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -819,7 +1097,7 @@
                 <div class="account-customization">
                     <div class="user-details"></div>
                     <div class="avatar-container">
-                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt=" Otobarsan avatar">
+                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
                         <div class="avatar-loading" id="avatarLoading">
                             <div class="loader"></div>
                         </div>
@@ -846,6 +1124,12 @@
                     </div>
                 </div>
             </header>
+            <section class="saved-laws-section">
+                <div class="saved-laws-header">
+                    <h2 class="saved-laws-title">Saved Legal Bookmarks</h2>
+                </div>
+                <div class="saved-laws-grid" id="savedLawsGrid"></div>
+            </section>
         </main>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
@@ -890,6 +1174,10 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
+        const savedLawsGrid = document.getElementById('savedLawsGrid');
+
+        // Placeholder image (same as used in the example image)
+        const placeholderImage = 'https://via.placeholder.com/300x150?text=Law+Image';
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -931,6 +1219,84 @@
                 }, (error) => {
                     console.error('Error loading user customization:', error);
                     alert('Failed to load user customization: ' + error.message);
+                });
+
+                // Load saved laws
+                const savedLawsRef = database.ref(`users/${sanitizedEmail}/savedLaws`);
+                savedLawsRef.on('value', (snapshot) => {
+                    savedLawsGrid.innerHTML = '';
+                    const laws = [];
+                    snapshot.forEach((childSnapshot) => {
+                        const law = childSnapshot.val();
+                        law.key = childSnapshot.key;
+                        laws.push(law);
+                    });
+
+                    if (laws.length === 0) {
+                        const noLaws = document.createElement('p');
+                        noLaws.className = 'no-saved-laws';
+                        noLaws.textContent = 'No saved laws found.';
+                        savedLawsGrid.appendChild(noLaws);
+                        return;
+                    }
+
+                    // Sort laws by timestamp (newest first)
+                    laws.sort((a, b) => b.timestamp - a.timestamp);
+
+                    laws.forEach((law) => {
+                        const lawElement = document.createElement('div');
+                        lawElement.className = 'saved-law-item';
+                        lawElement.innerHTML = `
+                            <img src="${placeholderImage}" alt="Law Image" class="saved-law-image">
+                            <div class="saved-law-content">
+                                <h3 class="saved-law-title">${law.title}</h3>
+                                <p class="saved-law-timestamp">${new Date(law.timestamp).toLocaleString()}</p>
+                                <div class="saved-law-actions">
+                                    <button class="action-btn download-btn" data-title="${law.title}" data-content="${law.content}">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="action-btn delete-btn" data-key="${law.key}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        savedLawsGrid.appendChild(lawElement);
+                    });
+
+                    // Add event listeners to download buttons
+                    document.querySelectorAll('.download-btn').forEach((button) => {
+                        button.addEventListener('click', () => {
+                            const title = button.getAttribute('data-title');
+                            const content = button.getAttribute('data-content');
+                            // Mock PDF download (since actual PDF generation requires a library like jsPDF)
+                            const element = document.createElement('a');
+                            const file = new Blob([`${title}\n\n${content}`], { type: 'text/plain' });
+                            element.href = URL.createObjectURL(file);
+                            element.download = `${title}.txt`; // Mock as .txt since we can't generate PDF here
+                            document.body.appendChild(element);
+                            element.click();
+                            document.body.removeChild(element);
+                        });
+                    });
+
+                    // Add event listeners to delete buttons
+                    document.querySelectorAll('.delete-btn').forEach((button) => {
+                        button.addEventListener('click', () => {
+                            const key = button.getAttribute('data-key');
+                            database.ref(`users/${sanitizedEmail}/savedLaws/${key}`).remove()
+                                .then(() => {
+                                    console.log('Law deleted successfully');
+                                })
+                                .catch((error) => {
+                                    console.error('Error deleting law:', error);
+                                    alert('Failed to delete law: ' + error.message);
+                                });
+                        });
+                    });
+                }, (error) => {
+                    console.error('Error loading saved laws:', error);
+                    savedLawsGrid.innerHTML = '<p class="no-saved-laws">Failed to load saved laws.</p>';
                 });
             } else {
                 localStorage.removeItem('currentUser');
