@@ -1341,7 +1341,6 @@
             <section class="articles">
                 <h2 id="sectionTitle">TOP ARTICLES</h2>
                 <div class="cards-container" id="cardsContainer">
-                    <!-- Laws will be dynamically populated here -->
                 </div>
             </section>
         </main>
@@ -1736,6 +1735,7 @@
         pdf: "https://dtiwebfiles.s3-ap-southeast-1.amazonaws.com/Laws+and+Policies/DTi+Compendium+laws/Private+Emission+Testing+Centers/Department+Administative+Order+18-05.pdf"
     }
 ];
+
 auth.onAuthStateChanged((user) => {
     if (user) {
         const currentUser = {
@@ -2047,8 +2047,9 @@ function saveLaw(lawTitle) {
 
 // Function to fetch laws from AI API (placeholder)
 async function fetchLawsFromAI(query) {
-    const AI_API_URL = 'https://hypothetical-ai-api.com/classify-laws';
-    const AI_API_KEY = 'your-api-key';
+    // Replace this with a real free AI API endpoint
+    const AI_API_URL = 'https://hypothetical-ai-api.com/classify-laws'; // Placeholder
+    const AI_API_KEY = 'your-api-key'; // Replace with actual API key
 
     try {
         const response = await fetch(AI_API_URL, {
@@ -2062,7 +2063,7 @@ async function fetchLawsFromAI(query) {
                 laws: laws.map(law => ({
                     title: law.title,
                     description: law.description,
-                    scenarios: law.scenarios
+                    scenario: law.scenario
                 }))
             })
         });
@@ -2073,13 +2074,14 @@ async function fetchLawsFromAI(query) {
 
         const data = await response.json();
         return {
-            mainLaw: data.mainLaw,
-            alternativeLaws: data.alternativeLaws
+            mainLaw: data.mainLaw, // Expected to return the title of the main law
+            alternativeLaws: data.alternativeLaws // Expected to return an array of 4 alternative law titles
         };
     } catch (error) {
         console.error('Error fetching laws from AI:', error);
+        // Fallback to local fuzzy search if AI API fails
         const fuse = new Fuse(laws, {
-            keys: ['title', 'description', 'scenarios'],
+            keys: ['title', 'description', 'scenario'],
             threshold: 0.4,
             distance: 100
         });
@@ -2096,6 +2098,7 @@ async function fetchLawsFromAI(query) {
 function renderLawCards(mainLawTitle, alternativeLawTitles) {
     cardsContainer.innerHTML = '';
 
+    // Render main law (wide card)
     const mainLaw = laws.find(law => law.title === mainLawTitle);
     if (mainLaw) {
         const mainCard = document.createElement('div');
@@ -2126,6 +2129,7 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
         cardsContainer.appendChild(mainCard);
     }
 
+    // Render alternative laws (4 smaller cards)
     const alternativesSection = document.createElement('div');
     alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
     alternativesSection.style.width = '100%';
@@ -2168,6 +2172,7 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
     });
     cardsContainer.appendChild(alternativesContainer);
 
+    // Add event listeners to save buttons
     document.querySelectorAll('.save-button').forEach(button => {
         button.addEventListener('click', () => {
             const lawTitle = button.getAttribute('data-title');
@@ -2176,6 +2181,7 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
     });
 }
 
+// Initial render of default cards (optional)
 const defaultCards = [
     {
         title: "UN: Asian Scam Calls Now a Global Export",
@@ -2217,62 +2223,73 @@ defaultCards.forEach(cardData => {
 });
 
 // Search functionality with AI integration
-searchInput.addEventListener('keypress', async (e) => {
-    if (e.key === 'Enter') {
-        const query = searchInput.value.trim();
+function performSearch(query) {
+    if (query) {
+        fingerprintIcon.classList.add('scanning');
+        sectionTitle.textContent = 'RELEVANT LAWS';
+        loaderOverlay.classList.add('active');
 
-        if (query) {
-            fingerprintIcon.classList.add('scanning');
-            sectionTitle.textContent = 'RELEVANT LAWS';
-            loaderOverlay.classList.add('active');
+        const user = auth.currentUser;
+        if (user) {
+            const sanitizedEmail = user.email.replace(/\./g, ',');
+            database.ref(`users/${sanitizedEmail}/searchHistory`).push({
+                query: query,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+        }
 
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}/searchHistory`).push({
-                    query: query,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                });
-            }
-
-            try {
-                const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+        fetchLawsFromAI(query)
+            .then(({ mainLaw, alternativeLaws }) => {
                 if (mainLaw && alternativeLaws) {
                     renderLawCards(mainLaw, alternativeLaws);
                 } else {
                     cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
                 }
-            } catch (error) {
+            })
+            .catch(error => {
                 console.error('Error in search:', error);
                 cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
-            } finally {
+            })
+            .finally(() => {
                 loaderOverlay.classList.remove('active');
-            }
-        } else {
-            fingerprintIcon.classList.remove('scanning');
-            sectionTitle.textContent = 'TOP ARTICLES';
-            cardsContainer.innerHTML = '';
-            defaultCards.forEach(cardData => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="image_container">
-                        <img src="${cardData.image}" alt="Cybercrime Image">
-                    </div>
-                    <div class="cybercrime-title">
-                        <span>${cardData.title}</span>
-                    </div>
-                    <div class="cybercrime-description">
-                        <p>Cybercrime</p>
-                        <p>${cardData.description}</p>
-                    </div>
-                    <a href="News.html" class="border-button">
-                        <span class="button-text">Read More</span>
-                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                    </a>
-                `;
-                cardsContainer.appendChild(card);
+                fingerprintIcon.classList.remove('scanning');
             });
-        }
+    } else {
+        fingerprintIcon.classList.remove('scanning');
+        sectionTitle.textContent = 'TOP ARTICLES';
+        cardsContainer.innerHTML = '';
+        defaultCards.forEach(cardData => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="image_container">
+                    <img src="${cardData.image}" alt="Cybercrime Image">
+                </div>
+                <div class="cybercrime-title">
+                    <span>${cardData.title}</span>
+                </div>
+                <div class="cybercrime-description">
+                    <p>Cybercrime</p>
+                    <p>${cardData.description}</p>
+                </div>
+                <a href="News.html" class="border-button">
+                    <span class="button-text">Read More</span>
+                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                </a>
+            `;
+            cardsContainer.appendChild(card);
+        });
     }
+}
+
+searchInput.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        const query = searchInput.value.trim();
+        performSearch(query);
+    }
+});
+
+document.querySelector('.search-icon').addEventListener('click', () => {
+    const query = searchInput.value.trim();
+    performSearch(query);
 });
