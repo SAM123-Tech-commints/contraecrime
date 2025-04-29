@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
+        /* CSS remains unchanged */
         * {
             box-sizing: border-box;
         }
@@ -45,7 +46,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .loader-overlay.active g {
+        .loader-overlay.active {
             opacity: 1;
             pointer-events: all;
         }
@@ -1670,24 +1671,24 @@
         });
 
         borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
+        const borderType = borderTypeSelect.value;
+        profilePic.style.borderStyle = borderType;
 
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: borderType,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the border type.');
-            }
-        });
+        const user = auth.currentUser;
+        if (user) {
+            const sanitizedEmail = user.email.replace(/\./g, ',');
+            database.ref(`users/${sanitizedEmail}`).update({
+                borderType: borderType,
+                updatedAt: firebase.database.ServerValue.TIMESTAMP
+            })
+            .catch(error => {
+                console.error('Error saving border type:', error);
+                alert('Failed to save border type: ' + error.message);
+            });
+        } else {
+            alert('You must be logged in to change the border type.');
+        }
+    });
 
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
@@ -1717,19 +1718,21 @@
         });
 
         document.querySelectorAll('a[href]').forEach(link => {
-    if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-        link.addEventListener('click', function(e) {
+            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+                link.addEventListener('click', function(e) {
+                    // Prevent default navigation
+                    e.preventDefault();
 
-            e.preventDefault();
+                    // Always show the loader for internal links
+                    loaderOverlay.classList.add('active');
 
-            loaderOverlay.classList.add('active');
-
-            setTimeout(() => {
-                window.location.href = this.href;
-            }, 150);
+                    // Navigate after a short delay
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 150);
+                });
+            }
         });
-    }
-});
     </script>
 </body>
 </html>
