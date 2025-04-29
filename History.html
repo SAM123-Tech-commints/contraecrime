@@ -1717,19 +1717,19 @@
         });
 
         document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
+    if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+        link.addEventListener('click', function(e) {
 
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
+            e.preventDefault();
 
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
+            loaderOverlay.classList.add('active');
+
+            setTimeout(() => {
+                window.location.href = this.href;
+            }, 150);
         });
+    }
+});
     </script>
 </body>
 </html>
