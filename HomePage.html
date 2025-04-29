@@ -620,6 +620,7 @@
             top: 50%;
             transform: translateY(-50%);
             transition: transform 0.3s ease;
+            cursor: pointer; 
         }
 
         .search-input {
@@ -1437,7 +1438,7 @@
                 </div>
                 <div class="search-container">
                     <input type="text" class="search-input" id="searchInput" placeholder="Ask anything...">
-                    <span class="search-icon">
+                    <span class="search-icon" role="button" aria-label="Search" tabindex="0">
                         <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </span>
                 </div>
@@ -2388,9 +2389,8 @@
                 });
             }
         }
-    }); // <-- Corrected closing of event listener
+    }); 
 
-    // Highlight searched keywords in cards (optional feature for better UX)
     function highlightText(element, query) {
         if (!query) return;
         const regex = new RegExp(`(${query})`, 'gi');
@@ -2398,13 +2398,31 @@
         element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
     }
 
-    // Handle window resize for sidebar visibility on mobile
     window.addEventListener('resize', () => {
         if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
             sidebar.classList.remove('active');
             const icon = mobileMenuIcon.querySelector('i');
             icon.classList.remove('fa-times');
             icon.classList.add('fa-bars');
+        }
+    });
+
+    searchInput.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter') {
+            const query = searchInput.value.trim();
+            await performSearch(query);
+        }
+    });
+
+    document.querySelector('.search-icon').addEventListener('click', async () => {
+        const query = searchInput.value.trim();
+        await performSearch(query);
+    });
+
+    document.querySelector('.search-icon').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            const query = searchInput.value.trim();
+            performSearch(query);
         }
     });
 </script>
