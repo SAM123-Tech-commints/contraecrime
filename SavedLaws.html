@@ -648,7 +648,7 @@
         }
 
         .history-item .timestamp {
-źwię: 12px;
+            font-size: 12px;
             font-weight: 400;
             color: #718096;
         }
@@ -1332,8 +1332,8 @@
         const auth = firebase.auth();
         const database = firebase.database();
 
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
-        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta'; // Replace with your Cloudinary Cloud Name
+        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime'; // Replace with your Cloudinary Upload Preset
 
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
@@ -1455,6 +1455,10 @@
                     body: formData
                 });
 
+                if (!response.ok) {
+                    throw new Error(`Cloudinary upload failed with status: ${response.status}`);
+                }
+
                 const data = await response.json();
                 if (data.secure_url) {
                     const user = auth.currentUser;
@@ -1465,10 +1469,12 @@
                         profilePic.src = data.secure_url;
                         profilePic.style.backgroundColor = 'transparent';
                     }
+                } else {
+                    throw new Error('No secure URL returned from Cloudinary');
                 }
             } catch (error) {
                 console.error('Error uploading avatar:', error);
-                alert('Failed to upload avatar. Please try again.');
+                alert(`Failed to upload avatar: ${error.message}. Please check your Cloudinary Cloud Name and Upload Preset, and try again.`);
             } finally {
                 avatarLoading.classList.remove('active');
             }
@@ -1509,56 +1515,61 @@
 
         async function loadSavedLaws(userId) {
             loaderOverlay.classList.add('active');
-            const savedLawsRef = database.ref(`users/${userId}/savedLaws`);
-            const snapshot = await savedLawsRef.once('value');
-            const savedLaws = snapshot.val();
+            try {
+                const savedLawsRef = database.ref(`users/${userId}/savedLaws`);
+                const snapshot = await savedLawsRef.once('value');
+                const savedLaws = snapshot.val();
 
-            savedLawsList.innerHTML = '';
+                savedLawsList.innerHTML = '';
 
-            if (!savedLaws || Object.keys(savedLaws).length === 0) {
-                savedLawsList.innerHTML = '<p class="no-history">No saved laws found.</p>';
-                clearAllBtn.style.display = 'none';
-                loaderOverlay.classList.remove('active');
-                return;
-            }
+                if (!savedLaws || Object.keys(savedLaws).length === 0) {
+                    savedLawsList.innerHTML = '<p class="no-history">No saved laws found.</p>';
+                    clearAllBtn.style.display = 'none';
+                    loaderOverlay.classList.remove('active');
+                    return;
+                }
 
-            clearAllBtn.style.display = 'block';
+                clearAllBtn.style.display = 'block';
 
-            const lawsArray = [];
-            for (const lawId in savedLaws) {
-                const lawData = savedLaws[lawId];
-                lawsArray.push({ title: lawData.title, id: lawId, timestamp: lawData.timestamp });
-            }
+                const lawsArray = [];
+                for (const lawId in savedLaws) {
+                    const lawData = savedLaws[lawId];
+                    lawsArray.push({ title: lawData.title, id: lawId, timestamp: lawData.timestamp });
+                }
 
-            lawsArray.sort((a, b) => b.timestamp - a.timestamp);
+                lawsArray.sort((a, b) => b.timestamp - a.timestamp);
 
-            lawsArray.forEach((law) => {
-                const li = document.createElement('li');
-                li.className = 'history-item';
-                li.innerHTML = `
-                    <div class="history-item-content">
-                        <i class="fas fa-bookmark history-item-icon"></i>
-                        <div class="history-item-text">
-                            <span class="query">${law.title}</span>
-                            <span class="timestamp">Saved on: ${new Date(law.timestamp).toLocaleString()}</span>
+                lawsArray.forEach((law) => {
+                    const li = document.createElement('li');
+                    li.className = 'history-item';
+                    li.innerHTML = `
+                        <div class="history-item-content">
+                            <i class="fas fa-bookmark history-item-icon"></i>
+                            <div class="history-item-text">
+                                <span class="query">${law.title}</span>
+                                <span class="timestamp">Saved on: ${new Date(law.timestamp).toLocaleString()}</span>
+                            </div>
                         </div>
-                    </div>
-                    <button class="delete-btn" data-law-id="${law.id}">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                `;
-                savedLawsList.appendChild(li);
-            });
-
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', async () => {
-                    const lawId = btn.getAttribute('data-law-id');
-                    await database.ref(`users/${userId}/savedLaws/${lawId}`).remove();
-                    loadSavedLaws(userId);
+                        <button class="delete-btn" data-law-id="${law.id}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    `;
+                    savedLawsList.appendChild(li);
                 });
-            });
 
-            loaderOverlay.classList.remove('active');
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const lawId = btn.getAttribute('data-law-id');
+                        await database.ref(`users/${userId}/savedLaws/${lawId}`).remove();
+                        loadSavedLaws(userId);
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading saved laws:', error);
+                savedLawsList.innerHTML = '<p class="no-history">Error loading saved laws. Please try again later.</p>';
+            } finally {
+                loaderOverlay.classList.remove('active');
+            }
         }
 
         clearAllBtn.addEventListener('click', () => {
@@ -1573,9 +1584,16 @@
             const user = auth.currentUser;
             if (user) {
                 loaderOverlay.classList.add('active');
-                await database.ref(`users/${user.uid}/savedLaws`).remove();
-                clearModal.classList.remove('active');
-                loadSavedLaws(user.uid);
+                try {
+                    await database.ref(`users/${user.uid}/savedLaws`).remove();
+                    clearModal.classList.remove('active');
+                    loadSavedLaws(user.uid);
+                } catch (error) {
+                    console.error('Error clearing saved laws:', error);
+                    alert('Failed to clear saved laws. Please try again.');
+                } finally {
+                    loaderOverlay.classList.remove('active');
+                }
             }
         });
     </script>
