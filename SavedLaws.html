@@ -525,442 +525,336 @@
         }
 
         .clear-all-btn {
-        background-color: #c53030;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        order: 1;
-        }
-
-        .clear-all-btn:hover {
-        background-color: #a12626;
-        transform: scale(1.05);
-        }
-
-        .clear-all-btn:active {
-        transform: scale(0.95);
-        }
-
-        .dark-theme .clear-all-btn {
-        background-color: #9b2c2c;
-        }
-
-        .dark-theme .clear-all-btn:hover {
-        background-color: #7f2525;
-        }
-
-        .saved-laws-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 0;
-        margin: 0;
-        }
-
-        .saved-law-item {
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        }
-
-        .saved-law-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.15);
-        }
-
-        .dark-theme .saved-law-item {
-        background-color: #2d3748;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
-        }
-
-        .dark-theme .saved-law-item:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .saved-law-image {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-bottom: 3px solid #d7b15c;
-        }
-
-        .dark-theme .saved-law-image {
-        border-bottom-color: #ecc94b;
-        }
-
-        .saved-law-content {
-        padding: 15px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        }
-
-        .saved-law-title {
-        font-size: 16px;
-        font-weight: 600;
-        color: #2d3748;
-        margin: 0 0 8px;
-        text-align: center;
-        }
-
-        .dark-theme .saved-law-title {
-        color: #e2e8f0;
-        }
-
-        .saved-law-timestamp {
-        font-size: 12px;
-        color: #718096;
-        margin: 0 0 12px;
-        text-align: center;
-        }
-
-        .dark-theme .saved-law-timestamp {
-        color: #a0aec0;
-        }
-
-        .saved-law-actions {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: auto;
-        }
-
-        .action-btn {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .download-btn {
-        background-color: #d7b15c;
-        color: white;
-        }
-
-        .download-btn:hover {
-        background-color: #b8973e;
-        transform: scale(1.1);
-        }
-
-        .download-btn:active {
-        transform: scale(0.95);
-        }
-
-        .dark-theme .download-btn {
-        background-color: #ecc94b;
-        }
-
-        .dark-theme .download-btn:hover {
-        background-color: #d4b038;
-        }
-
-        .delete-btn {
-        background-color: #e53e3e;
-        color: white;
-        }
-
-        .delete-btn:hover {
-        background-color: #c53030;
-        transform: scale(1.1);
-        }
-
-        .delete-btn:active {
-        transform: scale(0.95);
-        }
-
-        .dark-theme .delete-btn {
-        background-color: #f56565;
-        }
-
-        .dark-theme .delete-btn:hover {
-        background-color: #db4949;
-        }
-
-        .action-btn i {
-        font-size: 16px;
-        }
-
-        .no-saved-laws {
-        text-align: center;
-        font-size: 16px;
-        font-weight: 500;
-        color: #718096;
-        margin-top: 40px;
-        background-color: #edf2f7;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .dark-theme .no-saved-laws {
-        color: #a0aec0;
-        background-color: #2d3748;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        footer {
-        background-color: #333;
-        color: white;
-        padding: 15px 30px;
-        text-align: center;
-        margin-left: 290px;
-        z-index: 1;
-        transition: margin-left 0.3s ease;
-        }
-
-        footer p {
-        margin: 0;
-        font-size: 14px;
-        }
-
-        .footer-links {
-        margin-top: 5px;
-        }
-
-        .footer-links a {
-        color: #d7b15c;
-        text-decoration: none;
-        margin: 0 10px;
-        font-size: 14px;
-        }
-
-        .footer-links a:hover {
-        text-decoration: underline;
-        }
-
-        .dark-theme footer {
-        background-color: #1a1a1a;
-        }
-
-        .mobile-nav {
-        display: none;
-        background-image: url('https://i.imgur.com/bNRxAhZ.png');
-        padding: 15px;
-        position: fixed;
-        width: 100%;
-        z-index: 3000;
-        }
-
-        .mobile-nav .logo {
-        color: white;
-        font-size: 20px;
-        font-weight: bold;
-        text-decoration: none;
-        }
-
-        .mobile-nav .menu-icon {
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        }
-        .confirmation-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.dark-theme .modal-content {
-    background-color: #2d3748;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-.modal-content h3 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    color: #2d3748;
-}
-
-.dark-theme .modal-content h3 {
-    color: #e2e8f0;
-}
-
-.modal-content p {
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-    color: #718096;
-}
-
-.dark-theme .modal-content p {
-    color: #a0aec0;
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.modal-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.modal-btn.cancel {
-    background-color: #718096;
-    color: white;
-}
-
-.modal-btn.cancel:hover {
-    background-color: #5a7184;
-    transform: scale(1.05);
-}
-
-.modal-btn.cancel:active {
-    transform: scale(0.95);
-}
-
-.dark-theme .modal-btn.cancel {
-    background-color: #a0aec0;
-}
-
-.dark-theme .modal-btn.cancel:hover {
-    background-color: #8b9cb3;
-}
-
-.modal-btn.confirm {
-    background-color: #c53030;
-    color: white;
-}
-
-.modal-btn.confirm:hover {
-    background-color: #a12626;
-    transform: scale(1.05);
-}
-
-.modal-btn.confirm:active {
-    transform: scale(0.95);
-}
-
-.dark-theme .modal-btn.confirm {
-    background-color: #9b2c2c;
-}
-
-.dark-theme .modal-btn.confirm:hover {
-    background-color: #7f2525;
-}
-
-        @media (max-width: 1024px) {
-        .sidebar {
-        width: 250px;
-        }
-
-        .sidebar h1 {
-        font-size: 22px;
-        }
-
-        .sidebar ul li a {
-        font-size: 16px;
-        }
-
-        .dark-theme-label {
-        font-size: 16px;
-        }
-
-        .content {
-        margin-left: 250px;
-        }
-
-        footer {
-        margin-left: 250px;
-        }
-
-        .account-customization {
-        right: 10px;
-        }
-
-        .avatar-container .profile-pic {
-        width: 35px;
-        height: 35px;
-        }
-
-        .avatar-loading {
-        width: 35px;
-        height: 35px;
-        }
-
-        .avatar-loading .loader {
-        width: 18px;
-        height: 18px;
-        border-width: 2px;
-        }
-
-        .customization-options {
-        top: 45px;
-        width: 220px;
-        }
-
-        .saved-laws-title {
-        font-size: 24px;
-        }
-
-        .saved-law-item {
-        min-height: 280px;
-        }
-
-        .saved-law-image {
-        height: 120px;
-        }
-
-        .saved-law-title {
-        font-size: 14px;
-        }
-
-        .saved-law-timestamp {
-        font-size: 11px;
-        }
-
-        .action-btn {
-        width: 36px;
-        height: 36px;
-        }
-
-        .action-btn i {
-        font-size: 14px;
-        }
-
-        .clear-all-btn {
-        padding: 6px 12px;
-        font-size: 13px;
-        }
-        }
+            background-color: #c53030;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            order: 1;
+            }
+
+            .clear-all-btn:hover {
+            background-color: #a12626;
+            transform: scale(1.05);
+            }
+
+            .clear-all-btn:active {
+            transform: scale(0.95);
+            }
+
+            .dark-theme .clear-all-btn {
+            background-color: #9b2c2c;
+            }
+
+            .dark-theme .clear-all-btn:hover {
+            background-color: #7f2525;
+            }
+
+            .saved-laws-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+            }
+
+            .saved-law-item {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            }
+
+            .saved-law-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.15);
+            }
+
+            .dark-theme .saved-law-item {
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+            }
+
+            .dark-theme .saved-law-item:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+            }
+
+            .saved-law-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 3px solid #d7b15c;
+            }
+
+            .dark-theme .saved-law-image {
+            border-bottom-color: #ecc94b;
+            }
+
+            .saved-law-content {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            }
+
+            .saved-law-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 0 0 8px;
+            text-align: center;
+            }
+
+            .dark-theme .saved-law-title {
+            color: #e2e8f0;
+            }
+
+            .saved-law-timestamp {
+            font-size: 12px;
+            color: #718096;
+            margin: 0 0 12px;
+            text-align: center;
+            }
+
+            .dark-theme .saved-law-timestamp {
+            color: #a0aec0;
+            }
+
+            .saved-law-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: auto;
+            }
+
+            .action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+            .download-btn {
+            background-color: #d7b15c;
+            color: white;
+            }
+
+            .download-btn:hover {
+            background-color: #b8973e;
+            transform: scale(1.1);
+            }
+
+            .download-btn:active {
+            transform: scale(0.95);
+            }
+
+            .dark-theme .download-btn {
+            background-color: #ecc94b;
+            }
+
+            .dark-theme .download-btn:hover {
+            background-color: #d4b038;
+            }
+
+            .delete-btn {
+            background-color: #e53e3e;
+            color: white;
+            }
+
+            .delete-btn:hover {
+            background-color: #c53030;
+            transform: scale(1.1);
+            }
+
+            .delete-btn:active {
+            transform: scale(0.95);
+            }
+
+            .dark-theme .delete-btn {
+            background-color: #f56565;
+            }
+
+            .dark-theme .delete-btn:hover {
+            background-color: #db4949;
+            }
+
+            .action-btn i {
+            font-size: 16px;
+            }
+
+            .no-saved-laws {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            color: #718096;
+            margin-top: 40px;
+            background-color: #edf2f7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .dark-theme .no-saved-laws {
+            color: #a0aec0;
+            background-color: #2d3748;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            margin-left: 290px;
+            z-index: 1;
+            transition: margin-left 0.3s ease;
+            }
+
+            footer p {
+            margin: 0;
+            font-size: 14px;
+            }
+
+            .footer-links {
+            margin-top: 5px;
+            }
+
+            .footer-links a {
+            color: #d7b15c;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+            }
+
+            .footer-links a:hover {
+            text-decoration: underline;
+            }
+
+            .dark-theme footer {
+            background-color: #1a1a1a;
+            }
+
+            .mobile-nav {
+            display: none;
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            z-index: 3000;
+            }
+
+            .mobile-nav .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            }
+
+            .mobile-nav .menu-icon {
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            }
+
+            @media (max-width: 1024px) {
+            .sidebar {
+            width: 250px;
+            }
+
+            .sidebar h1 {
+            font-size: 22px;
+            }
+
+            .sidebar ul li a {
+            font-size: 16px;
+            }
+
+            .dark-theme-label {
+            font-size: 16px;
+            }
+
+            .content {
+            margin-left: 250px;
+            }
+
+            footer {
+            margin-left: 250px;
+            }
+
+            .account-customization {
+            right: 10px;
+            }
+
+            .avatar-container .profile-pic {
+            width: 35px;
+            height: 35px;
+            }
+
+            .avatar-loading {
+            width: 35px;
+            height: 35px;
+            }
+
+            .avatar-loading .loader {
+            width: 18px;
+            height: 18px;
+            border-width: 2px;
+            }
+
+            .customization-options {
+            top: 45px;
+            width: 220px;
+            }
+
+            .saved-laws-title {
+            font-size: 24px;
+            }
+
+            .saved-law-item {
+            min-height: 280px;
+            }
+
+            .saved-law-image {
+            height: 120px;
+            }
+
+            .saved-law-title {
+            font-size: 14px;
+            }
+
+            .saved-law-timestamp {
+            font-size: 11px;
+            }
+
+            .action-btn {
+            width: 36px;
+            height: 36px;
+            }
+
+            .action-btn i {
+            font-size: 14px;
+            }
+
+            .clear-all-btn {
+            padding: 6px 12px;
+            font-size: 13px;
+            }
+            }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -1787,30 +1681,21 @@
                     clearAllBtn.style.display = 'none';
                 });
 
-                const confirmationModal = document.getElementById('confirmationModal');
-                const cancelClearBtn = document.getElementById('cancelClear');
-                const confirmClearBtn = document.getElementById('confirmClear');
-
+                // Clear All button functionality
                 clearAllBtn.addEventListener('click', () => {
-                    confirmationModal.style.display = 'flex';
-                });
-
-                cancelClearBtn.addEventListener('click', () => {
-                    confirmationModal.style.display = 'none';
-                });
-
-                confirmClearBtn.addEventListener('click', () => {
-                    database.ref(`users/${sanitizedEmail}/savedLaws`).remove()
-                        .then(() => {
-                            console.log('All saved laws cleared successfully');
-                            savedLawsGrid.innerHTML = '<p class="no-saved-laws">No saved laws found.</p>';
-                            clearAllBtn.style.display = 'none';
-                        })
-                        .catch((error) => {
-                            console.error('Error clearing saved laws:', error);
-                            alert('Failed to clear saved laws: ' + error.message);
-                        });
-                    confirmationModal.style.display = 'none';
+                    if (confirm('Are you sure you want to clear all saved laws? This action cannot be undone.'))
+                    if (confirm('Are you sure you want to clear all saved laws? This action cannot be undone.')) {
+                        database.ref(`users/${sanitizedEmail}/savedLaws`).remove()
+                            .then(() => {
+                                console.log('All saved laws cleared successfully');
+                                savedLawsGrid.innerHTML = '<p class="no-saved-laws">No saved laws found.</p>';
+                                clearAllBtn.style.display = 'none';
+                            })
+                            .catch((error) => {
+                                console.error('Error clearing saved laws:', error);
+                                alert('Failed to clear saved laws: ' + error.message);
+                            });
+                    }
                 });
 
                 loaderOverlay.classList.remove('active');
