@@ -2123,7 +2123,6 @@
             }
         });
 
-        // Function to save law to Firebase
         function saveLaw(lawTitle) {
             const user = auth.currentUser;
             if (!user) {
@@ -2150,7 +2149,6 @@
             successModal.classList.remove('active');
         });
 
-        // Function to fetch laws from AI API (placeholder)
         async function fetchLawsFromAI(query) {
             const AI_API_URL = 'https://hypothetical-ai-api.com/classify-laws';
             const AI_API_KEY = 'your-api-key';
@@ -2197,139 +2195,131 @@
             }
         }
 
-        // Function to render law cards
-        function renderLawCards(mainLawTitle, alternativeLawTitles) {
-            cardsContainer.innerHTML = '';
+function renderLawCards(mainLawTitle, alternativeLawTitles) {
+        cardsContainer.innerHTML = '';
 
-            // Render main law (wide card)
-            const mainLaw = laws.find(law => law.title === mainLawTitle);
-            if (mainLaw) {
-                const mainCard = document.createElement('div');
-                mainCard.className = 'card main-law';
-                mainCard.innerHTML = `
+        const mainLaw = laws.find(law => law.title === mainLawTitle);
+        if (mainLaw) {
+            const mainCard = document.createElement('div');
+            mainCard.className = 'card main-law';
+            mainCard.innerHTML = `
+                <div class="image_container">
+                    <img src="${mainLaw.image}" alt="Law Image">
+                </div>
+                <div class="cybercrime-title">
+                    <span>${mainLaw.title}</span>
+                </div>
+                <div class="cybercrime-description">
+                    <p><strong>Description:</strong> ${mainLaw.description}</p>
+                    <p><strong>Scenario:</strong> ${mainLaw.scenario}</p>
+                    <p><strong>Punishment:</strong> ${mainLaw.punishment}</p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <a href="${mainLaw.pdf}" class="border-button" target="_blank">
+                        <span class="button-text">Read PDF</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                    </a>
+                    <button class="save-button" data-title="${mainLaw.title}">
+                        <span class="button-text">Save Law</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                    </button>
+                </div>
+            `;
+            cardsContainer.appendChild(mainCard);
+        }
+
+        const alternativesSection = document.createElement('div');
+        alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
+        alternativesSection.style.width = '100%';
+        alternativesSection.style.textAlign = 'center';
+        alternativesSection.style.marginTop = '40px';
+        cardsContainer.appendChild(alternativesSection);
+
+        const alternativesContainer = document.createElement('div');
+        alternativesContainer.className = 'cards-container';
+        alternativeLawTitles.forEach(title => {
+            const law = laws.find(l => l.title === title);
+            if (law) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
                     <div class="image_container">
-                        <img src="${mainLaw.image}" alt="Law Image">
+                        <img src="${law.image}" alt="Law Image">
                     </div>
                     <div class="cybercrime-title">
-                        <span>${mainLaw.title}</span>
+                        <span>${law.title}</span>
                     </div>
                     <div class="cybercrime-description">
-                        <p><strong>Description:</strong> ${mainLaw.description}</p>
-                        <p><strong>Scenario:</strong> ${mainLaw.scenario}</p>
-                        <p><strong>Punishment:</strong> ${mainLaw.punishment}</p>
+                        <p><strong>Description:</strong> ${law.description}</p>
+                        <p><strong>Scenario:</strong> ${law.scenario}</p>
+                        <p><strong>Punishment:</strong> ${law.punishment}</p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                        <a href="${mainLaw.pdf}" class="border-button" target="_blank">
+                        <a href="${law.pdf}" class="border-button" target="_blank">
                             <span class="button-text">Read PDF</span>
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>
-                        <button class="save-button" data-title="${mainLaw.title}">
+                        <button class="save-button" data-title="${law.title}">
                             <span class="button-text">Save Law</span>
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
                         </button>
                     </div>
                 `;
-                cardsContainer.appendChild(mainCard);
+                alternativesContainer.appendChild(card);
             }
-
-            // Render alternative laws (4 smaller cards)
-            const alternativesSection = document.createElement('div');
-            alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
-            alternativesSection.style.width = '100%';
-            alternativesSection.style.textAlign = 'center';
-            alternativesSection.style.marginTop = '40px';
-            cardsContainer.appendChild(alternativesSection);
-
-            const alternativesContainer = document.createElement('div');
-            alternativesContainer.className = 'cards-container';
-            alternativeLawTitles.forEach(title => {
-                const law = laws.find(l => l.title === title);
-                if (law) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="image_container">
-                            <img src="${law.image}" alt="Law Image">
-                        </div>
-                        <div class="cybercrime-title">
-                            <span>${law.title}</span>
-                        </div>
-                        <div class="cybercrime-description">
-                            <p><strong>Description:</strong> ${law.description}</p>
-                            <p><strong>Scenario:</strong> ${law.scenario}</p>
-                            <p><strong>Punishment:</strong> ${law.punishment}</p>
-                        </div>
-                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                            <a href="${law.pdf}" class="border-button" target="_blank">
-                                <span class="button-text">Read PDF</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                            </a>
-                            <button class="save-button" data-title="${law.title}">
-                                <span class="button-text">Save Law</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                            </button>
-                        </div>
-                    `;
-                    alternativesContainer.appendChild(card);
-                }
-            });
-            cardsContainer.appendChild(alternativesContainer);
-
-            // Add event listeners to save buttons
-            document.querySelectorAll('.save-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const lawTitle = button.getAttribute('data-title');
-                    saveLaw(lawTitle);
-                });
-            });
-        }
-
-        // Initial render of default cards (optional)
-        const defaultCards = [
-            {
-                title: "UN: Asian Scam Calls Now a Global Export",
-                image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
-                description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
-            },
-            {
-                title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
-                image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
-                description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
-            },
-            {
-                title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
-                image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
-                description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
-            }
-        ];
-
-        defaultCards.forEach(cardData => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div class="image_container">
-                    <img src="${cardData.image}" alt="Cybercrime Image">
-                </div>
-                <div class="cybercrime-title">
-                    <span>${cardData.title}</span>
-                </div>
-                <div class="cybercrime-description">
-                    <p>Cybercrime</p>
-                    <p>${cardData.description}</p>
-                </div>
-                <a href="News.html" class="border-button">
-                    <span class="button-text">Read More</span>
-                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                </a>
-            `;
-            cardsContainer.appendChild(card);
         });
-        
+        cardsContainer.appendChild(alternativesContainer);
 
-        searchInput.addEventListener('keypress', async (e) => {
-        if (e.key === 'Enter') {
-            const query = searchInput.value.trim();
+        document.querySelectorAll('.save-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const lawTitle = button.getAttribute('data-title');
+                saveLaw(lawTitle);
+            });
+        });
+    }
 
+    const defaultCards = [
+        {
+            title: "UN: Asian Scam Calls Now a Global Export",
+            image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
+            description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
+        },
+        {
+            title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
+            image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
+            description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
+        },
+        {
+            title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
+            image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
+            description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
+        }
+    ];
+
+    defaultCards.forEach(cardData => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div class="image_container">
+                <img src="${cardData.image}" alt="Cybercrime Image">
+            </div>
+            <div class="cybercrime-title">
+                <span>${cardData.title}</span>
+            </div>
+            <div class="cybercrime-description">
+                <p>Cybercrime</p>
+                <p>${cardData.description}</p>
+            </div>
+            <a href="News.html" class="border-button">
+                <span class="button-text">Read More</span>
+                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+            </a>
+        `;
+        cardsContainer.appendChild(card);
+    });
+
+    async function performSearch(query) {
+        try {
             if (query) {
                 fingerprintIcon.classList.add('scanning');
                 sectionTitle.textContent = 'RELEVANT LAWS';
@@ -2344,18 +2334,11 @@
                     });
                 }
 
-                try {
-                    const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
-                    if (mainLaw && alternativeLaws) {
-                        renderLawCards(mainLaw, alternativeLaws);
-                    } else {
-                        cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
-                    }
-                } catch (error) {
-                    console.error('Error in search:', error);
-                    cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
-                } finally {
-                    loaderOverlay.classList.remove('active');
+                const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+                if (mainLaw && alternativeLaws) {
+                    renderLawCards(mainLaw, alternativeLaws);
+                } else {
+                    cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
                 }
             } else {
                 fingerprintIcon.classList.remove('scanning');
@@ -2388,24 +2371,14 @@
                     cardsContainer.appendChild(card);
                 });
             }
+        } catch (error) {
+            console.error('Error in search:', error);
+            cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
+        } finally {
+            loaderOverlay.classList.remove('active');
+            fingerprintIcon.classList.remove('scanning');
         }
-    }); 
-
-    function highlightText(element, query) {
-        if (!query) return;
-        const regex = new RegExp(`(${query})`, 'gi');
-        const text = element.innerHTML;
-        element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
     }
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-            sidebar.classList.remove('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
-    });
 
     searchInput.addEventListener('keypress', async (e) => {
         if (e.key === 'Enter') {
@@ -2421,8 +2394,25 @@
 
     document.querySelector('.search-icon').addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault(); 
             const query = searchInput.value.trim();
             performSearch(query);
+        }
+    });
+
+    function highlightText(element, query) {
+        if (!query) return;
+        const regex = new RegExp(`(${query})`, 'gi');
+        const text = element.innerHTML;
+        element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+            const icon = mobileMenuIcon.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
         }
     });
 </script>
