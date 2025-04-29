@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime - Search History</title>
+    <title>Contra E-Crime</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -1077,9 +1077,9 @@
             }
 
             .account-customization {
-                top: 15px;
-                right: 60px;
-                z-index: 3001;
+                top: 70px;
+                right: 10px;
+                z-index: 998;
             }
 
             .avatar-container .profile-pic {
@@ -1118,6 +1118,10 @@
             .customization-options select {
                 font-size: 10px;
                 padding: 3px;
+            }
+
+            .sidebar.active ~ .content .account-customization {
+                display: none;
             }
 
             .history-title-container h2 {
