@@ -480,221 +480,251 @@
             flex: 1;
             position: relative;
             z-index: 1;
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             width: 100%;
             padding: 20px 0;
         }
 
         .saved-laws-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
-        flex-wrap: wrap; 
-        gap: 20px; 
-        justify-content: flex-start;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
-        .saved-laws-title {
-        font-size: 28px;
-        font-weight: 700;
-        margin: 0;
-        color: #2d3748;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        position: relative;
-        order: 0;
+        .saved-laws-title-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
-        .saved-laws-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: #d7b15c;
+        .dark-theme .saved-laws-title-container {
+            background-color: rgba(45, 55, 72, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .dark-theme .saved-laws-title {
+        .saved-laws-title-container h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            color: #2d3748;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .dark-theme .saved-laws-title-container h2 {
             color: #e2e8f0;
         }
 
-        .dark-theme .saved-laws-title::after {
-            background-color: #ecc94b;
+        .saved-laws-title-container i {
+            font-size: 20px;
+            color: #2d3748;
+        }
+
+        .dark-theme .saved-laws-title-container i {
+            color: #e2e8f0;
         }
 
         .clear-all-btn {
-            background-color: #c53030;
+            background-color: #e53e3e;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
+            border-radius: 6px;
+            padding: 10px 20px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            order: 1;
-            }
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-            .clear-all-btn:hover {
-            background-color: #a12626;
-            transform: scale(1.05);
-            }
+        .clear-all-btn:hover {
+            background-color: #c53030;
+            transform: translateY(-2px);
+        }
 
-            .clear-all-btn:active {
-            transform: scale(0.95);
-            }
+        .clear-all-btn:active {
+            transform: translateY(0);
+        }
 
-            .dark-theme .clear-all-btn {
+        .dark-theme .clear-all-btn {
             background-color: #9b2c2c;
-            }
+        }
 
-            .dark-theme .clear-all-btn:hover {
+        .dark-theme .clear-all-btn:hover {
             background-color: #7f2525;
-            }
+        }
 
-            .saved-laws-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+        .saved-laws-list {
+            list-style: none;
             padding: 0;
             margin: 0;
-            }
+        }
 
-            .saved-law-item {
+        .saved-law-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background-color: #ffffff;
+            padding: 16px 20px;
+            margin-bottom: 12px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            }
+            position: relative;
+            overflow: hidden;
+        }
 
-            .saved-law-item:hover {
-            transform: translateY(-5px);
+        .saved-law-item:hover {
+            transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.15);
-            }
+        }
 
-            .dark-theme .saved-law-item {
+        .dark-theme .saved-law-item {
             background-color: #2d3748;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
-            }
+        }
 
-            .dark-theme .saved-law-item:hover {
+        .dark-theme .saved-law-item:hover {
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
-            }
+        }
 
-            .saved-law-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-bottom: 3px solid #d7b15c;
-            }
+        .saved-law-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: #d7b15c;
+            transition: width 0.3s ease;
+        }
 
-            .dark-theme .saved-law-image {
-            border-bottom-color: #ecc94b;
-            }
+        .saved-law-item:hover::before {
+            width: 8px;
+        }
 
-            .saved-law-content {
-            padding: 15px;
+        .dark-theme .saved-law-item::before {
+            background-color: #ecc94b;
+        }
+
+        .saved-law-content {
+            display: flex;
+            align-items: center;
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            }
+            gap: 15px;
+        }
 
-            .saved-law-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2d3748;
-            margin: 0 0 8px;
-            text-align: center;
-            }
-
-            .dark-theme .saved-law-title {
-            color: #e2e8f0;
-            }
-
-            .saved-law-timestamp {
-            font-size: 12px;
+        .saved-law-icon {
             color: #718096;
-            margin: 0 0 12px;
-            text-align: center;
-            }
+            font-size: 20px;
+        }
 
-            .dark-theme .saved-law-timestamp {
+        .dark-theme .saved-law-icon {
             color: #a0aec0;
-            }
+        }
 
-            .saved-law-actions {
+        .saved-law-text {
+            flex: 1;
+        }
+
+        .saved-law-text span.title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2d3748;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .dark-theme .saved-law-text span.title {
+            color: #e2e8f0;
+        }
+
+        .saved-law-text .timestamp {
+            font-size: 12px;
+            font-weight: 400;
+            color: #718096;
+        }
+
+        .dark-theme .saved-law-text .timestamp {
+            color: #a0aec0;
+        }
+
+        .saved-law-actions {
             display: flex;
-            justify-content: center;
             gap: 10px;
-            margin-top: auto;
-            }
+        }
 
-            .action-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .action-btn {
+            background-color: transparent;
             border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            }
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
 
-            .download-btn {
+        .download-btn {
+            color: #d7b15c;
+        }
+
+        .download-btn:hover {
             background-color: #d7b15c;
             color: white;
-            }
-
-            .download-btn:hover {
-            background-color: #b8973e;
             transform: scale(1.1);
-            }
+        }
 
-            .download-btn:active {
+        .download-btn:active {
             transform: scale(0.95);
-            }
+        }
 
-            .dark-theme .download-btn {
+        .dark-theme .download-btn {
+            color: #ecc94b;
+        }
+
+        .dark-theme .download-btn:hover {
             background-color: #ecc94b;
-            }
+            color: #2d3748;
+        }
 
-            .dark-theme .download-btn:hover {
-            background-color: #d4b038;
-            }
+        .delete-btn {
+            color: #e53e3e;
+        }
 
-            .delete-btn {
-            background-color: #e53e3e;
-            color: white;
-            }
-
-            .delete-btn:hover {
-            background-color: #c53030;
-            transform: scale(1.1);
-            }
-
-            .delete-btn:active {
-            transform: scale(0.95);
-            }
-
-            .dark-theme .delete-btn {
+        .delete-btn:hover {
             background-color: #f56565;
-            }
+            color: white;
+            transform: scale(1.1);
+        }
 
-            .dark-theme .delete-btn:hover {
-            background-color: #db4949;
-            }
+        .delete-btn:active {
+            transform: scale(0.95);
+        }
 
-            .action-btn i {
+        .dark-theme .delete-btn {
+            color: #f56565;
+        }
+
+        .dark-theme .delete-btn:hover {
+            background-color: #c53030;
+        }
+
+        .action-btn i {
             font-size: 16px;
-            }
+        }
 
-            .no-saved-laws {
+        .no-saved-laws {
             text-align: center;
             font-size: 16px;
             font-weight: 500;
@@ -704,15 +734,113 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-            }
+        }
 
-            .dark-theme .no-saved-laws {
+        .dark-theme .no-saved-laws {
             color: #a0aec0;
             background-color: #2d3748;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-            }
+        }
 
-            footer {
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+        }
+
+        .confirmation-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .dark-theme .modal-content {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 15px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .dark-theme .modal-content h3 {
+            color: #e2e8f0;
+        }
+
+        .modal-content p {
+            margin: 0 0 20px;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .dark-theme .modal-content p {
+            color: #a0aec0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .modal-btn.confirm {
+            background-color: #e53e3e;
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background-color: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn.cancel {
+            background-color: #edf2f7;
+            color: #2d3748;
+        }
+
+        .modal-btn.cancel:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .dark-theme .modal-btn.cancel {
+            background-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        .dark-theme .modal-btn.cancel:hover {
+            background-color: #5a667a;
+        }
+
+        footer {
             background-color: #333;
             color: white;
             padding: 15px 30px;
@@ -720,141 +848,136 @@
             margin-left: 290px;
             z-index: 1;
             transition: margin-left 0.3s ease;
-            }
+        }
 
-            footer p {
+        footer p {
             margin: 0;
             font-size: 14px;
-            }
+        }
 
-            .footer-links {
+        .footer-links {
             margin-top: 5px;
-            }
+        }
 
-            .footer-links a {
+        .footer-links a {
             color: #d7b15c;
             text-decoration: none;
             margin: 0 10px;
             font-size: 14px;
-            }
+        }
 
-            .footer-links a:hover {
+        .footer-links a:hover {
             text-decoration: underline;
-            }
+        }
 
-            .dark-theme footer {
+        .dark-theme footer {
             background-color: #1a1a1a;
-            }
+        }
 
-            .mobile-nav {
+        .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
             padding: 15px;
             position: fixed;
             width: 100%;
             z-index: 3000;
-            }
+        }
 
-            .mobile-nav .logo {
+        .mobile-nav .logo {
             color: white;
             font-size: 20px;
             font-weight: bold;
             text-decoration: none;
-            }
+        }
 
-            .mobile-nav .menu-icon {
+        .mobile-nav .menu-icon {
             color: white;
             font-size: 24px;
             cursor: pointer;
             position: absolute;
             right: 15px;
             top: 15px;
-            }
+        }
 
-            @media (max-width: 1024px) {
+        @media (max-width: 1024px) {
             .sidebar {
-            width: 250px;
+                width: 250px;
             }
 
             .sidebar h1 {
-            font-size: 22px;
+                font-size: 22px;
             }
 
             .sidebar ul li a {
-            font-size: 16px;
+                font-size: 16px;
             }
 
             .dark-theme-label {
-            font-size: 16px;
+                font-size: 16px;
             }
 
             .content {
-            margin-left: 250px;
+                margin-left: 250px;
             }
 
             footer {
-            margin-left: 250px;
+                margin-left: 250px;
             }
 
             .account-customization {
-            right: 10px;
+                right: 10px;
             }
 
             .avatar-container .profile-pic {
-            width: 35px;
-            height: 35px;
+                width: 35px;
+                height: 35px;
             }
 
             .avatar-loading {
-            width: 35px;
-            height: 35px;
+                width: 35px;
+                height: 35px;
             }
 
             .avatar-loading .loader {
-            width: 18px;
-            height: 18px;
-            border-width: 2px;
+                width: 18px;
+                height: 18px;
+                border-width: 2px;
             }
 
             .customization-options {
-            top: 45px;
-            width: 220px;
+                top: 45px;
+                width: 220px;
             }
 
-            .saved-laws-title {
-            font-size: 24px;
+            .saved-laws-title-container h2 {
+                font-size: 24px;
+            }
+
+            .saved-laws-title-container i {
+                font-size: 18px;
             }
 
             .saved-law-item {
-            min-height: 280px;
+                padding: 12px 15px;
             }
 
-            .saved-law-image {
-            height: 120px;
+            .saved-law-text span.title {
+                font-size: 14px;
             }
 
-            .saved-law-title {
-            font-size: 14px;
-            }
-
-            .saved-law-timestamp {
-            font-size: 11px;
+            .saved-law-text .timestamp {
+                font-size: 11px;
             }
 
             .action-btn {
-            width: 36px;
-            height: 36px;
+                width: 32px;
+                height: 32px;
             }
 
             .action-btn i {
-            font-size: 14px;
+                font-size: 14px;
             }
-
-            .clear-all-btn {
-            padding: 6px 12px;
-            font-size: 13px;
-            }
-            }
+        }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -879,6 +1002,10 @@
                 padding: 20px;
             }
 
+            footer {
+                margin-left: 200px;
+            }
+
             .avatar-container .profile-pic {
                 width: 30px;
                 height: 30px;
@@ -900,25 +1027,21 @@
                 width: 200px;
             }
 
-            footer {
-                margin-left: 200px;
-            }
-
-            .saved-laws-title {
+            .saved-laws-title-container h2 {
                 font-size: 22px;
             }
 
-            .saved-law-item {
-                min-height: 260px;
-            }
-
-            .saved-law-image {
-                height: 110px;
+            .saved-laws-title-container i {
+                font-size: 16px;
             }
 
             .clear-all-btn {
-                padding: 5px 10px;
-                font-size: 12px;
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .saved-law-item {
+                padding: 10px 12px;
             }
         }
 
@@ -969,10 +1092,6 @@
                 padding: 80px 15px 15px;
             }
 
-            .header {
-                justify-content: center;
-            }
-
             footer {
                 margin-left: 0;
                 padding: 10px 20px;
@@ -990,7 +1109,7 @@
 
             .account-customization {
                 top: 15px;
-                right: 55px;
+                right: 60px;
                 z-index: 3001;
             }
 
@@ -1032,43 +1151,63 @@
                 padding: 3px;
             }
 
-            .saved-laws-title {
+            .saved-laws-title-container h2 {
                 font-size: 20px;
             }
 
+            .saved-laws-title-container i {
+                font-size: 14px;
+            }
+
+            .saved-laws-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .clear-all-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                width: 100%;
+            }
+
             .saved-law-item {
-                min-height: 240px;
+                padding: 10px 12px;
             }
 
-            .saved-law-image {
-                height: 100px;
-            }
-
-            .saved-law-title {
+            .saved-law-text span.title {
                 font-size: 13px;
             }
 
-            .saved-law-timestamp {
+            .saved-law-text .timestamp {
                 font-size: 10px;
             }
 
             .action-btn {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
             }
 
             .action-btn i {
                 font-size: 13px;
             }
 
-            .saved-laws-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 15px;
+            .modal-content {
+                padding: 15px 20px;
+                max-width: 300px;
             }
 
-            .clear-all-btn {
-                padding: 4px 8px;
-                font-size: 11px;
+            .modal-content h3 {
+                font-size: 18px;
+            }
+
+            .modal-content p {
+                font-size: 12px;
+            }
+
+            .modal-btn {
+                padding: 8px 16px;
+                font-size: 12px;
             }
         }
     </style>
@@ -1178,13 +1317,26 @@
             </header>
             <section class="saved-laws-section">
                 <div class="saved-laws-header">
-                    <h2 class="saved-laws-title">Saved Legal Bookmarks</h2>
+                    <div class="saved-laws-title-container">
+                        <h2>SAVED LAWS</h2>
+                        <i class="fas fa-bookmark"></i>
+                    </div>
                     <button class="clear-all-btn" id="clearAllBtn">
                         <i class="fas fa-trash-alt"></i> Clear All History
                     </button>
                 </div>
-                <div class="saved-laws-grid" id="savedLawsGrid"></div>
+                <ul class="saved-laws-list" id="savedLawsList"></ul>
             </section>
+            <div class="confirmation-modal" id="confirmationModal">
+                <div class="modal-content">
+                    <h3>Clear All Saved Laws</h3>
+                    <p>Are you sure you want to delete all your saved laws? This action cannot be undone.</p>
+                    <div class="modal-buttons">
+                        <button class="modal-btn cancel" id="cancelClear">Cancel</button>
+                        <button class="modal-btn confirm" id="confirmClear">Clear All</button>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
@@ -1229,8 +1381,12 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
-        const savedLawsGrid = document.getElementById('savedLawsGrid');
+        const savedLawsList = document.getElementById('savedLawsList');
         const clearAllBtn = document.getElementById('clearAllBtn');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmClear = document.getElementById('confirmClear');
+        const cancelClear = document.getElementById('cancelClear');
+
         const laws = [
     {
         title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
@@ -1599,7 +1755,7 @@
                 // Load saved laws
                 const savedLawsRef = database.ref(`users/${sanitizedEmail}/savedLaws`);
                 savedLawsRef.on('value', (snapshot) => {
-                    savedLawsGrid.innerHTML = '';
+                    savedLawsList.innerHTML = '';
                     const savedLaws = [];
                     snapshot.forEach((childSnapshot) => {
                         const law = childSnapshot.val();
@@ -1611,7 +1767,7 @@
                         const noLaws = document.createElement('p');
                         noLaws.className = 'no-saved-laws';
                         noLaws.textContent = 'No saved laws found.';
-                        savedLawsGrid.appendChild(noLaws);
+                        savedLawsList.appendChild(noLaws);
                         clearAllBtn.style.display = 'none';
                         return;
                     }
@@ -1622,28 +1778,30 @@
                     savedLaws.sort((a, b) => b.timestamp - a.timestamp);
 
                     savedLaws.forEach((savedLaw) => {
-                        // Find the corresponding law in the laws array to get the image and pdf
+                        // Find the corresponding law in the laws array to get the pdf
                         const lawDetails = laws.find(law => law.title === savedLaw.title);
                         if (!lawDetails) return; // Skip if law not found
 
-                        const lawElement = document.createElement('div');
-                        lawElement.className = 'saved-law-item';
-                        lawElement.innerHTML = `
-                            <img src="${lawDetails.image}" alt="${lawDetails.title}" class="saved-law-image">
+                        const li = document.createElement('li');
+                        li.className = 'saved-law-item';
+                        li.innerHTML = `
                             <div class="saved-law-content">
-                                <h3 class="saved-law-title">${savedLaw.title}</h3>
-                                <p class="saved-law-timestamp">${new Date(savedLaw.timestamp).toLocaleString()}</p>
-                                <div class="saved-law-actions">
-                                    <button class="action-btn download-btn" data-pdf="${lawDetails.pdf}" data-title="${savedLaw.title}">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="action-btn delete-btn" data-key="${savedLaw.key}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                <i class="fas fa-bookmark saved-law-icon"></i>
+                                <div class="saved-law-text">
+                                    <span class="title">${savedLaw.title}</span>
+                                    <span class="timestamp">${new Date(savedLaw.timestamp).toLocaleString()}</span>
                                 </div>
                             </div>
+                            <div class="saved-law-actions">
+                                <button class="action-btn download-btn" data-pdf="${lawDetails.pdf}" data-title="${savedLaw.title}">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn delete-btn" data-key="${savedLaw.key}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
                         `;
-                        savedLawsGrid.appendChild(lawElement);
+                        savedLawsList.appendChild(li);
                     });
 
                     // Add event listeners to download buttons
@@ -1653,11 +1811,10 @@
                             const title = button.getAttribute('data-title');
                             const sanitizedTitle = title.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
 
-                            // Create a hidden link to trigger the download
                             const link = document.createElement('a');
                             link.href = pdfUrl;
                             link.download = `${sanitizedTitle}.pdf`;
-                            link.target = '_blank'; // In case download attribute isn't supported
+                            link.target = '_blank';
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
@@ -1680,24 +1837,30 @@
                     });
                 }, (error) => {
                     console.error('Error loading saved laws:', error);
-                    savedLawsGrid.innerHTML = '<p class="no-saved-laws">Failed to load saved laws.</p>';
+                    savedLawsList.innerHTML = '<p class="no-saved-laws">Failed to load saved laws.</p>';
                     clearAllBtn.style.display = 'none';
                 });
 
-                // Clear All button functionality
+                // Clear all saved laws functionality
                 clearAllBtn.addEventListener('click', () => {
-                    if (confirm('Are you sure you want to clear all saved laws? This action cannot be undone.')) {
-                        database.ref(`users/${sanitizedEmail}/savedLaws`).remove()
-                            .then(() => {
-                                console.log('All saved laws cleared successfully');
-                                savedLawsGrid.innerHTML = '<p class="no-saved-laws">No saved laws found.</p>';
-                                clearAllBtn.style.display = 'none';
-                            })
-                            .catch((error) => {
-                                console.error('Error clearing saved laws:', error);
-                                alert('Failed to clear saved laws: ' + error.message);
-                            });
-                    }
+                    confirmationModal.classList.add('active');
+                });
+
+                confirmClear.addEventListener('click', () => {
+                    database.ref(`users/${sanitizedEmail}/savedLaws`).remove()
+                        .then(() => {
+                            console.log('All saved laws deleted successfully');
+                            confirmationModal.classList.remove('active');
+                        })
+                        .catch((error) => {
+                            console.error('Error deleting all saved laws:', error);
+                            alert('Failed to delete saved laws: ' + error.message);
+                            confirmationModal.classList.remove('active');
+                        });
+                });
+
+                cancelClear.addEventListener('click', () => {
+                    confirmationModal.classList.remove('active');
                 });
 
                 loaderOverlay.classList.remove('active');
