@@ -773,6 +773,8 @@
             color: var(--light);
             text-transform: capitalize;
             text-wrap: wrap;
+            min-height: 3rem; 
+            line-height: 1.3; 
         }
 
         .cybercrime-description {
@@ -862,6 +864,93 @@
 
         .save-button:hover .iconer {
             transform: translateY(0px);
+        }
+
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 4000;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .dark-theme .modal-content {
+            background-color: #2d3748;
+            color: #e2e8f0;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 15px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .dark-theme .modal-content h3 {
+            color: #e2e8f0;
+        }
+
+        .modal-content p {
+            margin: 0 0 20px;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        .dark-theme .modal-content p {
+            color: #a0aec0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .modal-btn.ok {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .modal-btn.ok:hover {
+            background-color: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .dark-theme .modal-btn.ok {
+            background-color: #5a9bd4;
+        }
+
+        .dark-theme .modal-btn.ok:hover {
+            background-color: #4682b4;
         }
 
         footer {
@@ -1211,6 +1300,24 @@
                 width: 100%;
                 max-width: 100%;
             }
+
+            .modal-content {
+                padding: 15px 20px;
+                max-width: 300px;
+            }
+
+            .modal-content h3 {
+                font-size: 18px;
+            }
+
+            .modal-content p {
+                font-size: 12px;
+            }
+
+            .modal-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -1342,6 +1449,15 @@
                     <!-- Laws will be dynamically populated here -->
                 </div>
             </section>
+            <div class="success-modal" id="successModal">
+                <div class="modal-content">
+                    <h3>Success</h3>
+                    <p>Law saved successfully!</p>
+                    <div class="modal-buttons">
+                        <button class="modal-btn ok" id="okSuccess">OK</button>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer>
             <p>© 2025 Contra E-Crime. All rights reserved.</p>
@@ -1394,8 +1510,10 @@
         const fingerprintIcon = document.getElementById('fingerprintIcon');
         const cardsContainer = document.getElementById('cardsContainer');
         const sectionTitle = document.getElementById('sectionTitle');
+        const successModal = document.getElementById('successModal');
+        const okSuccess = document.getElementById('okSuccess');
 
-       const laws = [
+        const laws = [
     {
         title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
         description: "A law that protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs.",
@@ -2019,7 +2137,7 @@
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             })
             .then(() => {
-                alert('Law saved successfully!');
+                successModal.classList.add('active');
             })
             .catch(error => {
                 console.error('Error saving law:', error);
@@ -2027,11 +2145,14 @@
             });
         }
 
+        okSuccess.addEventListener('click', () => {
+            successModal.classList.remove('active');
+        });
+
         // Function to fetch laws from AI API (placeholder)
         async function fetchLawsFromAI(query) {
-            // Replace this with a real free AI API endpoint
-            const AI_API_URL = 'https://hypothetical-ai-api.com/classify-laws'; // Placeholder
-            const AI_API_KEY = 'your-api-key'; // Replace with actual API key
+            const AI_API_URL = 'https://hypothetical-ai-api.com/classify-laws';
+            const AI_API_KEY = 'your-api-key';
 
             try {
                 const response = await fetch(AI_API_URL, {
@@ -2056,7 +2177,7 @@
 
                 const data = await response.json();
                 return {
-                    mainLaw: data.mainLaw, 
+                    mainLaw: data.mainLaw,
                     alternativeLaws: data.alternativeLaws
                 };
             } catch (error) {
@@ -2093,8 +2214,8 @@
                     </div>
                     <div class="cybercrime-description">
                         <p><strong>Description:</strong> ${mainLaw.description}</p>
-    <p><strong>Scenario:</strong> ${mainLaw.scenario}</p>
-    <p><strong>Punishment:</strong> ${mainLaw.punishment}</p>
+                        <p><strong>Scenario:</strong> ${mainLaw.scenario}</p>
+                        <p><strong>Punishment:</strong> ${mainLaw.punishment}</p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end;">
                         <a href="${mainLaw.pdf}" class="border-button" target="_blank">
@@ -2134,8 +2255,8 @@
                         </div>
                         <div class="cybercrime-description">
                             <p><strong>Description:</strong> ${law.description}</p>
-    <p><strong>Scenario:</strong> ${law.scenario}</p>
-    <p><strong>Punishment:</strong> ${law.punishment}</p>
+                            <p><strong>Scenario:</strong> ${law.scenario}</p>
+                            <p><strong>Punishment:</strong> ${law.punishment}</p>
                         </div>
                         <div style="display: flex; gap: 10px; justify-content: flex-end;">
                             <a href="${law.pdf}" class="border-button" target="_blank">
@@ -2163,23 +2284,23 @@
         }
 
         // Initial render of default cards (optional)
-     const defaultCards = [
-    {
-        title: "UN: Asian Scam Calls Now a Global Export",
-        image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
-        description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
-    },
-    {
-        title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
-        image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
-        description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
-    },
-    {
-        title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
-        image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
-        description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
-    }
-];
+        const defaultCards = [
+            {
+                title: "UN: Asian Scam Calls Now a Global Export",
+                image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
+                description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
+            },
+            {
+                title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
+                image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
+                description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
+            },
+            {
+                title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
+                image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
+                description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
+            }
+        ];
 
         defaultCards.forEach(cardData => {
             const card = document.createElement('div');
