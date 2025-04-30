@@ -675,7 +675,6 @@
                     console.error('Toggle password elements not found.');
                 }
 
-                // Ensure inputs are clickable by adding a click handler to labels
                 document.querySelectorAll('label[for]').forEach(label => {
                     label.addEventListener('click', () => {
                         const input = document.getElementById(label.getAttribute('for'));
@@ -727,7 +726,6 @@
                             const username = document.getElementById('signup-username').value.trim();
                             const passwordValue = signupPassword.value.trim();
 
-                            // Validate password strength
                             const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
                             if (!passwordRegex.test(passwordValue)) {
                                 signupErrorMessage.style.display = 'block';
@@ -748,7 +746,6 @@
                                 return;
                             }
 
-                            // Create user with Firebase Authentication
                             await auth.createUserWithEmailAndPassword(email, passwordValue);
 
                             await db.collection('users').doc(email).set({
@@ -771,9 +768,17 @@
                             console.error('Sign-up error:', error);
                             signupErrorMessage.style.display = 'block';
                             signupErrorMessage.classList.add('show');
-                            signupErrorMessage.textContent = error.code === 'auth/email-already-in-use'
-                                ? 'Email already exists. Please use a different email.'
-                                : 'An error occurred during sign-up. Please try again.';
+                            let errorMessage = 'An error occurred during sign-up. Please try again.';
+                            if (error.code === 'auth/email-already-in-use') {
+                                errorMessage = 'Email already exists. Please use a different email.';
+                            } else if (error.code === 'auth/invalid-email') {
+                                errorMessage = 'Invalid email format. Please check your email address.';
+                            } else if (error.code === 'auth/weak-password') {
+                                errorMessage = 'Password is too weak. Please use a stronger password.';
+                            } else if (error.code === 'auth/network-request-failed') {
+                                errorMessage = 'Network error. Please check your internet connection and try again.';
+                            }
+                            signupErrorMessage.textContent = errorMessage;
                             submitButton.classList.remove('loading');
                             submitButton.disabled = false;
                         }
