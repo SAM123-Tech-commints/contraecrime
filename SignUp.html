@@ -730,7 +730,7 @@
                             if (!passwordRegex.test(passwordValue)) {
                                 signupErrorMessage.style.display = 'block';
                                 signupErrorMessage.classList.add('show');
-                                signupErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
+                                signupErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&#).';
                                 submitButton.classList.remove('loading');
                                 submitButton.disabled = false;
                                 return;
@@ -769,14 +769,27 @@
                             signupErrorMessage.style.display = 'block';
                             signupErrorMessage.classList.add('show');
                             let errorMessage = 'An error occurred during sign-up. Please try again.';
-                            if (error.code === 'auth/email-already-in-use') {
-                                errorMessage = 'Email already exists. Please use a different email.';
-                            } else if (error.code === 'auth/invalid-email') {
-                                errorMessage = 'Invalid email format. Please check your email address.';
-                            } else if (error.code === 'auth/weak-password') {
-                                errorMessage = 'Password is too weak. Please use a stronger password.';
-                            } else if (error.code === 'auth/network-request-failed') {
-                                errorMessage = 'Network error. Please check your internet connection and try again.';
+                            switch (error.code) {
+                                case 'auth/email-already-in-use':
+                                    errorMessage = 'Email already exists. Please use a different email.';
+                                    break;
+                                case 'auth/invalid-email':
+                                    errorMessage = 'Invalid email format. Please check your email address.';
+                                    break;
+                                case 'auth/weak-password':
+                                    errorMessage = 'Password is too weak. Please use a stronger password.';
+                                    break;
+                                case 'auth/network-request-failed':
+                                    errorMessage = 'Network error. Please check your internet connection and try again.';
+                                    break;
+                                case 'auth/operation-not-allowed':
+                                    errorMessage = 'Email/password sign-up is disabled. Please contact support.';
+                                    break;
+                                case 'auth/invalid-api-key':
+                                    errorMessage = 'Invalid Firebase configuration. Please contact support.';
+                                    break;
+                                default:
+                                    errorMessage = `An unexpected error occurred: ${error.message}. Please try again.`;
                             }
                             signupErrorMessage.textContent = errorMessage;
                             submitButton.classList.remove('loading');
