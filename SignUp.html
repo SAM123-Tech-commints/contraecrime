@@ -314,8 +314,8 @@
             100% { transform: translateY(-50%) rotate(360deg); }
         }
 
-        .error-message {
-            color: #ff0000;
+        .error-message,
+        .success-message {
             text-align: center;
             margin-top: 10px;
             font-size: 14px;
@@ -324,7 +324,16 @@
             z-index: 1;
         }
 
-        .error-message.show {
+        .error-message {
+            color: #ff0000;
+        }
+
+        .success-message {
+            color: #28a745;
+        }
+
+        .error-message.show,
+        .success-message.show {
             display: block;
             animation: shake 0.5s ease;
         }
@@ -601,6 +610,7 @@
                     <button type="submit" class="action-btn">Create Account</button>
                 </div>
                 <div class="error-message" id="signupErrorMessage"></div>
+                <div class="success-message" id="signupSuccessMessage"></div>
             </form>
         </div>
     </div>
@@ -712,6 +722,7 @@
 
                 const signupForm = document.getElementById('signupForm');
                 const signupErrorMessage = document.getElementById('signupErrorMessage');
+                const signupSuccessMessage = document.getElementById('signupSuccessMessage');
 
                 if (signupForm) {
                     signupForm.addEventListener('submit', async (event) => {
@@ -763,7 +774,13 @@
                             submitButton.disabled = false;
                             signupErrorMessage.style.display = 'none';
 
-                            window.location.href = "HomePage.html";
+                            signupSuccessMessage.textContent = 'Account created successfully! Redirecting to login...';
+                            signupSuccessMessage.style.display = 'block';
+                            signupSuccessMessage.classList.add('show');
+
+                            setTimeout(() => {
+                                window.location.href = "index.html";
+                            }, 3000);
                         } catch (error) {
                             console.error('Sign-up error:', error);
                             signupErrorMessage.style.display = 'block';
