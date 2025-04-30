@@ -915,12 +915,11 @@
                             const rememberMe = document.getElementById('rememberme').checked;
                             const loginErrorMessage = document.getElementById('loginErrorMessage');
 
-                            // Validate password format before attempting login
-                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                            if (!passwordRegex.test(passwordValue)) {
+                            // Check if password field is empty
+                            if (!passwordValue) {
                                 loginErrorMessage.style.display = 'block';
                                 loginErrorMessage.classList.add('show');
-                                loginErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
+                                loginErrorMessage.textContent = 'Please enter your password.';
                                 submitButton.classList.remove('loading');
                                 submitButton.disabled = false;
                                 return;
