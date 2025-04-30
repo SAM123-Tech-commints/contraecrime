@@ -580,6 +580,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .history-item:hover {
@@ -620,16 +621,6 @@
             align-items: center;
             flex: 1;
             gap: 15px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .history-item-content:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        .dark-theme .history-item-content:hover {
-            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .history-item-icon {
@@ -1440,8 +1431,9 @@
                     searches.forEach((search) => {
                         const li = document.createElement('li');
                         li.className = 'history-item';
+                        li.setAttribute('data-query', search.query);
                         li.innerHTML = `
-                            <div class="history-item-content" data-query="${encodeURIComponent(search.query)}">
+                            <div class="history-item-content">
                                 <i class="fas fa-search history-item-icon"></i>
                                 <div class="history-item-text">
                                     <span class="query">${search.query}</span>
@@ -1455,13 +1447,29 @@
                         historyList.appendChild(li);
                     });
 
-                    // Add event listeners to history items for redirection with query
-                    document.querySelectorAll('.history-item-content').forEach((content) => {
-                        content.addEventListener('click', () => {
-                            const query = content.getAttribute('data-query');
+                    // Add event listeners to history items for clicking and copying
+                    document.querySelectorAll('.history-item').forEach((item) => {
+                        item.addEventListener('click', (e) => {
+                            // Prevent the click on the delete button from triggering the history item click
+                            if (e.target.closest('.delete-btn')) return;
+
+                            const query = item.getAttribute('data-query');
+                            
+                            // Copy the query to clipboard
+                            navigator.clipboard.writeText(query)
+                                .then(() => {
+                                    console.log('Query copied to clipboard:', query);
+                                })
+                                .catch((error) => {
+                                    console.error('Failed to copy query:', error);
+                                    alert('Failed to copy query: ' + error.message);
+                                });
+
+                            // Show loader and redirect to search results page with query parameter
                             loaderOverlay.classList.add('active');
                             setTimeout(() => {
-                                window.location.href = `HomePage.html?query=${query}`;
+                                // Assuming HomePage.html has a search functionality that can handle query parameters
+                                window.location.href = `HomePage.html?search=${encodeURIComponent(query)}`;
                             }, 150);
                         });
                     });
@@ -1469,7 +1477,7 @@
                     // Add event listeners to delete buttons
                     document.querySelectorAll('.delete-btn').forEach((button) => {
                         button.addEventListener('click', (e) => {
-                            e.stopPropagation(); // Prevent triggering the history-item-content click
+                            e.stopPropagation(); // Prevent the history item click event
                             const key = button.getAttribute('data-key');
                             database.ref(`users/${sanitizedEmail}/searchHistory/${key}`).remove()
                                 .then(() => {
@@ -1741,8 +1749,6 @@
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
-                    // Skip the event listener for history-item-content to avoid conflict
-                    if (this.closest('.history-item-content')) return;
                     e.preventDefault();
                     loaderOverlay.classList.add('active');
                     setTimeout(() => {
