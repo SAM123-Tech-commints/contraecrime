@@ -1044,23 +1044,6 @@
             top: 15px;
         }
 
-        /* Ensure the alternatives container uses a grid layout for 2x2 arrangement */
-        .alternatives-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columns */
-            grid-gap: 35px; /* Match the gap used in cards-container */
-            justify-items: center;
-            width: 100%;
-            max-width: 800px; /* Limit the width to keep cards from stretching too wide */
-            margin: 0 auto; /* Center the grid */
-        }
-
-        /* Ensure cards within the alternatives container maintain consistent size */
-        .alternatives-container .card {
-            width: 100%;
-            max-width: 350px; /* Match the default card width */
-        }
-
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -1188,11 +1171,6 @@
 
             .search-container {
                 width: 70%;
-            }
-
-            .alternatives-container {
-                grid-template-columns: 1fr; /* Stack cards in a single column on smaller screens */
-                max-width: 500px;
             }
         }
 
@@ -1341,15 +1319,6 @@
                 padding: 8px 16px;
                 font-size: 12px;
             }
-
-            .alternatives-container {
-                grid-template-columns: 1fr; /* Keep single column for mobile */
-                max-width: 100%;
-            }
-
-            .alternatives-container .card {
-                max-width: 100%;
-            }
         }
     </style>
 </head>
@@ -1444,7 +1413,7 @@
                             <label class="file-input-label" for="avatarInput">Change Avatar</label>
                             <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
                             <label for="avatarBgColorPicker">Avatar Background Color</label>
-                            <input type="color央 id="avatarBgColorPicker" value="#cccccc">
+                            <input type="color" id="avatarBgColorPicker" value="#cccccc">
                             <label for="borderColorPicker">Border Color</label>
                             <input type="color" id="borderColorPicker" value="#000000">
                             <label for="borderTypeSelect">Border Type</label>
@@ -1468,7 +1437,7 @@
                     </div>
                 </div>
                 <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Ask anything..." autofocus>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Ask anything...">
                     <span class="search-icon" role="button" aria-label="Search" tabindex="0">
                         <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </span>
@@ -1476,7 +1445,7 @@
                 <p>Find the right law for you!</p>
             </div>
             <section class="articles">
-                <h2 id="sectionTitle">RELEVANT LAWS</h2>
+                <h2 id="sectionTitle">TOP ARTICLES</h2>
                 <div class="cards-container" id="cardsContainer">
                     <!-- Laws will be dynamically populated here -->
                 </div>
@@ -1868,245 +1837,6 @@
     }
 ];
 
-        const defaultCards = [
-            {
-                title: "UN: Asian Scam Calls Now a Global Export",
-                image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
-                description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
-            },
-            {
-                title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
-                image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
-                description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
-            },
-            {
-                title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
-                image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
-                description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
-            }
-        ];
-
-        async function fetchLawsFromAI(query) {
-            const AI_API_URL = 'https://hypothetical-ai-api.com/classify-laws';
-            const AI_API_KEY = 'your-api-key';
-
-            try {
-                const response = await fetch(AI_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${AI_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        query: query,
-                        laws: laws.map(law => ({
-                            title: law.title,
-                            description: law.description,
-                            scenarios: law.scenarios
-                        }))
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch laws from AI API');
-                }
-
-                const data = await response.json();
-                return {
-                    mainLaw: data.mainLaw,
-                    alternativeLaws: data.alternativeLaws
-                };
-            } catch (error) {
-                console.error('Error fetching laws from AI:', error);
-                const fuse = new Fuse(laws, {
-                    keys: ['title', 'description', 'scenarios'],
-                    threshold: 0.4,
-                    distance: 100
-                });
-
-                const results = fuse.search(query);
-                const mainLaw = results[0]?.item.title;
-                const alternativeLaws = results.slice(1, 5).map(res => res.item.title);
-
-                return { mainLaw, alternativeLaws };
-            }
-        }
-
-        function renderLawCards(mainLawTitle, alternativeLawTitles) {
-            cardsContainer.innerHTML = '';
-
-            const mainLaw = laws.find(law => law.title === mainLawTitle);
-            if (mainLaw) {
-                const mainCard = document.createElement('div');
-                mainCard.className = 'card main-law';
-                mainCard.innerHTML = `
-                    <div class="image_container">
-                        <img src="${mainLaw.image}" alt="Law Image">
-                    </div>
-                    <div class="cybercrime-title">
-                        <span>${mainLaw.title}</span>
-                    </div>
-                    <div class="cybercrime-description">
-                        <p><strong>Description:</strong> ${mainLaw.description}</p>
-                        <p><strong>Scenario:</strong> ${mainLaw.scenario}</p>
-                        <p><strong>Punishment:</strong> ${mainLaw.punishment}</p>
-                    </div>
-                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                        <a href="${mainLaw.pdf}" class="border-button" target="_blank">
-                            <span class="button-text">Read PDF</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                        </a>
-                        <button class="save-button" data-title="${mainLaw.title}">
-                            <span class="button-text">SavePPS Law</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                        </button>
-                    </div>
-                `;
-                cardsContainer.appendChild(mainCard);
-            }
-
-            const alternativesSection = document.createElement('div');
-            alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
-            alternativesSection.style.width = '100%';
-            alternativesSection.style.textAlign = 'center';
-            alternativesSection.style.marginTop = '40px';
-            cardsContainer.appendChild(alternativesSection);
-
-            const alternativesContainer = document.createElement('div');
-            alternativesContainer.className = 'alternatives-container';
-            alternativeLawTitles.forEach(title => {
-                const law = laws.find(l => l.title === title);
-                if (law) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="image_container">
-                            <img src="${law.image}" alt="Law Image">
-                        </div>
-                        <div class="cybercrime-title">
-                            <span>${law.title}</span>
-                        </div>
-                        <div class="cybercrime-description">
-                            <p><strong>Description:</strong> ${law.description}</p>
-                            <p><strong>Scenario:</strong> ${law.scenario}</p>
-                            <p><strong>Punishment:</strong> ${law.punishment}</p>
-                        </div>
-                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                            <a href="${law.pdf}" class="border-button" target="_blank">
-                                <span class="button-text">Read PDF</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                            </a>
-                            <button class="save-button" data-title="${law.title}">
-                                <span class="button-text">Save Law</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                            </button>
-                        </div>
-                    `;
-                    alternativesContainer.appendChild(card);
-                }
-            });
-            cardsContainer.appendChild(alternativesContainer);
-
-            document.querySelectorAll('.save-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const lawTitle = button.getAttribute('data-title');
-                    saveLaw(lawTitle);
-                });
-            });
-        }
-
-        async function performSearch(query) {
-            try {
-                if (query) {
-                    fingerprintIcon.classList.add('scanning');
-                    sectionTitle.textContent = 'RELEVANT LAWS';
-                    loaderOverlay.classList.add('active');
-
-                    const user = auth.currentUser;
-                    if (user) {
-                        const sanitizedEmail = user.email.replace(/\./g, ',');
-                        database.ref(`users/${sanitizedEmail}/searchHistory`).push({
-                            query: query,
-                            timestamp: firebase.database.ServerValue.TIMESTAMP
-                        });
-                    }
-
-                    const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
-                    if (mainLaw && alternativeLaws) {
-                        renderLawCards(mainLaw, alternativeLaws);
-                    } else {
-                        cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
-                    }
-                } else {
-                    fingerprintIcon.classList.remove('scanning');
-                    sectionTitle.textContent = 'TOP ARTICLES';
-                    cardsContainer.innerHTML = '';
-                    defaultCards.forEach(cardData => {
-                        const card = document.createElement('div');
-                        card.className = 'card';
-                        card.innerHTML = `
-                            <div class="image_container">
-                                <img src="${cardData.image}" alt="Cybercrime Image">
-                            </div>
-                            <div class="cybercrime-title">
-                                <span>${cardData.title}</span>
-                            </div>
-                            <div class="cybercrime-description">
-                                <p>Cybercrime</p>
-                                <p>${cardData.description}</p>
-                            </div>
-                            <a href="News.html" class="border-button">
-                                <span class="button-text">Read More</span>
-                                <span class="iconer">
-                                    <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
-                                    </svg>
-                                </span>
-                            </a>
-                        `;
-                        cardsContainer.appendChild(card);
-                    });
-                }
-            } catch (error) {
-                console.error('Error in search:', error);
-                cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
-            } finally {
-                loaderOverlay.classList.remove('active');
-                fingerprintIcon.classList.remove('scanning');
-            }
-        }
-
-        // Initialize search functionality immediately
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set focus on the search input immediately
-            searchInput.focus();
-
-            // Perform an initial search with an empty query to show default content
-            performSearch('');
-
-            // Add event listeners for search
-            searchInput.addEventListener('keypress', async (e) => {
-                if (e.key === 'Enter') {
-                    const query = searchInput.value.trim();
-                    await performSearch(query);
-                }
-            });
-
-            document.querySelector('.search-icon').addEventListener('click', async () => {
-                const query = searchInput.value.trim();
-                await performSearch(query);
-            });
-
-            document.querySelector('.search-icon').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    const query = searchInput.value.trim();
-                    performSearch(query);
-                }
-            });
-        });
-
         auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
@@ -2419,21 +2149,272 @@
             successModal.classList.remove('active');
         });
 
-        function highlightText(element, query) {
-            if (!query) return;
-            const regex = new RegExp(`(${query})`, 'gi');
-            const text = element.innerHTML;
-            element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+        async function fetchLawsFromAI(query) {
+            const AI_API_URL = 'https://hypothetical-ai-api.com/classify-laws';
+            const AI_API_KEY = 'your-api-key';
+
+            try {
+                const response = await fetch(AI_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${AI_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        laws: laws.map(law => ({
+                            title: law.title,
+                            description: law.description,
+                            scenarios: law.scenarios
+                        }))
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch laws from AI API');
+                }
+
+                const data = await response.json();
+                return {
+                    mainLaw: data.mainLaw,
+                    alternativeLaws: data.alternativeLaws
+                };
+            } catch (error) {
+                console.error('Error fetching laws from AI:', error);
+                const fuse = new Fuse(laws, {
+                    keys: ['title', 'description', 'scenarios'],
+                    threshold: 0.4,
+                    distance: 100
+                });
+
+                const results = fuse.search(query);
+                const mainLaw = results[0]?.item.title;
+                const alternativeLaws = results.slice(1, 5).map(res => res.item.title);
+
+                return { mainLaw, alternativeLaws };
+            }
         }
 
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                const icon = mobileMenuIcon.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+function renderLawCards(mainLawTitle, alternativeLawTitles) {
+        cardsContainer.innerHTML = '';
+
+        const mainLaw = laws.find(law => law.title === mainLawTitle);
+        if (mainLaw) {
+            const mainCard = document.createElement('div');
+            mainCard.className = 'card main-law';
+            mainCard.innerHTML = `
+                <div class="image_container">
+                    <img src="${mainLaw.image}" alt="Law Image">
+                </div>
+                <div class="cybercrime-title">
+                    <span>${mainLaw.title}</span>
+                </div>
+                <div class="cybercrime-description">
+                    <p><strong>Description:</strong> ${mainLaw.description}</p>
+                    <p><strong>Scenario:</strong> ${mainLaw.scenario}</p>
+                    <p><strong>Punishment:</strong> ${mainLaw.punishment}</p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <a href="${mainLaw.pdf}" class="border-button" target="_blank">
+                        <span class="button-text">Read PDF</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                    </a>
+                    <button class="save-button" data-title="${mainLaw.title}">
+                        <span class="button-text">Save Law</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                    </button>
+                </div>
+            `;
+            cardsContainer.appendChild(mainCard);
+        }
+
+        const alternativesSection = document.createElement('div');
+        alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
+        alternativesSection.style.width = '100%';
+        alternativesSection.style.textAlign = 'center';
+        alternativesSection.style.marginTop = '40px';
+        cardsContainer.appendChild(alternativesSection);
+
+        const alternativesContainer = document.createElement('div');
+        alternativesContainer.className = 'cards-container';
+        alternativeLawTitles.forEach(title => {
+            const law = laws.find(l => l.title === title);
+            if (law) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="image_container">
+                        <img src="${law.image}" alt="Law Image">
+                    </div>
+                    <div class="cybercrime-title">
+                        <span>${law.title}</span>
+                    </div>
+                    <div class="cybercrime-description">
+                        <p><strong>Description:</strong> ${law.description}</p>
+                        <p><strong>Scenario:</strong> ${law.scenario}</p>
+                        <p><strong>Punishment:</strong> ${law.punishment}</p>
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <a href="${law.pdf}" class="border-button" target="_blank">
+                            <span class="button-text">Read PDF</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                        </a>
+                        <button class="save-button" data-title="${law.title}">
+                            <span class="button-text">Save Law</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                        </button>
+                    </div>
+                `;
+                alternativesContainer.appendChild(card);
             }
         });
-    </script>
+        cardsContainer.appendChild(alternativesContainer);
+
+        document.querySelectorAll('.save-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const lawTitle = button.getAttribute('data-title');
+                saveLaw(lawTitle);
+            });
+        });
+    }
+
+    const defaultCards = [
+        {
+            title: "UN: Asian Scam Calls Now a Global Export",
+            image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
+            description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
+        },
+        {
+            title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
+            image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
+            description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
+        },
+        {
+            title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
+            image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
+            description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
+        }
+    ];
+
+    defaultCards.forEach(cardData => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div class="image_container">
+                <img src="${cardData.image}" alt="Cybercrime Image">
+            </div>
+            <div class="cybercrime-title">
+                <span>${cardData.title}</span>
+            </div>
+            <div class="cybercrime-description">
+                <p>Cybercrime</p>
+                <p>${cardData.description}</p>
+            </div>
+            <a href="News.html" class="border-button">
+                <span class="button-text">Read More</span>
+                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+            </a>
+        `;
+        cardsContainer.appendChild(card);
+    });
+
+    async function performSearch(query) {
+        try {
+            if (query) {
+                fingerprintIcon.classList.add('scanning');
+                sectionTitle.textContent = 'RELEVANT LAWS';
+                loaderOverlay.classList.add('active');
+
+                const user = auth.currentUser;
+                if (user) {
+                    const sanitizedEmail = user.email.replace(/\./g, ',');
+                    database.ref(`users/${sanitizedEmail}/searchHistory`).push({
+                        query: query,
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    });
+                }
+
+                const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+                if (mainLaw && alternativeLaws) {
+                    renderLawCards(mainLaw, alternativeLaws);
+                } else {
+                    cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
+                }
+            } else {
+                fingerprintIcon.classList.remove('scanning');
+                sectionTitle.textContent = 'TOP ARTICLES';
+                cardsContainer.innerHTML = '';
+                defaultCards.forEach(cardData => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="image_container">
+                            <img src="${cardData.image}" alt="Cybercrime Image">
+                        </div>
+                        <div class="cybercrime-title">
+                            <span>${cardData.title}</span>
+                        </div>
+                        <div class="cybercrime-description">
+                            <p>Cybercrime</p>
+                            <p>${cardData.description}</p>
+                        </div>
+                        <a href="News.html" class="border-button">
+                            <span class="button-text">Read More</span>
+                            <span class="iconer">
+                                <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                        </a>
+                    `;
+                    cardsContainer.appendChild(card);
+                });
+            }
+        } catch (error) {
+            console.error('Error in search:', error);
+            cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
+        } finally {
+            loaderOverlay.classList.remove('active');
+            fingerprintIcon.classList.remove('scanning');
+        }
+    }
+
+    searchInput.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter') {
+            const query = searchInput.value.trim();
+            await performSearch(query);
+        }
+    });
+
+    document.querySelector('.search-icon').addEventListener('click', async () => {
+        const query = searchInput.value.trim();
+        await performSearch(query);
+    });
+
+    document.querySelector('.search-icon').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault(); 
+            const query = searchInput.value.trim();
+            performSearch(query);
+        }
+    });
+
+    function highlightText(element, query) {
+        if (!query) return;
+        const regex = new RegExp(`(${query})`, 'gi');
+        const text = element.innerHTML;
+        element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+            const icon = mobileMenuIcon.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    });
+</script>
 </body>
 </html>
