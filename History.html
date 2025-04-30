@@ -11,7 +11,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        /* CSS remains unchanged */
         * {
             box-sizing: border-box;
         }
@@ -621,6 +620,16 @@
             align-items: center;
             flex: 1;
             gap: 15px;
+            cursor: pointer; /* Indicate clickability */
+            transition: background-color 0.3s ease;
+        }
+
+        .history-item-content:hover {
+            background-color: rgba(0, 0, 0, 0.05); /* Subtle hover effect */
+        }
+
+        .dark-theme .history-item-content:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .history-item-icon {
@@ -1432,7 +1441,7 @@
                         const li = document.createElement('li');
                         li.className = 'history-item';
                         li.innerHTML = `
-                            <div class="history-item-content">
+                            <div class="history-item-content" data-query="${encodeURIComponent(search.query)}">
                                 <i class="fas fa-search history-item-icon"></i>
                                 <div class="history-item-text">
                                     <span class="query">${search.query}</span>
@@ -1446,9 +1455,21 @@
                         historyList.appendChild(li);
                     });
 
+                    // Add event listeners to history items for redirection
+                    document.querySelectorAll('.history-item-content').forEach((content) => {
+                        content.addEventListener('click', () => {
+                            const query = content.getAttribute('data-query');
+                            loaderOverlay.classList.add('active');
+                            setTimeout(() => {
+                                window.location.href = `HomePage.html?query=${query}`;
+                            }, 150);
+                        });
+                    });
+
                     // Add event listeners to delete buttons
                     document.querySelectorAll('.delete-btn').forEach((button) => {
-                        button.addEventListener('click', () => {
+                        button.addEventListener('click', (e) => {
+                            e.stopPropagation(); // Prevent triggering the history-item-content click
                             const key = button.getAttribute('data-key');
                             database.ref(`users/${sanitizedEmail}/searchHistory/${key}`).remove()
                                 .then(() => {
@@ -1671,24 +1692,24 @@
         });
 
         borderTypeSelect.addEventListener('change', () => {
-        const borderType = borderTypeSelect.value;
-        profilePic.style.borderStyle = borderType;
+            const borderType = borderTypeSelect.value;
+            profilePic.style.borderStyle = borderType;
 
-        const user = auth.currentUser;
-        if (user) {
-            const sanitizedEmail = user.email.replace(/\./g, ',');
-            database.ref(`users/${sanitizedEmail}`).update({
-                borderType: borderType,
-                updatedAt: firebase.database.ServerValue.TIMESTAMP
-            })
-            .catch(error => {
-                console.error('Error saving border type:', error);
-                alert('Failed to save border type: ' + error.message);
-            });
-        } else {
-            alert('You must be logged in to change the border type.');
-        }
-    });
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderType: borderType,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving border type:', error);
+                    alert('Failed to save border type: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the border type.');
+            }
+        });
 
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
@@ -1720,13 +1741,8 @@
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
-                    // Prevent default navigation
                     e.preventDefault();
-
-                    // Always show the loader for internal links
                     loaderOverlay.classList.add('active');
-
-                    // Navigate after a short delay
                     setTimeout(() => {
                         window.location.href = this.href;
                     }, 150);
