@@ -620,12 +620,12 @@
             align-items: center;
             flex: 1;
             gap: 15px;
-            cursor: pointer; /* Indicate clickability */
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         .history-item-content:hover {
-            background-color: rgba(0, 0, 0, 0.05); /* Subtle hover effect */
+            background-color: rgba(0, 0, 0, 0.05);
         }
 
         .dark-theme .history-item-content:hover {
@@ -1440,8 +1440,10 @@
                     searches.forEach((search) => {
                         const li = document.createElement('li');
                         li.className = 'history-item';
+                        // Include the URL in the data-url attribute, default to HomePage.html if not present
+                        const searchUrl = search.url || 'HomePage.html';
                         li.innerHTML = `
-                            <div class="history-item-content" data-query="${encodeURIComponent(search.query)}">
+                            <div class="history-item-content" data-url="${encodeURIComponent(searchUrl)}">
                                 <i class="fas fa-search history-item-icon"></i>
                                 <div class="history-item-text">
                                     <span class="query">${search.query}</span>
@@ -1458,10 +1460,10 @@
                     // Add event listeners to history items for redirection
                     document.querySelectorAll('.history-item-content').forEach((content) => {
                         content.addEventListener('click', () => {
-                            const query = content.getAttribute('data-query');
+                            const url = decodeURIComponent(content.getAttribute('data-url'));
                             loaderOverlay.classList.add('active');
                             setTimeout(() => {
-                                window.location.href = `HomePage.html?query=${query}`;
+                                window.location.href = url;
                             }, 150);
                         });
                     });
