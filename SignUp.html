@@ -726,7 +726,7 @@
                             const username = document.getElementById('signup-username').value.trim();
                             const passwordValue = signupPassword.value.trim();
 
-                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
                             if (!passwordRegex.test(passwordValue)) {
                                 signupErrorMessage.style.display = 'block';
                                 signupErrorMessage.classList.add('show');
