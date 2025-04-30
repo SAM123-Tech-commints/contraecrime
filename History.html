@@ -1440,10 +1440,8 @@
                     searches.forEach((search) => {
                         const li = document.createElement('li');
                         li.className = 'history-item';
-                        // Include the URL in the data-url attribute, default to HomePage.html if not present
-                        const searchUrl = search.url || 'HomePage.html';
                         li.innerHTML = `
-                            <div class="history-item-content" data-url="${encodeURIComponent(searchUrl)}">
+                            <div class="history-item-content" data-query="${encodeURIComponent(search.query)}">
                                 <i class="fas fa-search history-item-icon"></i>
                                 <div class="history-item-text">
                                     <span class="query">${search.query}</span>
@@ -1457,13 +1455,13 @@
                         historyList.appendChild(li);
                     });
 
-                    // Add event listeners to history items for redirection
+                    // Add event listeners to history items for redirection with query
                     document.querySelectorAll('.history-item-content').forEach((content) => {
                         content.addEventListener('click', () => {
-                            const url = decodeURIComponent(content.getAttribute('data-url'));
+                            const query = content.getAttribute('data-query');
                             loaderOverlay.classList.add('active');
                             setTimeout(() => {
-                                window.location.href = url;
+                                window.location.href = `HomePage.html?query=${query}`;
                             }, 150);
                         });
                     });
@@ -1743,6 +1741,8 @@
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
+                    // Skip the event listener for history-item-content to avoid conflict
+                    if (this.closest('.history-item-content')) return;
                     e.preventDefault();
                     loaderOverlay.classList.add('active');
                     setTimeout(() => {
