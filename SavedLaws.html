@@ -1373,324 +1373,428 @@
 
         const laws = [
     {
+        title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+        description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
+        scenario: "Someone’s account on an e-commerce app was hacked, leading to unauthorized orders of expensive products.",
+        punishment: "Penalties include fines from PHP 100,000 to PHP 1,000,000 and imprisonment from 6 months to 6 years for online fraud and other violations.",
+        image: "https://images.app.goo.gl/MJdJY5nPRFTpomS89",
+        pdf: "https://drive.google.com/uc?export=download&id=19eKpQ6LF8gXcNSHUJP5PRbTc3an0-Ttj"
+    },
+    {
+        title: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+        description: "Criminalizes the production, distribution, and possession of child pornography in the Philippines.",
+        scenario: "A suspect installs a secret camera in a child’s bedroom to record private activities for illicit purposes.",
+        punishment: "Reclusion perpetua and a fine of PHP 2,000,000 to PHP 5,000,000.",
+        image: "https://images.app.goo.gl/KbESLjpQK6qEjvYr5",
+        pdf: "https://drive.google.com/uc?export=download&id=19fqznBKhcapfQWA6NIzKSwqO9lT6Q9ty"
+    },
+    {
+        title: "Access Devices Regulation Act of 1998 (Republic Act No. 8484)",
+        description: "Criminalizes unauthorized possession, use, and trafficking of access devices like credit cards, debit cards, and PINs to deter fraud and identity theft.",
+        scenario: "A criminal installs skimming devices on ATMs to steal card information for unauthorized transactions.",
+        punishment: "Fines of PHP 10,000 or twice the value obtained; imprisonment from 6 to 20 years, depending on the offense and prior convictions.",
+        image: "https://www.divinalaw.com/wp-content/uploads/2021/06/RA-No.-8484-as-amended-by-RA-No.-11449-1024x1024.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1YymAGQcFx-bNO0vyAf90bti7q-WEyxs0"
+    },
+    {
+        title: "Anti-Financial Account Scamming Act (AFASA) (Republic Act No. 12010)",
+        description: "Combats online fraud by enforcing stricter fraud prevention systems for banks and protecting customers.",
+        scenario: "Money mules use fake IDs to open bank accounts for receiving scam proceeds from fake investment schemes.",
+        punishment: "Imprisonment from 4 to 14 years or life; fines from PHP 50,000 to PHP 10,000,000, depending on the offense.",
+        image: "https://ndvlaw.com/wp-content/uploads/2024/09/Republic-Act-No.-12010-A-Look-at-the-Anti-Financial-Account-Scamming-Act-AFASA.jpg",
+        pdf: "https://drive.google.com/uc?export=download&id=1yGJwCAfxi20_C0LMlwFTDtNBttZBLGM7"
+    },
+    {
+        title: "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
+        description: "Prevents and penalizes cybercrimes involving computer data, systems, and content, including hacking and online defamation.",
+        scenario: "A hacker steals sensitive customer data from a company’s network for fraudulent purposes.",
+        punishment: "Prisión mayor (6-12 years) or reclusión temporal (12-20 years); fines from PHP 50,000 to PHP 10,000,000, depending on the offense.",
+        image: "https://blog.ipleaders.in/wp-content/uploads/2021/05/online-abuse.jpg",
+        pdf: "https://drive.google.com/uc?export=download&id=1sVVM6uZ3mD5yH0uLiv1hgdFWhVfmVL2y"
+    },
+    {
+        title: "Data Privacy Act of 2012 (Republic Act No. 10173)",
+        description: "Protects personal data by regulating its collection, processing, and storage in government and private sectors.",
+        scenario: "A BPO employee illegally accesses clients’ credit card information for fraudulent purposes.",
+        punishment: "Imprisonment from 6 months to 7 years; fines from PHP 100,000 to PHP 5,000,000, depending on the violation.",
+        image: "https://afpmbai.com.ph/wp-content/uploads/2017/09/data_privacy_photo.jpg",
+        pdf: "https://drive.google.com/uc?export=download&id=1fmdjVWeMfagBmWi9UKDRX1Gol3kISPo5"
+    },
+    {
+        title: "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)",
+        description: "Criminalizes unauthorized recording, distribution, or publication of private photos or videos, especially without consent.",
+        scenario: "Someone secretly records a person showering and distributes the video online.",
+        punishment: "Imprisonment of 3 to 7 years; fines from PHP 100,000 to PHP 500,000, or both.",
+        image: "https://ralblaw.com/wp-content/uploads/2021/10/voyeurism1.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1MAp-mHsMnbNH7FdBZPg9qCi6BJK6ztJW"
+    },
+    {
+        title: "Expanded Anti-Trafficking in Persons Act of 2012 (Republic Act No. 10364)",
+        description: "Eliminates human trafficking, particularly of women and children, through protection mechanisms and penalties.",
+        scenario: "A woman is lured abroad with a job promise but forced into prostitution.",
+        punishment: "Imprisonment of 15 years and fines from PHP 500,000 to PHP 1,000,000; qualified trafficking carries life imprisonment and fines from PHP 2,000,000 to PHP 5,000,000.",
+        image: "https://www.regroup.com/wp-content/uploads/2022/01/trafficking-header.jpg",
+        pdf: "https://drive.google.com/uc?export=download&id=1veUl839xlZ5Z22bD2B4-RMZzOR1al0yP"
+    },
+    {
+        title: "Subscriber Identity Module (SIM) Registration Act (Republic Act No. 11934)",
+        description: "Mandates SIM card registration to enhance telecommunications security and curb crimes like fraud and phishing.",
+        scenario: "A scammer uses fake IDs to register SIM cards for smishing and phishing activities.",
+        punishment: "Imprisonment from 6 months to 6 years; fines from PHP 50,000 to PHP 4,000,000, or both.",
+        image: "https://newsinfo.inquirer.net/files/2022/12/sim-card-registration-122922.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1Q9iaqyhrzItF0dPJtX0BOACEsxgG7E2h"
+    },
+    {
+        title: "Anti-Online Sexual Abuse or Exploitation of Children Act (Republic Act No. 11930)",
+        description: "Protects children from online sexual abuse and exploitation through stricter enforcement and victim support.",
+        scenario: "A minor is coerced into sending explicit content via a messaging app for money.",
+        punishment: "Life imprisonment and fines from PHP 100,000 to PHP 20,000,000, depending on the offense.",
+        image: "https://pia.gov.ph/wp-content/uploads/2024/02/Strengthen-online-safety-of-children-with-RA-11930-THUMBNAIL.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1eN7KaTxydkquvH5oaOK4SuDtDUPPYUv0"
+    },
+    {
         title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
-        description: "A law that protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs.",
-        scenario: "A business using a copyrighted song in its marketing materials without permission from the copyright holder.",
-        punishment: "For the first offense: The penalty is imprisonment of one to three years and a fine ranging from PhP 50,000 to PhP 150,000. For the second offense: The penalty increases to imprisonment of three years and one day to six years, along with a fine of PhP 150,000 to PhP 500,000. For third and subsequent offenses: The most severe penalty is imprisonment of six years and one day to nine years, and a fine ranging from PhP 500,000 to PhP 1,500,000. In cases of insolvency, additional subsidiary imprisonment may be imposed.",
-        image: "https://newsline.ph/wp-content/uploads/2024/10/IPO.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4371"
+        description: "Protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs.",
+        scenario: "A business uses a copyrighted song in its marketing materials without permission from the copyright holder.",
+        punishment: "First offense: 1-3 years imprisonment and PHP 50,000-150,000 fine. Second offense: 3 years 1 day-6 years and PHP 150,000-500,000 fine. Third offense: 6 years 1 day-9 years and PHP 500,000-1,500,000 fine.",
+        image: "https://i.imgur.com/uDeCpYy.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=19eKpQ6LF8gXcNSHUJP5PRbTc3an0-Ttj"
     },
     {
         title: "Terrorism Financing Prevention and Suppression Act (Republic Act No. 10168)",
-        description: "A law that criminalizes the financing of terrorism and related offenses, aiming to prevent and suppress such acts by freezing and forfeiting associated properties or funds. It also aims to protect life, liberty, and property from terrorism.",
-        scenario: "Could involve a group of individuals using a legitimate business to funnel funds to terrorist organizations.",
-        punishment: "Individuals involved in financing terrorism results in imprisonment penalty ranges from reclusion temporal (maximum period) to reclusion perpetua, with fines ranging from Php 500,000.00 to Php 1,000,000.00. Those attempting to commit the crime will receive a penalty two degrees lower than the actual crime, while conspirators face the same penalty as the principal offenders. Accomplices receive a penalty one degree lower than that of the conspirators. The Anti-Money Laundering Council (AMLC) has the authority to impose administrative penalties, including reprimands or fines from Php 100,000 to Php 500,000, for violations of the law or its rules. The law permits the freezing and forfeiture of property or funds involved in terrorism financing.",
-        image: "https://api.phkule.org/storage/photos/mLOPcQRdubQOvWmnMTqX0mUMYlawV5eXGY4EqyEl.png",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/37689"
+        description: "Criminalizes the financing of terrorism, aiming to prevent and suppress such acts by freezing and forfeiting associated properties or funds.",
+        scenario: "A group uses a legitimate business to funnel funds to terrorist organizations.",
+        punishment: "Reclusion temporal to reclusion perpetua; fines from PHP 500,000 to PHP 1,000,000. Attempted crimes: two degrees lower penalty. Accomplices: one degree lower. AMLC fines from PHP 100,000 to PHP 500,000.",
+        image: "https://imgur.com/U7YW85j",
+        pdf: "https://drive.google.com/uc?export=download&id=1GWkIED1oTO-6q0_Oc3WnsLE6JQDNI7la"
     },
     {
         title: "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
-        description: "A law that defines and criminalizes money laundering, aiming to prevent the use of the country's financial system for laundering the proceeds of illegal activities. It also includes provisions for asset freezing and international cooperation in combating money laundering.",
-        scenario: "A criminal who gains a large sum of money from drug trafficking (a predicate crime). To launder this money, He might deposit the cash into a legitimate business account, then use that business account to purchase real estate and other assets.",
-        punishment: "A person who knowingly transacts or attempts to transact monetary instruments or property related to unlawful activity may face 7 to 14 years of imprisonment and a fine of at least ₱3,000,000 or up to twice the value of the asset involved. If someone facilitates such transactions by action or inaction, they may be punished with 4 to 7 years of imprisonment and a fine ranging from ₱1,500,000 to ₱3,000,000. Failure to disclose or file required information with the Anti-Money Laundering Council (AMLC) may result in 6 months to 4 years of imprisonment and a fine between ₱100,000 and ₱500,000, or both. Failure to keep records is punishable by 6 months to 1 year of imprisonment or a fine of ₱100,000 to ₱500,000, or both. Malicious or false reporting related to money laundering may lead to 6 months to 4 years of imprisonment and a fine within the same range, without eligibility for probation. Responsible officers of corporations or organizations involved may also be penalized, and additional sanctions apply to aliens (deportation), public officials (disqualification), and those who refuse to testify. Breach of confidentiality carries a penalty of 3 to 8 years of imprisonment and a fine of ₱500,000 to ₱1,000,000.",
-        image: "https://bitpinas.com/wp-content/uploads/2017/11/anti-money-laundering-3.png",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/10/44124"
+        description: "Criminalizes money laundering to prevent the use of the financial system for laundering illegal proceeds, with provisions for asset freezing.",
+        scenario: "A criminal launders drug trafficking money through a legitimate business to buy real estate.",
+        punishment: "7-14 years imprisonment and fines from PHP 3,000,000 or twice the asset value; facilitating transactions: 4-7 years and PHP 1,500,000-3,000,000; other violations: 6 months-8 years and PHP 100,000-1,000,000.",
+        image: "https://i.imgur.com/Jd2pX3x.png",
+        pdf: "https://drive.google.com/uc?export=download&id=19eu0OUggR8dWZVdTXO7bqWxlLzzyBxrq"
     },
     {
         title: "National Bureau of Investigation Reorganization Act (Republic Act No. 10867)",
-        description: "This law aims to enhance the NBI's investigative capabilities by reorganizing and modernizing the agency. It establishes a clear structure, expands the NBI's powers and functions, and sets qualification standards for personnel. The Act also provides for funding and transition provisions to ensure continuity.",
-        scenario: "The NBI Cybercrime Division conducted a raid on a group operating a phishing scam, where suspects created fake websites that mimicked legitimate online banking portals.",
-        punishment: "No specific punishments are outlined in the law for violations, as it primarily focuses on reorganizing and empowering the NBI.",
-        image: "https://assistance.ph/wp-content/uploads/2023/12/nbi.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/67908"
+        description: "Enhances the NBI’s investigative capabilities by reorganizing and modernizing the agency, setting personnel standards and funding provisions.",
+        scenario: "The NBI Cybercrime Division raids a group operating a phishing scam with fake banking websites.",
+        punishment: "No specific punishments outlined, as the law focuses on NBI reorganization.",
+        image: "https://i.imgur.com/82lztoi.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1P8iqEQZR-KyoujasXhyuKwOSDCnEkgVJ"
     },
     {
         title: "Mobile Number Portability Act (Republic Act No. 11202)",
-        description: "This law allows mobile subscribers to switch telecommunications service providers while keeping their existing mobile numbers. This act promotes consumer welfare by allowing consumers to freely choose and switch providers without losing their phone number.",
-        scenario: "A person could port a number known to be associated with a legitimate business or individual to create a false identity, potentially for scams, identity theft, or other illegal activities.",
-        punishment: "An initial fine of ₱10,000 is imposed if number portability is not completed within the prescribed time frame but is eventually delivered either before a complaint is filed or after mediation. Where a telecommunications provider unjustly refuses to perform portability even after mediation, fines ranging from ₱40,000 to ₱1,000,000 may be imposed. For repeated offenses—specifically on the fifth and subsequent instances of unjust refusal after mediation—the penalties are ranging from ₱400,000 to ₱1,000,000 and the possible revocation of the Public Telecommunications Entity (PTE) franchise.",
-        image: "https://static.tripzilla.ph/media/102907/conversions/mobile-number-portability-2-w768.webp",
-        pdf: ""
+        description: "Allows mobile subscribers to switch providers while retaining their numbers, promoting consumer welfare.",
+        scenario: "A scammer ports a number to create a false identity for fraudulent activities.",
+        punishment: "Fines from PHP 10,000 to PHP 1,000,000; repeated offenses may lead to revocation of PTE franchise.",
+        image: "https://i.imgur.com/YpXa47l.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1CaogPHeuVeuYVz2qwwrDzmysU2pAFyMe"
     },
     {
         title: "Safe Spaces Act (Republic Act No. 11313)",
-        description: "A law enacted to protect individuals from gender-based sexual harassment in public spaces, online, workplaces, and educational institutions. It defines and penalizes various forms of gender-based sexual harassment in these settings.",
-        scenario: "A person receives inappropriate, sexual messages from someone in a group chat, despite not expressing interest.",
-        punishment: "Verbal harassment such as cursing, wolf-whistling, catcalling, and sexist or homophobic slurs. The first offense results in a ₱1,000 fine and 12 hours of community service, including attending a Gender Sensitivity Seminar. The second offense is by 6 to 10 days of imprisonment or a ₱3,000 fine, while the third offense carries 11 to 30 days of imprisonment and a ₱10,000 fine. Lewd acts like offensive body gestures, flashing, public masturbation, or groping. The first offense results in a ₱10,000 fine and 12 hours of community service with a Gender Sensitivity Seminar. The second offense carries 11 to 30 days of imprisonment or a ₱15,000 fine, the third offense results in 1 month and 1 day to 6 months of imprisonment and a ₱20,000 fine. Stalking or unwanted physical contact such as pinching, brushing, or touching private areas.the first offense is punishable by 11 to 30 days of imprisonment or a ₱30,000 fine, along with a Gender Sensitivity Seminar. The second offense carries 1 month and 1 day to 6 months of imprisonment or a ₱50,000 fine, the third offense results in a maximum of 6 months imprisonment or a ₱100,000 fine.",
-        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirkYMjV2TfdB0Bow9Ogb4SrlNynpEH1ZLrRa6JImmu5cBs80cBzVCc9ctM1O69ly9pDLg08qk2185e2z9uNueciTzn0dnBsuK2BD1V4GWDHPwTdjBTSbgisQrJfbmHcLh6zB9s7zRSG7y_IZu-Cx7eQCr451ep8cN5hR2Ab6wmC5IRLYjeK23EiQ/w640-h360/Tara%20Kape!%20(SITE)%20(4).png",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/96805"
+        description: "Protects against gender-based sexual harassment in public spaces, online, workplaces, and educational institutions.",
+        scenario: "A person receives inappropriate sexual messages in a group chat without consent.",
+        punishment: "Verbal harassment: PHP 1,000-10,000 fines, community service, or 6-30 days imprisonment. Lewd acts: PHP 10,000-20,000 fines or 11 days-6 months imprisonment. Stalking/unwanted contact: PHP 30,000-100,000 fines or 11 days-6 months imprisonment.",
+        image: "https://imgur.com/gIGoy0v",
+        pdf: "https://drive.google.com/uc?export=download&id=1jGQdiO-amxQ_lgH3WHLUaEZ5uvl4mogR"
     },
     {
         title: "New Central Bank Act (Republic Act No. 7653)",
-        description: "The country's central monetary authority. It mandates the BSP to maintain price stability and promote financial stability, while also providing for fiscal and administrative autonomy. The act also outlines the structure and powers of the Monetary Board, including its membership and responsibilities.",
-        scenario: "Could involve a bank director or officer engaging in a conflict of interest by taking a loan from the bank they oversee, without disclosing it to the Monetary Board, or violating the confidentiality of bank deposits by revealing information obtained during supervision.",
-        punishment: "Unauthorized issuance of Bangko Sentral notes or reproduction of their facsimiles is punishable by imprisonment not less than five (5) years but not more than ten (10) years. Making false statements to the Monetary Board or Bangko Sentral examiners can lead to fines of up to ₱2 million, imprisonment for up to 5 years, or both. Violating BSP regulations can result in imprisonment of not less than 5 years but not more than 10 years, or a greater penalty under the Revised Penal Code. Maliciously reporting or filing false information leading to the temporary holding of funds is punishable under the Act. Fraudulently overvaluing property or making false statements in loan applications can lead to imprisonment ranging from six months to four years and a fine of not less than ₱100,000 and in some cases, up to ₱500,000 pesos. Unauthorized disclosure of confidential BSP information can result in a fine of not less than ₱100,000 and not more than ₱200,000, or imprisonment of a maximum of 14 years. The Monetary Board can impose ₱30,000 to ₱1,000,000 fines for non-compliance and take action on unlawful or unsafe operations.",
-        image: "https://cdn.slidesharecdn.com/ss_thumbnails/bsp-banking-law-150818155013-lva1-app6891-thumbnail.jpg?width=560&fit=bounds",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/2027"
+        description: "Mandates the Bangko Sentral ng Pilipinas (BSP) to maintain price and financial stability, outlining the Monetary Board’s structure and powers.",
+        scenario: "A bank director takes an undisclosed loan from their bank, violating conflict-of-interest rules.",
+        punishment: "Imprisonment from 6 months to 14 years; fines from PHP 30,000 to PHP 2,000,000 for violations like false statements or unauthorized disclosures.",
+        image: "https://imgur.com/fe9JDSI",
+        pdf: "https://drive.google.com/uc?export=download&id=1xIzlG57PfQVSTTFae4jTrzIU7EFXtulR"
     },
     {
         title: "Anti-Wire Tapping Act (Republic Act No. 4200)",
-        description: "The law prohibits and penalizes unauthorized wiretapping and other related violations of communication privacy. It makes it illegal to tap wires or cables, secretly overhear, intercept, or record communications or spoken words, and possess recordings of such actions without consent from all parties involved.",
-        scenario: "Involves a confidential business meeting where a person secretly records the conversation using a dictaphone without the knowledge or consent of the other participants.",
-        punishment: "Imprisonment for 6 months to 6 years, and perpetual disqualification from public office if the offender is a public official at the time of the offense. Additionally, if the offender is an alien, they can face deportation proceedings after serving their sentence.",
-        image: "https://philippinelawfirm.com/wp-content/uploads/2023/10/gen12-wiretapping_2018-12-02_21-43-46.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4442"
+        description: "Prohibits unauthorized wiretapping and recording of communications without consent, protecting communication privacy.",
+        scenario: "A person secretly records a confidential business meeting without participants’ consent.",
+        punishment: "Imprisonment from 6 months to 6 years; public officials face perpetual disqualification, and aliens face deportation.",
+        image: "https://i.imgur.com/2H5lVBF.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1huXOn7fZIKwRaaunW16YqVxq7fgqGL9x"
     },
     {
         title: "Human Security Act of 2007 (Republic Act No. 9372)",
-        description: "This law aimed to protect the Philippines from terrorism by defining the crime and providing mechanisms for its prevention and suppression. The act declared its state policy to protect life, liberty, and property from acts of terrorism and to address the issue through a comprehensive approach encompassing legal, political, economic, diplomatic, and military means.",
-        scenario: "Could involve a bomb threat reported at a crowded public event, leading to the arrest and detention of a suspect based on the law's provisions.",
-        punishment: "Joining a proscribed organization or one formed for terrorism purposes is punishable by 12 years of imprisonment. Assisting terrorists, such as harboring or aiding in the escape of a terrorist conspirator, carries a penalty of 10 years and one day to 12 years of imprisonment. Attempted terrorism is penalized two degrees lower than the penalty for the full crime, while conspiracy to commit terrorism is punished the same as the crime itself. Foreign terrorists committing acts of terrorism face life imprisonment without parole. Conspiring to commit terrorism also results in life imprisonment without parole. Police or law enforcement officials who fail to notify individuals of the termination of surveillance, interception, or recording activities face imprisonment of 10 years and one day to 12 years.",
-        image: "https://media.philstar.com/images/articles/marawi-clashes_2018-02-07_15-04-35.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/5340"
+        description: "Protects against terrorism by defining the crime and providing prevention and suppression mechanisms.",
+        scenario: "A bomb threat at a public event leads to a suspect’s arrest under the law.",
+        punishment: "12 years for joining terrorist groups; 10-12 years for assisting terrorists; life imprisonment without parole for foreign terrorists or conspiracy.",
+        image: "https://imgur.com/uk6tHLf",
+        pdf: "https://drive.google.com/uc?export=download&id=1ou2ATqbJsBXc8v9AD44hsn9oWsHtY7Lo"
     },
     {
         title: "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
-        description: "A law in the Philippines aimed at preventing, prohibiting, and penalizing terrorism. It defines terrorism and related offenses, outlines the powers and functions of the Anti-Terrorism Council (ATC), and provides for the detention and surveillance of suspected terrorists. The law also addresses the financing of terrorism and the forfeiture of assets.",
-        scenario: "Could involve individuals or groups who, with the intent to intimidate the public or government, release dangerous substances or cause fire, floods, or explosion.",
-        punishment: "Terrorism is punishable by life imprisonment without parole, along with a fine ranging from one million pesos (₱1,000,000.00) to five million pesos (₱5,000,000.00). Attempting to commit terrorism carries the same penalty as the completed act, including life imprisonment without parole. Conspiracy to commit terrorism is also penalized with the same sentence as the completed crime. Financing terrorism results in reclusion temporal (maximum period) to reclusion perpetua, and a fine between five hundred thousand pesos (₱500,000.00) and one million pesos (₱1,000,000.00). An accomplice in terrorism financing faces a penalty one degree lower than the conspirator. Economic sabotage related to terrorism is punishable by life imprisonment and a fine between one million pesos (₱1,000,000.00) and five million pesos (₱5,000,000.00). Other violations are punishable by imprisonment ranging from 10 to 20 years, with fines ranging from ₱500,000 to ₱800,000, depending on the offense's severity.",
-        image: "https://files01.pna.gov.ph/category-list/2020/07/07/anti-terror-law.jpg",
-        pdf: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/92597"
+        description: "Prevents and penalizes terrorism, defining offenses and empowering the Anti-Terrorism Council for detention and surveillance.",
+        scenario: "A group releases dangerous substances to intimidate the public, classified as terrorism.",
+        punishment: "Life imprisonment without parole and fines from PHP 1,000,000 to PHP 5,000,000; other violations: 10-20 years and PHP 500,000-800,000 fines.",
+        image: "https://imgur.com/0Fq4SQV",
+        pdf: "https://drive.google.com/uc?export=download&id=1GmkMUipXouSzaxc5nhGHRrhsV30Hz_ho"
     },
     {
         title: "Anti-Bullying Act of 2013 (Republic Act No. 10627)",
-        description: "Schools are required to implement policies to prevent and address bullying within their institutions and set procedures for handling complaints. It defines bullying as any severe or repeated use of written, verbal, or physical acts or gestures directed at another student that causes fear or disrupts the education process. The law also outlines reporting requirements and sanctions for non-compliance.",
-        scenario: "An elementary student teased by his classmates because of how they do not like his penmanship. They always distract him by writing anything in his notebook while he takes note of their lessons peacefully.",
-        punishment: "School Employees: A fine of 50,000 to 100,000 pesos or imprisonment from 6 months to 1 year, or both, for bullying. Private Schools: Suspension or revocation of their permits to operate for non-compliance. Public School Personnel: Subject to administrative disciplinary proceedings under Civil Service or Department rules. Private School Personnel: Subject to administrative disciplinary actions imposed by the school.",
-        image: "https://images.app.goo.gl/HPxWVGGP1gTZnfpc6",
-        pdf: "https://elegal.ph/site/wp-content/uploads/2015/07/RA-10627.pdf"
+        description: "Requires schools to implement anti-bullying policies and procedures to address and prevent bullying.",
+        scenario: "Classmates tease a student for poor penmanship, disrupting their learning by defacing their notebook.",
+        punishment: "School employees: PHP 50,000-100,000 fines or 6 months-1 year imprisonment. Schools: permit suspension/revocation or administrative sanctions.",
+        image: "https://i.imgur.com/fcW8tiE.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1bcz-gRb0P9I3C6gYukO9yjM5OzHk_WSK"
     },
     {
         title: "Department of Information and Communications Technology Act (Republic Act No. 10844)",
-        description: "It establishes the Department of Information and Communications Technology (DICT) as the primary government agency for developing and implementing ICT policies, plans, and programs. To provide oversight over agencies governing and regulating the ICT' sector and ensure consumer protection and welfare, data privacy and security, foster competition and the growth of the ICT sector.",
-        scenario: "A local government unit in Fairview, Quezon City, is experiencing a surge in phishing attacks targeting its employees and online services. This poses a risk to public safety and the confidentiality of citizen data.",
-        punishment: "Penalties for unauthorized processing of personal data include imprisonment (3-6 years) and fines (Php 500,000 to Php 4,000,000). Penalties for cybercrime vary depending on the offense and can include imprisonment and fines.",
-        image: "https://images.app.goo.gl/63vCtVZjWfn9ENr28",
-        pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/RA10844_DICT.pdf"
+        description: "Establishes the DICT to develop ICT policies, ensuring consumer protection, data privacy, and sector growth.",
+        scenario: "A local government unit in Fairview, Quezon City, faces phishing attacks targeting its online services.",
+        punishment: "Unauthorized data processing: 3-6 years imprisonment and PHP 500,000-4,000,000 fines. Cybercrime penalties vary by offense.",
+        image: "https://i.imgur.com/XPIqiJL.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1L5hAjE4FAh-4PSE2GnW_9euEC5UfQhA-"
     },
     {
         title: "Strategic Trade Management Act (Republic Act No. 10697)",
-        description: "An Act Preventing the Proliferation of Weapons of Mass Destruction by Managing the Trade in Strategic Goods, the Provision of Related Services, and for Other Purposes.",
-        scenario: "A company in the Philippines, X Corp, wants to export a high-speed computer chip to a foreign country, but the chip is also listed as a dual-use good, meaning it could be used for both civilian and military applications.",
-        punishment: "Up to P250,000 or twice the value of the strategic good. Upon request from the Securities and Exchange Commission (SEC), Department of Trade and Industry (DTI), or other relevant agencies, the STMO can order the suspension or cancellation of a business's registration and authorization. Violations can lead to imprisonment ranging from six months to twelve years, depending on the severity.",
-        image: "https://images.app.goo.gl/LzxspNHJEgFpxohn7",
-        pdf: "https://233773342789-lic.s3.eu-central-1.amazonaws.com/attachments/legislation/philippines/Implementing%20Rules%20of%20the%20Strategic%20Trade%20Management%20Act_25.09.2018.pdf"
+        description: "Prevents proliferation of weapons of mass destruction by regulating trade in strategic goods.",
+        scenario: "A company exports a dual-use computer chip without proper authorization, risking military misuse.",
+        punishment: "Fines up to PHP 250,000 or twice the goods’ value; imprisonment from 6 months to 12 years; business registration suspension.",
+        image: "https://i.imgur.com/ihzaYcz.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1LFHMLdNkLPrH7mNBtrx_Kmdxh1nxkIIk"
     },
     {
         title: "Energy Virtual One-Stop Shop Act (Republic Act No. 11234)",
-        description: "A web-based filing and monitoring system for energy related applications and a repository of information and permits issued for energy projects.",
-        scenario: "A company seeking to build a solar power plant, would use EVOSS to submit all necessary documents and track the progress of its application with various agencies.",
-        punishment: "A fine of One hundred thousand pesos (₱100,000.00) for every day of delay.",
-        image: "https://images.app.goo.gl/K1QNfksaXf2FFqPx7",
-        pdf: "https://evoss.ph/Home/Download/135253"
+        description: "Provides a web-based system for filing and monitoring energy-related applications and permits.",
+        scenario: "A company uses EVOSS to track its solar power plant application across agencies.",
+        punishment: "Fines of PHP 100,000 per day of delay.",
+        image: "https://i.imgur.com/I9djXob.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1LF9-k2M5FBKyvasxp7RugEiBu8KfU-Je"
     },
     {
         title: "Consumer Act of the Philippines (Republic Act No. 7394)",
-        description: "The primary law governing consumer protection in the country. It aims to protect consumers from health and safety hazards, deceptive practices, and unfair sales. It also provides for consumer education and redress mechanisms, and includes consumer representatives in policy formulation.",
-        scenario: "Involves a consumer purchasing a product with a 'No Return, No Exchange' policy, only to discover it has a manufacturing defect. In this case, the consumer has the right to have the product repaired, replaced, or refunded, despite the store's policy, as the defect falls under the Consumer Act's protection.",
-        punishment: "Title III,Chapter I (Deceptive, Unfair, and Unconscionable Sales Acts): Fines range from PHP 500 to PHP 10,000 or imprisonment of 5 months to 1 years, or both. Article 64 (Violations related to weights and measures): Fines range from PHP 50,000 to PHP 300,000 or imprisonment of 1 year to 5 years, or both. Article 18 (Prohibited Acts): Fines range from PHP 1,000 to PHP 10,000 or imprisonment of 2 months to 1 year, or both.",
-        image: "https://images.app.goo.gl/1FYipzHQygJ1DYU19",
-        pdf: "https://aseanconsumer.org/file/pdf_file/Republic%20Act%20No.%207394%20-%20The%20Consumer%20Act%20of%201992.pdf"
+        description: "Protects consumers from hazards, deceptive practices, and unfair sales, ensuring education and redress mechanisms.",
+        scenario: "A consumer buys a defective product with a ‘No Return’ policy but is entitled to repair or refund.",
+        punishment: "Fines from PHP 500 to PHP 300,000; imprisonment from 2 months to 5 years, depending on the violation.",
+        image: "https://i.imgur.com/jTttiZn.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1L9XOyWwzbS6AtlsQ5KjO3Hc1veZXKYeC"
     },
     {
         title: "Optical Media Act of 2003 (Republic Act No. 9239)",
-        description: "It is hereby declared to be the policy of the State to ensure the protection and promotion of intellectual property rights. The unregulated mastering, manufacture, replication, importation and exportation of optical media in all forms is inimical to economic growth and public interest.",
-        scenario: "A small, unregistered company named 'Copycat Media,' is caught illegally manufacturing and distributing pirated movies and TV shows on DVDs and Blu-rays. They are operating without a license from the OMB, which is required under RA 9239 to engage in these activities.",
-        punishment: "Can lead to imprisonment (3-6 years) and a fine of Php 500,000 to Php 1,500,000.",
-        image: "https://images.app.goo.gl/qpGKLPRPxvqbE3zE8",
-        pdf: "https://www.pntr.gov.ph/wp-content/uploads/2021/04/RA-9239.pdf"
+        description: "Protects intellectual property by regulating the production and distribution of optical media.",
+        scenario: "An unregistered company illegally distributes pirated DVDs without an OMB license.",
+        punishment: "Imprisonment from 3 to 6 years; fines from PHP 500,000 to PHP 1,500,000.",
+        image: "https://i.imgur.com/USUn9jC.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1L6hFoxjn220QgggEd60esvaD-b4IxoO0"
     },
     {
         title: "National Cybersecurity Plan Framework (Executive Order No. 189, 2015)",
-        description: "A response to the growing concern about cyber threats and vulnerabilities in the Philippines. About the increasing number of cyber threats and vulnerabilities affecting government and commercial information systems.",
-        scenario: "The NCIAC would quickly assess the extent of the attack, identify the source, and determine the impact on critical systems.",
-        punishment: "Offenses against confidentiality, integrity, and availability of computer data and systems: Punishable by imprisonment of prision mayor or a fine of at least P200,000 up to a maximum amount commensurate with the damage, or both. Offenses involving misuse of devices: The penalty is a maximum fine of PHP 500,000 and/or imprisonment of prision mayor. Offenses by a juridical person: If committed by a natural person on behalf of a juridical person (with authorization), the juridical person can face a maximum fine of PHP 10,000,000. Specific cybercrime offenses and their potential penalties: Identity theft: Imprisonment of up to 12 years and/or a fine ranging from P50,000 to P500,000. Hacking or unauthorized access: Imprisonment of 6 to 12 years, along with a fine up to P500,000.",
-        image: "https://images.app.goo.gl/8bCWhFxQJzQTp3Jh6",
-        pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/NCSP-2023-2028-FINAL-DICT.pdf"
+        description: "Addresses cyber threats by enhancing security for government and commercial information systems.",
+        scenario: "The NCIAC assesses a cyberattack’s impact on critical systems to coordinate a response.",
+        punishment: "Prisión mayor (6-12 years) or fines from PHP 200,000 to PHP 10,000,000, depending on the offense.",
+        image: "https://i.imgur.com/ERjJ1d1.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1LXirMjfZaJZN_81wfTBqC1CJpUqO_NDI"
     },
     {
         title: "Strengthening DICT’s Cybersecurity Role (Executive Order No. 82, 2022)",
-        description: "This plan aims to bolster the country's digital defenses while fostering a culture of cybersecurity awareness and responsibility.",
-        scenario: "A government agency fails to implement required cybersecurity measures, leading to a data breach that exposes sensitive citizen information.",
-        punishment: "No specific punishments are outlined in the law for violations, as it primarily focuses on establishing the DICT's cybersecurity responsibilities.",
-        image: "https://images.app.goo.gl/R8JVMBaQbYLUWYED6",
-        pdf: "https://cms-cdn.e.gov.ph/DICT/pdf/NCSP-2023-2028-FINAL-DICT.pdf"
+        description: "Bolsters digital defenses and fosters cybersecurity awareness across the country.",
+        scenario: "A government agency fails to implement cybersecurity measures, leading to a data breach.",
+        punishment: "No specific punishments outlined, as the order focuses on DICT’s cybersecurity role.",
+        image: "https://i.imgur.com/FaxwLks.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1LWQPBiHhXOsquk3X0jvqZHE2UxUmyO0-"
     },
     {
         title: "National Cybersecurity Inter-Agency Committee (Executive Order No. 95, 2019)",
-        description: "It was created to strengthen the Philippines’ cybersecurity framework. Its main purpose is to coordinate, integrate, and harmonize all government efforts related to safeguarding the country’s information and communications technology (ICT) infrastructure.",
-        scenario: "Its coordination with government agencies to strengthen defenses and respond effectively during cyber threats such as phishing attacks targeting government email systems.",
-        punishment: "No specific punishments are outlined in the law for violations, as it primarily focuses on establishing the committee and its coordination role.",
-        image: "https://cdn.opengovasia.com/wp-content/uploads/2023/05/PH_2_1270-39.jpg",
-        pdf: "https://lawphil.net/executive/execord/eo2019/pdf/eo_95_2019.pdf"
+        description: "Coordinates government efforts to safeguard ICT infrastructure against cyber threats.",
+        scenario: "The committee responds to phishing attacks targeting government email systems.",
+        punishment: "No specific punishments outlined, as the order focuses on coordination.",
+        image: "https://i.imgur.com/cqTT0Dd.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1LOidcGKN-xNRqR0SYHo3K6O99ybBu2RO"
     },
     {
         title: "Guidelines on IT Risk Management (BSP Circular No. 808, 2013)",
-        description: "This was designed to strengthen risk management, security operations and IT-related activities, as well as enforce consumer protection regulations in banks and other BSP-supervised institutions.",
-        scenario: "When a bank strengthens its online banking system by implementing multi-factor authentication and regularly updating its firewall and antivirus software to manage IT risks and protect customer data from cyber threats.",
-        punishment: "Monetary penalties: Fines or other financial sanctions for failing to meet the requirements of the circular. Non-monetary sanctions: Restrictions on operations or management changes. Contractual consequences: Contracts may be deemed void or unenforceable if they are found to violate the circular's provisions.",
-        image: "https://images.gmanews.tv/v3/webpics/v3/2015/04/2015_04_17_16_53_36_0.jpg",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2013/c808.pdf"
+        description: "Strengthens risk management and consumer protection in BSP-supervised institutions’ IT operations.",
+        scenario: "A bank implements multi-factor authentication to protect online banking from cyber threats.",
+        punishment: "Monetary fines, operational restrictions, or voided contracts for non-compliance.",
+        image: "https://i.imgur.com/7RHpvee.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1cQXxl2plPVQVVmDpSQCopO9dKc5yjxp-"
     },
     {
         title: "Enhanced Information Security Management (BSP Circular No. 982, 2017)",
-        description: "It focuses on strengthening data security, requiring BSFIs to establish effective technology risk management processes, governance structures, and cybersecurity controls.",
-        scenario: "A bank implemented BSP Circular No. 982 by establishing a robust cybersecurity framework that includes appointing an Information Security Officer, conducting regular risk assessments, and enforcing multi-factor authentication for online transactions.",
-        punishment: "Monetary penalties: The BSP can impose fines for non-compliance with the circular's requirements. Suspension or revocation of licenses: A financial institution that consistently fails to comply with information security guidelines may face the risk of its license being suspended or revoked. Action against responsible officers: If a breach of information security is attributable to the actions or negligence of an officer, the BSP may also take action against that individual.",
-        image: "https://www.securitymagazine.com/ext/resources/Issues/2019/September/SEC0919-Mobile-Feat-slide1_900px.jpg?1567784812",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2017/c982.pdf"
+        description: "Requires BSFIs to establish robust cybersecurity frameworks and risk management processes.",
+        scenario: "A bank appoints an Information Security Officer and enforces multi-factor authentication.",
+        punishment: "Fines, license suspension/revocation, or actions against responsible officers for non-compliance.",
+        image: "https://i.imgur.com/c2ciYqd.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1iwia7iIPzx4_Y-bZhddYMsd-KeRvIRZA"
     },
     {
         title: "Technology and Cyber-Risk Reporting (BSP Circular No. 1019, 2018)",
-        description: "This circular aims to strengthen the BSP's cyber-threat surveillance capabilities by tightening the reporting regime for technology and cyber-risk-related incidents and disruptions. It also emphasizes the importance of fostering safe, secure, efficient, and reliable retail payment systems, while protecting customer accounts and information, and upholding consumer protection.",
-        scenario: "A financial institution strengthened its cyber-risk oversight by regularly reporting technology-related incidents, identified threats, and corrective actions to senior management for informed decision-making and timely response.",
-        punishment: "Monetary penalties: These are outlined in the Manual of Regulations for Banks (MORB) and Manual of Regulations for Non-Bank Financial Institutions (MORNBFI). Suspension of new product offerings: This can restrict the institution's ability to launch new electronic financial products and services. Suspension or revocation of licenses: This can prevent the institution from providing specific financial services or operating entirely. Suspension or revocation of settlement authority: This can impact the institution's ability to participate in the Philippine Payments and Settlements System.",
-        image: "https://www.bworldonline.com/wp-content/uploads/2024/10/cybersecurity.jpg",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2018/c1019.pdf"
+        description: "Tightens reporting of cyber-risk incidents to enhance BSP’s surveillance and consumer protection.",
+        scenario: "A bank reports cyber incidents to senior management for timely corrective actions.",
+        punishment: "Fines per MORB/MORNBFI, suspension of product offerings, licenses, or settlement authority.",
+        image: "https://imgur.com/btAssap",
+        pdf: "https://drive.google.com/uc?export=download&id=17wNElB9nG6CDIWWJMcq80zEPHv2V2RlZ"
     },
     {
         title: "Guidelines on Operational Risk Management (BSP Circular No. 900, 2015)",
-        description: "Its primary purpose is to ensure the safe and sound operation of BSFIs by promoting the adoption of effective risk management systems. The circular defines operational risk as the risk of loss stemming from inadequate or failed internal processes, people, systems, external events, and legal risk.",
-        scenario: "A bank employee accidentally sends a client's confidential financial information to the wrong email address, emphasizing the need for strong data handling procedures to manage operational risks.",
-        punishment: "Suspension of rediscounting privileges: Banks may be temporarily suspended from using rediscounting facilities with the BSP. Suspension of cash dividend declaration: Banks may be prohibited from declaring and paying cash dividends. Suspension of branching privileges: Banks may be restricted from opening new branches or expanding their operations. Other Non-Monetary Sanctions: The BSP may also impose other non-monetary sanctions on a case-to-case basis, as determined by the Monetary Board.",
-        image: "https://www.riskpro.in/sites/default/files/styles/large/public/Operational%20Risk%20Management_1.jpg?itok=N4UoME9w",
-        pdf: "https://rbap.org/wp-content/uploads/2016/01/c900-Guidelines-on-Operational-Risk-Management.pdf"
+        description: "Promotes effective risk management systems to ensure safe BSFI operations, addressing process and system failures.",
+        scenario: "A bank employee sends confidential data to the wrong email, highlighting operational risks.",
+        punishment: "Suspension of rediscounting, dividends, branching privileges, or other non-monetary sanctions.",
+        image: "https://imgur.com/CvFVNnx",
+        pdf: "https://drive.google.com/uc?export=download&id=1QLBNTFwO8bKaOrvF9uiLHwhLy0WCu4CV"
     },
     {
         title: "Guidelines on Business Continuity Management (BSP Circular No. 951, 2017)",
-        description: "It emphasizes the importance of a robust Business Continuity Management process, highlighting the responsibilities of the board of directors and senior management in establishing and promoting a culture that prioritizes business continuity. The circular also specifies the roles and responsibilities of various parties within the organization in implementing and maintaining BCM initiatives.",
-        scenario: "A company develops a comprehensive disaster recovery plan to ensure critical operations continue smoothly in the event of a natural disaster, ensuring minimal disruption to services.",
-        punishment: "No specific punishments are outlined in the law for violations, as it primarily focuses on establishing guidelines for business continuity.",
-        image: "https://www.asisonline.org/globalassets/standards-and-guidelines/bcm-2021/business-continuity-banner-1536px.jpg",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2017/c951.pdf"
+        description: "Emphasizes robust business continuity processes to ensure operational resilience in BSFIs.",
+        scenario: "A company develops a disaster recovery plan to maintain operations during a natural disaster.",
+        punishment: "No specific punishments outlined, as the circular focuses on continuity guidelines.",
+        image: "https://imgur.com/VcPDD8t",
+        pdf: "https://drive.google.com/uc?export=download&id=1FrfbUXx2SRFBVpTOWejCqJp3bm9pJaW8"
     },
     {
         title: "Guidelines on Outsourcing Risk Management (BSP Circular No. 1039, 2019)",
-        description: "This circular primarily focuses on the operations and requirements of pawnshops and Money Service Businesses (MSBs), including remittance and transfer companies. It outlines guidelines for the submission of applications for licenses and authorizations for pawnshops, as well as the electronic submission of reports on remittance, money changing, and virtual currency exchange transactions.",
-        scenario: "To manage outsourcing risks effectively, a bank conducts thorough assessments of an external service provider’s security protocols and financial health before entrusting them with customer support operations.",
-        punishment: "Monetary fines: These are applied for various reporting infractions, such as erroneous, delayed, or unsubmitted reports. Revocation of licenses: In severe cases of non-compliance or repeated violations, the BSP may revoke a pawnshop's or MSB's license to operate.",
-        image: "https://resourcecenter.infinit-o.com/wp-content/uploads/2020/01/Infinit-O-Finance-Accounting-Outsourcing-Risk-Management.png",
-        pdf: "https://www.bsp.gov.ph/Regulations/Issuances/2019/c1039.pdf"
+        description: "Outlines requirements for pawnshops and MSBs, including licensing and electronic reporting to manage outsourcing risks.",
+        scenario: "A bank assesses an external provider’s security before outsourcing customer support.",
+        punishment: "Monetary fines for reporting infractions; license revocation for severe non-compliance.",
+        image: "https://i.imgur.com/wJkVPOc.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1aT6zapWtUFlfyoLHT_kIuJotznVhDp91"
     },
     {
         title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
-        description: "It focuses on the protection of Critical Information Infrastructure (CII) as outlined in the National Cybersecurity Plan (NCSP) 2022. It mandates the adoption of international security standards and outlines policies and regulations for safeguarding CII, as part of the NCSP. This circular also mandates the integration of the National IT Security Policy (NISP) with the NCSP framework.",
-        scenario: "A government agency enhances its cybersecurity posture by adopting standardized security protocols and conducting regular risk assessments to protect its ICT systems from potential threats.",
-        punishment: "No specific punishments are outlined in the law for violations, as it primarily focuses on adopting international security standards.",
-        image: "https://trendsresearch.org/wp-content/uploads/2025/01/Cybersecurity-in-a-World-in-Crisis-V1-copy.jpg",
-        pdf: "https://www.scribd.com/document/668954225/Memorandum-Circular-005"
+        description: "Mandates international security standards to protect Critical Information Infrastructure under the NCSP.",
+        scenario: "A government agency adopts security protocols to protect ICT systems from threats.",
+        punishment: "No specific punishments outlined, as the circular focuses on standard adoption.",
+        image: "https://imgur.com/InJVdd1",
+        pdf: "https://drive.google.com/uc?export=download&id=1bgqM5Qs1ATzz92eUbcOmirrjVHNSPGtX"
     },
     {
         title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
-        description: "This focuses on protecting individuals by promoting cybersecurity awareness and implementing security measures. This includes measures like cybersecurity awareness programs like the CyberSecurity Caravan, and promoting the adoption of cybersecurity practices by individuals. The NCSP aims to enhance the security of critical information infrastructure and government networks, which directly contributes to the protection of individual data and information within these systems.",
-        scenario: "A government agency implements a public awareness campaign about online security, teaching citizens how to protect their personal data and avoid falling victim to phishing scams, while also setting up a hotline for individuals to report any cyber incidents they encounter.",
-        punishment: "No specific punishments are outlined in the law for violations, as it primarily focuses on promoting cybersecurity awareness.",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWQ4GS9KMQg29NRva5dGI4sBS_bJBZu_YZkA&s",
-        pdf: "https://law.upd.edu.ph/wp-content/uploads/2020/05/DICT-DC-007-2020.pdf"
+        description: "Promotes cybersecurity awareness and measures to protect individual data within critical infrastructure.",
+        scenario: "A government agency runs a campaign to educate citizens on avoiding phishing scams.",
+        punishment: "No specific punishments outlined, as the circular focuses on awareness.",
+        image: "https://i.imgur.com/d95q33c.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1I4XxnD702TRk2CkTHejTnqdKg3kx4aZE"
     },
     {
         title: "Cloud First Policy (DICT Department Circular No. 2017-002)",
-        description: "This mandates government agencies to prioritize cloud computing solutions in their IT infrastructure planning and procurement. This policy aims to modernize government operations by leveraging cloud technology while maintaining data control and adhering to security standards.",
-        scenario: "The Department of Social Welfare and Development (DSWD) is planning to implement a new online system for managing social welfare programs.",
-        punishment: "No specific punishments are outlined in the law for violations, as it primarily focuses on mandating cloud computing adoption.",
-        image: "https://elegal.ph/site/wp-content/uploads/2017/02/cloud.jpg",
-        pdf: "https://www.jetro.go.jp/ext_images/jetro/activities/support/aseanjapan/report/3-6.pdf"
+        description: "Mandates government agencies to prioritize cloud computing for IT infrastructure to modernize operations.",
+        scenario: "DSWD implements a cloud-based system for managing social welfare programs.",
+        punishment: "No specific punishments outlined, as the circular focuses on cloud adoption.",
+        image: "https://imgur.com/SQGWOFW",
+        pdf: "https://drive.google.com/uc?export=download&id=1iCKbBeueSvtrV0S69ROuiTpen3KdR-Sp"
     },
     {
         title: "Guidelines on Government Email System (DICT Memorandum Circular No. 003, 2020)",
-        description: "",
-        scenario: "A government employee uses an unauthorized email service to send sensitive official documents, bypassing the secure government email system mandated by the circular.",
-        punishment: "No specific punishments are outlined in the law for violations, as it primarily focuses on establishing guidelines for government email use.",
-        image: "",
-        pdf: ""
+        description: "Sets standards for secure and efficient government email systems to ensure proper communication and data protection.",
+        scenario: "A government employee uses an unauthorized email service to send sensitive documents.",
+        punishment: "No specific punishments outlined, as the circular focuses on email system guidelines.",
+        image: "https://imgur.com/GNSXU8Q",
+        pdf: "https://drive.google.com/uc?export=download&id=1Z5Zcfj27F-s3PHpLZB4-DEwE4pkHD6ux"
     },
     {
         title: "Value-Added Services Regulation (NTC Memorandum Circular No. 02-05-2008)",
-        description: "This circular defines Value-Added Services (VAS) as enhanced telecommunications services beyond basic offerings, including messaging, audio/video conferencing, voice mail, electronic mail, information services, and electronic gaming. It outlines registration requirements, service classifications, and regulatory compliance for VAS providers.",
-        scenario: "A Voice Over Internet Protocol (VoIP) service provider offering voice calls over the internet, which is not a standard service offered by traditional phone companies.",
-        punishment: "Violations of the Circular can lead to revocation or cancellation of registration as a VAS provider.",
-        image: "https://images.app.goo.gl/pwhoMYMUUE6MUc5G9",
-        pdf: "https://region7.ntc.gov.ph/wp-content/uploads/2024/01/MC_02-05-2008_VAS.pdf"
+        description: "Regulates enhanced telecommunications services like VoIP, outlining registration and compliance for VAS providers.",
+        scenario: "A VoIP provider offers internet-based voice calls without standard telecom registration.",
+        punishment: "Revocation or cancellation of VAS provider registration for violations.",
+        image: "https://i.imgur.com/C7yIDNo.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1M7yIG7M9lExsPh3woel1MDGYHMjJuMrK"
     },
     {
         title: "Broadcast Messaging Regulation (NTC Memorandum Circular No. 03-03-2005-A)",
-        description: "Establishes guidelines for sending broadcast or push messages to subscribers, particularly regarding content providers and public telecommunications entities (PTEs).",
-        scenario: "A bank sending promotional text messages to its customers. Without prior consent, this violates the circular, which requires customers to explicitly opt-in to receive such messages.",
-        punishment: "Violations range from fines for less than 50 violations to blacklisting and revocation of permits for more than 50 violations per quarter.",
-        image: "https://images.app.goo.gl/Fbc63YjxjkrFci5Y6",
-        pdf: "https://region7.ntc.gov.ph/wp-content/uploads/2024/01/MC_03-03-2005.pdf"
+        description: "Sets guidelines for broadcast/push messages, requiring subscriber consent for content delivery.",
+        scenario: "A bank sends promotional texts without customer opt-in, violating consent rules.",
+        punishment: "Fines for <50 violations; blacklisting and permit revocation for >50 violations per quarter.",
+        image: "https://i.imgur.com/awwyzZS.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1MXaVmKOZ_im7lxWsEgJVtJti1EB7uZiy"
     },
     {
         title: "Guidelines on Prepaid Load Expiry (NTC Memorandum Circular No. 01-04-2019)",
-        description: "Mandating a one-year expiration period for all prepaid loads, regardless of amount. This circular covers all prepaid loads of public telecommunications entities and ICT providers.",
-        scenario: "A user named Cleo purchased a Php 100 prepaid load on April 1st, 2025. According to NTC guidelines, the load would expire on April 1st, 2026. If Cleo then purchased another Php 100 load on May 15th, 2025, the new validity period would be calculated from May 15th, 2025, meaning the combined load would expire on May 15th, 2026.",
-        punishment: "Violations of these regulations can result in penalties according to the Public Telecommunications Policy Act, the DICT Act of 2015, and other relevant laws, rules, and regulations of the NTC and DICT.",
-        image: "https://images.app.goo.gl/hHoAc5rnDu44BBZ87",
-        pdf: "https://region7.ntc.gov.ph/wp-content/uploads/2024/01/MC_03-07-2009.pdf"
+        description: "Mandates a one-year expiration for all prepaid loads, covering telecom and ICT providers.",
+        scenario: "A user’s PHP 100 load purchased on April 1, 2025, expires on April 1, 2026, per NTC rules.",
+        punishment: "Penalties per the Public Telecommunications Policy Act, DICT Act, and NTC/DICT regulations.",
+        image: "https://i.imgur.com/cO7KMFl.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1MVxucPguU1bMzt_QHeifx-XCgNHH2pA7"
     },
     {
         title: "Social Media and AI Election Guidelines (COMELEC Resolution No. 11064, 2024)",
-        description: "The resolution mandates candidates and political parties to register all digital campaign platforms by 13 December 2024, ensuring compliance with transparency requirements, including disclosing AI usage in campaign materials. The resolution applies to technology platforms and social media companies hosting political content, which must assist in removing unregistered platforms and monitoring for disinformation.",
-        scenario: "Use of content produced through AI technology but without compliance with the transparency and disclosure requirements under the resolution.",
-        punishment: "Coordinated inauthentic behavior and utilization of hyperactive users for the above mentioned purposes. Creation and dissemination of deep fakes, cheap fakes and soft fakes for the above mentioned purposes. Use of fake and unregistered social media accounts during the election and campaign period for the above mentioned purposes.",
-        image: "https://images.app.goo.gl/YTCcpHT2MeTVFfUWA",
-        pdf: "https://comelec.gov.ph/php-tpls-attachments/2025NLE/Resolutions/com_res_11064.pdf"
+        description: "Mandates registration of digital campaign platforms by December 13, 2024, ensuring transparency in AI usage.",
+        scenario: "A candidate uses AI-generated content without disclosing it, violating transparency rules.",
+        punishment: "Penalties for inauthentic behavior, deep fakes, and unregistered accounts during elections.",
+        image: "https://i.imgur.com/rXaMO8Y.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1MQBdl0_obNcOfBdT6x3Q9TTUrFHwsPZQ"
     },
     {
         title: "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
-        description: "Aims to improve the quality of pharmaceutical products through stricter distribution and storage standards. The order also emphasizes the importance of aligning local practices with international standards for pharmaceutical distribution and storage.",
-        scenario: "Establishes the legal framework for regulating the distribution and storage of pharmaceutical products, including online sales.",
-        punishment: "Administrative Order No. 2013-0027 states that violations are subject to existing administrative and legal sanctions. These sanctions are typically defined in other regulations, such as RA 9711 and its implementing rules, and can include fines, suspension of licenses, or other penalties.",
-        image: "https://images.app.goo.gl/9jZGSGUy5a1SYH118",
-        pdf: "https://www.fda.gov.ph/wp-content/uploads/2021/04/Administrative-Order-No.-2013-0027.pdf"
+        description: "Regulates pharmaceutical distribution and storage, including online sales, to ensure quality and compliance.",
+        scenario: "An online pharmacy sells substandard drugs without proper storage compliance.",
+        punishment: "Fines, license suspension, or other sanctions per RA 9711 and related regulations.",
+        image: "https://i.imgur.com/YUr5TZH.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1MNfoEsWEFCr9q3fLA_t9mUI-Q2Oii-uD"
     },
     {
         title: "E-Commerce Protection Guidelines (DTI Administrative Order No. 22-01)",
-        description: "Aims to increase consumer confidence in e-commerce by ensuring online businesses understand their responsibilities and adhere to fair practices.",
-        scenario: "A consumer buys a product online claiming to be a specific brand. However, the received product is a counterfeit, and the seller doesn't offer a refund or exchange despite the product not being of the advertised quality.",
-        punishment: "The Joint Administrative Order (JAO) includes penalties for violating regulations, reinforcing the importance of adhering to the rules.",
-        image: "https://images.app.goo.gl/FPThS1qkqmuRPyDv5",
-        pdf: "https://www.aseanconsumer.org/file/post_image/JAO%20NO.%2022-01.Guidelines%20on%20Online%20Businesses.pdf"
+        description: "Ensures fair practices in e-commerce to boost consumer confidence and address deceptive sales.",
+        scenario: "A consumer receives a counterfeit product from an online seller who refuses a refund.",
+        punishment: "Fines, permit revocation, or legal action for violations, per the Joint Administrative Order.",
+        image: "https://i.imgur.com/mFqmCw7.png",
+        pdf: "https://drive.google.com/uc?export=download&id=1MIB1Sp0YuKgYcF30YzcioN29dYSpFTj5"
     },
     {
         title: "Guidelines on Cybercrime Prosecution (DOJ Circular No. 027, 2018)",
-        description: "The circular focuses on prosecuting crimes that violate the confidentiality, integrity, and availability of computer data and systems. It also addresses offenses like illegal access, interception of data, and data interference.",
-        scenario: "An individual is charged with violating Section 5 of RA 9165 (illegal sale of dangerous drugs), with a quantity of drugs within the range where a plea of guilty to a lesser offense under Section 12 (illegal possession of drug paraphernalia) might be considered. Under DOJ Circular No. 027, the prosecution would not be required to accept such a plea bargaining proposal. The prosecution would be obligated to proceed with the original charge for the illegal sale of drugs, unless there are other compelling reasons for accepting the plea.",
-        punishment: "Imprisonment ranging from prision correccional (6 months and 1 day to 6 years) to prision mayor (6 years and 1 day to 12 years), depending on the severity and impact of the act.",
-        image: "https://images.app.goo.gl/2Quowehw8U4pqCPH8",
-        pdf: "https://www.doj.gov.ph/files/2018/DC/DC027-2018JUN%20Amended%20Guidelines%20for%20Plea%20Bargaining%20dtd%2026%20Jun%202018(1).pdf?__cf_chl_tk=WesqdnLjw1kmQGO4cTqus5pZQob.kyjwg4j4cSIvtTs-1745159710-1.0.1.1-n2KPDWigQuiNVNbkZEl0E8bMXOy8SKfjl7PfkSJWBpk"
+        description: "Guides prosecution of cybercrimes like illegal access and data interference, ensuring legal consistency.",
+        scenario: "A drug sale charge proceeds despite a plea bargain attempt, per DOJ guidelines.",
+        punishment: "Imprisonment from prisión correccional (6 months-6 years) to prisión mayor (6-12 years), depending on severity.",
+        image: "https://i.imgur.com/il9jPIa.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1MGc1NVkt6mDIAa1GQ-ORZCVRn38dEHOC"
     },
     {
         title: "PNP Anti-Cybercrime Group Operational Guidelines (PNP Circular No. 2019-001)",
-        description: "This circular outlines operational guidelines for the PNP Anti-Cybercrime Group (ACG), though it's difficult to definitively confirm without access to the specific document.",
-        scenario: "A social media page is used to spread false information about a recent incident, leading to panic and unrest.",
-        punishment: "Cybercrime offenses, as defined by law, can carry penalties such as imprisonment (prision mayor) and/or fines.",
-        image: "https://images.app.goo.gl/Nt5MrE1TZcHvjAi79",
-        pdf: "https://napolcom.gov.ph/pdf/MC2019-001.pdf?__cf_chl_tk=quHo44KOQomtEkrLILHjfyPHTz1BXnpQnxT8zoELEXI-1745160065-1.0.1.1-tddcEgLIGP2bavUXSf7zbBX.CbHS8Qz8YtB7OdtLEHE"
+        description: "Outlines operational protocols for the PNP Anti-Cybercrime Group to combat cybercrimes.",
+        scenario: "A social media page spreads false information, causing public panic, investigated by the ACG.",
+        punishment: "Cybercrime penalties like prisión mayor (6-12 years) and fines, per applicable laws.",
+        image: "https://i.imgur.com/jSyA9SQ.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=1MFR9mOwQzvyLPk5MTU7TDDPKhC8bHL2T"
     },
     {
         title: "Rules on Cybercrime Warrants (Supreme Court A.M. No. 17-11-03-SC)",
-        description: "This outlines procedures for obtaining and executing various types of warrants related to cybercrimes. These include warrants to search, seize, and examine computer data, warrants to examine computer data, and warrants to disclose or intercept computer data. The rule also covers the effective period of warrants, the process for returning seized items, and the potential for contempt or criminal charges for non-compliance.",
-        scenario: "In a case of online fraud, law enforcement can use a Warrant to Disclose Computer Data (WDCD) to obtain a suspect's online activity data, including traffic data and subscriber information, from their internet service provider to build a case against them.",
-        punishment: "Failing to comply with a cybercrime warrant or obstructing justice in a cybercrime case is handled under the Cybercrime Prevention Act.",
-        image: "https://elegal.ph/site/wp-content/uploads/2018/07/security.jpg",
-        pdf: "https://wipolex-resources-eu-central-1-358922420655.s3.amazonaws.com/edocs/lexdocs/laws/en/ph/ph208en_1.pdf"
+        description: "Outlines procedures for obtaining and executing cybercrime warrants, including data seizure and disclosure.",
+        scenario: "Law enforcement uses a warrant to access a fraud suspect’s online activity data.",
+        punishment: "Non-compliance handled under the Cybercrime Prevention Act, with penalties like imprisonment or fines.",
+        image: "https://i.imgur.com/mt6ExI1.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=13rS4HcKjdxiG4GcVVTILGJVddExX0HxP"
     },
     {
         title: "Rules on Electronic Evidence (Supreme Court A.M. No. 01-7-01-SC)",
-        description: "This establishes the admissibility of electronic signatures and documents in legal proceedings. It recognizes electronic documents as functional equivalents of written documents, meaning they are admissible as evidence if properly authenticated. The rules also outline how to authenticate electronic signatures and establish the integrity and reliability of electronic data messages.",
-        scenario: "An email with an electronically signed contract, authenticated through a secure platform demonstrating the signer's control and integrity of the signature, would be considered admissible electronic evidence, equivalent to a handwritten, signed paper contract, according to the Rules on Electronic Evidence.",
-        punishment: "Exclusion of Evidence: An electronic document that isn't properly authenticated or doesn't meet the requirements for admissibility may be excluded from evidence. Sanctions for False or Misleading Information: Presenting false or misleading information in electronic documents could result in legal consequences, such as perjury or other fraud charges.",
-        image: "https://s3.ap-south-1.amazonaws.com/novojuris/image/1603091279991_it__1_.jpg",
-        pdf: "https://www.doj.gov.ph/files/rules%20on%20electronic%20evidence.pdf"
+        description: "Establishes admissibility of electronic documents and signatures in legal proceedings if properly authenticated.",
+        scenario: "An electronically signed contract is admitted as evidence after authentication.",
+        punishment: "Exclusion of unauthenticated evidence; false information may lead to perjury or fraud charges.",
+        image: "https://imgur.com/nvEJYT3",
+        pdf: "https://drive.google.com/uc?export=download&id=1KOKCL2SDdMWG6r3NBQcr3V4k7VuuO5XA"
     },
     {
         title: "Revised Rules of Civil Procedure (Supreme Court A.M. No. 19-08-06-SC)",
-        description: "This outlines the procedures for administrative searches and inspections conducted by the Philippine Competition Commission (PCC). This rule, effective November 16, 2019, allows the PCC to apply for Inspection Orders from Special Commercial Courts to investigate potential violations of the Philippine Competition Act.",
-        scenario: "Involve a dispute over property or a debt where the amount claimed is within the jurisdiction of the first-level court.",
-        punishment: "Order to take specific actions: This could include ordering a party to comply with a court order or correct a procedural error. Order to pay a fine: The court can impose a fine as a penalty for violating the rules. Order to pay attorney's fees and other expenses: If the court finds that the violation resulted in attorney's fees and other expenses, it may order the offending party to pay those costs to the other party.",
-        image: "https://cdn.sanity.io/images/anl9abaw/production/cca237f4771a8e6802e1f4bf490ca2b827268c84-768x512.png?w=3840&q=75&fit=clip&auto=format",
-        pdf: "https://lpr.adb.org/sites/default/files/2024-07/philippines-supreme-court-19-08-06.pdf"
+        description: "Outlines PCC procedures for administrative searches to investigate competition law violations.",
+        scenario: "A property dispute falls under a first-level court’s jurisdiction, following revised procedures.",
+        punishment: "Court-ordered actions, fines, or payment of attorney’s fees for rule violations.",
+        image: "https://imgur.com/vgjjl0L",
+        pdf: "https://drive.google.com/uc?export=download&id=1J4JII14UiVXViPZpFKlSly3CiY21PBVR"
+    },
+    {
+        title: "Rule on Cybercrime Investigation (Supreme Court A.M. No. 17-11-03-SC)",
+        description: "Outlines procedures for obtaining and executing cybercrime warrants, including data seizure and disclosure (same as Rules on Cybercrime Warrants).",
+        scenario: "Police obtain a warrant to seize a suspect’s computer data in an online scam investigation.",
+        punishment: "Non-compliance handled under the Cybercrime Prevention Act, with penalties like imprisonment or fines.",
+        image: "https://i.imgur.com/mt6ExI1.jpeg",
+        pdf: "https://drive.google.com/uc?export=download&id=13rS4HcKjdxiG4GcVVTILGJVddExX0HxP"
+    },
+    {
+        title: "Guidelines on Consumer Protection in E-Commerce (DTI Department Order No. 18-05)",
+        description: "Ensures consumer protection in e-commerce through rules on transparency, purchase, and post-purchase services.",
+        scenario: "A consumer buys a product online that differs from its description, violating transparency rules.",
+        punishment: "Fines, permit revocation, or legal action for deceptive practices or non-compliance.",
+        image: "https://imgur.com/rwFeH4N",
+        pdf: "https://drive.google.com/uc?export=download&id=1_UNToj_yIquJhHB21sgMOGZaF8Xk73po"
+    },
+    {
+        title: "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+        description: "Regulates electronic filing of tax returns and payment of taxes for online transactions.",
+        scenario: "An online seller ignores eFPS requirements, filing taxes manually despite notices.",
+        punishment: "Compromise penalties for first/second offenses; third offenses: up to PHP 1,000 fine and 6 months imprisonment per NIRC Section 275.",
+        image: "https://imgur.com/XpH2tuw",
+        pdf: "https://drive.google.com/uc?export=download&id=1uuLbTcnDcQQ6fhLGGrG2sWIUFQe9G3wO"
     }
 ];
 
