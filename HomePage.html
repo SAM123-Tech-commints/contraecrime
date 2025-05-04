@@ -718,11 +718,11 @@ body, html {
 }
 
 .card {
-    --bg-card: #fff;
+    --bg-card: #27272a;
     --primary: #d9cd28;
     --primary-800: #d7b15c;
     --primary-shadow: #b7b90d;
-    --light: #f0f0f0;
+    --light: #d9d9d9;
     --zinc-800: #18181b;
     --bg-linear: linear-gradient(0deg, var(--primary) 50%, var(--light) 125%);
 
@@ -735,8 +735,6 @@ body, html {
     border-radius: 1rem;
     justify-content: space-between;
     transition: background-color 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: var(--bg-linear);
 }
 
 .card.main-law {
@@ -753,13 +751,12 @@ body, html {
 }
 
 body:not(.dark-theme) .card {
-    background: var(--bg-linear);
+    background-color: #b8973e;
 }
 
 .dark-theme .card {
-    background: linear-gradient(0deg, #3a3b3c 50%, #2c2d2e 125%);
+    background-color: #3a3b3c;
     color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .image_container {
@@ -1806,7 +1803,7 @@ body.dark-theme {
         title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
         description: "It focuses on the protection of Critical Information Infrastructure (CII) as outlined in the National Cybersecurity Plan (NCSP) 2022. It mandates the adoption of international security standards and outlines policies and regulations for safeguarding CII, as part of the NCSP. This circular also mandates the integration of the National IT Security Policy (NISP) with the NCSP framework.",
         scenario: "A government agency enhances its cybersecurity posture by adopting standardized security protocols and conducting regular risk assessments to protect its ICT systems from potential threats.",
-        punishment: "Administrative sanctions under Republic Act No. 6713, including suspension or fines up to ₱100,000, for non-compliance by government agencies.",
+        punishment: "Failure by the Department of Social Welfare and Development (DSWD) to comply with the Cloud First Policy, such as using non-accredited cloud service providers or neglecting data security and interoperability requirements, may result in administrative sanctions under Republic Act No. 6713 (Code of Conduct and Ethical Standards for Public Officials and Employees). Responsible officials could face fines not exceeding six months’ salary, suspension up to one year, or dismissal from service, as determined by the Civil Service Commission or Office of the Ombudsman. Additionally, violations involving personal data may incur fines up to ₱5,000,000 or imprisonment from six months to seven years under Republic Act No. 10173 (Data Privacy Act of 2012), enforced by the National Privacy Commission. Non-compliant expenditures may also be disallowed by the Commission on Audit, holding officials personally liable for irregular costs.",
         image: "https://i.imgur.com/Zi2wBxb.png",
         pdf: "https://drive.google.com/uc?export=download&id=1bgqM5Qs1ATzz92eUbcOmirrjVHNSPGtX"
     },
@@ -1814,7 +1811,7 @@ body.dark-theme {
         title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
         description: "This focuses on protecting individuals by promoting cybersecurity awareness and implementing security measures. This includes measures like cybersecurity awareness programs like the CyberSecurity Caravan, and promoting the adoption of cybersecurity practices by individuals. The NCSP aims to enhance the security of critical information infrastructure and government networks, which directly contributes to the protection of individual data and information within these systems.",
         scenario: "A government agency implements a public awareness campaign about online security, teaching citizens how to protect their personal data and avoid falling victim to phishing scams, while also setting up a hotline for individuals to report any cyber incidents they encounter.",
-        punishment: "Administrative sanctions under Republic Act No. 6713, including suspension or fines up to ₱100,000, for non-compliance by government personnel.",
+        punishment: "Similarly, non-compliance can lead to administrative sanctions under RA 6713, and data privacy violations can incur penalties under RA 10173, including fines up to PHP 5,000,000 and imprisonment from six months to seven years.",
         image: "https://i.imgur.com/d95q33c.jpeg",
         pdf: "https://drive.google.com/uc?export=download&id=1I4XxnD702TRk2CkTHejTnqdKg3kx4aZE"
     },
@@ -1939,7 +1936,6 @@ body.dark-theme {
         pdf: "https://drive.google.com/uc?export=download&id=1uuLbTcnDcQQ6fhLGGrG2sWIUFQe9G3wO"
     }
 ];
-
 
         auth.onAuthStateChanged((user) => {
             if (user) {
