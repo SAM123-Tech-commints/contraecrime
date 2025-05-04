@@ -728,12 +728,12 @@ body, html {
 
     position: relative;
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    flex-direction: row;
+    gap: 1rem;
     padding: 1rem;
-    width: 350px;
+    width: 100%;
+    max-width: 800px;
     border-radius: 1rem;
-    justify-content: space-between;
     transition: background-color 0.3s ease;
 }
 
@@ -764,16 +764,24 @@ body:not(.dark-theme) .card {
     cursor: pointer;
     position: relative;
     z-index: 5;
-    width: 100%;
+    width: 200px;
     height: 200px;
     background-color: var(--primary-800);
     border-radius: 0.5rem;
+    flex-shrink: 0;
 }
 
 .image_container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.75rem;
 }
 
 .cybercrime-title {
@@ -783,8 +791,7 @@ body:not(.dark-theme) .card {
     color: #ffffff;
     text-transform: capitalize;
     text-wrap: wrap;
-    min-height: 3rem; 
-    line-height: 1.3; 
+    line-height: 1.3;
 }
 
 .cybercrime-description {
@@ -792,6 +799,7 @@ body:not(.dark-theme) .card {
     color: #ffffff;
     line-height: 1.4;
     text-align: justify;
+    flex: 1;
 }
 
 .border-button {
@@ -806,7 +814,6 @@ body:not(.dark-theme) .card {
     color: rgb(255, 255, 255);
     cursor: pointer;
     align-self: flex-end;
-    margin-top: 1rem;
     transition: all 0.3s ease;
     text-decoration: none;
 }
@@ -847,7 +854,6 @@ body:not(.dark-theme) .card {
     color: rgb(255, 255, 255);
     cursor: pointer;
     align-self: flex-end;
-    margin-top: 1rem;
     transition: all 0.3s ease;
     text-decoration: none;
 }
@@ -1074,7 +1080,7 @@ body.dark-theme {
     }
 
     .card {
-        width: 300px;
+        max-width: 600px;
     }
 
     .card.main-law {
@@ -1114,6 +1120,11 @@ body.dark-theme {
         width: 108px;
         height: 110px;
     }
+
+    .image_container {
+        width: 150px;
+        height: 150px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1144,13 +1155,18 @@ body.dark-theme {
     }
 
     .card {
-        width: 100%;
+        flex-direction: column;
         max-width: 350px;
     }
 
     .card.main-law {
         width: 100%;
         max-width: 500px;
+    }
+
+    .image_container {
+        width: 100%;
+        height: 200px;
     }
 
     .avatar-container .profile-pic {
@@ -1297,6 +1313,7 @@ body.dark-theme {
     }
 
     .card {
+        flex-direction: column;
         width: 100%;
         max-width: 100%;
     }
@@ -1304,6 +1321,11 @@ body.dark-theme {
     .card.main-law {
         width: 100%;
         max-width: 100%;
+    }
+
+    .image_container {
+        width: 100%;
+        height: 200px;
     }
 
     .modal-content {
@@ -1803,7 +1825,7 @@ body.dark-theme {
         title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
         description: "It focuses on the protection of Critical Information Infrastructure (CII) as outlined in the National Cybersecurity Plan (NCSP) 2022. It mandates the adoption of international security standards and outlines policies and regulations for safeguarding CII, as part of the NCSP. This circular also mandates the integration of the National IT Security Policy (NISP) with the NCSP framework.",
         scenario: "A government agency enhances its cybersecurity posture by adopting standardized security protocols and conducting regular risk assessments to protect its ICT systems from potential threats.",
-        punishment: "Failure by the Department of Social Welfare and Development (DSWD) to comply with the Cloud First Policy, such as using non-accredited cloud service providers or neglecting data security and interoperability requirements, may result in administrative sanctions under Republic Act No. 6713 (Code of Conduct and Ethical Standards for Public Officials and Employees). Responsible officials could face fines not exceeding six months’ salary, suspension up to one year, or dismissal from service, as determined by the Civil Service Commission or Office of the Ombudsman. Additionally, violations involving personal data may incur fines up to ₱5,000,000 or imprisonment from six months to seven years under Republic Act No. 10173 (Data Privacy Act of 2012), enforced by the National Privacy Commission. Non-compliant expenditures may also be disallowed by the Commission on Audit, holding officials personally liable for irregular costs.",
+        punishment: "Administrative sanctions under Republic Act No. 6713, including suspension or fines up to ₱100,000, for non-compliance by government agencies.",
         image: "https://i.imgur.com/Zi2wBxb.png",
         pdf: "https://drive.google.com/uc?export=download&id=1bgqM5Qs1ATzz92eUbcOmirrjVHNSPGtX"
     },
@@ -1811,7 +1833,7 @@ body.dark-theme {
         title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
         description: "This focuses on protecting individuals by promoting cybersecurity awareness and implementing security measures. This includes measures like cybersecurity awareness programs like the CyberSecurity Caravan, and promoting the adoption of cybersecurity practices by individuals. The NCSP aims to enhance the security of critical information infrastructure and government networks, which directly contributes to the protection of individual data and information within these systems.",
         scenario: "A government agency implements a public awareness campaign about online security, teaching citizens how to protect their personal data and avoid falling victim to phishing scams, while also setting up a hotline for individuals to report any cyber incidents they encounter.",
-        punishment: "Similarly, non-compliance can lead to administrative sanctions under RA 6713, and data privacy violations can incur penalties under RA 10173, including fines up to PHP 5,000,000 and imprisonment from six months to seven years.",
+        punishment: "Administrative sanctions under Republic Act No. 6713, including suspension or fines up to ₱100,000, for non-compliance by government personnel.",
         image: "https://i.imgur.com/d95q33c.jpeg",
         pdf: "https://drive.google.com/uc?export=download&id=1I4XxnD702TRk2CkTHejTnqdKg3kx4aZE"
     },
@@ -2288,24 +2310,26 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                 <div class="image_container">
                     <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
                 </div>
-                <div class="cybercrime-title">
-                    <span>${mainLaw.title}</span>
-                </div>
-                <div class="cybercrime-description">
-                    <p><strong>Description:</strong> <span class="description-text">${mainLaw.description}</span></p>
-                    <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario}</span></p>
-                    <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
-                </div>
-                <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    ${mainLaw.pdf ? `
-                    <a href="${mainLaw.pdf}" class="border-button" target="_blank">
-                        <span class="button-text">Read PDF</span>
-                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                    </a>` : ''}
-                    <button class="save-button" data-title="${mainLaw.title}">
-                        <span class="button-text">Save Law</span>
-                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                    </button>
+                <div class="card-content">
+                    <div class="cybercrime-title">
+                        <span>${mainLaw.title}</span>
+                    </div>
+                    <div class="cybercrime-description">
+                        <p><strong>Description:</strong> <span class="description-text">${mainLaw.description}</span></p>
+                        <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario}</span></p>
+                        <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        ${mainLaw.pdf ? `
+                        <a href="${mainLaw.pdf}" class="border-button" target="_blank">
+                            <span class="button-text">Read PDF</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                        </a>` : ''}
+                        <button class="save-button" data-title="${mainLaw.title}">
+                            <span class="button-text">Goes to Saved Laws</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                        </button>
+                    </div>
                 </div>
             `;
             cardsContainer.appendChild(mainCard);
@@ -2341,24 +2365,26 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                     <div class="image_container">
                         <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
                     </div>
-                    <div class="cybercrime-title">
-                        <span>${law.title}</span>
-                    </div>
-                    <div class="cybercrime-description">
-                        <p><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
-                        <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
-                        <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
-                    </div>
-                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                        ${law.pdf ? `
-                        <a href="${law.pdf}" class="border-button" target="_blank">
-                            <span class="button-text">Read PDF</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                        </a>` : ''}
-                        <button class="save-button" data-title="${law.title}">
-                            <span class="button-text">Save Law</span>
-                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                        </button>
+                    <div class="card-content">
+                        <div class="cybercrime-title">
+                            <span>${law.title}</span>
+                        </div>
+                        <div class="cybercrime-description">
+                            <p><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
+                            <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
+                            <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
+                        </div>
+                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                            ${law.pdf ? `
+                            <a href="${law.pdf}" class="border-button" target="_blank">
+                                <span class="button-text">Read PDF</span>
+                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                            </a>` : ''}
+                            <button class="save-button" data-title="${law.title}">
+                                <span class="button-text">Goes to Saved Laws</span>
+                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                            </button>
+                        </div>
                     </div>
                 `;
                 alternativesContainer.appendChild(card);
@@ -2410,17 +2436,19 @@ defaultCards.forEach(cardData => {
         <div class="image_container">
             <img src="${cardData.image}" alt="Cybercrime Image">
         </div>
-        <div class="cybercrime-title">
-            <span>${cardData.title}</span>
+        <div class="card-content">
+            <div class="cybercrime-title">
+                <span>${cardData.title}</span>
+            </div>
+            <div class="cybercrime-description">
+                <p>Cybercrime</p>
+                <p>${cardData.description}</p>
+            </div>
+            <a href="News.html" class="border-button">
+                <span class="button-text">Read More</span>
+                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+            </a>
         </div>
-        <div class="cybercrime-description">
-            <p>Cybercrime</p>
-            <p>${cardData.description}</p>
-        </div>
-        <a href="News.html" class="border-button">
-            <span class="button-text">Read More</span>
-            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-        </a>
     `;
     cardsContainer.appendChild(card);
 });
@@ -2457,22 +2485,24 @@ async function performSearch(query) {
                     <div class="image_container">
                         <img src="${cardData.image}" alt="Cybercrime Image">
                     </div>
-                    <div class="cybercrime-title">
-                        <span>${cardData.title}</span>
+                    <div class="card-content">
+                        <div class="cybercrime-title">
+                            <span>${cardData.title}</span>
+                        </div>
+                        <div class="cybercrime-description">
+                            <p>Cybercrime</p>
+                            <p>${cardData.description}</p>
+                        </div>
+                        <a href="News.html" class="border-button">
+                            <span class="button-text">Read More</span>
+                            <span class="iconer">
+                                <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
+                                </svg>
+                            </span>
+                        </a>
                     </div>
-                    <div class="cybercrime-description">
-                        <p>Cybercrime</p>
-                        <p>${cardData.description}</p>
-                    </div>
-                    <a href="News.html" class="border-button">
-                        <span class="button-text">Read More</span>
-                        <span class="iconer">
-                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
-                            </svg>
-                        </span>
-                    </a>
                 `;
                 cardsContainer.appendChild(card);
             });
