@@ -757,7 +757,12 @@
                                 return;
                             }
 
-                            await auth.createUserWithEmailAndPassword(email, passwordValue);
+                            const userCredential = await auth.createUserWithEmailAndPassword(email, passwordValue);
+                            const user = userCredential.user;
+
+                            await user.updateProfile({
+                                displayName: username
+                            });
 
                             await db.collection('users').doc(email).set({
                                 email: email,
