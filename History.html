@@ -11,7 +11,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        /* Existing CSS with additions for the copy button */
         * {
             box-sizing: border-box;
         }
@@ -124,7 +123,8 @@
             padding: 20px;
             height: 100vh;
             position: fixed;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, width 0.3s ease;
+            z-index: 3000;
         }
 
         .sidebar h1 {
@@ -581,7 +581,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
             position: relative;
             overflow: hidden;
-            cursor: pointer; /* Make the item clickable */
+            cursor: pointer;
         }
 
         .history-item:hover {
@@ -987,7 +987,7 @@
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 200px;
+                width: 220px;
                 padding: 10px;
             }
 
@@ -1004,12 +1004,12 @@
             }
 
             .content {
-                margin-left: 200px;
+                margin-left: 220px;
                 padding: 20px;
             }
 
             footer {
-                margin-left: 200px;
+                margin-left: 220px;
             }
 
             .avatar-container .profile-pic {
@@ -1061,7 +1061,7 @@
             }
 
             .sidebar {
-                width: 100%;
+                width: 260px;
                 height: auto;
                 position: fixed;
                 padding: 10px;
@@ -1074,11 +1074,12 @@
 
             .sidebar.active {
                 transform: translateX(0);
-                z-index: 3000;
             }
 
             .sidebar h1 {
-                display: none;
+                display: block;
+                font-size: 20px;
+                margin-bottom: 20px;
             }
 
             .sidebar ul li {
