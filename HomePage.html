@@ -2074,7 +2074,7 @@ body.dark-theme {
     }
 ];
         
-        auth.onAuthStateChanged((user) => {
+auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
                     username: user.displayName || 'User',
@@ -2566,6 +2566,7 @@ body.dark-theme {
             try {
                 if (query) {
                     fingerprintIcon.classList.add('scanning');
+                    fingerprintIcon.style.opacity = '1';
                     sectionTitle.textContent = 'RELEVANT LAW';
                     loaderOverlay.classList.add('active');
 
@@ -2620,9 +2621,13 @@ body.dark-theme {
             } finally {
                 loaderOverlay.classList.remove('active');
                 if (query) {
+                    fingerprintIcon.style.transition = 'opacity 0.5s ease';
+                    fingerprintIcon.style.opacity = '0';
                     setTimeout(() => {
                         fingerprintIcon.classList.remove('scanning');
-                    }, 1000);
+                        fingerprintIcon.style.opacity = '1'; 
+                        fingerprintIcon.style.transition = ''; 
+                    }, 1500);
                 }
             }
         }
