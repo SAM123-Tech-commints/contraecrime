@@ -123,8 +123,7 @@
             padding: 20px;
             height: 100vh;
             position: fixed;
-            transition: transform 0.3s ease, width 0.3s ease;
-            z-index: 3000;
+            transition: transform 0.3s ease;
         }
 
         .sidebar h1 {
@@ -987,7 +986,7 @@
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 220px;
+                width: 200px;
                 padding: 10px;
             }
 
@@ -1004,12 +1003,12 @@
             }
 
             .content {
-                margin-left: 220px;
+                margin-left: 200px;
                 padding: 20px;
             }
 
             footer {
-                margin-left: 220px;
+                margin-left: 200px;
             }
 
             .avatar-container .profile-pic {
@@ -1061,7 +1060,7 @@
             }
 
             .sidebar {
-                width: 260px;
+                width: 100%;
                 height: auto;
                 position: fixed;
                 padding: 10px;
@@ -1074,12 +1073,11 @@
 
             .sidebar.active {
                 transform: translateX(0);
+                z-index: 3000;
             }
 
             .sidebar h1 {
-                display: block;
-                font-size: 20px;
-                margin-bottom: 20px;
+                display: none;
             }
 
             .sidebar ul li {
