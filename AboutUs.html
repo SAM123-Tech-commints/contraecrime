@@ -1861,6 +1861,7 @@
                 </li>
                 <li>
                     <a href="History.html">
+                        vidrio
                         <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
                         Search History
                     </a>
@@ -1892,6 +1893,7 @@
                 </div>
                 <div class="toggle-switch">
                     <label class="switch-label">
+                       
                         <input type="checkbox" class="checkbox" id="themeToggle">
                         <span class="slider"></span>
                     </label>
@@ -2022,6 +2024,7 @@
                     <div class="quiz-options" id="optionsContainer"></div>
                     <div class="quiz-explanation" id="explanationText"></div>
                     <div class="quiz-buttons">
+                        renewed
                         <button id="submitAnswer" disabled>Submit</button>
                         <button id="nextQuestion" style="display: none;">Next</button>
                         <button id="restartQuiz" style="display: none;">Restart</button>
@@ -2361,8 +2364,8 @@
             };
         });
 
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
+        avatarBgColorPicker.addEventListener('change', (event) => {
+            const color = event.target.value;
             profilePic.style.backgroundColor = color;
 
             const user = auth.currentUser;
@@ -2371,16 +2374,15 @@
                 database.ref(`users/${sanitizedEmail}`).update({
                     avatarBgColor: color,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
+                }).catch(error => {
                     console.error('Error saving avatar background color:', error);
                     alert('Failed to save avatar background color: ' + error.message);
                 });
             }
         });
 
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
+        borderColorPicker.addEventListener('change', (event) => {
+            const color = event.target.value;
             profilePic.style.borderColor = color;
 
             const user = auth.currentUser;
@@ -2389,16 +2391,15 @@
                 database.ref(`users/${sanitizedEmail}`).update({
                     borderColor: color,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
+                }).catch(error => {
                     console.error('Error saving border color:', error);
                     alert('Failed to save border color: ' + error.message);
                 });
             }
         });
 
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
+        borderTypeSelect.addEventListener('change', (event) => {
+            const borderType = event.target.value;
             profilePic.style.borderStyle = borderType;
 
             const user = auth.currentUser;
@@ -2407,8 +2408,7 @@
                 database.ref(`users/${sanitizedEmail}`).update({
                     borderType: borderType,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
+                }).catch(error => {
                     console.error('Error saving border type:', error);
                     alert('Failed to save border type: ' + error.message);
                 });
@@ -2417,10 +2417,24 @@
 
         themeToggle.addEventListener('change', () => {
             body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+            const isDarkTheme = body.classList.contains('dark-theme');
+            localStorage.setItem('darkTheme', isDarkTheme);
+
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    darkTheme: isDarkTheme,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                }).catch(error => {
+                    console.error('Error saving theme preference:', error);
+                    alert('Failed to save theme preference: ' + error.message);
+                });
+            }
         });
 
-        if (localStorage.getItem('theme') === 'dark') {
+        const savedTheme = localStorage.getItem('darkTheme');
+        if (savedTheme === 'true') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
@@ -2430,8 +2444,10 @@
         });
 
         document.addEventListener('click', (e) => {
-            if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target) && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
+            if (window.innerWidth <= 480 && sidebar.classList.contains('active')) {
+                if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
             }
         });
 
@@ -2441,15 +2457,6 @@
             }
         });
 
-        const timelineItems = document.querySelectorAll('.timeline-item');
-        const growthItems = document.querySelectorAll('.growth-item');
-        const leaderItems = document.querySelectorAll('.leader-item');
-        const careersCard = document.querySelector('.careers-card');
-
-        const observerOptions = {
-            threshold: 0.1
-        };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -2457,607 +2464,233 @@
                     observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        timelineItems.forEach(item => observer.observe(item));
-        growthItems.forEach(item => observer.observe(item));
-        leaderItems.forEach(item => observer.observe(item));
-        observer.observe(careersCard);
-
-        const quizQuestions = [
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What is the primary law in the Philippines governing cybercrimes?',
-                options: ['Republic Act No. 10175', 'Republic Act No. 8792', 'Republic Act No. 8293', 'Republic Act No. 7394'],
-                correct: 'Republic Act No. 10175',
-                explanation: 'Republic Act No. 10175, also known as the Cybercrime Prevention Act of 2012, is the primary law addressing cybercrimes in the Philippines.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What does "phishing" refer to in the context of cybercrime?',
-                options: ['Hacking into a database', 'Sending fraudulent emails to steal information', 'Creating fake social media profiles', 'Distributing malware via USB drives'],
-                correct: 'Sending fraudulent emails to steal information',
-                explanation: 'Phishing involves sending fraudulent emails or messages that appear to come from a legitimate source to trick users into providing sensitive information.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'truefalse',
-                question: 'Is hacking into someone’s email without permission considered a cybercrime under Philippine law?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'Unauthorized access to computer systems, including email accounts, is a cybercrime under Republic Act No. 10175.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'Which of the following is NOT a cybercrime under RA 10175?',
-                options: ['Online libel', 'Cybersex', 'Physical theft', 'Identity theft'],
-                correct: 'Physical theft',
-                explanation: 'Physical theft is not classified as a cybercrime under RA 10175, which focuses on offenses committed using digital means.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What is the penalty for cyber libel under RA 10175?',
-                options: ['1 month imprisonment', '6 months to 6 years imprisonment', 'Life imprisonment', 'No penalty'],
-                correct: '6 months to 6 years imprisonment',
-                explanation: 'Cyber libel under RA 10175 carries a penalty of imprisonment ranging from 6 months to 6 years.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What term refers to the act of illegally accessing a computer system?',
-                options: ['Phishing', 'Hacking', 'Spoofing', 'Spamming'],
-                correct: 'Hacking',
-                explanation: 'Hacking is the unauthorized access to or manipulation of computer systems or networks.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'truefalse',
-                question: 'Is sharing someone’s private photos online without consent a cybercrime in the Philippines?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'Sharing private photos without consent can be considered a violation under RA 10175, particularly under provisions related to privacy and cyber libel.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'Which agency is primarily responsible for enforcing cybercrime laws in the Philippines?',
-                options: ['Philippine National Police (PNP)', 'Department of Education', 'Bureau of Immigration', 'Local Government Units'],
-                correct: 'Philippine National Police (PNP)',
-                explanation: 'The PNP, through its Anti-Cybercrime Group, is primarily responsible for enforcing cybercrime laws.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What is "cybersex" as defined under RA 10175?',
-                options: ['Online gaming', 'Wilful engagement in sexual activities via digital platforms', 'Sending romantic messages online', 'Creating adult websites'],
-                correct: 'Wilful engagement in sexual activities via digital platforms',
-                explanation: 'Cybersex under RA 10175 refers to the willful engagement, maintenance, control, or operation of lascivious activities using digital platforms.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'truefalse',
-                question: 'Is sending spam emails a punishable offense under RA 10175?',
-                options: ['True', 'False'],
-                correct: 'False',
-                explanation: 'Sending spam emails is not explicitly listed as a punishable offense under RA 10175, though related activities may fall under other provisions.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What is the purpose of the Data Privacy Act of 2012 (RA 10173)?',
-                options: ['To regulate electronic commerce', 'To protect personal data privacy', 'To prevent cyberbullying', 'To criminalize hacking'],
-                correct: 'To protect personal data privacy',
-                explanation: 'The Data Privacy Act of 2012 (RA 10173) regulates the collection, processing, and storage of personal data to protect privacy.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'truefalse',
-                question: 'Is unauthorized recording of a private conversation a violation under the Anti-Wire Tapping Act (RA 4200)?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'The Anti-Wire Tapping Act (RA 4200) prohibits unauthorized recording or interception of private communications.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'Which law addresses the production and distribution of child pornography in the Philippines?',
-                options: ['RA 9775', 'RA 10175', 'RA 8792', 'RA 8293'],
-                correct: 'RA 9775',
-                explanation: 'The Anti-Child Pornography Act of 2009 (RA 9775) criminalizes the production, distribution, and possession of child pornography.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What does the term "money muling" refer to under the Anti-Financial Account Scamming Act (RA 12010)?',
-                options: ['Hacking bank accounts', 'Using fake accounts to receive scam funds', 'Creating phishing websites', 'Distributing malware'],
-                correct: 'Using fake accounts to receive scam funds',
-                explanation: 'Money muling involves opening fake accounts to receive funds from online scams, as defined under RA 12010.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'truefalse',
-                question: 'Is posting sexually explicit content of a minor online a cybercrime under RA 11930?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'The Anti-Online Sexual Abuse or Exploitation of Children Act (RA 11930) penalizes the distribution of sexually explicit content involving minors.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'Which law regulates the registration of SIM cards in the Philippines?',
-                options: ['RA 11934', 'RA 10175', 'RA 8792', 'RA 8484'],
-                correct: 'RA 11934',
-                explanation: 'The Subscriber Identity Module (SIM) Registration Act (RA 11934) mandates the registration of all SIM card users to enhance telecommunications security.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What is the primary goal of the Safe Spaces Act (RA 11313)?',
-                options: ['To prevent cybercrimes', 'To protect against gender-based harassment', 'To regulate e-commerce', 'To enforce data privacy'],
-                correct: 'To protect against gender-based harassment',
-                explanation: 'The Safe Spaces Act (RA 11313) aims to protect individuals from gender-based sexual harassment in public and online spaces.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'truefalse',
-                question: 'Does the Intellectual Property Code (RA 8293) protect copyrights and trademarks?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'The Intellectual Property Code of the Philippines (RA 8293) protects copyrights, trademarks, patents, and industrial designs.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What term describes pretending to be someone else online to deceive others?',
-                options: ['Hacking', 'Phishing', 'Identity theft', 'Spoofing'],
-                correct: 'Identity theft',
-                explanation: 'Identity theft involves pretending to be someone else online to deceive others or steal personal information.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'Which law criminalizes unauthorized use of credit cards or ATM cards?',
-                options: ['RA 8484', 'RA 10175', 'RA 9775', 'RA 12010'],
-                correct: 'RA 8484',
-                explanation: 'The Access Devices Regulation Act of 1998 (RA 8484) criminalizes unauthorized possession and use of access devices like credit or ATM cards.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'Under RA 10175, what is the penalty for data interference?',
-                options: ['1 to 3 years imprisonment', '3 to 7 years imprisonment', '7 to 12 years imprisonment', 'No penalty'],
-                correct: '3 to 7 years imprisonment',
-                explanation: 'Data interference, such as unauthorized alteration or deletion of data, carries a penalty of 3 to 7 years imprisonment under RA 10175.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: Juan creates a fake Facebook profile to defame Maria, causing her public humiliation. What cybercrime has Juan committed?',
-                options: ['Cyber libel', 'Identity theft', 'Online fraud', 'Cyberbullying'],
-                correct: 'Cyber libel',
-                explanation: 'Creating a fake profile to defame someone constitutes cyber libel under RA 10175, as it involves publishing defamatory content online.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'Which section of RA 10175 defines "system interference"?',
-                options: ['Section 4(a)(1)', 'Section 4(a)(3)', 'Section 4(a)(5)', 'Section 4(b)(2)'],
-                correct: 'Section 4(a)(5)',
-                explanation: 'Section 4(a)(5) of RA 10175 defines system interference as the intentional alteration or disruption of computer systems.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: Ana hacks into a company’s database and steals customer information. What cybercrime is this?',
-                options: ['Illegal access', 'Data interference', 'Cyber theft', 'System interference'],
-                correct: 'Illegal access',
-                explanation: 'Hacking into a database without authorization is classified as illegal access under RA 10175.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'What is the prescriptive period for filing a cybercrime case under RA 10175?',
-                options: ['1 year', '5 years', '12 years', '20 years'],
-                correct: '12 years',
-                explanation: 'The prescriptive period for cybercrime offenses under RA 10175 is 12 years from the date of the offense.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'truefalse',
-                question: 'Can a private individual file a cybercrime complaint directly with the court under RA 10175?',
-                options: ['True', 'False'],
-                correct: 'False',
-                explanation: 'Cybercrime complaints under RA 10175 typically require investigation by law enforcement before filing in court.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'Which of the following is an aggravating circumstance under RA 10175?',
-                options: ['Use of a pseudonym', 'Crime committed by a minor', 'Use of information and communication technologies', 'Crime committed at night'],
-                correct: 'Use of information and communication technologies',
-                explanation: 'The use of ICT is considered an aggravating circumstance under RA 10175, increasing the penalty for the offense.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: Pedro distributes malware that disrupts a government website. What cybercrime is this?',
-                options: ['Cyber vandalism', 'System interference', 'Illegal interception', 'Data interference'],
-                correct: 'System interference',
-                explanation: 'Distributing malware that disrupts a system is classified as system interference under RA 10175.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'What is the minimum fine for cybercrimes under RA 10175?',
-                options: ['PHP 50,000', 'PHP 100,000', 'PHP 200,000', 'PHP 500,000'],
-                correct: 'PHP 200,000',
-                explanation: 'The minimum fine for cybercrimes under RA 10175 is PHP 200,000, as stipulated in the law.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'truefalse',
-                question: 'Is aiding or abetting a cybercrime punishable under RA 10175?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'Aiding or abetting a cybercrime is punishable under RA 10175, as it includes those who assist in the commission of the offense.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: Lisa secretly records her neighbor showering and shares the video online. What law has she violated?',
-                options: ['RA 9995', 'RA 10175', 'RA 9775', 'RA 11934'],
-                correct: 'RA 9995',
-                explanation: 'The Anti-Photo and Video Voyeurism Act of 2009 (RA 9995) criminalizes unauthorized recording and distribution of private images or videos.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'What is the penalty for money muling under the Anti-Financial Account Scamming Act (RA 12010)?',
-                options: ['1 to 3 years imprisonment', '6 to 8 years imprisonment', 'Life imprisonment', 'No penalty'],
-                correct: '6 to 8 years imprisonment',
-                explanation: 'Money muling under RA 12010 is penalized with 6 to 8 years imprisonment or a fine of PHP 100,000 to PHP 500,000.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'truefalse',
-                question: 'Is the unauthorized sale of a registered SIM card punishable under RA 11934?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'Selling or transferring a registered SIM without following registration procedures is punishable under the SIM Registration Act (RA 11934).'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: A company uses a copyrighted song in its online ads without permission. What law is violated?',
-                options: ['RA 8293', 'RA 10175', 'RA 8484', 'RA 9775'],
-                correct: 'RA 8293',
-                explanation: 'The Intellectual Property Code (RA 8293) protects copyrights, and using a copyrighted song without permission violates this law.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'What is the penalty for unauthorized processing of personal data under RA 10173?',
-                options: ['1 to 3 years imprisonment', '3 to 6 years imprisonment', '6 to 12 years imprisonment', 'No penalty'],
-                correct: '3 to 6 years imprisonment',
-                explanation: 'Unauthorized processing of personal data under the Data Privacy Act (RA 10173) is punishable by 3 to 6 years imprisonment and fines.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: A group funnels money through a business to fund terrorist activities. What law is violated?',
-                options: ['RA 10168', 'RA 10175', 'RA 12010', 'RA 8484'],
-                correct: 'RA 10168',
-                explanation: 'The Terrorism Financing Prevention and Suppression Act (RA 10168) criminalizes the financing of terrorism.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'truefalse',
-                question: 'Is gender-based online harassment punishable under the Safe Spaces Act (RA 11313)?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'The Safe Spaces Act (RA 11313) penalizes gender-based sexual harassment, including online harassment.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'What is the penalty for terrorism under the Anti-Terrorism Act of 2020 (RA 11449)?',
-                options: ['6 to 12 years imprisonment', 'Life imprisonment without parole', '1 to 3 years imprisonment', 'Fine only'],
-                correct: 'Life imprisonment without parole',
-                explanation: 'Terrorism under RA 11449 is punishable by life imprisonment without parole and a fine of PHP 1,000,000 to PHP 5,000,000.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What does "spoofing" mean in the context of cybercrime?',
-                options: ['Sending spam emails', 'Faking an identity to trick users', 'Hacking a website', 'Stealing data from a USB'],
-                correct: 'Faking an identity to trick users',
-                explanation: 'Spoofing involves faking an identity, such as an email address or phone number, to deceive users into trusting malicious communication.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'truefalse',
-                question: 'Is bullying in schools addressed by the Anti-Bullying Act of 2013 (RA 10627)?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'The Anti-Bullying Act of 2013 (RA 10627) requires schools to implement policies to prevent and address bullying.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'Which law governs electronic commerce in the Philippines?',
-                options: ['RA 8792', 'RA 10175', 'RA 8293', 'RA 8484'],
-                correct: 'RA 8792',
-                explanation: 'The Electronic Commerce Act of 2000 (RA 8792) addresses offenses related to electronic transactions.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'multiple',
-                question: 'What is the role of the Department of Information and Communications Technology (DICT) under RA 10844?',
-                options: ['Enforce cybercrime laws', 'Develop ICT policies', 'Regulate banks', 'Protect intellectual property'],
-                correct: 'Develop ICT policies',
-                explanation: 'The DICT, established under RA 10844, develops and implements ICT policies and programs.'
-            },
-            {
-                difficulty: 'easy',
-                type: 'truefalse',
-                question: 'Is distributing pirated DVDs a violation of the Optical Media Act (RA 9239)?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'The Optical Media Act of 2003 (RA 9239) penalizes the unauthorized manufacture and distribution of optical media, including pirated DVDs.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: A bank employee leaks client data to a third party. What law is violated?',
-                options: ['RA 10173', 'RA 10175', 'RA 8484', 'RA 12010'],
-                correct: 'RA 10173',
-                explanation: 'Leaking client data violates the Data Privacy Act of 2012 (RA 10173), which regulates the handling of personal information.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'What is the penalty for unauthorized wiretapping under RA 4200?',
-                options: ['6 months to 6 years imprisonment', '1 to 3 years imprisonment', 'Life imprisonment', 'Fine only'],
-                correct: '6 months to 6 years imprisonment',
-                explanation: 'The Anti-Wire Tapping Act (RA 4200) imposes 6 months to 6 years imprisonment for unauthorized wiretapping.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'truefalse',
-                question: 'Can a juridical person be penalized under RA 10175 for cybercrimes?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'Under RA 10175, juridical persons can face fines up to PHP 10,000,000 for cybercrimes committed on their behalf.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: A scammer uses a fake ID to register multiple SIM cards for phishing. What law is violated?',
-                options: ['RA 11934', 'RA 10175', 'RA 8484', 'RA 9775'],
-                correct: 'RA 11934',
-                explanation: 'Using fake IDs to register SIM cards violates the Subscriber Identity Module (SIM) Registration Act (RA 11934).'
-            },
-            {
-                difficulty: 'hard',
-                type: 'multiple',
-                question: 'What is the penalty for producing child sexual abuse materials under RA 11930?',
-                options: ['6 to 12 years imprisonment', 'Life imprisonment', '1 to 3 years imprisonment', 'Fine only'],
-                correct: 'Life imprisonment',
-                explanation: 'Producing child sexual abuse materials under RA 11930 is punishable by life imprisonment and fines of at least PHP 2,000,000.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'truefalse',
-                question: 'Is failure to report a cyber-risk incident by a bank punishable under BSP Circular No. 1019?',
-                options: ['True', 'False'],
-                correct: 'True',
-                explanation: 'BSP Circular No. 1019 (2018) mandates banks to report cyber-risk incidents, with penalties for non-compliance including fines or suspension.'
-            },
-            {
-                difficulty: 'hard',
-                type: 'scenario',
-                question: 'Scenario: A company exports dual-use goods without proper authorization. What law is violated?',
-                options: ['RA 10697', 'RA 10175', 'RA 8792', 'RA 8293'],
-                correct: 'RA 10697',
-                explanation: 'The Strategic Trade Management Act (RA 10697) regulates the trade of dual-use goods, and unauthorized export violates this law.'
-            }
-        ];
+        document.querySelectorAll('.timeline-item, .growth-item, .leader-item, .careers-card').forEach(item => {
+            observer.observe(item);
+        });
 
         const quizData = {
-            easy: quizQuestions.filter(q => q.difficulty === 'easy'),
-            hard: quizQuestions.filter(q => q.difficulty === 'hard'),
-            mixed: [...quizQuestions.filter(q => q.difficulty === 'easy').slice(0, 5), ...quizQuestions.filter(q => q.difficulty === 'hard').slice(0, 5)]
+            easy: [
+                {
+                    question: "What is the primary law in the Philippines that addresses cybercrime?",
+                    options: ["RA 10175", "RA 8792", "RA 9262", "RA 9165"],
+                    correct: 0,
+                    explanation: "Republic Act No. 10175, also known as the Cybercrime Prevention Act of 2012, is the primary law in the Philippines that addresses cybercrimes, including hacking, cyber libel, and online fraud."
+                },
+                {
+                    question: "Which of the following is considered a cybercrime under RA 10175?",
+                    options: ["Physical theft", "Cyber libel", "Traffic violation", "Tax evasion"],
+                    correct: 1,
+                    explanation: "Cyber libel, as defined under RA 10175, involves the unlawful or prohibited act of libel committed through a computer system or any other similar means."
+                },
+                // Add more easy questions as needed
+            ],
+            hard: [
+                {
+                    question: "Under RA 10175, what is the penalty for illegal access to a computer system?",
+                    options: ["Fine only", "Imprisonment of up to 7 years", "Community service", "No penalty"],
+                    correct: 1,
+                    explanation: "Illegal access under RA 10175 is punishable by imprisonment of up to 7 years or a fine of at least PHP 100,000, or both."
+                },
+                {
+                    question: "What is the role of the National Cybercrime Coordinating Office (NCCO) under RA 10175?",
+                    options: ["Software development", "Policy coordination", "Tax collection", "Public transportation"],
+                    correct: 1,
+                    explanation: "The NCCO is responsible for coordinating policies and programs to combat cybercrime, as mandated by RA 10175."
+                },
+                // Add more hard questions as needed
+            ],
+            mixed: [
+                {
+                    question: "What does 'phishing' refer to in the context of cybercrime?",
+                    options: ["Fishing online", "Fraudulent attempt to obtain sensitive information", "Legal data sharing", "Software update"],
+                    correct: 1,
+                    explanation: "Phishing is a cybercrime where attackers impersonate legitimate entities to trick users into providing sensitive information, such as passwords or credit card details."
+                },
+                {
+                    question: "Which section of RA 10175 defines 'data interference'?",
+                    options: ["Section 4", "Section 6", "Section 8", "Section 10"],
+                    correct: 0,
+                    explanation: "Section 4 of RA 10175 defines data interference as the intentional or reckless alteration, damaging, deletion, or deterioration of computer data without right."
+                },
+                // Add more mixed questions as needed
+            ]
         };
 
         let currentQuestions = quizData.easy;
         let currentQuestionIndex = 0;
         let score = 0;
-        let selectedOption = null;
-        let mistakes = [];
-        const totalQuestions = 10;
+        let totalQuestions = 10;
+        let userAnswers = [];
+        let selectedDifficulty = 'easy';
 
         const questionText = document.getElementById('questionText');
         const optionsContainer = document.getElementById('optionsContainer');
         const explanationText = document.getElementById('explanationText');
-        const submitAnswer = document.getElementById('submitAnswer');
-        submitAnswer.addEventListener('click', checkAnswer);
-        const nextQuestion = document.getElementById('nextQuestion');
-        const restartQuiz = document.getElementById('restartQuiz');
+        const submitAnswerBtn = document.getElementById('submitAnswer');
+        const nextQuestionBtn = document.getElementById('nextQuestion');
+        const restartQuizBtn = document.getElementById('restartQuiz');
         const quizResults = document.getElementById('quizResults');
         const resultSummary = document.getElementById('resultSummary');
         const achievementBadges = document.getElementById('achievementBadges');
         const reviewMistakes = document.getElementById('reviewMistakes');
-        const reviewAnswers = document.getElementById('reviewAnswers');
-        const playAgain = document.getElementById('playAgain');
+        const reviewAnswersBtn = document.getElementById('reviewAnswers');
+        const playAgainBtn = document.getElementById('playAgain');
         const questionCount = document.getElementById('questionCount');
         const scoreDisplay = document.getElementById('scoreDisplay');
         const progressFill = document.getElementById('progressFill');
-        const easyMode = document.getElementById('easyMode');
-        const hardMode = document.getElementById('hardMode');
-        const mixedMode = document.getElementById('mixedMode');
+        const easyModeBtn = document.getElementById('easyMode');
+        const hardModeBtn = document.getElementById('hardMode');
+        const mixedModeBtn = document.getElementById('mixedMode');
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
+            return array;
         }
 
         function loadQuestion() {
-             const question = currentQuestions[currentQuestionIndex];
-             questionText.textContent = question.question;
-             optionsContainer.innerHTML = '';
-             question.options.forEach((option, index) => {
-                 const optionDiv = document.createElement('div');
-                 optionDiv.classList.add('quiz-option');
-                 optionDiv.textContent = option;
-                 optionDiv.addEventListener('click', () => selectOption(option, optionDiv)); 
-                 optionsContainer.appendChild(optionDiv);
-             });
-             questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
-             scoreDisplay.textContent = `Score: ${score}`;
-             progressFill.style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
-             submitAnswer.disabled = true; 
-             selectedOption = null;
-             explanationText.style.display = 'none';
-             nextQuestion.style.display = 'none';
-             restartQuiz.style.display = 'none';
-         }
-
-         function selectOption(option, optionDiv) {
-             console.log('Option selected:', option); 
-             selectedOption = option;
-             document.querySelectorAll('.quiz-option').forEach(div => div.classList.remove('selected'));
-             optionDiv.classList.add('selected');
-             submitAnswer.disabled = false; 
-         }
-
-        function checkAnswer() {
             const question = currentQuestions[currentQuestionIndex];
-            const isCorrect = selectedOption === question.correct;
-            const optionDivs = document.querySelectorAll('.quiz-option');
+            questionText.textContent = question.question;
+            optionsContainer.innerHTML = '';
+            explanationText.classList.remove('visible');
+            submitAnswerBtn.disabled = true;
+            nextQuestionBtn.style.display = 'none';
+            restartQuizBtn.style.display = 'none';
 
-            optionDivs.forEach(div => {
-                const optionText = div.textContent;
-                if (optionText === question.correct) {
-                    div.classList.add('correct');
-                } else if (optionText === selectedOption && !isCorrect) {
-                    div.classList.add('incorrect');
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('quiz-option');
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(index, optionElement));
+                optionsContainer.appendChild(optionElement);
+            });
+
+            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
+            scoreDisplay.textContent = `Score: ${score}`;
+            progressFill.style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
+        }
+
+        function selectOption(index, optionElement) {
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            optionElement.classList.add('selected');
+            submitAnswerBtn.disabled = false;
+            userAnswers[currentQuestionIndex] = index;
+        }
+
+        function submitAnswer() {
+            const question = currentQuestions[currentQuestionIndex];
+            const selectedOption = userAnswers[currentQuestionIndex];
+            const isCorrect = selectedOption === question.correct;
+
+            document.querySelectorAll('.quiz-option').forEach((opt, idx) => {
+                if (idx === question.correct) {
+                    opt.classList.add('correct');
+                } else if (idx === selectedOption && !isCorrect) {
+                    opt.classList.add('incorrect');
                 }
             });
 
             explanationText.textContent = question.explanation;
             explanationText.classList.add('visible');
-            explanationText.style.display = 'block';
+            submitAnswerBtn.disabled = true;
+            nextQuestionBtn.style.display = 'block';
 
             if (isCorrect) {
                 score += 10;
-            } else {
-                mistakes.push({
-                    question: question.question,
-                    selected: selectedOption,
-                    correct: question.correct,
-                    explanation: question.explanation
-                });
+                scoreDisplay.textContent = `Score: ${score}`;
             }
+        }
 
-            scoreDisplay.textContent = `Score: ${score}`;
-            submitAnswer.style.display = 'none';
-            nextQuestion.style.display = 'block';
-            if (currentQuestionIndex === totalQuestions - 1) {
-                nextQuestion.style.display = 'none';
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < totalQuestions && currentQuestionIndex < currentQuestions.length) {
+                loadQuestion();
+            } else {
                 showResults();
             }
         }
 
         function showResults() {
             quizResults.style.display = 'block';
-            const percentage = (score / (totalQuestions * 10)) * 100;
-            resultSummary.innerHTML = `You scored ${score} out of ${totalQuestions * 10} (${percentage}%)!`;
+            document.querySelector('.quiz-container').style.display = 'none';
+            resultSummary.textContent = `You scored ${score} out of ${totalQuestions * 10}!`;
 
             achievementBadges.innerHTML = '';
-            if (percentage === 100) {
-                achievementBadges.innerHTML += '<div class="achievement-badge">Cyber Law Master</div>';
-            } else if (percentage >= 70) {
-                achievementBadges.innerHTML += '<div class="achievement-badge">Cyber Law Expert</div>';
-            } else if (percentage >= 50) {
-                achievementBadges.innerHTML += '<div class="achievement-badge">Cyber Law Novice</div>';
+            if (score === totalQuestions * 10) {
+                achievementBadges.innerHTML += '<div class="achievement-badge">Perfect Score!</div>';
+            } else if (score >= totalQuestions * 7) {
+                achievementBadges.innerHTML += '<div class="achievement-badge">Cyber Law Expert!</div>';
+            } else if (score >= totalQuestions * 5) {
+                achievementBadges.innerHTML += '<div class="achievement-badge">Cyber Law Novice!</div>';
             }
 
             reviewMistakes.innerHTML = '';
-            if (mistakes.length > 0) {
-                reviewAnswers.style.display = 'block';
-            } else {
-                reviewAnswers.style.display = 'none';
-            }
-        }
-
-        function showMistakes() {
-            reviewMistakes.innerHTML = '<h4>Your Mistakes</h4>';
-            mistakes.forEach(mistake => {
-                const mistakeDiv = document.createElement('div');
-                mistakeDiv.classList.add('mistake-item');
-                mistakeDiv.innerHTML = `
-                    <p><strong>Question:</strong> ${mistake.question}</p>
-                    <p><strong>Your Answer:</strong> ${mistake.selected}</p>
-                    <p><strong>Correct Answer:</strong> ${mistake.correct}</p>
-                    <p><strong>Explanation:</strong> ${mistake.explanation}</p>
-                `;
-                reviewMistakes.appendChild(mistakeDiv);
+            currentQuestions.forEach((question, index) => {
+                if (userAnswers[index] !== question.correct) {
+                    const mistakeItem = document.createElement('div');
+                    mistakeItem.classList.add('mistake-item');
+                    mistakeItem.innerHTML = `
+                        <p><strong>Question:</strong> ${question.question}</p>
+                        <p><strong>Your Answer:</strong> ${question.options[userAnswers[index]]}</p>
+                        <p><strong>Correct Answer:</strong> ${question.options[question.correct]}</p>
+                        <p><strong>Explanation:</strong> ${question.explanation}</p>
+                    `;
+                    reviewMistakes.appendChild(mistakeItem);
+                }
             });
-            reviewAnswers.style.display = 'none';
+
+            reviewAnswersBtn.style.display = reviewMistakes.children.length > 0 ? 'block' : 'none';
         }
 
-        function resetQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            mistakes = [];
-            shuffleArray(currentQuestions);
-            quizResults.style.display = 'none';
-            submitAnswer.style.display = 'block';
-            loadQuestion();
-        }
-
-        submitAnswer.addEventListener('click', checkAnswer);
-
-        nextQuestion.addEventListener('click', () => {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions) {
-                loadQuestion();
-                submitAnswer.style.display = 'block';
-            }
+        reviewAnswersBtn.addEventListener('click', () => {
+            reviewMistakes.style.display = reviewMistakes.style.display === 'block' ? 'none' : 'block';
+            reviewAnswersBtn.textContent = reviewMistakes.style.display === 'block' ? 'Hide Mistakes' : 'Review Mistakes';
         });
 
-        reviewAnswers.addEventListener('click', showMistakes);
+        playAgainBtn.addEventListener('click', () => {
+            quizResults.style.display = 'none';
+            document.querySelector('.quiz-container').style.display = 'block';
+            restartQuiz();
+        });
 
-        playAgain.addEventListener('click', resetQuiz);
-
-        restartQuiz.addEventListener('click', resetQuiz);
-
-        function setDifficulty(mode) {
-            currentQuestions = quizData[mode];
-            shuffleArray(currentQuestions);
-            easyMode.classList.remove('active');
-            hardMode.classList.remove('active');
-            mixedMode.classList.remove('active');
-            document.getElementById(`${mode}Mode`).classList.add('active');
-            resetQuiz();
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            currentQuestions = shuffleArray([...quizData[selectedDifficulty]]).slice(0, totalQuestions);
+            loadQuestion();
+            reviewMistakes.style.display = 'none';
+            reviewAnswersBtn.textContent = 'Review Mistakes';
         }
 
-        easyMode.addEventListener('click', () => setDifficulty('easy'));
-        hardMode.addEventListener('click', () => setDifficulty('hard'));
-        mixedMode.addEventListener('click', () => setDifficulty('mixed'));
+        function setDifficulty(difficulty) {
+            selectedDifficulty = difficulty;
+            currentQuestions = shuffleArray([...quizData[difficulty]]).slice(0, totalQuestions);
+            easyModeBtn.classList.toggle('active', difficulty === 'easy');
+            hardModeBtn.classList.toggle('active', difficulty === 'hard');
+            mixedModeBtn.classList.toggle('active', difficulty === 'mixed');
+            restartQuiz();
+        }
 
-        window.addEventListener('load', () => {
+        easyModeBtn.addEventListener('click', () => setDifficulty('easy'));
+        hardModeBtn.addEventListener('click', () => setDifficulty('hard'));
+        mixedModeBtn.addEventListener('click', () => setDifficulty('mixed'));
+
+        submitAnswerBtn.addEventListener('click', submitAnswer);
+        nextQuestionBtn.addEventListener('click', nextQuestion);
+        restartQuizBtn.addEventListener('click', restartQuiz);
+
+        document.addEventListener('DOMContentLoaded', () => {
             updateUserCounts();
-            shuffleArray(currentQuestions);
+            currentQuestions = shuffleArray([...quizData.easy]).slice(0, totalQuestions);
             loadQuestion();
-            loaderOverlay.classList.remove('active');
         });
     </script>
 </body>
-</html>
+</html> 
