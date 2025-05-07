@@ -555,8 +555,8 @@
         .timeline-section,
         .growth-section,
         .careers-section,
-        .leaders-section,
-        .quiz-section {
+        .quiz-section,
+        .leaders-section {
             position: relative;
             z-index: 1;
             margin-bottom: 60px;
@@ -965,507 +965,6 @@
             color: #666;
         }
 
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 15px 30px;
-            text-align: center;
-            margin-left: 290px;
-            z-index: 1;
-            transition: margin-left 0.3s ease;
-        }
-
-        footer p {
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .footer-links {
-            margin-top: 5px;
-        }
-
-        .footer-links a {
-            color: #d7b15c;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 14px;
-        }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-
-        .dark-theme footer {
-            background-color: #1a1a1a;
-        }
-
-        body.dark-theme {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-
-        .dark-theme .content {
-            background: linear-gradient(135deg, #121212, #2c2c2c);
-        }
-
-        .dark-theme .content::before {
-            background: rgba(40, 41, 44, 0.6);
-        }
-
-        .dark-theme .hero-section {
-            background: linear-gradient(180deg, rgba(40, 41, 44, 0.95), rgba(40, 41, 44, 0.7));
-        }
-
-        .dark-theme .hero-section h1 {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .hero-section h1 span {
-            background: linear-gradient(90deg, #d7b15c, #b89a47);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        .dark-theme .hero-section h1 span::after {
-            background: linear-gradient(to right, #d7b15c, #8B0000);
-        }
-
-        .dark-theme .hero-section p {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .timeline-section {
-            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-        }
-
-        .dark-theme .timeline-section h2 {
-            color: #d7b15c;
-        }
-
-        .dark-theme .timeline-content {
-            background: #333;
-        }
-
-        .dark-theme .timeline-content h3 {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .timeline-content p {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .timeline-image {
-            box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
-        }
-
-        .dark-theme .timeline-marker {
-            background: linear-gradient(135deg, #d7b15c, #b89a47);
-        }
-
-        .dark-theme .growth-section {
-            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-        }
-
-        .dark-theme .growth-section h2 {
-            color: #d7b15c;
-        }
-
-        .dark-theme .growth-item {
-            background: #333;
-        }
-
-        .dark-theme .growth-item i {
-            color: #d7b15c;
-        }
-
-        .dark-theme .growth-item:hover i {
-            color: #b89a47;
-        }
-
-        .dark-theme .growth-item h3 {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .growth-item p {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .growth-section button {
-            background: linear-gradient(90deg, #d7b15c, #b89a47);
-            color: #222;
-        }
-
-        .dark-theme .careers-card a {
-            color: #222;
-        }
-
-        .dark-theme .leaders-section {
-            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-        }
-
-        .dark-theme .leaders-section h2 {
-            color: #d7b15c;
-        }
-
-        .dark-theme .leader-item {
-            background: #333;
-        }
-
-        .dark-theme .leader-item h3 {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .leader-item p {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .leader-item img {
-            border-color: #d7b15c;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .mobile-nav {
-            display: none;
-            background-image: url('https://i.imgur.com/bNRxAhZ.png');
-            padding: 15px;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .mobile-nav .logo {
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .mobile-nav .menu-icon {
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            position: absolute;
-            right: 15px;
-            top: 15px;
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 250px;
-            }
-
-            .sidebar h1 {
-                font-size: 22px;
-            }
-
-            .sidebar ul li a {
-                font-size: 16px;
-            }
-
-            .dark-theme-label {
-                font-size: 16px;
-            }
-
-            .content {
-                margin-left: 250px;
-                padding: 50px 30px 30px;
-            }
-
-            footer {
-                margin-left: 250px;
-            }
-
-            .hero-section h1 {
-                font-size: 42px;
-            }
-
-            .hero-section p {
-                font-size: 16px;
-            }
-
-            .hero-image {
-                height: 300px;
-            }
-
-            .timeline-section h2,
-            .growth-section h2,
-            .leaders-section h2 {
-                font-size: 32px;
-            }
-
-            .careers-card h2 {
-                font-size: 28px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
-                padding: 10px;
-            }
-
-            .sidebar h1 {
-                font-size: 20px;
-            }
-
-            .sidebar ul li a {
-                font-size: 14px;
-            }
-
-            .dark-theme-label {
-                font-size: 14px;
-            }
-
-            .content {
-                margin-left: 200px;
-                padding: 40px 20px 20px;
-            }
-
-            footer {
-                margin-left: 200px;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .timeline-item.right {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .timeline-content {
-                width: 100%;
-                margin-left: 40px;
-            }
-
-            .timeline-marker {
-                left: 20px;
-                transform: none;
-            }
-
-            .timeline-image {
-                height: 120px;
-            }
-
-            .growth-grid,
-            .leaders-grid {
-                gap: 30px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .mobile-nav {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: fixed;
-                padding: 15px;
-                transform: translateX(-100%);
-                z-index: 999;
-                top: 60px;
-                height: calc(100vh - 60px);
-                overflow-y: auto;
-                background-size: cover;
-                background-position: center;
-                background-color: #1a1a1a;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .sidebar h1 {
-                display: none;
-            }
-
-            .sidebar ul {
-                margin: 0;
-            }
-
-            .sidebar ul li {
-                margin: 20px 0;
-            }
-
-            .sidebar ul li a {
-                font-size: 16px;
-            }
-
-            .dark-theme-container {
-                margin-top: 20px;
-                margin-bottom: 15px;
-            }
-
-            .dark-theme-label {
-                font-size: 16px;
-            }
-
-            .content {
-                margin-left: 0;
-                padding: 80px 15px 15px;
-                overflow-x: hidden;
-            }
-
-            footer {
-                margin-left: 0;
-                padding: 10px 20px;
-                text-align: center;
-            }
-
-            footer p {
-                font-size: 12px;
-            }
-
-            .footer-links a {
-                font-size: 12px;
-                margin: 0 8px;
-            }
-
-            .header {
-                justify-content: center;
-            }
-
-            .hero-section {
-                padding: 20px 10px;
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            .hero-section h1 {
-                font-size: 28px;
-                margin-bottom: 15px;
-            }
-
-            .hero-section p {
-                font-size: 12px;
-                margin-bottom: 20px;
-            }
-
-            .hero-image {
-                width: 100%;
-                height: 150px;
-            }
-
-            .timeline-section,
-            .growth-section,
-            .careers-section,
-            .leaders-section,
-            .quiz-section {
-                padding: 50px 10px;
-            }
-
-            .timeline-section h2,
-            .growth-section h2,
-            .leaders-section h2,
-            .quiz-section h2 {
-                font-size: 28px;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item {
-                flex-direction: column;
-                align-items: flex-start;
-                margin-bottom: 60px;
-            }
-
-            .timeline-item.right {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .timeline-content {
-                width: 100%;
-                margin-left: 40px;
-                padding: 15px;
-                overflow: visible;
-            }
-
-            .timeline-content h3 {
-                font-size: 18px;
-                line-height: 1.4;
-                margin-bottom: 8px;
-            }
-
-            .timeline-content p {
-                font-size: 12px;
-                line-height: 1.5;
-            }
-
-            .timeline-content::before {
-                content: '';
-                position: absolute;
-                left: -30px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 30px;
-                height: 2px;
-                background-color: #8B0000;
-            }
-
-            .timeline-image {
-                height: 100px;
-            }
-
-            .timeline-marker {
-                left: 20px;
-                transform: none;
-            }
-
-            .growth-grid,
-            .leaders-grid {
-                gap: 20px;
-            }
-
-            .growth-item {
-                padding: 20px;
-            }
-
-            .careers-card {
-                padding: 30px;
-            }
-
-            .careers-card h2 {
-                font-size: 24px;
-            }
-
-            .careers-card p {
-                font-size: 14px;
-            }
-
-            .leader-item img {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
-        /* Quiz Section Styles */
         .quiz-section {
             padding: 80px 20px;
             text-align: center;
@@ -1639,6 +1138,7 @@
         .option.correct {
             background: #d4edda;
             border-color: #28a745;
+            color: #155724;
         }
 
         .option.incorrect {
@@ -1690,41 +1190,35 @@
             color: #b0b0b0;
         }
 
-        .leaderboard {
+        .correct-count {
             margin-top: 20px;
             padding: 20px;
             background: #f7f7f7;
             border-radius: 10px;
         }
 
-        .dark-theme .leaderboard {
+        .dark-theme .correct-count {
             background: #444;
         }
 
-        .leaderboard h4 {
+        .correct-count h4 {
             font-family: 'Montserrat', sans-serif;
             font-size: 20px;
             color: #222;
             margin-bottom: 15px;
         }
 
-        .dark-theme .leaderboard h4 {
+        .dark-theme .correct-count h4 {
             color: #e0e0e0;
         }
 
-        .leaderboard ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .leaderboard li {
+        .correct-count p {
             font-family: 'Poppins', sans-serif;
             font-size: 16px;
             color: #333;
-            margin-bottom: 10px;
         }
 
-        .dark-theme .leaderboard li {
+        .dark-theme .correct-count p {
             color: #e0e0e0;
         }
     </style>
@@ -1956,7 +1450,7 @@
                 <div class="quiz-container">
                     <div class="quiz-start-screen active" id="quizStartScreen">
                         <h3>Welcome to the Cybercrime Quiz!</h3>
-                        <p>Test your knowledge of Philippine cybercrime laws with this interactive quiz. Choose your difficulty level and answer 10 questions per level to progress. Earn points, climb the leaderboard, and become a cybercrime law expert!</p>
+                        <p>Test your knowledge of Philippine cybercrime laws with this interactive quiz. Choose your difficulty level and answer 10 questions per level to progress. See how many you got correct and exit to start again!</p>
                         <button class="quiz-button" onclick="startQuiz('easy')">Start Easy Level</button>
                         <button class="quiz-button" onclick="startQuiz('hard')">Start Hard Level</button>
                     </div>
@@ -1973,11 +1467,12 @@
                     <div class="quiz-end-screen" id="quizEndScreen">
                         <h3>Quiz Completed!</h3>
                         <p id="finalScore"></p>
-                        <div class="leaderboard">
-                            <h4>Leaderboard</h4>
-                            <ul id="leaderboardList"></ul>
+                        <div class="correct-count">
+                            <h4>Results</h4>
+                            <p id="correctCount"></p>
                         </div>
                         <button class="quiz-button" onclick="restartQuiz()">Restart Quiz</button>
+                        <button class="quiz-button" onclick="exitQuiz()">Exit</button>
                         <button class="quiz-button" onclick="changeLevel()">Change Level</button>
                     </div>
                 </div>
@@ -2236,7 +1731,7 @@
 
                         database.ref(`users/${sanitizedEmail}`).update({
                             avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
+                            updatedAt: firebase.database.ServerValue.TIMESTAM
                         })
                         .then(() => {
                             profilePic.src = avatarUrl;
