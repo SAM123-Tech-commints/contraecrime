@@ -1461,6 +1461,334 @@
                 height: 100px;
             }
         }
+
+        /* Quiz Section Styles */
+        .quiz-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            border-radius: 15px;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 60px;
+        }
+
+        .dark-theme .quiz-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+        }
+
+        .quiz-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .dark-theme .quiz-section h2 {
+            color: #d7b15c;
+        }
+
+        .quiz-section p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 300;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.3s;
+        }
+
+        .dark-theme .quiz-section p {
+            color: #b0b0b0;
+        }
+
+        .quiz-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .dark-theme .quiz-container {
+            background: #333;
+        }
+
+        .quiz-container:hover {
+            transform: translateY(-10px);
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            color: #222;
+        }
+
+        .dark-theme .quiz-progress {
+            color: #e0e0e0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8B0000, #b30000);
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        .dark-theme .progress-bar {
+            background: #555;
+        }
+
+        .dark-theme .progress-fill {
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+        }
+
+        .quiz-question {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .dark-theme .quiz-question {
+            color: #e0e0e0;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quiz-option {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dark-theme .quiz-option {
+            background: #444;
+            color: #e0e0e0;
+        }
+
+        .quiz-option:hover {
+            background: #e0e0e0;
+            transform: translateX(5px);
+        }
+
+        .dark-theme .quiz-option:hover {
+            background: #555;
+        }
+
+        .quiz-option input {
+            margin-right: 10px;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .quiz-feedback {
+            margin-top: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            color: #555;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .dark-theme .quiz-feedback {
+            color: #b0b0b0;
+        }
+
+        .quiz-feedback.correct {
+            color: #155724;
+            display: block;
+        }
+
+        .quiz-feedback.incorrect {
+            color: #721c24;
+            display: block;
+        }
+
+        .quiz-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .quiz-button {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #8B0000, #b30000);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark-theme .quiz-button {
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+            color: #222;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .dark-theme .quiz-button:hover {
+            box-shadow: 0 5px 15px rgba(215, 177, 92, 0.3);
+        }
+
+        .quiz-result {
+            text-align: center;
+            margin-top: 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #222;
+            display: none;
+        }
+
+        .dark-theme .quiz-result {
+            color: #e0e0e0;
+        }
+
+        .quiz-result p {
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        .dark-theme .quiz-result p {
+            color: #b0b0b0;
+        }
+
+        .quiz-result button {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-section {
+                padding: 50px 10px;
+            }
+
+            .quiz-section h2 {
+                font-size: 28px;
+            }
+
+            .quiz-section p {
+                font-size: 16px;
+            }
+
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .quiz-question {
+                font-size: 18px;
+            }
+
+            .quiz-option {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .quiz-feedback {
+                font-size: 14px;
+            }
+
+            .quiz-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .quiz-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-section h2 {
+                font-size: 24px;
+            }
+
+            .quiz-section p {
+                font-size: 14px;
+            }
+
+            .quiz-container {
+                padding: 15px;
+            }
+
+            .quiz-question {
+                font-size: 16px;
+            }
+
+            .quiz-option {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .quiz-feedback {
+                font-size: 12px;
+            }
+
+            .quiz-result {
+                font-size: 20px;
+            }
+
+            .quiz-result p {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1581,7 +1909,7 @@
                         <div class="timeline-content">
                             <h3>January 2025 – A School Project Begins</h3>
                             <p>Founded by Grade 12 ICT students at STI College Fairview, we kicked off the project under the banner of our school. The STI College Fairview logo became our symbol of academic excellence and teamwork.</p>
-                            <div class="timeline-image" style="background-image: url('https://i.imgur.com/lgF2ndM.jpeg');"></div>
+                            <div class="timeline-image" style="background-image: url('https://scontent.fmnl4-8.fna.fbcdn.net/v/t39.30808-6/370044409_696741882497707_8408055328080058811_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=TukFEOJyeUEQ7kNvwF1A2MG&_nc_oc=Adkmgh5O27vkKbQWmsZ4pznR4Z8U8K6avfC_Fj-RBzcKH1HM7iFr7GKn0xPqHZxK6iY&_nc_zt=23&_nc_ht=scontent.fmnl4-8.fna&_nc_gid=FwCdoy2Cj1w4oeXD5iJISg&oh=00_AfF_s7N-a21IQD9w4mvwD2I-CFo62oaVvCFQMKohOvBr3Q&oe=680E831A');"></div>
                         </div>
                         <div class="timeline-marker"></div>
                     </div>
@@ -1636,6 +1964,32 @@
                     <h2>Product</h2>
                     <p>Contra E-Crime is a student project passionate about making cyber laws easy to understand having Weigh the Right as our main tool for giving you the best search experience. Want to explore more of the website? Let’s connect at the SHS expo!</p>
                     <a href="HomePage.html">Learn More</a>
+                </div>
+            </section>
+
+            <section class="quiz-section">
+                <h2>Test Your Cyber Law Knowledge</h2>
+                <p>Challenge yourself with our interactive quiz on cybercrime laws, legal terms, and real-world scenarios. Answer over 50 questions to become a cyber law expert!</p>
+                <div class="quiz-container" id="quizContainer">
+                    <div class="quiz-progress">
+                        <span id="questionCount">Question 1 of 51</span>
+                        <span id="score">Score: 0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="quiz-question" id="quizQuestion"></div>
+                    <div class="quiz-options" id="quizOptions"></div>
+                    <div class="quiz-feedback" id="quizFeedback"></div>
+                    <div class="quiz-buttons">
+                        <button class="quiz-button" id="submitButton" disabled>Submit</button>
+                        <button class="quiz-button" id="nextButton" style="display: none;">Next</button>
+                    </div>
+                    <div class="quiz-result" id="quizResult">
+                        <h3>Your Results</h3>
+                        <p id="resultText"></p>
+                        <button class="quiz-button" id="restartButton">Restart Quiz</button>
+                    </div>
                 </div>
             </section>
 
@@ -1751,7 +2105,7 @@
                 const dailyLoginUsers = await calculateDailyLoginUsers();
                 const activeUsers = await calculateActiveUsers();
 
-                console.log('Updating UI - Total Login Events:', dailyLoginUsers, 'Active Users:', activeUsers);
+                console.log('Updating UI - Totalexperiences Total Login Events:', dailyLoginUsers, 'Active Users:', activeUsers);
 
                 document.getElementById('dailyLoginUsers').textContent = dailyLoginUsers.toString().padStart(3, '0');
                 document.getElementById('activeUsers').textContent = activeUsers.toString().padStart(3, '0');
@@ -1946,7 +2300,7 @@
                         })
                         .catch(error => {
                             console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
+                            alert('Failed to save among others: ' + error.message);
                             avatarLoading.classList.remove('active');
                         });
                     })
@@ -2082,6 +2436,439 @@
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('Page loaded, updating user counts');
             await updateUserCounts();
+            initializeQuiz();
+        });
+
+        // Quiz Logic
+        const quizQuestions = [
+            {
+                question: "What is the primary law governing cybercrime in the Philippines?",
+                options: ["Republic Act No. 10175", "Republic Act No. 8792", "Republic Act No. 8293", "Republic Act No. 7160"],
+                correct: 0,
+                feedback: "Republic Act No. 10175, also known as the Cybercrime Prevention Act of 2012, is the primary law addressing cybercrimes in the Philippines."
+            },
+            {
+                question: "Which of the following is considered a cybercrime under RA 10175?",
+                options: ["Online shopping", "Hacking", "Email communication", "Social media posting"],
+                correct: 1,
+                feedback: "Hacking, or unauthorized access to computer systems, is a cybercrime under RA 10175."
+            },
+            {
+                question: "What does 'Phishing' refer to in the context of cybercrime?",
+                options: ["Sending spam emails", "Creating fake websites to steal personal information", "Hacking into a network", "Distributing malware"],
+                correct: 1,
+                feedback: "Phishing involves creating fake websites or emails to trick users into providing personal information."
+            },
+            {
+                question: "What is the penalty for identity theft under RA 10175?",
+                options: ["Fine only", "Imprisonment or fine", "Community service", "No penalty"],
+                correct: 1,
+                feedback: "Identity theft under RA 10175 can result in imprisonment or a fine, depending on the severity."
+            },
+            {
+                question: "Scenario: Anna receives an email claiming she won a prize but needs to provide her bank details. What should she do?",
+                options: ["Provide the details to claim the prize", "Ignore the email and report it", "Reply to verify the sender", "Click the link to check the prize"],
+                correct: 1,
+                feedback: "Anna should ignore the email and report it as it is likely a phishing attempt."
+            },
+            {
+                question: "What is 'Cyberlibel' under Philippine law?",
+                options: ["Hacking a website", "Defamation through digital means", "Stealing digital content", "Sending spam messages"],
+                correct: 1,
+                feedback: "Cyberlibel is defamation committed through digital platforms, such as social media."
+            },
+            {
+                question: "Which agency in the Philippines investigates cybercrimes?",
+                options: ["Philippine National Police (PNP)", "Department of Justice (DOJ)", "National Bureau of Investigation (NBI)", "All of the above"],
+                correct: 3,
+                feedback: "The PNP, DOJ, and NBI all have roles in investigating cybercrimes in the Philippines."
+            },
+            {
+                question: "What does RA 10175 say about data privacy?",
+                options: ["It has no provisions on data privacy", "It protects personal data from unauthorized access", "It allows free access to all data", "It only applies to government data"],
+                correct: 1,
+                feedback: "RA 10175 includes provisions to protect personal data from unauthorized access."
+            },
+            {
+                question: "Scenario: John shares a defamatory post about his colleague on social media. What could he be charged with?",
+                options: ["Cyberlibel", "Hacking", "Phishing", "Data interference"],
+                correct: 0,
+                feedback: "John could be charged with cyberlibel for posting defamatory content online."
+            },
+            {
+                question: "What is the purpose of the Data Privacy Act of 2012 (RA 10173)?",
+                options: ["To promote cybercrime", "To protect personal information", "To regulate internet speed", "To monitor social media"],
+                correct: 1,
+                feedback: "RA 10173 aims to protect personal information in information and communications systems."
+            },
+            {
+                question: "What is 'Malware' in the context of cybercrime?",
+                options: ["A type of hardware", "Malicious software", "A secure network", "A legal software"],
+                correct: 1,
+                feedback: "Malware is malicious software designed to harm or exploit computer systems."
+            },
+            {
+                question: "Scenario: A company’s database is hacked, and customer data is stolen. What law is violated?",
+                options: ["RA 10175", "RA 8792", "RA 8293", "None"],
+                correct: 0,
+                feedback: "The hacking violates RA 10175, which covers unauthorized access and data interference."
+            },
+            {
+                question: "What does 'DDoS' stand for in cybercrime terminology?",
+                options: ["Data Distribution of Service", "Distributed Denial of Service", "Digital Data Security", "Direct Data Sharing"],
+                correct: 1,
+                feedback: "DDoS stands for Distributed Denial of Service, an attack to disrupt server access."
+            },
+            {
+                question: "Which of the following is NOT a cybercrime?",
+                options: ["Online libel", "Hacking", "Posting a photo on social media", "Phishing"],
+                correct: 2,
+                feedback: "Posting a photo on social media is not inherently a cybercrime unless it involves illegal content."
+            },
+            {
+                question: "What is the maximum imprisonment for cybersex under RA 10175?",
+                options: ["1 year", "3 years", "6 years", "12 years"],
+                correct: 2,
+                feedback: "Cybersex under RA 10175 can lead to imprisonment of up to 6 years."
+            },
+            {
+                question: "Scenario: A teenager hacks into a school’s grading system to change grades. What crime is committed?",
+                options: ["Cyberlibel", "Hacking", "Phishing", "Cybersex"],
+                correct: 1,
+                feedback: "The teenager committed hacking, a cybercrime under RA 10175."
+            },
+            {
+                question: "What is 'Ransomware'?",
+                options: ["A type of antivirus", "Software that locks data until a ransom is paid", "A secure data backup", "A legal software license"],
+                correct: 1,
+                feedback: "Ransomware locks data and demands payment for its release."
+            },
+            {
+                question: "What does the term 'Cybersecurity' refer to?",
+                options: ["Hacking systems", "Protecting digital systems from attacks", "Creating malware", "Monitoring internet usage"],
+                correct: 1,
+                feedback: "Cybersecurity involves protecting digital systems from cyber threats."
+            },
+            {
+                question: "Scenario: Maria receives a text message with a link to update her bank details. What should she do?",
+                options: ["Click the link to update", "Call her bank to verify", "Share the link with friends", "Reply with her details"],
+                correct: 1,
+                feedback: "Maria should call her bank to verify the message, as it may be a phishing attempt."
+            },
+            {
+                question: "What is the penalty for online child pornography under RA 10175?",
+                options: ["Fine only", "Imprisonment up to 7 years", "Community service", "No penalty"],
+                correct: 1,
+                feedback: "Online child pornography can lead to imprisonment of up to 7 years under RA 10175."
+            },
+            {
+                question: "What is 'Social Engineering' in cybercrime?",
+                options: ["Building social media platforms", "Manipulating people to gain confidential information", "Creating secure networks", "Developing antivirus software"],
+                correct: 1,
+                feedback: "Social engineering involves manipulating individuals to obtain sensitive information."
+            },
+            {
+                question: "Which law regulates electronic commerce in the Philippines?",
+                options: ["RA 10175", "RA 8792", "RA 10173", "RA 8293"],
+                correct: 1,
+                feedback: "RA 8792, the E-Commerce Act, regulates electronic commerce in the Philippines."
+            },
+            {
+                question: "Scenario: A hacker sends a virus to disrupt a company’s operations. What crime is this?",
+                options: ["Cyberlibel", "Data interference", "Phishing", "Identity theft"],
+                correct: 1,
+                feedback: "Sending a virus to disrupt operations is data interference under RA 10175."
+            },
+            {
+                question: "What does 'Encryption' mean in cybersecurity?",
+                options: ["Hacking a system", "Converting data into a secure code", "Deleting data", "Sharing data publicly"],
+                correct: 1,
+                feedback: "Encryption converts data into a secure code to protect it from unauthorized access."
+            },
+            {
+                question: "What is the role of the National Privacy Commission (NPC)?",
+                options: ["To promote cybercrime", "To enforce data privacy laws", "To regulate internet providers", "To monitor social media"],
+                correct: 1,
+                feedback: "The NPC enforces data privacy laws, including RA 10173."
+            },
+            {
+                question: "Scenario: A person uses someone else’s credit card details online. What crime is committed?",
+                options: ["Cyberlibel", "Identity theft", "Hacking", "Phishing"],
+                correct: 1,
+                feedback: "Using someone else’s credit card details is identity theft under RA 10175."
+            },
+            {
+                question: "What is 'Spyware'?",
+                options: ["Software that spies on user activity", "A type of antivirus", "A secure network", "A legal software"],
+                correct: 0,
+                feedback: "Spyware is software that secretly monitors and collects user information."
+            },
+            {
+                question: "What does RA 10175 say about unsolicited commercial messages?",
+                options: ["They are encouraged", "They are prohibited", "They are allowed with consent", "No provisions exist"],
+                correct: 1,
+                feedback: "RA 10175 prohibits unsolicited commercial messages, also known as spam."
+            },
+            {
+                question: "Scenario: A company fails to secure customer data, leading to a breach. What law is violated?",
+                options: ["RA 10175", "RA 10173", "RA 8792", "None"],
+                correct: 1,
+                feedback: "Failing to secure customer data violates RA 10173, the Data Privacy Act."
+            },
+            {
+                question: "What is 'Two-Factor Authentication' (2FA)?",
+                options: ["Using two passwords", "A security process requiring two verification methods", "A type of malware", "A hacking technique"],
+                correct: 1,
+                feedback: "2FA requires two verification methods to enhance security."
+            },
+            {
+                question: "What is the penalty for hacking under RA 10175?",
+                options: ["Fine only", "Imprisonment or fine", "Community service", "No penalty"],
+                correct: 1,
+                feedback: "Hacking under RA 10175 can result in imprisonment or a fine."
+            },
+            {
+                question: "Scenario: A student posts a humiliating video of a classmate online. What could they be charged with?",
+                options: ["Cyberlibel", "Hacking", "Phishing", "Data interference"],
+                correct: 0,
+                feedback: "Posting a humiliating video could lead to cyberlibel charges."
+            },
+            {
+                question: "What is a 'Firewall' in cybersecurity?",
+                options: ["A hacking tool", "A security system to block unauthorized access", "A type of malware", "A data encryption method"],
+                correct: 1,
+                feedback: "A firewall is a security system that blocks unauthorized access to a network."
+            },
+            {
+                question: "What does 'Cyberbullying' involve?",
+                options: ["Hacking a system", "Harassing someone online", "Stealing data", "Creating fake websites"],
+                correct: 1,
+                feedback: "Cyberbullying involves harassing or intimidating someone through digital platforms."
+            },
+            {
+                question: "Which law protects intellectual property in the Philippines?",
+                options: ["RA 10175", "RA 8792", "RA 8293", "RA 10173"],
+                correct: 2,
+                feedback: "RA 8293, the Intellectual Property Code, protects intellectual property."
+            },
+            {
+                question: "Scenario: A hacker demands payment to unlock a company’s data. What is this called?",
+                options: ["Phishing", "Ransomware", "Cyberlibel", "Hacking"],
+                correct: 1,
+                feedback: "This is ransomware, where data is locked until a ransom is paid."
+            },
+            {
+                question: "What is 'Data Breach'?",
+                options: ["Secure data transfer", "Unauthorized access to data", "Data encryption", "Legal data sharing"],
+                correct: 1,
+                feedback: "A data breach is unauthorized access to or disclosure of data."
+            },
+            {
+                question: "What does RA 10175 say about cybersex?",
+                options: ["It is legal", "It is a crime", "It is allowed with consent", "No provisions exist"],
+                correct: 1,
+                feedback: "Cybersex is a crime under RA 10175, particularly when involving exploitation."
+            },
+            {
+                question: "Scenario: A person creates a fake social media account to impersonate someone. What crime is this?",
+                options: ["Cyberlibel", "Identity theft", "Hacking", "Phishing"],
+                correct: 1,
+                feedback: "Creating a fake account to impersonate someone is identity theft."
+            },
+            {
+                question: "What is 'Botnet' in cybercrime?",
+                options: ["A secure network", "A network of infected devices", "A type of antivirus", "A legal software"],
+                correct: 1,
+                feedback: "A botnet is a network of infected devices used to carry out cyberattacks."
+            },
+            {
+                question: "What is the purpose of RA 10175?",
+                options: ["To promote internet use", "To prevent and penalize cybercrimes", "To regulate social media", "To monitor data usage"],
+                correct: 1,
+                feedback: "RA 10175 aims to prevent and penalize cybercrimes in the Philippines."
+            },
+            {
+                question: "Scenario: A company sends unsolicited ads via email. What law is violated?",
+                options: ["RA 10175", "RA 10173", "RA 8792", "None"],
+                correct: 0,
+                feedback: "Sending unsolicited ads violates RA 10175’s provisions on spam."
+            },
+            {
+                question: "What is 'Keylogger' in cybercrime?",
+                options: ["A secure login system", "Software that records keystrokes", "A type of firewall", "A legal software"],
+                correct: 1,
+                feedback: "A keylogger is software that records keystrokes to steal sensitive information."
+            },
+            {
+                question: "What does 'VPN' stand for in cybersecurity?",
+                options: ["Virtual Private Network", "Verified Public Network", "Virtual Protection Node", "Validated Private Node"],
+                correct: 0,
+                feedback: "VPN stands for Virtual Private Network, used to secure internet connections."
+            },
+            {
+                question: "Scenario: A hacker alters a website’s content without permission. What crime is committed?",
+                options: ["Cyberlibel", "Data interference", "Phishing", "Identity theft"],
+                correct: 1,
+                feedback: "Altering a website’s content is data interference under RA 10175."
+            },
+            {
+                question: "What is the role of the Cybercrime Investigation and Coordination Center (CICC)?",
+                options: ["To regulate internet providers", "To coordinate cybercrime investigations", "To promote cybercrime", "To monitor social media"],
+                correct: 1,
+                feedback: "The CICC coordinates cybercrime investigations in the Philippines."
+            },
+            {
+                question: "What is 'Adware'?",
+                options: ["Software that displays ads", "A type of antivirus", "A secure network", "A legal software"],
+                correct: 0,
+                feedback: "Adware is software that automatically displays advertisements, often maliciously."
+            },
+            {
+                question: "Scenario: A person spreads false information online to harm someone’s reputation. What could they be charged with?",
+                options: ["Cyberlibel", "Hacking", "Phishing", "Data interference"],
+                correct: 0,
+                feedback: "Spreading false information online could lead to cyberlibel charges."
+            },
+            {
+                question: "What is the penalty for phishing under RA 10175?",
+                options: ["Fine only", "Imprisonment or fine", "Community service", "No penalty"],
+                correct: 1,
+                feedback: "Phishing can result in imprisonment or a fine under RA 10175."
+            },
+            {
+                question: "What does 'Cybercrime' broadly refer to?",
+                options: ["Legal online activities", "Crimes involving digital systems", "Secure data sharing", "Internet regulation"],
+                correct: 1,
+                feedback: "Cybercrime refers to illegal activities involving digital systems or networks."
+            },
+            {
+                question: "Scenario: A student uses a teacher’s email without permission to send messages. What crime is committed?",
+                options: ["Cyberlibel", "Identity theft", "Hacking", "Phishing"],
+                correct: 1,
+                feedback: "Using someone’s email without permission is identity theft under RA 10175."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        const quizContainer = document.getElementById('quizContainer');
+        const quizQuestion = document.getElementById('quizQuestion');
+        const quizOptions = document.getElementById('quizOptions');
+        const quizFeedback = document.getElementById('quizFeedback');
+        const submitButton = document.getElementById('submitButton');
+        const nextButton = document.getElementById('nextButton');
+        const quizResult = document.getElementById('quizResult');
+        const resultText = document.getElementById('resultText');
+        const restartButton = document.getElementById('restartButton');
+        const questionCount = document.getElementById('questionCount');
+        const scoreDisplay = document.getElementById('score');
+        const progressFill = document.getElementById('progressFill');
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initializeQuiz() {
+            shuffleArray(quizQuestions);
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const questionData = quizQuestions[currentQuestion];
+            quizQuestion.textContent = questionData.question;
+            quizOptions.innerHTML = '';
+            quizFeedback.style.display = 'none';
+            submitButton.style.display = 'block';
+            nextButton.style.display = 'none';
+            submitButton.disabled = true;
+            selectedOption = null;
+
+            questionCount.textContent = `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+            scoreDisplay.textContent = `Score: ${score}`;
+            progressFill.style.width = `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+
+            questionData.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.classList.add('quiz-option');
+                optionDiv.innerHTML = `
+                    <input type="radio" name="quizOption" value="${index}" id="option${index}">
+                    <label for="option${index}">${option}</label>
+                `;
+                quizOptions.appendChild(optionDiv);
+
+                const radio = optionDiv.querySelector('input');
+                radio.addEventListener('change', () => {
+                    selectedOption = index;
+                    submitButton.disabled = false;
+                });
+            });
+        }
+
+        function showFeedback(isCorrect, feedbackText) {
+            quizFeedback.textContent = feedbackText;
+            quizFeedback.classList.remove('correct', 'incorrect');
+            quizFeedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            quizFeedback.style.display = 'block';
+
+            quizOptions.querySelectorAll('.quiz-option').forEach((option, index) => {
+                option.style.pointerEvents = 'none';
+                if (index === quizQuestions[currentQuestion].correct) {
+                    option.classList.add('correct');
+                }
+                if (index === selectedOption && !isCorrect) {
+                    option.classList.add('incorrect');
+                }
+            });
+        }
+
+        function showResults() {
+            quizContainer.style.display = 'none';
+            quizResult.style.display = 'block';
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            let message = '';
+            if (percentage >= 80) {
+                message = `Excellent! You scored ${score} out of ${quizQuestions.length} (${percentage}%). You're a cyber law expert!`;
+            } else if (percentage >= 50) {
+                message = `Good job! You scored ${score} out of ${quizQuestions.length} (${percentage}%). Keep learning to become a pro!`;
+            } else {
+                message = `You scored ${score} out of ${quizQuestions.length} (${percentage}%). Review the feedback and try again!`;
+            }
+            resultText.textContent = message;
+        }
+
+        submitButton.addEventListener('click', () => {
+            if (selectedOption === null) return;
+
+            const isCorrect = selectedOption === quizQuestions[currentQuestion].correct;
+            if (isCorrect) {
+                score++;
+            }
+            showFeedback(isCorrect, quizQuestions[currentQuestion].feedback);
+            submitButton.style.display = 'none';
+            nextButton.style.display = 'block';
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentQuestion++;
+            if (currentQuestion < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        restartButton.addEventListener('click', () => {
+            currentQuestion = 0;
+            score = 0;
+            quizContainer.style.display = 'block';
+            quizResult.style.display = 'none';
+            initializeQuiz();
         });
     </script>
 </body>
