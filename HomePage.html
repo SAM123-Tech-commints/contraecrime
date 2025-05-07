@@ -8,1334 +8,1340 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body, html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f7f7f7;
-            transition: background-color 0.3s ease;
-        }
-
-        .loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .loader-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .loader {
-            width: 48px;
-            height: 48px;
-            border: 5px solid #FFF;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-        }
-
-        @keyframes rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .dark-theme .loader {
-            border-color: #d7b15c;
-            border-bottom-color: transparent;
-        }
-
-        .avatar-loading {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 101;
-        }
-
-        .avatar-loading.active {
-            display: flex;
-        }
-
-        .avatar-loading .loader {
-            width: 24px;
-            height: 24px;
-            border-width: 3px;
-        }
-
-        .container {
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        .sidebar {
-            width: 290px;
-            background-image: url('https://i.imgur.com/bNRxAhZ.png');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 20px;
-            height: 100vh;
-            position: fixed;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 24px;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin: 50px 0;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .sidebar ul li a:not(.dark-theme-label a) {
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .sidebar ul li a:not(.dark-theme-label a):hover {
-            color: #d7b15c;
-            transform: translateX(5px);
-        }
-
-        .sidebar ul li a:not(.dark-theme-label a)::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -10px;
-            left: 0;
-            background-color: #d7b15c;
-            transition: width 0.3s ease;
-        }
-
-        .sidebar ul li a:not(.dark-theme-label a):hover::after {
-            width: 95%;
-        }
-
-        .dark-theme .sidebar ul li a:not(.dark-theme-label a):hover {
-            color: #d7b15c;
-        }
-
-        .sidebar ul li a img {
-            width: 30px;
-            height: 30px;
-        }
-
-        .dark-theme-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .dark-theme-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 18px;
-        }
-
-        .dark-theme-label img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 60px;
-            height: 30px;
-        }
-
-        .switch-label {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #28292c;
-            border-radius: 25px;
-            cursor: pointer;
-            border: 3px solid #28292c;
-        }
-
-        .checkbox {
-            position: absolute;
-            display: none;
-        }
-
-        .slider {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 25px;
-            transition: 0.3s;
-        }
-
-        .checkbox:checked ~ .slider {
-            background-color: #d8dbe0;
-        }
-
-        .slider::before {
-            content: "";
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            box-shadow: inset 8px -3px 0px 0px #d8dbe0;
-            background-color: #28292c;
-            transition: 0.3s;
-        }
-
-        .checkbox:checked ~ .slider::before {
-            transform: translateX(30px);
-            background-color: #28292c;
-            box-shadow: none;
-        }
-
-        .content {
-            flex: 1;
-            padding: 20px;
-            margin-left: 290px;
-            overflow-y: auto;
-            transition: background-color 0.3s ease, margin-left 0.3s ease;
-        }
-
-        .header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .account-customization {
-            position: fixed;
-            top: 10px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .user-details {
-            display: none;
-        }
-
-        .avatar-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .avatar-container .profile-pic {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            object-fit: cover;
-            border: 2px solid #000;
-            cursor: pointer;
-            color: transparent;
-            font-size: 0;
-        }
-
-        .customization-options {
-            position: absolute;
-            top: 50px;
-            right: 0;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: none;
-            flex-direction: column;
-            padding: 8px;
-            z-index: 100;
-            align-items: flex-start;
-            width: 300px;
-        }
-
-        .customization-options.active {
-            display: flex;
-        }
-
-        .customization-options .user-info {
-            margin-bottom: 10px;
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #d32f2f 100%);
-            border-radius: 5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .customization-options .user-info::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/circuit.png');
-            opacity: 0.1;
-            z-index: 0;
-        }
-
-        .customization-options .user-info p {
-            margin: 5px 0;
-            font-size: 12px;
-            color: #ffffff;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-            font-weight: 500;
-            overflow-wrap: break-word;
-        }
-
-        .customization-options .user-info p::before {
-            content: attr(data-label);
-            font-weight: 700;
-            color: #ff3333;
-            margin-right: 5px;
-        }
-
-        .customization-options label {
-            font-size: 12px;
-            color: #333;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px 8px;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            text-align: left;
-        }
-
-        .customization-options label:hover {
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-
-        .customization-options input[type="color"] {
-            width: 100%;
-            height: 25px;
-            padding: 0;
-            border: none;
-            cursor: pointer;
-            background: none;
-        }
-
-        .customization-options select {
-            font-size: 12px;
-            padding: 4px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .customization-options input[type="file"] {
-            display: none;
-        }
-
-        .customization-options .file-input-label {
-            font-size: 12px;
-            color: #333;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px 8px;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            text-align: left;
-        }
-
-        .customization-options .file-input-label:hover {
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-
-        .dark-theme .customization-options {
-            background-color: #3a3b3c;
-            border-color: #555;
-        }
-
-        .dark-theme .customization-options .user-info {
-            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-            color: #e0e0e0;
-        }
-
-        .dark-theme .customization-options .user-info p {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .customization-options .user-info p::before {
-            color: #ffeb3b;
-        }
-
-        .dark-theme .customization-options label,
-        .dark-theme .customization-options .file-input-label {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .customization-options label:hover,
-        .dark-theme .customization-options .file-input-label:hover {
-            background-color: #4a4b4c;
-        }
-
-        .dark-theme .customization-options select {
-            background-color: #3a3b3c;
-            color: #e0e0e0;
-            border-color: #555;
-        }
-
-        .fingerprint-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
-
-        .fingerprint-icon {
-            width: 100%;
-            height: 100%;
-            background: url('https://static.thenounproject.com/png/1238269-200.png') no-repeat center center;
-            background-size: contain;
-            position: relative;
-            transition: transform 0.5s ease;
-        }
-
-        .fingerprint-icon::before {
-            content: "";
-            position: absolute;
-            margin-right: 4px;
-            margin-top: 4px;
-            width: 138px;
-            height: 140px;
-            border: 3px solid;
-            border-radius: 50%;
-            z-index: 0;
-            color: #000000;
-            transition: border-color 0.3s ease;
-        }
-
-        .dark-theme .fingerprint-icon {
-            filter: brightness(0) invert(1);
-        }
-
-        .dark-theme .fingerprint-icon::before {
-            border-color: #ffffff;
-        }
-
-        .fingerprint-icon.scanning {
-            animation: glow 2s infinite ease-in-out, rotate3D 5s infinite linear;
-        }
-
-        .fingerprint-icon.scanning::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 0, 0, 0.3) 0%, transparent 70%);
-            opacity: 0;
-            animation: ripple 2s infinite ease-in-out;
-            z-index: -1;
-        }
-
-        .fingerprint-icon .scan-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #ff0000, transparent);
-            top: 50%;
-            left: 0;
-            opacity: 0;
-            z-index: 1;
-        }
-
-        .fingerprint-icon.scanning .scan-line {
-            animation: scanVertical 1.5s infinite linear;
-        }
-
-        .fingerprint-icon .scan-line:nth-child(2) {
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, #ff0000, transparent);
-            top: 0;
-            left: 50%;
-        }
-
-        .fingerprint-icon.scanning .scan-line:nth-child(2) {
-            animation: scanHorizontal 1.5s infinite linear;
-        }
-
-        .fingerprint-icon .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #ff0000;
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 2;
-        }
-
-        .fingerprint-icon.scanning .particle {
-            animation: particleMove 3s infinite ease-in-out;
-        }
-
-        .fingerprint-icon .particle:nth-child(3) { top: 10%; left: 20%; animation-delay: 0s; }
-        .fingerprint-icon .particle:nth-child(4) { top: 80%; left: 30%; animation-delay: 0.5s; }
-        .fingerprint-icon .particle:nth-child(5) { top: 40%; left: 70%; animation-delay: 1s; }
-        .fingerprint-icon .particle:nth-child(6) { top: 60%; left: 10%; animation-delay: 1.5s; }
-
-        @keyframes glow {
-            0%, 100% { filter: brightness(1) drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)); }
-            50% { filter: brightness(1.2) drop-shadow(0 0 15px rgba(255, 0, 0, 0.8)); }
-        }
-
-        @keyframes rotate3D {
-            0% { transform: rotateY(0deg) rotateX(0deg); }
-            50% { transform: rotateY(10deg) rotateX(5deg); }
-            100% { transform: rotateY(0deg) rotateX(0deg); }
-        }
-
-        @keyframes ripple {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 0.5; }
-            100% { opacity: 0; transform: scale(1.5); }
-        }
-
-        @keyframes scanVertical {
-            0% { transform: translateY(-60px); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(60px); opacity: 0; }
-        }
-
-        @keyframes scanHorizontal {
-            0% { transform: translateX(-60px); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateX(60px); opacity: 0; }
-        }
-
-        @keyframes particleMove {
-            0% { opacity: 0; transform: translate(0, 0); }
-            50% { opacity: 1; transform: translate(10px, -10px); }
-            100% { opacity: 0; transform: translate(-10px, 10px); }
-        }
-
-        .dark-theme .fingerprint-icon.scanning::after {
-            background: radial-gradient(circle, rgba(215, 177, 92, 0.3) 0%, transparent 70%);
-        }
-
-        .dark-theme .fingerprint-icon .scan-line {
-            background: linear-gradient(to right, transparent, #d7b15c, transparent);
-        }
-
-        .dark-theme .fingerprint-icon .scan-line:nth-child(2) {
-            background: linear-gradient(to bottom, transparent, #d7b15c, transparent);
-        }
-
-        .dark-theme .fingerprint-icon .particle {
-            background: #d7b15c;
-        }
-
-        .dark-theme .fingerprint-icon.scanning {
-            animation: glowDark 2s infinite ease-in-out, rotate3D 5s infinite linear;
-        }
-
-        @keyframes glowDark {
-            0%, 100% { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(215, 177, 92, 0.5)); }
-            50% { filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(215, 177, 92, 0.8)); }
-        }
-
-        .search-container {
-            width: 40%;
-            position: relative;
-            margin-bottom: 20px;
-            background: linear-gradient(145deg, #ffffff, #e6e6e6);
-            border-radius: 10px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.7);
-            padding: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .search-container:hover {
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15), -5px -5px 20px rgba(255, 255, 255, 0.9);
-        }
-
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            transition: transform 0.3s ease;
-            cursor: pointer; 
-        }
-
-        .search-input {
-            width: 100%;
-            height: 50px;
-            padding: 10px 40px 10px 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            letter-spacing: 1px;
-            background: transparent;
-            color: #333;
-            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.15), inset -3px -3px 8px rgba(255, 255, 255, 0.7);
-        }
-
-        .search-input::placeholder {
-            color: #999;
-            font-style: italic;
-        }
-
-        .search-container:hover > .search-icon {
-            animation: anim 1s linear infinite;
-        }
-
-        @keyframes anim {
-            0%, 100% {
-                transform: translateY(-50%) scale(1);
-            }
-            50% {
-                transform: translateY(-50%) scale(1.2);
-            }
-        }
-
-        .dark-theme .search-container {
-            background: linear-gradient(145deg, #3a3b3c, #2c2d2e);
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
-        }
-
-        .dark-theme .search-container:hover {
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4), -5px -5px 20px rgba(255, 255, 255, 0.15);
-        }
-
-        .dark-theme .search-input {
-            color: #ffffff;
-            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3), inset -2px -2px 5px rgba(255, 255, 255, 0.1);
-        }
-
-        .dark-theme .search-input:focus {
-            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.4), inset -3px -3px 8px rgba(255, 255, 255, 0.15);
-        }
-
-        .dark-theme .search-input::placeholder {
-            color: #bbbbbb;
-        }
-
-        .dark-theme .search-icon svg path {
-            stroke: #ffffff;
-        }
-
-        .header p {
-            font-size: 18px;
-            font-weight: 500;
-            color: #333;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            margin: 10px 0;
-        }
-
-        .dark-theme .header p {
-            color: #e0e0e0;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .articles {
-            margin-top: 20px;
-            color: #000000;
-            text-align: center;
-        }
-
-        .articles h2 {
-            margin-bottom: 30px;
-            font-size: 24px;
-        }
-
-        .cards-container {
-            display: flex;
-            gap: 35px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .card {
-            --bg-card: #27272a;
-            --primary: #d9cd28;
-            --primary-800: #d7b15c;
-            --primary-shadow: #b7b90d;
-            --light: #d9d9d9;
-            --zinc-800: #18181b;
-            --bg-linear: linear-gradient(0deg, var(--primary) 50%, var(--light) 125%);
-
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            padding: 1rem;
-            width: 350px;
-            border-radius: 1rem;
-            justify-content: space-between;
-            transition: background-color 0.3s ease;
-        }
-
-        .card.main-law {
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .card.hidden {
-            display: none;
-        }
-
-        .card.highlight {
-            box-shadow: 0 0 10px 5px rgba(230, 207, 5, 0.5);
-        }
-
-        body:not(.dark-theme) .card {
-            background-color: #b8973e;
-        }
-
-        .dark-theme .card {
-            background-color: #3a3b3c;
-            color: #ffffff;
-        }
-
-        .image_container {
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-            z-index: 5;
-            width: 100%;
-            height: 200px;
-            background-color: var(--primary-800);
-            border-radius: 0.5rem;
-        }
-
-        .image_container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .cybercrime-title {
-            width: 100%;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ffffff;
-            text-transform: capitalize;
-            text-wrap: wrap;
-            min-height: 3rem; 
-            line-height: 1.3; 
-        }
-
-        .cybercrime-description {
-            font-size: 0.9rem;
-            color: #ffffff;
-            line-height: 1.4;
-            text-align: justify;
-        }
-
-        .digital-clock {
-            width: 100%;
-            background: linear-gradient(to right, #8B4513, #FFA500);
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-            margin-top: 10px;
-            color: white;
-            font-weight: bold;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .border-button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 5px;
-            border-radius: 10px;
-            border: 1px solid rgb(255, 255, 255);
-            overflow: hidden;
-            background: transparent;
-            color: rgb(255, 255, 255);
-            cursor: pointer;
-            align-self: flex-end;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .border-button .button-text {
-            transform: translateX(17px);
-            font-size: 0.9em;
-            font-weight: 500;
-            transition-duration: 0.3s;
-            margin: 0;
-        }
-
-        .border-button .iconer {
-            transform: translateY(35px);
-            transition-duration: 0.3s;
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .border-button:hover .button-text {
-            transform: translateX(5px);
-        }
-
-        .border-button:hover .iconer {
-            transform: translateY(0px);
-        }
-
-        .save-button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 5px;
-            border-radius: 10px;
-            border: 1px solid rgb(255, 255, 255);
-            overflow: hidden;
-            background: transparent;
-            color: rgb(255, 255, 255);
-            cursor: pointer;
-            align-self: flex-end;
-            margin-top: 1rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .save-button .button-text {
-            transform: translateX(17px);
-            font-size: 0.9em;
-            font-weight: 500;
-            transition-duration: 0.3s;
-            margin: 0;
-        }
-
-        .save-button .iconer {
-            transform: translateY(35px);
-            transition-duration: 0.3s;
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .save-button:hover .button-text {
-            transform: translateX(5px);
-        }
-
-        .save-button:hover .iconer {
-            transform: translateY(0px);
-        }
-
-        .success-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 4000;
-        }
-
-        .success-modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .dark-theme .modal-content {
-            background-color: #2d3748;
-            color: #e2e8f0;
-        }
-
-        .modal-content h3 {
-            margin: 0 0 15px;
-            font-size: 20px;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .dark-theme .modal-content h3 {
-            color: #e2e8f0;
-        }
-
-        .modal-content p {
-            margin: 0 0 20px;
-            font-size: 14px;
-            color: #718096;
-        }
-
-        .dark-theme .modal-content p {
-            color: #a0aec0;
-        }
-
-        .modal-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .modal-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-        }
-
-        .modal-btn.ok {
-            background-color: #4a90e2;
-            color: white;
-        }
-
-        .modal-btn.ok:hover {
-            background-color: #357abd;
-            transform: translateY(-2px);
-        }
-
-        .dark-theme .modal-btn.ok {
-            background-color: #5a9bd4;
-        }
-
-        .dark-theme .modal-btn.ok:hover {
-            background-color: #4682b4;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 15px 30px;
-            text-align: center;
-            margin-left: 290px;
-            z-index: 1;
-            transition: margin-left 0.3s ease;
-        }
-
-        footer p {
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .footer-links {
-            margin-top: 5px;
-        }
-
-        .footer-links a {
-            color: #d7b15c;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 14px;
-        }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-
-        .dark-theme footer {
-            background-color: #1a1a1a;
-        }
-
-        body.dark-theme {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-
-        .dark-theme .content {
-            background-color: #28292c;
-        }
-
-        .dark-theme .content::before {
-            background-color: rgba(40, 41, 44, 0.9);
-        }
-
-        .dark-theme .articles {
-            color: #ffffff;
-        }
-
-        .dark-theme .articles h2 {
-            color: #ffffff;
-        }
-
-        .dark-theme .cybercrime-title,
-        .dark-theme .cybercrime-description {
-            color: #ffffff;
-        }
-
-        .mobile-nav {
-            display: none;
-            background-image: url('https://i.imgur.com/bNRxAhZ.png');
-            padding: 15px;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .mobile-nav .logo {
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .mobile-nav .menu-icon {
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            position: absolute;
-            right: 15px;
-            top: 15px;
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 250px;
-            }
-
-            .sidebar h1 {
-                font-size: 22px;
-            }
-
-            .sidebar ul li a {
-                font-size: 16px;
-            }
-
-            .dark-theme-label {
-                font-size: 16px;
-            }
-
-            .content {
-                margin-left: 250px;
-            }
-
-            footer {
-                margin-left: 250px;
-            }
-
-            .card {
-                width: 300px;
-            }
-
-            .card.main-law {
-                width: 100%;
-                max-width: 600px;
-            }
-
-            .account-customization {
-                right: 10px;
-            }
-
-            .avatar-container .profile-pic {
-                width: 35px;
-                height: 35px;
-            }
-
-            .avatar-loading {
-                width: 35px;
-                height: 35px;
-            }
-
-            .customization-options {
-                top: 45px;
-                width: 220px;
-            }
-
-            .search-container {
-                width: 50%;
-            }
-
-            .fingerprint-container {
-                width: 120px;
-                height: 120px;
-            }
-
-            .fingerprint-icon::before {
-                width: 108px;
-                height: 110px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
-                padding: 10px;
-            }
-
-            .sidebar h1 {
-                font-size: 20px;
-            }
-
-            .sidebar ul li a {
-                font-size: 14px;
-            }
-
-            .dark-theme-label {
-                font-size: 14px;
-            }
-
-            .content {
-                margin-left: 200px;
-                padding: 10px;
-            }
-
-            footer {
-                margin-left: 200px;
-            }
-
-            .card {
-                width: 100%;
-                max-width: 350px;
-            }
-
-            .card.main-law {
-                width: 100%;
-                max-width: 500px;
-            }
-
-            .avatar-container .profile-pic {
-                width: 30px;
-                height: 30px;
-            }
-
-            .avatar-loading {
-                width: 30px;
-                height: 30px;
-            }
-
-            .customization-options {
-                top: 40px;
-                width: 200px;
-            }
-
-            .fingerprint-container {
-                width: 120px;
-                height: 120px;
-            }
-
-            .search-container {
-                width: 70%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .mobile-nav {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: fixed;
-                padding: 10px;
-                transform: translateX(-100%);
-                z-index: 999;
-                top: 60px;
-                height: calc(100vh - 60px);
-                overflow-y: auto;
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .sidebar h1 {
-                display: none;
-            }
-
-            .sidebar ul li {
-                margin: 20px 0;
-            }
-
-            .sidebar ul li a {
-                font-size: 16px;
-            }
-
-            .dark-theme-label {
-                font-size: 16px;
-            }
-
-            .content {
-                margin-left: 0;
-                padding: 80px 10px 10px;
-            }
-
-            footer {
-                margin-left: 0;
-                padding: 10px 20px;
-                text-align: center;
-            }
-
-            footer p {
-                font-size: 12px;
-            }
-
-            .footer-links a {
-                font-size: 12px;
-                margin: 0 8px;
-            }
-
-            .account-customization {
-                top: 70px;
-                right: 10px;
-                z-index: 998;
-            }
-
-            .avatar-container .profile-pic {
-                width: 30px;
-                height: 30px;
-                border-width: 1px;
-            }
-
-            .avatar-loading {
-                width: 30px;
-                height: 30px;
-            }
-
-            .avatar-loading .loader {
-                width: 15px;
-                height: 15px;
-                border-width: 2px;
-            }
-
-            .customization-options {
-                top: 40px;
-                width: 180px;
-            }
-
-            .customization-options .user-info p {
-                font-size: 10px;
-            }
-
-            .customization-options label,
-            .customization-options .file-input-label {
-                font-size: 10px;
-                padding: 3px 6px;
-            }
-
-            .customization-options select {
-                font-size: 10px;
-                padding: 3px;
-            }
-
-            .fingerprint-container {
-                width: 90px;
-                height: 90px;
-            }
-
-            .fingerprint-icon::before {
-                width: 78px;
-                height: 80px;
-            }
-
-            .search-container {
-                width: 90%;
-            }
-
-            .card {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .card.main-law {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .modal-content {
-                padding: 15px 20px;
-                max-width: 300px;
-            }
-
-            .modal-content h3 {
-                font-size: 18px;
-            }
-
-            .modal-content p {
-                font-size: 12px;
-            }
-
-            .modal-btn {
-                padding: 8px 16px;
-                font-size: 12px;
-            }
-        }
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f7f7f7;
+    transition: background-color 0.3s ease;
+}
+
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.loader-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.dark-theme .loader {
+    border-color: #d7b15c;
+    border-bottom-color: transparent;
+}
+
+.avatar-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 101;
+}
+
+.avatar-loading.active {
+    display: flex;
+}
+
+.avatar-loading .loader {
+    width: 24px;
+    height: 24px;
+    border-width: 3px;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.sidebar {
+    width: 290px;
+    background-image: url('https://i.imgur.com/bNRxAhZ.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    transition: transform 0.3s ease;
+}
+
+.sidebar h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 50px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar ul li a:not(.dark-theme-label a) {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.sidebar ul li a:not(.dark-theme-label a):hover {
+    color: #d7b15c;
+    transform: translateX(5px);
+}
+
+.sidebar ul li a:not(.dark-theme-label a)::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -10px;
+    left: 0;
+    background-color: #d7b15c;
+    transition: width 0.3s ease;
+}
+
+.sidebar ul li a:not(.dark-theme-label a):hover::after {
+    width: 95%;
+}
+
+.dark-theme .sidebar ul li a:not(.dark-theme-label a):hover {
+    color: #d7b15c;
+}
+
+.sidebar ul li a img {
+    width: 30px;
+    height: 30px;
+}
+
+.dark-theme-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.dark-theme-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+}
+
+.dark-theme-label img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+}
+
+.switch-label {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #28292c;
+    border-radius: 25px;
+    cursor: pointer;
+    border: 3px solid #28292c;
+}
+
+.checkbox {
+    position: absolute;
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+.checkbox:checked ~ .slider {
+    background-color: #d8dbe0;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-shadow: inset 8px -3px 0px 0px #d8dbe0;
+    background-color: #28292c;
+    transition: 0.3s;
+}
+
+.checkbox:checked ~ .slider::before {
+    transform: translateX(30px);
+    background-color: #28292c;
+    box-shadow: none;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 290px;
+    overflow-y: auto;
+    transition: background-color 0.3s ease, margin-left 0.3s ease;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.account-customization {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.user-details {
+    display: none;
+}
+
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.avatar-container .profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover;
+    border: 2px solid #000;
+    cursor: pointer;
+    color: transparent;
+    font-size: 0;
+}
+
+.customization-options {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    padding: 8px;
+    z-index: 100;
+    align-items: flex-start;
+    width: 300px;
+}
+
+.customization-options.active {
+    display: flex;
+}
+
+.customization-options .user-info {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #d32f2f 100%);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.customization-options .user-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/circuit.png');
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.customization-options .user-info p {
+    margin: 5px 0;
+    font-size: 12px;
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+    overflow-wrap: break-word;
+}
+
+.customization-options .user-info p::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #ff3333;
+    margin-right: 5px;
+}
+
+.customization-options label {
+    font-size: 12px;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: left;
+}
+
+.customization-options label:hover {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.customization-options input[type="color"] {
+    width: 100%;
+    height: 25px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background: none;
+}
+
+.customization-options select {
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    width: 100%;
+}
+
+.customization-options input[type="file"] {
+    display: none;
+}
+
+.customization-options .file-input-label {
+    font-size: 12px;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: left;
+}
+
+.customization-options .file-input-label:hover {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.dark-theme .customization-options {
+    background-color: #3a3b3c;
+    border-color: #555;
+}
+
+.dark-theme .customization-options .user-info {
+    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+    color: #e0e0e0;
+}
+
+.dark-theme .customization-options .user-info p {
+    color: #e0e0e0;
+}
+
+.dark-theme .customization-options .user-info p::before {
+    color: #ffeb3b;
+}
+
+.dark-theme .customization-options label,
+.dark-theme .customization-options .file-input-label {
+    color: #e0e0e0;
+}
+
+.dark-theme .customization-options label:hover,
+.dark-theme .customization-options .file-input-label:hover {
+    background-color: #4a4b4c;
+}
+
+.dark-theme .customization-options select {
+    background-color: #3a3b3c;
+    color: #e0e0e0;
+    border-color: #555;
+}
+
+.fingerprint-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.fingerprint-icon {
+    width: 100%;
+    height: 100%;
+    background: url('https://static.thenounproject.com/png/1238269-200.png') no-repeat center center;
+    background-size: contain;
+    position: relative;
+    transition: transform 0.5s ease;
+}
+
+.fingerprint-icon::before {
+    content: "";
+    position: absolute;
+    margin-right: 4px;
+    margin-top: 4px;
+    width: 138px;
+    height: 140px;
+    border: 3px solid;
+    border-radius: 50%;
+    z-index: 0;
+    color: #000000;
+    transition: border-color 0.3s ease;
+}
+
+.dark-theme .fingerprint-icon {
+    filter: brightness(0) invert(1);
+}
+
+.dark-theme .fingerprint-icon::before {
+    border-color: #ffffff;
+}
+
+.fingerprint-icon.scanning {
+    animation: glow 2s infinite ease-in-out, rotate3D 5s infinite linear;
+}
+
+.fingerprint-icon.scanning::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    animation: ripple 2s infinite ease-in-out;
+    z-index: -1;
+}
+
+.fingerprint-icon .scan-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #ff0000, transparent);
+    top: 50%;
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+.fingerprint-icon.scanning .scan-line {
+    animation: scanVertical 1.5s infinite linear;
+}
+
+.fingerprint-icon .scan-line:nth-child(2) {
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, #ff0000, transparent);
+    top: 0;
+    left: 50%;
+}
+
+.fingerprint-icon.scanning .scan-line:nth-child(2) {
+    animation: scanHorizontal 1.5s infinite linear;
+}
+
+.fingerprint-icon .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ff0000;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 2;
+}
+
+.fingerprint-icon.scanning .particle {
+    animation: particleMove 3s infinite ease-in-out;
+}
+
+.fingerprint-icon .particle:nth-child(3) { top: 10%; left: 20%; animation-delay: 0s; }
+.fingerprint-icon .particle:nth-child(4) { top: 80%; left: 30%; animation-delay: 0.5s; }
+.fingerprint-icon .particle:nth-child(5) { top: 40%; left: 70%; animation-delay: 1s; }
+.fingerprint-icon .particle:nth-child(6) { top: 60%; left: 10%; animation-delay: 1.5s; }
+
+@keyframes glow {
+    0%, 100% { filter: brightness(1) drop-shadow(0 0 5px rgba(255, 0, 0, 0.5)); }
+    50% { filter: brightness(1.2) drop-shadow(0 0 15px rgba(255, 0, 0, 0.8)); }
+}
+
+@keyframes rotate3D {
+    0% { transform: rotateY(0deg) rotateX(0deg); }
+    50% { transform: rotateY(10deg) rotateX(5deg); }
+    100% { transform: rotateY(0deg) rotateX(0deg); }
+}
+
+@keyframes ripple {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.5; }
+    100% { opacity: 0; transform: scale(1.5); }
+}
+
+@keyframes scanVertical {
+    0% { transform: translateY(-60px); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(60px); opacity: 0; }
+}
+
+@keyframes scanHorizontal {
+    0% { transform: translateX(-60px); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateX(60px); opacity: 0; }
+}
+
+@keyframes particleMove {
+    0% { opacity: 0; transform: translate(0, 0); }
+    50% { opacity: 1; transform: translate(10px, -10px); }
+    100% { opacity: 0; transform: translate(-10px, 10px); }
+}
+
+.dark-theme .fingerprint-icon.scanning::after {
+    background: radial-gradient(circle, rgba(215, 177, 92, 0.3) 0%, transparent 70%);
+}
+
+.dark-theme .fingerprint-icon .scan-line {
+    background: linear-gradient(to right, transparent, #d7b15c, transparent);
+}
+
+.dark-theme .fingerprint-icon .scan-line:nth-child(2) {
+    background: linear-gradient(to bottom, transparent, #d7b15c, transparent);
+}
+
+.dark-theme .fingerprint-icon .particle {
+    background: #d7b15c;
+}
+
+.dark-theme .fingerprint-icon.scanning {
+    animation: glowDark 2s infinite ease-in-out, rotate3D 5s infinite linear;
+}
+
+@keyframes glowDark {
+    0%, 100% { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(215, 177, 92, 0.5)); }
+    50% { filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(215, 177, 92, 0.8)); }
+}
+
+.search-container {
+    width: 40%;
+    position: relative;
+    margin-bottom: 20px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.search-container:hover {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15), -5px -5px 20px rgba(255, 255, 255, 0.9);
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+    cursor: pointer; 
+}
+
+.search-input {
+    width: 100%;
+    height: 50px;
+    padding: 10px 40px 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    background: transparent;
+    color: #333;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.15), inset -3px -3px 8px rgba(255, 255, 255, 0.7);
+}
+
+.search-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.search-container:hover > .search-icon {
+    animation: anim 1s linear infinite;
+}
+
+@keyframes anim {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        transform: translateY(-50%) scale(1.2);
+    }
+}
+
+.dark-theme .search-container {
+    background: linear-gradient(145deg, #3a3b3c, #2c2d2e);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .search-container:hover {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4), -5px -5px 20px rgba(255, 255, 255, 0.15);
+}
+
+.dark-theme .search-input {
+    color: #ffffff;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3), inset -2px -2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .search-input:focus {
+    box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.4), inset -3px -3px 8px rgba(255, 255, 255, 0.15);
+}
+
+.dark-theme .search-input::placeholder {
+    color: #bbbbbb;
+}
+
+.dark-theme .search-icon svg path {
+    stroke: #ffffff;
+}
+
+.header p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+}
+
+.dark-theme .header p {
+    color: #e0e0e0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.articles {
+    margin-top: 20px;
+    color: #000000;
+    text-align: center;
+}
+
+.articles h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.cards-container {
+    display: flex;
+    gap: 35px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    --bg-card: #27272a;
+    --primary: #d9cd28;
+    --primary-800: #d7b15c;
+    --primary-shadow: #b7b90d;
+    --light: #d9d9d9;
+    --zinc-800: #18181b;
+    --bg-linear: linear-gradient(0deg, var(--primary) 50%, var(--light) 125%);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    width: 350px;
+    border-radius: 1rem;
+    justify-content: space-between;
+    transition: background-color 0.3s ease;
+}
+
+.card.main-law {
+    width: 100%;
+    max-width: 800px;
+}
+
+.card.hidden {
+    display: none;
+}
+
+.card.highlight {
+    box-shadow: 0 0 10px 5px rgba(230, 207, 5, 0.5);
+}
+
+body:not(.dark-theme) .card {
+    background-color: #b8973e;
+}
+
+.dark-theme .card {
+    background-color: #3a3b3c;
+    color: #ffffff;
+}
+
+.image_container {
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: 200px;
+    background-color: var(--primary-800);
+    border-radius: 0.5rem;
+}
+
+.image_container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cybercrime-title {
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: capitalize;
+    text-wrap: wrap;
+    min-height: 3rem; 
+    line-height: 1.3; 
+}
+
+.cybercrime-description {
+    font-size: 0.9rem;
+    color: #ffffff;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+.border-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 5px;
+    border-radius: 10px;
+    border: 1px solid rgb(255, 255, 255);
+    overflow: hidden;
+    background: transparent;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.border-button .button-text {
+    transform: translateX(17px);
+    font-size: 0.9em;
+    font-weight: 500;
+    transition-duration: 0.3s;
+    margin: 0;
+}
+
+.border-button .iconer {
+    transform: translateY(35px);
+    transition-duration: 0.3s;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.border-button:hover .button-text {
+    transform: translateX(5px);
+}
+
+.border-button:hover .iconer {
+    transform: translateY(0px);
+}
+
+.save-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 5px;
+    border-radius: 10px;
+    border: 1px solid rgb(255, 255, 255);
+    overflow: hidden;
+    background: transparent;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.save-button .button-text {
+    transform: translateX(17px);
+    font-size: 0.9em;
+    font-weight: 500;
+    transition-duration: 0.3s;
+    margin: 0;
+}
+
+.save-button .iconer {
+    transform: translateY(35px);
+    transition-duration: 0.3s;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.save-button:hover .button-text {
+    transform: translateX(5px);
+}
+
+.save-button:hover .iconer {
+    transform: translateY(0px);
+}
+
+#digitalClock {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: white;
+    background: linear-gradient(to right, #8B4513, #FFA500);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+.dark-theme #digitalClock {
+    background: linear-gradient(to right, #5a3a1f, #cc8400);
+}
+
+.success-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 4000;
+}
+
+.success-modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+}
+
+.dark-theme .modal-content {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
+
+.modal-content h3 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.dark-theme .modal-content h3 {
+    color: #e2e8f0;
+}
+
+.modal-content p {
+    margin: 0 0 20px;
+    font-size: 14px;
+    color: #718096;
+}
+
+.dark-theme .modal-content p {
+    color: #a0aec0;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.modal-btn.ok {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.modal-btn.ok:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+}
+
+.dark-theme .modal-btn.ok {
+    background-color: #5a9bd4;
+}
+
+.dark-theme .modal-btn.ok:hover {
+    background-color: #4682b4;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    margin-left: 290px;
+    z-index: 1;
+    transition: margin-left 0.3s ease;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.footer-links {
+    margin-top: 5px;
+}
+
+.footer-links a {
+    color: #d7b15c;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.dark-theme footer {
+    background-color: #1a1a1a;
+}
+
+body.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-theme .content {
+    background-color: #28292c;
+}
+
+.dark-theme .content::before {
+    background-color: rgba(40, 41, 44, 0.9);
+}
+
+.dark-theme .articles {
+    color: #ffffff;
+}
+
+.dark-theme .articles h2 {
+    color: #ffffff;
+}
+
+.dark-theme .cybercrime-title,
+.dark-theme .cybercrime-description {
+    color: #ffffff;
+}
+
+.mobile-nav {
+    display: none;
+    background-image: url('https://i.imgur.com/bNRxAhZ.png');
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.mobile-nav .logo {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.mobile-nav .menu-icon {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 250px;
+    }
+
+    .sidebar h1 {
+        font-size: 22px;
+    }
+
+    .sidebar ul li a {
+        font-size: 16px;
+    }
+
+    .dark-theme-label {
+        font-size: 16px;
+    }
+
+    .content {
+        margin-left: 250px;
+    }
+
+    footer {
+        margin-left: 250px;
+    }
+
+    .card {
+        width: 300px;
+    }
+
+    .card.main-law {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .account-customization {
+        right: 10px;
+    }
+
+    .avatar-container .profile-pic {
+        width: 35px;
+        height: 35px;
+    }
+
+    .avatar-loading {
+        width: 35px;
+        height: 35px;
+    }
+
+    .customization-options {
+        top: 45px;
+        width: 220px;
+    }
+
+    .search-container {
+        width: 50%;
+    }
+
+    .fingerprint-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .fingerprint-icon::before {
+        width: 108px;
+        height: 110px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .sidebar h1 {
+        font-size: 20px;
+    }
+
+    .sidebar ul li a {
+        font-size: 14px;
+    }
+
+    .dark-theme-label {
+        font-size: 14px;
+    }
+
+    .content {
+        margin-left: 200px;
+        padding: 10px;
+    }
+
+    footer {
+        margin-left: 200px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .card.main-law {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .avatar-container .profile-pic {
+        width: 30px;
+        height: 30px;
+    }
+
+    .avatar-loading {
+        width: 30px;
+        height: 30px;
+    }
+
+    .customization-options {
+        top: 40px;
+        width: 200px;
+    }
+
+    .fingerprint-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .search-container {
+        width: 70%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        padding: 10px;
+        transform: translateX(-100%);
+        z-index: 999;
+        top: 60px;
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .sidebar h1 {
+        display: none;
+    }
+
+    .sidebar ul li {
+        margin: 20px 0;
+    }
+
+    .sidebar ul li a {
+        font-size: 16px;
+    }
+
+    .dark-theme-label {
+        font-size: 16px;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 80px 10px 10px;
+    }
+
+    footer {
+        margin-left: 0;
+        padding: 10px 20px;
+        text-align: center;
+    }
+
+    footer p {
+        font-size: 12px;
+    }
+
+    .footer-links a {
+        font-size: 12px;
+        margin: 0 8px;
+    }
+
+    .account-customization {
+        top: 70px;
+        right: 10px;
+        z-index: 998;
+    }
+
+    .avatar-container .profile-pic {
+        width: 30px;
+        height: 30px;
+        border-width: 1px;
+    }
+
+    .avatar-loading {
+        width: 30px;
+        height: 30px;
+    }
+
+    .avatar-loading .loader {
+        width: 15px;
+        height: 15px;
+        border-width: 2px;
+    }
+
+    .customization-options {
+        top: 40px;
+        width: 180px;
+    }
+
+    .customization-options .user-info p {
+        font-size: 10px;
+    }
+
+    .customization-options label,
+    .customization-options .file-input-label {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+
+    .customization-options select {
+        font-size: 10px;
+        padding: 3px;
+    }
+
+    .fingerprint-container {
+        width: 90px;
+        height: 90px;
+    }
+
+    .fingerprint-icon::before {
+        width: 78px;
+        height: 80px;
+    }
+
+    .search-container {
+        width: 90%;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .card.main-law {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .modal-content {
+        padding: 15px 20px;
+        max-width: 300px;
+    }
+
+    .modal-content h3 {
+        font-size: 18px;
+    }
+
+    .modal-content p {
+        font-size: 12px;
+    }
+
+    .modal-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
     </style>
 </head>
 <body>
@@ -1463,8 +1469,9 @@
             <section class="articles">
                 <h2 id="sectionTitle">TOP ARTICLES</h2>
                 <div class="cards-container" id="cardsContainer">
-                    <!-- Laws will be dynamically populated here -->
+                    <!-- Default cards -->
                 </div>
+                <div id="digitalClock"></div>
             </section>
             <div class="success-modal" id="successModal">
                 <div class="modal-content">
@@ -2001,6 +2008,7 @@
     }
 ];
 
+
         auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
@@ -2371,7 +2379,6 @@
                                 <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
                             </button>
                         </div>
-                        <div class="digital-clock" id="digitalClock"></div>
                     `;
                     cardsContainer.appendChild(mainCard);
 
@@ -2425,7 +2432,6 @@
                                     <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
                                 </button>
                             </div>
-                            <div class="digital-clock" id="digitalClock"></div>
                         `;
                         alternativesContainer.appendChild(card);
 
@@ -2487,7 +2493,6 @@
                     <span class="button-text">Read More</span>
                     <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                 </a>
-                <div class="digital-clock" id="digitalClock"></div>
             `;
             cardsContainer.appendChild(card);
         });
@@ -2496,7 +2501,7 @@
             try {
                 if (query) {
                     fingerprintIcon.classList.add('scanning');
-                    fingerprintIcon.style.opacity = '1'; // Ensure visibility
+                    fingerprintIcon.style.opacity = '1';
                     sectionTitle.textContent = 'RELEVANT LAW';
                     loaderOverlay.classList.add('active');
 
@@ -2535,13 +2540,12 @@
                             <a href="News.html" class="border-button">
                                 <span class="button-text">Read More</span>
                                 <span class="iconer">
-                                    <svg height="24" width="24" viewBox="0 0 24 22" xmlns="http://www.w3.org/2000/svg">
+                                    <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M0 0h24v24H0z" fill="none"></path>
                                         <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
                                     </svg>
                                 </span>
                             </a>
-                            <div class="digital-clock" id="digitalClock"></div>
                         `;
                         cardsContainer.appendChild(card);
                     });
@@ -2558,52 +2562,62 @@
             }
         }
 
+        function updateClock() {
+            const options = { timeZone: 'Asia/Manila', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
+            const now = new Date().toLocaleString('en-US', options);
+            const [date, time] = now.split(', ');
+            const [month, day, year] = date.split('/');
+            const [hours, minutes, seconds, ampm] = time.split(/:| /);
+            const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds} ${ampm}`;
+            const dayName = new Date().toLocaleString('en-US', { weekday: 'long' }).toUpperCase();
+
+            const clock = document.getElementById('digitalClock');
+            if (clock) {
+                clock.textContent = `${dayName} ${formattedTime}`;
+            }
+        }
+
         window.addEventListener('load', () => {
             performSearch('');
             updateClock();
-            setInterval(updateClock, 1); // Update every millisecond
+            setInterval(updateClock, 1000); // Update every second
         });
 
-        function updateClock() {
-            const options = { timeZone: 'Asia/Manila', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric', millisecond: 'numeric' };
-            const now = new Date().toLocaleString('en-US', options);
-            const [date, time] = now.split(', ');
-            const [day, month, year] = date.split('/');
-            const [hour, minute, second] = time.split(':');
-            const [ampm, millisecond] = second.split(' ');
-            const formattedTime = `${day}/${month}/${year} ${hour}:${minute}:${second}${ampm} ${millisecond}ms`;
-            const clocks = document.querySelectorAll('.digital-clock');
-            clocks.forEach(clock => {
-                clock.textContent = formattedTime;
-            });
-        }
+        searchInput.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                await performSearch(query);
+            }
+        });
 
-        searchInput.addEventListener('input', debounce((e) => {
-            const query = e.target.value.trim();
-            performSearch(query);
-        }, 300));
+        document.querySelector('.search-icon').addEventListener('click', async () => {
+            const query = searchInput.value.trim();
+            await performSearch(query);
+        });
 
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
+        document.querySelector('.search-icon').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault(); 
+                const query = searchInput.value.trim();
+                performSearch(query);
+            }
+        });
 
         function highlightText(element, query) {
-            if (!element || !query) return;
-            const text = element.textContent;
-            if (text && query) {
-                const regex = new RegExp(`(${query})`, 'gi');
-                const highlighted = text.replace(regex, '<span style="background-color: yellow;">$1</span>');
-                element.innerHTML = highlighted;
-            }
+            if (!query) return;
+            const regex = new RegExp(`(${query})`, 'gi');
+            const text = element.innerHTML;
+            element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
         }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                const icon = mobileMenuIcon.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
     </script>
 </body>
 </html>
