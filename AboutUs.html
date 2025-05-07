@@ -555,8 +555,7 @@
         .timeline-section,
         .growth-section,
         .careers-section,
-        .leaders-section,
-        .quiz-section {
+        .leaders-section {
             position: relative;
             z-index: 1;
             margin-bottom: 60px;
@@ -892,210 +891,6 @@
             color: #222;
         }
 
-        .quiz-section {
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-            border-radius: 15px;
-        }
-
-        .quiz-section h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 36px;
-            font-weight: 700;
-            color: #8B0000;
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s forwards;
-        }
-
-        .quiz-section p {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            color: #555;
-            margin-bottom: 40px;
-        }
-
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .quiz-progress {
-            font-size: 16px;
-            color: #333;
-        }
-
-        .quiz-timer {
-            font-size: 16px;
-            color: #8B0000;
-        }
-
-        .quiz-question {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .quiz-option {
-            padding: 15px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            text-align: left;
-        }
-
-        .quiz-option:hover {
-            background: #e0e0e0;
-        }
-
-        .quiz-option.selected {
-            background: #d7b15c;
-            color: #fff;
-        }
-
-        .quiz-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .quiz-button {
-            padding: 12px 20px;
-            background: linear-gradient(90deg, #8B0000, #b30000);
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .quiz-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
-        }
-
-        .quiz-results {
-            display: none;
-            text-align: left;
-            margin-top: 20px;
-        }
-
-        .quiz-results h3 {
-            font-size: 24px;
-            color: #8B0000;
-            margin-bottom: 20px;
-        }
-
-        .quiz-results ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .quiz-results li {
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 5px;
-        }
-
-        .quiz-results .correct {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .quiz-results .incorrect {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .achievement-badge {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #d7b15c;
-            color: #fff;
-            border-radius: 25px;
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        .dark-theme .quiz-section {
-            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-        }
-
-        .dark-theme .quiz-section h2 {
-            color: #d7b15c;
-        }
-
-        .dark-theme .quiz-section p {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .quiz-container {
-            background: #333;
-        }
-
-        .dark-theme .quiz-progress,
-        .dark-theme .quiz-question {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .quiz-timer {
-            color: #d7b15c;
-        }
-
-        .dark-theme .quiz-option {
-            background: #444;
-            border-color: #555;
-            color: #e0e0e0;
-        }
-
-        .dark-theme .quiz-option:hover {
-            background: #555;
-        }
-
-        .dark-theme .quiz-option.selected {
-            background: #b89a47;
-        }
-
-        .dark-theme .quiz-button {
-            background: linear-gradient(90deg, #d7b15c, #b89a47);
-            color: #222;
-        }
-
-        .dark-theme .quiz-results .correct {
-            background: #2e7d32;
-            color: #d4edda;
-        }
-
-        .dark-theme .quiz-results .incorrect {
-            background: #c62828;
-            color: #f8d7da;
-        }
-
         .leaders-section {
             padding: 80px 20px;
             text-align: center;
@@ -1400,8 +1195,7 @@
 
             .timeline-section h2,
             .growth-section h2,
-            .leaders-section h2,
-            .quiz-section h2 {
+            .leaders-section h2 {
                 font-size: 32px;
             }
 
@@ -1468,10 +1262,6 @@
             .growth-grid,
             .leaders-grid {
                 gap: 30px;
-            }
-
-            .quiz-container {
-                padding: 20px;
             }
         }
 
@@ -1582,15 +1372,13 @@
             .timeline-section,
             .growth-section,
             .careers-section,
-            .leaders-section,
-            .quiz-section {
+            .leaders-section {
                 padding: 50px 10px;
             }
 
             .timeline-section h2,
             .growth-section h2,
-            .leaders-section h2,
-            .quiz-section h2 {
+            .leaders-section h2 {
                 font-size: 28px;
             }
 
@@ -1671,23 +1459,6 @@
             .leader-item img {
                 width: 100px;
                 height: 100px;
-            }
-
-            .quiz-container {
-                padding: 15px;
-            }
-
-            .quiz-question {
-                font-size: 16px;
-            }
-
-            .quiz-option {
-                padding: 10px;
-            }
-
-            .quiz-button {
-                padding: 10px 15px;
-                font-size: 14px;
             }
         }
     </style>
@@ -1810,7 +1581,7 @@
                         <div class="timeline-content">
                             <h3>January 2025 – A School Project Begins</h3>
                             <p>Founded by Grade 12 ICT students at STI College Fairview, we kicked off the project under the banner of our school. The STI College Fairview logo became our symbol of academic excellence and teamwork.</p>
-                            <div class="timeline-image" style="background-image: url('https://scontent.fmnl4-8.fna.fbcdn.net/v/t39.30808-6/370044409_696741882QNvgF1A2MG&_nc_oc=Adkmgh5O27vkKbQWmsZ4pznR4Z8U8K6avfC_Fj-RBzcKH1HM7iFr7GKn0xPqHZxK6iY&_nc_zt=23&_nc_ht=scontent.fmnl4-8.fna&_nc_gid=FwCdoy2Cj1w4oeXD5iJISg&oh=00_AfF_s7N-a21IQD9w4mvwD2I-CFo62oaVvCFQMKohOvBr3Q&oe=680E831A');"></div>
+                            <div class="timeline-image" style="background-image: url('https://i.imgur.com/3fGrqrv.jpeg');"></div>
                         </div>
                         <div class="timeline-marker"></div>
                     </div>
@@ -1865,29 +1636,6 @@
                     <h2>Product</h2>
                     <p>Contra E-Crime is a student project passionate about making cyber laws easy to understand having Weigh the Right as our main tool for giving you the best search experience. Want to explore more of the website? Let’s connect at the SHS expo!</p>
                     <a href="HomePage.html">Learn More</a>
-                </div>
-            </section>
-
-            <section class="quiz-section">
-                <h2>Cybercrime Law Challenge</h2>
-                <p>Test your knowledge of cybercrime laws with our interactive quiz! Answer questions, earn badges, and review your mistakes to become a cyber law expert.</p>
-                <div class="quiz-container">
-                    <div class="quiz-header">
-                        <div class="quiz-progress" id="quizProgress">Question 1/10</div>
-                        <div class="quiz-timer" id="quizTimer">Time: 30s</div>
-                    </div>
-                    <div class="quiz-question" id="quizQuestion"></div>
-                    <div class="quiz-options" id="quizOptions"></div>
-                    <div class="quiz-buttons">
-                        <button class="quiz-button" id="prevQuestion" disabled>Previous</button>
-                        <button class="quiz-button" id="nextQuestion">Next</button>
-                    </div>
-                    <div class="quiz-results" id="quizResults">
-                        <h3>Your Results</h3>
-                        <div id="achievementBadge"></div>
-                        <ul id="resultsList"></ul>
-                        <button class="quiz-button" id="restartQuiz">Restart Quiz</button>
-                    </div>
                 </div>
             </section>
 
@@ -2031,280 +1779,6 @@
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
 
-        // Quiz Logic
-        const quizQuestions = [
-            {
-                question: "What is the primary legislation in the Philippines governing cybercrimes?",
-                options: ["Republic Act No. 10175", "Republic Act No. 8293", "Republic Act No. 9165", "Republic Act No. 7877"],
-                correct: 0,
-                explanation: "Republic Act No. 10175, also known as the Cybercrime Prevention Act of 2012, is the primary law in the Philippines addressing cybercrimes."
-            },
-            {
-                question: "Which of the following is considered a cybercrime under RA 10175?",
-                options: ["Online shopping", "Identity theft", "Posting a blog", "Sending emails"],
-                correct: 1,
-                explanation: "Identity theft is explicitly listed as a cybercrime under RA 10175, involving the unauthorized use of personal information."
-            },
-            {
-                question: "What penalty may be imposed for illegal access under the Cybercrime Prevention Act?",
-                options: ["Fine only", "Imprisonment or fine", "Community service", "No penalty"],
-                correct: 1,
-                explanation: "Illegal access under RA 10175 can result in imprisonment, a fine, or both, depending on the severity of the offense."
-            },
-            {
-                question: "What is 'phishing' in the context of cybercrime?",
-                options: ["A type of online game", "Sending spam emails", "Tricking users into revealing personal information", "Hacking a website"],
-                correct: 2,
-                explanation: "Phishing involves fraudulent attempts to obtain sensitive information by pretending to be a trustworthy entity."
-            },
-            {
-                question: "Which agency is primarily responsible for enforcing cybercrime laws in the Philippines?",
-                options: ["Department of Education", "National Bureau of Investigation", "Philippine National Police", "Both B and C"],
-                correct: 3,
-                explanation: "Both the NBI and PNP have specialized cybercrime units tasked with enforcing cybercrime laws."
-            },
-            {
-                question: "What does 'data interference' mean under RA 10175?",
-                options: ["Sharing data online", "Unauthorized deletion or alteration of data", "Backing up data", "Encrypting data"],
-                correct: 1,
-                explanation: "Data interference involves the intentional or reckless alteration, damaging, deletion, or deterioration of computer data."
-            },
-            {
-                question: "Is online libel a cybercrime under RA 10175?",
-                options: ["Yes", "No", "Only if it involves hacking", "Only if it causes physical harm"],
-                correct: 0,
-                explanation: "Online libel is a cybercrime under RA 10175, covering defamatory statements made through digital platforms."
-            },
-            {
-                question: "What is the purpose of a 'warrant' in cybercrime investigations?",
-                options: ["To arrest suspects immediately", "To authorize search and seizure", "To fine offenders", "To dismiss a case"],
-                correct: 1,
-                explanation: "A warrant authorizes law enforcement to search and seize evidence related to a cybercrime investigation."
-            },
-            {
-                question: "Which of the following best defines 'cyberbullying'?",
-                options: ["Posting positive comments online", "Harassing someone through digital means", "Creating a social media account", "Sharing educational content"],
-                correct: 1,
-                explanation: "Cyberbullying involves using digital platforms to harass, intimidate, or harm others."
-            },
-            {
-                question: "What is a common defense against cybercrime charges in the Philippines?",
-                options: ["Lack of intent", "Having a fast internet", "Using a VPN", "Owning a computer"],
-                correct: 0,
-                explanation: "Lack of intent can be a defense, as many cybercrimes require proof of intentional or malicious action."
-            },
-            {
-                question: "What is the maximum imprisonment for computer-related fraud under RA 10175?",
-                options: ["1 year", "3 years", "7 years", "No imprisonment"],
-                correct: 2,
-                explanation: "Computer-related fraud can carry a penalty of up to 7 years imprisonment under RA 10175."
-            },
-            {
-                question: "Which act is NOT considered a cybercrime?",
-                options: ["Hacking", "Online shopping", "Spamming", "Phishing"],
-                correct: 1,
-                explanation: "Online shopping is a legitimate activity and not classified as a cybercrime."
-            },
-            {
-                question: "What is 'spamming' in the context of cybercrime?",
-                options: ["Sending unsolicited bulk messages", "Creating spam filters", "Posting on social media", "Sending one email"],
-                correct: 0,
-                explanation: "Spamming involves sending unsolicited bulk messages, often for commercial purposes, which is a cybercrime."
-            },
-            {
-                question: "Can minors be charged with cybercrimes in the Philippines?",
-                options: ["Yes, always", "No, never", "Yes, but with limitations", "Only if they are over 18"],
-                correct: 2,
-                explanation: "Minors can be charged, but the Juvenile Justice and Welfare Act provides special considerations for those under 18."
-            },
-            {
-                question: "What is the role of the Cybercrime Investigation and Coordinating Center (CICC)?",
-                options: ["To create websites", "To coordinate cybercrime prevention", "To sell software", "To provide internet access"],
-                correct: 1,
-                explanation: "The CICC coordinates efforts to prevent and combat cybercrimes in the Philippines."
-            },
-            {
-                question: "What does 'cyber espionage' involve?",
-                options: ["Playing online games", "Unauthorized access to steal sensitive data", "Posting public information", "Creating a website"],
-                correct: 1,
-                explanation: "Cyber espionage involves unauthorized access to steal confidential or sensitive data, often for strategic purposes."
-            },
-            {
-                question: "Which of the following is a penalty for online child pornography under RA 10175?",
-                options: ["Fine only", "Imprisonment up to 7 years", "Community service", "No penalty"],
-                correct: 1,
-                explanation: "Online child pornography carries severe penalties, including imprisonment of up to 7 years."
-            },
-            {
-                question: "What is a 'Trojan horse' in cybercrime?",
-                options: ["A type of email", "Malicious software disguised as legitimate", "A secure password", "A type of firewall"],
-                correct: 1,
-                explanation: "A Trojan horse is malicious software that appears legitimate but performs harmful actions."
-            },
-            {
-                question: "What does RA 10175 say about 'cybersex'?",
-                options: ["It is legal", "It is a cybercrime", "It is encouraged", "It is not mentioned"],
-                correct: 1,
-                explanation: "Cybersex, when involving exploitation or minors, is considered a cybercrime under RA 10175."
-            },
-            {
-                question: "What is the first step in reporting a cybercrime in the Philippines?",
-                options: ["Post on social media", "Contact a lawyer", "File a complaint with PNP or NBI", "Ignore it"],
-                correct: 2,
-                explanation: "The first step is to file a complaint with the PNP or NBI’s cybercrime division for investigation."
-            }
-            // Add more questions to reach 50+ for refresh pool
-        ];
-
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let selectedOption = null;
-        let timer;
-        let timeLeft = 30;
-        let userAnswers = [];
-        const questionsPerQuiz = 10;
-
-        const quizQuestion = document.getElementById('quizQuestion');
-        const quizOptions = document.getElementById('quizOptions');
-        const quizProgress = document.getElementById('quizProgress');
-        const quizTimer = document.getElementById('quizTimer');
-        const prevQuestion = document.getElementById('prevQuestion');
-        const nextQuestion = document.getElementById('nextQuestion');
-        const quizResults = document.getElementById('quizResults');
-        const resultsList = document.getElementById('resultsList');
-        const restartQuiz = document.getElementById('restartQuiz');
-        const achievementBadge = document.getElementById('achievementBadge');
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        function startQuiz() {
-            const shuffledQuestions = shuffleArray([...quizQuestions]).slice(0, questionsPerQuiz);
-            currentQuestions = shuffledQuestions;
-            currentQuestionIndex = 0;
-            score = 0;
-            userAnswers = [];
-            quizResults.style.display = 'none';
-            nextQuestion.disabled = false;
-            prevQuestion.disabled = true;
-            loadQuestion();
-            startTimer();
-        }
-
-        function startTimer() {
-            timeLeft = 30;
-            quizTimer.textContent = `Time: ${timeLeft}s`;
-            clearInterval(timer);
-            timer = setInterval(() => {
-                timeLeft--;
-                quizTimer.textContent = `Time: ${timeLeft}s`;
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    handleNextQuestion();
-                }
-            }, 1000);
-        }
-
-        function loadQuestion() {
-            const question = currentQuestions[currentQuestionIndex];
-            quizQuestion.textContent = question.question;
-            quizOptions.innerHTML = '';
-            question.options.forEach((option, index) => {
-                const optionDiv = document.createElement('div');
-                optionDiv.classList.add('quiz-option');
-                optionDiv.textContent = option;
-                optionDiv.addEventListener('click', () => selectOption(index, optionDiv));
-                quizOptions.appendChild(optionDiv);
-            });
-            quizProgress.textContent = `Question ${currentQuestionIndex + 1}/${questionsPerQuiz}`;
-            prevQuestion.disabled = currentQuestionIndex === 0;
-            nextQuestion.textContent = currentQuestionIndex === questionsPerQuiz - 1 ? 'Finish' : 'Next';
-            selectedOption = null;
-            startTimer();
-        }
-
-        function selectOption(index, optionDiv) {
-            selectedOption = index;
-            document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
-            optionDiv.classList.add('selected');
-        }
-
-        function handleNextQuestion() {
-            if (selectedOption === null) {
-                alert('Please select an option before proceeding.');
-                return;
-            }
-
-            const question = currentQuestions[currentQuestionIndex];
-            const isCorrect = selectedOption === question.correct;
-            if (isCorrect) score++;
-            userAnswers.push({
-                question: question.question,
-                selected: question.options[selectedOption],
-                correct: question.options[question.correct],
-                isCorrect,
-                explanation: question.explanation
-            });
-
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questionsPerQuiz) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function handlePrevQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                loadQuestion();
-            }
-        }
-
-        function showResults() {
-            clearInterval(timer);
-            quizResults.style.display = 'block';
-            resultsList.innerHTML = '';
-            userAnswers.forEach((answer, index) => {
-                const li = document.createElement('li');
-                li.classList.add(answer.isCorrect ? 'correct' : 'incorrect');
-                li.innerHTML = `
-                    <strong>Question ${index + 1}: ${answer.question}</strong><br>
-                    Your Answer: ${answer.selected}<br>
-                    Correct Answer: ${answer.correct}<br>
-                    Explanation: ${answer.explanation}
-                `;
-                resultsList.appendChild(li);
-            });
-
-            const percentage = (score / questionsPerQuiz) * 100;
-            let badge = '';
-            if (percentage === 100) {
-                badge = 'Cyber Law Master';
-            } else if (percentage >= 80) {
-                badge = 'Cyber Law Expert';
-            } else if (percentage >= 60) {
-                badge = 'Cyber Law Pro';
-            } else {
-                badge = 'Cyber Law Novice';
-            }
-            achievementBadge.textContent = `Achievement: ${badge} (${score}/${questionsPerQuiz})`;
-            nextQuestion.disabled = true;
-            prevQuestion.disabled = true;
-        }
-
-        nextQuestion.addEventListener('click', handleNextQuestion);
-        prevQuestion.addEventListener('click', handlePrevQuestion);
-        restartQuiz.addEventListener('click', startQuiz);
-
-        startQuiz();
-
-        // Existing Firebase and other JavaScript logic remains unchanged
         auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
@@ -2591,7 +2065,7 @@
             }
         });
 
-        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item, .quiz-container');
+        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item');
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
