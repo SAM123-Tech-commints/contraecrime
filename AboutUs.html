@@ -555,8 +555,7 @@
         .timeline-section,
         .growth-section,
         .careers-section,
-        .leaders-section,
-        .quiz-section {
+        .leaders-section {
             position: relative;
             z-index: 1;
             margin-bottom: 60px;
@@ -892,347 +891,6 @@
             color: #222;
         }
 
-        .quiz-section {
-            padding: 80px 20px;
-            text-align: center;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-            border-radius: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .quiz-section h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 36px;
-            font-weight: 700;
-            color: #8B0000;
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s forwards;
-        }
-
-        .quiz-section p {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            font-weight: 300;
-            color: #555;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s forwards 0.3s;
-        }
-
-        .quiz-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .quiz-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/circuit.png');
-            opacity: 0.05;
-            z-index: 0;
-        }
-
-        .quiz-difficulty {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .quiz-difficulty button {
-            padding: 10px 20px;
-            background: linear-gradient(90deg, #8B0000, #b30000);
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .quiz-difficulty button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
-        }
-
-        .quiz-difficulty button.active {
-            background: linear-gradient(90deg, #d7b15c, #b89a47);
-            color: #222;
-        }
-
-        .quiz-progress {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #8B0000, #b30000);
-            transition: width 0.3s ease;
-        }
-
-        .quiz-question {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: #222;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .quiz-option {
-            padding: 15px;
-            background: #f7f7f7;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            color: #333;
-            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .quiz-option:hover {
-            background: #e0e0e0;
-            border-color: #8B0000;
-            transform: translateX(5px);
-        }
-
-        .quiz-option.correct {
-            background: #d4edda;
-            border-color: #28a745;
-        }
-
-        .quiz-option.incorrect {
-            background: #f8d7da;
-            border-color: #dc3545;
-        }
-
-        .quiz-option.selected {
-            border-color: #8B0000;
-            background: #e0e0e0;
-        }
-
-        .quiz-explanation {
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            color: #555;
-            margin-top: 20px;
-            display: none;
-            position: relative;
-            z-index: 1;
-        }
-
-        .quiz-explanation.visible {
-            display: block;
-        }
-
-        .quiz-buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .quiz-buttons button {
-            padding: 12px 30px;
-            background: linear-gradient(90deg, #8B0000, #b30000);
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .quiz-buttons button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
-        }
-
-        .quiz-buttons button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .quiz-results {
-            display: none;
-            text-align: center;
-            padding: 30px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        .quiz-results h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: #222;
-            margin-bottom: 20px;
-        }
-
-        .quiz-results p {
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 20px;
-        }
-
-        .achievement-badge {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(90deg, #d7b15c, #b89a47);
-            color: #222;
-            border-radius: 25px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            margin: 10px;
-        }
-
-        .review-mistakes {
-            margin-top: 20px;
-        }
-
-        .review-mistakes h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: #222;
-            margin-bottom: 15px;
-        }
-
-        .mistake-item {
-            padding: 15px;
-            background: #f7f7f7;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .mistake-item p {
-            margin: 5px 0;
-        }
-
-        .dark-theme .quiz-section {
-            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-        }
-
-        .dark-theme .quiz-section h2 {
-            color: #d7b15c;
-        }
-
-        .dark-theme .quiz-section p {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .quiz-container {
-            background: #333;
-        }
-
-        .dark-theme .quiz-question {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .quiz-option {
-            background: #3a3b3c;
-            border-color: #555;
-            color: #e0e0e0;
-        }
-
-        .dark-theme .quiz-option:hover {
-            background: #4a4b4c;
-            border-color: #d7b15c;
-        }
-
-        .dark-theme .quiz-option.correct {
-            background: #2e7d32;
-            border-color: #1b5e20;
-        }
-
-        .dark-theme .quiz-option.incorrect {
-            background: #d81b60;
-            border-color: #b71c1c;
-        }
-
-        .dark-theme .quiz-option.selected {
-            border-color: #d7b15c;
-            background: #4a4b4c;
-        }
-
-        .dark-theme .quiz-explanation {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .quiz-results {
-            background: #333;
-        }
-
-        .dark-theme .quiz-results h3 {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .quiz-results p {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .mistake-item {
-            background: #3a3b3c;
-            border-color: #555;
-            color: #e0e0e0;
-        }
-
         .leaders-section {
             padding: 80px 20px;
             text-align: center;
@@ -1537,8 +1195,7 @@
 
             .timeline-section h2,
             .growth-section h2,
-            .leaders-section h2,
-            .quiz-section h2 {
+            .leaders-section h2 {
                 font-size: 32px;
             }
 
@@ -1715,15 +1372,13 @@
             .timeline-section,
             .growth-section,
             .careers-section,
-            .leaders-section,
-            .quiz-section {
+            .leaders-section {
                 padding: 50px 10px;
             }
 
             .timeline-section h2,
             .growth-section h2,
-            .leaders-section h2,
-            .quiz-section h2 {
+            .leaders-section h2 {
                 font-size: 28px;
             }
 
@@ -1805,24 +1460,6 @@
                 width: 100px;
                 height: 100px;
             }
-
-            .quiz-difficulty {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .quiz-difficulty button {
-                width: 100%;
-            }
-
-            .quiz-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .quiz-buttons button {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -1861,7 +1498,6 @@
                 </li>
                 <li>
                     <a href="History.html">
-                        vidrio
                         <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
                         Search History
                     </a>
@@ -1893,7 +1529,6 @@
                 </div>
                 <div class="toggle-switch">
                     <label class="switch-label">
-                       
                         <input type="checkbox" class="checkbox" id="themeToggle">
                         <span class="slider"></span>
                     </label>
@@ -1946,7 +1581,7 @@
                         <div class="timeline-content">
                             <h3>January 2025 – A School Project Begins</h3>
                             <p>Founded by Grade 12 ICT students at STI College Fairview, we kicked off the project under the banner of our school. The STI College Fairview logo became our symbol of academic excellence and teamwork.</p>
-                            <div class="timeline-image" style="background-image: url('https://i.imgur.com/3fGrqrv.jpeg');"></div>
+                            <div class="timeline-image" style="background-image: url('https://scontent.fmnl4-8.fna.fbcdn.net/v/t39.30808-6/370044409_696741882497707_8408055328080058811_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=TukFEOJyeUEQ7kNvwF1A2MG&_nc_oc=Adkmgh5O27vkKbQWmsZ4pznR4Z8U8K6avfC_Fj-RBzcKH1HM7iFr7GKn0xPqHZxK6iY&_nc_zt=23&_nc_ht=scontent.fmnl4-8.fna&_nc_gid=FwCdoy2Cj1w4oeXD5iJISg&oh=00_AfF_s7N-a21IQD9w4mvwD2I-CFo62oaVvCFQMKohOvBr3Q&oe=680E831A');"></div>
                         </div>
                         <div class="timeline-marker"></div>
                     </div>
@@ -2001,42 +1636,6 @@
                     <h2>Product</h2>
                     <p>Contra E-Crime is a student project passionate about making cyber laws easy to understand having Weigh the Right as our main tool for giving you the best search experience. Want to explore more of the website? Let’s connect at the SHS expo!</p>
                     <a href="HomePage.html">Learn More</a>
-                </div>
-            </section>
-
-            <section class="quiz-section">
-                <h2>Test Your Cyber Law Knowledge</h2>
-                <p>Challenge yourself with our interactive Cyber Law Quest! Choose your difficulty and embark on a journey to master Philippine cybercrime laws and legal terms. Review your mistakes, earn achievements, and become a cyber law expert!</p>
-                <div class="quiz-container">
-                    <div class="quiz-difficulty">
-                        <button id="easyMode" class="active">Easy</button>
-                        <button id="hardMode">Hard</button>
-                        <button id="mixedMode">Mixed</button>
-                    </div>
-                    <div class="quiz-progress">
-                        <span id="questionCount">Question 1 of 10</span>
-                        <span id="scoreDisplay">Score: 0</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-                    </div>
-                    <div class="quiz-question" id="questionText"></div>
-                    <div class="quiz-options" id="optionsContainer"></div>
-                    <div class="quiz-explanation" id="explanationText"></div>
-                    <div class="quiz-buttons">
-                        renewed
-                        <button id="submitAnswer" disabled>Submit</button>
-                        <button id="nextQuestion" style="display: none;">Next</button>
-                        <button id="restartQuiz" style="display: none;">Restart</button>
-                    </div>
-                </div>
-                <div class="quiz-results" id="quizResults">
-                    <h3>Your Results</h3>
-                    <p id="resultSummary"></p>
-                    <div id="achievementBadges"></div>
-                    <div class="review-mistakes" id="reviewMistakes"></div>
-                    <button id="reviewAnswers">Review Mistakes</button>
-                    <button id="playAgain">Play Again</button>
                 </div>
             </section>
 
@@ -2364,8 +1963,8 @@
             };
         });
 
-        avatarBgColorPicker.addEventListener('change', (event) => {
-            const color = event.target.value;
+        avatarBgColorPicker.addEventListener('change', () => {
+            const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
 
             const user = auth.currentUser;
@@ -2374,15 +1973,18 @@
                 database.ref(`users/${sanitizedEmail}`).update({
                     avatarBgColor: color,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
-                }).catch(error => {
+                })
+                .catch(error => {
                     console.error('Error saving avatar background color:', error);
                     alert('Failed to save avatar background color: ' + error.message);
                 });
+            } else {
+                alert('You must be logged in to change the avatar background color.');
             }
         });
 
-        borderColorPicker.addEventListener('change', (event) => {
-            const color = event.target.value;
+        borderColorPicker.addEventListener('change', () => {
+            const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
 
             const user = auth.currentUser;
@@ -2391,15 +1993,18 @@
                 database.ref(`users/${sanitizedEmail}`).update({
                     borderColor: color,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
-                }).catch(error => {
+                })
+                .catch(error => {
                     console.error('Error saving border color:', error);
                     alert('Failed to save border color: ' + error.message);
                 });
+            } else {
+                alert('You must be logged in to change the border color.');
             }
         });
 
-        borderTypeSelect.addEventListener('change', (event) => {
-            const borderType = event.target.value;
+        borderTypeSelect.addEventListener('change', () => {
+            const borderType = borderTypeSelect.value;
             profilePic.style.borderStyle = borderType;
 
             const user = auth.currentUser;
@@ -2408,56 +2013,60 @@
                 database.ref(`users/${sanitizedEmail}`).update({
                     borderType: borderType,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
-                }).catch(error => {
+                })
+                .catch(error => {
                     console.error('Error saving border type:', error);
                     alert('Failed to save border type: ' + error.message);
                 });
+            } else {
+                alert('You must be logged in to change the border type.');
             }
         });
 
-        themeToggle.addEventListener('change', () => {
-            body.classList.toggle('dark-theme');
-            const isDarkTheme = body.classList.contains('dark-theme');
-            localStorage.setItem('darkTheme', isDarkTheme);
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    darkTheme: isDarkTheme,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                }).catch(error => {
-                    console.error('Error saving theme preference:', error);
-                    alert('Failed to save theme preference: ' + error.message);
-                });
-            }
-        });
-
-        const savedTheme = localStorage.getItem('darkTheme');
-        if (savedTheme === 'true') {
+        if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
 
-        mobileMenuIcon.addEventListener('click', () => {
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('dark-theme');
+                localStorage.setItem('darkTheme', 'enabled');
+            } else {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('darkTheme', 'disabled');
+            }
+        });
+
+        mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 480 && sidebar.classList.contains('active')) {
-                if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target)) {
-                    sidebar.classList.remove('active');
-                }
+            const icon = mobileMenuIcon.querySelector('i');
+            if (sidebar.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             }
         });
 
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
+        document.querySelectorAll('a[href]').forEach(link => {
+            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+                link.addEventListener('click', function(e) {
+                    if (!this.href.includes(window.location.hostname)) return;
+                    
+                    e.preventDefault();
+                    loaderOverlay.classList.add('active');
+                    
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 150);
+                });
             }
         });
 
-        const observer = new IntersectionObserver((entries) => {
+        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item');
+        const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
@@ -2466,231 +2075,14 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.timeline-item, .growth-item, .leader-item, .careers-card').forEach(item => {
+        items.forEach(item => {
             observer.observe(item);
         });
 
-        const quizData = {
-            easy: [
-                {
-                    question: "What is the primary law in the Philippines that addresses cybercrime?",
-                    options: ["RA 10175", "RA 8792", "RA 9262", "RA 9165"],
-                    correct: 0,
-                    explanation: "Republic Act No. 10175, also known as the Cybercrime Prevention Act of 2012, is the primary law in the Philippines that addresses cybercrimes, including hacking, cyber libel, and online fraud."
-                },
-                {
-                    question: "Which of the following is considered a cybercrime under RA 10175?",
-                    options: ["Physical theft", "Cyber libel", "Traffic violation", "Tax evasion"],
-                    correct: 1,
-                    explanation: "Cyber libel, as defined under RA 10175, involves the unlawful or prohibited act of libel committed through a computer system or any other similar means."
-                },
-                // Add more easy questions as needed
-            ],
-            hard: [
-                {
-                    question: "Under RA 10175, what is the penalty for illegal access to a computer system?",
-                    options: ["Fine only", "Imprisonment of up to 7 years", "Community service", "No penalty"],
-                    correct: 1,
-                    explanation: "Illegal access under RA 10175 is punishable by imprisonment of up to 7 years or a fine of at least PHP 100,000, or both."
-                },
-                {
-                    question: "What is the role of the National Cybercrime Coordinating Office (NCCO) under RA 10175?",
-                    options: ["Software development", "Policy coordination", "Tax collection", "Public transportation"],
-                    correct: 1,
-                    explanation: "The NCCO is responsible for coordinating policies and programs to combat cybercrime, as mandated by RA 10175."
-                },
-                // Add more hard questions as needed
-            ],
-            mixed: [
-                {
-                    question: "What does 'phishing' refer to in the context of cybercrime?",
-                    options: ["Fishing online", "Fraudulent attempt to obtain sensitive information", "Legal data sharing", "Software update"],
-                    correct: 1,
-                    explanation: "Phishing is a cybercrime where attackers impersonate legitimate entities to trick users into providing sensitive information, such as passwords or credit card details."
-                },
-                {
-                    question: "Which section of RA 10175 defines 'data interference'?",
-                    options: ["Section 4", "Section 6", "Section 8", "Section 10"],
-                    correct: 0,
-                    explanation: "Section 4 of RA 10175 defines data interference as the intentional or reckless alteration, damaging, deletion, or deterioration of computer data without right."
-                },
-                // Add more mixed questions as needed
-            ]
-        };
-
-        let currentQuestions = quizData.easy;
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let totalQuestions = 10;
-        let userAnswers = [];
-        let selectedDifficulty = 'easy';
-
-        const questionText = document.getElementById('questionText');
-        const optionsContainer = document.getElementById('optionsContainer');
-        const explanationText = document.getElementById('explanationText');
-        const submitAnswerBtn = document.getElementById('submitAnswer');
-        const nextQuestionBtn = document.getElementById('nextQuestion');
-        const restartQuizBtn = document.getElementById('restartQuiz');
-        const quizResults = document.getElementById('quizResults');
-        const resultSummary = document.getElementById('resultSummary');
-        const achievementBadges = document.getElementById('achievementBadges');
-        const reviewMistakes = document.getElementById('reviewMistakes');
-        const reviewAnswersBtn = document.getElementById('reviewAnswers');
-        const playAgainBtn = document.getElementById('playAgain');
-        const questionCount = document.getElementById('questionCount');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        const progressFill = document.getElementById('progressFill');
-        const easyModeBtn = document.getElementById('easyMode');
-        const hardModeBtn = document.getElementById('hardMode');
-        const mixedModeBtn = document.getElementById('mixedMode');
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        function loadQuestion() {
-            const question = currentQuestions[currentQuestionIndex];
-            questionText.textContent = question.question;
-            optionsContainer.innerHTML = '';
-            explanationText.classList.remove('visible');
-            submitAnswerBtn.disabled = true;
-            nextQuestionBtn.style.display = 'none';
-            restartQuizBtn.style.display = 'none';
-
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.classList.add('quiz-option');
-                optionElement.textContent = option;
-                optionElement.addEventListener('click', () => selectOption(index, optionElement));
-                optionsContainer.appendChild(optionElement);
-            });
-
-            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
-            scoreDisplay.textContent = `Score: ${score}`;
-            progressFill.style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
-        }
-
-        function selectOption(index, optionElement) {
-            document.querySelectorAll('.quiz-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            optionElement.classList.add('selected');
-            submitAnswerBtn.disabled = false;
-            userAnswers[currentQuestionIndex] = index;
-        }
-
-        function submitAnswer() {
-            const question = currentQuestions[currentQuestionIndex];
-            const selectedOption = userAnswers[currentQuestionIndex];
-            const isCorrect = selectedOption === question.correct;
-
-            document.querySelectorAll('.quiz-option').forEach((opt, idx) => {
-                if (idx === question.correct) {
-                    opt.classList.add('correct');
-                } else if (idx === selectedOption && !isCorrect) {
-                    opt.classList.add('incorrect');
-                }
-            });
-
-            explanationText.textContent = question.explanation;
-            explanationText.classList.add('visible');
-            submitAnswerBtn.disabled = true;
-            nextQuestionBtn.style.display = 'block';
-
-            if (isCorrect) {
-                score += 10;
-                scoreDisplay.textContent = `Score: ${score}`;
-            }
-        }
-
-        function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions && currentQuestionIndex < currentQuestions.length) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            quizResults.style.display = 'block';
-            document.querySelector('.quiz-container').style.display = 'none';
-            resultSummary.textContent = `You scored ${score} out of ${totalQuestions * 10}!`;
-
-            achievementBadges.innerHTML = '';
-            if (score === totalQuestions * 10) {
-                achievementBadges.innerHTML += '<div class="achievement-badge">Perfect Score!</div>';
-            } else if (score >= totalQuestions * 7) {
-                achievementBadges.innerHTML += '<div class="achievement-badge">Cyber Law Expert!</div>';
-            } else if (score >= totalQuestions * 5) {
-                achievementBadges.innerHTML += '<div class="achievement-badge">Cyber Law Novice!</div>';
-            }
-
-            reviewMistakes.innerHTML = '';
-            currentQuestions.forEach((question, index) => {
-                if (userAnswers[index] !== question.correct) {
-                    const mistakeItem = document.createElement('div');
-                    mistakeItem.classList.add('mistake-item');
-                    mistakeItem.innerHTML = `
-                        <p><strong>Question:</strong> ${question.question}</p>
-                        <p><strong>Your Answer:</strong> ${question.options[userAnswers[index]]}</p>
-                        <p><strong>Correct Answer:</strong> ${question.options[question.correct]}</p>
-                        <p><strong>Explanation:</strong> ${question.explanation}</p>
-                    `;
-                    reviewMistakes.appendChild(mistakeItem);
-                }
-            });
-
-            reviewAnswersBtn.style.display = reviewMistakes.children.length > 0 ? 'block' : 'none';
-        }
-
-        reviewAnswersBtn.addEventListener('click', () => {
-            reviewMistakes.style.display = reviewMistakes.style.display === 'block' ? 'none' : 'block';
-            reviewAnswersBtn.textContent = reviewMistakes.style.display === 'block' ? 'Hide Mistakes' : 'Review Mistakes';
-        });
-
-        playAgainBtn.addEventListener('click', () => {
-            quizResults.style.display = 'none';
-            document.querySelector('.quiz-container').style.display = 'block';
-            restartQuiz();
-        });
-
-        function restartQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            userAnswers = [];
-            currentQuestions = shuffleArray([...quizData[selectedDifficulty]]).slice(0, totalQuestions);
-            loadQuestion();
-            reviewMistakes.style.display = 'none';
-            reviewAnswersBtn.textContent = 'Review Mistakes';
-        }
-
-        function setDifficulty(difficulty) {
-            selectedDifficulty = difficulty;
-            currentQuestions = shuffleArray([...quizData[difficulty]]).slice(0, totalQuestions);
-            easyModeBtn.classList.toggle('active', difficulty === 'easy');
-            hardModeBtn.classList.toggle('active', difficulty === 'hard');
-            mixedModeBtn.classList.toggle('active', difficulty === 'mixed');
-            restartQuiz();
-        }
-
-        easyModeBtn.addEventListener('click', () => setDifficulty('easy'));
-        hardModeBtn.addEventListener('click', () => setDifficulty('hard'));
-        mixedModeBtn.addEventListener('click', () => setDifficulty('mixed'));
-
-        submitAnswerBtn.addEventListener('click', submitAnswer);
-        nextQuestionBtn.addEventListener('click', nextQuestion);
-        restartQuizBtn.addEventListener('click', restartQuiz);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updateUserCounts();
-            currentQuestions = shuffleArray([...quizData.easy]).slice(0, totalQuestions);
-            loadQuestion();
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('Page loaded, updating user counts');
+            await updateUserCounts();
         });
     </script>
 </body>
-</html> 
+</html>
