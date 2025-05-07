@@ -897,7 +897,6 @@
             text-align: center;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
             border-radius: 15px;
-            position: relative;
         }
 
         .quiz-section h2 {
@@ -913,129 +912,49 @@
 
         .quiz-container {
             max-width: 800px;
-            min-height: 500px;
             margin: 0 auto;
-            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            background: #fff;
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .quiz-progress {
-            width: 100%;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .quiz-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #8B0000, #b30000);
-            transition: width 0.3s ease;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .quiz-container h3 {
             font-family: 'Montserrat', sans-serif;
             font-size: 24px;
-            font-weight: 700;
             color: #222;
             margin-bottom: 20px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease;
-        }
-
-        .quiz-start-screen {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-
-        .quiz-start-screen h3 {
-            font-size: 28px;
-            color: #8B0000;
-        }
-
-        .quiz-start-screen p {
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 30px;
-            max-width: 600px;
-            line-height: 1.6;
         }
 
         .quiz-options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .quiz-options button {
-            padding: 15px;
-            background: linear-gradient(90deg, #e9ecef, #dee2e6);
+            padding: 10px;
+            background: #f0f0f0;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
             font-family: 'Poppins', sans-serif;
             font-size: 16px;
-            font-weight: 500;
-            color: #333;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
+            transition: background 0.3s ease;
         }
 
         .quiz-options button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(90deg, #d7b15c, #c9a34b);
-            color: #222;
+            background: #d7b15c;
         }
 
         .quiz-options button.correct {
-            background: linear-gradient(90deg, #28a745, #218838);
+            background: #4caf50;
             color: #fff;
-            animation: pulse 0.5s ease;
-        }
-
-        .quiz-options button.correct::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            margin-right: 8px;
         }
 
         .quiz-options button.incorrect {
-            background: linear-gradient(90deg, #dc3545, #c82333);
+            background: #f44336;
             color: #fff;
-            animation: shake 0.5s ease;
-        }
-
-        .quiz-options button.incorrect::before {
-            content: '\f00d';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            margin-right: 8px;
-        }
-
-        .quiz-options button:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
         }
 
         .quiz-explanation {
@@ -1043,21 +962,17 @@
             font-family: 'Poppins', sans-serif;
             font-size: 14px;
             color: #666;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            animation: fadeIn 0.5s ease;
         }
 
         .quiz-controls {
             margin-top: 20px;
             display: flex;
-            gap: 15px;
+            gap: 10px;
             justify-content: center;
         }
 
         .quiz-controls button {
-            padding: 12px 25px;
+            padding: 10px 20px;
             background: linear-gradient(90deg, #8B0000, #b30000);
             color: #fff;
             border: none;
@@ -1065,53 +980,36 @@
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
             font-size: 16px;
-            font-weight: 500;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.3s ease;
         }
 
         .quiz-controls button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
         }
 
         .quiz-score {
             margin-top: 20px;
             font-family: 'Montserrat', sans-serif;
             font-size: 18px;
-            font-weight: 700;
             color: #222;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .quiz-timer {
             margin-top: 10px;
             font-family: 'Poppins', sans-serif;
             font-size: 16px;
-            font-weight: 500;
             color: #8B0000;
-            position: relative;
         }
 
-        .quiz-timer::before {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #e9ecef;
-            border-radius: 2px;
+        .quiz-start-screen {
+            text-align: center;
         }
 
-        .quiz-timer::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            height: 4px;
-            background: #8B0000;
-            border-radius: 2px;
-            transition: width 1s linear;
+        .quiz-start-screen p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
         }
 
         .dark-theme .quiz-section {
@@ -1123,43 +1021,25 @@
         }
 
         .dark-theme .quiz-container {
-            background: linear-gradient(135deg, #333, #2c2c2c);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            background: #333;
         }
 
         .dark-theme .quiz-container h3 {
             color: #e0e0e0;
         }
 
-        .dark-theme .quiz-start-screen h3 {
-            color: #d7b15c;
-        }
-
-        .dark-theme .quiz-start-screen p {
-            color: #b0b0b0;
-        }
-
         .dark-theme .quiz-options button {
-            background: linear-gradient(90deg, #444, #3a3b3c);
+            background: #444;
             color: #e0e0e0;
         }
 
         .dark-theme .quiz-options button:hover {
-            background: linear-gradient(90deg, #d7b15c, #c9a34b);
+            background: #d7b15c;
             color: #222;
-        }
-
-        .dark-theme .quiz-options button.correct {
-            background: linear-gradient(90deg, #34c759, #2db84c);
-        }
-
-        .dark-theme .quiz-options button.incorrect {
-            background: linear-gradient(90deg, #ff4d4f, #e63946);
         }
 
         .dark-theme .quiz-explanation {
             color: #b0b0b0;
-            background: #2c2c2c;
         }
 
         .dark-theme .quiz-score {
@@ -1168,10 +1048,6 @@
 
         .dark-theme .quiz-timer {
             color: #d7b15c;
-        }
-
-        .dark-theme .quiz-timer::after {
-            background: #d7b15c;
         }
 
         .leaders-section {
@@ -1413,27 +1289,6 @@
             }
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-
         .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
@@ -1507,11 +1362,6 @@
             .careers-card h2 {
                 font-size: 28px;
             }
-
-            .quiz-container {
-                max-width: 600px;
-                min-height: 450px;
-            }
         }
 
         @media (max-width: 768px) {
@@ -1572,24 +1422,6 @@
             .growth-grid,
             .leaders-grid {
                 gap: 30px;
-            }
-
-            .quiz-container {
-                max-width: 500px;
-                min-height: 400px;
-            }
-
-            .quiz-container h3 {
-                font-size: 20px;
-            }
-
-            .quiz-options button {
-                font-size: 14px;
-                padding: 12px;
-            }
-
-            .quiz-explanation {
-                font-size: 13px;
             }
         }
 
@@ -1792,36 +1624,25 @@
             }
 
             .quiz-container {
-                max-width: 100%;
-                min-height: 350px;
                 padding: 20px;
             }
 
             .quiz-container h3 {
-                font-size: 18px;
-            }
-
-            .quiz-start-screen h3 {
-                font-size: 24px;
-            }
-
-            .quiz-start-screen p {
-                font-size: 14px;
+                font-size: 20px;
             }
 
             .quiz-options button {
-                font-size: 13px;
-                padding: 10px;
+                font-size: 14px;
+                padding: 8px;
             }
 
             .quiz-explanation {
                 font-size: 12px;
-                padding: 10px;
             }
 
             .quiz-controls button {
                 font-size: 14px;
-                padding: 10px 20px;
+                padding: 8px 16px;
             }
 
             .quiz-score {
@@ -2013,9 +1834,6 @@
             <section class="quiz-section">
                 <h2>Test Your Cybercrime Law Knowledge</h2>
                 <div class="quiz-container" id="quizContainer">
-                    <div class="quiz-progress" id="quizProgress">
-                        <div class="quiz-progress-bar" id="quizProgressBar"></div>
-                    </div>
                     <div class="quiz-start-screen" id="quizStartScreen">
                         <h3>Welcome to the Cybercrime Quiz!</h3>
                         <p>Test your knowledge with 20 questions about cybercrime laws in the Philippines. Answer correctly to earn points and climb the leaderboard!</p>
@@ -2101,7 +1919,7 @@
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
             projectId: "contra-e-crime",
-            storageBucket: "contra-e-crime.firebasestorage.app",
+            storageBucket: "contra-e-cr.ConcurrentModificationExceptionime.firebasestorage.app",
             messagingSenderId: "198995444405",
             appId: "1:198995444405:web:5f8c6eed561461b36034fc",
             measurementId: "G-7Y2E24DD42",
@@ -2198,7 +2016,7 @@
                             profilePic.src = userData.avatarUrl;
                         } else {
                             profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
+                            }
                         if (userData.avatarBgColor) {
                             profilePic.style.backgroundColor = userData.avatarBgColor;
                             avatarBgColorPicker.value = userData.avatarBgColor;
@@ -2256,353 +2074,487 @@
 
             avatarLoading.classList.add('active');
 
-const formData = new FormData();
-formData.append('file', file);
-formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            const img = new Image();
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
 
-fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-    method: 'POST',
-    body: formData
-})
-.then(response => response.json())
-.then(data => {
-    if (data.secure_url) {
-        const user = auth.currentUser;
-        const sanitizedEmail = user.email.replace(/\./g, ',');
-        const userRef = database.ref(`users/${sanitizedEmail}`);
-        userRef.update({
-            avatarUrl: data.secure_url
-        })
-        .then(() => {
-            profilePic.src = data.secure_url;
-            avatarLoading.classList.remove('active');
-        })
-        .catch(error => {
-            console.error('Error saving avatar URL:', error);
-            alert('Failed to save avatar: ' + error.message);
-            avatarLoading.classList.remove('active');
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const maxDimension = 300;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > maxDimension) {
+                        height = Math.round((height * maxDimension) / width);
+                        width = maxDimension;
+                    }
+                } else {
+                    if (height > maxDimension) {
+                        width = Math.round((width * maxDimension) / height);
+                        height = maxDimension;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (!currentUser || !currentUser.email) {
+                        alert('User not logged in.');
+                        avatarLoading.classList.remove('active');
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('file', blob);
+                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                    formData.append('folder', `avatars/${currentUser.email}`);
+
+                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                                try {
+                                    const parsed = JSON.parse(text);
+                                    errorMessage = parsed.error?.message || text;
+                                } catch (e) {
+                                    errorMessage = text.includes('Invalid cloud name')
+                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                        : text.includes('Invalid upload preset')
+                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                        : text.includes('Unsigned uploads are not allowed')
+                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                        : text || 'Unknown error occurred';
+                                }
+                                throw new Error(errorMessage);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                        }
+
+                        const avatarUrl = data.secure_url;
+                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+                        database.ref(`users/${sanitizedEmail}`).update({
+                            avatarUrl: avatarUrl,
+                            updatedAt: firebase.database.ServerValue.TIMESTAMP
+                        })
+                        .then(() => {
+                            profilePic.src = avatarUrl;
+                            avatarLoading.classList.remove('active');
+                        })
+                        .catch(error => {
+                            console.error('Error saving avatar URL to Firebase:', error);
+                            alert('Failed to save avatar URL to Firebase: ' + error.message);
+                            avatarLoading.classList.remove('active');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error uploading avatar to Cloudinary:', error);
+                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                        avatarLoading.classList.remove('active');
+                    });
+                }, file.type, 0.6);
+            };
+            img.onerror = () => {
+                alert('Failed to process the image. Please try a different file.');
+                avatarLoading.classList.remove('active');
+            };
         });
-    } else {
-        throw new Error('Image upload failed');
-    }
-})
-.catch(error => {
-    console.error('Error uploading image:', error);
-    alert('Failed to upload image: ' + error.message);
-    avatarLoading.classList.remove('active');
-});
-});
 
-avatarBgColorPicker.addEventListener('change', (event) => {
-const color = event.target.value;
-profilePic.style.backgroundColor = color;
+        avatarBgColorPicker.addEventListener('change', () => {
+            const color = avatarBgColorPicker.value;
+            profilePic.style.backgroundColor = color;
 
-const user = auth.currentUser;
-if (user) {
-    const sanitizedEmail = user.email.replace(/\./g, ',');
-    const userRef = database.ref(`users/${sanitizedEmail}`);
-    userRef.update({
-        avatarBgColor: color
-    })
-    .catch(error => {
-        console.error('Error saving background color:', error);
-        alert('Failed to save background color: ' + error.message);
-    });
-}
-});
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    avatarBgColor: color,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving avatar background color:', error);
+                    alert('Failed to save avatar background color: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the avatar background color.');
+            }
+        });
 
-borderColorPicker.addEventListener('change', (event) => {
-const color = event.target.value;
-profilePic.style.borderColor = color;
+        borderColorPicker.addEventListener('change', () => {
+            const color = borderColorPicker.value;
+            profilePic.style.borderColor = color;
 
-const user = auth.currentUser;
-if (user) {
-    const sanitizedEmail = user.email.replace(/\./g, ',');
-    const userRef = database.ref(`users/${sanitizedEmail}`);
-    userRef.update({
-        borderColor: color
-    })
-    .catch(error => {
-        console.error('Error saving border color:', error);
-        alert('Failed to save border color: ' + error.message);
-    });
-}
-});
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderColor: color,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving border color:', error);
+                    alert('Failed to save border color: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the border color.');
+            }
+        });
 
-borderTypeSelect.addEventListener('change', (event) => {
-const borderType = event.target.value;
-profilePic.style.borderStyle = borderType;
+        borderTypeSelect.addEventListener('change', () => {
+            const borderType = borderTypeSelect.value;
+            profilePic.style.borderStyle = borderType;
 
-const user = auth.currentUser;
-if (user) {
-    const sanitizedEmail = user.email.replace(/\./g, ',');
-    const userRef = database.ref(`users/${sanitizedEmail}`);
-    userRef.update({
-        borderType: borderType
-    })
-    .catch(error => {
-        console.error('Error saving border type:', error);
-        alert('Failed to save border type: ' + error.message);
-    });
-}
-});
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderType: borderType,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving border type:', error);
+                    alert('Failed to save border type: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the border type.');
+            }
+        });
 
-const quizData = [
-{
-    question: "What is the primary law governing cybercrime in the Philippines?",
-    options: ["Republic Act No. 10175", "Republic Act No. 8792", "Republic Act No. 4200", "Republic Act No. 9775"],
-    correct: 0,
-    explanation: "Republic Act No. 10175, also known as the Cybercrime Prevention Act of 2012, is the primary law addressing cybercrime in the Philippines."
+        if (localStorage.getItem('darkTheme') === 'enabled') {
+            body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('dark-theme');
+                localStorage.setItem('darkTheme', 'enabled');
+            } else {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('darkTheme', 'disabled');
+            }
+        });
+
+        mobileMenuIcon.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            const icon = mobileMenuIcon.querySelector('i');
+            if (sidebar.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        document.querySelectorAll('a[href]').forEach(link => {
+            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+                link.addEventListener('click', function(e) {
+                    if (!this.href.includes(window.location.hostname)) return;
+                    
+                    e.preventDefault();
+                    loaderOverlay.classList.add('active');
+                    
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 150);
+                });
+            }
+        });
+
+        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item');
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        items.forEach(item => {
+            observer.observe(item);
+        });
+
+        const quizQuestions = [
+            {
+                difficulty: 'easy',
+                type: 'multiple',
+                question: 'What is the primary law in the Philippines governing cybercrimes?',
+                options: ['Republic Act No. 10175', 'Republic Act No. 8792', 'Republic Act No. 8293', 'Republic Act No. 7394'],
+                correct: 'Republic Act No. 10175',
+                explanation: 'Republic Act No. 10175, also known as the Cybercrime Prevention Act of 2012, is the primary law addressing cybercrimes in the Philippines.'
+            },
+            {
+                difficulty: 'easy',
+                type: 'multiple',
+                question: 'What does "phishing" refer to in the context of cybercrime?',
+                options: ['Hacking into a database', 'Sending fraudulent emails to steal information', 'Creating fake social media profiles', 'Distributing malware via USB drives'],
+                correct: 'Sending fraudulent emails to steal information',
+                explanation: 'Phishing involves sending fraudulent emails or messages that appear to come from a legitimate source to trick users into providing sensitive information.'
+            },
+            {
+                difficulty: 'easy',
+                type: 'truefalse',
+                question: 'Is hacking into someone’s email without permission considered a cybercrime under Philippine law?',
+                options: ['True', 'False'],
+                correct: 'True',
+                explanation: 'Unauthorized access to computer systems, including email accounts, is a cybercrime under Republic Act No.10175, as it violates provisions on illegal access and data interference.'
 },
 {
-    question: "Which of the following is considered a cybercrime under RA 10175?",
-    options: ["Online shopping", "Illegal access to computer systems", "Posting blog articles", "Sending emails"],
-    correct: 1,
-    explanation: "Illegal access to computer systems, such as hacking, is a cybercrime under RA 10175."
+difficulty: 'easy',
+type: 'multiple',
+question: 'Which of the following is NOT considered a cybercrime under RA 10175?',
+options: ['Online libel', 'Cybersex', 'Physical theft of a laptop', 'Identity theft'],
+correct: 'Physical theft of a laptop',
+explanation: 'Physical theft of a laptop is a traditional crime under the Revised Penal Code, not a cybercrime under RA 10175, which focuses on offenses involving digital systems.'
 },
 {
-    question: "What is the penalty for hacking under the Cybercrime Prevention Act?",
-    options: ["Fine only", "Imprisonment and/or fine", "Community service", "No penalty"],
-    correct: 1,
-    explanation: "Hacking under RA 10175 can result in imprisonment and/or a fine, depending on the severity of the offense."
+difficulty: 'medium',
+type: 'multiple',
+question: 'What penalty can be imposed for committing online libel under RA 10175?',
+options: ['Imprisonment of 6 months to 1 year', 'Imprisonment of 1 year to 6 years', 'Fine only', 'Community service'],
+correct: 'Imprisonment of 1 year to 6 years',
+explanation: 'Online libel, as defined under RA 10175, carries a penalty of imprisonment ranging from one year to six years, depending on the severity.'
 },
 {
-    question: "What is cyber libel as defined by RA 10175?",
-    options: ["Posting positive comments online", "Defamation committed through digital platforms", "Sharing news articles", "Creating a website"],
-    correct: 1,
-    explanation: "Cyber libel involves defamation committed through digital platforms, such as social media or websites."
+difficulty: 'medium',
+type: 'truefalse',
+question: 'Can a person be prosecuted for cybercrime if the offense was committed outside the Philippines but affected a Filipino citizen?',
+options: ['True', 'False'],
+correct: 'True',
+explanation: 'RA 10175 has extraterritorial application, meaning cybercrimes affecting Filipinos can be prosecuted even if committed abroad, subject to international law.'
 },
 {
-    question: "Which agency is primarily responsible for enforcing RA 10175?",
-    options: ["Philippine National Police (PNP)", "Department of Education", "Department of Health", "Local Government Units"],
-    correct: 0,
-    explanation: "The Philippine National Police (PNP), particularly its Anti-Cybercrime Group, is primarily responsible for enforcing RA 10175."
+difficulty: 'medium',
+type: 'multiple',
+question: 'Which agency is primarily responsible for enforcing the Cybercrime Prevention Act in the Philippines?',
+options: ['Philippine National Police (PNP)', 'National Bureau of Investigation (NBI)', 'Department of Justice (DOJ)', 'Cybercrime Investigation and Coordination Center (CICC)'],
+correct: 'Cybercrime Investigation and Coordination Center (CICC)',
+explanation: 'The CICC, under the Department of Information and Communications Technology (DICT), is tasked with coordinating and overseeing cybercrime investigations in the Philippines.'
 },
 {
-    question: "What is data interference under RA 10175?",
-    options: ["Improving data security", "Unauthorized alteration or deletion of data", "Backing up data", "Sharing data legally"],
-    correct: 1,
-    explanation: "Data interference involves the unauthorized alteration, deletion, or corruption of data."
+difficulty: 'medium',
+type: 'multiple',
+question: 'What is "data interference" under RA 10175?',
+options: ['Sharing data with permission', 'Altering or deleting data without authorization', 'Backing up data securely', 'Encrypting data for protection'],
+correct: 'Altering or deleting data without authorization',
+explanation: 'Data interference involves the intentional alteration, deletion, or corruption of data without permission, as defined in RA 10175.'
 },
 {
-    question: "What is the purpose of the Cybercrime Investigation and Coordinating Center (CICC)?",
-    options: ["To regulate internet providers", "To coordinate cybercrime prevention efforts", "To provide free internet access", "To develop mobile apps"],
-    correct: 1,
-    explanation: "The CICC coordinates efforts among agencies to prevent and combat cybercrime in the Philippines."
+difficulty: 'hard',
+type: 'multiple',
+question: 'Under RA 10175, what is the penalty for cybersex involving minors?',
+options: ['6 years imprisonment', '12 years imprisonment', 'Reclusion perpetua', 'Fine only'],
+correct: 'Reclusion perpetua',
+explanation: 'Cybersex involving minors is a grave offense under RA 10175, punishable by reclusion perpetua, especially when it involves exploitation or trafficking.'
 },
 {
-    question: "Which of the following is NOT a cybercrime under RA 10175?",
-    options: ["Online fraud", "Cybersex", "Legal online streaming", "Identity theft"],
-    correct: 2,
-    explanation: "Legal online streaming is not a cybercrime, unlike online fraud, cybersex, and identity theft, which are covered under RA 10175."
+difficulty: 'hard',
+type: 'truefalse',
+question: 'Is warrantless real-time collection of traffic data allowed under RA 10175?',
+options: ['True', 'False'],
+correct: 'True',
+explanation: 'RA 10175 allows warrantless real-time collection of traffic data under specific conditions, such as for law enforcement purposes, but it must comply with safeguards.'
 },
 {
-    question: "What is the maximum imprisonment for cybersex under RA 10175?",
-    options: ["1 year", "3 years", "7 years", "No imprisonment"],
-    correct: 2,
-    explanation: "Cybersex under RA 10175 can lead to a maximum imprisonment of seven years."
+difficulty: 'hard',
+type: 'multiple',
+question: 'Which of the following is a defense against a charge of online libel?',
+options: ['The statement was made in private', 'The statement was true and made with good motive', 'The statement was posted anonymously', 'The statement was deleted after posting'],
+correct: 'The statement was true and made with good motive',
+explanation: 'Truth and good motive are valid defenses against online libel under Philippine law, as long as the statement was not made with malicious intent.'
 },
 {
-    question: "What does the term 'phishing' refer to in cybercrime?",
-    options: ["Online gaming", "Fraudulent attempts to obtain sensitive information", "Creating social media accounts", "Streaming videos"],
-    correct: 1,
-    explanation: "Phishing involves fraudulent attempts to obtain sensitive information, such as passwords or credit card details, by posing as a trustworthy entity."
+difficulty: 'easy',
+type: 'multiple',
+question: 'What is the purpose of the Cybercrime Prevention Act of 2012?',
+options: ['To promote online gaming', 'To protect against unauthorized access and cyber threats', 'To regulate internet speed', 'To ban social media'],
+correct: 'To protect against unauthorized access and cyber threats',
+explanation: 'RA 10175 aims to prevent and penalize cybercrimes, such as hacking, phishing, and online fraud, to ensure a secure digital environment.'
 },
 {
-    question: "Which law complements RA 10175 in protecting personal data?",
-    options: ["Data Privacy Act of 2012", "E-Commerce Act", "Anti-Wiretapping Law", "Child Protection Act"],
-    correct: 0,
-    explanation: "The Data Privacy Act of 2012 (RA 10173) complements RA 10175 by protecting personal data in digital transactions."
+difficulty: 'easy',
+type: 'truefalse',
+question: 'Is posting defamatory content on social media considered a cybercrime in the Philippines?',
+options: ['True', 'False'],
+correct: 'True',
+explanation: 'Posting defamatory content online can be considered online libel, a cybercrime under RA 10175, if it harms someone’s reputation.'
 },
 {
-    question: "What is a common example of a cybercrime penalty under RA 10175?",
-    options: ["Public apology", "Imprisonment or fine", "Community service only", "No penalties"],
-    correct: 1,
-    explanation: "Imprisonment or a fine is a common penalty for cybercrimes under RA 10175, depending on the offense."
+difficulty: 'medium',
+type: 'multiple',
+question: 'What is an example of a "computer-related offense" under RA 10175?',
+options: ['Cyberbullying', 'Computer-related forgery', 'Physical vandalism of a server', 'Writing a blog'],
+correct: 'Computer-related forgery',
+explanation: 'Computer-related forgery, such as falsifying data with intent to deceive, is a specific offense under RA 10175.'
 },
 {
-    question: "What is the role of the National Privacy Commission in cybercrime prevention?",
-    options: ["Arresting cybercriminals", "Protecting personal data", "Developing websites", "Providing internet access"],
-    correct: 1,
-    explanation: "The National Privacy Commission oversees the protection of personal data, which helps prevent cybercrimes involving data breaches."
+difficulty: 'hard',
+type: 'multiple',
+question: 'What is the role of the National Privacy Commission (NPC) in relation to cybercrimes?',
+options: ['Prosecuting cybercrime cases', 'Protecting personal data and privacy', 'Developing cybercrime laws', 'Training hackers'],
+correct: 'Protecting personal data and privacy',
+explanation: 'The NPC ensures compliance with the Data Privacy Act of 2012, which complements RA 10175 by protecting personal data from misuse in cybercrimes.'
 },
 {
-    question: "Which of the following is a cybercrime offense related to content?",
-    options: ["Online libel", "Online shopping", "Email marketing", "Website development"],
-    correct: 0,
-    explanation: "Online libel is a content-related cybercrime under RA 10175, involving defamatory statements made online."
+difficulty: 'easy',
+type: 'multiple',
+question: 'Which of the following is a cybercrime under RA 10175?',
+options: ['Sending spam emails', 'Posting a food recipe online', 'Liking a social media post', 'Creating a website'],
+correct: 'Sending spam emails',
+explanation: 'Sending spam emails, especially with malicious intent, can be considered a cybercrime under RA 10175 if it involves fraud or unauthorized data collection.'
 },
 {
-    question: "What is the minimum fine for cybercrimes under RA 10175?",
-    options: ["PHP 50,000", "PHP 100,000", "PHP 200,000", "PHP 500,000"],
-    correct: 2,
-    explanation: "The minimum fine for cybercrimes under RA 10175 is PHP 200,000, depending on the offense."
+difficulty: 'medium',
+type: 'truefalse',
+question: 'Can a company be held liable for cybercrimes committed by its employees under RA 10175?',
+options: ['True', 'False'],
+correct: 'True',
+explanation: 'A company can be held liable under RA 10175 if it knowingly allows or fails to prevent cybercrimes committed by employees, especially in cases of negligence.'
 },
 {
-    question: "What is a computer-related forgery under RA 10175?",
-    options: ["Creating legal documents", "Altering electronic data with fraudulent intent", "Printing documents", "Scanning files"],
-    correct: 1,
-    explanation: "Computer-related forgery involves altering electronic data with fraudulent intent, as defined under RA 10175."
+difficulty: 'hard',
+type: 'multiple',
+question: 'What is the statute of limitations for filing a cybercrime case under RA 10175?',
+options: ['1 year', '5 years', '12 years', 'No limit'],
+correct: '12 years',
+explanation: 'The statute of limitations for cybercrimes under RA 10175 is generally 12 years, aligning with the prescription period for offenses punishable by imprisonment of more than six years.'
 },
 {
-    question: "Which of the following is a preventive measure against cybercrime?",
-    options: ["Sharing passwords", "Using strong passwords", "Clicking unknown links", "Ignoring software updates"],
-    correct: 1,
-    explanation: "Using strong passwords is a preventive measure to protect against cybercrimes like hacking or phishing."
+difficulty: 'easy',
+type: 'truefalse',
+question: 'Is it legal to share someone’s personal information online without their consent in the Philippines?',
+options: ['True', 'False'],
+correct: 'False',
+explanation: 'Sharing personal information without consent violates the Data Privacy Act of 2012 and can also be a cybercrime under RA 10175 if done with malicious intent.'
 },
 {
-    question: "What is the purpose of RA 10175’s anti-child pornography provisions?",
-    options: ["To promote online content", "To protect children from exploitation", "To regulate social media", "To improve internet speed"],
-    correct: 1,
-    explanation: "RA 10175 includes provisions to protect children from online exploitation, such as cybersex and child pornography."
-},
-{
-    question: "What is a common target of cybercriminals?",
-    options: ["Secure websites", "Personal information", "Public domain data", "Educational content"],
-    correct: 1,
-    explanation: "Personal information, such as passwords and financial details, is a common target for cybercriminals."
-},
-{
-    question: "What should you do if you suspect a cybercrime has been committed against you?",
-    options: ["Ignore it", "Report to the PNP Anti-Cybercrime Group", "Post about it online", "Change your username"],
-    correct: 1,
-    explanation: "You should report suspected cybercrimes to the PNP Anti-Cybercrime Group for investigation and action."
+difficulty: 'medium',
+type: 'multiple',
+question: 'What should you do if you suspect you are a victim of a cybercrime in the Philippines?',
+options: ['Ignore it', 'Report to the barangay', 'File a complaint with the PNP or NBI', 'Post about it on social media'],
+correct: 'File a complaint with the PNP or NBI',
+explanation: 'Victims of cybercrimes should report to the PNP Anti-Cybercrime Group or the NBI Cybercrime Division for proper investigation and action.'
 }
 ];
 
-let currentQuestion = 0;
-let score = 0;
-let timeLeft = 30;
-let timerInterval;
-const totalQuestions = quizData.length;
+let currentQuestionIndex = 0;
+    let score = 0;
+    let timer;
+    const timeLimit = 30;
 
-function updateProgressBar() {
-const progress = ((currentQuestion + 1) / totalQuestions) * 100;
-document.getElementById('quizProgressBar').style.width = `${progress}%`;
-}
-
-function startQuiz() {
-document.getElementById('quizStartScreen').style.display = 'none';
-document.getElementById('quizQuestion').style.display = 'block';
-loadQuestion();
-updateProgressBar();
-}
-
-function loadQuestion() {
-const question = quizData[currentQuestion];
-document.getElementById('questionText').textContent = question.question;
-const quizOptions = document.getElementById('quizOptions');
-quizOptions.innerHTML = '';
-
-question.options.forEach((option, index) => {
-    const button = document.createElement('button');
-    button.textContent = option;
-    button.onclick = () => checkAnswer(index);
-    quizOptions.appendChild(button);
-});
-
-document.getElementById('quizExplanation').style.display = 'none';
-document.getElementById('quizScore').textContent = `Score: ${score}`;
-timeLeft = 30;
-document.getElementById('quizTimer').textContent = `Time Left: ${timeLeft}s`;
-document.getElementById('quizTimer').style.setProperty('--timer-width', '100%');
-
-clearInterval(timerInterval);
-timerInterval = setInterval(() => {
-    timeLeft--;
-    document.getElementById('quizTimer').textContent = `Time Left: ${timeLeft}s`;
-    const timerWidth = (timeLeft / 30) * 100;
-    document.getElementById('quizTimer').style.setProperty('--timer-width', `${timerWidth}%`);
-    if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        checkAnswer(-1);
+    // Ensure quizQuestions is defined before using it
+    if (typeof quizQuestions === 'undefined') {
+        console.error('quizQuestions is not defined');
+        alert('Quiz data is not loaded. Please try again later.');
     }
-}, 1000);
-}
 
-function checkAnswer(selectedIndex) {
-clearInterval(timerInterval);
-const question = quizData[currentQuestion];
-const buttons = document.getElementById('quizOptions').children;
-
-for (let i = 0; i < buttons.length; i++) {
-    buttons[i].disabled = true;
-    if (i === question.correct) {
-        buttons[i].classList.add('correct');
-    } else if (i === selectedIndex && selectedIndex !== question.correct) {
-        buttons[i].classList.add('incorrect');
+    function startQuiz() {
+        document.getElementById('quizStartScreen').style.display = 'none';
+        document.getElementById('quizQuestion').style.display = 'block';
+        loadQuestion();
+        startTimer();
     }
-}
 
-const explanation = document.getElementById('quizExplanation');
-explanation.textContent = question.explanation;
-explanation.style.display = 'block';
+    function loadQuestion() {
+        if (!quizQuestions || currentQuestionIndex >= quizQuestions.length) {
+            console.error('Invalid quiz question index or quizQuestions not defined');
+            return;
+        }
+        const question = quizQuestions[currentQuestionIndex];
+        document.getElementById('questionText').textContent = question.question;
+        const optionsContainer = document.getElementById('quizOptions');
+        optionsContainer.innerHTML = '';
 
-if (selectedIndex === question.correct) {
-    score += 10;
-    document.getElementById('quizScore').textContent = `Score: ${score}`;
-}
-}
+        question.options.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.onclick = () => checkAnswer(option, question.correct, question.explanation);
+            optionsContainer.appendChild(button);
+        });
 
-function nextQuestion() {
-currentQuestion++;
-if (currentQuestion < totalQuestions) {
-    loadQuestion();
-    updateProgressBar();
-} else {
-    document.getElementById('quizQuestion').innerHTML = `
-        <h3>Quiz Completed!</h3>
-        <p>Your final score: ${score} / ${totalQuestions * 10}</p>
-        <button onclick="restartQuiz()">Restart Quiz</button>
-    `;
-    document.getElementById('quizProgressBar').style.width = '100%';
-}
-}
-
-function restartQuiz() {
-currentQuestion = 0;
-score = 0;
-document.getElementById('quizQuestion').style.display = 'none';
-document.getElementById('quizStartScreen').style.display = 'flex';
-document.getElementById('quizProgressBar').style.width = '0%';
-clearInterval(timerInterval);
-}
-
-themeToggle.addEventListener('change', () => {
-body.classList.toggle('dark-theme');
-localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-});
-
-if (localStorage.getItem('theme') === 'dark') {
-body.classList.add('dark-theme');
-themeToggle.checked = true;
-}
-
-mobileMenuIcon.addEventListener('click', () => {
-sidebar.classList.toggle('active');
-});
-
-document.addEventListener('click', (e) => {
-if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target) && sidebar.classList.contains('active')) {
-    sidebar.classList.remove('active');
-}
-});
-
-function handleIntersection(entries) {
-entries.forEach(entry => {
-    if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+        document.getElementById('quizExplanation').style.display = 'none';
+        document.getElementById('quizScore').textContent = `Score: ${score}`;
+        document.getElementById('quizTimer').textContent = `Time Left: ${timeLimit}s`;
     }
-});
-}
 
-const observer = new IntersectionObserver(handleIntersection, {
-threshold: 0.1
-});
+    function checkAnswer(selected, correct, explanation) {
+        clearTimeout(timer);
+        const buttons = document.querySelectorAll('.quiz-options button');
+        buttons.forEach(button => {
+            button.disabled = true;
+            if (button.textContent === correct) {
+                button.classList.add('correct');
+            } else if (button.textContent === selected && selected !== correct) {
+                button.classList.add('incorrect');
+            }
+        });
 
-document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item').forEach(item => {
-observer.observe(item);
-});
+        if (selected === correct) {
+            score += 10;
+            document.getElementById('quizScore').textContent = `Score: ${score}`;
+        }
 
-updateUserCounts();
+        const explanationDiv = document.getElementById('quizExplanation');
+        explanationDiv.textContent = explanation;
+        explanationDiv.style.display = 'block';
+    }
+
+    function startTimer() {
+        let timeLeft = timeLimit;
+        document.getElementById('quizTimer').textContent = `Time Left: ${timeLeft}s`;
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('quizTimer').textContent = `Time Left: ${timeLeft}s`;
+            if (timeLeft <= 0) {
+                clearTimeout(timer);
+                checkAnswer(null, quizQuestions[currentQuestionIndex].correct, quizQuestions[currentQuestionIndex].explanation);
+            }
+        }, 1000);
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizQuestions.length) {
+            loadQuestion();
+            startTimer();
+        } else {
+            document.getElementById('quizQuestion').innerHTML = `
+                <h3>Quiz Completed!</h3>
+                <p>Your final score is ${score} out of ${quizQuestions.length * 10}.</p>
+                <button onclick="restartQuiz()">Restart Quiz</button>
+            `;
+        }
+    }
+
+    function restartQuiz() {
+        currentQuestionIndex = 0;
+        score = 0;
+        document.getElementById('quizStartScreen').style.display = 'block';
+        document.getElementById('quizQuestion').style.display = 'none';
+        clearTimeout(timer);
+    }
+
+    window.onload = () => {
+        updateUserCounts();
+    };
 </script>
+</body> </html>
