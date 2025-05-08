@@ -554,7 +554,8 @@
         .timeline-section,
         .growth-section,
         .careers-section,
-        .leaders-section {
+        .leaders-section,
+        .game-section {
             position: relative;
             z-index: 1;
             margin-bottom: 60px;
@@ -890,6 +891,166 @@
             color: #222;
         }
 
+        .game-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            border-radius: 15px;
+        }
+
+        .game-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .game-card {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .game-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .game-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 20px;
+        }
+
+        .game-card p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .game-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #8B0000;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .game-input:focus {
+            border-color: #d7b15c;
+        }
+
+        .game-button {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #8B0000, #b30000);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .game-feedback {
+            margin-top: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: #222;
+        }
+
+        .game-feedback.correct {
+            color: #28a745;
+        }
+
+        .game-feedback.incorrect {
+            color: #dc3545;
+        }
+
+        .game-score {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-top: 20px;
+        }
+
+        .dark-theme .game-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+        }
+
+        .dark-theme .game-section h2 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .game-card {
+            background: #333;
+        }
+
+        .dark-theme .game-card h3 {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .game-card p {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .game-input {
+            border-color: #d7b15c;
+            background: #3a3b3c;
+            color: #e0e0e0;
+        }
+
+        .dark-theme .game-input:focus {
+            border-color: #b89a47;
+        }
+
+        .dark-theme .game-button {
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+            color: #222;
+        }
+
+        .dark-theme .game-feedback {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .game-feedback.correct {
+            color: #28a745;
+        }
+
+        .dark-theme .game-feedback.incorrect {
+            color: #dc3545;
+        }
+
+        .dark-theme .game-score {
+            color: #d7b15c;
+        }
+
         .leaders-section {
             padding: 80px 20px;
             text-align: center;
@@ -1194,7 +1355,8 @@
 
             .timeline-section h2,
             .growth-section h2,
-            .leaders-section h2 {
+            .leaders-section h2,
+            .game-section h2 {
                 font-size: 32px;
             }
 
@@ -1213,7 +1375,7 @@
                 font-size: 20px;
             }
 
- groundwater ul li a {
+            .sidebar ul li a {
                 font-size: 14px;
             }
 
@@ -1357,13 +1519,15 @@
             .timeline-section,
             .growth-section,
             .careers-section,
-            .leaders-section {
+            .leaders-section,
+            .game-section {
                 padding: 50px 10px;
             }
 
             .timeline-section h2,
             .growth-section h2,
-            .leaders-section h2 {
+            .leaders-section h2,
+            .game-section h2 {
                 font-size: 28px;
             }
 
@@ -1438,6 +1602,18 @@
             }
 
             .careers-card p {
+                font-size: 14px;
+            }
+
+            .game-card {
+                padding: 20px;
+            }
+
+            .game-card h3 {
+                font-size: 20px;
+            }
+
+            .game-card p {
                 font-size: 14px;
             }
 
@@ -1620,6 +1796,18 @@
                     <h2>Product</h2>
                     <p>Contra E-Crime is a student project passionate about making cyber laws easy to understand having Weigh the Right as our main tool for giving you the best search experience. Want to explore more of the website? Let’s connect at the SHS expo!</p>
                     <a href="HomePage.html">Learn More</a>
+                </div>
+            </section>
+
+            <section class="game-section">
+                <h2>Gimme 5: Philippine Cybercrime Law Edition</h2>
+                <div class="game-card">
+                    <h3 id="gameQuestion">Click Start to Begin!</h3>
+                    <p id="gameInstruction">Type one answer at a time and press Submit. Get 5 correct answers to move to the next question!</p>
+                    <input type="text" id="gameInput" class="game-input" placeholder="Type your answer here">
+                    <button id="gameButton" class="game-button">Start</button>
+                    <div id="gameFeedback" class="game-feedback"></div>
+                    <div id="gameScore" class="game-score">Score: 0 / 20</div>
                 </div>
             </section>
 
@@ -2049,7 +2237,7 @@
             }
         });
 
-        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item');
+        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item, .game-card');
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -2066,6 +2254,170 @@
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('Page loaded, updating user counts');
             await updateUserCounts();
+        });
+
+        // Game Logic
+        const questions = [
+            {
+                question: "Name 5 cybercrimes under Republic Act No. 10175",
+                answers: ["hacking", "phishing", "identity theft", "cyberlibel", "online fraud", "data interference", "cybersex", "child pornography", "cyber extortion", "spamming"]
+            },
+            {
+                question: "Name 5 penalties under RA 10175 for cybercrimes",
+                answers: ["imprisonment", "fine", "reclusion perpetua", "reclusion temporal", "prision mayor", "prision correccional", "arresto mayor", "community service", "probation", "damages"]
+            },
+            {
+                question: "Name 5 agencies enforcing cybercrime laws in the Philippines",
+                answers: ["national bureau of investigation", "philippine national police", "cybercrime investigation and coordinating center", "department of justice", "national telecommunications commission", "optical media board", "intellectual property office", "bangko sentral ng pilipinas", "securities and exchange commission", "department of information and communications technology"]
+            },
+            {
+                question: "Name 5 types of malware",
+                answers: ["virus", "worm", "trojan", "ransomware", "spyware", "adware", "rootkit", "keylogger", "botnet", "backdoor"]
+            },
+            {
+                question: "Name 5 ways to protect against cybercrimes",
+                answers: ["use strong passwords", "enable two-factor authentication", "update software", "avoid phishing emails", "use antivirus software", "encrypt data", "backup files", "use vpn", "secure wifi", "monitor accounts"]
+            },
+            {
+                question: "Name 5 elements of cyberlibel under RA 10175",
+                answers: ["defamation", "publication", "malice", "identifiable person", "public communication", "false statement", "harm to reputation", "intent", "online platform", "written expression"]
+            },
+            {
+                question: "Name 5 types of online fraud",
+                answers: ["phishing", "advance fee fraud", "online auction fraud", "credit card fraud", "investment scams", "lottery scams", "charity scams", "romance scams", "pyramid schemes", "fake shopping sites"]
+            },
+            {
+                question: "Name 5 rights protected under the Data Privacy Act of 2012",
+                answers: ["right to be informed", "right to access", "right to object", "right to erase", "right to rectify", "right to data portability", "right to restrict processing", "right to damages", "right to lodge a complaint", "right to transparency"]
+            },
+            {
+                question: "Name 5 cybercrime-related laws in the Philippines besides RA 10175",
+                answers: ["data privacy act", "electronic commerce act", "anti-child pornography act", "anti-photo and video voyeurism act", "intellectual property code", "anti-bullying act", "revised penal code", "anti-wire tapping act", "access devices regulation act", "optical media act"]
+            },
+            {
+                question: "Name 5 consequences of hacking",
+                answers: ["data breach", "financial loss", "identity theft", "system downtime", "reputational damage", "legal penalties", "data corruption", "unauthorized access", "privacy violation", "business disruption"]
+            },
+            {
+                question: "Name 5 types of phishing attacks",
+                answers: ["email phishing", "spear phishing", "whaling", "smishing", "vishing", "clone phishing", "link manipulation", "website forgery", "session hijacking", "content injection"]
+            },
+            {
+                question: "Name 5 components of a strong cybersecurity policy",
+                answers: ["access control", "data encryption", "incident response", "employee training", "regular audits", "firewall protection", "software updates", "backup systems", "password policies", "network monitoring"]
+            },
+            {
+                question: "Name 5 types of cybercrime victims",
+                answers: ["individuals", "businesses", "government agencies", "non-profit organizations", "educational institutions", "minors", "senior citizens", "healthcare providers", "financial institutions", "public utilities"]
+            },
+            {
+                question: "Name 5 tools used in cybercrime investigations",
+                answers: ["forensic software", "network analyzers", "data recovery tools", "log analysis tools", "encryption breakers", "malware analysis tools", "packet sniffers", "digital forensics kits", "hashing tools", "evidence management systems"]
+            },
+            {
+                question: "Name 5 signs of a phishing email",
+                answers: ["urgent language", "suspicious links", "spelling errors", "unknown sender", "request for personal info", "generic greetings", "fake logos", "mismatched email domains", "unusual attachments", "too good to be true offers"]
+            },
+            {
+                question: "Name 5 types of encryption methods",
+                answers: ["aes", "rsa", "des", "triple des", "blowfish", "twofish", "ecc", "sha", "md5", "quantum encryption"]
+            },
+            {
+                question: "Name 5 cybercrime prevention campaigns in the Philippines",
+                answers: ["cybersecurity awareness month", "anti-cybercrime campaign", "pnpa cybercrime awareness", "doh cybersecurity drive", "dict e-government initiatives", "bantay digital", "safe online ph", "cybercop program", "digital literacy program", "secure ph"]
+            },
+            {
+                question: "Name 5 risks of using public Wi-Fi",
+                answers: ["data interception", "man-in-the-middle attacks", "malware infection", "fake hotspots", "session hijacking", "password theft", "eavesdropping", "identity theft", "data manipulation", "network spoofing"]
+            },
+            {
+                question: "Name 5 types of cybercrime under the Revised Penal Code adapted for cyber activities",
+                answers: ["estafa", "libel", "slander", "forgery", "theft", "fraud", "malicious mischief", "robbery", "extortion", "threats"]
+            },
+            {
+                question: "Name 5 ethical hacking certifications",
+                answers: ["ceh", "oscp", "cissp", "comptia pentest+", "gpen", "ecsa", "lpt", "chfi", "cism", "ccsp"]
+            }
+        ];
+
+        let currentQuestionIndex = -1;
+        let correctAnswers = [];
+        let score = 0;
+        let gameStarted = false;
+
+        const gameQuestion = document.getElementById('gameQuestion');
+        const gameInstruction = document.getElementById('gameInstruction');
+        const gameInput = document.getElementById('gameInput');
+        const gameButton = document.getElementById('gameButton');
+        const gameFeedback = document.getElementById('gameFeedback');
+        const gameScore = document.getElementById('gameScore');
+
+        function loadNextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= questions.length) {
+                gameQuestion.textContent = "Game Over!";
+                gameInstruction.textContent = `You completed all questions! Final Score: ${score}/${questions.length}`;
+                gameInput.style.display = 'none';
+                gameButton.style.display = 'none';
+                gameFeedback.textContent = '';
+                gameScore.textContent = `Final Score: ${score}/${questions.length}`;
+                return;
+            }
+
+            correctAnswers = [];
+            gameQuestion.textContent = questions[currentQuestionIndex].question;
+            gameInstruction.textContent = `Type one answer at a time and press Submit. Get 5 correct answers to move to the next question! (${correctAnswers.length}/5)`;
+            gameInput.value = '';
+            gameFeedback.textContent = '';
+            gameInput.style.display = 'block';
+            gameButton.textContent = 'Submit';
+        }
+
+        gameButton.addEventListener('click', () => {
+            if (!gameStarted) {
+                gameStarted = true;
+                gameButton.textContent = 'Submit';
+                loadNextQuestion();
+                return;
+            }
+
+            const userAnswer = gameInput.value.trim().toLowerCase();
+            if (!userAnswer) {
+                gameFeedback.textContent = 'Please enter an answer!';
+                gameFeedback.classList.remove('correct', 'incorrect');
+                return;
+            }
+
+            const currentQuestion = questions[currentQuestionIndex];
+            if (currentQuestion.answers.includes(userAnswer) && !correctAnswers.includes(userAnswer)) {
+                correctAnswers.push(userAnswer);
+                gameFeedback.textContent = `Correct! ${userAnswer} is accepted. (${correctAnswers.length}/5)`;
+                gameFeedback.classList.add('correct');
+                gameFeedback.classList.remove('incorrect');
+            } else if (correctAnswers.includes(userAnswer)) {
+                gameFeedback.textContent = 'You already submitted this answer!';
+                gameFeedback.classList.remove('correct', 'incorrect');
+            } else {
+                gameFeedback.textContent = 'Incorrect or not a valid answer. Try again!';
+                gameFeedback.classList.add('incorrect');
+                gameFeedback.classList.remove('correct');
+            }
+
+            gameInput.value = '';
+            gameInstruction.textContent = `Type one answer at a time and press Submit. Get 5 correct answers to move to the next question! (${correctAnswers.length}/5)`;
+
+            if (correctAnswers.length >= 5) {
+                score++;
+                gameScore.textContent = `Score: ${score}/${questions.length}`;
+                gameFeedback.textContent = 'Great job! Moving to the next question...';
+                setTimeout(loadNextQuestion, 1000);
+            }
+        });
+
+        gameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && gameStarted) {
+                gameButton.click();
+            }
         });
     </script>
 </body>
