@@ -2256,87 +2256,46 @@
             await updateUserCounts();
         });
 
-        // Game Logic
         const questions = [
             {
-                question: "Name 5 cybercrimes under Republic Act No. 10175",
-                answers: ["hacking", "phishing", "identity theft", "cyberlibel", "online fraud", "data interference", "cybersex", "child pornography", "cyber extortion", "spamming"]
+                question: "Name 5 things you should not do online to stay safe",
+                answers: ["share password", "click strange links", "talk to strangers", "post personal info", "download unknown files", "give address", "share photos with strangers", "open weird emails", "use weak passwords", "visit unsafe websites"]
             },
             {
-                question: "Name 5 penalties under RA 10175 for cybercrimes",
-                answers: ["imprisonment", "fine", "reclusion perpetua", "reclusion temporal", "prision mayor", "prision correccional", "arresto mayor", "community service", "probation", "damages"]
+                question: "Name 5 devices that can connect to the internet",
+                answers: ["computer", "phone", "tablet", "laptop", "smart tv", "watch", "game console", "smart speaker", "camera", "router"]
             },
             {
-                question: "Name 5 agencies enforcing cybercrime laws in the Philippines",
-                answers: ["national bureau of investigation", "philippine national police", "cybercrime investigation and coordinating center", "department of justice", "national telecommunications commission", "optical media board", "intellectual property office", "bangko sentral ng pilipinas", "securities and exchange commission", "department of information and communications technology"]
+                question: "Name 5 rules for using the internet safely",
+                answers: ["ask parents", "use strong password", "log out", "don’t share secrets", "tell an adult", "stay on safe sites", "don’t click ads", "keep info private", "update apps", "use antivirus"]
             },
             {
-                question: "Name 5 types of malware",
-                answers: ["virus", "worm", "trojan", "ransomware", "spyware", "adware", "rootkit", "keylogger", "botnet", "backdoor"]
+                question: "Name 5 jobs that help stop cybercrimes",
+                answers: ["police", "cybercrime investigator", "lawyer", "teacher", "programmer", "security expert", "hacker", "judge", "IT specialist", "government agent"]
             },
             {
-                question: "Name 5 ways to protect against cybercrimes",
-                answers: ["use strong passwords", "enable two-factor authentication", "update software", "avoid phishing emails", "use antivirus software", "encrypt data", "backup files", "use vpn", "secure wifi", "monitor accounts"]
+                question: "Name 5 things that can be stolen online",
+                answers: ["password", "money", "name", "photos", "account", "email", "address", "credit card", "files", "identity"]
             },
             {
-                question: "Name 5 elements of cyberlibel under RA 10175",
-                answers: ["defamation", "publication", "malice", "identifiable person", "public communication", "false statement", "harm to reputation", "intent", "online platform", "written expression"]
+                question: "Name 5 apps or tools that help keep you safe online",
+                answers: ["antivirus", "firewall", "password manager", "vpn", "browser", "parental control", "security app", "ad blocker", "email filter", "safe search"]
             },
             {
-                question: "Name 5 types of online fraud",
-                answers: ["phishing", "advance fee fraud", "online auction fraud", "credit card fraud", "investment scams", "lottery scams", "charity scams", "romance scams", "pyramid schemes", "fake shopping sites"]
+                question: "Name 5 places where you should be careful online",
+                answers: ["social media", "email", "games", "websites", "chat apps", "forums", "online stores", "public wifi", "downloads", "messages"]
             },
             {
-                question: "Name 5 rights protected under the Data Privacy Act of 2012",
-                answers: ["right to be informed", "right to access", "right to object", "right to erase", "right to rectify", "right to data portability", "right to restrict processing", "right to damages", "right to lodge a complaint", "right to transparency"]
+                question: "Name 5 words related to cybercrime",
+                answers: ["hacking", "phishing", "virus", "scam", "fraud", "malware", "spyware", "theft", "cyberbully", "password"]
             },
             {
-                question: "Name 5 cybercrime-related laws in the Philippines besides RA 10175",
-                answers: ["data privacy act", "electronic commerce act", "anti-child pornography act", "anti-photo and video voyeurism act", "intellectual property code", "anti-bullying act", "revised penal code", "anti-wire tapping act", "access devices regulation act", "optical media act"]
+                question: "Name 5 things you can do if you see something bad online",
+                answers: ["tell parents", "report", "block", "log out", "don’t share", "tell teacher", "close app", "call police", "save proof", "ask for help"]
             },
             {
-                question: "Name 5 consequences of hacking",
-                answers: ["data breach", "financial loss", "identity theft", "system downtime", "reputational damage", "legal penalties", "data corruption", "unauthorized access", "privacy violation", "business disruption"]
-            },
-            {
-                question: "Name 5 types of phishing attacks",
-                answers: ["email phishing", "spear phishing", "whaling", "smishing", "vishing", "clone phishing", "link manipulation", "website forgery", "session hijacking", "content injection"]
-            },
-            {
-                question: "Name 5 components of a strong cybersecurity policy",
-                answers: ["access control", "data encryption", "incident response", "employee training", "regular audits", "firewall protection", "software updates", "backup systems", "password policies", "network monitoring"]
-            },
-            {
-                question: "Name 5 types of cybercrime victims",
-                answers: ["individuals", "businesses", "government agencies", "non-profit organizations", "educational institutions", "minors", "senior citizens", "healthcare providers", "financial institutions", "public utilities"]
-            },
-            {
-                question: "Name 5 tools used in cybercrime investigations",
-                answers: ["forensic software", "network analyzers", "data recovery tools", "log analysis tools", "encryption breakers", "malware analysis tools", "packet sniffers", "digital forensics kits", "hashing tools", "evidence management systems"]
-            },
-            {
-                question: "Name 5 signs of a phishing email",
-                answers: ["urgent language", "suspicious links", "spelling errors", "unknown sender", "request for personal info", "generic greetings", "fake logos", "mismatched email domains", "unusual attachments", "too good to be true offers"]
-            },
-            {
-                question: "Name 5 types of encryption methods",
-                answers: ["aes", "rsa", "des", "triple des", "blowfish", "twofish", "ecc", "sha", "md5", "quantum encryption"]
-            },
-            {
-                question: "Name 5 cybercrime prevention campaigns in the Philippines",
-                answers: ["cybersecurity awareness month", "anti-cybercrime campaign", "pnpa cybercrime awareness", "doh cybersecurity drive", "dict e-government initiatives", "bantay digital", "safe online ph", "cybercop program", "digital literacy program", "secure ph"]
-            },
-            {
-                question: "Name 5 risks of using public Wi-Fi",
-                answers: ["data interception", "man-in-the-middle attacks", "malware infection", "fake hotspots", "session hijacking", "password theft", "eavesdropping", "identity theft", "data manipulation", "network spoofing"]
-            },
-            {
-                question: "Name 5 types of cybercrime under the Revised Penal Code adapted for cyber activities",
-                answers: ["estafa", "libel", "slander", "forgery", "theft", "fraud", "malicious mischief", "robbery", "extortion", "threats"]
-            },
-            {
-                question: "Name 5 ethical hacking certifications",
-                answers: ["ceh", "oscp", "cissp", "comptia pentest+", "gpen", "ecsa", "lpt", "chfi", "cism", "ccsp"]
+                question: "Name 5 reasons why cyber laws are important",
+                answers: ["keep safe", "stop crimes", "protect people", "punish bad guys", "save money", "guard info", "help kids", "stop scams", "protect privacy", "make internet safe"]
             }
         ];
 
@@ -2351,6 +2310,13 @@
         const gameButton = document.getElementById('gameButton');
         const gameFeedback = document.getElementById('gameFeedback');
         const gameScore = document.getElementById('gameScore');
+
+        function isAnswerCloseEnough(userAnswer, validAnswer) {
+            // Simple fuzzy matching: check if user answer contains part of valid answer or vice versa
+            return userAnswer.includes(validAnswer) || validAnswer.includes(userAnswer) ||
+                   userAnswer.replace(/\s/g, '').includes(validAnswer.replace(/\s/g, '')) ||
+                   validAnswer.toLowerCase().startsWith(userAnswer.toLowerCase().charAt(0));
+        }
 
         function loadNextQuestion() {
             currentQuestionIndex++;
@@ -2389,16 +2355,30 @@
             }
 
             const currentQuestion = questions[currentQuestionIndex];
-            if (currentQuestion.answers.includes(userAnswer) && !correctAnswers.includes(userAnswer)) {
-                correctAnswers.push(userAnswer);
-                gameFeedback.textContent = `Correct! ${userAnswer} is accepted. (${correctAnswers.length}/5)`;
+            let isCorrect = false;
+            let matchedAnswer = '';
+
+            // Check for exact or close match
+            for (let validAnswer of currentQuestion.answers) {
+                if (userAnswer === validAnswer || isAnswerCloseEnough(userAnswer, validAnswer)) {
+                    if (!correctAnswers.includes(validAnswer)) {
+                        isCorrect = true;
+                        matchedAnswer = validAnswer;
+                        break;
+                    }
+                }
+            }
+
+            if (isCorrect) {
+                correctAnswers.push(matchedAnswer);
+                gameFeedback.textContent = `Correct! ${matchedAnswer} is accepted. (${correctAnswers.length}/5)`;
                 gameFeedback.classList.add('correct');
                 gameFeedback.classList.remove('incorrect');
             } else if (correctAnswers.includes(userAnswer)) {
                 gameFeedback.textContent = 'You already submitted this answer!';
                 gameFeedback.classList.remove('correct', 'incorrect');
             } else {
-                gameFeedback.textContent = 'Incorrect or not a valid answer. Try again!';
+                gameFeedback.textContent = 'Not quite right. Try another answer!';
                 gameFeedback.classList.add('incorrect');
                 gameFeedback.classList.remove('correct');
             }
