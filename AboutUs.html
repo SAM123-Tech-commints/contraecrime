@@ -554,6 +554,7 @@
         .timeline-section,
         .growth-section,
         .careers-section,
+        .game-section,
         .leaders-section {
             position: relative;
             z-index: 1;
@@ -890,6 +891,327 @@
             color: #222;
         }
 
+        /* Game Section Styles */
+        .game-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            border-radius: 15px;
+        }
+
+        .game-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .game-section p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: url('https://i.imgur.com/5fJ3Z1P.jpg') no-repeat center center;
+            background-size: cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            padding: 20px;
+        }
+
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .game-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .game-start-screen, .game-play-screen, .game-end-screen {
+            display: none;
+        }
+
+        .game-start-screen.active, .game-play-screen.active, .game-end-screen.active {
+            display: block;
+        }
+
+        .game-start-screen h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .game-start-screen p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .game-button {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, #8B0000, #b30000);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .game-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .game-play-screen .question {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .game-play-screen .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .game-play-screen .option {
+            padding: 10px;
+            background: #fff;
+            color: #222;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .game-play-screen .option:hover {
+            background: #d7b15c;
+            transform: translateY(-2px);
+        }
+
+        .game-play-screen .option.correct {
+            background: #4caf50;
+            color: #fff;
+        }
+
+        .game-play-screen .option.incorrect {
+            background: #f44336;
+            color: #fff;
+        }
+
+        .game-play-screen .feedback {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            color: #fff;
+        }
+        .game-play-screen .feedback.active {
+            display: block;
+        }
+
+        .game-play-screen .score-timer {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .game-play-screen .score, .game-play-screen .timer {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .game-play-screen .hint-button {
+            padding: 8px 20px;
+            background: #d7b15c;
+            color: #222;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .game-play-screen .hint-button:hover {
+            background: #b89a47;
+        }
+
+        .game-end-screen h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .game-end-screen p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .leaderboard {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .leaderboard h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .leaderboard ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .leaderboard li {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            margin: 5px 0;
+            color: #fff;
+        }
+
+        .dark-theme .game-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+        }
+
+        .dark-theme .game-container {
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-theme .game-play-screen .option {
+            background: #333;
+            color: #e0e0e0;
+        }
+
+        .dark-theme .game-play-screen .option:hover {
+            background: #b89a47;
+        }
+
+        .dark-theme .game-play-screen .score, .dark-theme .game-play-screen .timer {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-theme .game-play-screen .question, .dark-theme .leaderboard {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-theme .game-button {
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+            color: #222;
+        }
+
+        @media (max-width: 768px) {
+            .game-section {
+                padding: 50px 10px;
+            }
+
+            .game-container {
+                min-height: 400px;
+            }
+
+            .game-start-screen h3, .game-end-screen h3 {
+                font-size: 24px;
+            }
+
+            .game-play-screen .question {
+                font-size: 16px;
+            }
+
+            .game-play-screen .option {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-section h2 {
+                font-size: 28px;
+            }
+
+            .game-container {
+                min-height: 350px;
+                padding: 15px;
+            }
+
+            .game-start-screen h3, .game-end-screen h3 {
+                font-size: 20px;
+            }
+
+            .game-play-screen .question {
+                font-size: 14px;
+            }
+
+            .game-play-screen .option {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .game-play-screen .score-timer {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .game-play-screen .score, .game-play-screen .timer {
+                font-size: 14px;
+            }
+
+            .game-button, .game-play-screen .hint-button {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+
+            .leaderboard h4 {
+                font-size: 18px;
+            }
+
+            .leaderboard li {
+                font-size: 14px;
+            }
+        }
+
         .leaders-section {
             padding: 80px 20px;
             text-align: center;
@@ -919,7 +1241,7 @@
             background: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5.px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             opacity: 0;
             transform: translateY(30px);
@@ -1194,6 +1516,7 @@
 
             .timeline-section h2,
             .growth-section h2,
+            .game-section h2,
             .leaders-section h2 {
                 font-size: 32px;
             }
@@ -1213,7 +1536,7 @@
                 font-size: 20px;
             }
 
- groundwater ul li a {
+            .sidebar ul li a {
                 font-size: 14px;
             }
 
@@ -1357,12 +1680,14 @@
             .timeline-section,
             .growth-section,
             .careers-section,
+            .game-section,
             .leaders-section {
                 padding: 50px 10px;
             }
 
             .timeline-section h2,
             .growth-section h2,
+            .game-section h2,
             .leaders-section h2 {
                 font-size: 28px;
             }
@@ -1620,6 +1945,40 @@
                     <h2>Product</h2>
                     <p>Contra E-Crime is a student project passionate about making cyber laws easy to understand having Weigh the Right as our main tool for giving you the best search experience. Want to explore more of the website? Let’s connect at the SHS expo!</p>
                     <a href="HomePage.html">Learn More</a>
+                </div>
+            </section>
+
+            <section class="game-section">
+                <h2>CyberLaw Quest: Philippines</h2>
+                <p>Test your knowledge of Philippine cybercrime laws and sharpen your problem-solving skills in this interactive courtroom challenge!</p>
+                <div class="game-container">
+                    <div class="game-overlay"></div>
+                    <div class="game-content">
+                        <div class="game-start-screen active" id="gameStartScreen">
+                            <h3>Welcome to CyberLaw Quest</h3>
+                            <p>Step into the courtroom and tackle real-world cybercrime scenarios based on Republic Act No. 10175. Answer questions, learn legal terms, and climb the leaderboard!</p>
+                            <button class="game-button" id="startGameButton">Start Game</button>
+                        </div>
+                        <div class="game-play-screen" id="gamePlayScreen">
+                            <div class="score-timer">
+                                <div class="score" id="gameScore">Score: 0</div>
+                                <div class="timer" id="gameTimer">Time: 30s</div>
+                            </div>
+                            <div class="question" id="gameQuestion"></div>
+                            <div class="options" id="gameOptions"></div>
+                            <div class="feedback" id="gameFeedback"></div>
+                            <button class="hint-button" id="hintButton">Show Hint</button>
+                        </div>
+                        <div class="game-end-screen" id="gameEndScreen">
+                            <h3>Game Over!</h3>
+                            <p id="finalScore"></p>
+                            <div class="leaderboard">
+                                <h4>Leaderboard</h4>
+                                <ul id="leaderboardList"></ul>
+                            </div>
+                            <button class="game-button" id="restartGameButton">Play Again</button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -2049,7 +2408,7 @@
             }
         });
 
-        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item');
+        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item, .game-section');
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -2062,6 +2421,184 @@
         items.forEach(item => {
             observer.observe(item);
         });
+
+        // Game Logic for CyberLaw Quest
+        const gameStartScreen = document.getElementById('gameStartScreen');
+        const gamePlayScreen = document.getElementById('gamePlayScreen');
+        const gameEndScreen = document.getElementById('gameEndScreen');
+        const startGameButton = document.getElementById('startGameButton');
+        const restartGameButton = document.getElementById('restartGameButton');
+        const gameQuestion = document.getElementById('gameQuestion');
+        const gameOptions = document.getElementById('gameOptions');
+        const gameFeedback = document.getElementById('gameFeedback');
+        const gameScore = document.getElementById('gameScore');
+        const gameTimer = document.getElementById('gameTimer');
+        const hintButton = document.getElementById('hintButton');
+        const finalScore = document.getElementById('finalScore');
+        const leaderboardList = document.getElementById('leaderboardList');
+
+        const questions = [
+            {
+                question: "A person posts defamatory remarks about you on social media, causing harm to your reputation. What cybercrime under RA 10175 applies?",
+                options: ["Online Libel", "Cyberbullying", "Identity Theft", "Data Interference"],
+                correct: "Online Libel",
+                feedback: "Correct! Online Libel (Sec. 4(c)(4)) involves posting defamatory content online that harms someone's reputation.",
+                hint: "Check Sec. 4(c)(4) of RA 10175 for crimes involving harmful online content."
+            },
+            {
+                question: "Someone hacks into your email account and sends fraudulent messages to your contacts. What is this offense called under RA 10175?",
+                options: ["Illegal Access", "Cyber-squatting", "Online Fraud", "System Interference"],
+                correct: "Illegal Access",
+                feedback: "Correct! Illegal Access (Sec. 4(a)(1)) involves unauthorized access to a computer system, like hacking an email account.",
+                hint: "Look at Sec. 4(a)(1) of RA 10175 for unauthorized system access."
+            },
+            {
+                question: "What is the penalty for committing Online Libel under RA 10175?",
+                options: ["1-7 years imprisonment", "Fine only", "6 months-1 year imprisonment", "Community service"],
+                correct: "1-7 years imprisonment",
+                feedback: "Correct! Online Libel carries a penalty of imprisonment ranging from one to seven years under RA 10175.",
+                hint: "Refer to the penalties under Sec. 6 of RA 10175 for cybercrimes."
+            },
+            {
+                question: "You receive an email from someone pretending to be your bank, asking for your account details. What cybercrime is this?",
+                options: ["Phishing", "Cyber-squatting", "Data Interference", "Online Libel"],
+                correct: "Phishing",
+                feedback: "Correct! Phishing falls under Identity Theft (Sec. 4(b)(3)), where someone fraudulently obtains personal information.",
+                hint: "See Sec. 4(b)(3) of RA 10175 for crimes involving fraudulent identity use."
+            },
+            {
+                question: "A hacker deletes critical data from a company's server. What offense is this under RA 10175?",
+                options: ["Data Interference", "Illegal Interception", "Cyber-squatting", "Misuse of Devices"],
+                correct: "Data Interference",
+                feedback: "Correct! Data Interference (Sec. 4(a)(3)) involves the intentional deletion or alteration of data without authority.",
+                hint: "Check Sec. 4(a)(3) of RA 10175 for actions affecting data integrity."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let timer;
+        let timeLeft = 30;
+
+        function startGame() {
+            gameStartScreen.classList.remove('active');
+            gamePlayScreen.classList.add('active');
+            currentQuestion = 0;
+            score = 0;
+            gameScore.textContent = `Score: ${score}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            gameQuestion.textContent = q.question;
+            gameOptions.innerHTML = '';
+            gameFeedback.classList.remove('active');
+            hintButton.style.display = 'block';
+
+            q.options.forEach(option => {
+                const button = document.createElement('div');
+                button.classList.add('option');
+                button.textContent = option;
+                button.addEventListener('click', () => checkAnswer(option));
+                gameOptions.appendChild(button);
+            });
+
+            timeLeft = 30;
+            gameTimer.textContent = `Time: ${timeLeft}s`;
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                gameTimer.textContent = `Time: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    checkAnswer(null);
+                }
+            }, 1000);
+        }
+
+        function checkAnswer(selected) {
+            clearInterval(timer);
+            const q = questions[currentQuestion];
+            const options = gameOptions.querySelectorAll('.option');
+
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if (opt.textContent === q.correct) {
+                    opt.classList.add('correct');
+                }
+                if (selected && opt.textContent === selected && selected !== q.correct) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            if (selected === q.correct) {
+                score += 10;
+                gameScore.textContent = `Score: ${score}`;
+            } else if (selected !== null) {
+                score = Math.max(0, score - 5);
+                gameScore.textContent = `Score: ${score}`;
+            }
+
+            gameFeedback.textContent = q.feedback;
+            gameFeedback.classList.add('active');
+            hintButton.style.display = 'none';
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    endGame();
+                }
+            }, 2000);
+        }
+
+        function showHint() {
+            gameFeedback.textContent = questions[currentQuestion].hint;
+            gameFeedback.classList.add('active');
+            hintButton.style.display = 'none';
+        }
+
+        async function endGame() {
+            gamePlayScreen.classList.remove('active');
+            gameEndScreen.classList.add('active');
+            finalScore.textContent = `Your Score: ${score}`;
+
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                await database.ref(`leaderboard/${sanitizedEmail}`).set({
+                    username: user.displayName || 'User',
+                    score: score,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
+            }
+
+            updateLeaderboard();
+        }
+
+        async function updateLeaderboard() {
+            leaderboardList.innerHTML = '';
+            try {
+                const snapshot = await database.ref('leaderboard').orderByChild('score').limitToLast(5).once('value');
+                const leaderboardData = [];
+                snapshot.forEach(child => {
+                    leaderboardData.push(child.val());
+                });
+                leaderboardData.reverse().forEach(data => {
+                    const li = document.createElement('li');
+                    li.textContent = `${data.username}: ${data.score}`;
+                    leaderboardList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching leaderboard:', error);
+            }
+        }
+
+        startGameButton.addEventListener('click', startGame);
+        restartGameButton.addEventListener('click', startGame);
+        hintButton.addEventListener('click', showHint);
 
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('Page loaded, updating user counts');
