@@ -721,9 +721,6 @@
 
             <form id="resetPasswordForm" style="display: none;">
                 <h2>Reset Password</h2>
-                <label for="reset-username">New Username (Optional)</label>
-                <input type="text" id="reset-username" placeholder="Enter your new username" required>
-                
                 <label for="new-password">New Password</label>
                 <div class="input-container">
                     <input type="password" id="new-password" placeholder="Enter new password" required>
@@ -964,91 +961,76 @@
                 }
 
                 if (resetPasswordForm) {
-    resetPasswordForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
+                    resetPasswordForm.addEventListener('submit', async (event) => {
+                        event.preventDefault();
 
-        const submitButton = resetPasswordForm.querySelector('.action-btn');
-        submitButton.classList.add('loading');
-        submitButton.disabled = true;
+                        const submitButton = resetPasswordForm.querySelector('.action-btn');
+                        submitButton.classList.add('loading');
+                        submitButton.disabled = true;
 
-        const newUsername = document.getElementById('reset-username').value.trim();
-        const newPasswordValue = document.getElementById('new-password').value.trim();
-        const confirmPasswordValue = document.getElementById('confirm-password').value.trim();
-        const resetErrorMessage = document.getElementById('resetErrorMessage');
-        const resetSuccessMessage = document.getElementById('resetSuccessMessage');
+                        const newPasswordValue = document.getElementById('new-password').value.trim();
+                        const confirmPasswordValue = document.getElementById('confirm-password').value.trim();
+                        const resetErrorMessage = document.getElementById('resetErrorMessage');
+                        const resetSuccessMessage = document.getElementById('resetSuccessMessage');
 
-        if (!newUsername) {
-            resetErrorMessage.textContent = 'Please enter a username.';
-            resetErrorMessage.style.display = 'block';
-            resetErrorMessage.classList.add('show');
-            resetSuccessMessage.style.display = 'none';
-            submitButton.classList.remove('loading');
-            submitButton.disabled = false;
-            return;
-        }
+                        if (newPasswordValue !== confirmPasswordValue) {
+                            resetErrorMessage.textContent = 'Passwords do not match.';
+                            resetErrorMessage.style.display = 'block';
+                            resetErrorMessage.classList.add('show');
+                            resetSuccessMessage.style.display = 'none';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
 
-        if (newPasswordValue !== confirmPasswordValue) {
-            resetErrorMessage.textContent = 'Passwords do not match.';
-            resetErrorMessage.style.display = 'block';
-            resetErrorMessage.classList.add('show');
-            resetSuccessMessage.style.display = 'none';
-            submitButton.classList.remove('loading');
-            submitButton.disabled = false;
-            return;
-        }
+                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                        if (!passwordRegex.test(newPasswordValue)) {
+                            resetErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
+                            resetErrorMessage.style.display = 'block';
+                            resetErrorMessage.classList.add('show');
+                            resetSuccessMessage.style.display = 'none';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
 
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!passwordRegex.test(newPasswordValue)) {
-            resetErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
-            resetErrorMessage.style.display = 'block';
-            resetErrorMessage.classList.add('show');
-            resetSuccessMessage.style.display = 'none';
-            submitButton.classList.remove('loading');
-            submitButton.disabled = false;
-            return;
-        }
+                        try {
+                            const email = await auth.verifyPasswordResetCode(oobCode);
 
-        try {
-            const email = await auth.verifyPasswordResetCode(oobCode);
+                            await auth.confirmPasswordReset(oobCode, newPasswordValue);
 
-            await auth.confirmPasswordReset(oobCode, newPasswordValue);
+                            await db.collection('users').doc(email).update({
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
 
-            await db.collection('users').doc(email).update({
-                username: newUsername,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
+                            await auth.signInWithEmailAndPassword(email, newPasswordValue);
 
-            await auth.signInWithEmailAndPassword(email, newPasswordValue);
-            const user = auth.currentUser;
-            if (user) {
-                await user.updateProfile({
-                    displayName: newUsername
-                });
-            }
+                            const userDoc = await db.collection('users').doc(email).get();
+                            const username = userDoc.exists ? userDoc.data().username : 'User';
 
-            localStorage.setItem('currentUser', JSON.stringify({ email, username: newUsername }));
+                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
 
-            resetSuccessMessage.textContent = 'Password reset successful! Redirecting to login...';
-            resetSuccessMessage.style.display = 'block';
-            resetSuccessMessage.classList.add('show');
-            resetErrorMessage.style.display = 'none';
+                            resetSuccessMessage.textContent = 'Password reset successful! Redirecting to homepage...';
+                            resetSuccessMessage.style.display = 'block';
+                            resetSuccessMessage.classList.add('show');
+                            resetErrorMessage.style.display = 'none';
 
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 3000);
-        } catch (error) {
-            console.error('Password reset error:', error);
-            resetErrorMessage.textContent = error.message.includes('expired') || error.message.includes('invalid')
-                ? 'The reset link has expired or is invalid. Please request a new one.'
-                : 'An error occurred. Please try again: ' + error.message;
-            resetErrorMessage.style.display = 'block';
-            resetErrorMessage.classList.add('show');
-            resetSuccessMessage.style.display = 'none';
-            submitButton.classList.remove('loading');
-            submitButton.disabled = false;
-        }
-    });
-}
+                            setTimeout(() => {
+                                window.location.href = 'HomePage.html';
+                            }, 3000);
+                        } catch (error) {
+                            console.error('Password reset error:', error);
+                            resetErrorMessage.textContent = error.message.includes('expired') || error.message.includes('invalid')
+                                ? 'The reset link has expired or is invalid. Please request a new one.'
+                                : 'An error occurred. Please try again: ' + error.message;
+                            resetErrorMessage.style.display = 'block';
+                            resetErrorMessage.classList.add('show');
+                            resetSuccessMessage.style.display = 'none';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                        }
+                    });
+                }
 
                 const googleSignInBtn = document.getElementById('googleSignInBtn');
                 const googleSignInModal = document.getElementById('googleSignInModal');
