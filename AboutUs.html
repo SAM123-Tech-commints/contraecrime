@@ -103,7 +103,6 @@
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
             background-size: cover;
             background-position: center;
-            background-color: #1a1a1a;
             color: white;
             padding: 20px;
             height: 100vh;
@@ -1136,7 +1135,7 @@
             padding: 15px;
             position: fixed;
             width: 100%;
-            z-index: 1000;
+            z-index: 3000;
         }
 
         .mobile-nav .logo {
@@ -1214,7 +1213,7 @@
                 font-size: 20px;
             }
 
-            .sidebar ul li a {
+ groundwater ul li a {
                 font-size: 14px;
             }
 
@@ -1278,30 +1277,21 @@
                 width: 100%;
                 height: auto;
                 position: fixed;
-                padding: 15px;
+                padding: 10px;
                 transform: translateX(-100%);
-                z-index: 999;
+                z-index: 2999;
                 top: 60px;
                 height: calc(100vh - 60px);
                 overflow-y: auto;
-                background-size: cover;
-                background-position: center;
-                background-color: #1a1a1a;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
             }
 
             .sidebar.active {
                 transform: translateX(0);
+                z-index: 3000;
             }
 
             .sidebar h1 {
                 display: none;
-            }
-
-            .sidebar ul {
-                margin: 0;
             }
 
             .sidebar ul li {
@@ -1310,11 +1300,6 @@
 
             .sidebar ul li a {
                 font-size: 16px;
-            }
-
-            .dark-theme-container {
-                margin-top: 20px;
-                margin-bottom: 15px;
             }
 
             .dark-theme-label {
