@@ -920,16 +920,16 @@
         }
 
         .game-container {
-        max-width: 900px;
-        margin: 0 auto;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        position: relative;
-        overflow: hidden;
-        min-height: 500px;
-        padding: 20px;
-    }
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #e6f0fa 0%, #f6e6e9 100%);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            padding: 30px;
+        }
 
         .game-overlay {
             position: absolute;
@@ -937,7 +937,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
 
@@ -959,27 +959,40 @@
 
         .game-start-screen h3 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 28px;
+            font-size: 32px;
             margin-bottom: 20px;
+            color: #8B0000;
         }
 
         .game-start-screen p {
             font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .game-start-screen .instructions {
+            font-family: 'Poppins', sans-serif;
             font-size: 16px;
             margin-bottom: 30px;
-            color: #fff;
+            color: #e0e0e0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
         }
 
         .game-button {
-            padding: 12px 30px;
+            padding: 18px 50px;
             background: linear-gradient(90deg, #8B0000, #b30000);
             color: #fff;
             border: none;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 20px;
+            font-weight: 700;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -1040,6 +1053,7 @@
             border-radius: 5px;
             color: #fff;
         }
+
         .game-play-screen .feedback.active {
             display: block;
         }
@@ -1068,16 +1082,34 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             margin-top: 10px;
+            margin-right: 10px;
         }
 
         .game-play-screen .hint-button:hover {
             background: #b89a47;
         }
 
+        .game-play-screen .stop-button {
+            padding: 8px 20px;
+            background: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .game-play-screen .stop-button:hover {
+            background: #d32f2f;
+        }
+
         .game-end-screen h3 {
             font-family: 'Montserrat', sans-serif;
             font-size: 28px;
             margin-bottom: 20px;
+            color: #8B0000;
         }
 
         .game-end-screen p {
@@ -1098,6 +1130,7 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 20px;
             margin-bottom: 10px;
+            color: #d7b15c;
         }
 
         .leaderboard ul {
@@ -1118,11 +1151,12 @@
         }
 
         .dark-theme .game-container {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a2c3a 100%);
             box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
         }
 
         .dark-theme .game-play-screen .option {
-            background: #333;
+            background: #444;
             color: #e0e0e0;
         }
 
@@ -1143,6 +1177,11 @@
             color: #222;
         }
 
+        .dark-theme .game-start-screen h3,
+        .dark-theme .game-end-screen h3 {
+            color: #d7b15c;
+        }
+
         @media (max-width: 768px) {
             .game-section {
                 padding: 50px 10px;
@@ -1150,10 +1189,15 @@
 
             .game-container {
                 min-height: 400px;
+                padding: 20px;
             }
 
             .game-start-screen h3, .game-end-screen h3 {
                 font-size: 24px;
+            }
+
+            .game-start-screen p, .game-start-screen .instructions {
+                font-size: 14px;
             }
 
             .game-play-screen .question {
@@ -1162,6 +1206,11 @@
 
             .game-play-screen .option {
                 font-size: 14px;
+            }
+
+            .game-button {
+                padding: 14px 40px;
+                font-size: 18px;
             }
         }
 
@@ -1177,6 +1226,10 @@
 
             .game-start-screen h3, .game-end-screen h3 {
                 font-size: 20px;
+            }
+
+            .game-start-screen p, .game-start-screen .instructions {
+                font-size: 12px;
             }
 
             .game-play-screen .question {
@@ -1197,7 +1250,7 @@
                 font-size: 14px;
             }
 
-            .game-button, .game-play-screen .hint-button {
+            .game-button, .game-play-screen .hint-button, .game-play-screen .Skeleton {
                 font-size: 14px;
                 padding: 10px 20px;
             }
@@ -1240,7 +1293,7 @@
             background: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 5.px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             opacity: 0;
             transform: translateY(30px);
@@ -1956,6 +2009,17 @@
                         <div class="game-start-screen active" id="gameStartScreen">
                             <h3>Welcome to CyberLaw Quest</h3>
                             <p>Step into the courtroom and tackle real-world cybercrime scenarios based on Republic Act No. 10175. Answer questions, learn legal terms, and climb the leaderboard!</p>
+                            <div class="instructions">
+                                <strong>How to Play:</strong>
+                                <ul>
+                                    <li>Click <strong>Start Game</strong> to begin.</li>
+                                    <li>Answer each question within 30 seconds.</li>
+                                    <li>Earn <strong>10 points</strong> for a correct answer, lose <strong>5 points</strong> for an incorrect one.</li>
+                                    <li>Use the <strong>Hint</strong> button for a clue, but only once per question.</li>
+                                    <li>Click <strong>Stop Game</strong> to end early and view your score.</li>
+                                    <li>Check the leaderboard to see where you rank!</li>
+                                </ul>
+                            </div>
                             <button class="game-button" id="startGameButton">Start Game</button>
                         </div>
                         <div class="game-play-screen" id="gamePlayScreen">
@@ -1967,6 +2031,7 @@
                             <div class="options" id="gameOptions"></div>
                             <div class="feedback" id="gameFeedback"></div>
                             <button class="hint-button" id="hintButton">Show Hint</button>
+                            <button class="stop-button" id="stopGameButton">Stop Game</button>
                         </div>
                         <div class="game-end-screen" id="gameEndScreen">
                             <h3>Game Over!</h3>
@@ -2243,365 +2308,644 @@
                     const formData = new FormData();
                     formData.append('file', blob);
                     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
 
                     fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
-                                try {
-                                    const parsed = JSON.parse(text);
-                                    errorMessage = parsed.error?.message || text;
-                                } catch (e) {
-                                    errorMessage = text.includes('Invalid cloud name')
-                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
-                                        : text.includes('Invalid upload preset')
-                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                        : text.includes('Unsigned uploads are not allowed')
-                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                        : text || 'Unknown error occurred';
-                                }
-                                throw new Error(errorMessage);
-                            });
-                        }
-                        return response.json();
-                    })
+                    .then(response => response.json())
                     .then(data => {
-                        if (data.error) {
-                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                        if (data.secure_url) {
+                            profilePic.src = data.secure_url;
+
+                            const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+                            const userRef = database.ref(`users/${sanitizedEmail}`);
+                            userRef.update({
+                                avatarUrl: data.secure_url
+                            }, (error) => {
+                                if (error) {
+                                    console.error('Error saving avatar URL:', error);
+                                    alert('Failed to save avatar: ' + error.message);
+                                } else {
+                                    console.log('Avatar URL saved successfully');
+                                }
+                                avatarLoading.classList.remove('active');
+                            });
+                        } else {
+                            console.error('Cloudinary upload failed:', data);
+                            alert('Failed to upload avatar.');
+                            avatarLoading.classList.remove('active');
                         }
-
-                        const avatarUrl = data.secure_url;
-                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                        database.ref(`users/${sanitizedEmail}`).update({
-                            avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
-                        })
-                        .then(() => {
-                            profilePic.src = avatarUrl;
-                            avatarLoading.classList.remove('active');
-                        })
-                        .catch(error => {
-                            console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
-                            avatarLoading.classList.remove('active');
-                        });
                     })
                     .catch(error => {
-                        console.error('Error uploading avatar to Cloudinary:', error);
-                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                        console.error('Error uploading to Cloudinary:', error);
+                        alert('Error uploading avatar: ' + error.message);
                         avatarLoading.classList.remove('active');
                     });
-                }, file.type, 0.6);
-            };
-            img.onerror = () => {
-                alert('Failed to process the image. Please try a different file.');
-                avatarLoading.classList.remove('active');
+                }, 'image/jpeg', 0.8);
             };
         });
 
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
+        avatarBgColorPicker.addEventListener('change', (event) => {
+            const color = event.target.value;
             profilePic.style.backgroundColor = color;
 
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving avatar background color:', error);
-                    alert('Failed to save avatar background color: ' + error.message);
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.update({
+                    avatarBgColor: color
+                }, (error) => {
+                    if (error) {
+                        console.error('Error saving background color:', error);
+                        alert('Failed to save background color: ' + error.message);
+                    }
                 });
-            } else {
-                alert('You must be logged in to change the avatar background color.');
             }
         });
 
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
+        borderColorPicker.addEventListener('change', (event) => {
+            const color = event.target.value;
             profilePic.style.borderColor = color;
 
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border color:', error);
-                    alert('Failed to save border color: ' + error.message);
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.update({
+                    borderColor: color
+                }, (error) => {
+                    if (error) {
+                        console.error('Error saving border color:', error);
+                        alert('Failed to save border color: ' + error.message);
+                    }
                 });
-            } else {
-                alert('You must be logged in to change the border color.');
             }
         });
 
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
+        borderTypeSelect.addEventListener('change', (event) => {
+            const borderType = event.target.value;
             profilePic.style.borderStyle = borderType;
 
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: borderType,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.update({
+                    borderType: borderType
+                }, (error) => {
+                    if (error) {
+                        console.error('Error saving border type:', error);
+                        alert('Failed to save border type: ' + error.message);
+                    }
                 });
-            } else {
-                alert('You must be logged in to change the border type.');
             }
         });
 
-        if (localStorage.getItem('darkTheme') === 'enabled') {
+        themeToggle.addEventListener('change', () => {
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
 
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
-        });
-
-        mobileMenuIcon.addEventListener('click', function() {
+        mobileMenuIcon.addEventListener('click', () => {
             sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target)) {
+                sidebar.classList.remove('active');
             }
         });
 
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-                    
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-                    
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
-        });
-
-        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item, .game-section');
-        const observer = new IntersectionObserver((entries, observer) => {
+        function handleIntersection(entries, observer) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
+        }
 
-        items.forEach(item => {
+        const observer = new IntersectionObserver(handleIntersection, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item').forEach(item => {
             observer.observe(item);
         });
 
-        // Game Logic for CyberLaw Quest
+        const gameQuestions = [
+    {
+        question: "Under Republic Act No. 10175, what is the penalty for illegal access to a computer system?",
+        options: [
+            "Imprisonment of 6 months to 3 years",
+            "Imprisonment of 1 to 7 years",
+            "Fine of PHP 100,000",
+            "Community service"
+        ],
+        correct: 1,
+        hint: "The punishment is a prison term that spans several years, not just months."
+    },
+    {
+        question: "What is 'Phishing' classified as under the Cybercrime Prevention Act?",
+        options: [
+            "Data Interference",
+            "Cyber-squatting",
+            "Identity Theft",
+            "Illegal Interception"
+        ],
+        correct: 2,
+        hint: "This crime involves pretending to be a trusted source to steal personal details."
+    },
+    {
+        question: "Which section of RA 10175 defines 'Cybersex' as a cybercrime?",
+        options: [
+            "Section 4(a)(1)",
+            "Section 4(c)(1)",
+            "Section 5(b)",
+            "Section 6"
+        ],
+        correct: 1,
+        hint: "Look for a section that addresses content-related crimes involving explicit material."
+    },
+    {
+        question: "What is the maximum fine for online libel under RA 10175?",
+        options: [
+            "PHP 50,000",
+            "PHP 200,000",
+            "PHP 1,000,000",
+            "No fine, only imprisonment"
+        ],
+        correct: 2,
+        hint: "The fine is a large amount, often associated with serious reputational harm."
+    },
+    {
+        question: "Who can file a complaint for cybercrimes under RA 10175?",
+        options: [
+            "Only the victim",
+            "Law enforcement agencies",
+            "Any person or entity",
+            "Only the NBI"
+        ],
+        correct: 2,
+        hint: "The law is inclusive, allowing more than just victims to report violations."
+    },
+    {
+        question: "What does 'Data Interference' under RA 10175 involve?",
+        options: [
+            "Unauthorized copying of data",
+            "Damaging or altering computer data",
+            "Stealing hardware",
+            "Sending spam emails"
+        ],
+        correct: 1,
+        hint: "This crime targets the integrity of digital information, often by tampering."
+    },
+    {
+        question: "Scenario: Anna receives an email claiming she won a lottery but needs to share her bank details. What crime is this likely to be?",
+        options: [
+            "Online Libel",
+            "Phishing",
+            "Cybersex",
+            "Data Interference"
+        ],
+        correct: 1,
+        hint: "The email is a trick to lure Anna into revealing sensitive information."
+    },
+    {
+        question: "What is the term for spreading false information online that harms someone's reputation under RA 10175?",
+        options: [
+            "Cyber-squatting",
+            "Online Libel",
+            "Identity Theft",
+            "Hacking"
+        ],
+        correct: 1,
+        hint: "This crime is similar to defamation but occurs in the digital space."
+    },
+    {
+        question: "Which agency is primarily responsible for enforcing RA 10175?",
+        options: [
+            "Philippine National Police (PNP)",
+            "National Bureau of Investigation (NBI)",
+            "Department of Justice (DOJ)",
+            "All of the above"
+        ],
+        correct: 3,
+        hint: "Multiple agencies collaborate to tackle cybercrimes in the Philippines."
+    },
+    {
+        question: "What is 'Cyber-squatting' under RA 10175?",
+        options: [
+            "Hacking government websites",
+            "Registering domain names to profit from trademarks",
+            "Sending bulk unsolicited emails",
+            "Creating fake social media profiles"
+        ],
+        correct: 1,
+        hint: "This involves exploiting brand names in website addresses for gain."
+    },
+    {
+        question: "Scenario: John hacks into a company's database and deletes critical files. What crime has he committed?",
+        options: [
+            "Illegal Access",
+            "Data Interference",
+            "Cybersex",
+            "Online Libel"
+        ],
+        correct: 1,
+        hint: "The act involves deliberately damaging or altering digital information."
+    },
+    {
+        question: "What is the penalty for child pornography under RA 10175?",
+        options: [
+            "Fine of PHP 50,000",
+            "Imprisonment of 7 to 14 years",
+            "Imprisonment of 12 to 20 years",
+            "Community service"
+        ],
+        correct: 2,
+        hint: "This serious offense carries a long prison term due to its impact on minors."
+    },
+    {
+        question: "What does 'Illegal Interception' mean under RA 10175?",
+        options: [
+            "Stealing physical devices",
+            "Unauthorized access to private communications",
+            "Posting offensive content online",
+            "Creating malware"
+        ],
+        correct: 1,
+        hint: "This crime involves secretly capturing someone’s private messages."
+    },
+    {
+        question: "Scenario: Maria posts a false story about her classmate on social media, causing public humiliation. What is this crime?",
+        options: [
+            "Phishing",
+            "Cyber-squatting",
+            "Online Libel",
+            "Data Interference"
+        ],
+        correct: 2,
+        hint: "The act harms someone’s reputation through false online statements."
+    },
+    {
+        question: "What is the legal term for a written statement that harms someone's reputation?",
+        options: [
+            "Slander",
+            "Libel",
+            "Defamation",
+            "Fraud"
+        ],
+        correct: 1,
+        hint: "This term specifically refers to written or published false statements."
+    },
+    {
+        question: "Under RA 10175, what is the penalty for aiding or abetting a cybercrime?",
+        options: [
+            "Same as the principal offender",
+            "Half the principal’s penalty",
+            "Fine only",
+            "No penalty"
+        ],
+        correct: 0,
+        hint: "Helping a cybercriminal carries the same weight as committing the act."
+    },
+    {
+        question: "What is 'Malware' in the context of cybercrime?",
+        options: [
+            "A type of hardware",
+            "Malicious software",
+            "A legal document",
+            "A social media platform"
+        ],
+        correct: 1,
+        hint: "This term describes programs designed to harm or infiltrate systems."
+    },
+    {
+        question: "Scenario: A hacker demands payment to unlock a company’s encrypted files. What is this called?",
+        options: [
+            "Phishing",
+            "Ransomware",
+            "Cybersex",
+            "Online Libel"
+        ],
+        correct: 1,
+        hint: "The crime involves locking data and demanding money for access."
+    },
+    {
+        question: "What does RA 10175 define as a 'Computer System'?",
+        options: [
+            "Only desktop computers",
+            "Any device that processes data",
+            "Only servers",
+            "Physical hardware only"
+        ],
+        correct: 1,
+        hint: "The definition is broad, covering devices that handle digital information."
+    },
+    {
+        question: "What is the term for pretending to be someone else online to deceive others?",
+        options: [
+            "Hacking",
+            "Identity Theft",
+            "Phishing",
+            "Cyber-squatting"
+        ],
+        correct: 1,
+        hint: "This crime involves stealing someone’s personal identity for fraud."
+    },
+    {
+        question: "Scenario: A student shares pirated software online. What crime is this under RA 10175?",
+        options: [
+            "Illegal Access",
+            "Data Interference",
+            "Cybersex",
+            "Copyright Infringement"
+        ],
+        correct: 3,
+        hint: "The act violates intellectual property rights in the digital space."
+    },
+    {
+        question: "What is the minimum imprisonment for online fraud under RA 10175?",
+        options: [
+            "1 year",
+            "3 years",
+            "6 years",
+            "No minimum"
+        ],
+        correct: 1,
+        hint: "The penalty starts with a few years in prison for deceptive acts."
+    },
+    {
+        question: "What does 'Denial of Service' (DoS) attack aim to do?",
+        options: [
+            "Steal data",
+            "Overload a system to disrupt service",
+            "Spread false information",
+            "Create fake identities"
+        ],
+        correct: 1,
+        hint: "The goal is to make a website or service unavailable to users."
+    },
+    {
+        question: "Scenario: An employee accesses a restricted database without permission. What is this crime?",
+        options: [
+            "Illegal Access",
+            "Online Libel",
+            "Phishing",
+            "Cybersex"
+        ],
+        correct: 0,
+        hint: "The act involves entering a system without authorization."
+    },
+    {
+        question: "What is the term for a legally binding agreement between parties?",
+        options: [
+            "Contract",
+            "Affidavit",
+            "Warrant",
+            "Subpoena"
+        ],
+        correct: 0,
+        hint: "This document outlines mutual obligations enforceable by law."
+    },
+    {
+        question: "Under RA 10175, what is the penalty for cybersex involving minors?",
+        options: [
+            "Fine of PHP 100,000",
+            "Imprisonment of 12 to 20 years",
+            "Imprisonment of 1 to 3 years",
+            "Community service"
+        ],
+        correct: 1,
+        hint: "The punishment is severe due to the involvement of vulnerable individuals."
+    },
+    {
+        question: "What is 'Spyware' in cybercrime terms?",
+        options: [
+            "Software for gaming",
+            "Software that secretly collects data",
+            "A type of antivirus",
+            "A hardware component"
+        ],
+        correct: 1,
+        hint: "This program covertly monitors user activity without consent."
+    },
+    {
+        question: "Scenario: A website sells fake products using a famous brand’s logo. What is this crime?",
+        options: [
+            "Cyber-squatting",
+            "Online Fraud",
+            "Identity Theft",
+            "Phishing"
+        ],
+        correct: 1,
+        hint: "The act involves deceiving customers with counterfeit goods."
+    },
+    {
+        question: "What does RA 10175 require for evidence in cybercrime cases?",
+        options: [
+            "Only physical evidence",
+            "Digital evidence with integrity",
+            "Only witness testimony",
+            "No evidence required"
+        ],
+        correct: 1,
+        hint: "The evidence must be reliable and verifiable in digital form."
+    },
+    {
+        question: "What is the term for a court order to produce evidence?",
+        options: [
+            "Warrant",
+            "Subpoena",
+            "Affidavit",
+            "Contract"
+        ],
+        correct: 1,
+        hint: "This legal document compels someone to provide documents or testimony."
+    }
+];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        let timeLeft = 30;
+        let hintUsed = false;
+
         const gameStartScreen = document.getElementById('gameStartScreen');
         const gamePlayScreen = document.getElementById('gamePlayScreen');
         const gameEndScreen = document.getElementById('gameEndScreen');
         const startGameButton = document.getElementById('startGameButton');
-        const restartGameButton = document.getElementById('restartGameButton');
         const gameQuestion = document.getElementById('gameQuestion');
         const gameOptions = document.getElementById('gameOptions');
         const gameFeedback = document.getElementById('gameFeedback');
         const gameScore = document.getElementById('gameScore');
         const gameTimer = document.getElementById('gameTimer');
         const hintButton = document.getElementById('hintButton');
+        const stopGameButton = document.getElementById('stopGameButton');
         const finalScore = document.getElementById('finalScore');
         const leaderboardList = document.getElementById('leaderboardList');
+        const restartGameButton = document.getElementById('restartGameButton');
 
-        const questions = [
-            {
-                question: "A person posts defamatory remarks about you on social media, causing harm to your reputation. What cybercrime under RA 10175 applies?",
-                options: ["Online Libel", "Cyberbullying", "Identity Theft", "Data Interference"],
-                correct: "Online Libel",
-                feedback: "Correct! Online Libel (Sec. 4(c)(4)) involves posting defamatory content online that harms someone's reputation.",
-                hint: "Check Sec. 4(c)(4) of RA 10175 for crimes involving harmful online content."
-            },
-            {
-                question: "Someone hacks into your email account and sends fraudulent messages to your contacts. What is this offense called under RA 10175?",
-                options: ["Illegal Access", "Cyber-squatting", "Online Fraud", "System Interference"],
-                correct: "Illegal Access",
-                feedback: "Correct! Illegal Access (Sec. 4(a)(1)) involves unauthorized access to a computer system, like hacking an email account.",
-                hint: "Look at Sec. 4(a)(1) of RA 10175 for unauthorized system access."
-            },
-            {
-                question: "What is the penalty for committing Online Libel under RA 10175?",
-                options: ["1-7 years imprisonment", "Fine only", "6 months-1 year imprisonment", "Community service"],
-                correct: "1-7 years imprisonment",
-                feedback: "Correct! Online Libel carries a penalty of imprisonment ranging from one to seven years under RA 10175.",
-                hint: "Refer to the penalties under Sec. 6 of RA 10175 for cybercrimes."
-            },
-            {
-                question: "You receive an email from someone pretending to be your bank, asking for your account details. What cybercrime is this?",
-                options: ["Phishing", "Cyber-squatting", "Data Interference", "Online Libel"],
-                correct: "Phishing",
-                feedback: "Correct! Phishing falls under Identity Theft (Sec. 4(b)(3)), where someone fraudulently obtains personal information.",
-                hint: "See Sec. 4(b)(3) of RA 10175 for crimes involving fraudulent identity use."
-            },
-            {
-                question: "A hacker deletes critical data from a company's server. What offense is this under RA 10175?",
-                options: ["Data Interference", "Illegal Interception", "Cyber-squatting", "Misuse of Devices"],
-                correct: "Data Interference",
-                feedback: "Correct! Data Interference (Sec. 4(a)(3)) involves the intentional deletion or alteration of data without authority.",
-                hint: "Check Sec. 4(a)(3) of RA 10175 for actions affecting data integrity."
-            }
-        ];
-
-        let currentQuestion = 0;
-        let score = 0;
-        let timer;
-        let timeLeft = 30;
+        startGameButton.addEventListener('click', startGame);
+        stopGameButton.addEventListener('click', endGame);
+        restartGameButton.addEventListener('click', resetGame);
+        hintButton.addEventListener('click', showHint);
 
         function startGame() {
             gameStartScreen.classList.remove('active');
             gamePlayScreen.classList.add('active');
-            currentQuestion = 0;
+            currentQuestionIndex = 0;
             score = 0;
-            gameScore.textContent = `Score: ${score}`;
+            hintUsed = false;
+            updateScore();
             loadQuestion();
         }
 
         function loadQuestion() {
-            const q = questions[currentQuestion];
-            gameQuestion.textContent = q.question;
-            gameOptions.innerHTML = '';
-            gameFeedback.classList.remove('active');
-            hintButton.style.display = 'block';
+            if (currentQuestionIndex >= gameQuestions.length) {
+                endGame();
+                return;
+            }
 
-            q.options.forEach(option => {
-                const button = document.createElement('div');
-                button.classList.add('option');
-                button.textContent = option;
-                button.addEventListener('click', () => checkAnswer(option));
-                gameOptions.appendChild(button);
+            const question = gameQuestions[currentQuestionIndex];
+            gameQuestion.textContent = question.question;
+            gameOptions.innerHTML = '';
+            gameFeedback.textContent = '';
+            gameFeedback.classList.remove('active');
+            hintUsed = false;
+            hintButton.disabled = false;
+
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(index));
+                gameOptions.appendChild(optionElement);
             });
 
             timeLeft = 30;
             gameTimer.textContent = `Time: ${timeLeft}s`;
+            startTimer();
+        }
+
+        function startTimer() {
             clearInterval(timer);
             timer = setInterval(() => {
                 timeLeft--;
                 gameTimer.textContent = `Time: ${timeLeft}s`;
                 if (timeLeft <= 0) {
                     clearInterval(timer);
-                    checkAnswer(null);
+                    gameFeedback.textContent = 'Time’s up!';
+                    gameFeedback.classList.add('active');
+                    disableOptions();
+                    setTimeout(loadNextQuestion, 2000);
                 }
             }, 1000);
         }
 
-        function checkAnswer(selected) {
+        function selectOption(index) {
             clearInterval(timer);
-            const q = questions[currentQuestion];
-            const options = gameOptions.querySelectorAll('.option');
+            const question = gameQuestions[currentQuestionIndex];
+            const options = gameOptions.children;
 
-            options.forEach(opt => {
-                opt.style.pointerEvents = 'none';
-                if (opt.textContent === q.correct) {
-                    opt.classList.add('correct');
-                }
-                if (selected && opt.textContent === selected && selected !== q.correct) {
-                    opt.classList.add('incorrect');
-                }
-            });
-
-            if (selected === q.correct) {
-                score += 10;
-                gameScore.textContent = `Score: ${score}`;
-            } else if (selected !== null) {
-                score = Math.max(0, score - 5);
-                gameScore.textContent = `Score: ${score}`;
+            for (let i = 0; i < options.length; i++) {
+                options[i].classList.add(i === question.correct ? 'correct' : 'incorrect');
+                options[i].style.pointerEvents = 'none';
             }
 
-            gameFeedback.textContent = q.feedback;
+            if (index === question.correct) {
+                score += 10;
+                gameFeedback.textContent = 'Correct! +10 points';
+            } else {
+                score -= 5;
+                gameFeedback.textContent = 'Incorrect. -5 points';
+            }
             gameFeedback.classList.add('active');
-            hintButton.style.display = 'none';
+            updateScore();
+            setTimeout(loadNextQuestion, 2000);
+        }
 
-            setTimeout(() => {
-                currentQuestion++;
-                if (currentQuestion < questions.length) {
-                    loadQuestion();
-                } else {
-                    endGame();
-                }
-            }, 2000);
+        function disableOptions() {
+            const options = gameOptions.children;
+            for (let i = 0; i < options.length; i++) {
+                options[i].style.pointerEvents = 'none';
+            }
+        }
+
+        function updateScore() {
+            gameScore.textContent = `Score: ${score}`;
         }
 
         function showHint() {
-            gameFeedback.textContent = questions[currentQuestion].hint;
-            gameFeedback.classList.add('active');
-            hintButton.style.display = 'none';
+            if (!hintUsed) {
+                gameFeedback.textContent = gameQuestions[currentQuestionIndex].hint;
+                gameFeedback.classList.add('active');
+                hintUsed = true;
+                hintButton.disabled = true;
+            }
         }
 
-        async function endGame() {
+        function loadNextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function endGame() {
+            clearInterval(timer);
             gamePlayScreen.classList.remove('active');
             gameEndScreen.classList.add('active');
-            finalScore.textContent = `Your Score: ${score}`;
+            finalScore.textContent = `Your Final Score: ${score}`;
 
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                await database.ref(`leaderboard/${sanitizedEmail}`).set({
-                    username: user.displayName || 'User',
+                const leaderboardRef = database.ref(`leaderboard/${sanitizedEmail}`);
+                leaderboardRef.set({
+                    username: user.displayName || 'Anonymous',
                     score: score,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
             }
 
-            updateLeaderboard();
+            loadLeaderboard();
         }
 
-        async function updateLeaderboard() {
-            leaderboardList.innerHTML = '';
-            try {
-                const snapshot = await database.ref('leaderboard').orderByChild('score').limitToLast(5).once('value');
+        function loadLeaderboard() {
+            const leaderboardRef = database.ref('leaderboard');
+            leaderboardRef.orderByChild('score').limitToLast(5).once('value', (snapshot) => {
+                leaderboardList.innerHTML = '';
                 const leaderboardData = [];
-                snapshot.forEach(child => {
-                    leaderboardData.push(child.val());
+                snapshot.forEach((childSnapshot) => {
+                    leaderboardData.push(childSnapshot.val());
                 });
-                leaderboardData.reverse().forEach(data => {
+
+                leaderboardData.sort((a, b) => b.score - a.score).forEach((entry, index) => {
                     const li = document.createElement('li');
-                    li.textContent = `${data.username}: ${data.score}`;
+                    li.textContent = `${index + 1}. ${entry.username}: ${entry.score} points`;
                     leaderboardList.appendChild(li);
                 });
-            } catch (error) {
-                console.error('Error fetching leaderboard:', error);
-            }
+            });
         }
 
-        startGameButton.addEventListener('click', startGame);
-        restartGameButton.addEventListener('click', startGame);
-        hintButton.addEventListener('click', showHint);
+        function resetGame() {
+            gameEndScreen.classList.remove('active');
+            gameStartScreen.classList.add('active');
+            score = 0;
+            currentQuestionIndex = 0;
+            updateScore();
+        }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log('Page loaded, updating user counts');
-            await updateUserCounts();
+        window.addEventListener('load', () => {
+            loaderOverlay.classList.remove('active');
+            updateUserCounts();
         });
     </script>
 </body>
