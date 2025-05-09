@@ -688,30 +688,12 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 0.6s ease-in-out;
+            transition: transform 0.6s;
             cursor: pointer;
         }
 
         .card.flipped {
             transform: rotateY(180deg);
-        }
-
-        .card.fade-out {
-            animation: fadeOutScale 0.4s ease-in-out forwards;
-        }
-
-        .card.fade-in {
-            animation: fadeInScale 0.4s ease-in-out forwards;
-        }
-
-        @keyframes fadeOutScale {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0.95); }
-        }
-
-        @keyframes fadeInScale {
-            0% { opacity: 0; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
         }
 
         .card-front, .card-back {
@@ -1365,7 +1347,7 @@
                 </div>
 
                 <div class="news-content active">
-                                   <!-- Page 1 Articles -->
+                <!-- Page 1 Articles -->
                 <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg" alt="News Image" class="news-image">
@@ -1800,6 +1782,7 @@
                         <a href="https://www.pna.gov.ph/articles/1242003" target="_blank" class="read-more">Read more</a>
                     </div>
                 </div>
+
                     <div class="pagination">
                         <button id="prevPage" onclick="changePage(-1)">Previous</button>
                         <div class="page-numbers" id="pageNumbers"></div>
@@ -1829,8 +1812,8 @@
                     </div>
                     <div class="card-counter" id="cardCounter"></div>
                     <div class="navigation-buttons">
-                        <button class="nav-button" onclick="navigateCard(-1)" id="prevCardBtn"><i class="fas fa-arrow-left"></i></button>
-                        <button class="nav-button" onclick="navigateCard(1)" id="nextCardBtn"><i class="fas fa-arrow-right"></i></button>
+                        <button class="nav-button" onclick="navigateCard(-1)"><i class="fas fa-arrow-left"></i></button>
+                        <button class="nav-button" onclick="navigateCard(1)"><i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
             </section>
@@ -1881,8 +1864,6 @@
         const createdAtDisplay = document.getElementById('createdAtDisplay');
         const card = document.getElementById('card');
         const cardCounter = document.getElementById('cardCounter');
-        const prevCardBtn = document.getElementById('prevCardBtn');
-        const nextCardBtn = document.getElementById('nextCardBtn');
 
         const cardsData = [
     { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
@@ -1940,61 +1921,36 @@
 
         let currentCardIndex = 0;
         let isFlipped = false;
-        let isTransitioning = false;
 
         function updateCard(index) {
-            if (isTransitioning) return;
-
-            isTransitioning = true;
-
-            // Apply fade-out animation
-            card.classList.add('fade-out');
-
-            // Wait for the fade-out animation to finish
-            setTimeout(() => {
-                // Update card content
-                const data = cardsData[index];
-                const front = card.querySelector('.card-front');
-                const back = card.querySelector('.card-back');
-                front.innerHTML = `
-                    <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
-                    <h3>${data.term}</h3>
-                `;
-                back.innerHTML = `
-                    <h3>${data.term}</h3>
-                    <div class="part-of-speech">${data.partOfSpeech}</div>
-                    <div class="definition">${data.definition}</div>
-                    <div class="example">${data.example}</div>
-                    <div class="synonyms">Synonyms: ${data.synonyms}</div>
-                `;
-
-                // Maintain flipped state
-                card.classList.toggle('flipped', isFlipped);
-
-                // Update card counter
-                cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
-
-                // Apply fade-in animation
-                card.classList.add('fade-in');
-
-                // Re-enable transitions
-                isTransitioning = false;
-            }, 400); // Match the animation duration
+            const data = cardsData[index];
+            const front = card.querySelector('.card-front');
+            const back = card.querySelector('.card-back');
+            front.innerHTML = `
+                <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
+                <h3>${data.term}</h3>
+            `;
+            back.innerHTML = `
+                <h3>${data.term}</h3>
+                <div class="part-of-speech">${data.partOfSpeech}</div>
+                <div class="definition">${data.definition}</div>
+                <div class="example">${data.example}</div>
+                <div class="synonyms">Synonyms: ${data.synonyms}</div>
+            `;
+            card.classList.toggle('flipped', isFlipped);
+            cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
         }
 
         function navigateCard(direction) {
-            if (isTransitioning) return;
             currentCardIndex = (currentCardIndex + direction + cardsData.length) % cardsData.length;
             updateCard(currentCardIndex);
         }
 
         card.addEventListener('click', () => {
-            if (isTransitioning) return;
             isFlipped = !isFlipped;
             card.classList.toggle('flipped', isFlipped);
         });
 
-        // Initial card setup
         updateCard(currentCardIndex);
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
