@@ -59,12 +59,8 @@
         }
 
         @keyframes rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .dark-theme .loader {
@@ -676,119 +672,110 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 20px 0;
+            text-align: center;
         }
 
-        .swiper-container {
+        .card-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .card {
+            position: absolute;
             width: 100%;
-            padding: 20px 0;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
         }
 
-        .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: auto;
+        .card.flipped {
+            transform: rotateY(180deg);
         }
 
-        .insight-card {
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
             background: linear-gradient(135deg, #2c3e50, #3498db);
             color: white;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            width: 300px;
-            height: 400px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: grab;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .insight-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        .card-back {
+            transform: rotateY(180deg);
         }
 
-        .insight-card h3 {
+        .card h3 {
             font-size: 24px;
             margin-bottom: 15px;
             color: #f1c40f;
             text-transform: uppercase;
         }
 
-        .insight-card .definition {
+        .card .definition, .card .example, .card .synonyms {
             font-size: 16px;
             margin-bottom: 10px;
             line-height: 1.5;
+            text-align: center;
         }
 
-        .insight-card .example {
-            font-size: 14px;
+        .card .example {
             font-style: italic;
             color: #ecf0f1;
         }
 
-        .dark-theme .insight-card {
+        .dark-theme .card-front, .dark-theme .card-back {
             background: linear-gradient(135deg, #1a252f, #1e87c7);
         }
 
-        .dark-theme .insight-card h3 {
+        .dark-theme .card h3 {
             color: #f1c40f;
         }
 
-        .dark-theme .insight-card .example {
+        .dark-theme .card .example {
             color: #bdc3c7;
         }
 
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: #3498db;
-            background-color: rgba(255, 255, 255, 0.8);
+        .navigation-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
             border-radius: 50%;
             width: 40px;
             height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .swiper-button-next:hover,
-        .swiper-button-prev:hover {
-            background-color: rgba(255, 255, 255, 1);
-            color: #2980b9;
+        .nav-button:hover {
+            background-color: #2980b9;
         }
 
-        .dark-theme .swiper-button-next,
-        .dark-theme .swiper-button-prev {
-            color: #1e87c7;
-            background-color: rgba(26, 37, 47, 0.8);
+        .dark-theme .nav-button {
+            background-color: #1e87c7;
         }
 
-        .dark-theme .swiper-button-next:hover,
-        .dark-theme .swiper-button-prev:hover {
-            background-color: rgba(26, 37, 47, 1);
-            color: #145a8e;
-        }
-
-        .swiper-pagination-bullet {
-            background: #3498db;
-            opacity: 0.7;
-            width: 12px;
-            height: 12px;
-            transition: opacity 0.3s ease;
-        }
-
-        .swiper-pagination-bullet-active {
-            opacity: 1;
-            background: #f1c40f;
-        }
-
-        .dark-theme .swiper-pagination-bullet {
-            background: #1e87c7;
-        }
-
-        .dark-theme .swiper-pagination-bullet-active {
-            background: #f1c40f;
+        .dark-theme .nav-button:hover {
+            background-color: #145a8e;
         }
 
         .pagination {
@@ -1317,7 +1304,7 @@
                 </div>
 
                 <div class="news-content active">
-                <!-- Page 1 Articles -->
+                                   <!-- Page 1 Articles -->
                 <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg" alt="News Image" class="news-image">
@@ -1760,455 +1747,24 @@
                     </div>
                 </div>
 
-                <div class="insights-content active">
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <!-- Dictionary Cards -->
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Cybercrime</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.</div>
-                                    <div class="example">The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.</div>
-                                    <div class="synonyms">Synonyms: digital crime, internet crime, online fraud</div>
-                                </div>
+                <div class="insights-content">
+                    <div class="card-container">
+                        <div class="card" id="card">
+                            <div class="card-front">
+                                <h3>Cybercrime</h3>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Hacking</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.</div>
-                                    <div class="example">Hacking is penalized under the Electronic Commerce Act of 2000 for unauthorized access to electronic transactions.</div>
-                                    <div class="synonyms">Synonyms: unauthorized access, cyber intrusion, data breach</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Phishing</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.</div>
-                                    <div class="example">The NBI Cybercrime Division raided a group operating a phishing scam using fake banking websites.</div>
-                                    <div class="synonyms">Synonyms: online scam, identity theft, social engineering</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Fraud</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Wrongful deception intended to result in financial or personal gain, often conducted online or through electronic means.</div>
-                                    <div class="example">The Anti-Financial Account Scamming Act penalizes fraud involving fake bank accounts for online scams.</div>
-                                    <div class="synonyms">Synonyms: deception, scam, swindle</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Identity Theft</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The deliberate use of someone else's identity, typically to gain financial advantage or obtain credit.</div>
-                                    <div class="example">The Access Devices Regulation Act criminalizes the use of stolen credit card information for identity theft.</div>
-                                    <div class="synonyms">Synonyms: impersonation, identity fraud, personal data theft</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Pornography</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Material containing explicit sexual content, especially when involving minors, which is illegal under specific laws.</div>
-                                    <div class="example">The Anti-Child Pornography Act of 2009 criminalizes the distribution of child pornography online.</div>
-                                    <div class="synonyms">Synonyms: explicit content, obscene material, adult content</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Voyeurism</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The practice of gaining sexual pleasure from watching others when they are naked or engaged in sexual activity, often without consent.</div>
-                                    <div class="example">The Anti-Photo and Video Voyeurism Act penalizes unauthorized recording of private areas.</div>
-                                    <div class="synonyms">Synonyms: peeping, surveillance, intrusion</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Trafficking</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The illegal trade or transport of humans, often for forced labor or sexual exploitation.</div>
-                                    <div class="example">The Expanded Anti-Trafficking in Persons Act addresses human trafficking for prostitution or debt bondage.</div>
-                                    <div class="synonyms">Synonyms: human smuggling, forced labor, exploitation</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Money Laundering</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The process of making illegally-gained proceeds appear legal by passing them through legitimate financial systems.</div>
-                                    <div class="example">The Anti-Money Laundering Act criminalizes the use of drug trafficking proceeds in legitimate business accounts.</div>
-                                    <div class="synonyms">Synonyms: financial crime, illicit funding, asset washing</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Terrorism</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The unlawful use of violence or intimidation, especially against civilians, to achieve political or ideological aims.</div>
-                                    <div class="example">The Anti-Terrorism Act of 2020 penalizes acts like releasing dangerous substances to intimidate the public.</div>
-                                    <div class="synonyms">Synonyms: extremism, radicalism, political violence</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Wiretapping</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of secretly intercepting or recording private communications without consent.</div>
-                                    <div class="example">The Anti-Wire Tapping Act prohibits unauthorized recording of confidential business meetings.</div>
-                                    <div class="synonyms">Synonyms: eavesdropping, interception, surveillance</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Bullying</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The use of force, coercion, or intimidation to harm or dominate others, often repeatedly.</div>
-                                    <div class="example">The Anti-Bullying Act of 2013 requires schools to address bullying incidents like teasing over penmanship.</div>
-                                    <div class="synonyms">Synonyms: harassment, intimidation, coercion</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Harassment</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Aggressive pressure or intimidation, often involving unwanted or offensive behavior.</div>
-                                    <div class="example">The Safe Spaces Act penalizes verbal harassment like catcalling or sexist slurs.</div>
-                                    <div class="synonyms">Synonyms: bullying, intimidation, persecution</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Skimming</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The illegal practice of capturing card information using unauthorized devices, typically at ATMs or payment terminals.</div>
-                                    <div class="example">Credit card skimming is penalized under the Access Devices Regulation Act for stealing card data.</div>
-                                    <div class="synonyms">Synonyms: card theft, data capture, electronic theft</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Cryptojacking</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The unauthorized use of a victim's computer to mine cryptocurrency.</div>
-                                    <div class="example">Cryptojacking is considered a form of cybercrime under the Cybercrime Prevention Act for system interference.</div>
-                                    <div class="synonyms">Synonyms: crypto mining, resource theft, unauthorized mining</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Ransomware</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Malicious software that encrypts a victim's data, demanding payment for its release.</div>
-                                    <div class="example">Ransomware attacks fall under the Cybercrime Prevention Act for data interference and extortion.</div>
-                                    <div class="synonyms">Synonyms: malware, extortionware, data hijacking</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Spoofing</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of disguising a communication to appear as if it comes from a trusted source to deceive the recipient.</div>
-                                    <div class="example">SIM card spoofing is penalized under the Subscriber Identity Module Registration Act for malicious intent.</div>
-                                    <div class="synonyms">Synonyms: impersonation, deception, masquerading</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Defamation</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of damaging someone's reputation through false statements, often online.</div>
-                                    <div class="example">Posting defamatory statements on social media is penalized under the Cybercrime Prevention Act.</div>
-                                    <div class="synonyms">Synonyms: slander, libel, character assassination</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Smishing</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A type of phishing scam conducted via SMS, tricking users into revealing sensitive information.</div>
-                                    <div class="example">Smishing is addressed under the Subscriber Identity Module Registration Act to curb fraudulent SMS activities.</div>
-                                    <div class="synonyms">Synonyms: SMS phishing, text scam, mobile fraud</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Grooming</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The process of building trust with a child to exploit them, often for sexual purposes, typically online.</div>
-                                    <div class="example">Online grooming is penalized under the Anti-Online Sexual Abuse or Exploitation of Children Act.</div>
-                                    <div class="synonyms">Synonyms: enticement, manipulation, predation</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Copyright</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The legal right granted to creators to control the use and distribution of their original works.</div>
-                                    <div class="example">The Intellectual Property Code protects against unauthorized use of copyrighted songs in marketing materials.</div>
-                                    <div class="synonyms">Synonyms: intellectual property, authorship rights, creative control</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Encryption</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The process of converting data into a code to prevent unauthorized access, often used in cybersecurity.</div>
-                                    <div class="example">The Data Privacy Act emphasizes encryption to protect personal data during processing.</div>
-                                    <div class="synonyms">Synonyms: data protection, coding, ciphering</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Firewall</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A network security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules.</div>
-                                    <div class="example">Banks implement firewalls as per BSP Circular No. 982 to protect customer data from cyber threats.</div>
-                                    <div class="synonyms">Synonyms: network security, barrier, shield</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Authentication</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The process of verifying the identity of a user or system, often through passwords or biometrics.</div>
-                                    <div class="example">Multi-factor authentication is mandated by BSP Circular No. 982 for secure online banking transactions.</div>
-                                    <div class="synonyms">Synonyms: verification, validation, identity check</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Surveillance</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Close observation or monitoring, often conducted electronically, to gather information or evidence.</div>
-                                    <div class="example">The Human Security Act allows surveillance of suspected terrorists with proper authorization.</div>
-                                    <div class="synonyms">Synonyms: monitoring, observation, tracking</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Forfeiture</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The loss or surrender of property or rights as a penalty for illegal activity.</div>
-                                    <div class="example">The Terrorism Financing Prevention Act allows forfeiture of funds used to support terrorist activities.</div>
-                                    <div class="synonyms">Synonyms: seizure, confiscation, penalty</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Prosecution</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of conducting legal proceedings against someone for a criminal offense.</div>
-                                    <div class="example">The Guidelines on Cybercrime Prosecution outline procedures for prosecuting online fraud cases.</div>
-                                    <div class="synonyms">Synonyms: litigation, legal action, trial</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Compliance</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of adhering to laws, regulations, or standards, particularly in business or technology.</div>
-                                    <div class="example">The Consumer Act requires businesses to comply with regulations against deceptive sales practices.</div>
-                                    <div class="synonyms">Synonyms: adherence, conformity, obedience</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Sanction</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A penalty or measure imposed to enforce compliance with laws or regulations.</div>
-                                    <div class="example">The National Bureau of Investigation Reorganization Act imposes administrative sanctions for non-compliance.</div>
-                                    <div class="synonyms">Synonyms: penalty, punishment, restriction</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Regulation</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A rule or directive made and maintained by an authority to control or govern conduct.</div>
-                                    <div class="example">The Value-Added Services Regulation governs enhanced telecommunications services like VoIP.</div>
-                                    <div class="synonyms">Synonyms: rule, law, directive</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Liability</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Legal responsibility for one's actions or omissions, often resulting in penalties or damages.</div>
-                                    <div class="example">The Anti-Photo and Video Voyeurism Act imposes liability on public officers for privacy violations.</div>
-                                    <div class="synonyms">Synonyms: responsibility, accountability, obligation</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Consent</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Permission or agreement given voluntarily for an action, especially regarding personal data or privacy.</div>
-                                    <div class="example">The Broadcast Messaging Regulation requires consumer consent for promotional text messages.</div>
-                                    <div class="synonyms">Synonyms: permission, approval, agreement</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Disclosure</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of revealing or making information known, often required by law for transparency.</div>
-                                    <div class="example">The New Central Bank Act penalizes unauthorized disclosure of confidential bank information.</div>
-                                    <div class="synonyms">Synonyms: revelation, exposure, transparency</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Admissibility</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The quality of being acceptable or valid as evidence in a court of law.</div>
-                                    <div class="example">The Rules on Electronic Evidence establish the admissibility of electronically signed contracts.</div>
-                                    <div class="synonyms">Synonyms: acceptability, validity, eligibility</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Obstruction</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of impeding or hindering a legal process, investigation, or enforcement.</div>
-                                    <div class="example">The Anti-Financial Account Scamming Act penalizes obstruction of justice in fraud investigations.</div>
-                                    <div class="synonyms">Synonyms: interference, hindrance, impediment</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Counterfeit</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">An imitation made with the intent to deceive, often applied to forged documents or devices.</div>
-                                    <div class="example">The Access Devices Regulation Act penalizes the trafficking of counterfeit access devices.</div>
-                                    <div class="synonyms">Synonyms: forgery, fake, imitation</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Embezzlement</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of wrongfully taking or misappropriating funds or property entrusted to one's care.</div>
-                                    <div class="example">Using access devices to embezzle funds is penalized under the Access Devices Regulation Act.</div>
-                                    <div class="synonyms">Synonyms: misappropriation, theft, fraud</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Privacy</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The state of being free from unauthorized intrusion or surveillance, especially concerning personal data.</div>
-                                    <div class="example">The Data Privacy Act protects the fundamental right to privacy in data processing.</div>
-                                    <div class="synonyms">Synonyms: confidentiality, seclusion, personal security</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Extortion</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The practice of obtaining something, especially money, through force or threats.</div>
-                                    <div class="example">Ransomware attacks often involve extortion, penalized under the Cybercrime Prevention Act.</div>
-                                    <div class="synonyms">Synonyms: blackmail, coercion, shakedown</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Jurisdiction</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The authority of a court or legal body to hear and decide cases within a specific area or subject matter.</div>
-                                    <div class="example">The Revised Rules of Civil Procedure define jurisdiction for disputes over property or debt.</div>
-                                    <div class="synonyms">Synonyms: authority, control, legal power</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Injunction</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A court order requiring a person or entity to do or refrain from doing a specific act.</div>
-                                    <div class="example">The Consumer Act may lead to an injunction against deceptive sales practices.</div>
-                                    <div class="synonyms">Synonyms: order, directive, prohibition</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Negligence</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Failure to exercise reasonable care, resulting in harm or damage to others.</div>
-                                    <div class="example">Negligence in data handling is penalized under the Data Privacy Act for improper disposal.</div>
-                                    <div class="synonyms">Synonyms: carelessness, oversight, irresponsibility</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Perjury</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The act of deliberately lying or misrepresenting facts under oath in a legal proceeding.</div>
-                                    <div class="example">False statements in electronic evidence may lead to perjury charges under the Rules on Electronic Evidence.</div>
-                                    <div class="synonyms">Synonyms: false testimony, lying under oath, misrepresentation</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Restitution</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">The restoration of something lost or stolen to its proper owner, often ordered as a legal remedy.</div>
-                                    <div class="example">The Consumer Act allows restitution for defective products through repair or refund.</div>
-                                    <div class="synonyms">Synonyms: compensation, repayment, restoration</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Subpoena</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A legal document ordering a person to attend court or produce evidence.</div>
-                                    <div class="example">The Rules on Cybercrime Warrants may involve subpoenas to disclose computer data in fraud cases.</div>
-                                    <div class="synonyms">Synonyms: summons, writ, order</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Warrant</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A legal document authorizing law enforcement to conduct a search, seizure, or arrest.</div>
-                                    <div class="example">The Rule on Cybercrime Investigation outlines procedures for obtaining cybercrime warrants.</div>
-                                    <div class="synonyms">Synonyms: authorization, permit, mandate</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Statute</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A written law passed by a legislative body, often addressing specific issues like cybercrime.</div>
-                                    <div class="example">The Cybercrime Prevention Act is a statute aimed at suppressing digital offenses.</div>
-                                    <div class="synonyms">Synonyms: law, act, legislation</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Infraction</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">A violation or breach of a law or regulation, typically less serious than a crime.</div>
-                                    <div class="example">The Guidelines on Outsourcing Risk Management penalize reporting infractions with fines.</div>
-                                    <div class="synonyms">Synonyms: violation, breach, offense</div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="insight-card">
-                                    <h3>Contraband</h3>
-                                    <div class="part-of-speech">noun</div>
-                                    <div class="definition">Goods or materials that are prohibited by law from being imported, exported, or possessed.</div>
-                                    <div class="example">The Strategic Trade Management Act regulates contraband like dual-use computer chips.</div>
-                                    <div class="synonyms">Synonyms: illegal goods, prohibited items, smuggled goods</div>
-                                </div>
+                            <div class="card-back">
+                                <h3>Cybercrime</h3>
+                                <div class="part-of-speech">noun</div>
+                                <div class="definition">Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.</div>
+                                <div class="example">The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.</div>
+                                <div class="synonyms">Synonyms: digital crime, internet crime, online fraud</div>
                             </div>
                         </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-pagination"></div>
+                    </div>
+                    <div class="navigation-buttons">
+                        <button class="nav-button" onclick="navigateCard(-1)"><i class="fas fa-arrow-left"></i></button>
+                        <button class="nav-button" onclick="navigateCard(1)"><i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
             </section>
@@ -2227,7 +1783,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
@@ -2258,6 +1813,44 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
+        const card = document.getElementById('card');
+
+        const cardsData = [
+            { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
+            { term: "Hacking", partOfSpeech: "noun", definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.", example: "Hacking is penalized under the Electronic Commerce Act of 2000 for unauthorized access to electronic transactions.", synonyms: "unauthorized access, cyber intrusion, data breach" },
+            { term: "Phishing", partOfSpeech: "noun", definition: "A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.", example: "The NBI Cybercrime Division raided a group operating a phishing scam using fake banking websites.", synonyms: "online scam, identity theft, social engineering" },
+            { term: "Fraud", partOfSpeech: "noun", definition: "Wrongful deception intended to result in financial or personal gain, often conducted online or through electronic means.", example: "The Anti-Financial Account Scamming Act penalizes fraud involving fake bank accounts for online scams.", synonyms: "deception, scam, swindle" },
+            { term: "Identity Theft", partOfSpeech: "noun", definition: "The deliberate use of someone else's identity, typically to gain financial advantage or obtain credit.", example: "The Access Devices Regulation Act criminalizes the use of stolen credit card information for identity theft.", synonyms: "impersonation, identity fraud, personal data theft" }
+            // Add more terms as needed
+        ];
+
+        let currentCardIndex = 0;
+
+        function updateCard(index) {
+            const data = cardsData[index];
+            const front = card.querySelector('.card-front');
+            const back = card.querySelector('.card-back');
+            front.innerHTML = `<h3>${data.term}</h3>`;
+            back.innerHTML = `
+                <h3>${data.term}</h3>
+                <div class="part-of-speech">${data.partOfSpeech}</div>
+                <div class="definition">${data.definition}</div>
+                <div class="example">${data.example}</div>
+                <div class="synonyms">Synonyms: ${data.synonyms}</div>
+            `;
+            card.classList.remove('flipped');
+        }
+
+        function navigateCard(direction) {
+            currentCardIndex = (currentCardIndex + direction + cardsData.length) % cardsData.length;
+            updateCard(currentCardIndex);
+        }
+
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
+
+        updateCard(currentCardIndex);
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
@@ -2632,33 +2225,6 @@
                 insightsToggle.classList.add('active');
             }
         }
-
-        const swiper = new Swiper('.swiper-container', {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            effect: 'coverflow',
-            coverflowEffect: {
-                rotate: 20,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
-            },
-            grabCursor: true,
-        });
 
         displayNewsItems(currentPage);
     </script>
