@@ -673,135 +673,75 @@
         }
 
         .insights-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            padding: 20px 0;
         }
 
         .swiper-container {
             width: 100%;
-            height: 400px;
-            position: relative;
-            overflow: hidden;
+            padding: 20px 0;
         }
 
         .swiper-slide {
             display: flex;
             justify-content: center;
             align-items: center;
+            height: auto;
         }
 
-        .dictionary-card {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        .insight-card {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            width: 90%;
-            max-width: 500px;
-            height: 320px;
-            overflow-y: auto;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            position: relative;
+            width: 300px;
+            height: 400px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: grab;
         }
 
-        .dictionary-card::-webkit-scrollbar {
-            width: 8px;
+        .insight-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .dictionary-card::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .dictionary-card::-webkit-scrollbar-thumb {
-            background: #8B0000;
-            border-radius: 4px;
-        }
-
-        .dictionary-card::-webkit-scrollbar-thumb:hover {
-            background: #6d0000;
-        }
-
-        .dark-theme .dictionary-card {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
-
-        .dark-theme .dictionary-card::-webkit-scrollbar-track {
-            background: #252525;
-        }
-
-        .dark-theme .dictionary-card::-webkit-scrollbar-thumb {
-            background: #ff6b6b;
-        }
-
-        .dictionary-card:hover {
-            transform: scale(1.02);
-        }
-
-        .dictionary-card h3 {
+        .insight-card h3 {
             font-size: 24px;
-            color: #333;
-            margin-bottom: 10px;
-            text-transform: capitalize;
-            border-bottom: 2px solid #8B0000;
-            padding-bottom: 5px;
-            transition: color 0.3s ease;
+            margin-bottom: 15px;
+            color: #f1c40f;
+            text-transform: uppercase;
         }
 
-        .dark-theme .dictionary-card h3 {
-            color: #e0e0e0;
-            border-bottom: 2px solid #ff6b6b;
-        }
-
-        .dictionary-card .part-of-speech {
-            font-style: italic;
-            color: #666;
+        .insight-card .definition {
             font-size: 16px;
             margin-bottom: 10px;
-            transition: color 0.3s ease;
+            line-height: 1.5;
         }
 
-        .dark-theme .dictionary-card .part-of-speech {
-            color: #b0b0b0;
-        }
-
-        .dictionary-card .definition {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 10px;
-            transition: color 0.3s ease;
-        }
-
-        .dark-theme .dictionary-card .definition {
-            color: #e0e0e0;
-        }
-
-        .dictionary-card .example {
+        .insight-card .example {
             font-size: 14px;
-            color: #666;
             font-style: italic;
-            margin-bottom: 10px;
-            transition: color 0.3s ease;
+            color: #ecf0f1;
         }
 
-        .dark-theme .dictionary-card .example {
-            color: #b0b0b0;
+        .dark-theme .insight-card {
+            background: linear-gradient(135deg, #1a252f, #1e87c7);
         }
 
-        .dictionary-card .synonyms {
-            font-size: 14px;
-            color: #333;
-            margin-bottom: 10px;
-            transition: color 0.3s ease;
+        .dark-theme .insight-card h3 {
+            color: #f1c40f;
         }
 
-        .dark-theme .dictionary-card .synonyms {
-            color: #e0e0e0;
+        .dark-theme .insight-card .example {
+            color: #bdc3c7;
         }
 
-        .swiper-button-next, .swiper-button-prev {
-            color: #8B0000;
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #3498db;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
             width: 40px;
@@ -809,34 +749,46 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: color 0.3s ease, background-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .swiper-button-next:hover, .swiper-button-prev:hover {
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
             background-color: rgba(255, 255, 255, 1);
+            color: #2980b9;
         }
 
-        .dark-theme .swiper-button-next, .dark-theme .swiper-button-prev {
-            color: #ff6b6b;
-            background-color: rgba(40, 41, 44, 0.8);
+        .dark-theme .swiper-button-next,
+        .dark-theme .swiper-button-prev {
+            color: #1e87c7;
+            background-color: rgba(26, 37, 47, 0.8);
         }
 
-        .dark-theme .swiper-button-next:hover, .dark-theme .swiper-button-prev:hover {
-            background-color: rgba(40, 41, 44, 1);
+        .dark-theme .swiper-button-next:hover,
+        .dark-theme .swiper-button-prev:hover {
+            background-color: rgba(26, 37, 47, 1);
+            color: #145a8e;
         }
 
         .swiper-pagination-bullet {
-            background: #8B0000;
-            opacity: 0.5;
+            background: #3498db;
+            opacity: 0.7;
+            width: 12px;
+            height: 12px;
             transition: opacity 0.3s ease;
         }
 
         .swiper-pagination-bullet-active {
             opacity: 1;
+            background: #f1c40f;
         }
 
         .dark-theme .swiper-pagination-bullet {
-            background: #ff6b6b;
+            background: #1e87c7;
+        }
+
+        .dark-theme .swiper-pagination-bullet-active {
+            background: #f1c40f;
         }
 
         .pagination {
@@ -1808,12 +1760,12 @@
                     </div>
                 </div>
 
-                <div class="insights-content">
+                <div class="insights-content active">
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
                             <!-- Dictionary Cards -->
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Cybercrime</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.</div>
@@ -1822,7 +1774,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Hacking</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.</div>
@@ -1831,7 +1783,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Phishing</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.</div>
@@ -1840,7 +1792,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Fraud</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Wrongful deception intended to result in financial or personal gain, often conducted online or through electronic means.</div>
@@ -1849,7 +1801,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Identity Theft</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The deliberate use of someone else's identity, typically to gain financial advantage or obtain credit.</div>
@@ -1858,7 +1810,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Pornography</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Material containing explicit sexual content, especially when involving minors, which is illegal under specific laws.</div>
@@ -1867,7 +1819,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Voyeurism</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The practice of gaining sexual pleasure from watching others when they are naked or engaged in sexual activity, often without consent.</div>
@@ -1876,7 +1828,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Trafficking</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The illegal trade or transport of humans, often for forced labor or sexual exploitation.</div>
@@ -1885,7 +1837,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Money Laundering</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The process of making illegally-gained proceeds appear legal by passing them through legitimate financial systems.</div>
@@ -1894,7 +1846,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Terrorism</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The unlawful use of violence or intimidation, especially against civilians, to achieve political or ideological aims.</div>
@@ -1903,7 +1855,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Wiretapping</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of secretly intercepting or recording private communications without consent.</div>
@@ -1912,7 +1864,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Bullying</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The use of force, coercion, or intimidation to harm or dominate others, often repeatedly.</div>
@@ -1921,7 +1873,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Harassment</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Aggressive pressure or intimidation, often involving unwanted or offensive behavior.</div>
@@ -1930,7 +1882,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Skimming</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The illegal practice of capturing card information using unauthorized devices, typically at ATMs or payment terminals.</div>
@@ -1939,7 +1891,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Cryptojacking</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The unauthorized use of a victim's computer to mine cryptocurrency.</div>
@@ -1948,7 +1900,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Ransomware</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Malicious software that encrypts a victim's data, demanding payment for its release.</div>
@@ -1957,7 +1909,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Spoofing</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of disguising a communication to appear as if it comes from a trusted source to deceive the recipient.</div>
@@ -1966,7 +1918,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Defamation</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of damaging someone's reputation through false statements, often online.</div>
@@ -1975,7 +1927,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Smishing</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A type of phishing scam conducted via SMS, tricking users into revealing sensitive information.</div>
@@ -1984,7 +1936,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Grooming</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The process of building trust with a child to exploit them, often for sexual purposes, typically online.</div>
@@ -1993,7 +1945,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Copyright</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The legal right granted to creators to control the use and distribution of their original works.</div>
@@ -2002,7 +1954,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Encryption</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The process of converting data into a code to prevent unauthorized access, often used in cybersecurity.</div>
@@ -2011,7 +1963,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Firewall</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A network security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules.</div>
@@ -2020,7 +1972,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Authentication</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The process of verifying the identity of a user or system, often through passwords or biometrics.</div>
@@ -2029,7 +1981,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Surveillance</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Close observation or monitoring, often conducted electronically, to gather information or evidence.</div>
@@ -2038,7 +1990,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Forfeiture</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The loss or surrender of property or rights as a penalty for illegal activity.</div>
@@ -2047,7 +1999,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Prosecution</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of conducting legal proceedings against someone for a criminal offense.</div>
@@ -2056,7 +2008,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Compliance</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of adhering to laws, regulations, or standards, particularly in business or technology.</div>
@@ -2065,7 +2017,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Sanction</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A penalty or measure imposed to enforce compliance with laws or regulations.</div>
@@ -2074,7 +2026,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Regulation</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A rule or directive made and maintained by an authority to control or govern conduct.</div>
@@ -2083,7 +2035,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Liability</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Legal responsibility for one's actions or omissions, often resulting in penalties or damages.</div>
@@ -2092,7 +2044,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Consent</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Permission or agreement given voluntarily for an action, especially regarding personal data or privacy.</div>
@@ -2101,7 +2053,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Disclosure</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of revealing or making information known, often required by law for transparency.</div>
@@ -2110,7 +2062,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Admissibility</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The quality of being acceptable or valid as evidence in a court of law.</div>
@@ -2119,7 +2071,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Obstruction</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of impeding or hindering a legal process, investigation, or enforcement.</div>
@@ -2128,7 +2080,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Counterfeit</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">An imitation made with the intent to deceive, often applied to forged documents or devices.</div>
@@ -2137,7 +2089,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Embezzlement</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of wrongfully taking or misappropriating funds or property entrusted to one's care.</div>
@@ -2146,7 +2098,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Privacy</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The state of being free from unauthorized intrusion or surveillance, especially concerning personal data.</div>
@@ -2155,7 +2107,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Extortion</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The practice of obtaining something, especially money, through force or threats.</div>
@@ -2164,7 +2116,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Jurisdiction</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The authority of a court or legal body to hear and decide cases within a specific area or subject matter.</div>
@@ -2173,7 +2125,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Injunction</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A court order requiring a person or entity to do or refrain from doing a specific act.</div>
@@ -2182,7 +2134,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Negligence</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Failure to exercise reasonable care, resulting in harm or damage to others.</div>
@@ -2191,7 +2143,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Perjury</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The act of deliberately lying or misrepresenting facts under oath in a legal proceeding.</div>
@@ -2200,7 +2152,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Restitution</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">The restoration of something lost or stolen to its proper owner, often ordered as a legal remedy.</div>
@@ -2209,7 +2161,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Subpoena</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A legal document ordering a person to attend court or produce evidence.</div>
@@ -2218,7 +2170,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Warrant</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A legal document authorizing law enforcement to conduct a search, seizure, or arrest.</div>
@@ -2227,7 +2179,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Statute</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A written law passed by a legislative body, often addressing specific issues like cybercrime.</div>
@@ -2236,7 +2188,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Infraction</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">A violation or breach of a law or regulation, typically less serious than a crime.</div>
@@ -2245,7 +2197,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div class="dictionary-card">
+                                <div class="insight-card">
                                     <h3>Contraband</h3>
                                     <div class="part-of-speech">noun</div>
                                     <div class="definition">Goods or materials that are prohibited by law from being imported, exported, or possessed.</div>
@@ -2469,7 +2421,7 @@
 
                         database.ref(`users/${sanitizedEmail}`).update({
                             avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
+                            updatedAt: firebase.database.ServerValue.TIMESTAM
                         })
                         .then(() => {
                             profilePic.src = avatarUrl;
@@ -2681,7 +2633,6 @@
             }
         }
 
-        // Initialize Swiper
         const swiper = new Swiper('.swiper-container', {
             slidesPerView: 1,
             spaceBetween: 30,
@@ -2695,9 +2646,18 @@
                 prevEl: '.swiper-button-prev',
             },
             autoplay: {
-                delay: 5000,
+                delay: 3000,
                 disableOnInteraction: false,
             },
+            effect: 'coverflow',
+            coverflowEffect: {
+                rotate: 20,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            grabCursor: true,
         });
 
         displayNewsItems(currentPage);
