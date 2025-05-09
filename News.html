@@ -681,6 +681,7 @@
             height: 400px;
             margin: 0 auto;
             perspective: 1000px;
+            overflow: hidden;
         }
 
         .card {
@@ -688,12 +689,50 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 0.6s;
+            transition: transform 0.6s ease-in-out, opacity 0.3s ease;
             cursor: pointer;
         }
 
         .card.flipped {
             transform: rotateY(180deg);
+        }
+
+        .card.transition-out {
+            animation: cardTransitionOut 0.6s ease-in-out forwards;
+        }
+
+        .card.transition-in {
+            animation: cardTransitionIn 0.6s ease-in-out forwards;
+        }
+
+        @keyframes cardTransitionOut {
+            0% {
+                transform: rotateY(0) translateZ(0);
+                opacity: 1;
+            }
+            50% {
+                transform: rotateY(30deg) translateX(-50%) translateZ(-100px);
+                opacity: 0.5;
+            }
+            100% {
+                transform: rotateY(90deg) translateX(-100%) translateZ(-200px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes cardTransitionIn {
+            0% {
+                transform: rotateY(-90deg) translateX(100%) translateZ(-200px);
+                opacity: 0;
+            }
+            50% {
+                transform: rotateY(-30deg) translateX(50%) translateZ(-100px);
+                opacity: 0.5;
+            }
+            100% {
+                transform: rotateY(0) translateZ(0);
+                opacity: 1;
+            }
         }
 
         .card-front, .card-back {
@@ -732,7 +771,7 @@
         .card .definition, .card .example, .card .synonyms {
             font-size: 16px;
             margin-bottom: 10px;
-            line-height: 1.5;
+            line-height: 1.6;
             text-align: center;
         }
 
@@ -1783,13 +1822,6 @@
                     </div>
                 </div>
 
-                    <div class="pagination">
-                        <button id="prevPage" onclick="changePage(-1)">Previous</button>
-                        <div class="page-numbers" id="pageNumbers"></div>
-                        <button id="nextPage" onclick="changePage(1)">Next</button>
-                    </div>
-                </div>
-
                 <div class="insights-content">
                     <div class="card-container">
                         <div class="card" id="card">
@@ -1812,8 +1844,8 @@
                     </div>
                     <div class="card-counter" id="cardCounter"></div>
                     <div class="navigation-buttons">
-                        <button class="nav-button" onclick="navigateCard(-1)"><i class="fas fa-arrow-left"></i></button>
-                        <button class="nav-button" onclick="navigateCard(1)"><i class="fas fa-arrow-right"></i></button>
+                        <button class="nav-button" onclick="navigateCard(-1)" id="prevCardBtn"><i class="fas fa-arrow-left"></i></button>
+                        <button class="nav-button" onclick="navigateCard(1)" id="nextCardBtn"><i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
             </section>
@@ -1864,6 +1896,8 @@
         const createdAtDisplay = document.getElementById('createdAtDisplay');
         const card = document.getElementById('card');
         const cardCounter = document.getElementById('cardCounter');
+        const prevCardBtn = document.getElementById('prevCardBtn');
+        const nextCardBtn = document.getElementById('nextCardBtn');
 
         const cardsData = [
     { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
@@ -1918,40 +1952,69 @@
     { term: "Cybercrime Warrant", partOfSpeech: "noun", definition: "A legal authorization to search, seize, or disclose computer data in cybercrime investigations.", example: "The Rules on Cybercrime Warrants allow law enforcement to obtain data in fraud cases.", synonyms: "digital warrant, cyber search order, data seizure warrant" },
     { term: "Electronic Evidence", partOfSpeech: "noun", definition: "Digital information, such as emails or documents, admissible in court if authenticated.", example: "The Rules on Electronic Evidence allow emails to be used as evidence in trials.", synonyms: "digital evidence, e-evidence, online proof" }
 ];
-
         let currentCardIndex = 0;
         let isFlipped = false;
+        let isTransitioning = false;
 
-        function updateCard(index) {
+        function updateCard(index, direction) {
+            if (isTransitioning) return;
+
+            isTransitioning = true;
             const data = cardsData[index];
             const front = card.querySelector('.card-front');
             const back = card.querySelector('.card-back');
-            front.innerHTML = `
-                <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
-                <h3>${data.term}</h3>
-            `;
-            back.innerHTML = `
-                <h3>${data.term}</h3>
-                <div class="part-of-speech">${data.partOfSpeech}</div>
-                <div class="definition">${data.definition}</div>
-                <div class="example">${data.example}</div>
-                <div class="synonyms">Synonyms: ${data.synonyms}</div>
-            `;
-            card.classList.toggle('flipped', isFlipped);
-            cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
+
+            // Apply outgoing transition
+            card.classList.add('transition-out');
+            card.style.zIndex = 0;
+
+            // Wait for the outgoing transition to finish
+            setTimeout(() => {
+                // Update content
+                front.innerHTML = `
+                    <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
+                    <h3>${data.term}</h3>
+                `;
+                back.innerHTML = `
+                    <h3>${data.term}</h3>
+                    <div class="part-of-speech">${data.partOfSpeech}</div>
+                    <div class="definition">${data.definition}</div>
+                    <div class="example">${data.example}</div>
+                    <div class="synonyms">Synonyms: ${data.synonyms}</div>
+                `;
+
+                // Apply incoming transition
+                card.classList.remove('transition-out');
+                card.classList.add('transition-in');
+                card.style.zIndex = 1;
+
+                // Maintain flipped state
+                card.classList.toggle('flipped', isFlipped);
+
+                // Update counter
+                cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
+
+                // Remove incoming transition class after animation
+                setTimeout(() => {
+                    card.classList.remove('transition-in');
+                    isTransitioning = false;
+                }, 600); // Match the animation duration
+            }, 600); // Match the animation duration
         }
 
         function navigateCard(direction) {
             currentCardIndex = (currentCardIndex + direction + cardsData.length) % cardsData.length;
-            updateCard(currentCardIndex);
+            updateCard(currentCardIndex, direction);
         }
 
         card.addEventListener('click', () => {
+            if (isTransitioning) return;
             isFlipped = !isFlipped;
             card.classList.toggle('flipped', isFlipped);
         });
 
-        updateCard(currentCardIndex);
+        // Initial card setup
+        updateCard(currentCardIndex, 0);
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
