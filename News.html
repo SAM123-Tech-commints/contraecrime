@@ -701,7 +701,7 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            background: linear-gradient(135deg, #8B0000, #B22222);
+            background: linear-gradient(135deg, #8B0000, #FF4040);
             color: white;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -710,6 +710,12 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+
+        .card-front img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
         }
 
         .card-back {
@@ -736,7 +742,7 @@
         }
 
         .dark-theme .card-front, .dark-theme .card-back {
-            background: linear-gradient(135deg, #4A0000, #6D0000);
+            background: linear-gradient(135deg, #121212, #28292c);
         }
 
         .dark-theme .card h3 {
@@ -773,6 +779,17 @@
             100% { transform: rotate(0deg); }
         }
 
+        .card-counter {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .dark-theme .card-counter {
+            color: #e0e0e0;
+        }
+
         .navigation-buttons {
             margin-top: 20px;
             display: flex;
@@ -781,7 +798,7 @@
         }
 
         .nav-button {
-            background-color: #B22222;
+            background-color: #8B0000;
             color: white;
             border: none;
             border-radius: 50%;
@@ -793,15 +810,15 @@
         }
 
         .nav-button:hover {
-            background-color: #8B0000;
+            background-color: #FF4040;
         }
 
         .dark-theme .nav-button {
-            background-color: #6D0000;
+            background-color: #28292c;
         }
 
         .dark-theme .nav-button:hover {
-            background-color: #4A0000;
+            background-color: #1a1a1a;
         }
 
         .pagination {
@@ -1777,6 +1794,7 @@
                     <div class="card-container">
                         <div class="card" id="card">
                             <div class="card-front">
+                                <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
                                 <h3>Cybercrime</h3>
                             </div>
                             <div class="card-back">
@@ -1792,6 +1810,7 @@
                         <span>Click to flip card</span>
                         <i class="fas fa-sync-alt flip-arrow"></i>
                     </div>
+                    <div class="card-counter" id="cardCounter"></div>
                     <div class="navigation-buttons">
                         <button class="nav-button" onclick="navigateCard(-1)"><i class="fas fa-arrow-left"></i></button>
                         <button class="nav-button" onclick="navigateCard(1)"><i class="fas fa-arrow-right"></i></button>
@@ -1844,6 +1863,7 @@
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
         const card = document.getElementById('card');
+        const cardCounter = document.getElementById('cardCounter');
 
         const cardsData = [
     { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
@@ -1900,13 +1920,16 @@
 ];
 
         let currentCardIndex = 0;
-        let isFlipped = false; // Track the flip state
+        let isFlipped = false;
 
         function updateCard(index) {
             const data = cardsData[index];
             const front = card.querySelector('.card-front');
             const back = card.querySelector('.card-back');
-            front.innerHTML = `<h3>${data.term}</h3>`;
+            front.innerHTML = `
+                <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
+                <h3>${data.term}</h3>
+            `;
             back.innerHTML = `
                 <h3>${data.term}</h3>
                 <div class="part-of-speech">${data.partOfSpeech}</div>
@@ -1914,12 +1937,8 @@
                 <div class="example">${data.example}</div>
                 <div class="synonyms">Synonyms: ${data.synonyms}</div>
             `;
-            // Preserve the current flip state
-            if (isFlipped) {
-                card.classList.add('flipped');
-            } else {
-                card.classList.remove('flipped');
-            }
+            card.classList.toggle('flipped', isFlipped);
+            cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
         }
 
         function navigateCard(direction) {
@@ -1928,8 +1947,8 @@
         }
 
         card.addEventListener('click', () => {
-            isFlipped = !isFlipped; // Toggle the flip state
-            card.classList.toggle('flipped');
+            isFlipped = !isFlipped;
+            card.classList.toggle('flipped', isFlipped);
         });
 
         updateCard(currentCardIndex);
