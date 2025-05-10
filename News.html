@@ -691,6 +691,7 @@
             height: 400px;
             margin: 0 auto;
             perspective: 1000px;
+            overflow: hidden;
         }
 
         .card {
@@ -698,21 +699,72 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 0.6s ease-in-out, opacity 0.3s ease;
+            transition: transform 0.6s ease-in-out;
             cursor: pointer;
-            opacity: 1;
         }
 
         .card.flipped {
             transform: rotateY(180deg);
         }
 
-        .card.fade-out {
-            opacity: 0;
+        .card.slide-out-left {
+            animation: slideOutLeft 0.5s ease-in-out forwards;
         }
 
-        .card.fade-in {
-            opacity: 1;
+        .card.slide-out-right {
+            animation: slideOutRight 0.5s ease-in-out forwards;
+        }
+
+        .card.slide-in-left {
+            animation: slideInLeft 0.5s ease-in-out forwards;
+        }
+
+        .card.slide-in-right {
+            animation: slideInRight 0.5s ease-in-out forwards;
+        }
+
+        @keyframes slideOutLeft {
+            0% {
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-100%) rotate(-15deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideOutRight {
+            0% {
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideInLeft {
+            0% {
+                transform: translateX(-100%) rotate(-15deg);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            0% {
+                transform: translateX(100%) rotate(15deg);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0) rotate(0deg);
+                opacity: 1;
+            }
         }
 
         .card-front, .card-back {
@@ -1365,11 +1417,226 @@
                     <span class="toggle-label insights-toggle" onclick="toggleContent('insights')">Insights</span>
                 </div>
 
-             <div class="news-content active">
-    <!-- Page 1 Articles (Blank) -->
+<div class="news-content active">
+    <!-- Page 1 Articles -->
     <div class="news-item" data-page="1">
-        <!-- Blank page content -->
-        <p>No articles available on this page.</p>
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://newsinfo.inquirer.net/files/2024/10/PNP-headquarters-file.jpeg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>PNP: 16 cases vs fake news so far pending in courts</h2>
+                <div class="news-meta">Jason Sigales - INQUIRER.net | May 10, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA, Philippines — Sixteen cases against fake news filed by the Philippine National Police (PNP) so far are pending in courts.</p>
+            <p>This was according to data from the PNP Anti-Cybercrime Group (ACG) shared by Public Information Office Chief Col. Randulf Tuaño at the Saturday News Forum in Quezon City.</p>
+            <p>The cases were filed as early as the time of then-PNP Chief Gen. Benjamin Acorda Jr. up until the formation of the agency’s Joint Anti-Fake News Action Committee (JAFNAC), Tuaño added.</p>
+            <p>Data on the profiles, numbers and locations of the respondents in these cases was not immediately available from the PNP.</p>
+            <p>(Coordination became easier. It’s not only dependent on the ACG, but it’s now with the committee for easy coordination and investigation of fake news.)</p>
+            <a href="https://newsinfo.inquirer.net/2059844/pnp-16-cases-vs-fake-news-so-far-pending-in-courts" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://files01.pna.gov.ph/category-list/2025/05/09/050925-pco-secretary-jay-ruiz-during-threat-monitoring-center-launch-via-raymond-dela-cruz.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>24/7 threat monitoring center launched vs. online disinformation</h2>
+                <div class="news-meta">Raymond Carl Dela Cruz - PNA | May 9, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – The inter-agency ‘Task Force KKK (Katotohanan, Katapatan, Katarungan) sa Halalan’ on Friday launched its new threat monitoring center that seeks to combat online disinformation and other election violations.</p>
+            <p>During the launching ceremony at the Cybercrime Investigation and Coordinating Center (CICC) office in Diliman, Quezon City, Presidential Communications Office (PCO) Secretary Jay Ruiz said the facility seeks to protect the integrity of the elections.</p>
+            <p>“Elections are the bedrock of democracy. President Ferdinand R. Marcos Jr. has issued a directive to make this election clean and fair. It aims to safeguard the integrity of the 2025 national and local elections,” Ruiz said.</p>
+            <p>He said there are reports of foreign state-sponsored groups that are attempting to influence the country’s elections.</p>
+            <p>“Lalo tayong mag-ingat dahil eleksyon po ito. Ang pino-protektahan natin dito ay boto ng bawat Pilipino. Magkaisa po tayo, labanan natin ang fake news (Let’s be extra careful because this is the elections. We’re protecting the vote of every Filipino. Let’s work together to combat fake news),” Ruiz said.</p>
+            <p>Analysts from various government agencies are housed within the facility and are tasked with gathering reports of disinformation or ‘fake news,’ malicious artificial intelligence (AI)-generated content, and other election violations under Commission on Elections (Comelec) Resolution No. 1164.</p>
+            <p>After gathering reports, they will use their tools to determine whether an online post is false and considered a violation.</p>
+            <p>Reports of vote-buying are said to be addressed within an hour, AI-generated content is detected within minutes using software tools, while disinformation posts are flagged, and a  to date, Task Force KKK has partnered with Meta, Google, TikTok, X, and other online platforms for the quick takedown of misinformation.</p>
+            <p>In cases where disinformation has already spread, the task force will issue statements debunking false narratives.</p>
+            <p>On the other hand, Comelec Commissioner Nelson Celis clarified that posts that are not found to violate Resolution No. 1164 will not be taken down in respect of freedom of speech.</p>
+            <p>“Ang online disinformation as an election offense ay may penalty of one to a maximum of six years imprisonment. Kaya kayong mga troll farms magtago-tago na kayo. Meron kaming tools para ma-trace ang origin ng mga posts na yan (Online disinformation as an election offense is penalized by one to six years imprisonment. That’s why troll farms should begin hiding, we have tools to trace the origin of such posts),” Celis said.</p>
+            <p>He added Comelec’s efforts to combat online disinformation on the elections began in 2023 as ‘Task Force Kontra Fake News.’</p>
+            <p>In Malacañang, Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro said the 24/7 threat monitoring center is proof that the government acts quickly and is united when the truth is at stake.</p>
+            <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin at tapusin ang (It is a real-time digital command post ready to identify, deter, and end) online misinformation and disinformation,” Castro said in a press briefing.</p>
+            <a href="https://www.pna.gov.ph/articles/1249812" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://od2-image-api.abs-cbn.com/prod/20250509100544/b133303cc8969c51ebb168b185009a33551d1337a5d044e902fd445e55508a3c.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Halalan Threat Monitoring Center to fight 'fake news'</h2>
+                <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA — The Commission on Elections-led Task Force KKK sa Halalan has formally opened its Threat Monitoring Center on Friday, a few days ahead of the 2025 midterm polls.</p>
+            <p>Task Force KKK, which stands for Katotohanan, Katapatan, Katarungan, aims to push for truthful, honest and fair polls this coming Monday, May 12, 2025.</p>
+            <p>The Threat Monitoring Center is an inter-agency center with employees from Comelec, Department of Information and Communications Technology, Cybercrime Investigation and Coordinating Center, Philippine National Police- Anti-Cybercrime Group, National Bureau of Investigation, and the National Intelligence Coordinating Agency.</p>
+            <p>This is also supported by various election watchdogs as well as social media platforms like Meta for Facebook, TikTok, Google, and X formerly Twitter.</p>
+            <p>They will monitor and verify online posts and social media messages that could violate election laws.</p>
+            <p>Social media companies vowed to take down posts if proven that these have "fake news" content.</p>
+            <p>Presidential Communications Office Secretary Jay Ruiz said the center will be a big help to fight misinformation and disinformation during and even after the elections on Monday.</p>
+            <p>“We now have the plague of disinformation particularly thorugh fake accounts, bots, and deceptive online practice…. Marami malilinlang, maraming maloloko. Ito po ang pineprevent natin dahil dito sa KKK,” Ruiz said.</p>
+            <p>Ruiz urged social media platforms to comply and to respond quickly since a single fake news can affect the public.</p>
+            <a href="https://www.abs-cbn.com/news/nation/2025/5/9/halalan-threat-monitoring-center-to-fight-fake-news-1746" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://pco.gov.ph/wp-content/uploads/2025/05/20250507-PCOPressBriefing5-2048x1366.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>PBBM directs DICT to monitor threats to May 12 elections</h2>
+                <div class="news-meta">PND - PIA | May 9, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>With his administration’s commitment to ensuring a peaceful, clean, and fair elections for the nation’s future, President Ferdinand R. Marcos Jr. has ordered government agencies to monitor possible digital threats to the May 12 midterm elections around the clock.</p>
+            <p>Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro also said the Department of Information and Communications Technology (DICT) Cybercrime Investigation and Coordinating Center is closely working with the Commission on Elections (COMELEC).</p>
+            <p>Castro said the DICT and COMELEC collaboration and cooperation would help establish a real-time digital command and ensure honest, orderly, and peaceful elections.</p>
+            <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin, at tapusin ang online misinformation and disinformation,” the Palace Press Officer said.</p>
+            <p>Castro noted that, “Kaisa ang administrasyon ni Pangulong Marcos Jr., ating itataguyod ang isang halalang mapayapa, malinis at makatarungan para sa bayan para sa kinabukasan at para sa isang Bagong Pilipinas.”</p>
+            <p>For the May 12, 2025, midterm elections, the Comelec formed Task Force Katotohanan, Katapatan, at Katarungan sa Halalan (Task Force KKK sa Halalan) to monitor election threats.</p>
+            <p>The unprecedented joint DICT-COMELEC threat monitoring center will operate for two days to ensure the smooth and credible conduct of Monday’s elections.</p>
+            <p>In a briefing on Friday, Castro said the joint initiative manifests the government’s commitment to safeguard the truth.</p>
+            <p>Castro also said election watchdogs are coordinating with COMELEC to ensure the peaceful and honest conduct of the May 12 elections.</p>
+            <p>“Para sa hangaring malinis at tapat na halalan, nagsama-sama ang lahat ng election watchdogs mula sa mga pribadong organisasyon, simbahan, kabataan at iba pang sektor,” Castro said.</p>
+            <p>“Sa kanilang mahigpit na pagbabantay, matitiyak na ang bawat boto ay mabibilang nang tama, at ang bawat boses ng mga mamamayan ay maririnig,” Castro said.</p>
+            <p>Castro added that the Philippine National Police (PNP) assured the public that it is 100 percent ready for the 2025 national and local elections.</p>
+            <p>Quoting Philippine National Police Chief Gen. Rommel Marbil, Castro said the PNP’s commitment is to serve the Filipino people, not the politicians, and continue with its duty to protect the sanctity of the vote.</p>
+            <a href="https://pia.gov.ph/pbbm-directs-dict-to-monitor-threats-to-may-12-elections/" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://od2-image-api.abs-cbn.com/prod/20250509100528/c4db0490353238e4d1868ff8183a43cf8d44c32929c18e0e00d88ae7baf2a65e.jpg?w=306&h=204" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Cyber terrorists? Gov't mulls new label on 'fake news' peddlers</h2>
+                <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA — The Philippine government is now studying whether people who spread "fake news" or disinformation and misinformation can be classified as cyber terrorists, similar to what is done in other countries.</p>
+            <p>Presidential Communications Office Secretary Jay Ruiz said there is an ongoing study on whether they will move towards that direction, especially with what he calls a plague of disinformation now happening. He clarified however, that this will only apply to fake news peddlers whose posts affect national security or bigger issues that could affect the public.</p>
+            <p>“Pinag-iisipan po namin ng DICT na ihanay sa mga cyber terrorist yung mga ganyang nagpapakalat ng sobrang masamang impormasyon sa utak ng ating mga kababayan,” he said.</p>
+            <p>This comes as Ruiz led the opening of the Threat Monitoring Center of the Commission on Elections with the help of various agencies, including the Department of Information and Communications Technology.</p>
+            <p>Comelec Commissioner Nelson Celis warned fake news peddlers that they have a way to check and determine the origin of fake news and that there is a prison sentence of up to 6 years for those proven guilty of spreading lies online.</p>
+            <p>“Pagna-trace kayo mga troll farm kayo, mag-ingat kayo, magtago na kayo, umalis na kayo ng bansa dahil election offense po yan. One year ang pinakamababa, six years max. Matrace namin sino yung origin hanggang kumakalat. Meron kaming tools at ma trace naming troll farms niyo,” said Celis.</p>
+            <p>However, officials also warned that one of the biggest threats is misinformation and disinformation coming from other countries or based overseas. They have monitored some of these cases and urged the public not to believe immediately in any social media posts from unknown or suspicious accounts.</p>
+            <p>“Isa pang nakakabahalang kumakalat na balita sa Reuters tungkol sa mga foreign companies, mga nasa ibang bansa na nag mamanipulate ditto sa darating na halalan,” Ruiz said.</p>
+            <p>DICT Asec. Aboy Paraiso added, “When you see fake news, we have tools to see where they came from and it’s outside interference that really hampers, threatens these elections.”</p>
+            <p>Officials now urge the public to be vigilant as fake news posts are rampant, both election-related and not.</p>
+            <a href="https://www.abs-cbn.com/news/technology/2025/5/9/gov-t-mulls-classifying-fake-news-peddlers-as-cyber-terrorists-1742" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://files01.pna.gov.ph/category-list/2022/07/25/20220428110552.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>PNP-ACG nabs 153 cybercrime suspects in April</h2>
+                <div class="news-meta">Christopher Lloyd Caliwan - PNA | May 8, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – The Philippine National Police Anti-Cybercrime Group (PNP-ACG) operatives arrested 153 persons for cybercrimes nationwide in April, a police official said Thursday.</p>
+            <p>ACG Director Brig. Gen. Bernard Yang said the group also rescued 11 minor victims of online sexual abuse and trafficking in persons in 159 operations.</p>
+            <p>Yang said the operatives conducted nine entrapment operations against fake dentists, resulting in the arrest of 14 individuals, in coordination with the Philippine Dental Association.</p>
+            <p>He said the operations were the result of the PNP-ACG’s proactive cyber patrolling.</p>
+            <p>“Actually, marami na pong nagbe-venture (many have been venturing) into this kind of illegal activity at nakita nilang medyo lucrative itong illegal business na ito (and we found it is a lucrative business),” Yang said in a media interview at Camp Crame.</p>
+            <p>One of those arrested was a 25-year-old man caught in the act of installing dental braces on a police officer posing as a patient inside a hotel in Cotabato City.</p>
+            <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid
+              <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid minimal fees for the procedures.</p>
+            <p>He warned the public about the risks of getting procedures from unlicensed individuals, even if these cost cheaper.</p>
+            <p>"These fake dentists offering service without a license can cause serious risks, including health complications, financial loss, the spread of infections, and long-term damage to your teeth. If you are aware of anyone offering unauthorized dental services, report it immediately to the nearest ACG office for appropriate action," he said. (PNA)</p>
+            <a href="https://www.pna.gov.ph/articles/1249660" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://insiderph.com/uploads/articles/thumb_cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector-1-561x421.webp" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>CIBI’s Fraud Bureau leads cybercrime defense push in financial sector</h2>
+                <div class="news-meta">Corrie S. Narisma - InsiderPH | May 7, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>With cybercrime incidents in the Philippines tripling to 10,004 in 2024, the need for stronger industry collaboration has never been more urgent.</p>
+            <p>Recognizing this growing threat, CIBI Information Inc., the country’s first and only local credit bureau, has officially launched the Fraud Bureau, a pioneering initiative aimed at uniting the financial sector against fraud.</p>
+            <p>According to the Cybercrime Investigation and Coordinating Center (CICC), the sharp increase in digital threats underscores the necessity for a coordinated, data-driven response. CIBI’s Fraud Bureau seeks to do just that—offering a secure platform for banks, fintech companies, and financial institutions to share information on suspicious applicant behavior, blacklist data, and real-time application trends.</p>
+            <p>The Fraud Bureau’s primary objective is to create a unified intelligence-sharing ecosystem that promotes proactive fraud detection, rapid identification of risks, and robust cybercrime prevention. By pooling insights and resources, members of the Bureau can build stronger defenses and foster transparency and trust in the Philippine financial system.</p>
+            <p>“The significant increase in fraudulent activity highlights the urgent need for coordinated action,” said CIBI president and CEO Pia Arellano. “CIBI recognizes that data-driven collaboration is essential to tackling fraud. This initiative strengthens industry-wide defenses and supports greater trust and transparency in our financial ecosystem.”</p>
+            <p>As the nation’s leading credit reporting agency, CIBI has long championed financial inclusion and informed decision-making. The Fraud Bureau aligns with this mission by empowering financial institutions to combat fraud while protecting consumers and promoting sustainable fintech innovation. — Ed: Corrie S. Narisma</p>
+            <a href="https://insiderph.com/cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://media.philstar.com/photos/2025/05/06/fake-news_2025-05-06_21-38-06.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Vlogger charged over fake news</h2>
+                <div class="news-meta">Emmanuel Tupas - The Philippine Star | May 7, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA, Philippines — Criminal charges were filed yesterday against a vlogger for allegedly spreading false information about a supposed police raid on the house of former president Rodrigo Duterte in Davao City.</p>
+            <p>Members of the Davao City police and Anti-Cybercrime Group filed the complaint against the vlogger for allegedly violating Article 154 of the Revised Penal Code or the unlawful use of means of publication and unlawful utterances in relation to Republic Act 10175 or the Cybercrime Prevention Act.</p>
+            <p>The Philippine National Police withheld the identity of the vlogger, who posted on social media on April 30 that 30 members of the PNP Criminal Investigation and Detection Group and 90 Special Action Force commandos raided the house of Duterte.</p>
+            <p>Due to the false information, hundreds of Duterte’s supporters rushed to his property.</p>
+            <p>Col. Randulf Tuano, PNP public information officer, said the PNP would disclose the vlogger’s identity once an arrest warrant is issued against the respondent.</p>
+            <a href="https://www.philstar.com/nation/2025/05/07/2441122/vlogger-charged-over-fake-news" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://images.gmanews.tv/webpics/2020/11/pnp_2020_11_06_00_38_37.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>PNP files cybercrime raps vs. vlogger over ‘fake news’ on raid vs Duterte</h2>
+                <div class="news-meta">Joviland Rita - GMA Integrated News | May 6, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>The Philippine National Police (PNP) said Tuesday a cybercrime complaint was filed against a vlogger for spreading fake news on the alleged raid on the house of former President Rodrigo Duterte.</p>
+            <p>According to the PNP, the complaint against the vlogger is for unlawful use of means of publication and unlawful utterances under the Revised Penal Code in relation to the Cybercrime Prevention Act of 2012.</p>
+            <p>The complaint was filed by the Police Regional Office 11 and the Anti-Cybercrime Group.</p>
+            <p>“Ito po kaugnay sa report ng vlogger na meron 30 [Criminal Investigation and Detection Group] at 90 [Special Action Force] personnel na nanggaling sa Luzon na ni-raid ang bahay ng dating pangulo noong gabi noong April 30,” PNP public information office head Police Colonel Randulf Tuaño said in a press briefing.</p>
+            <p>(This is in relation to the vlogger's report that 30 Criminal Investigation and Detection Group and 90 Special Action Force personnel from Luzon raided the former president's house on the night of April 30.)</p>
+            <a href="https://www.gmanetwork.com/news/topstories/nation/945170/pnp-files-cybercrime-raps-vs-vlogger-over-fake-news-on-raid-vs-duterte/story/" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
+
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://www.doj.gov.ph/thumbs.php?src=/images/2025/Press%20Releases/April/DOJ%20Gcash%201.jpg&w=1430&q=100" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>DOJ-Office of Cybercrime, FBI, and GCash Strengthen Collaboration to Combat Cybercrime Threats</h2>
+                <div class="news-meta">DOJ | April 29, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>The Department of Justice-Office of Cybercrime (DOJ-OOC) recently held a strategic meeting with representatives from GCash, the Philippines’ leading mobile wallet platform, and officials from the Federal Bureau of Investigation (FBI) in Manila. The meeting focused on reinforcing efforts to combat the rising threat of cybercrime involving the digital finance sector.</p>
+            <p>Recognizing the increasing sophistication of cybercriminal activities, the DOJ-OOC, FBI, and GCash discussed ways to enhance information sharing, streamline coordination in investigations, and develop proactive measures to detect and prevent online financial crimes. The meeting underscored the critical importance of strong partnerships between law enforcement agencies and private sector stakeholders in safeguarding digital financial ecosystems.</p>
+            <p>All parties reaffirmed their commitment to work collaboratively in identifying and addressing emerging threats, ensuring swift action against cybercriminals, and protecting the public’s trust in digital platforms. This joint initiative marks a significant step toward building a more secure and resilient digital economy in the Philippines.</p>
+            <a href="https://www.doj.gov.ph/news_article.html?newsid=8k3UwFELkbsBcHF_NCkRosp8fYMJ6G3c_Vu80NsuqVo" target="_blank" class="read-more">Read more</a>
+        </div>
     </div>
 
     <!-- Page 2 Articles (Formerly Page 1) -->
@@ -1795,6 +2062,7 @@
     <button id="nextPage" onclick="changePage(1)">Next</button>
 </div>
 </div>
+
                 <div class="insights-content">
                     <div class="card-container">
                         <div class="card" id="card">
@@ -1872,7 +2140,7 @@
         const prevCardBtn = document.getElementById('prevCardBtn');
         const nextCardBtn = document.getElementById('nextCardBtn');
 
-     const cardsData = [
+const cardsData = [
     { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
     { term: "Hacking", partOfSpeech: "noun", definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.", example: "Hacking is penalized under the Electronic Commerce Act of 2000 for unauthorized access to electronic transactions.", synonyms: "unauthorized access, cyber intrusion, data breach" },
     { term: "Phishing", partOfSpeech: "noun", definition: "A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.", example: "The NBI Cybercrime Division raided a group operating a phishing scam using fake banking websites.", synonyms: "online scam, identity theft, social engineering" },
@@ -1930,16 +2198,27 @@
         let isFlipped = false;
         let isTransitioning = false;
 
-        function updateCard(index) {
+        function updateCard(index, direction) {
             if (isTransitioning) return;
 
             isTransitioning = true;
-            card.classList.add('fade-out');
+            const prevIndex = currentCardIndex;
+            currentCardIndex = (index + cardsData.length) % cardsData.length;
 
+            const data = cardsData[currentCardIndex];
+            const front = card.querySelector('.card-front');
+            const back = card.querySelector('.card-back');
+
+            // Apply outgoing animation
+            if (direction > 0) {
+                card.classList.add('slide-out-left');
+            } else if (direction < 0) {
+                card.classList.add('slide-out-right');
+            }
+
+            // Wait for the outgoing animation to finish
             setTimeout(() => {
-                const data = cardsData[index];
-                const front = card.querySelector('.card-front');
-                const back = card.querySelector('.card-back');
+                // Update card content
                 front.innerHTML = `
                     <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
                     <h3>${data.term}</h3>
@@ -1951,19 +2230,30 @@
                     <div class="example">${data.example}</div>
                     <div class="synonyms">Synonyms: ${data.synonyms}</div>
                 `;
-                card.classList.toggle('flipped', isFlipped);
-                cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
 
-                card.classList.remove('fade-out');
-                card.classList.add('fade-in');
+                // Apply incoming animation
+                if (direction > 0) {
+                    card.classList.remove('slide-out-left');
+                    card.classList.add('slide-in-right');
+                } else if (direction < 0) {
+                    card.classList.remove('slide-out-right');
+                    card.classList.add('slide-in-left');
+                }
+
+                // Maintain flipped state
+                card.classList.toggle('flipped', isFlipped);
+
+                // Update card counter
+                cardCounter.textContent = `Card ${currentCardIndex + 1} of ${cardsData.length}`;
+
+                // Re-enable transitions
                 isTransitioning = false;
-            }, 300); // Match the fade-out duration
+            }, 500); // Match the animation duration
         }
 
         function navigateCard(direction) {
             if (isTransitioning) return;
-            currentCardIndex = (currentCardIndex + direction + cardsData.length) % cardsData.length;
-            updateCard(currentCardIndex);
+            updateCard(currentCardIndex + direction, direction);
         }
 
         card.addEventListener('click', () => {
@@ -1971,7 +2261,8 @@
             card.classList.toggle('flipped', isFlipped);
         });
 
-        updateCard(currentCardIndex);
+        // Initial card setup
+        updateCard(currentCardIndex, 0);
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
