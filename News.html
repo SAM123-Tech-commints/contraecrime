@@ -691,7 +691,6 @@
             height: 400px;
             margin: 0 auto;
             perspective: 1000px;
-            overflow: hidden;
         }
 
         .card {
@@ -699,72 +698,21 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 0.6s ease-in-out;
+            transition: transform 0.6s ease-in-out, opacity 0.3s ease;
             cursor: pointer;
+            opacity: 1;
         }
 
         .card.flipped {
             transform: rotateY(180deg);
         }
 
-        .card.exit-left {
-            animation: exitLeft 0.6s ease-in-out forwards;
+        .card.fade-out {
+            opacity: 0;
         }
 
-        .card.enter-right {
-            animation: enterRight 0.6s ease-in-out forwards;
-        }
-
-        .card.exit-right {
-            animation: exitRight 0.6s ease-in-out forwards;
-        }
-
-        .card.enter-left {
-            animation: enterLeft 0.6s ease-in-out forwards;
-        }
-
-        @keyframes exitLeft {
-            0% {
-                transform: translateX(0) scale(1) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(-100%) scale(0.8) rotate(-15deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes enterRight {
-            0% {
-                transform: translateX(100%) scale(0.8) rotate(15deg);
-                opacity: 0;
-            }
-            100% {
-                transform: translateX(0) scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        @keyframes exitRight {
-            0% {
-                transform: translateX(0) scale(1) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(100%) scale(0.8) rotate(15deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes enterLeft {
-            0% {
-                transform: translateX(-100%) scale(0.8) rotate(-15deg);
-                opacity: 0;
-            }
-            100% {
-                transform: translateX(0) scale(1) rotate(0deg);
-                opacity: 1;
-            }
+        .card.fade-in {
+            opacity: 1;
         }
 
         .card-front, .card-back {
@@ -884,29 +832,11 @@
             background-color: #FF4040;
         }
 
-        .random-button {
-            background-color: #8B0000;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .random-button:hover {
-            background-color: #FF4040;
-        }
-
-        .dark-theme .nav-button,
-        .dark-theme .random-button {
+        .dark-theme .nav-button {
             background-color: #28292c;
         }
 
-        .dark-theme .nav-button:hover,
-        .dark-theme .random-button:hover {
+        .dark-theme .nav-button:hover {
             background-color: #1a1a1a;
         }
 
@@ -1436,827 +1366,649 @@
                 </div>
 
                 <div class="news-content active">
-                   <div class="news-content active">
     <!-- Page 1 Articles -->
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://newsinfo.inquirer.net/files/2024/10/PNP-headquarters-file.jpeg" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>PNP: 16 cases vs fake news so far pending in courts</h2>
-                        <div class="news-meta">Jason Sigales - INQUIRER.net | May 10, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>MANILA, Philippines — Sixteen cases against fake news filed by the Philippine National Police (PNP) so far are pending in courts.</p>
-                    <p>This was according to data from the PNP Anti-Cybercrime Group (ACG) shared by Public Information Office Chief Col. Randulf Tuaño at the Saturday News Forum in Quezon City.</p>
-                    <p>The cases were filed as early as the time of then-PNP Chief Gen. Benjamin Acorda Jr. up until the formation of the agency’s Joint Anti-Fake News Action Committee (JAFNAC), Tuaño added.</p>
-                    <p>Data on the profiles, numbers and locations of the respondents in these cases was not immediately available from the PNP.</p>
-                    <p>(Coordination became easier. It’s not only dependent on the ACG, but it’s now with the committee for easy coordination and investigation of fake news.)</p>
-                    <a href="https://newsinfo.inquirer.net/2059844/pnp-16-cases-vs-fake-news-so-far-pending-in-courts" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://newsinfo.inquirer.net/files/2024/10/PNP-headquarters-file.jpeg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>PNP: 16 cases vs fake news so far pending in courts</h2>
+                <div class="news-meta">Jason Sigales - INQUIRER.net | May 10, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA, Philippines — Sixteen cases against fake news filed by the Philippine National Police (PNP) so far are pending in courts.</p>
+            <p>This was according to data from the PNP Anti-Cybercrime Group (ACG) shared by Public Information Office Chief Col. Randulf Tuaño at the Saturday News Forum in Quezon City.</p>
+            <p>The cases were filed as early as the time of then-PNP Chief Gen. Benjamin Acorda Jr. up until the formation of the agency’s Joint Anti-Fake News Action Committee (JAFNAC), Tuaño added.</p>
+            <p>Data on the profiles, numbers and locations of the respondents in these cases was not immediately available from the PNP.</p>
+            <p>(Coordination became easier. It’s not only dependent on the ACG, but it’s now with the committee for easy coordination and investigation of fake news.)</p>
+            <a href="https://newsinfo.inquirer.net/2059844/pnp-16-cases-vs-fake-news-so-far-pending-in-courts" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://files01.pna.gov.ph/category-list/2025/05/09/050925-pco-secretary-jay-ruiz-during-threat-monitoring-center-launch-via-raymond-dela-cruz.jpg" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>24/7 threat monitoring center launched vs. online disinformation</h2>
-                        <div class="news-meta">Raymond Carl Dela Cruz - PNA | May 9, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>MANILA – The inter-agency ‘Task Force KKK (Katotohanan, Katapatan, Katarungan) sa Halalan’ on Friday launched its new threat monitoring center that seeks to combat online disinformation and other election violations.</p>
-                    <p>During the launching ceremony at the Cybercrime Investigation and Coordinating Center (CICC) office in Diliman, Quezon City, Presidential Communications Office (PCO) Secretary Jay Ruiz said the facility seeks to protect the integrity of the elections.</p>
-                    <p>“Elections are the bedrock of democracy. President Ferdinand R. Marcos Jr. has issued a directive to make this election clean and fair. It aims to safeguard the integrity of the 2025 national and local elections,” Ruiz said.</p>
-                    <p>He said there are reports of foreign state-sponsored groups that are attempting to influence the country’s elections.</p>
-                    <p>“Lalo tayong mag-ingat dahil eleksyon po ito. Ang pino-protektahan natin dito ay boto ng bawat Pilipino. Magkaisa po tayo, labanan natin ang fake news (Let’s be extra careful because this is the elections. We’re protecting the vote of every Filipino. Let’s work together to combat fake news),” Ruiz said.</p>
-                    <p>Analysts from various government agencies are housed within the facility and are tasked with gathering reports of disinformation or ‘fake news,’ malicious artificial intelligence (AI)-generated content, and other election violations under Commission on Elections (Comelec) Resolution No. 1164.</p>
-                    <p>After gathering reports, they will use their tools to determine whether an online post is false and considered a violation.</p>
-                    <p>Reports of vote-buying are said to be addressed within an hour, AI-generated content is detected within minutes using software tools, while disinformation posts are flagged, and a  to date, Task Force KKK has partnered with Meta, Google, TikTok, X, and other online platforms for the quick takedown of misinformation.</p>
-                    <p>In cases where disinformation has already spread, the task force will issue statements debunking false narratives.</p>
-                    <p>On the other hand, Comelec Commissioner Nelson Celis clarified that posts that are not found to violate Resolution No. 1164 will not be taken down in respect of freedom of speech.</p>
-                    <p>“Ang online disinformation as an election offense ay may penalty of one to a maximum of six years imprisonment. Kaya kayong mga troll farms magtago-tago na kayo. Meron kaming tools para ma-trace ang origin ng mga posts na yan (Online disinformation as an election offense is penalized by one to six years imprisonment. That’s why troll farms should begin hiding, we have tools to trace the origin of such posts),” Celis said.</p>
-                    <p>He added Comelec’s efforts to combat online disinformation on the elections began in 2023 as ‘Task Force Kontra Fake News.’</p>
-                    <p>In Malacañang, Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro said the 24/7 threat monitoring center is proof that the government acts quickly and is united when the truth is at stake.</p>
-                    <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin at tapusin ang (It is a real-time digital command post ready to identify, deter, and end) online misinformation and disinformation,” Castro said in a press briefing.</p>
-                    <a href="https://www.pna.gov.ph/articles/1249812" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://files01.pna.gov.ph/category-list/2025/05/09/050925-pco-secretary-jay-ruiz-during-threat-monitoring-center-launch-via-raymond-dela-cruz.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>24/7 threat monitoring center launched vs. online disinformation</h2>
+                <div class="news-meta">Raymond Carl Dela Cruz - PNA | May 9, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – The inter-agency ‘Task Force KKK (Katotohanan, Katapatan, Katarungan) sa Halalan’ on Friday launched its new threat monitoring center that seeks to combat online disinformation and other election violations.</p>
+            <p>During the launching ceremony at the Cybercrime Investigation and Coordinating Center (CICC) office in Diliman, Quezon City, Presidential Communications Office (PCO) Secretary Jay Ruiz said the facility seeks to protect the integrity of the elections.</p>
+            <p>“Elections are the bedrock of democracy. President Ferdinand R. Marcos Jr. has issued a directive to make this election clean and fair. It aims to safeguard the integrity of the 2025 national and local elections,” Ruiz said.</p>
+            <p>He said there are reports of foreign state-sponsored groups that are attempting to influence the country’s elections.</p>
+            <p>“Lalo tayong mag-ingat dahil eleksyon po ito. Ang pino-protektahan natin dito ay boto ng bawat Pilipino. Magkaisa po tayo, labanan natin ang fake news (Let’s be extra careful because this is the elections. We’re protecting the vote of every Filipino. Let’s work together to combat fake news),” Ruiz said.</p>
+            <p>Analysts from various government agencies are housed within the facility and are tasked with gathering reports of disinformation or ‘fake news,’ malicious artificial intelligence (AI)-generated content, and other election violations under Commission on Elections (Comelec) Resolution No. 1164.</p>
+            <p>After gathering reports, they will use their tools to determine whether an online post is false and considered a violation.</p>
+            <p>Reports of vote-buying are said to be addressed within an hour, AI-generated content is detected within minutes using software tools, while disinformation posts are flagged, and a  to date, Task Force KKK has partnered with Meta, Google, TikTok, X, and other online platforms for the quick takedown of misinformation.</p>
+            <p>In cases where disinformation has already spread, the task force will issue statements debunking false narratives.</p>
+            <p>On the other hand, Comelec Commissioner Nelson Celis clarified that posts that are not found to violate Resolution No. 1164 will not be taken down in respect of freedom of speech.</p>
+            <p>“Ang online disinformation as an election offense ay may penalty of one to a maximum of six years imprisonment. Kaya kayong mga troll farms magtago-tago na kayo. Meron kaming tools para ma-trace ang origin ng mga posts na yan (Online disinformation as an election offense is penalized by one to six years imprisonment. That’s why troll farms should begin hiding, we have tools to trace the origin of such posts),” Celis said.</p>
+            <p>He added Comelec’s efforts to combat online disinformation on the elections began in 2023 as ‘Task Force Kontra Fake News.’</p>
+            <p>In Malacañang, Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro said the 24/7 threat monitoring center is proof that the government acts quickly and is united when the truth is at stake.</p>
+            <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin at tapusin ang (It is a real-time digital command post ready to identify, deter, and end) online misinformation and disinformation,” Castro said in a press briefing.</p>
+            <a href="https://www.pna.gov.ph/articles/1249812" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://od2-image-api.abs-cbn.com/prod/20250509100544/b133303cc8969c51ebb168b185009a33551d1337a5d044e902fd445e55508a3c.jpg" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>Halalan Threat Monitoring Center to fight 'fake news'</h2>
-                        <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>MANILA — The Commission on Elections-led Task Force KKK sa Halalan has formally opened its Threat Monitoring Center on Friday, a few days ahead of the 2025 midterm polls.</p>
-                    <p>Task Force KKK, which stands for Katotohanan, Katapatan, Katarungan, aims to push for truthful, honest and fair polls this coming Monday, May 12, 2025.</p>
-                    <p>The Threat Monitoring Center is an inter-agency center with employees from Comelec, Department of Information and Communications Technology, Cybercrime Investigation and Coordinating Center, Philippine National Police- Anti-Cybercrime Group, National Bureau of Investigation, and the National Intelligence Coordinating Agency.</p>
-                    <p>This is also supported by various election watchdogs as well as social media platforms like Meta for Facebook, TikTok, Google, and X formerly Twitter.</p>
-                    <p>They will monitor and verify online posts and social media messages that could violate election laws.</p>
-                    <p>Social media companies vowed to take down posts if proven that these have "fake news" content.</p>
-                    <p>Presidential Communications Office Secretary Jay Ruiz said the center will be a big help to fight misinformation and disinformation during and even after the elections on Monday.</p>
-                    <p>“We now have the plague of disinformation particularly thorugh fake accounts, bots, and deceptive online practice…. Marami malilinlang, maraming maloloko. Ito po ang pineprevent natin dahil dito sa KKK,” Ruiz said.</p>
-                    <p>Ruiz urged social media platforms to comply and to respond quickly since a single fake news can affect the public.</p>
-                    <a href="https://www.abs-cbn.com/news/nation/2025/5/9/halalan-threat-monitoring-center-to-fight-fake-news-1746" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://od2-image-api.abs-cbn.com/prod/20250509100544/b133303cc8969c51ebb168b185009a33551d1337a5d044e902fd445e55508a3c.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Halalan Threat Monitoring Center to fight 'fake news'</h2>
+                <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA — The Commission on Elections-led Task Force KKK sa Halalan has formally opened its Threat Monitoring Center on Friday, a few days ahead of the 2025 midterm polls.</p>
+            <p>Task Force KKK, which stands for Katotohanan, Katapatan, Katarungan, aims to push for truthful, honest and fair polls this coming Monday, May 12, 2025.</p>
+            <p>The Threat Monitoring Center is an inter-agency center with employees from Comelec, Department of Information and Communications Technology, Cybercrime Investigation and Coordinating Center, Philippine National Police- Anti-Cybercrime Group, National Bureau of Investigation, and the National Intelligence Coordinating Agency.</p>
+            <p>This is also supported by various election watchdogs as well as social media platforms like Meta for Facebook, TikTok, Google, and X formerly Twitter.</p>
+            <p>They will monitor and verify online posts and social media messages that could violate election laws.</p>
+            <p>Social media companies vowed to take down posts if proven that these have "fake news" content.</p>
+            <p>Presidential Communications Office Secretary Jay Ruiz said the center will be a big help to fight misinformation and disinformation during and even after the elections on Monday.</p>
+            <p>“We now have the plague of disinformation particularly thorugh fake accounts, bots, and deceptive online practice…. Marami malilinlang, maraming maloloko. Ito po ang pineprevent natin dahil dito sa KKK,” Ruiz said.</p>
+            <p>Ruiz urged social media platforms to comply and to respond quickly since a single fake news can affect the public.</p>
+            <a href="https://www.abs-cbn.com/news/nation/2025/5/9/halalan-threat-monitoring-center-to-fight-fake-news-1746" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://i.imgur.com/bKFkUHf.jpeg" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>PBBM directs DICT to monitor threats to May 12 elections</h2>
-                        <div class="news-meta">PND - PIA | May 9, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>With his administration’s commitment to ensuring a peaceful, clean, and fair elections for the nation’s future, President Ferdinand R. Marcos Jr. has ordered government agencies to monitor possible digital threats to the May 12 midterm elections around the clock.</p>
-                    <p>Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro also said the Department of Information and Communications Technology (DICT) Cybercrime Investigation and Coordinating Center is closely working with the Commission on Elections (COMELEC).</p>
-                    <p>Castro said the DICT and COMELEC collaboration and cooperation would help establish a real-time digital command and ensure honest, orderly, and peaceful elections.</p>
-                    <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin, at tapusin ang online misinformation and disinformation,” the Palace Press Officer said.</p>
-                    <p>Castro noted that, “Kaisa ang administrasyon ni Pangulong Marcos Jr., ating itataguyod ang isang halalang mapayapa, malinis at makatarungan para sa bayan para sa kinabukasan at para sa isang Bagong Pilipinas.”</p>
-                    <p>For the May 12, 2025, midterm elections, the Comelec formed Task Force Katotohanan, Katapatan, at Katarungan sa Halalan (Task Force KKK sa Halalan) to monitor election threats.</p>
-                    <p>The unprecedented joint DICT-COMELEC threat monitoring center will operate for two days to ensure the smooth and credible conduct of Monday’s elections.</p>
-                    <p>In a briefing on Friday, Castro said the joint initiative manifests the government’s commitment to safeguard the truth.</p>
-                    <p>Castro also said election watchdogs are coordinating with COMELEC to ensure the peaceful and honest conduct of the May 12 elections.</p>
-                    <p>“Para sa hangaring malinis at tapat na halalan, nagsama-sama ang lahat ng election watchdogs mula sa mga pribadong organisasyon, simbahan, kabataan at iba pang sektor,” Castro said.</p>
-                    <p>“Sa kanilang mahigpit na pagbabantay, matitiyak na ang bawat boto ay mabibilang nang tama, at ang bawat boses ng mga mamamayan ay maririnig,” Castro said.</p>
-                    <p>Castro added that the Philippine National Police (PNP) assured the public that it is 100 percent ready for the 2025 national and local elections.</p>
-                    <p>Quoting Philippine National Police Chief Gen. Rommel Marbil, Castro said the PNP’s commitment is to serve the Filipino people, not the politicians, and continue with its duty to protect the sanctity of the vote.</p>
-                    <a href="https://pia.gov.ph/pbbm-directs-dict-to-monitor-threats-to-may-12-elections/" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://i.imgur.com/bKFkUHf.jpeg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>PBBM directs DICT to monitor threats to May 12 elections</h2>
+                <div class="news-meta">PND - PIA | May 9, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>With his administration’s commitment to ensuring a peaceful, clean, and fair elections for the nation’s future, President Ferdinand R. Marcos Jr. has ordered government agencies to monitor possible digital threats to the May 12 midterm elections around the clock.</p>
+            <p>Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro also said the Department of Information and Communications Technology (DICT) Cybercrime Investigation and Coordinating Center is closely working with the Commission on Elections (COMELEC).</p>
+            <p>Castro said the DICT and COMELEC collaboration and cooperation would help establish a real-time digital command and ensure honest, orderly, and peaceful elections.</p>
+            <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin, at tapusin ang online misinformation and disinformation,” the Palace Press Officer said.</p>
+            <p>Castro noted that, “Kaisa ang administrasyon ni Pangulong Marcos Jr., ating itataguyod ang isang halalang mapayapa, malinis at makatarungan para sa bayan para sa kinabukasan at para sa isang Bagong Pilipinas.”</p>
+            <p>For the May 12, 2025, midterm elections, the Comelec formed Task Force Katotohanan, Katapatan, at Katarungan sa Halalan (Task Force KKK sa Halalan) to monitor election threats.</p>
+            <p>The unprecedented joint DICT-COMELEC threat monitoring center will operate for two days to ensure the smooth and credible conduct of Monday’s elections.</p>
+            <p>In a briefing on Friday, Castro said the joint initiative manifests the government’s commitment to safeguard the truth.</p>
+            <p>Castro also said election watchdogs are coordinating with COMELEC to ensure the peaceful and honest conduct of the May 12 elections.</p>
+            <p>“Para sa hangaring malinis at tapat na halalan, nagsama-sama ang lahat ng election watchdogs mula sa mga pribadong organisasyon, simbahan, kabataan at iba pang sektor,” Castro said.</p>
+            <p>“Sa kanilang mahigpit na pagbabantay, matitiyak na ang bawat boto ay mabibilang nang tama, at ang bawat boses ng mga mamamayan ay maririnig,” Castro said.</p>
+            <p>Castro added that the Philippine National Police (PNP) assured the public that it is 100 percent ready for the 2025 national and local elections.</p>
+            <p>Quoting Philippine National Police Chief Gen. Rommel Marbil, Castro said the PNP’s commitment is to serve the Filipino people, not the politicians, and continue with its duty to protect the sanctity of the vote.</p>
+            <a href="https://pia.gov.ph/pbbm-directs-dict-to-monitor-threats-to-may-12-elections/" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://od2-image-api.abs-cbn.com/prod/20250509100528/c4db0490353238e4d1868ff8183a43cf8d44c32929c18e0e00d88ae7baf2a65e.jpg?w=306&h=204" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>Cyber terrorists? Gov't mulls new label on 'fake news' peddlers</h2>
-                        <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>MANILA — The Philippine government is now studying whether people who spread "fake news" or disinformation and misinformation can be classified as cyber terrorists, similar to what is done in other countries.</p>
-                    <p>Presidential Communications Office Secretary Jay Ruiz said there is an ongoing study on whether they will move towards that direction, especially with what he calls a plague of disinformation now happening. He clarified however, that this will only apply to fake news peddlers whose posts affect national security or bigger issues that could affect the public.</p>
-                    <p>“Pinag-iisipan po namin ng DICT na ihanay sa mga cyber terrorist yung mga ganyang nagpapakalat ng sobrang masamang impormasyon sa utak ng ating mga kababayan,” he said.</p>
-                    <p>This comes as Ruiz led the opening of the Threat Monitoring Center of the Commission on Elections with the help of various agencies, including the Department of Information and Communications Technology.</p>
-                    <p>Comelec Commissioner Nelson Celis warned fake news peddlers that they have a way to check and determine the origin of fake news and that there is a prison sentence of up to 6 years for those proven guilty of spreading lies online.</p>
-                    <p>“Pagna-trace kayo mga troll farm kayo, mag-ingat kayo, magtago na kayo, umalis na kayo ng bansa dahil election offense po yan. One year ang pinakamababa, six years max. Matrace namin sino yung origin hanggang kumakalat. Meron kaming tools at ma trace naming troll farms niyo,” said Celis.</p>
-                    <p>However, officials also warned that one of the biggest threats is misinformation and disinformation coming from other countries or based overseas. They have monitored some of these cases and urged the public not to believe immediately in any social media posts from unknown or suspicious accounts.</p>
-                    <p>“Isa pang nakakabahalang kumakalat na balita sa Reuters tungkol sa mga foreign companies, mga nasa ibang bansa na nag mamanipulate ditto sa darating na halalan,” Ruiz said.</p>
-                    <p>DICT Asec. Aboy Paraiso added, “When you see fake news, we have tools to see where they came from and it’s outside interference that really hampers, threatens these elections.”</p>
-                    <p>Officials now urge the public to be vigilant as fake news posts are rampant, both election-related and not.</p>
-                    <a href="https://www.abs-cbn.com/news/technology/2025/5/9/gov-t-mulls-classifying-fake-news-peddlers-as-cyber-terrorists-1742" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://od2-image-api.abs-cbn.com/prod/20250509100528/c4db0490353238e4d1868ff8183a43cf8d44c32929c18e0e00d88ae7baf2a65e.jpg?w=306&h=204" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Cyber terrorists? Gov't mulls new label on 'fake news' peddlers</h2>
+                <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA — The Philippine government is now studying whether people who spread "fake news" or disinformation and misinformation can be classified as cyber terrorists, similar to what is done in other countries.</p>
+            <p>Presidential Communications Office Secretary Jay Ruiz said there is an ongoing study on whether they will move towards that direction, especially with what he calls a plague of disinformation now happening. He clarified however, that this will only apply to fake news peddlers whose posts affect national security or bigger issues that could affect the public.</p>
+            <p>“Pinag-iisipan po namin ng DICT na ihanay sa mga cyber terrorist yung mga ganyang nagpapakalat ng sobrang masamang impormasyon sa utak ng ating mga kababayan,” he said.</p>
+            <p>This comes as Ruiz led the opening of the Threat Monitoring Center of the Commission on Elections with the help of various agencies, including the Department of Information and Communications Technology.</p>
+            <p>Comelec Commissioner Nelson Celis warned fake news peddlers that they have a way to check and determine the origin of fake news and that there is a prison sentence of up to 6 years for those proven guilty of spreading lies online.</p>
+            <p>“Pagna-trace kayo mga troll farm kayo, mag-ingat kayo, magtago na kayo, umalis na kayo ng bansa dahil election offense po yan. One year ang pinakamababa, six years max. Matrace namin sino yung origin hanggang kumakalat. Meron kaming tools at ma trace naming troll farms niyo,” said Celis.</p>
+            <p>However, officials also warned that one of the biggest threats is misinformation and disinformation coming from other countries or based overseas. They have monitored some of these cases and urged the public not to believe immediately in any social media posts from unknown or suspicious accounts.</p>
+            <p>“Isa pang nakakabahalang kumakalat na balita sa Reuters tungkol sa mga foreign companies, mga nasa ibang bansa na nag mamanipulate ditto sa darating na halalan,” Ruiz said.</p>
+            <p>DICT Asec. Aboy Paraiso added, “When you see fake news, we have tools to see where they came from and it’s outside interference that really hampers, threatens these elections.”</p>
+            <p>Officials now urge the public to be vigilant as fake news posts are rampant, both election-related and not.</p>
+            <a href="https://www.abs-cbn.com/news/technology/2025/5/9/gov-t-mulls-classifying-fake-news-peddlers-as-cyber-terrorists-1742" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://files01.pna.gov.ph/category-list/2022/07/25/20220428110552.jpg" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>PNP-ACG nabs 153 cybercrime suspects in April</h2>
-                        <div class="news-meta">Christopher Lloyd Caliwan - PNA | May 8, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>MANILA – The Philippine National Police Anti-Cybercrime Group (PNP-ACG) operatives arrested 153 persons for cybercrimes nationwide in April, a police official said Thursday.</p>
-                    <p>ACG Director Brig. Gen. Bernard Yang said the group also rescued 11 minor victims of online sexual abuse and trafficking in persons in 159 operations.</p>
-                    <p>Yang said the operatives conducted nine entrapment operations against fake dentists, resulting in the arrest of 14 individuals, in coordination with the Philippine Dental Association.</p>
-                    <p>He said the operations were the result of the PNP-ACG’s proactive cyber patrolling.</p>
-                    <p>“Actually, marami na pong nagbe-venture (many have been venturing) into this kind of illegal activity at nakita nilang medyo lucrative itong illegal business na ito (and we found it is a lucrative business),” Yang said in a media interview at Camp Crame.</p>
-                    <p>One of those arrested was a 25-year-old man caught in the act of installing dental braces on a police officer posing as a patient inside a hotel in Cotabato City.</p>
-                    <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid
-                    <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid minimal fees for the procedures.</p>
-                    <p>He warned the public about the risks of getting procedures from unlicensed individuals, even if these cost cheaper.</p>
-                    <p>"These fake dentists offering service without a license can cause serious risks, including health complications, financial loss, the spread of infections, and long-term damage to your teeth. If you are aware of anyone offering unauthorized dental services, report it immediately to the nearest ACG office for appropriate action," he said. (PNA)</p>
-                    <a href="https://www.pna.gov.ph/articles/1249660" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://files01.pna.gov.ph/category-list/2022/07/25/20220428110552.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>PNP-ACG nabs 153 cybercrime suspects in April</h2>
+                <div class="news-meta">Christopher Lloyd Caliwan - PNA | May 8, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – The Philippine National Police Anti-Cybercrime Group (PNP-ACG) operatives arrested 153 persons for cybercrimes nationwide in April, a police official said Thursday.</p>
+            <p>ACG Director Brig. Gen. Bernard Yang said the group also rescued 11 minor victims of online sexual abuse and trafficking in persons in 159 operations.</p>
+            <p>Yang said the operatives conducted nine entrapment operations against fake dentists, resulting in the arrest of 14 individuals, in coordination with the Philippine Dental Association.</p>
+            <p>He said the operations were the result of the PNP-ACG’s proactive cyber patrolling.</p>
+            <p>“Actually, marami na pong nagbe-venture (many have been venturing) into this kind of illegal activity at nakita nilang medyo lucrative itong illegal business na ito (and we found it is a lucrative business),” Yang said in a media interview at Camp Crame.</p>
+            <p>One of those arrested was a 25-year-old man caught in the act of installing dental braces on a police officer posing as a patient inside a hotel in Cotabato City.</p>
+            <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid
+              <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid minimal fees for the procedures.</p>
+            <p>He warned the public about the risks of getting procedures from unlicensed individuals, even if these cost cheaper.</p>
+            <p>"These fake dentists offering service without a license can cause serious risks, including health complications, financial loss, the spread of infections, and long-term damage to your teeth. If you are aware of anyone offering unauthorized dental services, report it immediately to the nearest ACG office for appropriate action," he said. (PNA)</p>
+            <a href="https://www.pna.gov.ph/articles/1249660" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://insiderph.com/uploads/articles/thumb_cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector-1-561x421.webp" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>CIBI’s Fraud Bureau leads cybercrime defense push in financial sector</h2>
-                        <div class="news-meta">Corrie S. Narisma - InsiderPH | May 7, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>With cybercrime incidents in the Philippines tripling to 10,004 in 2024, the need for stronger industry collaboration has never been more urgent.</p>
-                    <p>Recognizing this growing threat, CIBI Information Inc., the country’s first and only local credit bureau, has officially launched the Fraud Bureau, a pioneering initiative aimed at uniting the financial sector against fraud.</p>
-                    <p>According to the Cybercrime Investigation and Coordinating Center (CICC), the sharp increase in digital threats underscores the necessity for a coordinated, data-driven response. CIBI’s Fraud Bureau seeks to do just that—offering a secure platform for banks, fintech companies, and financial institutions to share information on suspicious applicant behavior, blacklist data, and real-time application trends.</p>
-                    <p>The Fraud Bureau’s primary objective is to create a unified intelligence-sharing ecosystem that promotes proactive fraud detection, rapid identification of risks, and robust cybercrime prevention. By pooling insights and resources, members of the Bureau can build stronger defenses and foster transparency and trust in the Philippine financial system.</p>
-                    <p>“The significant increase in fraudulent activity highlights the urgent need for coordinated action,” said CIBI president and CEO Pia Arellano. “CIBI recognizes that data-driven collaboration is essential to tackling fraud. This initiative strengthens industry-wide defenses and supports greater trust and transparency in our financial ecosystem.”</p>
-                    <p>As the nation’s leading credit reporting agency, CIBI has long championed financial inclusion and informed decision-making. The Fraud Bureau aligns with this mission by empowering financial institutions to combat fraud while protecting consumers and promoting sustainable fintech innovation. — Ed: Corrie S. Narisma</p>
-                    <a href="https://insiderph.com/cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://insiderph.com/uploads/articles/thumb_cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector-1-561x421.webp" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>CIBI’s Fraud Bureau leads cybercrime defense push in financial sector</h2>
+                <div class="news-meta">Corrie S. Narisma - InsiderPH | May 7, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>With cybercrime incidents in the Philippines tripling to 10,004 in 2024, the need for stronger industry collaboration has never been more urgent.</p>
+            <p>Recognizing this growing threat, CIBI Information Inc., the country’s first and only local credit bureau, has officially launched the Fraud Bureau, a pioneering initiative aimed at uniting the financial sector against fraud.</p>
+            <p>According to the Cybercrime Investigation and Coordinating Center (CICC), the sharp increase in digital threats underscores the necessity for a coordinated, data-driven response. CIBI’s Fraud Bureau seeks to do just that—offering a secure platform for banks, fintech companies, and financial institutions to share information on suspicious applicant behavior, blacklist data, and real-time application trends.</p>
+            <p>The Fraud Bureau’s primary objective is to create a unified intelligence-sharing ecosystem that promotes proactive fraud detection, rapid identification of risks, and robust cybercrime prevention. By pooling insights and resources, members of the Bureau can build stronger defenses and foster transparency and trust in the Philippine financial system.</p>
+            <p>“The significant increase in fraudulent activity highlights the urgent need for coordinated action,” said CIBI president and CEO Pia Arellano. “CIBI recognizes that data-driven collaboration is essential to tackling fraud. This initiative strengthens industry-wide defenses and supports greater trust and transparency in our financial ecosystem.”</p>
+            <p>As the nation’s leading credit reporting agency, CIBI has long championed financial inclusion and informed decision-making. The Fraud Bureau aligns with this mission by empowering financial institutions to combat fraud while protecting consumers and promoting sustainable fintech innovation. — Ed: Corrie S. Narisma</p>
+            <a href="https://insiderph.com/cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://media.philstar.com/photos/2025/05/06/fake-news_2025-05-06_21-38-06.jpg" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>Vlogger charged over fake news</h2>
-                        <div class="news-meta">Emmanuel Tupas - The Philippine Star | May 7, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>MANILA, Philippines — Criminal charges were filed yesterday against a vlogger for allegedly spreading false information about a supposed police raid on the house of former president Rodrigo Duterte in Davao City.</p>
-                    <p>Members of the Davao City police and Anti-Cybercrime Group filed the complaint against the vlogger for allegedly violating Article 154 of the Revised Penal Code or the unlawful use of means of publication and unlawful utterances in relation to Republic Act 10175 or the Cybercrime Prevention Act.</p>
-                    <p>The Philippine National Police withheld the identity of the vlogger, who posted on social media on April 30 that 30 members of the PNP Criminal Investigation and Detection Group and 90 Special Action Force commandos raided the house of Duterte.</p>
-                    <p>Due to the false information, hundreds of Duterte’s supporters rushed to his property.</p>
-                    <p>Col. Randulf Tuano, PNP public information officer, said the PNP would disclose the vlogger’s identity once an arrest warrant is issued against the respondent.</p>
-                    <a href="https://www.philstar.com/nation/2025/05/07/2441122/vlogger-charged-over-fake-news" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://media.philstar.com/photos/2025/05/06/fake-news_2025-05-06_21-38-06.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Vlogger charged over fake news</h2>
+                <div class="news-meta">Emmanuel Tupas - The Philippine Star | May 7, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA, Philippines — Criminal charges were filed yesterday against a vlogger for allegedly spreading false information about a supposed police raid on the house of former president Rodrigo Duterte in Davao City.</p>
+            <p>Members of the Davao City police and Anti-Cybercrime Group filed the complaint against the vlogger for allegedly violating Article 154 of the Revised Penal Code or the unlawful use of means of publication and unlawful utterances in relation to Republic Act 10175 or the Cybercrime Prevention Act.</p>
+            <p>The Philippine National Police withheld the identity of the vlogger, who posted on social media on April 30 that 30 members of the PNP Criminal Investigation and Detection Group and 90 Special Action Force commandos raided the house of Duterte.</p>
+            <p>Due to the false information, hundreds of Duterte’s supporters rushed to his property.</p>
+            <p>Col. Randulf Tuano, PNP public information officer, said the PNP would disclose the vlogger’s identity once an arrest warrant is issued against the respondent.</p>
+            <a href="https://www.philstar.com/nation/2025/05/07/2441122/vlogger-charged-over-fake-news" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://images.gmanews.tv/webpics/2020/11/pnp_2020_11_06_00_38_37.jpg" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>PNP files cybercrime raps vs. vlogger over ‘fake news’ on raid vs Duterte</h2>
-                        <div class="news-meta">Joviland Rita - GMA Integrated News | May 6, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>The Philippine National Police (PNP) said Tuesday a cybercrime complaint was filed against a vlogger for spreading fake news on the alleged raid on the house of former President Rodrigo Duterte.</p>
-                    <p>According to the PNP, the complaint against the vlogger is for unlawful use of means of publication and unlawful utterances under the Revised Penal Code in relation to the Cybercrime Prevention Act of 2012.</p>
-                    <p>The complaint was filed by the Police Regional Office 11 and the Anti-Cybercrime Group.</p>
-                    <p>“Ito po kaugnay sa report ng vlogger na meron 30 [Criminal Investigation and Detection Group] at 90 [Special Action Force] personnel na nanggaling sa Luzon na ni-raid ang bahay ng dating pangulo noong gabi noong April 30,” PNP public information office head Police Colonel Randulf Tuaño said in a press briefing.</p>
-                    <p>(This is in relation to the vlogger's report that 30 Criminal Investigation and Detection Group and 90 Special Action Force personnel from Luzon raided the former president's house on the night of April 30.)</p>
-                    <a href="https://www.gmanetwork.com/news/topstories/nation/945170/pnp-files-cybercrime-raps-vs-vlogger-over-fake-news-on-raid-vs-duterte/story/" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://images.gmanews.tv/webpics/2020/11/pnp_2020_11_06_00_38_37.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>PNP files cybercrime raps vs. vlogger over ‘fake news’ on raid vs Duterte</h2>
+                <div class="news-meta">Joviland Rita - GMA Integrated News | May 6, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>The Philippine National Police (PNP) said Tuesday a cybercrime complaint was filed against a vlogger for spreading fake news on the alleged raid on the house of former President Rodrigo Duterte.</p>
+            <p>According to the PNP, the complaint against the vlogger is for unlawful use of means of publication and unlawful utterances under the Revised Penal Code in relation to the Cybercrime Prevention Act of 2012.</p>
+            <p>The complaint was filed by the Police Regional Office 11 and the Anti-Cybercrime Group.</p>
+            <p>“Ito po kaugnay sa report ng vlogger na meron 30 [Criminal Investigation and Detection Group] at 90 [Special Action Force] personnel na nanggaling sa Luzon na ni-raid ang bahay ng dating pangulo noong gabi noong April 30,” PNP public information office head Police Colonel Randulf Tuaño said in a press briefing.</p>
+            <p>(This is in relation to the vlogger's report that 30 Criminal Investigation and Detection Group and 90 Special Action Force personnel from Luzon raided the former president's house on the night of April 30.)</p>
+            <a href="https://www.gmanetwork.com/news/topstories/nation/945170/pnp-files-cybercrime-raps-vs-vlogger-over-fake-news-on-raid-vs-duterte/story/" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-            <div class="news-item" data-page="1">
-                <div class="news-header" onclick="toggleDetails(this)">
-                    <img src="https://i.imgur.com/hjgx02V.png" alt="News Image" class="news-image">
-                    <div class="news-title">
-                        <h2>DOJ-Office of Cybercrime, FBI, and GCash Strengthen Collaboration to Combat Cybercrime Threats</h2>
-                        <div class="news-meta">DOJ | April 29, 2025</div>
-                    </div>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="news-details">
-                    <p>The Department of Justice-Office of Cybercrime (DOJ-OOC) recently held a strategic meeting with representatives from GCash, the Philippines’ leading mobile wallet platform, and officials from the Federal Bureau of Investigation (FBI) in Manila. The meeting focused on reinforcing efforts to combat the rising threat of cybercrime involving the digital finance sector.</p>
-                    <p>Recognizing the increasing sophistication of cybercriminal activities, the DOJ-OOC, FBI, and GCash discussed ways to enhance information sharing, streamline coordination in investigations, and develop proactive measures to detect and prevent online financial crimes. The meeting underscored the critical importance of strong partnerships between law enforcement agencies and private sector stakeholders in safeguarding digital financial ecosystems.</p>
-                    <p>All parties reaffirmed their commitment to work collaboratively in identifying and addressing emerging threats, ensuring swift action against cybercriminals, and protecting the public’s trust in digital platforms. This joint initiative marks a significant step toward building a more secure and resilient digital economy in the Philippines.</p>
-                    <a href="https://www.doj.gov.ph/news_article.html?newsid=8k3UwFELkbsBcHF_NCkRosp8fYMJ6G3c_Vu80NsuqVo" target="_blank" class="read-more">Read more</a>
-                </div>
+    <div class="news-item" data-page="1">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://i.imgur.com/hjgx02V.png" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>DOJ-Office of Cybercrime, FBI, and GCash Strengthen Collaboration to Combat Cybercrime Threats</h2>
+                <div class="news-meta">DOJ | April 29, 2025</div>
             </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>The Department of Justice-Office of Cybercrime (DOJ-OOC) recently held a strategic meeting with representatives from GCash, the Philippines’ leading mobile wallet platform, and officials from the Federal Bureau of Investigation (FBI) in Manila. The meeting focused on reinforcing efforts to combat the rising threat of cybercrime involving the digital finance sector.</p>
+            <p>Recognizing the increasing sophistication of cybercriminal activities, the DOJ-OOC, FBI, and GCash discussed ways to enhance information sharing, streamline coordination in investigations, and develop proactive measures to detect and prevent online financial crimes. The meeting underscored the critical importance of strong partnerships between law enforcement agencies and private sector stakeholders in safeguarding digital financial ecosystems.</p>
+            <p>All parties reaffirmed their commitment to work collaboratively in identifying and addressing emerging threats, ensuring swift action against cybercriminals, and protecting the public’s trust in digital platforms. This joint initiative marks a significant step toward building a more secure and resilient digital economy in the Philippines.</p>
+            <a href="https://www.doj.gov.ph/news_article.html?newsid=8k3UwFELkbsBcHF_NCkRosp8fYMJ6G3c_Vu80NsuqVo" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="1">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://files01.pna.gov.ph/category-list/2025/05/09/threat-monitoring-center-raymond-carl-dela-cruz.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>24/7 Threat Monitoring Center Launched vs. Online Disinformation</h2>
-                                <div class="news-meta">Raymond Carl Dela Cruz - PNA | May 9, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA – The inter-agency ‘Task Force KKK (Katotohanan, Katapatan, Katarungan) sa Halalan’ on Friday launched its new threat monitoring center that seeks to combat online disinformation and other election violations.</p>
-                            <p>During the launching ceremony at the Cybercrime Investigation and Coordinating Center (CICC) office in Diliman, Quezon City, Presidential Communications Office (PCO) Secretary Jay Ruiz said the facility seeks to protect the integrity of the elections.</p>
-                            <p>“Elections are the bedrock of democracy. President Ferdinand R. Marcos Jr. has issued a directive to make this election clean and fair. It aims to safeguard the integrity of the 2025 national and local elections,” Ruiz said.</p>
-                            <p>He said there are reports of foreign state-sponsored groups that are attempting to influence the country’s elections.</p>
-                            <p>“Lalo tayong mag-ingat dahil eleksyon po ito. Ang pino-protektahan natin dito ay boto ng bawat Pilipino. Magkaisa po tayo, labanan natin ang fake news (Let’s be extra careful because this is the elections. We’re protecting the vote of every Filipino. Let’s work together to combat fake news),” Ruiz said.</p>
-                            <p>Analysts from various government agencies are housed within the facility and are tasked with gathering reports of disinformation or ‘fake news,’ malicious artificial intelligence (AI)-generated content, and other election violations under Commission on Elections (Comelec) Resolution No. 1164.</p>
-                            <p>After gathering reports, they will use their tools to determine whether an online post is false and considered a violation.</p>
-                            <p>Reports of vote-buying are said to be addressed within an hour, AI-generated content is detected within minutes using software tools, while disinformation posts are flagged, and a takedown request is sent to the appropriate digital platforms.</p>
-                            <p>To date, Task Force KKK has partnered with Meta, Google, TikTok, X, and other online platforms for the quick takedown of misinformation.</p>
-                            <p>In cases where disinformation has already spread, the task force will issue statements debunking false narratives.</p>
-                            <p>On the other hand, Comelec Commissioner Nelson Celis clarified that posts that are not found to violate Resolution No. 1164 will not be taken down in respect of freedom of speech.</p>
-                            <p>“Ang online disinformation as an election offense ay may penalty of one to a maximum of six years imprisonment. Kaya kayong mga troll farms magtago-tago na kayo. Meron kaming tools para ma-trace ang origin ng mga posts na yan (Online disinformation as an election offense is penalized by one to six years imprisonment. That’s why troll farms should begin hiding, we have tools to trace the origin of such posts),” Celis said.</p>
-                            <p>He added Comelec’s efforts to combat online disinformation on the elections began in 2023 as ‘Task Force Kontra Fake News.’</p>
-                            <p>In Malacañang, Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro said the 24/7 threat monitoring center is proof that the government acts quickly and is united when the truth is at stake.</p>
-                            <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin at tapusin ang (It is a real-time digital command post ready to identify, deter, and end) online misinformation and disinformation,” Castro said in a press briefing.</p>
-                            <p><strong>Government regulation</strong></p>
-                            <p>Meanwhile, Ruiz said online platforms today are not currently regulated by the Philippine government and are completely reliant on self-regulation.</p>
-                            <p>However, Ruiz said content regulation on the most popular platforms in the country is often lacking.</p>
-                            <p>“Walang regulation, walang code of ethics, kaya kita niyo naman, napaka-bilis kumalat ng fake news (There is no regulation, no code of ethics. That’s why it’s so easy to spread fake news),” he said.</p>
-                            <p>In addition, Ruiz said other countries have started to brand sources of online disinformation as cyberterrorists to apply more appropriate penalties to those with the biggest impact on society.</p>
-                            <p>“Maraming tao ang nasasaktan, naloloko, napapaniwala, at talagang nakakasama sa ating lipunan. Paano kung bata ang makabasa ng fake news? Araw araw nakakasagap ng maling impormasyon (This is hurting and deceiving many people, and it is really detrimental to our society. What if it’s a child who reads fake news? They’ll keep receiving misinformation everyday),” he said.</p>
-                            <p>To date, Ruiz said the government is studying increasing penalties for such violations.</p>
-                            <p>“Sa aming palagay, palakasin ang cybercrime law. At kung ayaw ng self-regulation, dapat i-regulate na ng gobyerno ang cyber platforms (In our opinion, we need to enhance the anti-cybercrime law. And if digital platforms don’t want to self-regulate, the government should regulate them),” he said.</p>
-                            <p>The ‘Task Force KKK sa Halalan’ is led by the Comelec, the PCO, Department of Information and Communications Technology (DICT), CICC, other government agencies, and partners in the private sector. (PNA)</p>
-                            <a href="https://www.pna.gov.ph/articles/1249812" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <!-- Page 2 Articles (Formerly Page 1) -->
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>UN: Asian Scam Calls Now a Global Export</h2>
+                <div class="news-meta">The Register | April 22, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry.</p>
+            <p>The UNODC report, published today, highlights how Southeast Asian cybercrime groups, initially focused on regional targets, have expanded their operations worldwide, using advanced technology and human trafficking to scale their fraudulent activities.</p>
+            <p>"These groups operate like multinational corporations, with sophisticated structures and global reach," the report states. It estimates that such scams generated $40 billion in 2024 alone, with call centers in countries like Cambodia, Myanmar, and the Philippines playing a central role.</p>
+            <p>The report also notes the role of forced labor, with tens of thousands of people trafficked into scam compounds, where they are coerced into making fraudulent calls under threat of violence.</p>
+            <a href="https://www.theregister.com/2025/04/22/un_asian_scam_calls/" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="1">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://od2-image-api.abs-cbn.com/prod/2025050917011/cebe07b3b5fbeddbfa8eabf4e2fadb4c47dbfa7be3eabf4c012ebadf1c012ebb.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Halalan Threat Monitoring Center to Fight 'Fake News'</h2>
-                                <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA — The Commission on Elections-led Task Force KKK sa Halalan has formally opened its Threat Monitoring Center on Friday, a few days ahead of the 2025 midterm polls.</p>
-                            <p>Task Force KKK, which stands for Katotohanan, Katapatan, Katarungan, aims to push for truthful, honest and fair polls this coming Monday, May 12, 2025.</p>
-                            <p>The Threat Monitoring Center is an inter-agency center with employees from Comelec, Department of Information and Communications Technology, Cybercrime Investigation and Coordinating Center, Philippine National Police- Anti-Cybercrime Group, National Bureau of Investigation, and the National Intelligence Coordinating Agency.</p>
-                            <p>This is also supported by various election watchdogs as well as social media platforms like Meta for Facebook, TikTok, Google, and X formerly Twitter.</p>
-                            <p>They will monitor and verify online posts and social media messages that could violate election laws.</p>
-                            <p>Social media companies vowed to take down posts if proven that these have "fake news" content.</p>
-                            <p>Presidential Communications Office Secretary Jay Ruiz said the center will be a big help to fight misinformation and disinformation during and even after the elections on Monday.</p>
-                            <p>“We now have the plague of disinformation particularly thorugh fake accounts, bots, and deceptive online practice…. Marami malilinlang, maraming maloloko. Ito po ang pineprevent natin dahil dito sa KKK,” Ruiz said.</p>
-                            <p>Ruiz urged social media platforms to comply and to respond quickly since a single fake news can affect the public.</p>
-                            <p>“Pakiusap namin sa mga platform baka naman pwede pag gobyerno na nagsabing fake news ang post na ito, pinapakiusapan namin na sana sumunod sila sa pag take down ng mga maling balita,” he added.</p>
-                            <p>Yves Gonzalez, Google’s Government Affairs and Public Policy head, said “Meron po tayong madaling ma-takedown, meron din po tayo na kailangan additional time to verify.”</p>
-                            <p>The center will run for a month but there are plans to do the same for the upcoming Barangay and Sangguniang Kabataan elections and the Bangsamoro polls.</p>
-                            <a href="https://www.abs-cbn.com/news/nation/2025/5/9/halalan-threat-monitoring-center-to-fight-fake-news-1746" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway</h2>
+                <div class="news-meta">SC Media | April 22, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>The United Nations Office on Drugs and Crime (UNODC) released a report today detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent.</p>
+            <p>According to the UNODC, these operations, often based in countries like Cambodia, Laos, and the Philippines, have grown from local scams into a $40 billion industry in 2024, driven by advanced technology and the exploitation of trafficked labor.</p>
+            <p>"The scale of these operations is unprecedented," said a UNODC spokesperson. "They use everything from fake investment schemes to romance scams, targeting victims globally through phone calls, text messages, and online platforms."</p>
+            <p>The report also highlights the human cost, with an estimated 200,000 people trafficked into scam compounds across Southeast Asia, forced to perpetrate fraud under brutal conditions.</p>
+            <a href="https://www.scworld.com/brief/un-global-expansion-of-southeast-asian-cyber-fraud-operations-underway" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="1">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://od2-image-api.abs-cbn.com/prod/2025050917011/cebe07b3b5fbeddbfa8eabf4e2fadb4c47dbfa7be3eabf4c012ebadf1c012ebb.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Cyber Terrorists? Gov't Mulls New Label on 'Fake News' Peddlers</h2>
-                                <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA — The Philippine government is now studying whether people who spread "fake news" or disinformation and misinformation can be classified as cyber terrorists, similar to what is done in other countries.</p>
-                            <p>Presidential Communications Office Secretary Jay Ruiz said there is an ongoing study on whether they will move towards that direction, especially with what he calls a plague of disinformation now happening. He clarified however, that this will only apply to fake news peddlers whose posts affect national security or bigger issues that could affect the public.</p>
-                            <p>“Pinag-iisipan po namin ng DICT na ihanay sa mga cyber terrorist yung mga ganyang nagpapakalat ng sobrang masamang impormasyon sa utak ng ating mga kababayan,” he said.</p>
-                            <p>This comes as Ruiz led the opening of the Threat Monitoring Center of the Commission on Elections with the help of various agencies, including the Department of Information and Communications Technology.</p>
-                            <p>Comelec Commissioner Nelson Celis warned fake news peddlers that they have a way to check and determine the origin of fake news and that there is a prison sentence of up to 6 years for those proven guilty of spreading lies online.</p>
-                            <p>“Pagna-trace kayo mga troll farm kayo, mag-ingat kayo, magtago na kayo, umalis na kayo ng bansa dahil election offense po yan. One year ang pinakamababa, six years max. Matrace namin sino yung origin hanggang kumakalat. Meron kaming tools at ma trace naming troll farms niyo,” said Celis.</p>
-                            <p>However, officials also warned that one of the biggest threats is misinformation and disinformation coming from other countries or based overseas. They have monitored some of these cases and urged the public not to believe immediately in any social media posts from unknown or suspicious accounts.</p>
-                            <p>“Isa pang nakakabahalang kumakalat na balita sa Reuters tungkol sa mga foreign companies, mga nasa ibang bansa na nag mamanipulate ditto sa darating na halalan,” Ruiz said.</p>
-                            <p>DICT Asec. Aboy Paraiso added, “When you see fake news, we have tools to see where they came from and it’s outside interference that really hampers, threatens these elections.”</p>
-                            <p>Officials now urge the public to be vigilant as fake news posts are rampant, both election-related and not.</p>
-                            <a href="https://www.abs-cbn.com/news/technology/2025/5/9/gov-t-mulls-classifying-fake-news-peddlers-as-cyber-terrorists-1742" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global</h2>
+                <div class="news-meta">The Record | April 22, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>United Nations report warns that cyber fraud originating in Southeast Asia has reached an "inflection point," with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers.</p>
+            <p>The UN Office on Drugs and Crime (UNODC) report, released on April 22, details how scam operations in countries like Cambodia, Myanmar, and the Philippines have scaled up, using advanced tech to target victims worldwide with fraudulent calls, texts, and online schemes.</p>
+            <p>"These are not small-time operations anymore," the report notes. "They are highly organized, transnational crime syndicates that generated an estimated $40 billion in 2024, with no signs of slowing down."</p>
+            <p>The UNODC also emphasizes the human trafficking element, noting that many workers in these scam centers are victims themselves, forced to participate under threat of violence or death.</p>
+            <a href="https://therecord.media/southeast-asia-cyber-fraud-at-inflection-point" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="1">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://pia.gov.ph/sites/default/files/styles/large/public/2024-12/2024-12-03t135139z_1_lynxmpekc2048_rtroptp_4_philippines-politics-duterte.webp?itok=2q0y0iZQ" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>PBBM Directs DICT to Monitor Threats to May 12 Elections</h2>
-                                <div class="news-meta">PND | May 9, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>With his administration’s commitment to ensuring a peaceful, clean, and fair elections for the nation’s future, President Ferdinand R. Marcos Jr. has ordered government agencies to monitor possible digital threats to the May 12 midterm elections around the clock.</p>
-                            <p>Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro also said the Department of Information and Communications Technology (DICT) Cybercrime Investigation and Coordinating Center is closely working with the Commission on Elections (COMELEC).</p>
-                            <p>Castro said the DICT and COMELEC collaboration and cooperation would help establish a real-time digital command and ensure honest, orderly, and peaceful elections.</p>
-                            <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin, at tapusin ang online misinformation and disinformation,” the Palace Press Officer said.</p>
-                            <p>Castro noted that, “Kaisa ang administrasyon ni Pangulong Marcos Jr., ating itataguyod ang isang halalang mapayapa, malinis at makatarungan para sa bayan para sa kinabukasan at para sa isang Bagong Pilipinas.”</p>
-                            <p>For the May 12, 2025, midterm elections, the Comelec formed Task Force Katotohanan, Katapatan, at Katarungan sa Halalan (Task Force KKK sa Halalan) to monitor election threats.</p>
-                            <p>The unprecedented joint DICT-COMELEC threat monitoring center will operate for two days to ensure the smooth and credible conduct of Monday’s elections.</p>
-                            <p>In a briefing on Friday, Castro said the joint initiative manifests the government’s commitment to safeguard the truth.</p>
-                            <p>Castro also said election watchdogs are coordinating with COMELEC to ensure the peaceful and honest conduct of the May 12 elections.</p>
-                            <p>“Para sa hangaring malinis at tapat na halalan, nagsama-sama ang lahat ng election watchdogs mula sa mga pribadong organisasyon, simbahan, kabataan at iba pang sektor,” Castro said.</p>
-                            <p>“Sa kanilang mahigpit na pagbabantay, matitiyak na ang bawat boto ay mabibilang nang tama, at ang bawat boses ng mga mamamayan ay maririnig,” Castro said.</p>
-                            <p>Castro added that the Philippine National Police (PNP) assured the public that it is 100 percent ready for the 2025 national and local elections.</p>
-                            <p>Quoting Philippine National Police Chief Gen. Rommel Marbil, Castro said the PNP’s commitment is to serve the Filipino people, not the politicians, and continue with its duty to protect the sanctity of the vote.</p>
-                            <a href="https://pia.gov.ph/pbbm-directs-dict-to-monitor-threats-to-may-12-elections/" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://files01.pna.gov.ph/category-list/2023/08/22/holiday-08212023rn.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Public Warned vs. Online Booking Scams Amid Travel Season</h2>
+                <div class="news-meta">Christopher Lloyd Caliwan - PNA | April 22, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – The Philippine National Police (PNP) on Tuesday warned the public against online scammers offering tour packages that appear too good to be true as the summer travel season peaks.</p>
+            <p>PNP Chief Gen. Rommel Francisco Marbil issued the reminder as the police force’s Anti-Cybercrime Group (ACG) arrested 45 persons for cybercrimes from April 11 to 17 in line with President Ferdinand R. Marcos Jr.’s directive to intensify the campaign against cybercrimes.</p>
+            <p>“We urge everyone to verify the legitimacy of travel agencies and booking platforms before making any transactions,” Marbil said in a statement.</p>
+            <p>“To cybercriminals preying on innocent citizens, especially during this peak travel season, be warned: the PNP is actively monitoring, patrolling, and ready to act. There will be no safe space for scammers in the digital world,” he added.</p>
+            <p>The PNP-ACG conducted 313 cyber patrolling activities and carried out 13 digital forensic examinations from April 11 to 17, resulting in the arrest of 45, including 32 through entrapment operations.</p>
+            <p>The ACG called on the public to stay vigilant and immediately report any suspicious or harmful online activity through the ACG’s official hotlines and verified social media accounts.</p>
+            <p>Marbil said the PNP remains steadfast in its mission to ensure that every Filipino enjoys a safer and more secure cyberspace under the Bagong Pilipinas framework.</p>
+            <p>He lauded ACG’s consistent and high-impact performance, emphasizing the importance of public trust and law enforcement’s evolving role in cyberspace.</p>
+            <p>The PNP chief also commended the Criminal Investigation and Detection Group’s (CIDG) intensified operations in apprehending the 37 wanted individuals and fugitives on April 14.</p>
+            <p>“I salute our CIDG teams nationwide for their relentless commitment and swift action in taking 37 fugitives off the streets in just one day. Your bravery and perseverance in carrying out this difficult task not only strengthen public safety but also bring hope to victims still waiting for justice,” he said.</p>
+            <p>He assured the public that the CIDG remains relentless in its efforts to account for and arrest all wanted persons and criminals nationwide.</p>
+            <a href="https://www.pna.gov.ph/articles/1248432" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="1">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://files01.pna.gov.ph/600/2025/05/08/acg-arrest.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>PNP-ACG Nabs 153 Cybercrime Suspects in April</h2>
-                                <div class="news-meta">Christopher Lloyd Caliwan - PNA | May 8, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA – The Philippine National Police Anti-Cybercrime Group (PNP-ACG) operatives arrested 153 persons for cybercrimes nationwide in April, a police official said Thursday.</p>
-                            <p>ACG Director Brig. Gen. Bernard Yang said the group also rescued 11 minor victims of online sexual abuse and trafficking in persons in 159 operations.</p>
-                            <p>Yang said the operatives conducted nine entrapment operations against fake dentists, resulting in the arrest of 14 individuals, in coordination with the Philippine Dental Association.</p>
-                            <p>He said the operations were the result of the PNP-ACG’s proactive cyber patrolling.</p>
-                            <p>“Actually, marami na pong nagbe-venture (many have been venturing) into this kind of illegal activity at nakita nilang medyo lucrative itong illegal business na ito (and we found it is a lucrative business),” Yang said in a media interview at Camp Crame.</p>
-                            <p>One of those arrested was a 25-year-old man caught in the act of installing dental braces on a police officer posing as a patient inside a hotel in Cotabato City.</p>
-                            <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid minimal fees for the procedures.</p>
-                            <p>He warned the public about the risks of getting procedures from unlicensed individuals, even if these cost cheaper.</p>
-                            <p>"These fake dentists offering service without a license can cause serious risks, including health complications, financial loss, the spread of infections, and long-term damage to your teeth. If you are aware of anyone offering unauthorized dental services, report it immediately to the nearest ACG office for appropriate action," he said. (PNA)</p>
-                            <a href="https://www.pna.gov.ph/articles/1249660" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://i.imgur.com/KOft8nD.png" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Philippines, UAE Sign Security Pact to Combat Cybercrime, Trafficking</h2>
+                <div class="news-meta">Ellie Aben - Arab News | April 22, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA: The Philippines has signed a new security agreement with the UAE to tackle transnational and organized crime, officials said on Tuesday.</p>
+            <p>Signed by Philippine Interior Secretary Juanito Victor Remulla and UAE Interior Minister Sheikh Saif bin Zayed Al-Nahyan, the new deal focuses on cybercrime, drug trafficking, and human trafficking.</p>
+            <p>“Transnational crimes with global networks powered by new technologies and the ease of cross-border movement of persons and criminal syndicates need more international cooperation and partnerships,” Alfonso Ver, Philippine ambassador to the UAE, told Arab News on Tuesday.</p>
+            <p>“This is one concrete step to address the growing menace above … We have gone into new and heretofore unexplored areas of bilateral cooperation, moving beyond the issues of OFWs (Overseas Filipino Workers), migration, and oil,” Ver added.</p>
+            <p>The Philippines and the UAE celebrated 50 years of diplomatic relations last year. The two countries have been working to expand security ties over the past few years, with discussions ongoing for a wide-ranging bilateral defense pact.</p>
+            <p>In 2021, the Philippines posted a defense attache in the UAE, making it the only country in the Middle East where Manila has such representation. The two countries also signed several treaties on extradition, mutual legal assistance, and transfer of prisoners in February.</p>
+            <p>Ver said the new agreement was a “milestone” that provides a “strategic framework” that will help guide Philippine-UAE “future engagements in a more structured, sustainable, and effective” manner. It is also expected to promote the exchange of best practices and expertise.</p>
+            <p>“We discussed ways to strengthen bilateral relations between the two friendly countries and develop cooperation in the security and police fields,” Sheikh Saif said in a post on X, referring to his meeting with Remulla.</p>
+            <p>“This underscores our shared commitment to supporting effective international institutional cooperation to enhance the security and stability of societies,” he added.</p>
+            <p>Cybercrime and trafficking have been growing concerns for countries like the Philippines. More than 200 Filipinos were among several thousand people freed in late February and March from online scam centers run by syndicates operating along Myanmar’s border with Thailand, where many of them are believed to have been recruited and trafficked by criminal gangs.</p>
+            <p>Lured by well-paid job offers in Thailand, they were released in a weeks-long, highly publicized crackdown by Thai, Myanmar, and Chinese forces.</p>
+            <a href="https://arab.news/v2jem" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="1">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://insiderph.com/wp-content/uploads/2025/05/CIBI-Fraud-Bureau-Launch.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>CIBI’s Fraud Bureau Leads Cybercrime Defense Push in Financial Sector</h2>
-                                <div class="news-meta">InsiderPH | May 7, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>With cybercrime incidents in the Philippines tripling to 10,004 in 2024, the need for stronger industry collaboration has never been more urgent.</p>
-                            <p>Recognizing this growing threat, CIBI Information Inc., the country’s first and only local credit bureau, has officially launched the Fraud Bureau, a pioneering initiative aimed at uniting the financial sector against fraud.</p>
-                            <p>According to the Cybercrime Investigation and Coordinating Center (CICC), the sharp increase in digital threats underscores the necessity for a coordinated, data-driven response. CIBI’s Fraud Bureau seeks to do just that—offering a secure platform for banks, fintech companies, and financial institutions to share information on suspicious applicant behavior, blacklist data, and real-time application trends.</p>
-                            <p>The Fraud Bureau’s primary objective is to create a unified intelligence-sharing ecosystem that promotes proactive fraud detection, rapid identification of risks, and robust cybercrime prevention. By pooling insights and resources, members of the Bureau can build stronger defenses and foster transparency and trust in the Philippine financial system.</p>
-                            <p>“The significant increase in fraudulent activity highlights the urgent need for coordinated action,” said CIBI president and CEO Pia Arellano. “CIBI recognizes that data-driven collaboration is essential to tackling fraud. This initiative strengthens industry-wide defenses and supports greater trust and transparency in our financial ecosystem.”</p>
-                            <p>As the nation’s leading credit reporting agency, CIBI has long championed financial inclusion and informed decision-making. The Fraud Bureau aligns with this mission by empowering financial institutions to combat fraud while protecting consumers and promoting sustainable fintech innovation. — Ed: Corrie S. Narisma</p>
-                            <a href="https://insiderph.com/cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://files01.pna.gov.ph/category-list/2025/04/10/040325-dict-secretary-henry-aguda.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>DICT Comprehensive Policy to Counter Online Disinformation, Threats</h2>
+                <div class="news-meta">Raymond Carl Dela Cruz - PNA | April 21, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – Department of Information and Communications Technology (DICT) Secretary Henry Aguda on Monday endorsed a sweeping policy that targets online disinformation, cyber scams, and other online threats.</p>
+            <p>The policy is part of the upcoming “Good Vibes sa Internet” initiative that aims to build a safer and more trustworthy online environment by eliminating digital threats and protecting the public from online abuse, according to a news release.</p>
+            <p>“We must create a safer and more responsible cyberspace for every Filipino. We can no longer stand idly by as false information erodes the trust that binds our nation,” Aguda said during his first meeting with the executive committee as chair of the Cybercrime Investigation and Coordinating Center (CICC).</p>
+            <p>The policy builds on the Cybercrime Prevention Act and introduces new measures such as the formation of a multi-agency task force to “swiftly respond” against online disinformation.</p>
+            <p>“Through digital bayanihan (cooperation), the DICT will work closely with social media platforms, law enforcement, and civil society to detect and dismantle digital lies before they spread,” he said.</p>
+            <p>Aside from disinformation or fake news, the policy will address the escalating threats of cyberterrorism by reclassifying certain cybercrimes as acts of cyberterrorism.</p>
+            <p>“This move aims to deter malicious actors, recognize cybercrimes as continuing offenses, and strengthen national security and public safety in today’s increasingly digital landscape,” he said.</p>
+            <p>Aguda said the policies form part of the government’s broader commitment to shaping an online space that “fosters meaningful engagement, upholds truth, and safeguards the collective well-being of every Filipino online.”</p>
+            <p>“Cybercriminals must be held accountable with the full force of the law. We are taking a strong stance to ensure that the digital space is no place for fear, fraud, or extremism,” he said.</p>
+            <a href="https://www.pna.gov.ph/articles/1248375" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="1">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://media.philstar.com/photos/2024/09/16/2_2024-09-16_22-46-09374_thumbnail.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Vlogger Charged Over Fake News</h2>
-                                <div class="news-meta">Emmanuel Tupas - The Philippine Star | May 7, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA, Philippines — Criminal charges were filed yesterday against a vlogger for allegedly spreading false information about a supposed police raid on the house of former president Rodrigo Duterte in Davao City.</p>
-                            <p>Members of the Davao City police and Anti-Cybercrime Group filed the complaint against the vlogger for allegedly violating Article 154 of the Revised Penal Code or the unlawful use of means of publication and unlawful utterances in relation to Republic Act 10175 or the Cybercrime Prevention Act.</p>
-                            <p>The Philippine National Police withheld the identity of the vlogger, who posted on social media on April 30 that 30 members of the PNP Criminal Investigation and Detection Group and 90 Special Action Force commandos raided the house of Duterte.</p>
-                            <p>Due to the false information, hundreds of Duterte’s supporters rushed to his property.</p>
-                            <p>Col. Randulf Tuano, PNP public information officer, said the PNP would disclose the vlogger’s identity once an arrest warrant is issued against the respondent.</p>
-                            <a href="https://www.philstar.com/nation/2025/05/07/2441122/vlogger-charged-over-fake-news" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://pia.gov.ph/wp-content/uploads/2025/04/Thumbnail-photo-10-1024x769.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Smishing, Quishing, Phishing, Vishing: Visayas Media Navigate ‘Shing-a-Ling’ of Cyber Threats</h2>
+                <div class="news-meta">PIA | April 18, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>CEBU CITY – Media practitioners across the Visayas gathered for a cybersecurity forum to tackle the growing wave of cyber threats, including smishing (SMS phishing), quishing (QR code phishing), phishing (email scams), and vishing (voice phishing), collectively dubbed the "shing-a-ling" of digital fraud.</p>
+            <p>The forum, organized by the Philippine Information Agency (PIA), featured experts from the Department of Information and Communications Technology (DICT) who warned of the increasing sophistication of these scams, often targeting unsuspecting individuals through fake messages and fraudulent links.</p>
+            <p>"These threats are evolving rapidly, and media professionals need to be equipped to identify and report them," said a DICT spokesperson. The event also included workshops on spotting fraudulent communications and protecting personal data online.</p>
+            <p>Participants were urged to educate the public on safe digital practices, such as avoiding suspicious links and verifying the authenticity of messages before taking action.</p>
+            <a href="https://pia.gov.ph/smishing-quishing-phishing-vishing-visayas-media-navigate-shing-a-ling-of-cyber-threats/" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <!-- Page 2 Articles (Formerly Page 1) -->
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>UN: Asian Scam Calls Now a Global Export</h2>
-                                <div class="news-meta">The Register | April 22, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry.</p>
-                            <p>The UNODC report, published today, highlights how Southeast Asian cybercrime groups, initially focused on regional targets, have expanded their operations worldwide, using advanced technology and human trafficking to scale their fraudulent activities.</p>
-                            <p>"These groups operate like multinational corporations, with sophisticated structures and global reach," the report states. It estimates that such scams generated $40 billion in 2024 alone, with call centers in countries like Cambodia, Myanmar, and the Philippines playing a central role.</p>
-                            <p>The report also notes the role of forced labor, with tens of thousands of people trafficked into scam compounds, where they are coerced into making fraudulent calls under threat of violence.</p>
-                            <a href="https://www.theregister.com/2025/04/22/un_asian_scam_calls/" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://od2-image-api.abs-cbn.com/prod/2025041608048/9e80e1ba82e2cb61282f70495a648388ce7198356dfaed65f77628d465429e35.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Cybercrime Council Eyes Task Force Against Online and Text Scams</h2>
+                <div class="news-meta">Pia Gutierrez - ABS-CBN News | April 16, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – The Cybercrime Investigation Coordination Council (CICC) is considering forming a dedicated task force to go after online and text scammers, an official said Wednesday.</p>
+            <p>Department of Information and Communications Technology (DICT) Assistant Secretary Renato Paraiso said the council would meet later in the day to discuss the plan.</p>
+            <p>"We're strengthening the CICC in terms of investigation and apprehension. The council, led by the DICT Secretary and joined by other agencies, will meet today to discuss forming a task force to crack down on online and text scams," Paraiso said in a televised interview.</p>
+            <p>He also said the CICC is enhancing its Inter-Agency Response Center (I-ARC) Hotline 1326, where the public can report online scam incidents.</p>
+            <p>According to Paraiso, while the SIM Card Registration Act has helped discourage text scams by removing anonymity, many scammers have adapted by shifting to online messaging apps that don't require SIM registration.</p>
+            <p>"The SIM card registration removed their anonymity, but scammers have adapted. They no longer use calls or texts. They've moved to internet-based services like Viber and Messenger, which don't require valid SIM cards," he said.</p>
+            <p>Paraiso reminded the public to stay alert for online scams, avoid clicking suspicious links, and never share one-time passwords (OTPs), which scammers can use to access financial accounts and records.</p>
+            <a href="https://www.abs-cbn.com/news/business/2025/4/16/cybercrime-council-studying-task-force-against-online-and-text-scams-1509" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway</h2>
-                                <div class="news-meta">SC Media | April 22, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>The United Nations Office on Drugs and Crime (UNODC) released a report today detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent.</p>
-                            <p>According to the UNODC, these operations, often based in countries like Cambodia, Laos, and the Philippines, have grown from local scams into a $40 billion industry in 2024, driven by advanced technology and the exploitation of trafficked labor.</p>
-                            <p>"The scale of these operations is unprecedented," said a UNODC spokesperson. "They use everything from fake investment schemes to romance scams, targeting victims globally through phone calls, text messages, and online platforms."</p>
-                            <p>The report also highlights the human cost, with an estimated 200,000 people trafficked into scam compounds across Southeast Asia, forced to perpetrate fraud under brutal conditions.</p>
-                            <a href="https://www.scworld.com/brief/un-global-expansion-of-southeast-asian-cyber-fraud-operations-underway" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://od2-image-api.abs-cbn.com/prod/2025041613040/d27eef3ab9282c58f9d73b2b496fec6bc80f684f0c33b0f9323360e4ce42a303.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Publiko, Pinag-iingat sa Vacation Scam</h2>
+                <div class="news-meta">ABS-CBN News | April 16, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – Pinag-iingat ng Cybercrime Investigation and Coordination Center (CICC) ang publiko laban sa mga scam na gumagamit ng mga pekeng promo ng bakasyon, lalo na ngayong panahon ng tag-init.</p>
+            <p>Ayon sa CICC, maraming insidente na ng panloloko ang naiulat kung saan ang mga biktima ay hinikayat na magbayad para sa mga discounted travel packages na hindi naman totoo.</p>
+            <p>"Huwag basta-basta magbibigay ng personal na impormasyon o magbabayad online nang hindi na-verify ang legitimacy ng offer," babala ng CICC sa isang pahayag.</p>
+            <p>Hinihikayat din ng ahensya ang publiko na i-report ang anumang kahina-hinalang mensahe o tawag sa kanilang hotline upang mapigilan ang mga ganitong uri ng scam.</p>
+            <a href="https://www.abs-cbn.com/news/business/2025/4/16/tv-patrol-publiko-pinag-iingat-sa-vacation-scam-2005" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global</h2>
-                                <div class="news-meta">The Record | April 22, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>United Nations report warns that cyber fraud originating in Southeast Asia has reached an "inflection point," with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers.</p>
-                            <p>The UN Office on Drugs and Crime (UNODC) report, released on April 22, details how scam operations in countries like Cambodia, Myanmar, and the Philippines have scaled up, using advanced tech to target victims worldwide with fraudulent calls, texts, and online schemes.</p>
-                            <p>"These are not small-time operations anymore," the report notes. "They are highly organized, transnational crime syndicates that generated an estimated $40 billion in 2024, with no signs of slowing down."</p>
-                            <p>The UNODC also emphasizes the human trafficking element, noting that many workers in these scam centers are victims themselves, forced to participate under threat of violence or death.</p>
-                            <a href="https://therecord.media/southeast-asia-cyber-fraud-at-inflection-point" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="2">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://newsinfo.inquirer.net/files/2025/04/Jaime-Santiago-23April2025.jpg.avif" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>NBI Files Raps vs Vloggers Outside PH for Disinformation</h2>
+                <div class="news-meta">Inquirer.net | April 15, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA, Philippines — The National Bureau of Investigation (NBI) has filed charges against several vloggers based abroad for allegedly spreading disinformation that caused public alarm in the Philippines.</p>
+            <p>The NBI Cybercrime Division identified the suspects after a months-long investigation into fake news videos that went viral, falsely claiming a national emergency involving government officials.</p>
+            <p>"These vloggers used their platforms to spread lies, causing panic and mistrust," said an NBI official. The charges include violations of the Cybercrime Prevention Act of 2012, specifically for online libel and spreading false information.</p>
+            <p>The NBI is coordinating with international authorities to apprehend the suspects, who are believed to be operating from countries like the United States and Canada.</p>
+            <a href="https://newsinfo.inquirer.net/2055033/nbi-files-raps-vs-vloggers-outside-ph-for-disinformation" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://files01.pna.gov.ph/category-list/2023/08/22/holiday-08212023rn.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Public Warned vs. Online Booking Scams Amid Travel Season</h2>
-                                <div class="news-meta">Christopher Lloyd Caliwan - PNA | April 22, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA – The Philippine National Police (PNP) on Tuesday warned the public against online scammers offering tour packages that appear too good to be true as the summer travel season peaks.</p>
-                            <p>PNP Chief Gen. Rommel Francisco Marbil issued the reminder as the police force’s Anti-Cybercrime Group (ACG) arrested 45 persons for cybercrimes from April 11 to 17 in line with President Ferdinand R. Marcos Jr.’s directive to intensify the campaign against cybercrimes.</p>
-                            <p>“We urge everyone to verify the legitimacy of travel agencies and booking platforms before making any transactions,” Marbil said in a statement.</p>
-                            <p>“To cybercriminals preying on innocent citizens, especially during this peak travel season, be warned: the PNP is actively monitoring, patrolling, and ready to act. There will be no safe space for scammers in the digital world,” he added.</p>
-                            <p>The PNP-ACG conducted 313 cyber patrolling activities and carried out 13 digital forensic examinations from April 11 to 17, resulting in the arrest of 45, including 32 through entrapment operations.</p>
-                            <p>The ACG called on the public to stay vigilant and immediately report any suspicious or harmful online activity through the ACG’s official hotlines and verified social media accounts.</p>
-                            <p>Marbil said the PNP remains steadfast in its mission to ensure that every Filipino enjoys a safer and more secure cyberspace under the Bagong Pilipinas framework.</p>
-                            <p>He lauded ACG’s consistent and high-impact performance, emphasizing the importance of public trust and law enforcement’s evolving role in cyberspace.</p>
-                            <p>The PNP chief also commended the Criminal Investigation and Detection Group’s (CIDG) intensified operations in apprehending the 37 wanted individuals and fugitives on April 14.</p>
-                            <p>“I salute our CIDG teams nationwide for their relentless commitment and swift action in taking 37 fugitives off the streets in just one day. Your bravery and perseverance in carrying out this difficult task not only strengthen public safety but also bring hope to victims still waiting for justice,” he said.</p>
-                            <p>He assured the public that the CIDG remains relentless in its efforts to account for and arrest all wanted persons and criminals nationwide.</p>
-                            <a href="https://www.pna.gov.ph/articles/1248432" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <!-- Page 3 Articles (Formerly Page 2) -->
+    <div class="news-item" data-page="3">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://i.imgur.com/y0ZVR1S.jpeg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Philippine Cybercrime Center Gains Global Recognition for Anti-Scam Efforts</h2>
+                <div class="news-meta">Bilyonaryo | April 1, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>The Cybercrime Investigation and Coordinating Center (CICC) has earned international praise for its robust efforts in combating online scams, positioning the Philippines as a leader in Southeast Asia’s fight against cybercrime.</p>
+            <p>At a recent global cybersecurity conference, the CICC was lauded for its innovative strategies, including the use of advanced technology to track and dismantle scam networks, as well as its public awareness campaigns that have educated millions on how to avoid online fraud.</p>
+            <p>"The Philippines is setting a benchmark in the region," said an international cybersecurity expert at the conference. The CICC’s efforts have led to a significant reduction in scam-related losses, with several high-profile arrests made in the past year.</p>
+            <p>The agency continues to collaborate with global partners to tackle transnational cybercrime, focusing on emerging threats like AI-driven fraud and deepfake scams.</p>
+            <a href="https://bilyonaryo.com/2025/04/01/philippine-cybercrime-center-gains-global-recognition-for-anti-scam-efforts/scams/" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://i.imgur.com/KOft8nD.png" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Philippines, UAE Sign Security Pact to Combat Cybercrime, Trafficking</h2>
-                                <div class="news-meta">Ellie Aben - Arab News | April 22, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA: The Philippines has signed a new security agreement with the UAE to tackle transnational and organized crime, officials said on Tuesday.</p>
-                            <p>Signed by Philippine Interior Secretary Juanito Victor Remulla and UAE Interior Minister Sheikh Saif bin Zayed Al-Nahyan, the new deal focuses on cybercrime, drug trafficking, and human trafficking.</p>
-                            <p>“Transnational crimes with global networks powered by new technologies and the ease of cross-border movement of persons and criminal syndicates need more international cooperation and partnerships,” Alfonso Ver, Philippine ambassador to the UAE, told Arab News on Tuesday.</p>
-                            <p>“This is one concrete step to address the growing menace above … We have gone into new and heretofore unexplored areas of bilateral cooperation, moving beyond the issues of OFWs (Overseas Filipino Workers), migration, and oil,” Ver added.</p>
-                            <p>The Philippines and the UAE celebrated 50 years of diplomatic relations last year. The two countries have been working to expand security ties over the past few years, with discussions ongoing for a wide-ranging bilateral defense pact.</p>
-                            <p>In 2021, the Philippines posted a defense attache in the UAE, making it the only country in the Middle East where Manila has such representation. The two countries also signed several treaties on extradition, mutual legal assistance, and transfer of prisoners in February.</p>
-                            <p>Ver said the new agreement was a “milestone” that provides a “strategic framework” that will help guide Philippine-UAE “future engagements in a more structured, sustainable, and effective” manner. It is also expected to promote the exchange of best practices and expertise.</p>
-                            <p>“We discussed ways to strengthen bilateral relations between the two friendly countries and develop cooperation in the security and police fields,” Sheikh Saif said in a post on X, referring to his meeting with Remulla.</p>
-                            <p>“This underscores our shared commitment to supporting effective international institutional cooperation to enhance the security and stability of societies,” he added.</p>
-                            <p>Cybercrime and trafficking have been growing concerns for countries like the Philippines. More than 200 Filipinos were among several thousand people freed in late February and March from online scam centers run by syndicates operating along Myanmar’s border with Thailand, where many of them are believed to have been recruited and trafficked by criminal gangs.</p>
-                            <p>Lured by well-paid job offers in Thailand, they were released in a weeks-long, highly publicized crackdown by Thai, Myanmar, and Chinese forces.</p>
-                            <a href="https://arab.news/v2jem" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="3">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://media.philstar.com/photos/2025/03/18/fake_2025-03-18_23-29-47.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>How is 'Fake News' Punishable by Law? Anti-Cybercrime Officers Explain</h2>
+                <div class="news-meta">Dominique Nicole Flores - Philstar.com | March 21, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>During the third House Tri-Committee hearing on Friday, March 21, Rep. Zia Alonto Adiong (Lanao del Sur, 1st District) asked government agencies responsible for investigating false information on social media to explain how an ordinary citizen can report and navigate the process.</p>
+            <p>Agencies with this capability include the National Bureau of Investigation (NBI), the PNP Anti-Cybercrime Group (PNP-ACG) and the Department of Information and Communications Technology (DICT).</p>
+            <p>Many are familiar with the Cybercrime Prevention Act of 2012 (Republic Act 10175), which penalizes online libel — defamatory statements made through digital platforms — under Article 355 of the Revised Penal Code.</p>
+            <p>However, police colonel Andres Simbajon Jr., deputy director for administration of the PNP-ACG, told the committee that "fake news" can still be legally addressed, as it is classified as a crime under the Revised Penal Code.</p>
+            <p>One in particular is Article 154, which penalizes the "unlawful use of means of publication and unlawful utterances."</p>
+            <p>The Revised Penal Code prescribes a penalty of arresto mayor — imprisonment ranging from one month and one day to six months — for unlawful publication perspective, this comes with an additional fine ranging from P40,000 to P200,000.</p>
+            <p>Police lieutenant colonel Anacleto Daliva, assistant chief of the PNP-ACG's legal affairs division, explained that false information can also be penalized under the Cybercrime Prevention Act through Section 6, which covers crimes under the Revised Penal Code and special laws when committed through a computer system.</p>
+            <p>Meanwhile, core cybercrimes such as libel and online fraud fall under Section 4. "These are crimes where perpetrators use IT equipment, such as a cellphone or computer," Daliva said.</p>
+            <a href="https://www.philstar.com/headlines/2025/03/21/2430091/how-fake-news-punishable-law-anti-cybercrime-officers-explain" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://files01.pna.gov.ph/category-list/2025/04/10/040325-dict-secretary-henry-aguda.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>DICT Comprehensive Policy to Counter Online Disinformation, Threats</h2>
-                                <div class="news-meta">Raymond Carl Dela Cruz - PNA | April 21, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA – Department of Information and Communications Technology (DICT) Secretary Henry Aguda on Monday endorsed a sweeping policy that targets online disinformation, cyber scams, and other online threats.</p>
-                            <p>The policy is part of the upcoming “Good Vibes sa Internet” initiative that aims to build a safer and more trustworthy online environment by eliminating digital threats and protecting the public from online abuse, according to a news release.</p>
-                            <p>“We must create a safer and more responsible cyberspace for every Filipino. We can no longer stand idly by as false information erodes the trust that binds our nation,” Aguda said during his first meeting with the executive committee as chair of the Cybercrime Investigation and Coordinating Center (CICC).</p>
-                            <p>The policy builds on the Cybercrime Prevention Act and introduces new measures such as the formation of a multi-agency task force to “swiftly respond” against online disinformation.</p>
-                            <p>“Through digital bayanihan (cooperation), the DICT will work closely with social media platforms, law enforcement, and civil society to detect and dismantle digital lies before they spread,” he said.</p>
-                            <p>Aside from disinformation or fake news, the policy will address the escalating threats of cyberterrorism by reclassifying certain cybercrimes as acts of cyberterrorism.</p>
-                            <p>“This move aims to deter malicious actors, recognize cybercrimes as continuing offenses, and strengthen national security and public safety in today’s increasingly digital landscape,” he said.</p>
-                            <p>Aguda said the policies form part of the government’s broader commitment to shaping an online space that “fosters meaningful engagement, upholds truth, and safeguards the collective well-being of every Filipino online.”</p>
-                            <p>“Cybercriminals must be held accountable with the full force of the law. We are taking a strong stance to ensure that the digital space is no place for fear, fraud, or extremism,” he said.</p>
-                            <a href="https://www.pna.gov.ph/articles/1248375" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="3">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://radyopilipinas.ph/wp-content/uploads/2023/09/Digital-Wallet-Security-Updates-How-to-Report-a-Cybercrime-to-PNP-ACG.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>ACG Nabs 126 for Cybercrimes</h2>
+                <div class="news-meta">Emmanuel Tupas - The Philippine Star | March 19, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA, Philippines — Up to 126 people were arrested across the country in February for cybercrimes, the police Anti-Cybercrime Group reported yesterday.</p>
+            <p>ACG director Brig. Gen. Bernard Yang said the figure is higher by 240.54 percent compared to the 37 people arrested in January.</p>
+            <p>The suspects were apprehended in 132 law enforcement operations nationwide. Seven victims were rescued, the ACG said.</p>
+            <p>Two other suspects, who are minors, were placed under the custody of social welfare officers.</p>
+            <p>"The ACG remains steadfast in its commitment to enhancing efforts to combat cybercrime and ensure that criminals online are brought to justice," Yang said in a statement.</p>
+            <p>He said 75 suspects were arrested in entrapment operations. Seven others were nabbed through the implementation of warrants to search, seize and examine computer data and 44 in the implementation of warrants of arrest.</p>
+            <p>The top five offenses committed by the suspects are estafa, grave coercion, libel, violation of Republic Act 11934, the Subscriber Identity Module Registration Act, and RA 12010 or the Anti-Financial Account Scamming Act.</p>
+            <p>Yang urged the public to report to authorities people who are involved in cybercrimes.</p>
+            <a href="https://www.philstar.com/nation/2025/03/19/2429397/acg-nabs-126-cybercrimes?fbclid=IwY2xjawJQnzpleHRuA2FlbQIxMAABHX_69CAyo9IM6J6GvZkki-ccpgRoBcqpiKdKnNytIovBZoZMv3hiU6g04w_aem_ef1xmZ7tZsQM8pvy7v06fQ" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://pia.gov.ph/wp-content/uploads/2025/04/Thumbnail-photo-10-1024x769.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Smishing, Quishing, Phishing, Vishing: Visayas Media Navigate ‘Shing-a-Ling’ of Cyber Threats</h2>
-                                <div class="news-meta">PIA | April 18, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>CEBU CITY – Media practitioners across the Visayas gathered for a cybersecurity forum to tackle the growing wave of cyber threats, including smishing (SMS phishing), quishing (QR code phishing), phishing (email scams), and vishing (voice phishing), collectively dubbed the "shing-a-ling" of digital fraud.</p>
-                            <p>The forum, organized by the Philippine Information Agency (PIA), featured experts from the Department of Information and Communications Technology (DICT) who warned of the increasing sophistication of these scams, often targeting unsuspecting individuals through fake messages and fraudulent links.</p>
-                            <p>"These threats are evolving rapidly, and media professionals need to be equipped to identify and report them," said a DICT spokesperson. The event also included workshops on spotting fraudulent communications and protecting personal data online.</p>
-                            <p>Participants were urged to educate the public on safe digital practices, such as avoiding suspicious links and verifying the authenticity of messages before taking action.</p>
-                            <a href="https://pia.gov.ph/smishing-quishing-phishing-vishing-visayas-media-navigate-shing-a-ling-of-cyber-threats/" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="3">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://itbutler.sa/wp-content/uploads/2025/04/The-Role-of-Proactive-Cybersecurity-in-Saudi-Digital-Transformation.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Saudi Arabia Among Top Cybercrime Targets in 2024 as Digital Fraud Surges: Report</h2>
+                <div class="news-meta">Arab News | March 13, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>RIYADH: Saudi Arabia was among the top 10 countries targeted by cybercriminals in 2024, with digital fraud attempts surging by 35 percent compared to the previous year, according to a new report by cybersecurity firm Kaspersky.</p>
+            <p>The report, released on Wednesday, highlighted that the Kingdom faced over 20 million cyber attacks last year, with phishing emails, ransomware, and online scams being the most common threats.</p>
+            <p>"The rapid digital transformation in Saudi Arabia has made it a lucrative target for cybercriminals," said a Kaspersky spokesperson. The report noted that many attacks were linked to international crime syndicates operating out of Southeast Asia and Eastern Europe.</p>
+            <p>Saudi authorities have responded by strengthening cybersecurity measures, including public awareness campaigns and increased collaboration with global tech firms to combat digital fraud.</p>
+            <a href="https://www.arabnews.com/node/2597991/amp" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://od2-image-api.abs-cbn.com/prod/2025041608048/9e80e1ba82e2cb61282f70495a648388ce7198356dfaed65f77628d465429e35.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Cybercrime Council Eyes Task Force Against Online and Text Scams</h2>
-                                <div class="news-meta">Pia Gutierrez - ABS-CBN News | April 16, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA – The Cybercrime Investigation Coordination Council (CICC) is considering forming a dedicated task force to go after online and text scammers, an official said Wednesday.</p>
-                            <p>Department of Information and Communications Technology (DICT) Assistant Secretary Renato Paraiso said the council would meet later in the day to discuss the plan.</p>
-                            <p>"We're strengthening the CICC in terms of investigation and apprehension. The council, led by the DICT Secretary and joined by other agencies, will meet today to discuss forming a task force to crack down on online and text scams," Paraiso said in a televised interview.</p>
-                            <p>He also said the CICC is enhancing its Inter-Agency Response Center (I-ARC) Hotline 1326, where the public can report online scam incidents.</p>
-                            <p>According to Paraiso, while the SIM Card Registration Act has helped discourage text scams by removing anonymity, many scammers have adapted by shifting to online messaging apps that don't require SIM registration.</p>
-                            <p>"The SIM card registration removed their anonymity, but scammers have adapted. They no longer use calls or texts. They've moved to internet-based services like Viber and Messenger, which don't require valid SIM cards," he said.</p>
-                            <p>Paraiso reminded the public to stay alert for online scams, avoid clicking suspicious links, and never share one-time passwords (OTPs), which scammers can use to access financial accounts and records.</p>
-                            <a href="https://www.abs-cbn.com/news/business/2025/4/16/cybercrime-council-studying-task-force-against-online-and-text-scams-1509" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="3">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://files01.pna.gov.ph/category-list/2022/07/11/doj-seal.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>DOJ, UNODC Link Up for Capacity Building vs. Cybercrime</h2>
+                <div class="news-meta">Benjamin Pulta - PNA | February 13, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>MANILA – The Department of Justice's Office of Cybercrime and the United Nations Office on Drugs and Crime (UNODC) are in talks to collaborate in various projects to strengthen criminal justice, especially on the intensified enforcement of cybercrime laws in the Philippines.</p>
+            <p>In a news release on Thursday, the DOJ said among the activities that the two agencies intend to undertake is increasing the government's pool of digital forensic experts and boosting their capacities of cybercrime investigators and prosecutors.</p>
+            <p>DOJ Secretary Jesus Crispin Remulla highlighted this need due to the steady increase in cybercrimes and cyber-enabled offenses or incidents in the country.</p>
+            <p>To negotiate on the details of this partnership, Remulla will be leading a small delegation of DOJ officials to the UNODC headquarters in Vienna, Austria to sit down with its Executive Director, Ghada Fathi Waly.</p>
+            <p>The delegation will also visit UNODC's Crime Laboratory.</p>
+            <p>The meeting and visit will be conducted on the sidelines of the 68th Session of the UN Commission on Narcotic Drugs on March 10 to 14.</p>
+            <p>The DOJ said the activities are in line with the Marcos administration's commitment to human rights and the rule of law.</p>
+            <p>Meanwhile, Undersecretary Jesse Hermogenes Andres, head of DOJ's Law Enforcement Cluster, is leading the conversations with UNODC's team in the Philippines.</p>
+            <p>Andres said he envisions to institutionalize the government's ability to procure and utilize the necessary digital forensic tools and software applications used in cybercrime investigations.</p>
+            <p>He said funding for the renewal of licenses of these important investigative tools must always be given priority.</p>
+            <p>The DOJ and the UNODC are looking at signing a comprehensive memorandum of agreement to cover the various justice sector programs, including prison reform and forensics, in May this year. (PNA)</p>
+            <a href="https://www.pna.gov.ph/articles/1244021" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://od2-image-api.abs-cbn.com/prod/2025041613040/d27eef3ab9282c58f9d73b2b496fec6bc80f684f0c33b0f9323360e4ce42a303.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Publiko, Pinag-iingat sa Vacation Scam</h2>
-                                <div class="news-meta">ABS-CBN News | April 16, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA – Pinag-iingat ng Cybercrime Investigation and Coordination Center (CICC) ang publiko laban sa mga scam na gumagamit ng mga pekeng promo ng bakasyon, lalo na ngayong panahon ng tag-init.</p>
-                            <p>Ayon sa CICC, maraming insidente na ng panloloko ang naiulat kung saan ang mga biktima ay hinikayat na magbayad para sa mga discounted travel packages na hindi naman totoo.</p>
-                            <p>"Huwag basta-basta magbibigay ng personal na impormasyon o magbabayad online nang hindi na-verify ang legitimacy ng offer," babala ng CICC sa isang pahayag.</p>
-                            <p>Hinihikayat din ng ahensya ang publiko na i-report ang anumang kahina-hinalang mensahe o tawag sa kanilang hotline upang mapigilan ang mga ganitong uri ng scam.</p>
-                            <a href="https://www.abs-cbn.com/news/business/2025/4/16/tv-patrol-publiko-pinag-iingat-sa-vacation-scam-2005" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+    <div class="news-item" data-page="3">
+        <div class="news-header" onclick="toggleDetails(this)">
+            <img src="https://venturebeat.com/wp-content/uploads/2024/06/Deepfakes-will-cost-40B-by-2027-as-adversarial-AI-gains-momentum-hero-image.jpg" alt="News Image" class="news-image">
+            <div class="news-title">
+                <h2>Guarding Against Cybercrime and Fraud in the Age of Deepfakes</h2>
+                <div class="news-meta">Justin Herring, Gina M. Parlovecchio, Rajesh De - Mayer Brown | February 5, 2025</div>
+            </div>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="news-details">
+            <p>Generative AI is starting to transform many sectors, both legitimate and illicit. Criminals have been early adopters, exploiting technology like deepfakes to turbo-charge existing methods to commit cybercrime and fraud—and invent entirely new ones. AI has made it increasingly challenging to verify the true identities of customers, investors, vendors, and even colleagues.</p>
+            <p>Companies and their counsel need to understand how to avoid deepfake-related risks, how to address them effectively when they arise, and how to stay within the bounds of their ethical responsibilities. Our panel, comprised of both current and former government officials, will discuss:</p>
+            <ul>
+                <p style="margin-left: 20px;">• Deepfake fraud in the workplace, and knowing who you're talking to online</p>
+                <p style="margin-left: 20px;">• Fake employees and remote-work scams</p>
+                <p style="margin-left: 20px;">• Meeting professional responsibilities to protect electronic data and communications</p>
+                <p style="margin-left: 20px;">• How regulators and law enforcement are confronting these new threats</p>
+            </ul>
+            <a href="https://www.mayerbrown.com/en/insights/events/2025/02/guarding-against-cybercrime-and-fraud-in-the-age-of-deepfakes" target="_blank" class="read-more">Read more</a>
+        </div>
+    </div>
 
-                    <div class="news-item" data-page="2">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://newsinfo.inquirer.net/files/2025/04/Jaime-Santiago-23April2025.jpg.avif" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>NBI Files Raps vs Vloggers Outside PH for Disinformation</h2>
-                                <div class="news-meta">Inquirer.net | April 15, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA, Philippines — The National Bureau of Investigation (NBI) has filed charges against several vloggers based abroad for allegedly spreading disinformation that caused public alarm in the Philippines.</p>
-                            <p>The NBI Cybercrime Division identified the suspects after a months-long investigation into fake news videos that went viral, falsely claiming a national emergency involving government officials.</p>
-                            <p>"These vloggers used their platforms to spread lies, causing panic and mistrust," said an NBI official. The charges include violations of the Cybercrime Prevention Act of 2012, specifically for online libel and spreading false information.</p>
-                            <p>The NBI is coordinating with international authorities to apprehend the suspects, who are believed to be operating from countries like the United States and Canada.</p>
-                            <a href="https://newsinfo.inquirer.net/2055033/nbi-files-raps-vs-vloggers-outside-ph-for-disinformation" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+<div class="news-item" data-page="3">
+    <div class="news-header" onclick="toggleDetails(this)">
+        <img src="https://od2-image-api.abs-cbn.com/prod/2025013108014/fbd75639688f7cff92a9bfe441dd9b9dcba5dbacd973d286d076ec0309a9c443.png?w=1200&h=800" alt="News Image" class="news-image">
+        <div class="news-title">
+            <h2>CICC Records Over 10,000 Cybercrime Complaints in 2024</h2>
+            <div class="news-meta">Ched Rick Gatchalian - ABS-CBN News | January 31, 2025</div>
+        </div>
+        <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="news-details">
+        <p>MANILA — A total of 10,004 cybercrime complaints were recorded in 2024, marking a threefold increase compared to 3,317 complaints in 2023, the Cybercrime Investigation and Coordinating Center (CICC) reported on Friday.</p>
+        <p>The agency also announced P198 million in losses from the recorded cybercrime incidents.</p>
+        <p>But this does not necessarily translate to a rise in cybercrime prevalence, as CICC Executive Director Alexander K. Ramos described the increase as an indicator of "growing cybercrime awareness of the public and their willingness to report".</p>
+        <p>"In previous years, people were not aware that they were being scammed and many were not also aware of where to file their complaints," he said.</p>
+        <a href="https://www.abs-cbn.com/news/technology/2025/1/31/cicc-records-over-10-000-cybercrime-complaints-in-2024-1628" target="_blank" class="read-more">Read more</a>
+    </div>
+</div>
 
-                    <!-- Page 3 Articles (Formerly Page 2) -->
-                    <div class="news-item" data-page="3">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://i.imgur.com/y0ZVR1S.jpeg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Philippine Cybercrime Center Gains Global Recognition for Anti-Scam Efforts</h2>
-                                <div class="news-meta">Bilyonaryo | April 1, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>The Cybercrime Investigation and Coordinating Center (CICC) has earned international praise for its robust efforts in combating online scams, positioning the Philippines as a leader in Southeast Asia’s fight against cybercrime.</p>
-                            <p>At a recent global cybersecurity conference, the CICC was lauded for its innovative strategies, including the use of advanced technology to track and dismantle scam networks, as well as its public awareness campaigns that have educated millions on how to avoid online fraud.</p>
-                            <p>"The Philippines is setting a benchmark in the region," said an international cybersecurity expert at the conference. The CICC’s efforts have led to a significant reduction in scam-related losses, with several high-profile arrests made in the past year.</p>
-                            <p>The agency continues to collaborate with global partners to tackle transnational cybercrime, focusing on emerging threats like AI-driven fraud and deepfake scams.</p>
-                            <a href="https://bilyonaryo.com/2025/04/01/philippine-cybercrime-center-gains-global-recognition-for-anti-scam-efforts/scams/" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+<div class="news-item" data-page="3">
+    <div class="news-header" onclick="toggleDetails(this)">
+        <img src="https://files01.pna.gov.ph/category-list/2024/08/03/doj-usec-vasquez-satnewsforum-2024aug3-jbondoc-2.jpg" alt="News Image" class="news-image">
+        <div class="news-title">
+            <h2>DOJ to Improve Anti-Cybercrime Capacity in 2025</h2>
+            <div class="news-meta">Benjamin Pulta - PNA | January 23, 2025</div>
+        </div>
+        <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="news-details">
+        <p>MANILA – The Department of Justice (DOJ) will embark on capacity-building this year to improve its anti-cybercrime efforts, according to a senior official.</p>
+        <p>In an interview on PTV-4's "Bagong Pilipinas Ngayon" on Wednesday, DOJ Undersecretary Raul Vasquez said that for 2025, they will "take major strides in strengthening the DOJ's fight against cybercrime by conducting advanced technological and forensic trainings for its personnel and law enforcement units."</p>
+        <p>The DOJ has an Office of Cybercrime (OOC) created under Republic Act No. 10175 or the Cybercrime Prevention Act of 2012 that serves as the central authority in all matters relating to international mutual assistance and extradition for cybercrime and cyber-related matters.</p>
+        <p>The OOC also acts as "the focal agency in formulating and implementing law enforcement investigation and prosecution strategies in curbing cybercrime and cyber-related offenses nationwide," according to the DOJ.</p>
+        <p>Vasquez made the statement following the arrest of a foreign national and two Filipinos suspected of engaging in months-long electronic intelligence-surveillance-reconnaissance (ISR) operations in key military and civilian infrastructures in the country.</p>
+        <p>The DOJ confirmed that it is pursuing other members of the group who may have procured equipment used in the eavesdropping operations, even as the military said it is monitoring the role played by Philippine Online Gaming Operators (POGOs) in the alleged spying activities.</p>
+        <p>The National Bureau of Investigation (NBI) on Wednesday likewise announced the arrest of eight foreigners in Parañaque City allegedly engaged in online phishing operations.</p>
+        <a href="https://www.pna.gov.ph/articles/1242480" target="_blank" class="read-more">Read more</a>
+    </div>
+</div>
 
-                    <div class="news-item" data-page="3">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://media.philstar.com/photos/2025/03/18/fake_2025-03-18_23-29-47.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>How is 'Fake News' Punishable by Law? Anti-Cybercrime Officers Explain</h2>
-                                <div class="news-meta">Dominique Nicole Flores - Philstar.com | March 21, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>During the third House Tri-Committee hearing on Friday, March 21, Rep. Zia Alonto Adiong (Lanao del Sur, 1st District) asked government agencies responsible for investigating false information on social media to explain how an ordinary citizen can report and navigate the process.</p>
-                            <p>Agencies with this capability include the National Bureau of Investigation (NBI), the PNP Anti-Cybercrime Group (PNP-ACG) and the Department of Information and Communications Technology (DICT).</p>
-                            <p>Many are familiar with the Cybercrime Prevention Act of 2012 (Republic Act 10175), which penalizes online libel — defamatory statements made through digital platforms — under Article 355 of the Revised Penal Code.</p>
-                            <p>However, police colonel Andres Simbajon Jr., deputy director for administration of the PNP-ACG, told the committee that "fake news" can still be legally addressed, as it is classified as a crime under the Revised Penal Code.</p>
-                            <p>One in particular is Article 154, which penalizes the "unlawful use of means of publication and unlawful utterances."</p>
-                            <p>The Revised Penal Code prescribes a penalty of arresto mayor — imprisonment ranging from one month and one day to six months — for unlawful publication perspective, this comes with an additional fine ranging from P40,000 to P200,000.</p>
-                            <p>Police lieutenant colonel Anacleto Daliva, assistant chief of the PNP-ACG's legal affairs division, explained that false information can also be penalized under the Cybercrime Prevention Act through Section 6, which covers crimes under the Revised Penal Code and special laws when committed through a computer system.</p>
-                            <p>Meanwhile, core cybercrimes such as libel and online fraud fall under Section 4. "These are crimes where perpetrators use IT equipment, such as a cellphone or computer," Daliva said.</p>
-                            <a href="https://www.philstar.com/headlines/2025/03/21/2430091/how-fake-news-punishable-law-anti-cybercrime-officers-explain" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+<div class="news-item" data-page="3">
+    <div class="news-header" onclick="toggleDetails(this)">
+        <img src="https://bilyonaryo.com/wp-content/uploads/2025/01/Thiang-Choon-Wee.jpg" alt="News Image" class="news-image">
+        <div class="news-title">
+            <h2>Malaysian Supplier of Text Scam Device Arrested in Cybercrime Sting</h2>
+            <div class="news-meta">Max Torres Anaten - Brigada News | January 22, ieks2025</div>
+        </div>
+        <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="news-details">
+        <p>A Malaysian national believed to be a key supplier of a device used in large-scale text scams was arrested in a joint operation by the Philippine National Police Anti-Cybercrime Group (PNP-ACG) and the Cybercrime Investigation and Coordinating Center (CICC).</p>
+        <p>Authorities identified the suspect as the alleged leader of a syndicate selling International Mobile Subscriber Identity (IMSI) catchers, electronic tools designed to trace and intercept mobile phone communications.</p>
+        <p>The CICC began monitoring the suspect's company in October last year, carefully tracking its activities until they were certain of the suspect's involvement before executing the operation.</p>
+        <p>IMSI catchers, also known as "Stingrays" or rogue cell towers, function by imitating legitimate cell towers to deceive nearby mobile devices into connecting with them. Once connected, the device collects IMSI numbers, enabling the operator to track location, monitor activity, and intercept text messages, calls, and data traffic.</p>
+        <p>Investigators revealed that these devices are commonly used in text scams, tricking victims into sharing personal information and enabling large-scale fraud operations.</p>
+        <p>"This arrest is a significant breakthrough in our fight against cybercrime and text scams that target the public," said a CICC representative.</p>
+        <p>Authorities vowed to continue cracking down on syndicates using advanced technology to commit crimes, urging the public to remain vigilant against scams.</p>
+        <a href="https://www.brigadanews.ph/malaysian-supplier-of-text-scam-device-arrested-in-cybercrime-sting/" target="_blank" class="read-more">Read more</a>
+    </div>
+</div>
 
-                    <div class="news-item" data-page="3">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://radyopilipinas.ph/wp-content/uploads/2023/09/Digital-Wallet-Security-Updates-How-to-Report-a-Cybercrime-to-PNP-ACG.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>ACG Nabs 126 for Cybercrimes</h2>
-                                <div class="news-meta">Emmanuel Tupas - The Philippine Star | March 19, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA, Philippines — Up to 126 people were arrested across the country in February for cybercrimes, the police Anti-Cybercrime Group reported yesterday.</p>
-                            <p>ACG director Brig. Gen. Bernard Yang said the figure is higher by 240.54 percent compared to the 37 people arrested in January.</p>
-                            <p>The suspects were apprehended in 132 law enforcement operations nationwide. Seven victims were rescued, the ACG said.</p>
-                            <p>Two other suspects, who are minors, were placed under the custody of social welfare officers.</p>
-                            <p>"The ACG remains steadfast in its commitment to enhancing efforts to combat cybercrime and ensure that criminals online are brought to justice," Yang said in a statement.</p>
-                            <p>He said 75 suspects were arrested in entrapment operations. Seven others were nabbed through the implementation of warrants to search, seize and examine computer data and 44 in the implementation of warrants of arrest.</p>
-                            <p>The top five offenses committed by the suspects are estafa, grave coercion, libel, violation of Republic Act 11934, the Subscriber Identity Module Registration Act, and RA 12010 or the Anti-Financial Account Scamming Act.</p>
-                            <p>Yang urged the public to report to authorities people who are involved in cybercrimes.</p>
-                            <a href="https://www.philstar.com/nation/2025/03/19/2429397/acg-nabs-126-cybercrimes?fbclid=IwY2xjawJQnzpleHRuA2FlbQIxMAABHX_69CAyo9IM6J6GvZkki-ccpgRoBcqpiKdKnNytIovBZoZMv3hiU6g04w_aem_ef1xmZ7tZsQM8pvy7v06fQ" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
+<div class="news-item" data-page="3">
+    <div class="news-header" onclick="toggleDetails(this)">
+        <img src="https://files01.pna.gov.ph/category-list/2025/01/17/4-nabbed-for-sale-of-pre-registered-sim-cards.png" alt="News Image" class="news-image">
+        <div class="news-title">
+            <h2>4 Nabbed in 2-Day Crackdown vs. Sale of Pre-Registered SIM Cards</h2>
+            <div class="news-meta">Christopher Lloyd Caliwan - PNA | January 17, 2025</div>
+        </div>
+        <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="news-details">
+        <p>MANILA – Operatives of the Philippine National Police Anti-Cybercrime Group (PNP-ACG) have arrested four persons involved in the illegal online sale of pre-registered subscriber identity module (SIM) cards in separate operations in Laguna province and Quezon City.</p>
+        <p>In a statement Friday, ACG acting chief Brig. Gen. Bernard Yang said cyberpatrolling activities led to an engagement with the online sellers and their eventual arrest on Jan. 13 to 14.</p>
+        <p>The Calabarzon police's anti-cybercrime unit spotted a suspect advertising online a bundle of a fully verified e-wallet account and a SIM card priced at PHP800.</p>
+        <p>An officer arranged to meet up with the suspect and an accomplice, both of whom the ACG did not identify, which resulted in their arrest in Cabuyao town, Laguna at 4:40 p.m. on Jan. 13.</p>
+        <p>Meanwhile, the ACG's Cyber Financial Crime Unit (CFCU) said another suspect, alias "JP," was selling an e-wallet account with an automated teller machine (ATM) card as well as an online banking account worth PHP3,000.</p>
+        <p>The suspect was arrested after meeting up with a police officer who acted as a buyer along Mayon Street in Quezon City at around 12:58 p.m. on Jan. 14.</p>
+        <p>Around 2:32 p.m. on the same date, the anti-cybercrime units of Northern Police District and Quezon City Police District arrested a suspect, alias Arvin, for selling his registered SIM card, along General Araneta Avenue in Cubao, Quezon City.</p>
+        <p>The SIM card was linked to a verified e-wallet account and was priced at PHP2,300, the ACG said in a separate report.</p>
+        <p>All four suspects were charged with violations of the SIM Registration Act, the Anti-Financial Account Scamming Act, and the Cybercrime Prevention Act.</p>
+        <p>The SIM card can be used for text scams or to create a social media account for scamming activities.</p>
+        <p>Yang reminded the public that the illegal online sale of SIM cards is punishable by law, with significant fines and imprisonment.</p>
+        <p>"It is crucial to adhere to the law and avoid involvement in such online illegal transactions to protect oneself and prevent the spread of cybercrime," he added. (PNA)</p>
+        <a href="https://www.pna.gov.ph/articles/1242003" target="_blank" class="read-more">Read more</a>
+    </div>
+</div>
 
-                    <div class="news-item" data-page="3">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://itbutler.sa/wp-content/uploads/2025/04/The-Role-of-Proactive-Cybersecurity-in-Saudi-Digital-Transformation.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Saudi Arabia Among Top Cybercrime Targets in 2024 as Digital Fraud Surges: Report</h2>
-                                <div class="news-meta">Arab News | March 13, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>RIYADH: Saudi Arabia was among the top 10 countries targeted by cybercriminals in 2024, with digital fraud attempts surging by 35 percent compared to the previous year, according to a new report by cybersecurity firm Kaspersky.</p>
-                            <p>The report, released on Wednesday, highlighted that the Kingdom faced over 20 million cyber attacks last year, with phishing emails, ransomware, and online scams being the most common threats.</p>
-                            <p>"The rapid digital transformation in Saudi Arabia has made it a lucrative target for cybercriminals," said a Kaspersky spokesperson. The report noted that many attacks were linked to international crime syndicates operating out of Southeast Asia and Eastern Europe.</p>
-                            <p>Saudi authorities have responded by strengthening cybersecurity measures, including public awareness campaigns and increased collaboration with global tech firms to combat digital fraud.</p>
-                            <a href="https://www.arabnews.com/node/2597991/amp" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
-
-                    <div class="news-item" data-page="3">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://files01.pna.gov.ph/category-list/2022/07/11/doj-seal.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>DOJ, UNODC Link Up for Capacity Building vs. Cybercrime</h2>
-                                <div class="news-meta">Benjamin Pulta - PNA | February 13, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>MANILA – The Department of Justice's Office of Cybercrime and the United Nations Office on Drugs and Crime (UNODC) are in talks to collaborate in various projects to strengthen criminal justice, especially on the intensified enforcement of cybercrime laws in the Philippines.</p>
-                            <p>In a news release on Thursday, the DOJ said among the activities that the two agencies intend to undertake is increasing the government's pool of digital forensic experts and boosting their capacities of cybercrime investigators and prosecutors.</p>
-                            <p>DOJ Secretary Jesus Crispin Remulla highlighted this need due to the steady increase in cybercrimes and cyber-enabled offenses or incidents in the country.</p>
-                            <p>To negotiate on the details of this partnership, Remulla will be leading a small delegation of DOJ officials to the UNODC headquarters in Vienna, Austria to sit down with its Executive Director, Ghada Fathi Waly.</p>
-                            <p>The delegation will also visit UNODC's Crime Laboratory.</p>
-                            <p>The meeting and visit will be conducted on the sidelines of the 68th Session of the UN Commission on Narcotic Drugs on March 10 to 14.</p>
-                            <p>The DOJ said the activities are in line with the Marcos administration's commitment to human rights and the rule of law.</p>
-                            <p>Meanwhile, Undersecretary Jesse Hermogenes Andres, head of DOJ's Law Enforcement Cluster, is leading the conversations with UNODC's team in the Philippines.</p>
-                            <p>Andres said he envisions to institutionalize the government's ability to procure and utilize the necessary digital forensic tools and software applications used in cybercrime investigations.</p>
-                            <p>He said funding for the renewal of licenses of these important investigative tools must always be given priority.</p>
-                            <p>The DOJ and the UNODC are looking at signing a comprehensive memorandum of agreement to cover the various justice sector programs, including prison reform and forensics, in May this year. (PNA)</p>
-                            <a href="https://www.pna.gov.ph/articles/1244021" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
-
-                    <div class="news-item" data-page="3">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://venturebeat.com/wp-content/uploads/2024/06/Deepfakes-will-cost-40B-by-2027-as-adversarial-AI-gains-momentum-hero-image.jpg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>Guarding Against Cybercrime and Fraud in the Age of Deepfakes</h2>
-                                <div class="news-meta">Justin Herring, Gina M. Parlovecchio, Rajesh De - Mayer Brown | February 5, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>Generative AI is starting to transform many sectors, both legitimate and illicit. Criminals have been early adopters, exploiting technology like deepfakes to turbo-charge existing methods to commit cybercrime and fraud—and invent entirely new ones. AI has made it increasingly challenging to verify the true identities of customers, investors, vendors, and even colleagues.</p>
-                            <p>Companies and their counsel need to understand how to avoid deepfake-related risks, how to address them effectively when they arise, and how to stay within the bounds of their ethical responsibilities. Our panel, comprised of both current and former government officials, will discuss:</p>
-                            <ul>
-                                <p style="margin-left: 20px;">• Deepfake fraud in the workplace, and knowing who you're talking to online</p>
-                                <p style="margin-left: 20px;">• Fake employees and remote-work scams</p>
-                                <p style="margin-left: 20px;">• Meeting professional responsibilities to protect electronic data and communications</p>
-                                <p style="margin-left: 20px;">• How regulators and law enforcement are confronting these new threats</p>
-                            </ul>
-                            <a href="https://www.mayerbrown.com/en/insights/events/2025/02/guarding-against-cybercrime-and-fraud-in-the-age-of-deepfakes" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
-
-                <div class="news-item" data-page="3">
-                    <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://od2-image-api.abs-cbn.com/prod/2025013108014/fbd75639688f7cff92a9bfe441dd9b9dcba5dbacd973d286d076ec0309a9c443.png?w=1200&h=800" alt="News Image" class="news-image">
-                        <div class="news-title">
-                            <h2>CICC Records Over 10,000 Cybercrime Complaints in 2024</h2>
-                            <div class="news-meta">Ched Rick Gatchalian - ABS-CBN News | January 31, 2025</div>
-                        </div>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="news-details">
-                        <p>MANILA — A total of 10,004 cybercrime complaints were recorded in 2024, marking a threefold increase compared to 3,317 complaints in 2023, the Cybercrime Investigation and Coordinating Center (CICC) reported on Friday.</p>
-                        <p>The agency also announced P198 million in losses from the recorded cybercrime incidents.</p>
-                        <p>But this does not necessarily translate to a rise in cybercrime prevalence, as CICC Executive Director Alexander K. Ramos described the increase as an indicator of "growing cybercrime awareness of the public and their willingness to report".</p>
-                        <p>"In previous years, people were not aware that they were being scammed and many were not also aware of where to file their complaints," he said.</p>
-                        <a href="https://www.abs-cbn.com/news/technology/2025/1/31/cicc-records-over-10-000-cybercrime-complaints-in-2024-1628" target="_blank" class="read-more">Read more</a>
-                    </div>
-                </div>
-
-                <div class="news-item" data-page="3">
-                    <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://files01.pna.gov.ph/category-list/2024/08/03/doj-usec-vasquez-satnewsforum-2024aug3-jbondoc-2.jpg" alt="News Image" class="news-image">
-                        <div class="news-title">
-                            <h2>DOJ to Improve Anti-Cybercrime Capacity in 2025</h2>
-                            <div class="news-meta">Benjamin Pulta - PNA | January 23, 2025</div>
-                        </div>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="news-details">
-                        <p>MANILA – The Department of Justice (DOJ) will embark on capacity-building this year to improve its anti-cybercrime efforts, according to a senior official.</p>
-                        <p>In an interview on PTV-4's "Bagong Pilipinas Ngayon" on Wednesday, DOJ Undersecretary Raul Vasquez said that for 2025, they will "take major strides in strengthening the DOJ's fight against cybercrime by conducting advanced technological and forensic trainings for its personnel and law enforcement units."</p>
-                        <p>The DOJ has an Office of Cybercrime (OOC) created under Republic Act No. 10175 or the Cybercrime Prevention Act of 2012 that serves as the central authority in all matters relating to international mutual assistance and extradition for cybercrime and cyber-related matters.</p>
-                        <p>The OOC also acts as "the focal agency in formulating and implementing law enforcement investigation and prosecution strategies in curbing cybercrime and cyber-related offenses nationwide," according to the DOJ.</p>
-                        <p>Vasquez made the statement following the arrest of a foreign national and two Filipinos suspected of engaging in months-long electronic intelligence-surveillance-reconnaissance (ISR) operations in key military and civilian infrastructures in the country.</p>
-                        <p>The DOJ confirmed that it is pursuing other members of the group who may have procured equipment used in the eavesdropping operations, even as the military said it is monitoring the role played by Philippine Online Gaming Operators (POGOs) in the alleged spying activities.</p>
-                        <p>The National Bureau of Investigation (NBI) on Wednesday likewise announced the arrest of eight foreigners in Parañaque City allegedly engaged in online phishing operations.</p>
-                        <a href="https://www.pna.gov.ph/articles/1242480" target="_blank" class="read-more">Read more</a>
-                    </div>
-                </div>
-
-                <div class="news-item" data-page="3">
-                    <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://bilyonaryo.com/wp-content/uploads/2025/01/Thiang-Choon-Wee.jpg" alt="News Image" class="news-image">
-                        <div class="news-title">
-                            <h2>Malaysian Supplier of Text Scam Device Arrested in Cybercrime Sting</h2>
-                            <div class="news-meta">Max Torres Anaten - Brigada News | January 22, ieks2025</div>
-                        </div>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="news-details">
-                        <p>A Malaysian national believed to be a key supplier of a device used in large-scale text scams was arrested in a joint operation by the Philippine National Police Anti-Cybercrime Group (PNP-ACG) and the Cybercrime Investigation and Coordinating Center (CICC).</p>
-                        <p>Authorities identified the suspect as the alleged leader of a syndicate selling International Mobile Subscriber Identity (IMSI) catchers, electronic tools designed to trace and intercept mobile phone communications.</p>
-                        <p>The CICC began monitoring the suspect's company in October last year, carefully tracking its activities until they were certain of the suspect's involvement before executing the operation.</p>
-                        <p>IMSI catchers, also known as "Stingrays" or rogue cell towers, function by imitating legitimate cell towers to deceive nearby mobile devices into connecting with them. Once connected, the device collects IMSI numbers, enabling the operator to track location, monitor activity, and intercept text messages, calls, and data traffic.</p>
-                        <p>Investigators revealed that these devices are commonly used in text scams, tricking victims into sharing personal information and enabling large-scale fraud operations.</p>
-                        <p>"This arrest is a significant breakthrough in our fight against cybercrime and text scams that target the public," said a CICC representative.</p>
-                        <p>Authorities vowed to continue cracking down on syndicates using advanced technology to commit crimes, urging the public to remain vigilant against scams.</p>
-                        <a href="https://www.brigadanews.ph/malaysian-supplier-of-text-scam-device-arrested-in-cybercrime-sting/" target="_blank" class="read-more">Read more</a>
-                    </div>
-                </div>
-
-                <div class="news-item" data-page="3">
-                    <div class="news-header" onclick="toggleDetails(this)">
-                        <img src="https://files01.pna.gov.ph/category-list/2025/01/17/4-nabbed-for-sale-of-pre-registered-sim-cards.png" alt="News Image" class="news-image">
-                        <div class="news-title">
-                            <h2>4 Nabbed in 2-Day Crackdown vs. Sale of Pre-Registered SIM Cards</h2>
-                            <div class="news-meta">Christopher Lloyd Caliwan - PNA | January 17, 2025</div>
-                        </div>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="news-details">
-                        <p>MANILA – Operatives of the Philippine National Police Anti-Cybercrime Group (PNP-ACG) have arrested four persons involved in the illegal online sale of pre-registered subscriber identity module (SIM) cards in separate operations in Laguna province and Quezon City.</p>
-                        <p>In a statement Friday, ACG acting chief Brig. Gen. Bernard Yang said cyberpatrolling activities led to an engagement with the online sellers and their eventual arrest on Jan. 13 to 14.</p>
-                        <p>The Calabarzon police's anti-cybercrime unit spotted a suspect advertising online a bundle of a fully verified e-wallet account and a SIM card priced at PHP800.</p>
-                        <p>An officer arranged to meet up with the suspect and an accomplice, both of whom the ACG did not identify, which resulted in their arrest in Cabuyao town, Laguna at 4:40 p.m. on Jan. 13.</p>
-                        <p>Meanwhile, the ACG's Cyber Financial Crime Unit (CFCU) said another suspect, alias "JP," was selling an e-wallet account with an automated teller machine (ATM) card as well as an online banking account worth PHP3,000.</p>
-                        <p>The suspect was arrested after meeting up with a police officer who acted as a buyer along Mayon Street in Quezon City at around 12:58 p.m. on Jan. 14.</p>
-                        <p>Around 2:32 p.m. on the same date, the anti-cybercrime units of Northern Police District and Quezon City Police District arrested a suspect, alias Arvin, for selling his registered SIM card, along General Araneta Avenue in Cubao, Quezon City.</p>
-                        <p>The SIM card was linked to a verified e-wallet account and was priced at PHP2,300, the ACG said in a separate report.</p>
-                        <p>All four suspects were charged with violations of the SIM Registration Act, the Anti-Financial Account Scamming Act, and the Cybercrime Prevention Act.</p>
-                        <p>The SIM card can be used for text scams or to create a social media account for scamming activities.</p>
-                        <p>Yang reminded the public that the illegal online sale of SIM cards is punishable by law, with significant fines and imprisonment.</p>
-                        <p>"It is crucial to adhere to the law and avoid involvement in such online illegal transactions to protect oneself and prevent the spread of cybercrime," he added. (PNA)</p>
-                        <a href="https://www.pna.gov.ph/articles/1242003" target="_blank" class="read-more">Read more</a>
-                    </div>
-                </div>
-
-                <div class="pagination">
-                    <button id="prevPage" onclick="changePage(-1)">Previous</button>
-                    <div class="page-numbers" id="pageNumbers"></div>
-                    <button id="nextPage" onclick="changePage(1)">Next</button>
-                </div>
+<div class="pagination">
+    <button id="prevPage" onclick="changePage(-1)">Previous</button>
+    <div class="page-numbers" id="pageNumbers"></div>
+    <button id="nextPage" onclick="changePage(1)">Next</button>
+</div>
 </div>
 
                 <div class="insights-content">
@@ -2282,8 +2034,8 @@
                     <div class="card-counter" id="cardCounter"></div>
                     <div class="navigation-buttons">
                         <button class="nav-button" onclick="navigateCard(-1)" id="prevCardBtn"><i class="fas fa-arrow-left"></i></button>
-                        <button class="random-button" onclick="navigateRandom()" id="randomCardBtn"><i class="fas fa-random"></i></button>
                         <button class="nav-button" onclick="navigateCard(1)" id="nextCardBtn"><i class="fas fa-arrow-right"></i></button>
+                        <button class="nav-button" onclick="randomCard()" id="randomCardBtn">🎲</button>
                     </div>
                 </div>
             </section>
@@ -2337,7 +2089,7 @@
         const prevCardBtn = document.getElementById('prevCardBtn');
         const nextCardBtn = document.getElementById('nextCardBtn');
 
-const cardsData = [
+        const cardsData = [
     { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
     { term: "Hacking", partOfSpeech: "noun", definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.", example: "Hacking is penalized under the Electronic Commerce Act of 2000 for unauthorized access to electronic transactions.", synonyms: "unauthorized access, cyber intrusion, data breach" },
     { term: "Phishing", partOfSpeech: "noun", definition: "A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.", example: "The NBI Cybercrime Division raided a group operating a phishing scam using fake banking websites.", synonyms: "online scam, identity theft, social engineering" },
@@ -2395,25 +2147,14 @@ const cardsData = [
         let isFlipped = false;
         let isTransitioning = false;
 
-        function updateCard(index, direction) {
+        function updateCard(index) {
             if (isTransitioning) return;
 
             isTransitioning = true;
-            const prevIndex = currentCardIndex;
-            currentCardIndex = index;
-
-            // Apply exit animation
-            if (direction > 0) {
-                card.classList.add('exit-left');
-            } else if (direction < 0) {
-                card.classList.add('exit-right');
-            } else {
-                // For random navigation, choose direction based on index difference
-                card.classList.add(index > prevIndex ? 'exit-left' : 'exit-right');
-            }
+            card.classList.add('fade-out');
 
             setTimeout(() => {
-                const data = cardsData[currentCardIndex];
+                const data = cardsData[index];
                 const front = card.querySelector('.card-front');
                 const back = card.querySelector('.card-back');
                 front.innerHTML = `
@@ -2428,34 +2169,24 @@ const cardsData = [
                     <div class="synonyms">Synonyms: ${data.synonyms}</div>
                 `;
                 card.classList.toggle('flipped', isFlipped);
-                cardCounter.textContent = `Card ${currentCardIndex + 1} of ${cardsData.length}`;
+                cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
 
-                // Apply enter animation
-                if (direction > 0) {
-                    card.classList.add('enter-right');
-                } else if (direction < 0) {
-                    card.classList.add('enter-left');
-                } else {
-                    card.classList.add(index > prevIndex ? 'enter-right' : 'enter-left');
-                }
-
+                card.classList.remove('fade-out');
+                card.classList.add('fade-in');
                 isTransitioning = false;
-            }, 600); // Match the animation duration
+            }, 300); // Match the fade-out duration
         }
 
         function navigateCard(direction) {
             if (isTransitioning) return;
-            const newIndex = (currentCardIndex + direction + cardsData.length) % cardsData.length;
-            updateCard(newIndex, direction);
+            currentCardIndex = (currentCardIndex + direction + cardsData.length) % cardsData.length;
+            updateCard(currentCardIndex);
         }
 
-        function navigateRandom() {
+        function randomCard() {
             if (isTransitioning) return;
-            let newIndex;
-            do {
-                newIndex = Math.floor(Math.random() * cardsData.length);
-            } while (newIndex === currentCardIndex);
-            updateCard(newIndex, newIndex - currentCardIndex);
+            currentCardIndex = Math.floor(Math.random() * cardsData.length);
+            updateCard(currentCardIndex);
         }
 
         card.addEventListener('click', () => {
@@ -2463,7 +2194,7 @@ const cardsData = [
             card.classList.toggle('flipped', isFlipped);
         });
 
-        updateCard(currentCardIndex, 0);
+        updateCard(currentCardIndex);
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
