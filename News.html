@@ -534,36 +534,51 @@
             position: relative;
         }
 
-        .toggle-label.active {
-            color: #8B0000;
-            font-weight: bold;
-        }
-
         .toggle-label::after {
             content: '';
             position: absolute;
             width: 0;
             height: 2px;
             bottom: 0;
-            left: 0;
+            left: 50%;
             background-color: #8B0000;
-            transition: width 0.3s ease;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .toggle-label:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .toggle-label:hover {
+            color: #8B0000;
+        }
+
+        .toggle-label.active {
+            color: #8B0000;
+            font-weight: bold;
+            border-bottom: 2px solid #8B0000;
         }
 
         .toggle-label.active::after {
-            width: 100%;
+            display: none;
         }
 
         .dark-theme .toggle-label {
             color: #e0e0e0;
         }
 
-        .dark-theme .toggle-label.active {
+        .dark-theme .toggle-label:hover {
             color: #ff6b6b;
         }
 
         .dark-theme .toggle-label::after {
             background-color: #ff6b6b;
+        }
+
+        .dark-theme .toggle-label.active {
+            color: #ff6b6b;
+            border-bottom: 2px solid #ff6b6b;
         }
 
         .news-content, .insights-content {
@@ -691,7 +706,6 @@
             margin: 0 auto;
             padding: 20px 0;
             text-align: center;
-            position: relative;
         }
 
         .card-container {
@@ -699,8 +713,6 @@
             width: 300px;
             height: 400px;
             margin: 0 auto;
-            perspective: 1000px;
-            overflow: hidden;
         }
 
         .card {
@@ -708,7 +720,7 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 0.6s ease-in-out, opacity 0.3s ease;
+            transition: transform 0.6s ease-in-out, opacity 0.3s ease, left 0.3s ease;
             cursor: pointer;
         }
 
@@ -716,41 +728,47 @@
             transform: rotateY(180deg);
         }
 
-        .card.transition-out {
-            animation: cardTransitionOut 0.6s ease-in-out forwards;
+        .card.transition-out-left {
+            opacity: 0;
+            left: -100%;
         }
 
-        .card.transition-in {
-            animation: cardTransitionIn 0.6s ease-in-out forwards;
+        .card.transition-out-right {
+            opacity: 0;
+            left: 100%;
         }
 
-        @keyframes cardTransitionOut {
-            0% {
-                transform: rotateY(0) translateZ(0);
-                opacity: 1;
-            }
-            50% {
-                transform: rotateY(30deg) translateX(-50%) translateZ(-100px);
-                opacity: 0.5;
-            }
-            100% {
-                transform: rotateY(90deg) translateX(-100%) translateZ(-200px);
+        .card.transition-in-left {
+            opacity: 1;
+            left: 0;
+            animation: slideInLeft 0.3s ease forwards;
+        }
+
+        .card.transition-in-right {
+            opacity: 1;
+            left: 0;
+            animation: slideInRight 0.3s ease forwards;
+        }
+
+        @keyframes slideInLeft {
+            from {
                 opacity: 0;
+                left: -100%;
+            }
+            to {
+                opacity: 1;
+                left: 0;
             }
         }
 
-        @keyframes cardTransitionIn {
-            0% {
-                transform: rotateY(-90deg) translateX(100%) translateZ(-200px);
+        @keyframes slideInRight {
+            from {
                 opacity: 0;
+                left: 100%;
             }
-            50% {
-                transform: rotateY(-30deg) translateX(50%) translateZ(-100px);
-                opacity: 0.5;
-            }
-            100% {
-                transform: rotateY(0) translateZ(0);
+            to {
                 opacity: 1;
+                left: 0;
             }
         }
 
@@ -848,64 +866,65 @@
             color: #e0e0e0;
         }
 
-        .progress-bar {
+        .progress-bar-container {
+            margin: 20px auto;
             width: 300px;
             height: 10px;
-            background-color: #e0e0e0;
+            background-color: #ddd;
             border-radius: 5px;
-            margin: 20px auto;
             overflow: hidden;
         }
 
-        .progress {
+        .progress-bar {
             height: 100%;
             background-color: #8B0000;
-            width: 0;
             transition: width 0.3s ease;
         }
 
-        .random-fact {
-            font-size: 16px;
-            color: #666;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            transition: color 0.3s ease, background-color 0.3s ease;
+        .dark-theme .progress-bar-container {
+            background-color: #444;
         }
 
-        .dark-theme .random-fact {
-            color: #b0b0b0;
-            background-color: #252525;
+        .dark-theme .progress-bar {
+            background-color: #ff6b6b;
         }
 
-        .card-tooltip {
-            position: absolute;
-            background-color: #fff;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            font-size: 14px;
-            display: none;
-            z-index: 10;
-            max-width: 200px;
-            text-align: center;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
+        .dot-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
         }
 
-        .card:hover .card-tooltip {
-            display: block;
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #bbb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        .dark-theme .card-tooltip {
-            background-color: #3a3b3c;
-            color: #e0e0e0;
+        .dot.active {
+            background-color: #8B0000;
+            transform: scale(1.2);
+        }
+
+        .dot:hover {
+            background-color: #FF4040;
+            transform: scale(1.2);
+        }
+
+        .dark-theme .dot {
+            background-color: #666;
+        }
+
+        .dark-theme .dot.active {
+            background-color: #ff6b6b;
+        }
+
+        .dark-theme .dot:hover {
+            background-color: #ff9999;
         }
 
         .navigation-buttons {
@@ -931,12 +950,36 @@
             background-color: #FF4040;
         }
 
+        .random-button {
+            background-color: #d7b15c;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .random-button:hover {
+            background-color: #e6c47d;
+        }
+
         .dark-theme .nav-button {
             background-color: #28292c;
         }
 
         .dark-theme .nav-button:hover {
             background-color: #1a1a1a;
+        }
+
+        .dark-theme .random-button {
+            background-color: #d7b15c;
+            color: #333;
+        }
+
+        .dark-theme .random-button:hover {
+            background-color: #e6c47d;
         }
 
         .pagination {
@@ -1465,8 +1508,8 @@
                 </div>
 
                 <div class="news-content active">
-                               <!-- Page 1 Articles -->
-                <div class="news-item" data-page="2">
+                                   <!-- Page 1 Articles -->
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1485,7 +1528,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1504,7 +1547,7 @@
                 </div>
 
 
-                 <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1523,7 +1566,7 @@
                 </div>
 
 
-               <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2023/08/22/holiday-08212023rn.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1549,7 +1592,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://i.imgur.com/KOft8nD.png" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1575,7 +1618,7 @@
                 </div>
 
 
-                 <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2025/04/10/040325-dict-secretary-henry-aguda.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1599,7 +1642,7 @@
                 </div>
 
 
-                 <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://pia.gov.ph/wp-content/uploads/2025/04/Thumbnail-photo-10-1024x769.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1618,7 +1661,7 @@
                 </div>
 
 
-                 <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://od2-image-api.abs-cbn.com/prod/2025041608048/9e80e1ba82e2cb61282f70495a648388ce7198356dfaed65f77628d465429e35.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1640,7 +1683,7 @@
                 </div>
 
 
-                 <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://od2-image-api.abs-cbn.com/prod/2025041613040/d27eef3ab9282c58f9d73b2b496fec6bc80f684f0c33b0f9323360e4ce42a303.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1659,7 +1702,7 @@
                 </div>
 
 
-                 <div class="news-item" data-page="2">
+                <div class="news-item" data-page="1">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://newsinfo.inquirer.net/files/2025/04/Jaime-Santiago-23April2025.jpg.avif" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1679,7 +1722,7 @@
 
 
                 <!-- Page 2 Articles -->
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://i.imgur.com/y0ZVR1S.jpeg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1698,7 +1741,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://media.philstar.com/photos/2025/03/18/fake_2025-03-18_23-29-47.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1721,7 +1764,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://radyopilipinas.ph/wp-content/uploads/2023/09/Digital-Wallet-Security-Updates-How-to-Report-a-Cybercrime-to-PNP-ACG.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1744,7 +1787,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://itbutler.sa/wp-content/uploads/2025/04/The-Role-of-Proactive-Cybersecurity-in-Saudi-Digital-Transformation.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1763,7 +1806,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2022/07/11/doj-seal.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1789,7 +1832,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://venturebeat.com/wp-content/uploads/2024/06/Deepfakes-will-cost-40B-by-2027-as-adversarial-AI-gains-momentum-hero-image.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1812,7 +1855,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://od2-image-api.abs-cbn.com/prod/2025013108014/fbd75639688f7cff92a9bfe441dd9b9dcba5dbacd973d286d076ec0309a9c443.png?w=1200&h=800" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1831,7 +1874,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2024/08/03/doj-usec-vasquez-satnewsforum-2024aug3-jbondoc-2.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1853,7 +1896,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://bilyonaryo.com/wp-content/uploads/2025/01/Thiang-Choon-Wee.jpg" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1875,7 +1918,7 @@
                 </div>
 
 
-                <div class="news-item" data-page="3">
+                <div class="news-item" data-page="2">
                     <div class="news-header" onclick="toggleDetails(this)">
                         <img src="https://files01.pna.gov.ph/category-list/2025/01/17/4-nabbed-for-sale-of-pre-registered-sim-cards.png" alt="News Image" class="news-image">
                         <div class="news-title">
@@ -1911,7 +1954,6 @@
                 <div class="insights-content">
                     <div class="card-container">
                         <div class="card" id="card">
-                            <div class="card-tooltip" id="cardTooltip"></div>
                             <div class="card-front">
                                 <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
                                 <h3>Cybercrime</h3>
@@ -1930,12 +1972,13 @@
                         <i class="fas fa-sync-alt flip-arrow"></i>
                     </div>
                     <div class="card-counter" id="cardCounter"></div>
-                    <div class="progress-bar">
-                        <div class="progress" id="progress"></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
                     </div>
-                    <div class="random-fact" id="randomFact"></div>
+                    <div class="dot-navigation" id="dotNavigation"></div>
                     <div class="navigation-buttons">
                         <button class="nav-button" onclick="navigateCard(-1)" id="prevCardBtn"><i class="fas fa-arrow-left"></i></button>
+                        <button class="nav-button random-button" onclick="randomCard()" id="randomCardBtn">Random</button>
                         <button class="nav-button" onclick="navigateCard(1)" id="nextCardBtn"><i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
@@ -1987,23 +2030,64 @@
         const createdAtDisplay = document.getElementById('createdAtDisplay');
         const card = document.getElementById('card');
         const cardCounter = document.getElementById('cardCounter');
+        const progressBar = document.getElementById('progressBar');
+        const dotNavigation = document.getElementById('dotNavigation');
         const prevCardBtn = document.getElementById('prevCardBtn');
         const nextCardBtn = document.getElementById('nextCardBtn');
-        const progress = document.getElementById('progress');
-        const randomFact = document.getElementById('randomFact');
-        const cardTooltip = document.getElementById('cardTooltip');
 
         const cardsData = [
-            { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud", tooltip: "Criminal activities using computers or the internet.", fact: "Cybercrime costs the global economy over $10 trillion annually as of 2025." },
-            { term: "Hacking", partOfSpeech: "noun", definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.", example: "Hacking is penalized under the Electronic Commerce Act of 2000 for unauthorized access to electronic transactions.", synonyms: "unauthorized access, cyber intrusion, data breach", tooltip: "Unauthorized access to computer systems.", fact: "The first known hacking incident occurred in 1971 with the Creeper virus." },
-            { term: "Phishing", partOfSpeech: "noun", definition: "A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.", example: "The NBI Cybercrime Division raided a group operating a phishing scam using fake banking websites.", synonyms: "online scam, identity theft, social engineering", tooltip: "Fraudulent attempts to steal information.", fact: "Phishing attacks increased by 65% in 2024 according to cybersecurity reports." },
-            { term: "Fraud", partOfSpeech: "noun", definition: "Wrongful deception intended to result in financial or personal gain, often conducted online or through electronic means.", example: "The Anti-Financial Account Scamming Act penalizes fraud involving fake bank accounts for online scams.", synonyms: "deception, scam, swindle", tooltip: "Deceptive acts for financial gain.", fact: "Online fraud losses exceeded $12 billion in the U.S. in 2024." },
-            { term: "Identity Theft", partOfSpeech: "noun", definition: "The deliberate use of someone else's identity, typically to gain financial advantage or obtain credit.", example: "The Access Devices Regulation Act criminalizes the use of stolen credit card information for identity theft.", synonyms: "impersonation, identity fraud, personal data theft", tooltip: "Stealing someone's identity for gain.", fact: "Over 1.1 million identity theft cases were reported in 2024 globally." },
-            // Additional cards to reach 51 (simplified for brevity)
-            ...Array.from({ length: 46 }, (_, i) => ({
-                term: `Term${i + 6}`, partOfSpeech: "noun", definition: `Definition for Term${i + 6}.`, example: `Example for Term${i + 6}.`, synonyms: `synonym${i + 6}`, tooltip: `Brief about Term${i + 6}.`, fact: `Fact about Term${i + 6}.`
-            }))
-        ];
+    { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
+    { term: "Hacking", partOfSpeech: "noun", definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.", example: "Hacking is penalized under the Electronic Commerce Act of 2000 for unauthorized access to electronic transactions.", synonyms: "unauthorized access, cyber intrusion, data breach" },
+    { term: "Phishing", partOfSpeech: "noun", definition: "A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.", example: "The NBI Cybercrime Division raided a group operating a phishing scam using fake banking websites.", synonyms: "online scam, identity theft, social engineering" },
+    { term: "Fraud", partOfSpeech: "noun", definition: "Wrongful deception intended to result in financial or personal gain, often conducted online or through electronic means.", example: "The Anti-Financial Account Scamming Act penalizes fraud involving fake bank accounts for online scams.", synonyms: "deception, scam, swindle" },
+    { term: "Identity Theft", partOfSpeech: "noun", definition: "The deliberate use of someone else's identity, typically to gain financial advantage or obtain credit.", example: "The Access Devices Regulation Act criminalizes the use of stolen credit card information for identity theft.", synonyms: "impersonation, identity fraud, personal data theft" },
+    { term: "Data Breach", partOfSpeech: "noun", definition: "An incident where sensitive or confidential data is accessed or disclosed without authorization.", example: "The Data Privacy Act of 2012 imposes penalties for data breaches involving unauthorized access to personal information.", synonyms: "security breach, information leak, data exposure" },
+    { term: "Child Pornography", partOfSpeech: "noun", definition: "Illegal material depicting minors in sexual acts, often distributed online.", example: "The Anti-Child Pornography Act of 2009 criminalizes the production and distribution of child pornography.", synonyms: "child exploitation material, illegal content, explicit media" },
+    { term: "Money Laundering", partOfSpeech: "noun", definition: "The process of concealing the origins of illegally obtained money, often through financial transactions.", example: "The Anti-Money Laundering Act of 2001 aims to prevent the financial system from being used for laundering drug money.", synonyms: "financial crime, illicit funds, money washing" },
+    { term: "Cyber-Squatting", partOfSpeech: "noun", definition: "Registering or using a domain name with bad faith intent to profit from the goodwill of a trademark belonging to someone else.", example: "Cyber-squatting is penalized under the Cybercrime Prevention Act of 2012 for misusing domain names.", synonyms: "domain hijacking, trademark abuse, online squatting" },
+    { term: "Unauthorized Access", partOfSpeech: "noun", definition: "Gaining entry to a computer system or network without permission.", example: "Unauthorized access to customer data is punishable under the Data Privacy Act of 2012.", synonyms: "illegal entry, system breach, hacking" },
+    { term: "Electronic Transaction", partOfSpeech: "noun", definition: "A transaction conducted through electronic means, such as online payments or digital contracts.", example: "The Electronic Commerce Act of 2000 regulates electronic transactions to prevent fraud.", synonyms: "digital transaction, e-commerce, online exchange" },
+    { term: "Credit Card Skimming", partOfSpeech: "noun", definition: "The theft of credit card information using illegal devices attached to card readers.", example: "Credit card skimming at ATMs is addressed under the Access Devices Regulation Act of 1998.", synonyms: "card fraud, data theft, skimming scam" },
+    { term: "Money Muling", partOfSpeech: "noun", definition: "The act of using individuals to transfer illegally obtained money, often through fake accounts.", example: "Money muling is penalized under the Anti-Financial Account Scamming Act with imprisonment.", synonyms: "financial mule, illicit transfer, scam facilitator" },
+    { term: "Social Engineering", partOfSpeech: "noun", definition: "Manipulating individuals into divulging confidential information, often used in cyber scams.", example: "Social engineering schemes are heavily penalized under the Anti-Financial Account Scamming Act.", synonyms: "human hacking, manipulation scam, deception tactic" },
+    { term: "Economic Sabotage", partOfSpeech: "noun", definition: "Large-scale financial crimes that undermine the economy, often linked to terrorism or fraud.", example: "Economic sabotage under the Anti-Financial Account Scamming Act can lead to life imprisonment.", synonyms: "financial sabotage, economic crime, systemic fraud" },
+    { term: "Cybersex", partOfSpeech: "noun", definition: "Engaging in sexual activities through digital platforms, often illegally involving exploitation.", example: "Cybersex crimes are addressed under the Cybercrime Prevention Act with severe penalties.", synonyms: "online sexual exploitation, digital sex crime, virtual abuse" },
+    { term: "Data Interference", partOfSpeech: "noun", definition: "The intentional alteration, deletion, or corruption of computer data without authorization.", example: "Data interference is a punishable offense under the Cybercrime Prevention Act of 2012.", synonyms: "data tampering, information corruption, system disruption" },
+    { term: "System Interference", partOfSpeech: "noun", definition: "Disrupting the normal operation of a computer system, often through malware or attacks.", example: "System interference is criminalized under the Cybercrime Prevention Act to protect infrastructure.", synonyms: "cyber disruption, system sabotage, network interference" },
+    { term: "Misuse of Devices", partOfSpeech: "noun", definition: "Using tools or software to commit cybercrimes, such as hacking tools or malware.", example: "Misuse of devices carries heavy fines under the Cybercrime Prevention Act of 2012.", synonyms: "device abuse, illegal software use, cyber tool misuse" },
+    { term: "Computer-Related Forgery", partOfSpeech: "noun", definition: "Creating or altering digital data to deceive others, often for fraudulent purposes.", example: "Computer-related forgery is penalized under the Cybercrime Prevention Act for digital fraud.", synonyms: "digital forgery, electronic fraud, data falsification" },
+    { term: "Voyeurism", partOfSpeech: "noun", definition: "The act of secretly observing or recording someone in a private setting, often for sexual purposes.", example: "The Anti-Photo and Video Voyeurism Act of 2009 penalizes voyeurism involving unauthorized recordings.", synonyms: "peeping, privacy violation, secret recording" },
+    { term: "Human Trafficking", partOfSpeech: "noun", definition: "The illegal trade of humans for exploitation, often involving coercion or deception.", example: "The Expanded Anti-Trafficking in Persons Act addresses trafficking for prostitution or labor.", synonyms: "modern slavery, forced labor, exploitation trade" },
+    { term: "SIM Spoofing", partOfSpeech: "noun", definition: "Impersonating a legitimate SIM card to send misleading messages or commit fraud.", example: "SIM spoofing is penalized under the Subscriber Identity Module Registration Act.", synonyms: "SIM fraud, mobile impersonation, telecom scam" },
+    { term: "Online Sexual Abuse", partOfSpeech: "noun", definition: "Exploiting individuals, often minors, through digital platforms for sexual purposes.", example: "The Anti-Online Sexual Abuse or Exploitation of Children Act protects minors from online abuse.", synonyms: "digital exploitation, cyber abuse, online predation" },
+    { term: "Grooming", partOfSpeech: "noun", definition: "Building a relationship with a child to manipulate them into sexual activity, often online.", example: "Grooming is heavily penalized under the Anti-Online Sexual Abuse or Exploitation of Children Act.", synonyms: "online enticement, child manipulation, predator behavior" },
+    { term: "Intellectual Property", partOfSpeech: "noun", definition: "Creations of the mind, such as inventions, designs, or artistic works, protected by law.", example: "The Intellectual Property Code of the Philippines protects copyrights and trademarks.", synonyms: "IP rights, creative ownership, patent protection" },
+    { term: "Terrorism Financing", partOfSpeech: "noun", definition: "Providing or collecting funds to support terrorist activities or organizations.", example: "The Terrorism Financing Prevention and Suppression Act criminalizes funding terrorist groups.", synonyms: "terror funding, illicit financing, terrorism support" },
+    { term: "Asset Freezing", partOfSpeech: "noun", definition: "The legal process of restricting access to financial assets to prevent illegal use.", example: "Asset freezing is a provision under the Anti-Money Laundering Act to stop illicit transactions.", synonyms: "fund seizure, financial restriction, property lockdown" },
+    { term: "Phishing Attack", partOfSpeech: "noun", definition: "A targeted attempt to steal sensitive information through fraudulent emails or messages.", example: "A phishing attack on a government agency is addressed by the National Cybersecurity Inter-Agency Committee.", synonyms: "email scam, fraudulent message, cyber baiting" },
+    { term: "Number Portability", partOfSpeech: "noun", definition: "The ability to retain a mobile number when switching service providers.", example: "The Mobile Number Portability Act allows consumers to switch providers without losing their number.", synonyms: "mobile portability, number retention, telecom switching" },
+    { term: "Gender-Based Harassment", partOfSpeech: "noun", definition: "Unwanted behavior targeting someone based on their gender, often in public or online spaces.", example: "The Safe Spaces Act penalizes gender-based harassment in online group chats.", synonyms: "sexual harassment, gender discrimination, online abuse" },
+    { term: "Wiretapping", partOfSpeech: "noun", definition: "The act of secretly intercepting or recording private communications without consent.", example: "The Anti-Wire Tapping Act prohibits unauthorized wiretapping of business meetings.", synonyms: "eavesdropping, illegal interception, communication breach" },
+    { term: "Terrorism", partOfSpeech: "noun", definition: "The use of violence or threats to intimidate a population or government for political purposes.", example: "The Anti-Terrorism Act of 2020 penalizes acts of terrorism like bomb threats.", synonyms: "violent extremism, terror act, political violence" },
+    { term: "Bullying", partOfSpeech: "noun", definition: "Repeated aggressive behavior intended to harm or intimidate someone, often in schools.", example: "The Anti-Bullying Act of 2013 addresses bullying in schools, such as teasing over penmanship.", synonyms: "harassment, intimidation, peer abuse" },
+    { term: "Cybersecurity", partOfSpeech: "noun", definition: "Measures taken to protect computer systems and networks from cyber threats.", example: "The Department of Information and Communications Technology Act strengthens cybersecurity policies.", synonyms: "digital security, online protection, cyber defense" },
+    { term: "Strategic Goods", partOfSpeech: "noun", definition: "Items that can be used for both civilian and military purposes, regulated to prevent misuse.", example: "The Strategic Trade Management Act regulates the export of strategic goods like computer chips.", synonyms: "dual-use goods, controlled items, sensitive technology" },
+    { term: "Consumer Protection", partOfSpeech: "noun", definition: "Laws and regulations designed to safeguard consumers from unfair practices.", example: "The Consumer Act of the Philippines protects consumers from defective products.", synonyms: "buyer rights, consumer safety, fair trade" },
+    { term: "Piracy", partOfSpeech: "noun", definition: "The unauthorized reproduction or distribution of copyrighted material, such as movies or music.", example: "The Optical Media Act of 2003 penalizes piracy of DVDs and Blu-rays.", synonyms: "copyright infringement, illegal copying, content theft" },
+    { term: "Operational Risk", partOfSpeech: "noun", definition: "The risk of loss due to inadequate processes, systems, or human error.", example: "The Guidelines on Operational Risk Management address risks like accidental data leaks.", synonyms: "process risk, system failure, human error risk" },
+    { term: "Business Continuity", partOfSpeech: "noun", definition: "Planning to ensure critical operations continue during disruptions like natural disasters.", example: "The Guidelines on Business Continuity Management ensure banks operate during crises.", synonyms: "disaster recovery, operational resilience, continuity planning" },
+    { term: "Outsourcing Risk", partOfSpeech: "noun", definition: "Risks associated with delegating operations to third-party providers, such as security breaches.", example: "The Guidelines on Outsourcing Risk Management ensure secure outsourcing of customer support.", synonyms: "vendor risk, third-party risk, delegation risk" },
+    { term: "Critical Infrastructure", partOfSpeech: "noun", definition: "Essential systems like telecommunications or banking that, if disrupted, impact society.", example: "The Adoption of PNS ISO/IEC 27002 protects critical information infrastructure.", synonyms: "essential systems, vital infrastructure, key networks" },
+    { term: "Cloud Computing", partOfSpeech: "noun", definition: "The delivery of computing services over the internet, including storage and processing.", example: "The Cloud First Policy mandates government agencies to prioritize cloud solutions.", synonyms: "cloud services, online computing, virtual infrastructure" },
+    { term: "Value-Added Services", partOfSpeech: "noun", definition: "Enhanced telecommunications services beyond basic offerings, like messaging or VoIP.", example: "The Value-Added Services Regulation governs services like VoIP calls.", synonyms: "enhanced services, telecom extras, digital add-ons" },
+    { term: "Broadcast Messaging", partOfSpeech: "noun", definition: "Sending promotional or informational messages to a large group of subscribers.", example: "The Broadcast Messaging Regulation requires opt-in consent for promotional texts.", synonyms: "mass messaging, push notifications, bulk SMS" },
+    { term: "Prepaid Load", partOfSpeech: "noun", definition: "A monetary amount added to a mobile account for services like calls or data.", example: "The Guidelines on Prepaid Load Expiry set a one-year validity for prepaid loads.", synonyms: "mobile credit, top-up balance, prepaid funds" },
+    { term: "Deep Fake", partOfSpeech: "noun", definition: "AI-generated media that falsely depicts a person, often used to spread disinformation.", example: "The Social Media and AI Election Guidelines penalize the use of deep fakes in campaigns.", synonyms: "AI forgery, synthetic media, fake video" },
+    { term: "Online Pharmacy", partOfSpeech: "noun", definition: "A digital platform selling pharmaceutical products, regulated for safety and legality.", example: "The Online Pharmaceutical Sales Regulation ensures safe distribution of medicines online.", synonyms: "e-pharmacy, digital drugstore, virtual pharmacy" },
+    { term: "E-Commerce", partOfSpeech: "noun", definition: "The buying and selling of goods and services over the internet.", example: "The E-Commerce Protection Guidelines ensure fair practices in online shopping.", synonyms: "online trade, digital commerce, internet shopping" },
+    { term: "Cybercrime Warrant", partOfSpeech: "noun", definition: "A legal authorization to search, seize, or disclose computer data in cybercrime investigations.", example: "The Rules on Cybercrime Warrants allow law enforcement to obtain data in fraud cases.", synonyms: "digital warrant, cyber search order, data seizure warrant" },
+    { term: "Electronic Evidence", partOfSpeech: "noun", definition: "Digital information, such as emails or documents, admissible in court if authenticated.", example: "The Rules on Electronic Evidence allow emails to be used as evidence in trials.", synonyms: "digital evidence, e-evidence, online proof" }
+];
 
         let currentCardIndex = 0;
         let isFlipped = false;
@@ -2018,11 +2102,7 @@
             const back = card.querySelector('.card-back');
 
             // Apply outgoing transition
-            card.classList.add('transition-out');
-            card.style.zIndex = 0;
-
-            // Update tooltip
-            cardTooltip.textContent = data.tooltip;
+            card.classList.add(direction > 0 ? 'transition-out-right' : 'transition-out-left');
 
             // Wait for the outgoing transition to finish
             setTimeout(() => {
@@ -2040,29 +2120,65 @@
                 `;
 
                 // Apply incoming transition
-                card.classList.remove('transition-out');
-                card.classList.add('transition-in');
-                card.style.zIndex = 1;
+                card.classList.remove('transition-out-left', 'transition-out-right');
+                card.classList.add(direction > 0 ? 'transition-in-right' : 'transition-in-left');
 
                 // Maintain flipped state
                 card.classList.toggle('flipped', isFlipped);
 
-                // Update counter, progress, and random fact
+                // Update counter and progress
                 cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
-                progress.style.width = `${((index + 1) / cardsData.length) * 100}%`;
-                randomFact.textContent = data.fact;
+                updateProgressBar();
+                updateDots();
 
-                // Remove incoming transition class after animation
+                // Reset transition state
                 setTimeout(() => {
-                    card.classList.remove('transition-in');
                     isTransitioning = false;
-                }, 600); // Match the animation duration
-            }, 600); // Match the animation duration
+                }, 300); // Match the animation duration
+            }, 300); // Match the animation duration
         }
 
         function navigateCard(direction) {
             currentCardIndex = (currentCardIndex + direction + cardsData.length) % cardsData.length;
             updateCard(currentCardIndex, direction);
+        }
+
+        function randomCard() {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * cardsData.length);
+            } while (newIndex === currentCardIndex);
+            const direction = newIndex > currentCardIndex ? 1 : -1;
+            currentCardIndex = newIndex;
+            updateCard(currentCardIndex, direction);
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentCardIndex + 1) / cardsData.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function updateDots() {
+            const dots = dotNavigation.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentCardIndex);
+            });
+        }
+
+        function createDots() {
+            cardsData.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === currentCardIndex) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => {
+                    const direction = index > currentCardIndex ? 1 : -1;
+                    currentCardIndex = index;
+                    updateCard(currentCardIndex, direction);
+                });
+                dotNavigation.appendChild(dot);
+            });
         }
 
         card.addEventListener('click', () => {
@@ -2073,6 +2189,8 @@
 
         // Initial card setup
         updateCard(currentCardIndex, 0);
+        createDots();
+        updateProgressBar();
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
