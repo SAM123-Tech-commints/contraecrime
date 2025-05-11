@@ -1558,7 +1558,7 @@ body.dark-theme {
         const okSuccess = document.getElementById('okSuccess');
         const clock = document.getElementById('clock');
 
-  const laws = [
+        const laws = [
     {
         title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
         description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
@@ -2028,574 +2028,613 @@ body.dark-theme {
         pdfwebsite: "https://lawphil.net/administ/bir/rr/rr09_01.pdf"
     }
 ];
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentUser = {
-                    username: user.displayName || 'User',
-                    email: user.email,
-                    createdAt: user.metadata.creationTime
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                usernameDisplay.textContent = `${currentUser.username}`;
-                emailDisplay.textContent = `${currentUser.email}`;
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
 
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        const currentUser = {
+            username: user.displayName || 'User',
+            email: user.email,
+            createdAt: user.metadata.creationTime
+        };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+        usernameDisplay.textContent = `${currentUser.username}`;
+        emailDisplay.textContent = `${currentUser.email}`;
+        createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
+
+        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+        const userRef = database.ref(`users/${sanitizedEmail}`);
+        userRef.once('value', (snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+                if (userData.avatarUrl) {
+                    profilePic.src = userData.avatarUrl;
+                } else {
+                    profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                }
+                if (userData.avatarBgColor) {
+                    profilePic.style.backgroundColor = userData.avatarBgColor;
+                    avatarBgColorPicker.value = userData.avatarBgColor;
+                }
+                if (userData.borderColor) {
+                    profilePic.style.borderColor = userData.borderColor;
+                    borderColorPicker.value = userData.borderColor;
+                }
+                if (userData.borderType) {
+                    profilePic.style.borderStyle = userData.borderType;
+                    borderTypeSelect.value = userData.borderType;
+                }
+            }
+        }, (error) => {
+            console.error('Error loading user customization:', error);
+            alert('Failed to load user customization: ' + error.message);
+        });
+    } else {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    }
+});
+
+profilePic.addEventListener('click', () => {
+    customizationMenu.classList.toggle('active');
+});
+
+document.addEventListener('click', (e) => {
+    if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+        customizationMenu.classList.remove('active');
+    }
+});
+
+avatarInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const maxSize = 2 * 1024 * 1024;
+    if (!validTypes.includes(file.type)) {
+        alert('Please upload a valid image (JPG, JPEG, PNG).');
+        return;
+    }
+    if (file.size > maxSize) {
+        alert('Image size must be less than 2MB.');
+        return;
+    }
+
+    const user = auth.currentUser;
+    if (!user) {
+        alert('You must be logged in to upload an avatar.');
+        avatarLoading.classList.remove('active');
+        return;
+    }
+
+    avatarLoading.classList.add('active');
+
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const maxDimension = 300;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+            if (width > maxDimension) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+            }
+        } else {
+            if (height > maxDimension) {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+            }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob((blob) => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser || !currentUser.email) {
+                alert('User not logged in.');
+                avatarLoading.classList.remove('active');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', blob);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('folder', `avatars/${currentUser.email}`);
+
+            fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                        try {
+                            const parsed = JSON.parse(text);
+                            errorMessage = parsed.error?.message || text;
+                        } catch (e) {
+                            errorMessage = text.includes('Invalid cloud name')
+                                ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                : text.includes('Invalid upload preset')
+                                ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                : text.includes('Unsigned uploads are not allowed')
+                                ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                : text || 'Unknown error occurred';
+                        }
+                        throw new Error(errorMessage);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                }
+
+                const avatarUrl = data.secure_url;
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
-                        if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
-                            avatarBgColorPicker.value = userData.avatarBgColor;
-                        }
-                        if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
-                            borderColorPicker.value = userData.borderColor;
-                        }
-                        if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
-                            borderTypeSelect.value = userData.borderType;
-                        }
-                    }
-                }, (error) => {
-                    console.error('Error loading user customization:', error);
-                    alert('Failed to load user customization: ' + error.message);
-                });
-            } else {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'index.html';
-            }
-        });
-
-        profilePic.addEventListener('click', () => {
-            customizationMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
-            }
-        });
-
-        avatarInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPG, JPEG, PNG).');
-                return;
-            }
-            if (file.size > maxSize) {
-                alert('Image size must be less than 2MB.');
-                return;
-            }
-
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to upload an avatar.');
-                avatarLoading.classList.remove('active');
-                return;
-            }
-
-            avatarLoading.classList.add('active');
-
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxDimension = 300;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxDimension) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    }
-                } else {
-                    if (height > maxDimension) {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        alert('User not logged in.');
-                        avatarLoading.classList.remove('active');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
-                                try {
-                                    const parsed = JSON.parse(text);
-                                    errorMessage = parsed.error?.message || text;
-                                } catch (e) {
-                                    errorMessage = text.includes('Invalid cloud name')
-                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
-                                        : text.includes('Invalid upload preset')
-                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                        : text.includes('Unsigned uploads are not allowed')
-                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                        : text || 'Unknown error occurred';
-                                }
-                                throw new Error(errorMessage);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.error) {
-                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
-                        }
-
-                        const avatarUrl = data.secure_url;
-                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                        database.ref(`users/${sanitizedEmail}`).update({
-                            avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
-                        })
-                        .then(() => {
-                            profilePic.src = avatarUrl;
-                            avatarLoading.classList.remove('active');
-                        })
-                        .catch(error => {
-                            console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
-                            avatarLoading.classList.remove('active');
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error uploading avatar to Cloudinary:', error);
-                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
-                        avatarLoading.classList.remove('active');
-                    });
-                }, file.type, 0.6);
-            };
-            img.onerror = () => {
-                alert('Failed to process the image. Please try a different file.');
-                avatarLoading.classList.remove('active');
-            };
-        });
-
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
-            profilePic.style.backgroundColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
                 database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color,
+                    avatarUrl: avatarUrl,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
                 })
-                .catch(error => {
-                    console.error('Error saving avatar background color:', error);
-                    alert('Failed to save avatar background color: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the avatar background color.');
-            }
-        });
-
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
-            profilePic.style.borderColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                .then(() => {
+                    profilePic.src = avatarUrl;
+                    avatarLoading.classList.remove('active');
                 })
                 .catch(error => {
-                    console.error('Error saving border color:', error);
-                    alert('Failed to save border color: ' + error.message);
+                    console.error('Error saving avatar URL to Firebase:', error);
+                    alert('Failed to save avatar URL to Firebase: ' + error.message);
+                    avatarLoading.classList.remove('active');
                 });
-            } else {
-                alert('You must be logged in to change the border color.');
-            }
-        });
-
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: borderType,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the border type.');
-            }
-        });
-
-        if (localStorage.getItem('darkTheme') === 'enabled') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
-        });
-
-        mobileMenuIcon.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
-        });
-
-        function saveLaw(lawTitle) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to save a law.');
-                return;
-            }
-
-            const sanitizedEmail = user.email.replace(/\./g, ',');
-            const lawRef = database.ref(`users/${sanitizedEmail}/savedLaws`).push();
-            lawRef.set({
-                title: lawTitle,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            })
-            .then(() => {
-                successModal.classList.add('active');
             })
             .catch(error => {
-                console.error('Error saving law:', error);
-                alert('Failed to save law: ' + error.message);
+                console.error('Error uploading avatar to Cloudinary:', error);
+                alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                avatarLoading.classList.remove('active');
             });
-        }
+        }, file.type, 0.6);
+    };
+    img.onerror = () => {
+        alert('Failed to process the image. Please try a different file.');
+        avatarLoading.classList.remove('active');
+    };
+});
 
-        okSuccess.addEventListener('click', () => {
-            successModal.classList.remove('active');
+avatarBgColorPicker.addEventListener('change', () => {
+    const color = avatarBgColorPicker.value;
+    profilePic.style.backgroundColor = color;
+
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            avatarBgColor: color,
+            updatedAt: firebase.database.ServerValue.TIMESTAMP
+        })
+        .catch(error => {
+            console.error('Error saving avatar background color:', error);
+            alert('Failed to save avatar background color: ' + error.message);
+        });
+    } else {
+        alert('You must be logged in to change the avatar background color.');
+    }
+});
+
+borderColorPicker.addEventListener('change', () => {
+    const color = borderColorPicker.value;
+    profilePic.style.borderColor = color;
+
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            borderColor: color,
+            updatedAt: firebase.database.ServerValue.TIMESTAMP
+        })
+        .catch(error => {
+            console.error('Error saving border color:', error);
+            alert('Failed to save border color: ' + error.message);
+        });
+    } else {
+        alert('You must be logged in to change the border color.');
+    }
+});
+
+borderTypeSelect.addEventListener('change', () => {
+    const borderType = borderTypeSelect.value;
+    profilePic.style.borderStyle = borderType;
+
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            borderType: borderType,
+            updatedAt: firebase.database.ServerValue.TIMESTAMP
+        })
+        .catch(error => {
+            console.error('Error saving border type:', error);
+            alert('Failed to save border type: ' + error.message);
+        });
+    } else {
+        alert('You must be logged in to change the border type.');
+    }
+});
+
+if (localStorage.getItem('darkTheme') === 'enabled') {
+    body.classList.add('dark-theme');
+    themeToggle.checked = true;
+}
+
+themeToggle.addEventListener('change', function() {
+    if (this.checked) {
+        body.classList.add('dark-theme');
+        localStorage.setItem('darkTheme', 'enabled');
+    } else {
+        body.classList.remove('dark-theme');
+        localStorage.setItem('darkTheme', 'disabled');
+    }
+});
+
+mobileMenuIcon.addEventListener('click', function() {
+    sidebar.classList.toggle('active');
+    const icon = mobileMenuIcon.querySelector('i');
+    if (sidebar.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+});
+
+document.querySelectorAll('a[href]').forEach(link => {
+    if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+        link.addEventListener('click', function(e) {
+            if (!this.href.includes(window.location.hostname)) return;
+
+            e.preventDefault();
+            loaderOverlay.classList.add('active');
+
+            setTimeout(() => {
+                window.location.href = this.href;
+            }, 150);
+        });
+    }
+});
+
+function saveLaw(lawTitle) {
+    const user = auth.currentUser;
+    if (!user) {
+        alert('You must be logged in to save a law.');
+        return;
+    }
+
+    const sanitizedEmail = user.email.replace(/\./g, ',');
+    const lawRef = database.ref(`users/${sanitizedEmail}/savedLaws`).push();
+    lawRef.set({
+        title: lawTitle,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+    })
+    .then(() => {
+        successModal.classList.add('active');
+    })
+    .catch(error => {
+        console.error('Error saving law:', error);
+        alert('Failed to save law: ' + error.message);
+    });
+}
+
+okSuccess.addEventListener('click', () => {
+    successModal.classList.remove('active');
+});
+
+async function fetchLawsFromAI(query) {
+    try {
+        const fuse = new Fuse(laws, {
+            keys: ['title', 'description', 'scenario'],
+            threshold: 0.3,
+            distance: 200,
+            minMatchCharLength: 2
         });
 
-        async function fetchLawsFromAI(query) {
-            try {
-                const apiKey = 'AIzaSyC6AMWZQnwjvQ-tn4XbXmI4Ynet9Weynl0'; // Replace with your Gemini API key
-                const url = `https://api.gemini.google.com/v1/models/gemini-1.5-pro:generateContent?key=${apiKey}`;
-                const prompt = `
-                    Based on the following Philippine cybercrime laws: ${JSON.stringify(laws)}, analyze this user query: "${query}". 
-                    Identify 1 main law that best matches the query and up to 4 alternative laws as suggestions. 
-                    Return the result in JSON format with the following structure:
-                    {
-                        "mainLaw": { "title": "", "description": "", "scenario": "", "punishment": "", "image": "", "pdfwebsite": "" },
-                        "alternativeLaws": [
-                            { "title": "", "description": "", "scenario": "", "punishment": "", "image": "", "pdfwebsite": "" },
-                            ...
-                        ]
-                    }
-                    Ensure that all returned laws exist in the provided list and match the exact titles and details.
-                `;
-
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Gemini API request failed with status ${response.status}`);
-                }
-
-                const data = await response.json();
-                const result = JSON.parse(data.candidates[0].content.parts[0].text);
-
-                // Validate that returned laws exist in the laws array
-                const validateLaw = (law) => {
-                    const foundLaw = laws.find(l => l.title === law.title);
-                    if (!foundLaw) {
-                        throw new Error(`Law "${law.title}" not found in the laws array.`);
-                    }
-                    return foundLaw;
-                };
-
-                const mainLaw = result.mainLaw ? validateLaw(result.mainLaw) : null;
-                const alternativeLaws = result.alternativeLaws
-                    .map(law => validateLaw(law))
-                    .filter(law => law.title !== mainLaw?.title)
-                    .slice(0, 4);
-
-                return { mainLaw, alternativeLaws };
-            } catch (error) {
-                console.error('Error in fetchLawsFromAI:', error);
-                return { mainLaw: null, alternativeLaws: [] };
-            }
+        const results = fuse.search(query);
+        
+        if (!results.length) {
+            return { mainLaw: null, alternativeLaws: [] };
         }
 
-        function renderLawCards(mainLaw, alternativeLaws) {
-            cardsContainer.innerHTML = '';
+        const mainLaw = results[0].item.title;
+        const alternativeLaws = results.slice(1, 4).map(res => res.item.title);
 
-            const query = searchInput.value.trim();
-            
-            if (mainLaw) {
-                const mainCard = document.createElement('div');
-                mainCard.className = 'card main-law highlight';
-                mainCard.innerHTML = `
+        return { mainLaw, alternativeLaws };
+    } catch (error) {
+        console.error('Error in fetchLawsFromAI:', error);
+        return { mainLaw: null, alternativeLaws: [] };
+    }
+}
+
+function renderLawCards(mainLawTitle, alternativeLawTitles) {
+    cardsContainer.innerHTML = '';
+
+    const query = searchInput.value.trim();
+    
+    if (mainLawTitle) {
+        const mainLaw = laws.find(law => law.title === mainLawTitle);
+        if (mainLaw) {
+            const mainCard = document.createElement('div');
+            mainCard.className = 'card main-law highlight';
+            mainCard.innerHTML = `
+                <div class="image_container">
+                    <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
+                </div>
+                <div class="cybercrime-title">
+                    <span>${mainLaw.title}</span>
+                </div>
+                <div class="cybercrime-description">
+                    <p><strong>Description:</strong> <span class="description-text">${mainLaw.description}</span></p>
+                    <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario}</span></p>
+                    <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    ${mainLaw.pdfwebsite ? `
+                    <a href="${mainLaw.pdfwebsite}" class="border-button" target="_blank">
+                        <span class="button-text">Read More</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                    </a>` : ''}
+                    <button class="save-button" data-title="${mainLaw.title}">
+                        <span class="button-text">Save Law</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                    </button>
+                </div>
+            `;
+            cardsContainer.appendChild(mainCard);
+
+            if (query) {
+                ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
+                    const element = mainCard.querySelector(`.${className}`);
+                    highlightText(element, query);
+                });
+            }
+        }
+    } else {
+        cardsContainer.innerHTML = '<p>No relevant laws found for your search.</p>';
+        return;
+    }
+
+    if (alternativeLawTitles.length > 0) {
+        const alternativesSection = document.createElement('div');
+        alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
+        alternativesSection.style.width = '100%';
+        alternativesSection.style.textAlign = 'center';
+        alternativesSection.style.marginTop = '40px';
+        cardsContainer.appendChild(alternativesSection);
+
+        const alternativesContainer = document.createElement('div');
+        alternativesContainer.className = 'cards-container';
+        alternativeLawTitles.forEach(title => {
+            const law = laws.find(l => l.title === title);
+            if (law) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
                     <div class="image_container">
-                        <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
+                        <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
                     </div>
                     <div class="cybercrime-title">
-                        <span>${mainLaw.title}</span>
+                        <span>${law.title}</span>
                     </div>
                     <div class="cybercrime-description">
-                        <p><strong>Description:</strong> <span class="description-text">${mainLaw.description}</span></p>
-                        <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario}</span></p>
-                        <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
+                        <p><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
+                        <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
+                        <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                        ${mainLaw.pdfwebsite ? `
-                        <a href="${mainLaw.pdfwebsite}" class="border-button" target="_blank">
+                        ${law.pdfwebsite ? `
+                        <a href="${law.pdfwebsite}" class="border-button" target="_blank">
                             <span class="button-text">Read More</span>
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>` : ''}
-                        <button class="save-button" data-title="${mainLaw.title}">
+                        <button class="save-button" data-title="${law.title}">
                             <span class="button-text">Save Law</span>
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                        </button>
+                    </button>
                     </div>
                 `;
-                cardsContainer.appendChild(mainCard);
+                alternativesContainer.appendChild(card);
 
                 if (query) {
                     ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
-                        const element = mainCard.querySelector(`.${className}`);
+                        const element = card.querySelector(`.${className}`);
                         highlightText(element, query);
                     });
                 }
-            } else {
-                cardsContainer.innerHTML = '<p>No relevant laws found for your search.</p>';
-                return;
             }
-
-            if (alternativeLaws.length > 0) {
-                const alternativesSection = document.createElement('div');
-                alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
-                alternativesSection.style.width = '100%';
-                alternativesSection.style.textAlign = 'center';
-                alternativesSection.style.marginTop = '40px';
-                cardsContainer.appendChild(alternativesSection);
-
-                const alternativesContainer = document.createElement('div');
-                alternativesContainer.className = 'cards-container';
-                alternativeLaws.forEach(law => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="image_container">
-                            <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
-                        </div>
-                        <div class="cybercrime-title">
-                            <span>${law.title}</span>
-                        </div>
-                        <div class="cybercrime-description">
-                            <p><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
-                            <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
-                            <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
-                        </div>
-                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                            ${law.pdfwebsite ? `
-                            <a href="${law.pdfwebsite}" class="border-button" target="_blank">
-                                <span class="button-text">Read More</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                            </a>` : ''}
-                            <button class="save-button" data-title="${law.title}">
-                                <span class="button-text">Save Law</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                            </button>
-                        </div>
-                    `;
-                    alternativesContainer.appendChild(card);
-
-                    if (query) {
-                        ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
-                            const element = card.querySelector(`.${className}`);
-                            highlightText(element, query);
-                        });
-                    }
-                });
-                cardsContainer.appendChild(alternativesContainer);
-            }
-
-            document.querySelectorAll('.save-button').forEach(button => {
-                button.removeEventListener('click', saveLawHandler);
-                button.addEventListener('click', saveLawHandler);
-            });
-        }
-
-        function saveLawHandler() {
-            const lawTitle = this.getAttribute('data-title');
-            saveLaw(lawTitle);
-        }
-
-        const defaultCards = [
-            {
-                title: "UN: Asian Scam Calls Now a Global Export",
-                image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
-                description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
-            },
-            {
-                title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
-                image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
-                description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
-            },
-            {
-                title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
-                image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
-                description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
-            }
-        ];
-
-        defaultCards.forEach(cardData => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div class="image_container">
-                    <img src="${cardData.image}" alt="Cybercrime Image">
-                </div>
-                <div class="cybercrime-title">
-                    <span>${cardData.title}</span>
-                </div>
-                <div class="cybercrime-description">
-                    <p>Cybercrime</p>
-                    <p>${cardData.description}</p>
-                </div>
-                <a href="News.html" class="border-button">
-                    <span class="button-text">Read More</span>
-                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                </a>
-            `;
-            cardsContainer.appendChild(card);
         });
+        cardsContainer.appendChild(alternativesContainer);
+    }
 
-        async function performSearch(query) {
-            try {
-                if (query) {
-                    fingerprintIcon.classList.add('scanning');
-                    fingerprintIcon.style.opacity = '1'; // Ensure visibility
-                    sectionTitle.textContent = 'RELEVANT LAW';
-                    loaderOverlay.classList.add('active');
-
-                    const user = auth.currentUser;
-                    if (user) {
-                        const sanitizedEmail = user.email.replace(/\./g, ',');
-                        database.ref(`users/${sanitizedEmail}/searchHistory`).push({
-                            query: query,
-                            timestamp: firebase.database.ServerValue.TIMESTAMP
-                        });
-                    }
-
-                    const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
-                    if (mainLaw && alternativeLaws) {
-                        renderLawCards(mainLaw, alternativeLaws);
-                    } else {
-                        cardsContainer.innerHTML = '<p>No relevant laws found for your search.</p>';
+    document.querySelectorAll('.save-button').forEach(button => {
+        button.removeEventListener('click', saveLawHandler);
+        button.addEventListener('click', saveLawHandler);
+    });
 }
-} else {
-sectionTitle.textContent = 'TOP ARTICLES';
-renderLawCards(null, []);
-cardsContainer.innerHTML = '';
+
+function saveLawHandler() {
+    const lawTitle = this.getAttribute('data-title');
+    saveLaw(lawTitle);
+}
+
+const defaultCards = [
+    {
+        title: "UN: Asian Scam Calls Now a Global Export",
+        image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
+        description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
+    },
+    {
+        title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
+        image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
+        description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
+    },
+    {
+        title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
+        image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
+        description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
+    }
+];
+
 defaultCards.forEach(cardData => {
-const card = document.createElement('div');
-card.className = 'card';
-card.innerHTML = `
-
-<div class="image_container"> <img src="${cardData.image}" alt="Cybercrime Image"> </div> <div class="cybercrime-title"> <span>${cardData.title}</span> </div> <div class="cybercrime-description"> <p>Cybercrime</p> <p>${cardData.description}</p> </div> <a href="News.html" class="border-button"> <span class="button-text">Read More</span> <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span> </a> `; cardsContainer.appendChild(card); }); } } catch (error) { console.error('Search error:', error); cardsContainer.innerHTML = '<p>An error occurred while searching. Please try again.</p>'; } finally { fingerprintIcon.classList.remove('scanning'); loaderOverlay.classList.remove('active'); } }
-function highlightText(element, query) {
-if (!element || !query) return;
-const text = element.textContent;
-const regex = new RegExp(query, 'gi');
-element.innerHTML = text.replace(regex, '<span style="background-color: yellow;">$1</span>');
-}
-
-searchInput.addEventListener('keypress', (e) => {
-if (e.key === 'Enter') {
-performSearch(searchInput.value.trim());
-}
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+        <div class="image_container">
+            <img src="${cardData.image}" alt="Cybercrime Image">
+        </div>
+        <div class="cybercrime-title">
+            <span>${cardData.title}</span>
+        </div>
+        <div class="cybercrime-description">
+            <p>Cybercrime</p>
+            <p>${cardData.description}</p>
+        </div>
+        <a href="News.html" class="border-button">
+            <span class="button-text">Read More</span>
+            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+        </a>
+    `;
+    cardsContainer.appendChild(card);
 });
 
-document.querySelector('.search-icon').addEventListener('click', () => {
-performSearch(searchInput.value.trim());
+async function performSearch(query) {
+    try {
+        if (query) {
+            fingerprintIcon.classList.add('scanning');
+            fingerprintIcon.style.opacity = '1'; // Ensure visibility
+            sectionTitle.textContent = 'RELEVANT LAW';
+            loaderOverlay.classList.add('active');
+
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}/searchHistory`).push({
+                    query: query,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
+            }
+
+            const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+            if (mainLaw && alternativeLaws) {
+                renderLawCards(mainLaw, alternativeLaws);
+            } else {
+                cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
+            }
+        } else {
+            sectionTitle.textContent = 'TOP ARTICLES';
+            cardsContainer.innerHTML = '';
+            defaultCards.forEach(cardData => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="image_container">
+                        <img src="${cardData.image}" alt="Cybercrime Image">
+                    </div>
+                    <div class="cybercrime-title">
+                        <span>${cardData.title}</span>
+                    </div>
+                    <div class="cybercrime-description">
+                        <p>Cybercrime</p>
+                        <p>${cardData.description}</p>
+                    </div>
+                    <a href="News.html" class="border-button">
+                        <span class="button-text">Read More</span>
+                        <span class="iconer">
+                            <svg height="24" width="24" viewBox="0 0 24 22" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                    </a>
+                `;
+                cardsContainer.appendChild(card);
+            });
+        }
+    } catch (error) {
+        console.error('Error in search:', error);
+        cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
+    } finally {
+        loaderOverlay.classList.remove('active');
+        if (query) {
+            fingerprintIcon.classList.add('scanning');
+            fingerprintIcon.style.opacity = '1';
+        }
+    }
+}
+
+window.addEventListener('load', () => {
+    performSearch('');
+});
+
+searchInput.addEventListener('keypress', async (e) => {
+    if (e.key === 'Enter') {
+        const query = searchInput.value.trim();
+        await performSearch(query);
+    }
+});
+
+document.querySelector('.search-icon').addEventListener('click', async () => {
+    const query = searchInput.value.trim();
+    await performSearch(query);
+});
+
+document.querySelector('.search-icon').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault(); 
+        const query = searchInput.value.trim();
+        performSearch(query);
+    }
+});
+
+function highlightText(element, query) {
+    if (!query) return;
+    const regex = new RegExp(`(${query})`, 'gi');
+    const text = element.innerHTML;
+    element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+}
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        const icon = mobileMenuIcon.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
 });
 
 function updateClock() {
-const now = new Date();
-const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-clock.textContent = now.toLocaleTimeString('en-US', options);
+    const now = new Date();
+    const philippinesTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Manila" }));
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const day = days[philippinesTime.getDay()];
+    const date = philippinesTime.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+    const time = philippinesTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true });
+    clock.textContent = `${day} ${date} ${time}`;
 }
 
 setInterval(updateClock, 1000);
 updateClock();
-</script>
-
-</body> </html>
+    </script>
+</body>
+</html>
