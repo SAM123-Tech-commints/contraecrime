@@ -1517,48 +1517,49 @@ body.dark-theme {
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/compromise@14.10.0/builds/compromise.min.js"></script>
     <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
-            authDomain: "contra-e-crime.firebaseapp.com",
-            projectId: "contra-e-crime",
-            storageBucket: "contra-e-crime.firebasestorage.app",
-            messagingSenderId: "198995444405",
-            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
-        };
+        apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
+        authDomain: "contra-e-crime.firebaseapp.com",
+        projectId: "contra-e-crime",
+        storageBucket: "contra-e-crime.firebasestorage.app",
+        messagingSenderId: "198995444405",
+        appId: "1:198995444405:web:5f8c6eed561461b36034fc",
+        databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
+    };
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
 
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
-        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+    const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
+    const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
-        const sidebar = document.getElementById('sidebar');
-        const loaderOverlay = document.getElementById('loaderOverlay');
-        const profilePic = document.getElementById('profilePic');
-        const customizationMenu = document.getElementById('customizationMenu');
-        const avatarInput = document.getElementById('avatarInput');
-        const avatarLoading = document.getElementById('avatarLoading');
-        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
-        const borderColorPicker = document.getElementById('borderColorPicker');
-        const borderTypeSelect = document.getElementById('borderTypeSelect');
-        const usernameDisplay = document.getElementById('usernameDisplay');
-        const emailDisplay = document.getElementById('emailDisplay');
-        const createdAtDisplay = document.getElementById('createdAtDisplay');
-        const searchInput = document.getElementById('searchInput');
-        const fingerprintIcon = document.getElementById('fingerprintIcon');
-        const cardsContainer = document.getElementById('cardsContainer');
-        const sectionTitle = document.getElementById('sectionTitle');
-        const successModal = document.getElementById('successModal');
-        const okSuccess = document.getElementById('okSuccess');
-        const clock = document.getElementById('clock');
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+    const sidebar = document.getElementById('sidebar');
+    const loaderOverlay = document.getElementById('loaderOverlay');
+    const profilePic = document.getElementById('profilePic');
+    const customizationMenu = document.getElementById('customizationMenu');
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarLoading = document.getElementById('avatarLoading');
+    const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+    const borderColorPicker = document.getElementById('borderColorPicker');
+    const borderTypeSelect = document.getElementById('borderTypeSelect');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    const emailDisplay = document.getElementById('emailDisplay');
+    const createdAtDisplay = document.getElementById('createdAtDisplay');
+    const searchInput = document.getElementById('searchInput');
+    const fingerprintIcon = document.getElementById('fingerprintIcon');
+    const cardsContainer = document.getElementById('cardsContainer');
+    const sectionTitle = document.getElementById('sectionTitle');
+    const successModal = document.getElementById('successModal');
+    const okSuccess = document.getElementById('okSuccess');
+    const clock = document.getElementById('clock');
 
-  const laws = [
+            const laws = [
     {
         title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
         description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
@@ -2029,6 +2030,8 @@ body.dark-theme {
     }
 ];
 
+    const searchCache = new Map();
+
     auth.onAuthStateChanged((user) => {
         if (user) {
             const currentUser = {
@@ -2341,32 +2344,99 @@ body.dark-theme {
         successModal.classList.remove('active');
     });
 
+    function normalizeQuery(query) {
+        const doc = window.nlp(query);
+        let tokens = doc.terms().out('array').map(term => term.toLowerCase().replace(/[^a-z0-9\s]/g, ''));
+
+        const synonyms = {
+            'hack': ['hacking', 'breach', 'unauthorized access'],
+            'fraud': ['scam', 'deception', 'cheat'],
+            'crime': ['offense', 'violation', 'felony']
+        };
+
+        tokens = tokens.flatMap(token => {
+            for (const [key, syns] of Object.entries(synonyms)) {
+                if (token.includes(key)) {
+                    return [token, ...syns];
+                }
+            }
+            return token;
+        });
+
+        return tokens.join(' ');
+    }
+
+    function localSearchFallback(query) {
+        const normalizedQuery = query.toLowerCase();
+        const matches = laws
+            .map(law => {
+                const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
+                const score = text.split(normalizedQuery).length - 1;
+                return { law, score };
+            })
+            .filter(item => item.score > 0)
+            .sort((a, b) => b.score - a.score);
+
+        if (matches.length === 0) {
+            return { mainLaw: null, alternativeLaws: [] };
+        }
+
+        const mainLaw = matches[0].law.title;
+        const alternativeLaws = matches
+            .slice(1, 5)
+            .map(item => item.law.title)
+            .slice(0, 4);
+
+        return { mainLaw, alternativeLaws };
+    }
+
     async function fetchLawsFromAI(query) {
         try {
+            const normalizedQuery = normalizeQuery(query);
+
+            if (searchCache.has(normalizedQuery)) {
+                return searchCache.get(normalizedQuery);
+            }
+
             const client = new Typesense.Client({
                 nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
                 apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
-                connectionTimeoutSeconds: 2,
+                connectionTimeoutSeconds: 2
             });
 
             const searchParameters = {
-                q: query,
+                q: normalizedQuery,
                 query_by: 'title,description,scenario',
+                query_by_weights: '2,1,1',
                 per_page: 5,
+                typo_tokens_threshold: 1,
+                num_typos: 2
             };
 
             const results = await client.collections('laws').documents().search(searchParameters);
 
-            if (!results.hits || results.hits.length === 0) {
-                return { mainLaw: null, alternativeLaws: [] };
+            let mainLaw = null;
+            let alternativeLaws = [];
+
+            if (results.hits && results.hits.length > 0) {
+                mainLaw = results.hits[0].document.title;
+                alternativeLaws = results.hits
+                    .slice(1, 5)
+                    .map(hit => hit.document.title)
+                    .filter(title => title !== mainLaw)
+                    .slice(0, 4);
             }
 
-            const mainLaw = results.hits[0].document.title;
-
-            let alternativeLaws = results.hits
-                .slice(1, 5)
-                .map(hit => hit.document.title)
-                .filter(title => title !== mainLaw);
+            if (!mainLaw || alternativeLaws.length < 4) {
+                const fallback = localSearchFallback(query);
+                if (fallback.mainLaw && !mainLaw) {
+                    mainLaw = fallback.mainLaw;
+                }
+                alternativeLaws = [
+                    ...alternativeLaws,
+                    ...fallback.alternativeLaws.filter(title => !alternativeLaws.includes(title) && title !== mainLaw)
+                ].slice(0, 4);
+            }
 
             while (alternativeLaws.length < 4 && laws.length > 0) {
                 const availableLaws = laws
@@ -2377,12 +2447,17 @@ body.dark-theme {
                 alternativeLaws.push(availableLaws[randomIndex]);
             }
 
-            alternativeLaws = alternativeLaws.slice(0, 4);
+            const result = { mainLaw, alternativeLaws };
+            searchCache.set(normalizedQuery, result);
+            if (searchCache.size > 100) {
+                const oldestKey = searchCache.keys().next().value;
+                searchCache.delete(oldestKey);
+            }
 
-            return { mainLaw, alternativeLaws };
+            return result;
         } catch (error) {
             console.error('Typesense search error:', error);
-            return { mainLaw: null, alternativeLaws: [] };
+            return localSearchFallback(query);
         }
     }
 
