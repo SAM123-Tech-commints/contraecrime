@@ -7,6 +7,11 @@
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typesense@1.7.0/dist/typesense.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/compromise@14.10.0/builds/compromise.min.js"></script>
     <style>
 * {
     box-sizing: border-box;
@@ -1559,7 +1564,7 @@ body.dark-theme {
     const okSuccess = document.getElementById('okSuccess');
     const clock = document.getElementById('clock');
 
-            const laws = [
+        const laws = [
     {
         title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
         description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
@@ -2031,6 +2036,10 @@ body.dark-theme {
 ];
 
     const searchCache = new Map();
+    let currentPage = 1;
+    let currentQuery = '';
+    let isLoadingMore = false;
+    let displayedLawTitles = new Set();
 
     auth.onAuthStateChanged((user) => {
         if (user) {
@@ -2041,9 +2050,9 @@ body.dark-theme {
             };
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-            usernameDisplay.textContent = `${currentUser.username}`;
-            emailDisplay.textContent = `${currentUser.email}`;
-            createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
+            usernameDisplay.textContent = currentUser.username;
+            emailDisplay.textContent = currentUser.email;
+            createdAtDisplay.textContent = new Date(currentUser.createdAt).toLocaleString();
 
             const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
@@ -2054,7 +2063,7 @@ body.dark-theme {
                     if (userData.avatarUrl) {
                         profilePic.src = userData.avatarUrl;
                     } else {
-                        profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                        profilePic.src = 'https://via.placeholder.com/50';
                     }
                     if (userData.avatarBgColor) {
                         profilePic.style.backgroundColor = userData.avatarBgColor;
@@ -2383,19 +2392,19 @@ body.dark-theme {
 
         const mainLaw = matches[0].law.title;
         const alternativeLaws = matches
-            .slice(1, 5)
-            .map(item => item.law.title)
-            .slice(0, 4);
+            .slice(1)
+            .map(item => item.law.title);
 
         return { mainLaw, alternativeLaws };
     }
 
-    async function fetchLawsFromAI(query) {
+    async function fetchLawsFromAI(query, page = 1) {
         try {
             const normalizedQuery = normalizeQuery(query);
+            const cacheKey = `${normalizedQuery}:${page}`;
 
-            if (searchCache.has(normalizedQuery)) {
-                return searchCache.get(normalizedQuery);
+            if (searchCache.has(cacheKey)) {
+                return searchCache.get(cacheKey);
             }
 
             const client = new Typesense.Client({
@@ -2409,6 +2418,7 @@ body.dark-theme {
                 query_by: 'title,description,scenario',
                 query_by_weights: '2,1,1',
                 per_page: 5,
+                page: page,
                 typo_tokens_threshold: 1,
                 num_typos: 2
             };
@@ -2421,10 +2431,9 @@ body.dark-theme {
             if (results.hits && results.hits.length > 0) {
                 mainLaw = results.hits[0].document.title;
                 alternativeLaws = results.hits
-                    .slice(1, 5)
+                    .slice(1)
                     .map(hit => hit.document.title)
-                    .filter(title => title !== mainLaw)
-                    .slice(0, 4);
+                    .filter(title => title !== mainLaw && !displayedLawTitles.has(title));
             }
 
             if (!mainLaw || alternativeLaws.length < 4) {
@@ -2434,21 +2443,12 @@ body.dark-theme {
                 }
                 alternativeLaws = [
                     ...alternativeLaws,
-                    ...fallback.alternativeLaws.filter(title => !alternativeLaws.includes(title) && title !== mainLaw)
-                ].slice(0, 4);
+                    ...fallback.alternativeLaws.filter(title => !alternativeLaws.includes(title) && title !== mainLaw && !displayedLawTitles.has(title))
+                ];
             }
 
-            while (alternativeLaws.length < 4 && laws.length > 0) {
-                const availableLaws = laws
-                    .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
-                    .map(law => law.title);
-                if (availableLaws.length === 0) break;
-                const randomIndex = Math.floor(Math.random() * availableLaws.length);
-                alternativeLaws.push(availableLaws[randomIndex]);
-            }
-
-            const result = { mainLaw, alternativeLaws };
-            searchCache.set(normalizedQuery, result);
+            const result = { mainLaw, alternativeLaws, totalResults: results.found || 0 };
+            searchCache.set(cacheKey, result);
             if (searchCache.size > 100) {
                 const oldestKey = searchCache.keys().next().value;
                 searchCache.delete(oldestKey);
@@ -2461,12 +2461,15 @@ body.dark-theme {
         }
     }
 
-    function renderLawCards(mainLawTitle, alternativeLawTitles) {
-        cardsContainer.innerHTML = '';
+    function renderLawCards(mainLawTitle, alternativeLawTitles, append = false) {
+        if (!append) {
+            cardsContainer.innerHTML = '';
+            displayedLawTitles.clear();
+        }
 
         const query = searchInput.value.trim();
 
-        if (mainLawTitle) {
+        if (mainLawTitle && !displayedLawTitles.has(mainLawTitle)) {
             const mainLaw = laws.find(law => law.title === mainLawTitle);
             if (mainLaw) {
                 const mainCard = document.createElement('div');
@@ -2496,6 +2499,7 @@ body.dark-theme {
                     </div>
                 `;
                 cardsContainer.appendChild(mainCard);
+                displayedLawTitles.add(mainLawTitle);
 
                 if (query) {
                     ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
@@ -2504,63 +2508,69 @@ body.dark-theme {
                     });
                 }
             }
-        } else {
-            cardsContainer.innerHTML = '<p>No relevant laws found for your search.</p>';
-            fingerprintIcon.classList.remove('scanning');
-            fingerprintIcon.style.opacity = '1';
-            return;
         }
 
-        if (alternativeLawTitles.length === 4) {
-            const alternativesSection = document.createElement('div');
-            alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
-            alternativesSection.style.width = '100%';
-            alternativesSection.style.textAlign = 'center';
-            alternativesSection.style.marginTop = '40px';
-            cardsContainer.appendChild(alternativesSection);
+        if (alternativeLawTitles.length > 0) {
+            if (!append) {
+                const alternativesSection = document.createElement('div');
+                alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
+                alternativesSection.style.width = '100%';
+                alternativesSection.style.textAlign = 'center';
+                alternativesSection.style.marginTop = '40px';
+                cardsContainer.appendChild(alternativesSection);
+            }
 
             const alternativesContainer = document.createElement('div');
             alternativesContainer.className = 'cards-container';
             alternativeLawTitles.forEach(title => {
-                const law = laws.find(l => l.title === title);
-                if (law) {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="image_container">
-                            <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
-                        </div>
-                        <div class="cybercrime-title">
-                            <span>${law.title}</span>
-                        </div>
-                        <div class="cybercrime-description">
-                            <p><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
-                            <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
-                            <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
-                        </div>
-                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                            ${law.pdfwebsite ? `
-                            <a href="${law.pdfwebsite}" class="border-button" target="_blank">
-                                <span class="button-text">Read More</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                            </a>` : ''}
-                            <button class="save-button" data-title="${law.title}">
-                                <span class="button-text">Save Law</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                            </button>
-                        </div>
-                    `;
-                    alternativesContainer.appendChild(card);
+                if (!displayedLawTitles.has(title)) {
+                    const law = laws.find(l => l.title === title);
+                    if (law) {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        card.innerHTML = `
+                            <div class="image_container">
+                                <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
+                            </div>
+                            <div class="cybercrime-title">
+                                <span>${law.title}</span>
+                            </div>
+                            <div class="cybercrime-description">
+                                <p><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
+                                <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
+                                <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
+                            </div>
+                            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                                ${law.pdfwebsite ? `
+                                <a href="${law.pdfwebsite}" class="border-button" target="_blank">
+                                    <span class="button-text">Read More</span>
+                                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                                </a>` : ''}
+                                <button class="save-button" data-title="${law.title}">
+                                    <span class="button-text">Save Law</span>
+                                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                                </button>
+                            </div>
+                        `;
+                        alternativesContainer.appendChild(card);
+                        displayedLawTitles.add(title);
 
-                    if (query) {
-                        ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
-                            const element = card.querySelector(`.${className}`);
-                            highlightText(element, query);
-                        });
+                        if (query) {
+                            ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
+                                const element = card.querySelector(`.${className}`);
+                                highlightText(element, query);
+                            });
+                        }
                     }
                 }
             });
-            cardsContainer.appendChild(alternativesContainer);
+            if (alternativesContainer.children.length > 0) {
+                cardsContainer.appendChild(alternativesContainer);
+            }
+        }
+
+        if (cardsContainer.children.length === 0) {
+            cardsContainer.innerHTML = '<p>No relevant laws found for your search.</p>';
         }
 
         document.querySelectorAll('.save-button').forEach(button => {
@@ -2569,7 +2579,6 @@ body.dark-theme {
         });
 
         fingerprintIcon.classList.remove('scanning');
-        fingerprintIcon.style.opacity = '1';
     }
 
     function saveLawHandler() {
@@ -2595,33 +2604,35 @@ body.dark-theme {
         }
     ];
 
-    defaultCards.forEach(cardData => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <div class="image_container">
-                <img src="${cardData.image}" alt="Cybercrime Image">
-            </div>
-            <div class="cybercrime-title">
-                <span>${cardData.title}</span>
-            </div>
-            <div class="cybercrime-description">
-                <p>Cybercrime</p>
-                <p>${cardData.description}</p>
-            </div>
-            <a href="News.html" class="border-button">
-                <span class="button-text">Read More</span>
-                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-            </a>
-        `;
-        cardsContainer.appendChild(card);
-    });
+    function renderDefaultCards() {
+        cardsContainer.innerHTML = '';
+        defaultCards.forEach(cardData => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="image_container">
+                    <img src="${cardData.image}" alt="Cybercrime Image">
+                </div>
+                <div class="cybercrime-title">
+                    <span>${cardData.title}</span>
+                </div>
+                <div class="cybercrime-description">
+                    <p>Cybercrime</p>
+                    <p>${cardData.description}</p>
+                </div>
+                <a href="News.html" class="border-button">
+                    <span class="button-text">Read More</span>
+                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                </a>
+            `;
+            cardsContainer.appendChild(card);
+        });
+    }
 
-    async function performSearch(query) {
+    async function performSearch(query, page = 1, append = false) {
         try {
             if (query) {
                 fingerprintIcon.classList.add('scanning');
-                fingerprintIcon.style.opacity = '1';
                 sectionTitle.textContent = 'RELEVANT LAW';
                 loaderOverlay.classList.add('active');
 
@@ -2634,96 +2645,97 @@ body.dark-theme {
                     });
                 }
 
-                const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
-                if (mainLaw && alternativeLaws.length === 4) {
-                    renderLawCards(mainLaw, alternativeLaws);
+                currentQuery = query;
+                currentPage = page;
+
+                                const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query, page);
+                if (mainLaw || alternativeLaws.length > 0) {
+                    renderLawCards(mainLaw, alternativeLaws, append);
                 } else {
-                    cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
+                    cardsContainer.innerHTML = '<p>No relevant laws found for your search.</p>';
                     fingerprintIcon.classList.remove('scanning');
-                    fingerprintIcon.style.opacity = '1';
                 }
             } else {
                 sectionTitle.textContent = 'TOP ARTICLES';
-                cardsContainer.innerHTML = '';
+                renderDefaultCards();
+                currentQuery = '';
+                currentPage = 1;
+                displayedLawTitles.clear();
                 fingerprintIcon.classList.remove('scanning');
-                fingerprintIcon.style.opacity = '1';
-                defaultCards.forEach(cardData => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <div class="image_container">
-                            <img src="${cardData.image}" alt="Cybercrime Image">
-                        </div>
-                        <div class="cybercrime-title">
-                            <span>${cardData.title}</span>
-                        </div>
-                        <div class="cybercrime-description">
-                            <p>Cybercrime</p>
-                            <p>${cardData.description}</p>
-                        </div>
-                        <a href="News.html" class="border-button">
-                            <span class="button-text">Read More</span>
-                            <span class="iconer">
-                                <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
-                                </svg>
-                            </span>
-                        </a>
-                    `;
-                    cardsContainer.appendChild(card);
-                });
             }
         } catch (error) {
-            console.error('Error in search:', error);
-            cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
+            console.error('Search error:', error);
+            cardsContainer.innerHTML = '<p>Error performing search. Please try again.</p>';
             fingerprintIcon.classList.remove('scanning');
-            fingerprintIcon.style.opacity = '1';
         } finally {
             loaderOverlay.classList.remove('active');
+            isLoadingMore = false;
         }
     }
 
-    searchInput.addEventListener('keypress', function(e) {
+    function highlightText(element, query) {
+        if (!element || !query) return;
+        const regex = new RegExp(`(${query})`, 'gi');
+        element.innerHTML = element.textContent.replace(regex, '<mark>$1</mark>');
+    }
+
+    searchInput.addEventListener('input', async () => {
+        const query = searchInput.value.trim();
+        currentPage = 1;
+        displayedLawTitles.clear();
+        await performSearch(query);
+    });
+
+    searchInput.addEventListener('keypress', async (e) => {
         if (e.key === 'Enter') {
             const query = searchInput.value.trim();
-            performSearch(query);
+            currentPage = 1;
+            displayedLawTitles.clear();
+            await performSearch(query);
         }
     });
 
-    document.querySelector('.search-icon').addEventListener('click', function() {
+    document.querySelector('.search-icon').addEventListener('click', async () => {
         const query = searchInput.value.trim();
-        performSearch(query);
+        currentPage = 1;
+        displayedLawTitles.clear();
+        await performSearch(query);
     });
 
-    function highlightText(element, query) {
-        if (!element || !query) return;
-        const text = element.textContent;
-        const regex = new RegExp(`(${query})`, 'gi');
-        element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
+    function setupInfiniteScroll() {
+        const observer = new IntersectionObserver(async (entries) => {
+            if (entries[0].isIntersecting && !isLoadingMore && currentQuery) {
+                isLoadingMore = true;
+                currentPage += 1;
+                await performSearch(currentQuery, currentPage, true);
+            }
+        }, {
+            root: null,
+            rootMargin: '200px',
+            threshold: 0.1
+        });
+
+        const sentinel = document.createElement('div');
+        sentinel.id = 'sentinel';
+        sentinel.style.height = '10px';
+        cardsContainer.appendChild(sentinel);
+        observer.observe(sentinel);
     }
 
     function updateClock() {
         const now = new Date();
-        const options = {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true,
-            timeZoneName: 'short'
-        };
-        clock.textContent = now.toLocaleTimeString('en-US', options);
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        clock.textContent = `${hours}:${minutes}:${seconds}`;
     }
 
     setInterval(updateClock, 1000);
     updateClock();
 
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-            sidebar.classList.remove('active');
-            mobileMenuIcon.querySelector('i').classList.remove('fa-times');
-            mobileMenuIcon.querySelector('i').classList.add('fa-bars');
-        }
+    window.addEventListener('load', () => {
+        renderDefaultCards();
+        setupInfiniteScroll();
     });
 </script>
 </body>
