@@ -2541,7 +2541,10 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
 
     if (alternativeLawTitles.length > 0) {
         const alternativesSection = document.createElement('div');
-        alternativesSection.innerHTML = '<h2 style="text-align: center; margin-top: 40px; margin-bottom: 20px;">Alternative Laws Suggested</h2>';
+         alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
+                alternativesSection.style.width = '100%';
+                alternativesSection.style.textAlign = 'center';
+                alternativesSection.style.marginTop = '40px';
         cardsContainer.appendChild(alternativesSection);
 
         const alternativesContainer = document.createElement('div');
