@@ -1564,7 +1564,7 @@ const successModal = document.getElementById('successModal');
 const okSuccess = document.getElementById('okSuccess');
 const clock = document.getElementById('clock');
 
-        const laws = [
+  const laws = [
     {
         title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
         description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
@@ -2035,6 +2035,7 @@ const clock = document.getElementById('clock');
     }
 ];
 
+
 const searchCache = new Map();
 
 // Auto-search logic for handling queries from History.html
@@ -2382,26 +2383,46 @@ okSuccess.addEventListener('click', () => {
 
 function normalizeQuery(query) {
     if (!query || typeof query !== 'string') return '';
-    // Enhanced normalization with Compromise for Typesense 1.14.0
+    // Enhanced normalization with Compromise
     const doc = nlp(query.trim().toLowerCase());
     const normalized = doc
-        .normalize({ punctuation: true, possessives: true, plurals: true })
+        .normalize({ punctuation: true, possessives: true, plurals: true, contractions: true })
         .text()
-        .replace(/[^a-z0-9\s]/g, ' ');
+        .replace(/[^a-z0-9\s]/g, ' ') // Remove special characters
+        .split(/\s+/) // Split into words
+        .filter(word => word.length > 1) // Remove single-character words
+        .join(' '); // Rejoin for Typesense
     return normalized;
 }
 
 function localSearchFallback(query) {
     const normalizedQuery = normalizeQuery(query);
+    const keywords = normalizedQuery.split(/\s+/).filter(k => k.length > 1); // Split into keywords
+    if (keywords.length === 0) {
+        return { mainLaw: null, alternativeLaws: [] };
+    }
+
     const matches = laws
         .map(law => {
             const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
-            const keywords = normalizedQuery.split(' ').filter(k => k);
-            const score = keywords.reduce((acc, keyword) => acc + (text.includes(keyword) ? 1 : 0), 0);
+            // Score based on keyword matches (exact and partial)
+            let score = 0;
+            keywords.forEach(keyword => {
+                const regex = new RegExp(`\\b${keyword}\\b`, 'i'); // Exact word match
+                if (regex.test(text)) {
+                    score += 2; // Higher weight for exact matches
+                } else if (text.includes(keyword)) {
+                    score += 1; // Partial match
+                }
+                // Boost score for title matches
+                if (law.title.toLowerCase().match(regex)) {
+                    score += 3;
+                }
+            });
             return { law, score };
         })
         .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score);
+        .sort((a, b) => b.score - a.score); // Sort by score descending
 
     if (matches.length === 0) {
         return { mainLaw: null, alternativeLaws: [] };
@@ -2413,6 +2434,7 @@ function localSearchFallback(query) {
         .map(item => item.law.title)
         .slice(0, 4);
 
+    // Fill remaining slots with random laws if needed
     while (alternativeLaws.length < 4 && laws.length > 0) {
         const availableLaws = laws
             .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
@@ -2420,14 +2442,6 @@ function localSearchFallback(query) {
         if (availableLaws.length === 0) break;
         const randomIndex = Math.floor(Math.random() * availableLaws.length);
         alternativeLaws.push(availableLaws[randomIndex]);
-    }
-
-    while (alternativeLaws.length < 4 && laws.length > 0) {
-        const availableLaws = laws.map(law => law.title);
-        const randomIndex = Math.floor(Math.random() * availableLaws.length);
-        if (!alternativeLaws.includes(availableLaws[randomIndex])) {
-            alternativeLaws.push(availableLaws[randomIndex]);
-        }
     }
 
     return { mainLaw, alternativeLaws };
@@ -2469,8 +2483,9 @@ async function fetchLawsFromAI(query) {
             infix: 'always',
             drop_tokens_threshold: 1,
             locale: 'auto',
-            synonyms: true, 
-            phrase_match: true 
+            synonyms: true,
+            phrase_match: true,
+            split_join_tokens: 'always' // Enable keyword splitting
         };
 
         const results = await client.collections('laws').documents().search(searchParameters);
@@ -2544,8 +2559,8 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                     <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    ${mainLaw.pdf ? `
-                    <a href="${mainLaw.pdf}" class="border-button" target="_blank">
+                    ${mainLaw.pdfwebsite ? `
+                    <a href="${mainLaw.pdfwebsite}" class="border-button" target="_blank">
                         <span class="button-text">Read More</span>
                         <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                     </a>` : ''}
@@ -2604,8 +2619,8 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                         <p style="margin: 5px 0;"><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end; padding: 10px;">
-                        ${law.pdf ? `
-                        <a href="${law.pdf}" class="border-button" target="_blank">
+                        ${law.pdfwebsite ? `
+                        <a href="${law.pdfwebsite}" class="border-button" target="_blank">
                             <span class="button-text">Read More</span>
                             <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>` : ''}
