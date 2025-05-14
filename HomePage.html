@@ -806,6 +806,12 @@ body:not(.dark-theme) .card {
 
 .cybercrime-description p {
     margin: 5px 0;
+    white-space: pre-wrap; 
+}
+
+.cybercrime-description strong {
+    display: inline-block;
+    margin-right: 5px; 
 }
 
 .border-button {
@@ -2563,9 +2569,9 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                     <span>${mainLaw.title.trim()}</span>
                 </div>
                 <div class="cybercrime-description">
-                    <p><strong>Description:</strong> <span class="description-text">${mainLaw.description.trim()}</span></p>
-                    <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario.trim()}</span></p>
-                    <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment.trim()}</span></p>
+                    <p><strong>Description:</strong> ${mainLaw.description.trim()}</p>
+                    <p><strong>Scenario:</strong> ${mainLaw.scenario.trim()}</p>
+                    <p><strong>Punishment:</strong> ${mainLaw.punishment.trim()}</p>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
                     ${mainLaw.pdfwebsite ? `
@@ -2584,7 +2590,7 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
             if (query) {
                 ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
                     const element = mainCard.querySelector(`.${className}`);
-                    highlightText(element, query);
+                    if (element) highlightText(element, query);
                 });
             }
         }
@@ -2623,9 +2629,9 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                         <span>${law.title.trim()}</span>
                     </div>
                     <div class="cybercrime-description">
-                        <p><strong>Description:</strong> <span class="description-text">${law.description.trim()}</span></p>
-                        <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario.trim()}</span></p>
-                        <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment.trim()}</span></p>
+                        <p><strong>Description:</strong> ${law.description.trim()}</p>
+                        <p><strong>Scenario:</strong> ${law.scenario.trim()}</p>
+                        <p><strong>Punishment:</strong> ${law.punishment.trim()}</p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end; padding: 10px;">
                         ${law.pdfwebsite ? `
@@ -2644,7 +2650,7 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                 if (query) {
                     ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
                         const element = card.querySelector(`.${className}`);
-                        highlightText(element, query);
+                        if (element) highlightText(element, query);
                     });
                 }
             }
