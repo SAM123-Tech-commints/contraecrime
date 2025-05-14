@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
        <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
-       <script src="https://cdn.jsdelivr.net/npm/franc-min@6.2.0/franc-min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -1518,8 +1517,10 @@ body.dark-theme {
             </div>
         </footer>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/franc-min@6.2.0/franc-min.js"></script>
+
+    <!-- Load Typesense -->
 <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -2036,6 +2037,7 @@ const clock = document.getElementById('clock');
     }
 ];
 
+
 const searchCache = new Map();
 
 // Auto-search logic for handling queries from History.html
@@ -2375,38 +2377,20 @@ okSuccess.addEventListener('click', () => {
     successModal.classList.remove('active');
 });
 
-function normalizeQuery(query, detectedLang) {
+function normalizeQuery(query) {
     if (!query || typeof query !== 'string') return '';
-    const stopWords = {
-        en: ['a', 'an', 'the', 'is', 'are', 'was', 'were', 'be', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for'],
-        fil: ['ng', 'sa', 'at', 'si', 'kay', 'para', 'nang', 'mga', 'ang', 'ay', 'na']
-    };
-
-    // Preserve language-specific characters (Unicode)
-    let normalized = query.trim().toLowerCase().replace(/\s+/g, ' ');
-
-    // Apply stop words based on detected language
-    const langStopWords = stopWords[detectedLang] || stopWords.en;
-    normalized = normalized
-        .split(' ')
-        .filter(word => word.length >= 2 && !langStopWords.includes(word))
-        .join(' ');
-
-    // Fallback to original trimmed query if normalization removes everything
-    return normalized || query.trim().toLowerCase();
+    // Minimal normalization: trim and lowercase, preserve Unicode characters
+    return query.trim().toLowerCase().replace(/\s+/g, ' ');
 }
 
-function localSearchFallback(query, detectedLang) {
-    const normalizedQuery = normalizeQuery(query, detectedLang);
+function localSearchFallback(query) {
+    const normalizedQuery = normalizeQuery(query);
     if (!normalizedQuery) return { mainLaw: null, alternativeLaws: [] };
 
     const matches = laws
         .map(law => {
-            // Search language-specific fields based on detected language
-            const textFields = detectedLang === 'fil' && law.title_fil
-                ? `${law.title_fil} ${law.description_fil || law.description} ${law.scenario_fil || law.scenario}`
-                : `${law.title} ${law.description} ${law.scenario}`;
-            const text = textFields.toLowerCase();
+            // Search all fields, including multilingual ones
+            const text = `${law.title} ${law.description} ${law.scenario} ${law.title_fil || ''} ${law.description_fil || ''} ${law.scenario_fil || ''}`.toLowerCase();
             const score = text.includes(normalizedQuery) ? 2 : 0;
             if (score === 0 && normalizedQuery.length >= 2) {
                 const regex = new RegExp(normalizedQuery.split('').join('.*'), 'i');
@@ -2441,9 +2425,7 @@ function localSearchFallback(query, detectedLang) {
 
 async function fetchLawsFromAI(query) {
     try {
-        // Detect query language using franc
-        const detectedLang = franc(query, { minLength: 3, whitelist: ['eng', 'fil', 'spa', 'fra', 'deu', 'zho', 'ara'] }) || 'eng';
-        const normalizedQuery = normalizeQuery(query, detectedLang);
+        const normalizedQuery = normalizeQuery(query);
         if (!normalizedQuery) {
             throw new Error('Empty or invalid query');
         }
@@ -2464,27 +2446,21 @@ async function fetchLawsFromAI(query) {
             throw new Error('Typesense collection "laws" not found or inaccessible');
         }
 
-        // Dynamically adjust query_by based on detected language
-        const queryByFields = detectedLang === 'fil'
-            ? 'title_fil,description_fil,scenario_fil,title,description,scenario'
-            : 'title,description,scenario,title_fil,description_fil,scenario_fil';
-        const queryByWeights = detectedLang === 'fil' ? '4,3,2,2,1,1' : '4,3,2,2,1,1';
-
         const searchParameters = {
             q: normalizedQuery,
-            query_by: queryByFields,
-            query_by_weights: queryByWeights,
+            query_by: 'title,description,scenario,title_fil,description_fil,scenario_fil',
+            query_by_weights: '1,1,1,1,1,1', // Equal weights for all fields
             per_page: 5,
-            typo_tokens_threshold: 0,
-            num_typos: 2,
+            typo_tokens_threshold: 0, // Process even single-character queries
+            num_typos: 2, // Allow up to 2 typos
             include_fields: 'title,description,scenario,title_fil,description_fil,scenario_fil,image,pdf,punishment',
             sort_by: '_text_match:desc',
             prefix: true,
-            infix: 'always',
-            drop_tokens_threshold: 0,
-            min_len_1typo: 2,
-            min_len_2typo: 4,
-            synonyms: true
+            infix: 'always', // Enable substring matching
+            drop_tokens_threshold: 0, // Don't drop tokens
+            min_len_1typo: 2, // Allow typos on 2+ character words
+            min_len_2typo: 4, // Allow 2 typos on 4+ character words
+            synonyms: true // Use synonym mappings
         };
 
         const results = await client.collections('laws').documents().search(searchParameters);
@@ -2502,7 +2478,7 @@ async function fetchLawsFromAI(query) {
         }
 
         if (!mainLaw || alternativeLaws.length < 4) {
-            const fallback = localSearchFallback(query, detectedLang);
+            const fallback = localSearchFallback(query);
             if (fallback.mainLaw && !mainLaw) {
                 mainLaw = fallback.mainLaw;
             }
@@ -2521,7 +2497,7 @@ async function fetchLawsFromAI(query) {
             alternativeLaws.push(availableLaws[randomIndex]);
         }
 
-        const result = { mainLaw, alternativeLaws, detectedLang };
+        const result = { mainLaw, alternativeLaws };
         searchCache.set(normalizedQuery, result);
         if (searchCache.size > 50) {
             const oldestKey = searchCache.keys().next().value;
@@ -2531,11 +2507,11 @@ async function fetchLawsFromAI(query) {
         return result;
     } catch (error) {
         console.error('Typesense search error:', error.message);
-        return localSearchFallback(query, 'eng');
+        return localSearchFallback(query);
     }
 }
 
-function renderLawCards(mainLawTitle, alternativeLawTitles, detectedLang) {
+function renderLawCards(mainLawTitle, alternativeLawTitles) {
     cardsContainer.innerHTML = '';
 
     const query = searchInput.value.trim();
@@ -2543,9 +2519,10 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, detectedLang) {
     if (mainLawTitle) {
         const mainLaw = laws.find(law => law.title === mainLawTitle);
         if (mainLaw) {
-            const title = detectedLang === 'fil' && mainLaw.title_fil ? mainLaw.title_fil : mainLaw.title;
-            const description = detectedLang === 'fil' && mainLaw.description_fil ? mainLaw.description_fil : mainLaw.description;
-            const scenario = detectedLang === 'fil' && mainLaw.scenario_fil ? mainLaw.scenario_fil : mainLaw.scenario;
+            // Display primary fields (title, description, scenario) as stored
+            const title = mainLaw.title;
+            const description = mainLaw.description;
+            const scenario = mainLaw.scenario;
 
             const mainCard = document.createElement('div');
             mainCard.className = 'card main-law highlight';
@@ -2607,9 +2584,9 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, detectedLang) {
         alternativeLawTitles.forEach(title => {
             const law = laws.find(l => l.title === title);
             if (law) {
-                const altTitle = detectedLang === 'fil' && law.title_fil ? law.title_fil : law.title;
-                const altDescription = detectedLang === 'fil' && law.description_fil ? law.description_fil : law.description;
-                const altScenario = detectedLang === 'fil' && law.scenario_fil ? law.scenario_fil : law.scenario;
+                const altTitle = law.title;
+                const altDescription = law.description;
+                const altScenario = law.scenario;
 
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -2735,9 +2712,9 @@ async function performSearch(query) {
                 });
             }
 
-            const { mainLaw, alternativeLaws, detectedLang } = await fetchLawsFromAI(query);
+            const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
             if (mainLaw) {
-                renderLawCards(mainLaw, alternativeLaws, detectedLang);
+                renderLawCards(mainLaw, alternativeLaws);
             } else {
                 cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
