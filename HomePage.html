@@ -2053,10 +2053,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add click event listener for fingerprintIcon to navigate to homepage
 fingerprintIcon.addEventListener('click', () => {
+    // Option 2: Navigate to HomePage.html with loader transition
     loaderOverlay.classList.add('active');
     setTimeout(() => {
         window.location.href = 'HomePage.html';
     }, 150);
+
+    // Option 1 (Alternative): Restart the animation instead of navigating
+    /*
+    fingerprintIcon.classList.remove('scanning', 'glow'); // Remove existing animation classes
+    void fingerprintIcon.offsetWidth; // Force reflow to restart animation
+    fingerprintIcon.classList.add('glow'); // Re-add the glow animation (or 'scanning' if preferred)
+    fingerprintIcon.style.opacity = '1'; // Ensure visibility
+    */
 });
 
 auth.onAuthStateChanged((user) => {
@@ -2373,28 +2382,22 @@ okSuccess.addEventListener('click', () => {
 
 function normalizeQuery(query) {
     if (!query || typeof query !== 'string') return '';
+    // Enhanced normalization with Compromise for Typesense 1.14.0
     const doc = nlp(query.trim().toLowerCase());
     const normalized = doc
         .normalize({ punctuation: true, possessives: true, plurals: true })
         .text()
-        .replace(/[^a-z0-9\s-]/g, ' ') // Preserve hyphens
-        .replace(/\s+/g, ' ') // Collapse multiple spaces
-        .trim();
-    const keywords = doc.nouns().out('array').join(' ');
-    return keywords || normalized;
+        .replace(/[^a-z0-9\s]/g, ' ');
+    return normalized;
 }
 
 function localSearchFallback(query) {
     const normalizedQuery = normalizeQuery(query);
-    const keywords = normalizedQuery.split(' ').filter(k => k.length > 2);
     const matches = laws
         .map(law => {
             const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
-            const score = keywords.reduce((acc, keyword) => {
-                const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
-                const matches = text.match(regex) || [];
-                return acc + matches.length * (keyword.length / 10);
-            }, 0);
+            const keywords = normalizedQuery.split(' ').filter(k => k);
+            const score = keywords.reduce((acc, keyword) => acc + (text.includes(keyword) ? 1 : 0), 0);
             return { law, score };
         })
         .filter(item => item.score > 0)
@@ -2453,11 +2456,8 @@ async function fetchLawsFromAI(query) {
             throw new Error('Typesense collection "laws" not found or inaccessible');
         }
 
-        const keywords = normalizedQuery.split(' ').filter(k => k.length > 2);
-        const boostedQuery = keywords.length > 1 ? `${normalizedQuery} || ${keywords.join(' ')}` : normalizedQuery;
-
         const searchParameters = {
-            q: boostedQuery,
+            q: normalizedQuery,
             query_by: 'title,description,scenario',
             query_by_weights: '4,3,2',
             per_page: 5,
@@ -2469,9 +2469,8 @@ async function fetchLawsFromAI(query) {
             infix: 'always',
             drop_tokens_threshold: 1,
             locale: 'auto',
-            synonyms: true,
-            phrase_match: true,
-            split_join_tokens: 'both'
+            synonyms: true, 
+            phrase_match: true 
         };
 
         const results = await client.collections('laws').documents().search(searchParameters);
@@ -2764,14 +2763,9 @@ document.querySelector('.search-icon').addEventListener('click', function() {
 
 function highlightText(element, query) {
     if (!element || !query) return;
-    const normalizedQuery = normalizeQuery(query);
-    const keywords = normalizedQuery.split(' ').filter(k => k.length > 2);
-    let text = element.textContent;
-    keywords.forEach(keyword => {
-        const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
-        text = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
-    });
-    element.innerHTML = text;
+    const text = element.textContent;
+    const regex = new RegExp(`(${query})`, 'gi');
+    element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
 }
 
 function updateClock() {
@@ -2796,3 +2790,6 @@ window.addEventListener('resize', () => {
         mobileMenuIcon.querySelector('i').classList.add('fa-bars');
     }
 });
+</script>
+</body>
+</html>
