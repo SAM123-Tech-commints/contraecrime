@@ -788,8 +788,11 @@ body:not(.dark-theme) .card {
     color: #ffffff;
     text-transform: capitalize;
     text-wrap: wrap;
-    min-height: 3rem; 
-    line-height: 1.3; 
+    min-height: 3rem;
+    line-height: 1.3;
+    padding: 10px 0;
+    text-align: center; 
+    white-space: normal;
 }
 
 .cybercrime-description {
@@ -797,6 +800,12 @@ body:not(.dark-theme) .card {
     color: #ffffff;
     line-height: 1.4;
     text-align: justify;
+    padding: 0 10px;
+    margin: 5px 0;
+}
+
+.cybercrime-description p {
+    margin: 5px 0;
 }
 
 .border-button {
@@ -2551,12 +2560,12 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                     <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
                 </div>
                 <div class="cybercrime-title">
-                    <span>${mainLaw.title}</span>
+                    <span>${mainLaw.title.trim()}</span>
                 </div>
                 <div class="cybercrime-description">
-                    <p><strong>Description:</strong> <span class="description-text">${mainLaw.description}</span></p>
-                    <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario}</span></p>
-                    <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
+                    <p><strong>Description:</strong> <span class="description-text">${mainLaw.description.trim()}</span></p>
+                    <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario.trim()}</span></p>
+                    <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment.trim()}</span></p>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
                     ${mainLaw.pdfwebsite ? `
@@ -2610,13 +2619,13 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                     <div class="image_container">
                         <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
                     </div>
-                    <div class="cybercrime-title" style="text-align: center; padding: 10px 0;">
-                        <span>${law.title}</span>
+                    <div class="cybercrime-title">
+                        <span>${law.title.trim()}</span>
                     </div>
-                    <div class="cybercrime-description" style="padding: 0 10px;">
-                        <p style="margin: 5px 0;"><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
-                        <p style="margin: 5px 0;"><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
-                        <p style="margin: 5px 0;"><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
+                    <div class="cybercrime-description">
+                        <p><strong>Description:</strong> <span class="description-text">${law.description.trim()}</span></p>
+                        <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario.trim()}</span></p>
+                        <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment.trim()}</span></p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end; padding: 10px;">
                         ${law.pdfwebsite ? `
