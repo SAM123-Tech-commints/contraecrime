@@ -1517,13 +1517,14 @@ body.dark-theme {
             </div>
         </footer>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/typesense@1.7.0/dist/typesense.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/typesense@1.7.0/dist/typesense.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/compromise@14.10.0/builds/compromise.min.js"></script>
     <script>
-        const firebaseConfig = {
+               const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
             projectId: "contra-e-crime",
@@ -2349,11 +2350,12 @@ body.dark-theme {
         });
 
         function detectLanguage(query) {
-            const tagalogWords = ['hacked', 'scam', 'fraud', 'krimen', 'pag-hack', 'panloloko', 'ilegal', 'account', 'online', 'transaksyon'];
+            const tagalogWords = ['hacked', 'scam', 'fraud', 'krimen', 'pag-hack', 'panloloko', 'ilegal', 'account', 'online', 'transaksyon', 'cybercrime', 'hack', 'pagnanakaw', 'seguridad'];
             const queryWords = query.toLowerCase().split(/\s+/);
             const tagalogCount = queryWords.filter(word => tagalogWords.includes(word)).length;
             const totalWords = queryWords.length;
 
+            if (totalWords === 0) return 'en';
             if (tagalogCount / totalWords > 0.5) {
                 return 'tl'; // Tagalog or Taglish
             }
@@ -2371,7 +2373,11 @@ body.dark-theme {
                 'account': 'account',
                 'scam': 'scam',
                 'fraud': 'fraud',
-                'online': 'online'
+                'online': 'online',
+                'cybercrime': 'cybercrime',
+                'hack': 'hacking',
+                'pagnanakaw': 'theft',
+                'seguridad': 'security'
             };
 
             return query.split(/\s+/).map(word => translations[word.toLowerCase()] || word).join(' ');
@@ -2386,9 +2392,11 @@ body.dark-theme {
             }
 
             const synonyms = {
-                'hack': ['hacking', 'breach', 'unauthorized access'],
-                'fraud': ['scam', 'deception', 'cheat'],
-                'crime': ['offense', 'violation', 'felony']
+                'hack': ['hacking', 'breach', 'unauthorized access', 'cracking'],
+                'fraud': ['scam', 'deception', 'cheat', 'fraudulent'],
+                'crime': ['offense', 'violation', 'felony', 'cybercrime'],
+                'account': ['profile', 'user account', 'login'],
+                'transaction': ['deal', 'payment', 'purchase']
             };
 
             let tokens = normalizedQuery.split(' ').flatMap(token => {
@@ -2400,7 +2408,7 @@ body.dark-theme {
                 return token;
             });
 
-            return tokens.join(' ');
+            return tokens.join(' ').trim();
         }
 
         function localSearchFallback(query) {
@@ -2420,10 +2428,29 @@ body.dark-theme {
             }
 
             const mainLaw = matches[0].law.title;
-            const alternativeLaws = matches
+            let alternativeLaws = matches
                 .slice(1, 5)
                 .map(item => item.law.title)
                 .slice(0, 4);
+
+            // If fewer than 4 alternatives, fill with random laws
+            while (alternativeLaws.length < 4 && laws.length > 0) {
+                const availableLaws = laws
+                    .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
+                    .map(law => law.title);
+                if (availableLaws.length === 0) break;
+                const randomIndex = Math.floor(Math.random() * availableLaws.length);
+                alternativeLaws.push(availableLaws[randomIndex]);
+            }
+
+            // If still fewer than 4, repeat the main law or available laws
+            while (alternativeLaws.length < 4 && laws.length > 0) {
+                const availableLaws = laws.map(law => law.title);
+                const randomIndex = Math.floor(Math.random() * availableLaws.length);
+                if (!alternativeLaws.includes(availableLaws[randomIndex])) {
+                    alternativeLaws.push(availableLaws[randomIndex]);
+                }
+            }
 
             return { mainLaw, alternativeLaws };
         }
@@ -2431,6 +2458,9 @@ body.dark-theme {
         async function fetchLawsFromAI(query) {
             try {
                 const normalizedQuery = normalizeQuery(query);
+                if (!normalizedQuery) {
+                    throw new Error('Empty or invalid query after normalization');
+                }
 
                 if (searchCache.has(normalizedQuery)) {
                     return searchCache.get(normalizedQuery);
@@ -2439,8 +2469,15 @@ body.dark-theme {
                 const client = new Typesense.Client({
                     nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
                     apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
-                    connectionTimeoutSeconds: 2
+                    connectionTimeoutSeconds: 5 // Increased timeout
                 });
+
+                // Verify collection exists
+                try {
+                    await client.collections('laws').retrieve();
+                } catch (err) {
+                    throw new Error('Typesense collection "laws" not found or inaccessible');
+                }
 
                 const searchParameters = {
                     q: normalizedQuery,
@@ -2452,7 +2489,8 @@ body.dark-theme {
                     include_fields: 'title,description,scenario',
                     rank_by: 'relevance',
                     prefix: true,
-                    infix: 'always'
+                    infix: 'always',
+                    drop_tokens_threshold: 1
                 };
 
                 const results = await client.collections('laws').documents().search(searchParameters);
@@ -2469,6 +2507,7 @@ body.dark-theme {
                         .slice(0, 4);
                 }
 
+                // Fallback if insufficient results
                 if (!mainLaw || alternativeLaws.length < 4) {
                     const fallback = localSearchFallback(query);
                     if (fallback.mainLaw && !mainLaw) {
@@ -2480,6 +2519,7 @@ body.dark-theme {
                     ].slice(0, 4);
                 }
 
+                // Ensure 4 alternative laws
                 while (alternativeLaws.length < 4 && laws.length > 0) {
                     const availableLaws = laws
                         .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
@@ -2487,6 +2527,15 @@ body.dark-theme {
                     if (availableLaws.length === 0) break;
                     const randomIndex = Math.floor(Math.random() * availableLaws.length);
                     alternativeLaws.push(availableLaws[randomIndex]);
+                }
+
+                // Final fallback: repeat laws if necessary
+                while (alternativeLaws.length < 4 && laws.length > 0) {
+                    const availableLaws = laws.map(law => law.title);
+                    const randomIndex = Math.floor(Math.random() * availableLaws.length);
+                    if (!alternativeLaws.includes(availableLaws[randomIndex])) {
+                        alternativeLaws.push(availableLaws[randomIndex]);
+                    }
                 }
 
                 const result = { mainLaw, alternativeLaws };
@@ -2498,7 +2547,7 @@ body.dark-theme {
 
                 return result;
             } catch (error) {
-                console.error('Typesense search error:', error);
+                console.error('Typesense search error:', error.message);
                 return localSearchFallback(query);
             }
         }
@@ -2547,13 +2596,13 @@ body.dark-theme {
                     }
                 }
             } else {
-                cardsContainer.innerHTML = '<p>No relevant laws found for your search.</p>';
+                cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
                 fingerprintIcon.style.opacity = '1';
                 return;
             }
 
-            if (alternativeLawTitles.length === 4) {
+            if (alternativeLawTitles.length > 0) {
                 const alternativesSection = document.createElement('div');
                 alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
                 alternativesSection.style.width = '100%';
@@ -2584,7 +2633,7 @@ body.dark-theme {
                                 ${law.pdf ? `
                                 <a href="${law.pdf}" class="border-button" target="_blank">
                                     <span class="button-text">Read More</span>
-                                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span Cohere
                                 </a>` : ''}
                                 <button class="save-button" data-title="${law.title}">
                                     <span class="button-text">Save Law</span>
@@ -2677,10 +2726,10 @@ body.dark-theme {
                     }
 
                     const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
-                    if (mainLaw && alternativeLaws.length === 4) {
+                    if (mainLaw) {
                         renderLawCards(mainLaw, alternativeLaws);
                     } else {
-                        cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
+                        cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                         fingerprintIcon.classList.add('glow');
                         fingerprintIcon.style.opacity = '1';
                     }
@@ -2717,8 +2766,8 @@ body.dark-theme {
                     });
                 }
             } catch (error) {
-                console.error('Error in search:', error);
-                cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
+                console.error('Search error:', error.message);
+                cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please try again.</p>`;
                 fingerprintIcon.classList.add('glow');
                 fingerprintIcon.style.opacity = '1';
             } finally {
