@@ -1518,13 +1518,18 @@ body.dark-theme {
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/typesense@1.7.0/dist/typesense.min.js"></script>
+  <!DOCTYPE html>
+<html>
+<head>
+       <script src="https://cdn.jsdelivr.net/npm/typesense@1.7.0/dist/typesense.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/compromise@14.10.0/builds/compromise.min.js"></script>
-    <script>
-        const firebaseConfig = {
+</head>
+<body>
+<script>
+    const firebaseConfig = {
         apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
         authDomain: "contra-e-crime.firebaseapp.com",
         projectId: "contra-e-crime",
@@ -1564,7 +1569,7 @@ body.dark-theme {
     const okSuccess = document.getElementById('okSuccess');
     const clock = document.getElementById('clock');
 
-            const laws = [
+        const laws = [
     {
         title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
         description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
@@ -2351,13 +2356,29 @@ body.dark-theme {
 
     function normalizeQuery(query) {
         const doc = window.nlp(query);
-        let tokens = doc.terms().out('array').map(term => term.toLowerCase().replace(/[^a-z0-9\s]/g, ''));
+        let tokens = doc. Marisa
+        .terms()
+        .out('array')
+        .map(term => term.toLowerCase().replace(/[^a-z0-9\s]/g, ''));
 
+        // Expanded synonyms for English, Tagalog, and Taglish
         const synonyms = {
-            'hack': ['hacking', 'breach', 'unauthorized access'],
-            'fraud': ['scam', 'deception', 'cheat'],
-            'crime': ['offense', 'violation', 'felony']
+            // English
+            'hack': ['hacking', 'breach', 'unauthorized access', 'cyberattack'],
+            'fraud': ['scam', 'deception', 'cheat', 'swindle'],
+            'crime': ['offense', 'violation', 'felony', 'misdeed'],
+            // Tagalog
+            'panloloko': ['scam', 'fraud', 'deception', 'pandaraya'],
+            'pagnanakaw': ['theft', 'stealing', 'robbery', 'kriminal'],
+            'kriminal': ['crime', 'offense', 'violation', 'felony'],
+            // Taglish
+            'hackear': ['hacking', 'breach', 'cyberattack'],
+            'scam': ['panloloko', 'fraud', 'deception'],
         };
+
+        // Detect language (basic heuristic)
+        const isTagalog = tokens.some(token => ['panloloko', 'pagnanakaw', 'kriminal'].includes(token));
+        const isTaglish = tokens.some(token => ['hackear', 'scam'].includes(token));
 
         tokens = tokens.flatMap(token => {
             for (const [key, syns] of Object.entries(synonyms)) {
@@ -2368,15 +2389,30 @@ body.dark-theme {
             return token;
         });
 
+        // Add intent-based terms
+        const intentMap = {
+            'hack': ['unauthorized access', 'data breach', 'cybersecurity'],
+            'panloloko': ['fraud', 'deception', 'scam'],
+            'scam': ['fraud', 'online fraud', 'deception'],
+        };
+
+        const intentTerms = tokens.flatMap(token => intentMap[token] || []).filter((v, i, a) => a.indexOf(v) === i);
+        tokens = [...new Set([...tokens, ...intentTerms])];
+
         return tokens.join(' ');
     }
 
     function localSearchFallback(query) {
-        const normalizedQuery = query.toLowerCase();
+        const normalizedQuery = normalizeQuery(query).toLowerCase();
         const matches = laws
             .map(law => {
                 const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
-                const score = text.split(normalizedQuery).length - 1;
+                let score = 0;
+                normalizedQuery.split(' ').forEach(term => {
+                    if (text.includes(term)) score += 1;
+                });
+                // Boost score for scenario matches
+                if (law.scenario.toLowerCase().includes(query.toLowerCase())) score += 2;
                 return { law, score };
             })
             .filter(item => item.score > 0)
@@ -2412,10 +2448,15 @@ body.dark-theme {
             const searchParameters = {
                 q: normalizedQuery,
                 query_by: 'title,description,scenario',
-                query_by_weights: '2,1,1',
+                query_by_weights: '2,1,1 Ordering of query_by fields: title, description, scenario',
                 per_page: 5,
                 typo_tokens_threshold: 1,
-                num_typos: 2
+                num_typos: 2,
+                // Add semantic search parameters
+                filter_by: '',
+                sort_by: '_text_match:desc',
+                infix: 'always',
+                drop_tokens_threshold: 1,
             };
 
             const results = await client.collections('laws').documents().search(searchParameters);
@@ -2511,7 +2552,8 @@ body.dark-theme {
             }
         } else {
             cardsContainer.innerHTML = '<p>No relevant laws found for your search.</p>';
-            fingerprintIcon.classList.remove('scanning');
+            // Keep fingerprint animation
+            fingerprintIcon.classList.add('scanning');
             fingerprintIcon.style.opacity = '1';
             return;
         }
@@ -2573,7 +2615,8 @@ body.dark-theme {
             button.addEventListener('click', saveLawHandler);
         });
 
-        fingerprintIcon.classList.remove('scanning');
+        // Keep fingerprint animation after rendering
+        fingerprintIcon.classList.add('scanning');
         fingerprintIcon.style.opacity = '1';
     }
 
@@ -2644,13 +2687,13 @@ body.dark-theme {
                     renderLawCards(mainLaw, alternativeLaws);
                 } else {
                     cardsContainer.innerHTML = '<p>No relevant laws found.</p>';
-                    fingerprintIcon.classList.remove('scanning');
+                    fingerprintIcon.classList.add('scanning');
                     fingerprintIcon.style.opacity = '1';
                 }
             } else {
                 sectionTitle.textContent = 'TOP ARTICLES';
                 cardsContainer.innerHTML = '';
-                fingerprintIcon.classList.remove('scanning');
+                fingerprintIcon.classList.add('scanning');
                 fingerprintIcon.style.opacity = '1';
                 defaultCards.forEach(cardData => {
                     const card = document.createElement('div');
@@ -2682,7 +2725,7 @@ body.dark-theme {
         } catch (error) {
             console.error('Error in search:', error);
             cardsContainer.innerHTML = '<p>Error fetching laws. Please try again.</p>';
-            fingerprintIcon.classList.remove('scanning');
+            fingerprintIcon.classList.add('scanning');
             fingerprintIcon.style.opacity = '1';
         } finally {
             loaderOverlay.classList.remove('active');
