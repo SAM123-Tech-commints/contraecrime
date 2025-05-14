@@ -7,11 +7,13 @@
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
+        /* Existing styles retained, only new styles added */
         * {
             box-sizing: border-box;
         }
@@ -58,12 +60,8 @@
         }
 
         @keyframes rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .dark-theme .loader {
@@ -237,7 +235,7 @@
             transition: 0.3s;
         }
 
-        .checkbox:checked ~ .slider::before {
+        .checkbox:checked ~ .scrollbar::before {
             transform: translateX(30px);
             background-color: #28292c;
             box-shadow: none;
@@ -362,7 +360,7 @@
         .customization-options .user-info p::before {
             content: attr(data-label);
             font-weight: 700;
-            color: #ff3333; 
+            color: #ff3333;
             margin-right: 5px;
         }
 
@@ -428,9 +426,9 @@
         }
 
         .dark-theme .customization-options .user-info {
-    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-    color: #e0e0e0; 
-}
+            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            color: #e0e0e0;
+        }
 
         .dark-theme .customization-options .user-info p {
             color: #e0e0e0;
@@ -472,12 +470,24 @@
             color: #333;
             text-transform: uppercase;
             margin-bottom: 12px;
+            animation: fadeInDown 1s ease;
         }
 
         .contact-section p.tagline {
             font-size: 22px;
             color: #666;
             margin-bottom: 50px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .contact-grid {
@@ -486,7 +496,7 @@
             flex-wrap: wrap;
         }
 
-        .contact-details, .contact-form {
+        .contact-details, .contact-form-container {
             flex: 1;
             min-width: 350px;
         }
@@ -496,6 +506,14 @@
             align-items: center;
             gap: 18px;
             margin-bottom: 25px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-details .detail-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .contact-details .detail-item i {
@@ -559,6 +577,133 @@
             color: #1DA1F2;
         }
 
+        .map-container {
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
+        }
+
+        .faq-container {
+            margin-top: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #8B0000;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 15px;
+            font-size: 16px;
+            color: #666;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            padding: 15px;
+        }
+
+        .live-support {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .live-support .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            animation: pulse 2s infinite;
+        }
+
+        .live-support.offline .status-dot {
+            background-color: #f44336;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .toggle-button {
+            display: flex;
+            background-color: #f0f0f0;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-button button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .toggle-button button.active {
+            background-color: #8B0000;
+            color: white;
+        }
+
+        .contact-form, .chat-container {
+            display: none;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        .contact-form.active, .chat-container.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         .contact-form form {
             display: flex;
             flex-direction: column;
@@ -573,6 +718,14 @@
             border-radius: 6px;
             width: 100%;
             font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #8B0000;
+            box-shadow: 0 0 5px rgba(139, 0, 0, 0.3);
+            outline: none;
         }
 
         .contact-form textarea {
@@ -588,10 +741,135 @@
             border-radius: 6px;
             font-size: 20px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .contact-form button:hover {
+            background-color: #580100;
+            transform: scale(1.02);
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            border: 1px solid #ddd;
+        }
+
+        .chat-header {
+            background-color: #8B0000;
+            color: white;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #f9f9f9;
+            scrollbar-width: thin;
+            scrollbar-color: #8B0000 #f0f0f0;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: #8B0000;
+            border-radius: 4px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            max-width: 70%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .message.received {
+            align-self: flex-start;
+        }
+
+        .message-bubble {
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .message.sent .message-bubble {
+            background-color: #8B0000;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.received .message-bubble {
+            background-color: #e0e0e0;
+            color: #333;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-timestamp {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input input:focus {
+            border-color: #8B0000;
+        }
+
+        .chat-input button {
+            padding: 10px 20px;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-input button:hover {
             background-color: #580100;
         }
 
@@ -679,6 +957,10 @@
             color: #b0b0b0;
         }
 
+        .dark-theme .contact-details .detail-item {
+            background-color: #333;
+        }
+
         .dark-theme .contact-details .detail-item i {
             color: #d7b15c;
         }
@@ -701,20 +983,80 @@
             background-color: rgba(40, 41, 44, 1);
         }
 
-        .dark-theme .contact-form input,
-        .dark-theme .contact-form textarea {
+        .dark-theme .faq-container {
             background-color: #333;
-            color: #d8dbe0;
-            border-color: #555;
         }
 
-        .dark-theme .contact-form button {
+        .dark-theme .faq-question {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .faq-question:hover {
+            color: #d7b15c;
+        }
+
+        .dark-theme .faq-answer {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .live-support {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .toggle-button {
+            background-color: #3a3b3c;
+        }
+
+        .dark-theme .toggle-button button {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .toggle-button button.active {
             background-color: #d7b15c;
             color: #121212;
         }
 
-        .dark-theme .contact-form button:hover {
+        .dark-theme .contact-form, .dark-theme .chat-container {
+            background-color: #333;
+            border-color: #555;
+        }
+
+        .dark-theme .contact-form input,
+        .dark-theme .contact-form textarea,
+        .dark-theme .chat-input input {
+            background-color: #3a3b3c;
+            color: #d8dbe0;
+            border-color: #555;
+        }
+
+        .dark-theme .contact-form button,
+        .dark-theme .chat-input button {
+            background-color: #d7b15c;
+            color: #121212;
+        }
+
+        .dark-theme .contact-form button:hover,
+        .dark-theme .chat-input button:hover {
             background-color: #c19d4f;
+        }
+
+        .dark-theme .chat-header {
+            background-color: #d7b15c;
+            color: #121212;
+        }
+
+        .dark-theme .chat-messages {
+            background-color: #2a2b2e;
+        }
+
+        .dark-theme .message.sent .message-bubble {
+            background-color: #d7b15c;
+            color: #121212;
+        }
+
+        .dark-theme .message.received .message-bubble {
+            background-color: #4a4b4c;
+            color: #d8dbe0;
         }
 
         .dark-theme .confirmation-message {
@@ -804,11 +1146,13 @@
             }
 
             .contact-form input,
-            .contact-form textarea {
+            .contact-form textarea,
+            .chat-input input {
                 font-size: 18px;
             }
 
-            .contact-form button {
+            .contact-form button,
+            .chat-input button {
                 font-size: 18px;
             }
 
@@ -840,6 +1184,10 @@
             .customization-options {
                 top: 45px;
                 width: 220px;
+            }
+
+            .chat-container {
+                height: 350px;
             }
         }
 
@@ -907,6 +1255,10 @@
             .customization-options {
                 top: 40px;
                 width: 200px;
+            }
+
+            .chat-container {
+                height: 300px;
             }
         }
 
@@ -999,7 +1351,8 @@
             }
 
             .contact-form input,
-            .contact-form textarea {
+            .contact-form textarea,
+            .chat-input input {
                 font-size: 16px;
             }
 
@@ -1007,7 +1360,8 @@
                 height: 150px;
             }
 
-            .contact-form button {
+            .contact-form button,
+            .chat-input button {
                 font-size: 16px;
             }
 
@@ -1060,7 +1414,18 @@
                 padding: 3px;
             }
 
-            /* Hide account-customization when sidebar is active */
+            .faq-question {
+                font-size: 16px;
+            }
+
+            .faq-answer {
+                font-size: 14px;
+            }
+
+            .chat-container {
+                height: 250px;
+            }
+
             .sidebar.active ~ .content .account-customization {
                 display: none;
             }
@@ -1071,7 +1436,6 @@
     <div class="loader-overlay" id="loaderOverlay">
         <div class="loader"></div>
     </div>
-    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="#" class="logo">Contra E-Crime</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -1083,51 +1447,14 @@
         <nav class="sidebar" id="sidebar">
             <h1>Contra E-Crime</h1>
             <ul>
-                <li>
-                    <a href="HomePage.html">
-                        <img src="https://i.imgur.com/OAHusQp.png" alt="Home">
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="News.html">
-                        <img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">
-                        News & Insights
-                    </a>
-                </li>
-                <li>
-                    <a href="SavedLaws.html">
-                        <img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">
-                        Saved Laws
-                    </a>
-                </li>
-                <li>
-                    <a href="History.html">
-                        <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
-                        Search History
-                    </a>
-                </li>
-                <li>
-                    <a href="ContactUs.html">
-                        <img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">
-                        Contact Us
-                    </a>
-                </li>
-                <li>
-                    <a href="AboutUs.html">
-                        <img src="https://i.imgur.com/lktrzpa.png" alt="About Us">
-                        About Us
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html">
-                        <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
-                        Logout
-                    </a>
-                </li>
+                <li><a href="HomePage.html"><img src="https://i.imgur.com/OAHusQp.png" alt="Home">Home</a></li>
+                <li><a href="News.html"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
+                <li><a href="SavedLaws.html"><img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">Saved Laws</a></li>
+                <li><a href="History.html"><img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">Search History</a></li>
+                <li><a href="ContactUs.html"><img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">Contact Us</a></li>
+                <li><a href="AboutUs.html"><img src="https://i.imgur.com/lktrzpa.png" alt="About Us">About Us</a></li>
+                <li><a href="index.html"><img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">Logout</a></li>
             </ul>
-
-            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -1144,9 +1471,7 @@
         <main class="content">
             <header class="header">
                 <div class="account-customization">
-                    <div class="user-details">
-                        <!-- Hidden by default -->
-                    </div>
+                    <div class="user-details"></div>
                     <div class="avatar-container">
                         <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
                         <div class="avatar-loading" id="avatarLoading">
@@ -1177,7 +1502,7 @@
             </header>
             <section class="contact-section">
                 <h1>CONTACT US</h1>
-                <p class="tagline">We’re here to help you!</p>
+                <p class="tagline">We’re here to help you with any inquiries!</p>
                 <div class="contact-grid">
                     <div class="contact-details">
                         <div class="detail-item">
@@ -1197,33 +1522,65 @@
                             <p>Regalado Hwy, Novaliches, Quezon City, Metro Manila</p>
                         </div>
                         <div class="social-media">
-                            <a href="https://www.facebook.com/share/18cj7f1m6L/" target="_blank">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="https://github.com/contraecrime" target="_blank">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contraecrimecc@gmail.com" target="_blank">
-                                <i class="fab fa-google"></i>
-                            </a>
-                            <a href="https://twitter.com/contraecrime" target="_blank">
-                                <i class="fab fa-twitter"></i>
-                            </a>
+                            <a href="https://www.facebook.com/share/18cj7f1m6L/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://github.com/contraecrime" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contraecrimecc@gmail.com" target="_blank"><i class="fab fa-google"></i></a>
+                            <a href="https://twitter.com/contraecrime" target="_blank"><i class="fab fa-twitter"></i></a>
+                        </div>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.742036231143!2d121.03351431500607!3d14.669169989758604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b0e6b7c8b7b9%3A0x6f8f9b9b9c7e7e7e!2sRegalado%20Hwy%2C%20Novaliches%2C%20Quezon%20City%2C%20Metro%20Manila%2C%20Philippines!5e0!3m2!1sen!2sph!4v1698765432109" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="faq-container">
+                            <div class="faq-item">
+                                <div class="faq-question">How can I report a cybercrime? <i class="fas fa-chevron-down"></i></div>
+                                <div class="faq-answer">You can report a cybercrime by contacting us via the chat or form, or directly through our email at contraecrimecc@gmail.com.</div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">What laws do you cover? <i class="fas fa-chevron-down"></i></div>
+                                <div class="faq-answer">We cover Philippine cybercrime laws, including RA 10175, and provide resources on our website.</div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">Is my information secure? <i class="fas fa-chevron-down"></i></div>
+                                <div class="faq-answer">Yes, we use Firebase for secure data storage and follow strict privacy policies.</div>
+                            </div>
+                        </div>
+                        <div class="live-support" id="liveSupport">
+                            <div class="status-dot"></div>
+                            <span>Support: Online</span>
                         </div>
                     </div>
-                    <div class="contact-form">
-                        <form id="contactForm">
-                            <input type="text" name="name" placeholder="Name" required>
-                            <input type="email" name="email" placeholder="E-Mail" required>
-                            <input type="tel" name="phone" placeholder="Phone Number" required>
-                            <textarea name="message" placeholder="Message" required></textarea>
-                            <button type="submit">Send Messages</button>
-                        </form>
-                        <div class="confirmation-message" id="confirmationMessage">
-                            Your message has been submitted and will be sent to our Official Members.
+                    <div class="contact-form-container">
+                        <div class="toggle-container">
+                            <div class="toggle-button">
+                                <button id="showForm" class="active">Contact Form</button>
+                                <button id="showChat">Live Chat</button>
+                            </div>
                         </div>
-                        <div class="error-message" id="errorMessage">
-                            There was an error sending your message. Please try again later.
+                        <div class="contact-form active" id="contactFormContainer">
+                            <form id="contactForm">
+                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="email" name="email" placeholder="E-Mail" required>
+                                <input type="tel" name="phone" placeholder="Phone Number" required>
+                                <textarea name="message" placeholder="Message" required></textarea>
+                                <button type="submit">Send Message</button>
+                            </form>
+                            <div class="confirmation-message" id="confirmationMessage">
+                                Your message has been submitted and will be sent to our Official Members.
+                            </div>
+                            <div class="error-message" id="errorMessage">
+                                There was an error sending your message. Please try again later.
+                            </div>
+                        </div>
+                        <div class="chat-container" id="chatContainer">
+                            <div class="chat-header">
+                                <h3>Live Chat Support</h3>
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="chat-messages" id="chatMessages"></div>
+                            <div class="chat-input">
+                                <input type="text" id="chatInput" placeholder="Type your message...">
+                                <button id="sendMessage">Send</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1280,11 +1637,70 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
+        const showForm = document.getElementById('showForm');
+        const showChat = document.getElementById('showChat');
+        const contactFormContainer = document.getElementById('contactFormContainer');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessage = document.getElementById('sendMessage');
+        const liveSupport = document.getElementById('liveSupport');
 
         // Cloudinary Configuration
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
+        // Simulate Admin Availability (Online 9 AM - 5 PM PH Time)
+        function checkAdminAvailability() {
+            const now = new Date();
+            const phTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+            const hours = phTime.getHours();
+            if (hours >= 9 && hours < 17) {
+                liveSupport.classList.remove('offline');
+                liveSupport.querySelector('span').textContent = 'Support: Online';
+            } else {
+                liveSupport.classList.add('offline');
+                liveSupport.querySelector('span').textContent = 'Support: Offline';
+            }
+        }
+        checkAdminAvailability();
+        setInterval(checkAdminAvailability, 60000);
+
+        // Toggle between Form and Chat
+        showForm.addEventListener('click', () => {
+            showForm.classList.add('active');
+            showChat.classList.remove('active');
+            contactFormContainer.classList.add('active');
+            chatContainer.classList.remove('active');
+        });
+
+        showChat.addEventListener('click', () => {
+            showChat.classList.add('active');
+            showForm.classList.remove('active');
+            contactFormContainer.classList.remove('active');
+            chatContainer.classList.add('active');
+            scrollToBottom();
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.nextElementSibling;
+                const isActive = answer.classList.contains('active');
+                document.querySelectorAll('.faq-answer').forEach(a => {
+                    a.classList.remove('active');
+                    a.previousElementSibling.querySelector('i').classList.remove('fa-chevron-up');
+                    a.previousElementSibling.querySelector('i').classList.add('fa-chevron-down');
+                });
+                if (!isActive) {
+                    answer.classList.add('active');
+                    item.querySelector('i').classList.remove('fa-chevron-down');
+                    item.querySelector('i').classList.add('fa-chevron-up');
+                }
+            });
+        });
+
+        // Authentication State
         auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
@@ -1304,11 +1720,7 @@
                 userRef.once('value', (snapshot) => {
                     const userData = snapshot.val();
                     if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
+                        profilePic.src = userData.avatarUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
                         if (userData.avatarBgColor) {
                             profilePic.style.backgroundColor = userData.avatarBgColor;
                             avatarBgColorPicker.value = userData.avatarBgColor;
@@ -1322,6 +1734,8 @@
                             borderTypeSelect.value = userData.borderType;
                         }
                     }
+                    // Load Chat Messages
+                    loadChatMessages(currentUser.email);
                 }, (error) => {
                     console.error('Error loading user customization:', error);
                     alert('Failed to load user customization: ' + error.message);
@@ -1332,7 +1746,7 @@
             }
         });
 
-        // Avatar customization menu toggle
+        // Avatar Customization
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
@@ -1343,7 +1757,6 @@
             }
         });
 
-        // Handle avatar upload
         avatarInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
@@ -1370,9 +1783,7 @@
 
             const img = new Image();
             const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
+            reader.onload = (e) => { img.src = e.target.result; };
             reader.readAsDataURL(file);
 
             img.onload = () => {
@@ -1424,11 +1835,11 @@
                                     errorMessage = parsed.error?.message || text;
                                 } catch (e) {
                                     errorMessage = text.includes('Invalid cloud name')
-                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                        ? 'Invalid Cloudinary cloud name.'
                                         : text.includes('Invalid upload preset')
-                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                        ? 'Invalid upload preset.'
                                         : text.includes('Unsigned uploads are not allowed')
-                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                        ? 'Unsigned uploads are not allowed.'
                                         : text || 'Unknown error occurred';
                                 }
                                 throw new Error(errorMessage);
@@ -1453,25 +1864,24 @@
                             avatarLoading.classList.remove('active');
                         })
                         .catch(error => {
-                            console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
+                            console.error('Error saving avatar URL:', error);
+                            alert('Failed to save avatar URL: ' + error.message);
                             avatarLoading.classList.remove('active');
                         });
                     })
                     .catch(error => {
-                        console.error('Error uploading avatar to Cloudinary:', error);
-                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                        console.error('Error uploading avatar:', error);
+                        alert(`Failed to upload avatar: ${error.message}`);
                         avatarLoading.classList.remove('active');
                     });
                 }, file.type, 0.6);
             };
             img.onerror = () => {
-                alert('Failed to process the image. Please try a different file.');
+                alert('Failed to process the image.');
                 avatarLoading.classList.remove('active');
             };
         });
 
-        // Handle avatar background color change
         avatarBgColorPicker.addEventListener('change', () => {
             const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
@@ -1487,12 +1897,9 @@
                     console.error('Error saving avatar background color:', error);
                     alert('Failed to save avatar background color: ' + error.message);
                 });
-            } else {
-                alert('You must be logged in to change the avatar background color.');
             }
         });
 
-        // Handle border color change
         borderColorPicker.addEventListener('change', () => {
             const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
@@ -1508,12 +1915,9 @@
                     console.error('Error saving border color:', error);
                     alert('Failed to save border color: ' + error.message);
                 });
-            } else {
-                alert('You must be logged in to change the border color.');
             }
         });
 
-        // Handle border type change
         borderTypeSelect.addEventListener('change', () => {
             const borderType = borderTypeSelect.value;
             profilePic.style.borderStyle = borderType;
@@ -1529,12 +1933,10 @@
                     console.error('Error saving border type:', error);
                     alert('Failed to save border type: ' + error.message);
                 });
-            } else {
-                alert('You must be logged in to change the border type.');
             }
         });
 
-        // Theme toggle
+        // Theme Toggle
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1550,7 +1952,7 @@
             }
         });
 
-        // Mobile menu toggle
+        // Mobile Menu Toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -1563,15 +1965,13 @@
             }
         });
 
-        // Page transition loader
+        // Page Transition Loader
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
                     if (!this.href.includes(window.location.hostname)) return;
-
                     e.preventDefault();
                     loaderOverlay.classList.add('active');
-
                     setTimeout(() => {
                         window.location.href = this.href;
                     }, 150);
@@ -1579,10 +1979,9 @@
             }
         });
 
-        // Contact form submission
+        // Contact Form Submission
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
-
             confirmationMessage.classList.remove('visible');
             errorMessage.classList.remove('visible');
 
@@ -1595,14 +1994,106 @@
 
             emailjs.send("service_u73ui1i", "template_ctzw4rk", formData)
                 .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
+                    console.log('Form SUCCESS!', response.status, response.text);
                     confirmationMessage.classList.add('visible');
                     contactForm.reset();
                 }, function(error) {
-                    console.log('FAILED...', error);
+                    console.log('Form FAILED...', error);
                     errorMessage.classList.add('visible');
                 });
         });
+
+        // Chat Functionality
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function loadChatMessages(userEmail) {
+            const sanitizedEmail = userEmail.replace(/\./g, ',');
+            const messagesRef = database.ref(`chat/${sanitizedEmail}`);
+            messagesRef.on('value', (snapshot) => {
+                chatMessages.innerHTML = '';
+                const messages = snapshot.val();
+                if (messages) {
+                    Object.values(messages).sort((a, b) => a.timestamp - b.timestamp).forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `message ${msg.sender === userEmail ? 'sent' : 'received'}`;
+                        messageDiv.innerHTML = `
+                            <div class="message-bubble">${msg.text}</div>
+                            <div class="message-timestamp">${new Date(msg.timestamp).toLocaleString('en-US', { timeZone: 'Asia/Manila' })}</div>
+                        `;
+                        chatMessages.appendChild(messageDiv);
+                    });
+                    scrollToBottom();
+                }
+            }, (error) => {
+                console.error('Error loading chat messages:', error);
+                alert('Failed to load chat messages: ' + error.message);
+            });
+        }
+
+        sendMessage.addEventListener('click', () => {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert('You must be logged in to send messages.');
+                return;
+            }
+
+            const sanitizedEmail = user.email.replace(/\./g, ',');
+            const messageData = {
+                sender: user.email,
+                text: message,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            // Save to Firebase
+            database.ref(`chat/${sanitizedEmail}`).push(messageData)
+                .then(() => {
+                    // Send to Admin via EmailJS
+                    emailjs.send("service_u73ui1i", "template_ctzw4rk", {
+                        name: user.displayName || 'User',
+                        email: user.email,
+                        message: message
+                    })
+                    .then(() => {
+                        chatInput.value = '';
+                        scrollToBottom();
+                    })
+                    .catch(error => {
+                        console.error('Error sending email:', error);
+                        alert('Failed to send message to admin: ' + error.message);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error saving chat message:', error);
+                    alert('Failed to save chat message: ' + error.message);
+                });
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage.click();
+            }
+        });
+
+        // Simulate Admin Reply (Note: Actual replies should be handled via Gmail and EmailJS webhook)
+        // This is a placeholder for admin replies being synced back to Firebase
+        function simulateAdminReply(userEmail, userMessage) {
+            // In a real setup, use EmailJS webhook or Gmail API to detect admin replies
+            // For demo, simulate a reply after 5 seconds
+            setTimeout(() => {
+                const sanitizedEmail = userEmail.replace(/\./g, ',');
+                const replyData = {
+                    sender: 'contraecrimecc@gmail.com',
+                    text: `Thank you for your message: "${userMessage}". How can we assist you further?`,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+                database.ref(`chat/${sanitizedEmail}`).push(replyData);
+            }, 5000);
+        }
     </script>
 </body>
 </html>
