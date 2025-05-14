@@ -306,32 +306,6 @@
             font-size: 0;
         }
 
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: #d32f2f;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            font-weight: bold;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .notification-badge.visible {
-            display: flex;
-        }
-
-        .dark-theme .notification-badge {
-            background-color: #ffeb3b;
-            color: #121212;
-        }
-
         .customization-options {
             position: absolute;
             top: 50px;
@@ -388,7 +362,7 @@
         .customization-options .user-info p::before {
             content: attr(data-label);
             font-weight: 700;
-            color: #ff3333;
+            color: #ff3333; 
             margin-right: 5px;
         }
 
@@ -454,9 +428,9 @@
         }
 
         .dark-theme .customization-options .user-info {
-            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-            color: #e0e0e0;
-        }
+    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+    color: #e0e0e0; 
+}
 
         .dark-theme .customization-options .user-info p {
             color: #e0e0e0;
@@ -653,144 +627,6 @@
             display: block;
         }
 
-        .message-history {
-            margin-top: 50px;
-            max-width: 1300px;
-            width: 100%;
-        }
-
-        .message-history h2 {
-            font-size: 32px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .message-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .message-card {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .message-card.unread::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 10px;
-            height: 10px;
-            background-color: #d32f2f;
-            border-radius: 50%;
-        }
-
-        .message-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .message-card .message-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .message-card .message-header .timestamp {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .message-card .message-content {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 10px;
-            white-space: pre-wrap;
-        }
-
-        .message-card .reply-content {
-            background-color: #f0f0f0;
-            padding: 15px;
-            border-radius: 6px;
-            font-size: 16px;
-            color: #333;
-            margin-top: 10px;
-            position: relative;
-        }
-
-        .message-card .reply-content::before {
-            content: 'Reply from Contra E-Crime:';
-            font-weight: bold;
-            color: #8B0000;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .message-card .reply-content .reply-timestamp {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-            text-align: right;
-        }
-
-        .no-messages {
-            font-size: 18px;
-            color: #666;
-            text-align: center;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .dark-theme .message-history h2 {
-            color: #d8dbe0;
-        }
-
-        .dark-theme .message-card {
-            background-color: #3a3b3c;
-            border-color: #555;
-            color: #d8dbe0;
-        }
-
-        .dark-theme .message-card .message-content {
-            color: #d8dbe0;
-        }
-
-        .dark-theme .message-card .message-header .timestamp {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .message-card .reply-content {
-            background-color: #4a4b4c;
-            color: #d8dbe0;
-        }
-
-        .dark-theme .message-card .reply-content::before {
-            color: #d7b15c;
-        }
-
-        .dark-theme .message-card .reply-content .reply-timestamp {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .message-card.unread::before {
-            background-color: #ffeb3b;
-        }
-
-        .dark-theme .no-messages {
-            background-color: #3a3b3c;
-            border-color: #555;
-            color: #d8dbe0;
-        }
-
         footer {
             background-color: #333;
             color: white;
@@ -981,27 +817,6 @@
                 font-size: 16px;
             }
 
-            .message-history h2 {
-                font-size: 28px;
-            }
-
-            .message-card .message-content,
-            .message-card .reply-content {
-                font-size: 14px;
-            }
-
-            .message-card .message-header .timestamp {
-                font-size: 12px;
-            }
-
-            .message-card .reply-content .reply-timestamp {
-                font-size: 10px;
-            }
-
-            .no-messages {
-                font-size: 16px;
-            }
-
             .account-customization {
                 right: 10px;
             }
@@ -1020,12 +835,6 @@
                 width: 18px;
                 height: 18px;
                 border-width: 2px;
-            }
-
-            .notification-badge {
-                width: 16px;
-                height: 16px;
-                font-size: 10px;
             }
 
             .customization-options {
@@ -1093,12 +902,6 @@
                 width: 15px;
                 height: 15px;
                 border-width: 2px;
-            }
-
-            .notification-badge {
-                width: 14px;
-                height: 14px;
-                font-size: 8px;
             }
 
             .customization-options {
@@ -1213,36 +1016,6 @@
                 font-size: 14px;
             }
 
-            .message-history {
-                margin-top: 30px;
-            }
-
-            .message-history h2 {
-                font-size: 24px;
-            }
-
-            .message-card {
-                padding: 15px;
-            }
-
-            .message-card .message-content,
-            .message-card .reply-content {
-                font-size: 12px;
-            }
-
-            .message-card .message-header .timestamp {
-                font-size: 10px;
-            }
-
-            .message-card .reply-content .reply-timestamp {
-                font-size: 8px;
-            }
-
-            .no-messages {
-                font-size: 14px;
-                padding: 15px;
-            }
-
             .account-customization {
                 top: 70px;
                 right: 10px;
@@ -1264,12 +1037,6 @@
                 width: 15px;
                 height: 15px;
                 border-width: 2px;
-            }
-
-            .notification-badge {
-                width: 12px;
-                height: 12px;
-                font-size: 8px;
             }
 
             .customization-options {
@@ -1382,7 +1149,6 @@
                     </div>
                     <div class="avatar-container">
                         <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
-                        <div class="notification-badge" id="notificationBadge"></div>
                         <div class="avatar-loading" id="avatarLoading">
                             <div class="loader"></div>
                         </div>
@@ -1423,7 +1189,7 @@
                             <p>contraecrime.vercel.app</p>
                         </div>
                         <div class="detail-item">
-                            <i ="" id="contact-details" class="fas fa-envelope">
+                            <i class="fas fa-envelope"></i>
                             <p>contraecrimecc@gmail.com</p>
                         </div>
                         <div class="detail-item">
@@ -1459,12 +1225,6 @@
                         <div class="error-message" id="errorMessage">
                             There was an error sending your message. Please try again later.
                         </div>
-                    </div>
-                </div>
-                <div class="message-history">
-                    <h2>Your Messages</h2>
-                    <div class="message-list" id="messageList">
-                        <div class="no-messages">No messages found.</div>
                     </div>
                 </div>
             </section>
@@ -1520,8 +1280,6 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
-        const messageList = document.getElementById('messageList');
-        const notificationBadge = document.getElementById('notificationBadge');
 
         // Cloudinary Configuration
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
@@ -1542,7 +1300,6 @@
 
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
-                // Load user customization
                 const userRef = database.ref(`users/${sanitizedEmail}`);
                 userRef.once('value', (snapshot) => {
                     const userData = snapshot.val();
@@ -1569,74 +1326,6 @@
                     console.error('Error loading user customization:', error);
                     alert('Failed to load user customization: ' + error.message);
                 });
-
-                // Load user messages
-                const messagesRef = database.ref('messages').orderByChild('email').equalTo(currentUser.email);
-                messagesRef.on('value', (snapshot) => {
-                    const messages = snapshot.val();
-                    messageList.innerHTML = '';
-                    let unreadCount = 0;
-
-                    if (messages) {
-                        Object.entries(messages).forEach(([messageId, message]) => {
-                            const messageCard = document.createElement('div');
-                            messageCard.className = 'message-card';
-                            if (!message.read) {
-                                messageCard.classList.add('unread');
-                                unreadCount++;
-                            }
-
-                            const messageHeader = document.createElement('div');
-                            messageHeader.className = 'message-header';
-                            const timestamp = document.createElement('span');
-                            timestamp.className = 'timestamp';
-                            timestamp.textContent = new Date(message.timestamp).toLocaleString();
-                            messageHeader.appendChild(timestamp);
-
-                            const messageContent = document.createElement('div');
-                            messageContent.className = 'message-content';
-                            messageContent.textContent = `You: ${message.message}`;
-
-                            messageCard.appendChild(messageHeader);
-                            messageCard.appendChild(messageContent);
-
-                            if (message.reply) {
-                                const replyContent = document.createElement('div');
-                                replyContent.className = 'reply-content';
-                                replyContent.textContent = message.reply;
-                                const replyTimestamp = document.createElement('div');
-                                replyTimestamp.className = 'reply-timestamp';
-                                replyTimestamp.textContent = new Date(message.replyTimestamp).toLocaleString();
-                                replyContent.appendChild(replyTimestamp);
-                                messageCard.appendChild(replyContent);
-                            }
-
-                            // Mark as read when clicked
-                            messageCard.addEventListener('click', () => {
-                                if (!message.read) {
-                                    database.ref(`messages/${messageId}`).update({
-                                        read: true
-                                    });
-                                }
-                            });
-
-                            messageList.appendChild(messageCard);
-                        });
-                    } else {
-                        messageList.innerHTML = '<div class="no-messages">No messages found.</div>';
-                    }
-
-                    // Update notification badge
-                    if (unreadCount > 0) {
-                        notificationBadge.textContent = unreadCount;
-                        notificationBadge.classList.add('visible');
-                    } else {
-                        notificationBadge.classList.remove('visible');
-                    }
-                }, (error) => {
-                    console.error('Error loading messages:', error);
-                    messageList.innerHTML = '<div class="error-message visible">Failed to load messages. Please try again later.</div>';
-                });
             } else {
                 localStorage.removeItem('currentUser');
                 window.location.href = 'index.html';
@@ -1659,7 +1348,7 @@
             const file = event.target.files[0];
             if (!file) return;
 
-            innovations = ['image/jpeg', 'image/png', 'image/jpg'];
+            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
             const maxSize = 2 * 1024 * 1024;
             if (!validTypes.includes(file.type)) {
                 alert('Please upload a valid image (JPG, JPEG, PNG).');
@@ -1904,33 +1593,15 @@
                 message: contactForm.querySelector('textarea[name="message"]').value
             };
 
-            // Save message to Firebase
-            const newMessageRef = database.ref('messages').push();
-            newMessageRef.set({
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-                message: formData.message,
-                timestamp: firebase.database.ServerValue.TIMESTAMP,
-                read: false
-            })
-            .then(() => {
-                emailjs.send("service_u73ui1i", "template_ctzw4rk", formData)
-                    .then(function(response) {
-                        console.log('SUCCESS!', response.status, response.text);
-                        confirmationMessage.classList.add('visible');
-                        contactForm.reset();
-                    }, function(error) {
-                        console.log('FAILED...', error);
-                        errorMessage.classList.add('visible');
-                        // Remove the message from Firebase if email fails
-                        newMessageRef.remove();
-                    });
-            })
-            .catch(error => {
-                console.error('Error saving message to Firebase:', error);
-                errorMessage.classList.add('visible');
-            });
+            emailjs.send("service_u73ui1i", "template_ctzw4rk", formData)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    confirmationMessage.classList.add('visible');
+                    contactForm.reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    errorMessage.classList.add('visible');
+                });
         });
     </script>
 </body>
