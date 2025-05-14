@@ -2037,14 +2037,35 @@ const clock = document.getElementById('clock');
 
 const searchCache = new Map();
 
-// Add the auto-search logic here to handle queries from History.html
+// Auto-search logic for handling queries from History.html
 document.addEventListener('DOMContentLoaded', () => {
     const autoSearchQuery = localStorage.getItem('autoSearchQuery');
     if (autoSearchQuery && searchInput) {
-        searchInput.value = autoSearchQuery; // Populate the search bar with the query
-        performSearch(autoSearchQuery); // Automatically trigger the search
-        localStorage.removeItem('autoSearchQuery'); // Clear the stored query to prevent re-triggering
+        searchInput.value = autoSearchQuery; // Populate the search bar
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                performSearch(autoSearchQuery); // Trigger search after user is authenticated
+                localStorage.removeItem('autoSearchQuery'); // Clear the stored query
+            }
+        });
     }
+});
+
+// Add click event listener for fingerprintIcon to navigate to homepage
+fingerprintIcon.addEventListener('click', () => {
+    // Option 2: Navigate to HomePage.html with loader transition
+    loaderOverlay.classList.add('active');
+    setTimeout(() => {
+        window.location.href = 'HomePage.html';
+    }, 150);
+
+    // Option 1 (Alternative): Restart the animation instead of navigating
+    /*
+    fingerprintIcon.classList.remove('scanning', 'glow'); // Remove existing animation classes
+    void fingerprintIcon.offsetWidth; // Force reflow to restart animation
+    fingerprintIcon.classList.add('glow'); // Re-add the glow animation (or 'scanning' if preferred)
+    fingerprintIcon.style.opacity = '1'; // Ensure visibility
+    */
 });
 
 auth.onAuthStateChanged((user) => {
