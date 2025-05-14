@@ -1518,8 +1518,6 @@ body.dark-theme {
         </footer>
     </div>
 
-    <!-- Load Typesense -->
-<script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -2037,18 +2035,17 @@ const clock = document.getElementById('clock');
     }
 ];
 
-
 const searchCache = new Map();
 
 // Auto-search logic for handling queries from History.html
 document.addEventListener('DOMContentLoaded', () => {
     const autoSearchQuery = localStorage.getItem('autoSearchQuery');
     if (autoSearchQuery && searchInput) {
-        searchInput.value = autoSearchQuery;
+        searchInput.value = autoSearchQuery; // Populate the search bar
         auth.onAuthStateChanged((user) => {
             if (user) {
-                performSearch(autoSearchQuery);
-                localStorage.removeItem('autoSearchQuery');
+                performSearch(autoSearchQuery); // Trigger search after user is authenticated
+                localStorage.removeItem('autoSearchQuery'); // Clear the stored query
             }
         });
     }
@@ -2056,14 +2053,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add click event listener for fingerprintIcon to navigate to homepage
 fingerprintIcon.addEventListener('click', () => {
+    // Option 2: Navigate to HomePage.html with loader transition
     loaderOverlay.classList.add('active');
     setTimeout(() => {
         window.location.href = 'HomePage.html';
     }, 150);
-});
 
-// Add cursor pointer to fingerprintIcon
-fingerprintIcon.style.cursor = 'pointer';
+    // Option 1 (Alternative): Restart the animation instead of navigating
+    /*
+    fingerprintIcon.classList.remove('scanning', 'glow'); // Remove existing animation classes
+    void fingerprintIcon.offsetWidth; // Force reflow to restart animation
+    fingerprintIcon.classList.add('glow'); // Re-add the glow animation (or 'scanning' if preferred)
+    fingerprintIcon.style.opacity = '1'; // Ensure visibility
+    */
+});
 
 auth.onAuthStateChanged((user) => {
     if (user) {
@@ -2379,23 +2382,22 @@ okSuccess.addEventListener('click', () => {
 
 function normalizeQuery(query) {
     if (!query || typeof query !== 'string') return '';
-    // Minimal normalization: trim and lowercase, preserve Unicode characters
-    return query.trim().toLowerCase().replace(/\s+/g, ' ');
+    // Enhanced normalization with Compromise for Typesense 1.14.0
+    const doc = nlp(query.trim().toLowerCase());
+    const normalized = doc
+        .normalize({ punctuation: true, possessives: true, plurals: true })
+        .text()
+        .replace(/[^a-z0-9\s]/g, ' ');
+    return normalized;
 }
 
 function localSearchFallback(query) {
     const normalizedQuery = normalizeQuery(query);
-    if (!normalizedQuery) return { mainLaw: null, alternativeLaws: [] };
-
     const matches = laws
         .map(law => {
-            // Search all fields, including multilingual ones
-            const text = `${law.title} ${law.description} ${law.scenario} ${law.title_fil || ''} ${law.description_fil || ''} ${law.scenario_fil || ''}`.toLowerCase();
-            const score = text.includes(normalizedQuery) ? 2 : 0;
-            if (score === 0 && normalizedQuery.length >= 2) {
-                const regex = new RegExp(normalizedQuery.split('').join('.*'), 'i');
-                if (regex.test(text)) return { law, score: 1 };
-            }
+            const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
+            const keywords = normalizedQuery.split(' ').filter(k => k);
+            const score = keywords.reduce((acc, keyword) => acc + (text.includes(keyword) ? 1 : 0), 0);
             return { law, score };
         })
         .filter(item => item.score > 0)
@@ -2418,6 +2420,14 @@ function localSearchFallback(query) {
         if (availableLaws.length === 0) break;
         const randomIndex = Math.floor(Math.random() * availableLaws.length);
         alternativeLaws.push(availableLaws[randomIndex]);
+    }
+
+    while (alternativeLaws.length < 4 && laws.length > 0) {
+        const availableLaws = laws.map(law => law.title);
+        const randomIndex = Math.floor(Math.random() * availableLaws.length);
+        if (!alternativeLaws.includes(availableLaws[randomIndex])) {
+            alternativeLaws.push(availableLaws[randomIndex]);
+        }
     }
 
     return { mainLaw, alternativeLaws };
@@ -2448,19 +2458,19 @@ async function fetchLawsFromAI(query) {
 
         const searchParameters = {
             q: normalizedQuery,
-            query_by: 'title,description,scenario,title_fil,description_fil,scenario_fil',
-            query_by_weights: '1,1,1,1,1,1', // Equal weights for all fields
+            query_by: 'title,description,scenario',
+            query_by_weights: '4,3,2',
             per_page: 5,
-            typo_tokens_threshold: 0, // Process even single-character queries
-            num_typos: 2, // Allow up to 2 typos
-            include_fields: 'title,description,scenario,title_fil,description_fil,scenario_fil,image,pdf,punishment',
+            typo_tokens_threshold: 1,
+            num_typos: 2,
+            include_fields: 'title,description,scenario',
             sort_by: '_text_match:desc',
             prefix: true,
-            infix: 'always', // Enable substring matching
-            drop_tokens_threshold: 0, // Don't drop tokens
-            min_len_1typo: 2, // Allow typos on 2+ character words
-            min_len_2typo: 4, // Allow 2 typos on 4+ character words
-            synonyms: true // Use synonym mappings
+            infix: 'always',
+            drop_tokens_threshold: 1,
+            locale: 'auto',
+            synonyms: true, 
+            phrase_match: true 
         };
 
         const results = await client.collections('laws').documents().search(searchParameters);
@@ -2519,11 +2529,6 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
     if (mainLawTitle) {
         const mainLaw = laws.find(law => law.title === mainLawTitle);
         if (mainLaw) {
-            // Display primary fields (title, description, scenario) as stored
-            const title = mainLaw.title;
-            const description = mainLaw.description;
-            const scenario = mainLaw.scenario;
-
             const mainCard = document.createElement('div');
             mainCard.className = 'card main-law highlight';
             mainCard.innerHTML = `
@@ -2531,11 +2536,11 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                     <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
                 </div>
                 <div class="cybercrime-title">
-                    <span>${title}</span>
+                    <span>${mainLaw.title}</span>
                 </div>
                 <div class="cybercrime-description">
-                    <p><strong>Description:</strong> <span class="description-text">${description}</span></p>
-                    <p><strong>Scenario:</strong> <span class="scenario-text">${scenario}</span></p>
+                    <p><strong>Description:</strong> <span class="description-text">${mainLaw.description}</span></p>
+                    <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario}</span></p>
                     <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
@@ -2584,10 +2589,6 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
         alternativeLawTitles.forEach(title => {
             const law = laws.find(l => l.title === title);
             if (law) {
-                const altTitle = law.title;
-                const altDescription = law.description;
-                const altScenario = law.scenario;
-
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
@@ -2595,11 +2596,11 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                         <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
                     </div>
                     <div class="cybercrime-title" style="text-align: center; padding: 10px 0;">
-                        <span>${altTitle}</span>
+                        <span>${law.title}</span>
                     </div>
                     <div class="cybercrime-description" style="padding: 0 10px;">
-                        <p style="margin: 5px 0;"><strong>Description:</strong> <span class="description-text">${altDescription}</span></p>
-                        <p style="margin: 5px 0;"><strong>Scenario:</strong> <span class="scenario-text">${altScenario}</span></p>
+                        <p style="margin: 5px 0;"><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
+                        <p style="margin: 5px 0;"><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
                         <p style="margin: 5px 0;"><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end; padding: 10px;">
@@ -2659,41 +2660,27 @@ const defaultCards = [
     }
 ];
 
-function renderDefaultCards() {
-    sectionTitle.textContent = 'TOP ARTICLES';
-    cardsContainer.innerHTML = '';
-    fingerprintIcon.classList.add('glow');
-    fingerprintIcon.style.opacity = '1';
-    defaultCards.forEach(cardData => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <div class="image_container">
-                <img src="${cardData.image}" alt="Cybercrime Image">
-            </div>
-            <div class="cybercrime-title">
-                <span>${cardData.title}</span>
-            </div>
-            <div class="cybercrime-description">
-                <p>Cybercrime</p>
-                <p>${cardData.description}</p>
-            </div>
-            <a href="News.html" class="border-button">
-                <span class="button-text">Read More</span>
-                <span class="iconer">
-                    <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
-                    </svg>
-                </span>
-            </a>
-        `;
-        cardsContainer.appendChild(card);
-    });
-}
-
-// Initial render of default cards
-renderDefaultCards();
+defaultCards.forEach(cardData => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+        <div class="image_container">
+            <img src="${cardData.image}" alt="Cybercrime Image">
+        </div>
+        <div class="cybercrime-title">
+            <span>${cardData.title}</span>
+        </div>
+        <div class="cybercrime-description">
+            <p>Cybercrime</p>
+            <p>${cardData.description}</p>
+        </div>
+        <a href="News.html" class="border-button">
+            <span class="button-text">Read More</span>
+            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+        </a>
+    `;
+    cardsContainer.appendChild(card);
+});
 
 async function performSearch(query) {
     try {
@@ -2721,7 +2708,36 @@ async function performSearch(query) {
                 fingerprintIcon.style.opacity = '1';
             }
         } else {
-            renderDefaultCards();
+            sectionTitle.textContent = 'TOP ARTICLES';
+            cardsContainer.innerHTML = '';
+            fingerprintIcon.classList.add('glow');
+            fingerprintIcon.style.opacity = '1';
+            defaultCards.forEach(cardData => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="image_container">
+                        <img src="${cardData.image}" alt="Cybercrime Image">
+                    </div>
+                    <div class="cybercrime-title">
+                        <span>${cardData.title}</span>
+                    </div>
+                    <div class="cybercrime-description">
+                        <p>Cybercrime</p>
+                        <p>${cardData.description}</p>
+                    </div>
+                    <a href="News.html" class="border-button">
+                        <span class="button-text">Read More</span>
+                        <span class="iconer">
+                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                    </a>
+                `;
+                cardsContainer.appendChild(card);
+            });
         }
     } catch (error) {
         console.error('Search error:', error.message);
@@ -2743,13 +2759,6 @@ searchInput.addEventListener('keypress', function(e) {
 document.querySelector('.search-icon').addEventListener('click', function() {
     const query = searchInput.value.trim();
     performSearch(query);
-});
-
-searchInput.addEventListener('input', function() {
-    const query = searchInput.value.trim();
-    if (!query) {
-        renderDefaultCards();
-    }
 });
 
 function highlightText(element, query) {
