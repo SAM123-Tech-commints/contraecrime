@@ -77,7 +77,7 @@
             left: 0;
             width: 50px;
             height: 50px;
-            background-color: rgba(0, 0,0, 0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             display: none;
             justify-content: center;
@@ -559,97 +559,6 @@
             color: #1DA1F2;
         }
 
-        .messages-section {
-            margin-top: 30px;
-            padding: 15px;
-            background: url('https://i.imgur.com/yytZfZz.png') no-repeat center center;
-            background-size: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .messages-section h3 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .messages-list {
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .message-item {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            position: relative;
-            transition: background-color 0.3s ease;
-        }
-
-        .message-item.new {
-            background-color: rgba(224, 247, 224, 0.9);
-            animation: fadeNew 3s ease-out forwards;
-        }
-
-        @keyframes fadeNew {
-            to {
-                background-color: rgba(255, 255, 255, 0.9);
-            }
-        }
-
-        .message-item p {
-            margin: 0;
-            font-size: 16px;
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .message-item .timestamp {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-            text-align: right;
-        }
-
-        .no-messages {
-            font-size: 16px;
-            color: #666;
-            text-align: center;
-        }
-
-        .dark-theme .messages-section {
-            background: url('https://i.imgur.com/bNRxAhZ.png') no-repeat center center;
-            background-size: cover;
-        }
-
-        .dark-theme .messages-section h3 {
-            color: #d8dbe0;
-        }
-
-        .dark-theme .message-item {
-            background-color: rgba(40, 41, 44, 0.9);
-        }
-
-        .dark-theme .message-item.new {
-            background-color: rgba(46, 75, 46, 0.9);
-        }
-
-        .dark-theme .message-item p {
-            color: #d8dbe0;
-        }
-
-        .dark-theme .message-item .timestamp {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .no-messages {
-            color: #b0b0b0;
-        }
-
         .contact-form form {
             display: flex;
             flex-direction: column;
@@ -894,22 +803,6 @@
                 height: 45px;
             }
 
-            .messages-section h3 {
-                font-size: 20px;
-            }
-
-            .message-item p {
-                font-size: 14px;
-            }
-
-            .message-item .timestamp {
-                font-size: 10px;
-            }
-
-            .no-messages {
-                font-size: 14px;
-            }
-
             .contact-form input,
             .contact-form textarea {
                 font-size: 18px;
@@ -993,26 +886,6 @@
                 font-size: 24px;
                 width: 40px;
                 height: 40px;
-            }
-
-            .messages-section h3 {
-                font-size: 18px;
-            }
-
-            .messages-list {
-                max-height: 200px;
-            }
-
-            .message-item p {
-                font-size: 14px;
-            }
-
-            .message-item .timestamp {
-                font-size: 10px;
-            }
-
-            .no-messages {
-                font-size: 14px;
             }
 
             .avatar-container .profile-pic {
@@ -1123,26 +996,6 @@
                 font-size: 20px;
                 width: 35px;
                 height: 35px;
-            }
-
-            .messages-section h3 {
-                font-size: 16px;
-            }
-
-            .messages-list {
-                max-height: 150px;
-            }
-
-            .message-item p {
-                font-size: 12px;
-            }
-
-            .message-item .timestamp {
-                font-size: 10px;
-            }
-
-            .no-messages {
-                font-size: 12px;
             }
 
             .contact-form input,
@@ -1357,12 +1210,6 @@
                                 <i class="fab fa-twitter"></i>
                             </a>
                         </div>
-                        <div class="messages-section">
-                            <h3>Messages from Contra E-Crime</h3>
-                            <div class="messages-list" id="messagesList">
-                                <p class="no-messages" id="noMessages">No messages yet.</p>
-                            </div>
-                        </div>
                     </div>
                     <div class="contact-form">
                         <form id="contactForm">
@@ -1433,44 +1280,10 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
-        const messagesList = document.getElementById('messagesList');
-        const noMessages = document.getElementById('noMessages');
 
         // Cloudinary Configuration
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
-
-        // Messages handling
-        function displayMessages(messages) {
-            messagesList.innerHTML = '';
-            if (Object.keys(messages).length === 0) {
-                noMessages.style.display = 'block';
-                return;
-            }
-            noMessages.style.display = 'none';
-            Object.entries(messages).reverse().forEach(([key, message]) => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'message-item';
-                if (message.isNew) {
-                    messageDiv.className += ' new';
-                    setTimeout(() => {
-                        messageDiv.classList.remove('new');
-                        const user = auth.currentUser;
-                        if (user) {
-                            const sanitizedEmail = user.email.replace(/\./g, ',');
-                            database.ref(`messages/${sanitizedEmail}/${key}`).update({
-                                isNew: false
-                            });
-                        }
-                    }, 3000);
-                }
-                messageDiv.innerHTML = `
-                    <p>${message.content}</p>
-                    <div class="timestamp">${new Date(message.timestamp).toLocaleString()}</div>
-                `;
-                messagesList.appendChild(messageDiv);
-            });
-        }
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -1487,7 +1300,6 @@
 
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
-                // Load user customization
                 const userRef = database.ref(`users/${sanitizedEmail}`);
                 userRef.once('value', (snapshot) => {
                     const userData = snapshot.val();
@@ -1513,16 +1325,6 @@
                 }, (error) => {
                     console.error('Error loading user customization:', error);
                     alert('Failed to load user customization: ' + error.message);
-                });
-
-                // Load messages
-                const messagesRef = database.ref(`messages/${sanitizedEmail}`);
-                messagesRef.on('value', (snapshot) => {
-                    const messages = snapshot.val() || {};
-                    displayMessages(messages);
-                }, (error) => {
-                    console.error('Error loading messages:', error);
-                    alert('Failed to load messages: ' + error.message);
                 });
             } else {
                 localStorage.removeItem('currentUser');
