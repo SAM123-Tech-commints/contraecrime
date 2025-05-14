@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-       <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -737,9 +737,11 @@ body, html {
     gap: 0.75rem;
     padding: 1rem;
     width: 350px;
+    max-width: 100%;
     border-radius: 1rem;
     justify-content: space-between;
     transition: background-color 0.3s ease;
+    overflow-wrap: break-word;
 }
 
 .card.main-law {
@@ -788,15 +790,18 @@ body:not(.dark-theme) .card {
     color: #ffffff;
     text-transform: capitalize;
     text-wrap: wrap;
-    min-height: 3rem; 
-    line-height: 1.3; 
+    min-height: 3rem;
+    line-height: 1.3;
+    overflow-wrap: break-word;
 }
 
 .cybercrime-description {
     font-size: 0.9rem;
     color: #ffffff;
     line-height: 1.4;
-    text-align: justify;
+    text-align: left;
+    padding: 1rem;
+    overflow-wrap: break-word;
 }
 
 .border-button {
@@ -1097,17 +1102,34 @@ body.dark-theme {
         margin-left: 250px;
     }
 
-    footer {
-        margin-left: 250px;
-    }
-
     .card {
         width: 300px;
+        max-width: 100%;
+        overflow-wrap: break-word;
     }
 
     .card.main-law {
         width: 100%;
         max-width: 600px;
+    }
+
+    .cybercrime-title {
+        overflow-wrap: break-word;
+    }
+
+    .cybercrime-description {
+        text-align: left;
+        padding: 1rem;
+        overflow-wrap: break-word;
+    }
+
+    .image_container {
+        height: 200px;
+        width: 100%;
+    }
+
+    footer {
+        margin-left: 250px;
     }
 
     .account-customization {
@@ -1172,18 +1194,34 @@ body.dark-theme {
         padding: 10px;
     }
 
-    footer {
-        margin-left: 200px;
-    }
-
     .card {
         width: 100%;
         max-width: 350px;
+        overflow-wrap: break-word;
     }
 
     .card.main-law {
         width: 100%;
         max-width: 500px;
+    }
+
+    .cybercrime-title {
+        overflow-wrap: break-word;
+    }
+
+    .cybercrime-description {
+        text-align: left;
+        padding: 1rem;
+        overflow-wrap: break-word;
+    }
+
+    .image_container {
+        height: 200px;
+        width: 100%;
+    }
+
+    footer {
+        margin-left: 200px;
     }
 
     .avatar-container .profile-pic {
@@ -2053,19 +2091,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add click event listener for fingerprintIcon to navigate to homepage
 fingerprintIcon.addEventListener('click', () => {
-    // Option 2: Navigate to HomePage.html with loader transition
     loaderOverlay.classList.add('active');
     setTimeout(() => {
         window.location.href = 'HomePage.html';
     }, 150);
-
-    // Option 1 (Alternative): Restart the animation instead of navigating
-    /*
-    fingerprintIcon.classList.remove('scanning', 'glow'); // Remove existing animation classes
-    void fingerprintIcon.offsetWidth; // Force reflow to restart animation
-    fingerprintIcon.classList.add('glow'); // Re-add the glow animation (or 'scanning' if preferred)
-    fingerprintIcon.style.opacity = '1'; // Ensure visibility
-    */
 });
 
 auth.onAuthStateChanged((user) => {
@@ -2382,22 +2411,28 @@ okSuccess.addEventListener('click', () => {
 
 function normalizeQuery(query) {
     if (!query || typeof query !== 'string') return '';
-    // Enhanced normalization with Compromise for Typesense 1.14.0
     const doc = nlp(query.trim().toLowerCase());
     const normalized = doc
         .normalize({ punctuation: true, possessives: true, plurals: true })
         .text()
-        .replace(/[^a-z0-9\s]/g, ' ');
-    return normalized;
+        .replace(/[^a-z0-9\s-]/g, ' ') // Preserve hyphens
+        .replace(/\s+/g, ' ') // Collapse multiple spaces
+        .trim();
+    const keywords = doc.nouns().out('array').join(' ');
+    return keywords || normalized;
 }
 
 function localSearchFallback(query) {
     const normalizedQuery = normalizeQuery(query);
+    const keywords = normalizedQuery.split(' ').filter(k => k.length > 2);
     const matches = laws
         .map(law => {
             const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
-            const keywords = normalizedQuery.split(' ').filter(k => k);
-            const score = keywords.reduce((acc, keyword) => acc + (text.includes(keyword) ? 1 : 0), 0);
+            const score = keywords.reduce((acc, keyword) => {
+                const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+                const matches = text.match(regex) || [];
+                return acc + matches.length * (keyword.length / 10);
+            }, 0);
             return { law, score };
         })
         .filter(item => item.score > 0)
@@ -2456,8 +2491,11 @@ async function fetchLawsFromAI(query) {
             throw new Error('Typesense collection "laws" not found or inaccessible');
         }
 
+        const keywords = normalizedQuery.split(' ').filter(k => k.length > 2);
+        const boostedQuery = keywords.length > 1 ? `${normalizedQuery} || ${keywords.join(' ')}` : normalizedQuery;
+
         const searchParameters = {
-            q: normalizedQuery,
+            q: boostedQuery,
             query_by: 'title,description,scenario',
             query_by_weights: '4,3,2',
             per_page: 5,
@@ -2469,8 +2507,9 @@ async function fetchLawsFromAI(query) {
             infix: 'always',
             drop_tokens_threshold: 1,
             locale: 'auto',
-            synonyms: true, 
-            phrase_match: true 
+            synonyms: true,
+            phrase_match: true,
+            split_join_tokens: 'both'
         };
 
         const results = await client.collections('laws').documents().search(searchParameters);
@@ -2763,9 +2802,14 @@ document.querySelector('.search-icon').addEventListener('click', function() {
 
 function highlightText(element, query) {
     if (!element || !query) return;
-    const text = element.textContent;
-    const regex = new RegExp(`(${query})`, 'gi');
-    element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
+    const normalizedQuery = normalizeQuery(query);
+    const keywords = normalizedQuery.split(' ').filter(k => k.length > 2);
+    let text = element.textContent;
+    keywords.forEach(keyword => {
+        const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+        text = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
+    });
+    element.innerHTML = text;
 }
 
 function updateClock() {
@@ -2790,6 +2834,3 @@ window.addEventListener('resize', () => {
         mobileMenuIcon.querySelector('i').classList.add('fa-bars');
     }
 });
-</script>
-</body>
-</html>
