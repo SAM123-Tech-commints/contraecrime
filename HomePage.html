@@ -1524,7 +1524,7 @@ body.dark-theme {
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/compromise@14.10.0/builds/compromise.min.js"></script>
     <script>
-               const firebaseConfig = {
+const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
             projectId: "contra-e-crime",
@@ -2349,66 +2349,9 @@ body.dark-theme {
             successModal.classList.remove('active');
         });
 
-        function detectLanguage(query) {
-            const tagalogWords = ['hacked', 'scam', 'fraud', 'krimen', 'pag-hack', 'panloloko', 'ilegal', 'account', 'online', 'transaksyon', 'cybercrime', 'hack', 'pagnanakaw', 'seguridad'];
-            const queryWords = query.toLowerCase().split(/\s+/);
-            const tagalogCount = queryWords.filter(word => tagalogWords.includes(word)).length;
-            const totalWords = queryWords.length;
-
-            if (totalWords === 0) return 'en';
-            if (tagalogCount / totalWords > 0.5) {
-                return 'tl'; // Tagalog or Taglish
-            }
-            return 'en'; // English or mixed
-        }
-
-        function translateToEnglish(query) {
-            const translations = {
-                'hacked': 'hacking',
-                'pag-hack': 'hacking',
-                'panloloko': 'fraud',
-                'krimen': 'crime',
-                'ilegal': 'illegal',
-                'transaksyon': 'transaction',
-                'account': 'account',
-                'scam': 'scam',
-                'fraud': 'fraud',
-                'online': 'online',
-                'cybercrime': 'cybercrime',
-                'hack': 'hacking',
-                'pagnanakaw': 'theft',
-                'seguridad': 'security'
-            };
-
-            return query.split(/\s+/).map(word => translations[word.toLowerCase()] || word).join(' ');
-        }
-
         function normalizeQuery(query) {
-            const language = detectLanguage(query);
-            let normalizedQuery = query.toLowerCase().replace(/[^a-z0-9\s]/g, '');
-
-            if (language === 'tl') {
-                normalizedQuery = translateToEnglish(normalizedQuery);
-            }
-
-            const synonyms = {
-                'hack': ['hacking', 'breach', 'unauthorized access', 'cracking'],
-                'fraud': ['scam', 'deception', 'cheat', 'fraudulent'],
-                'crime': ['offense', 'violation', 'felony', 'cybercrime'],
-                'account': ['profile', 'user account', 'login'],
-                'transaction': ['deal', 'payment', 'purchase']
-            };
-
-            let tokens = normalizedQuery.split(' ').flatMap(token => {
-                for (const [key, syns] of Object.entries(synonyms)) {
-                    if (token.includes(key)) {
-                        return [token, ...syns];
-                    }
-                }
-                return token;
-            });
-
-            return tokens.join(' ').trim();
+            if (!query || typeof query !== 'string') return '';
+            return query.trim().toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
         }
 
         function localSearchFallback(query) {
@@ -2416,7 +2359,7 @@ body.dark-theme {
             const matches = laws
                 .map(law => {
                     const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
-                    const keywords = normalizedQuery.split(' ');
+                    const keywords = normalizedQuery.split(' ').filter(k => k);
                     const score = keywords.reduce((acc, keyword) => acc + (text.includes(keyword) ? 1 : 0), 0);
                     return { law, score };
                 })
@@ -2433,7 +2376,7 @@ body.dark-theme {
                 .map(item => item.law.title)
                 .slice(0, 4);
 
-            // If fewer than 4 alternatives, fill with random laws
+            // Fill alternatives if needed
             while (alternativeLaws.length < 4 && laws.length > 0) {
                 const availableLaws = laws
                     .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
@@ -2443,7 +2386,7 @@ body.dark-theme {
                 alternativeLaws.push(availableLaws[randomIndex]);
             }
 
-            // If still fewer than 4, repeat the main law or available laws
+            // Allow repetition if still insufficient
             while (alternativeLaws.length < 4 && laws.length > 0) {
                 const availableLaws = laws.map(law => law.title);
                 const randomIndex = Math.floor(Math.random() * availableLaws.length);
@@ -2459,7 +2402,7 @@ body.dark-theme {
             try {
                 const normalizedQuery = normalizeQuery(query);
                 if (!normalizedQuery) {
-                    throw new Error('Empty or invalid query after normalization');
+                    throw new Error('Empty or invalid query');
                 }
 
                 if (searchCache.has(normalizedQuery)) {
@@ -2469,10 +2412,10 @@ body.dark-theme {
                 const client = new Typesense.Client({
                     nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
                     apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
-                    connectionTimeoutSeconds: 5 // Increased timeout
+                    connectionTimeoutSeconds: 5
                 });
 
-                // Verify collection exists
+                // Verify collection
                 try {
                     await client.collections('laws').retrieve();
                 } catch (err) {
@@ -2482,15 +2425,16 @@ body.dark-theme {
                 const searchParameters = {
                     q: normalizedQuery,
                     query_by: 'title,description,scenario',
-                    query_by_weights: '3,2,1',
+                    query_by_weights: '4,3,2',
                     per_page: 5,
                     typo_tokens_threshold: 1,
                     num_typos: 2,
                     include_fields: 'title,description,scenario',
-                    rank_by: 'relevance',
+                    sort_by: '_text_match:desc',
                     prefix: true,
                     infix: 'always',
-                    drop_tokens_threshold: 1
+                    drop_tokens_threshold: 1,
+                    locale: 'auto'
                 };
 
                 const results = await client.collections('laws').documents().search(searchParameters);
@@ -2519,7 +2463,7 @@ body.dark-theme {
                     ].slice(0, 4);
                 }
 
-                // Ensure 4 alternative laws
+                // Ensure alternatives
                 while (alternativeLaws.length < 4 && laws.length > 0) {
                     const availableLaws = laws
                         .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
@@ -2527,15 +2471,6 @@ body.dark-theme {
                     if (availableLaws.length === 0) break;
                     const randomIndex = Math.floor(Math.random() * availableLaws.length);
                     alternativeLaws.push(availableLaws[randomIndex]);
-                }
-
-                // Final fallback: repeat laws if necessary
-                while (alternativeLaws.length < 4 && laws.length > 0) {
-                    const availableLaws = laws.map(law => law.title);
-                    const randomIndex = Math.floor(Math.random() * availableLaws.length);
-                    if (!alternativeLaws.includes(availableLaws[randomIndex])) {
-                        alternativeLaws.push(availableLaws[randomIndex]);
-                    }
                 }
 
                 const result = { mainLaw, alternativeLaws };
@@ -2633,7 +2568,7 @@ body.dark-theme {
                                 ${law.pdf ? `
                                 <a href="${law.pdf}" class="border-button" target="_blank">
                                     <span class="button-text">Read More</span>
-                                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span Cohere
+                                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                                 </a>` : ''}
                                 <button class="save-button" data-title="${law.title}">
                                     <span class="button-text">Save Law</span>
@@ -2767,7 +2702,7 @@ body.dark-theme {
                 }
             } catch (error) {
                 console.error('Search error:', error.message);
-                cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please try again.</p>`;
+                cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
                 fingerprintIcon.classList.add('glow');
                 fingerprintIcon.style.opacity = '1';
             } finally {
