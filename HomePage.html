@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/typesense@1.7.0/dist/typesense.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -1518,51 +1518,51 @@ body.dark-theme {
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/typesense@1.7.0/dist/typesense.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/compromise@14.10.0/builds/compromise.min.js"></script>
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/compromise@14.10.0/builds/compromise.min.js"></script>
+<script>
 const firebaseConfig = {
-            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
-            authDomain: "contra-e-crime.firebaseapp.com",
-            projectId: "contra-e-crime",
-            storageBucket: "contra-e-crime.firebasestorage.app",
-            messagingSenderId: "198995444405",
-            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
-        };
+    apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
+    authDomain: "contra-e-crime.firebaseapp.com",
+    projectId: "contra-e-crime",
+    storageBucket: "contra-e-crime.firebasestorage.app",
+    messagingSenderId: "198995444405",
+    appId: "1:198995444405:web:5f8c6eed561461b36034fc",
+    databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
+};
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
 
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
-        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
+const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
-        const sidebar = document.getElementById('sidebar');
-        const loaderOverlay = document.getElementById('loaderOverlay');
-        const profilePic = document.getElementById('profilePic');
-        const customizationMenu = document.getElementById('customizationMenu');
-        const avatarInput = document.getElementById('avatarInput');
-        const avatarLoading = document.getElementById('avatarLoading');
-        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
-        const borderColorPicker = document.getElementById('borderColorPicker');
-        const borderTypeSelect = document.getElementById('borderTypeSelect');
-        const usernameDisplay = document.getElementById('usernameDisplay');
-        const emailDisplay = document.getElementById('emailDisplay');
-        const createdAtDisplay = document.getElementById('createdAtDisplay');
-        const searchInput = document.getElementById('searchInput');
-        const fingerprintIcon = document.getElementById('fingerprintIcon');
-        const cardsContainer = document.getElementById('cardsContainer');
-        const sectionTitle = document.getElementById('sectionTitle');
-        const successModal = document.getElementById('successModal');
-        const okSuccess = document.getElementById('okSuccess');
-        const clock = document.getElementById('clock');
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+const sidebar = document.getElementById('sidebar');
+const loaderOverlay = document.getElementById('loaderOverlay');
+const profilePic = document.getElementById('profilePic');
+const customizationMenu = document.getElementById('customizationMenu');
+const avatarInput = document.getElementById('avatarInput');
+const avatarLoading = document.getElementById('avatarLoading');
+const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+const borderColorPicker = document.getElementById('borderColorPicker');
+const borderTypeSelect = document.getElementById('borderTypeSelect');
+const usernameDisplay = document.getElementById('usernameDisplay');
+const emailDisplay = document.getElementById('emailDisplay');
+const createdAtDisplay = document.getElementById('createdAtDisplay');
+const searchInput = document.getElementById('searchInput');
+const fingerprintIcon = document.getElementById('fingerprintIcon');
+const cardsContainer = document.getElementById('cardsContainer');
+const sectionTitle = document.getElementById('sectionTitle');
+const successModal = document.getElementById('successModal');
+const okSuccess = document.getElementById('okSuccess');
+const clock = document.getElementById('clock');
 
         const laws = [
     {
@@ -2033,735 +2033,729 @@ const firebaseConfig = {
         pdf: "https://drive.google.com/uc?export=download&id=1uuLbTcnDcQQ6fhLGGrG2sWIUFQe9G3wO",
         pdfwebsite: "https://lawphil.net/administ/bir/rr/rr09_01.pdf"
     }
-];
+];27
 
-        const searchCache = new Map();
+const searchCache = new Map();
 
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentUser = {
-                    username: user.displayName || 'User',
-                    email: user.email,
-                    createdAt: user.metadata.creationTime
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        const currentUser = {
+            username: user.displayName || 'User',
+            email: user.email,
+            createdAt: user.metadata.creationTime
+        };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                usernameDisplay.textContent = `${currentUser.username}`;
-                emailDisplay.textContent = `${currentUser.email}`;
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
+        usernameDisplay.textContent = `${currentUser.username}`;
+        emailDisplay.textContent = `${currentUser.email}`;
+        createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
 
+        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+        const userRef = database.ref(`users/${sanitizedEmail}`);
+        userRef.once('value', (snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+                if (userData.avatarUrl) {
+                    profilePic.src = userData.avatarUrl;
+                } else {
+                    profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                }
+                if (userData.avatarBgColor) {
+                    profilePic.style.backgroundColor = userData.avatarBgColor;
+                    avatarBgColorPicker.value = userData.avatarBgColor;
+                }
+                if (userData.borderColor) {
+                    profilePic.style.borderColor = userData.borderColor;
+                    borderColorPicker.value = userData.borderColor;
+                }
+                if (userData.borderType) {
+                    profilePic.style.borderStyle = userData.borderType;
+                    borderTypeSelect.value = userData.borderType;
+                }
+            }
+        }, (error) => {
+            console.error('Error loading user customization:', error);
+            alert('Failed to load user customization: ' + error.message);
+        });
+    } else {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    }
+});
+
+profilePic.addEventListener('click', () => {
+    customizationMenu.classList.toggle('active');
+});
+
+document.addEventListener('click', (e) => {
+    if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+        customizationMenu.classList.remove('active');
+    }
+});
+
+avatarInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const maxSize = 2 * 1024 * 1024;
+    if (!validTypes.includes(file.type)) {
+        alert('Please upload a valid image (JPG, JPEG, PNG).');
+        return;
+    }
+    if (file.size > maxSize) {
+        alert('Image size must be less than 2MB.');
+        return;
+    }
+
+    const user = auth.currentUser;
+    if (!user) {
+        alert('You must be logged in to upload an avatar.');
+        avatarLoading.classList.remove('active');
+        return;
+    }
+
+    avatarLoading.classList.add('active');
+
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const maxDimension = 300;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+            if (width > maxDimension) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+            }
+        } else {
+            if (height > maxDimension) {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+            }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob((blob) => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser || !currentUser.email) {
+                alert('User not logged in.');
+                avatarLoading.classList.remove('active');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', blob);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('folder', `avatars/${currentUser.email}`);
+
+            fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                        try {
+                            const parsed = JSON.parse(text);
+                            errorMessage = parsed.error?.message || text;
+                        } catch (e) {
+                            errorMessage = text.includes('Invalid cloud name')
+                                ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                : text.includes('Invalid upload preset')
+                                ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                : text.includes('Unsigned uploads are not allowed')
+                                ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                : text || 'Unknown error occurred';
+                        }
+                        throw new Error(errorMessage);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                }
+
+                const avatarUrl = data.secure_url;
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
-                        if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
-                            avatarBgColorPicker.value = userData.avatarBgColor;
-                        }
-                        if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
-                            borderColorPicker.value = userData.borderColor;
-                        }
-                        if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
-                            borderTypeSelect.value = userData.borderType;
-                        }
-                    }
-                }, (error) => {
-                    console.error('Error loading user customization:', error);
-                    alert('Failed to load user customization: ' + error.message);
-                });
-            } else {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'index.html';
-            }
-        });
-
-        profilePic.addEventListener('click', () => {
-            customizationMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
-            }
-        });
-
-        avatarInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPG, JPEG, PNG).');
-                return;
-            }
-            if (file.size > maxSize) {
-                alert('Image size must be less than 2MB.');
-                return;
-            }
-
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to upload an avatar.');
-                avatarLoading.classList.remove('active');
-                return;
-            }
-
-            avatarLoading.classList.add('active');
-
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxDimension = 300;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxDimension) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    }
-                } else {
-                    if (height > maxDimension) {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        alert('User not logged in.');
-                        avatarLoading.classList.remove('active');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
-                                try {
-                                    const parsed = JSON.parse(text);
-                                    errorMessage = parsed.error?.message || text;
-                                } catch (e) {
-                                    errorMessage = text.includes('Invalid cloud name')
-                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
-                                        : text.includes('Invalid upload preset')
-                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                        : text.includes('Unsigned uploads are not allowed')
-                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                        : text || 'Unknown error occurred';
-                                }
-                                throw new Error(errorMessage);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.error) {
-                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
-                        }
-
-                        const avatarUrl = data.secure_url;
-                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                        database.ref(`users/${sanitizedEmail}`).update({
-                            avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
-                        })
-                        .then(() => {
-                            profilePic.src = avatarUrl;
-                            avatarLoading.classList.remove('active');
-                        })
-                        .catch(error => {
-                            console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
-                            avatarLoading.classList.remove('active');
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error uploading avatar to Cloudinary:', error);
-                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
-                        avatarLoading.classList.remove('active');
-                    });
-                }, file.type, 0.6);
-            };
-            img.onerror = () => {
-                alert('Failed to process the image. Please try a different file.');
-                avatarLoading.classList.remove('active');
-            };
-        });
-
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
-            profilePic.style.backgroundColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
                 database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color,
+                    avatarUrl: avatarUrl,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
                 })
-                .catch(error => {
-                    console.error('Error saving avatar background color:', error);
-                    alert('Failed to save avatar background color: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the avatar background color.');
-            }
-        });
-
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
-            profilePic.style.borderColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                .then(() => {
+                    profilePic.src = avatarUrl;
+                    avatarLoading.classList.remove('active');
                 })
                 .catch(error => {
-                    console.error('Error saving border color:', error);
-                    alert('Failed to save border color: ' + error.message);
+                    console.error('Error saving avatar URL to Firebase:', error);
+                    alert('Failed to save avatar URL to Firebase: ' + error.message);
+                    avatarLoading.classList.remove('active');
                 });
-            } else {
-                alert('You must be logged in to change the border color.');
-            }
-        });
-
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: borderType,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the border type.');
-            }
-        });
-
-        if (localStorage.getItem('darkTheme') === 'enabled') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
-        });
-
-        mobileMenuIcon.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
-        });
-
-        function saveLaw(lawTitle) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to save a law.');
-                return;
-            }
-
-            const sanitizedEmail = user.email.replace(/\./g, ',');
-            const lawRef = database.ref(`users/${sanitizedEmail}/savedLaws`).push();
-            lawRef.set({
-                title: lawTitle,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            })
-            .then(() => {
-                successModal.classList.add('active');
             })
             .catch(error => {
-                console.error('Error saving law:', error);
-                alert('Failed to save law: ' + error.message);
+                console.error('Error uploading avatar to Cloudinary:', error);
+                alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                avatarLoading.classList.remove('active');
             });
+        }, file.type, 0.6);
+    };
+    img.onerror = () => {
+        alert('Failed to process the image. Please try a different file.');
+        avatarLoading.classList.remove('active');
+    };
+});
+
+avatarBgColorPicker.addEventListener('change', () => {
+    const color = avatarBgColorPicker.value;
+    profilePic.style.backgroundColor = color;
+
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            avatarBgColor: color,
+            updatedAt: firebase.database.ServerValue.TIMESTAMP
+        })
+        .catch(error => {
+            console.error('Error saving avatar background color:', error);
+            alert('Failed to save avatar background color: ' + error.message);
+        });
+    } else {
+        alert('You must be logged in to change the avatar background color.');
+    }
+});
+
+borderColorPicker.addEventListener('change', () => {
+    const color = borderColorPicker.value;
+    profilePic.style.borderColor = color;
+
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            borderColor: color,
+            updatedAt: firebase.database.ServerValue.TIMESTAMP
+        })
+        .catch(error => {
+            console.error('Error saving border color:', error);
+            alert('Failed to save border color: ' + error.message);
+        });
+    } else {
+        alert('You must be logged in to change the border color.');
+    }
+});
+
+borderTypeSelect.addEventListener('change', () => {
+    const borderType = borderTypeSelect.value;
+    profilePic.style.borderStyle = borderType;
+
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            borderType: borderType,
+            updatedAt: firebase.database.ServerValue.TIMESTAMP
+        })
+        .catch(error => {
+            console.error('Error saving border type:', error);
+            alert('Failed to save border type: ' + error.message);
+        });
+    } else {
+        alert('You must be logged in to change the border type.');
+    }
+});
+
+if (localStorage.getItem('darkTheme') === 'enabled') {
+    body.classList.add('dark-theme');
+    themeToggle.checked = true;
+}
+
+themeToggle.addEventListener('change', function() {
+    if (this.checked) {
+        body.classList.add('dark-theme');
+        localStorage.setItem('darkTheme', 'enabled');
+    } else {
+        body.classList.remove('dark-theme');
+        localStorage.setItem('darkTheme', 'disabled');
+    }
+});
+
+mobileMenuIcon.addEventListener('click', function() {
+    sidebar.classList.toggle('active');
+    const icon = mobileMenuIcon.querySelector('i');
+    if (sidebar.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+});
+
+document.querySelectorAll('a[href]').forEach(link => {
+    if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+        link.addEventListener('click', function(e) {
+            if (!this.href.includes(window.location.hostname)) return;
+
+            e.preventDefault();
+            loaderOverlay.classList.add('active');
+
+            setTimeout(() => {
+                window.location.href = this.href;
+            }, 150);
+        });
+    }
+});
+
+function saveLaw(lawTitle) {
+    const user = auth.currentUser;
+    if (!user) {
+        alert('You must be logged in to save a law.');
+        return;
+    }
+
+    const sanitizedEmail = user.email.replace(/\./g, ',');
+    const lawRef = database.ref(`users/${sanitizedEmail}/savedLaws`).push();
+    lawRef.set({
+        title: lawTitle,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+    })
+    .then(() => {
+        successModal.classList.add('active');
+    })
+    .catch(error => {
+        console.error('Error saving law:', error);
+        alert('Failed to save law: ' + error.message);
+    });
+}
+
+okSuccess.addEventListener('click', () => {
+    successModal.classList.remove('active');
+});
+
+function normalizeQuery(query) {
+    if (!query || typeof query !== 'string') return '';
+    // Enhanced normalization with Compromise for Typesense 1.14.0
+    const doc = nlp(query.trim().toLowerCase());
+    const normalized = doc
+        .normalize({ punctuation: true, possessives: true, plurals: true })
+        .text()
+        .replace(/[^a-z0-9\s]/g, ' ');
+    return normalized;
+}
+
+function localSearchFallback(query) {
+    const normalizedQuery = normalizeQuery(query);
+    const matches = laws
+        .map(law => {
+            const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
+            const keywords = normalizedQuery.split(' ').filter(k => k);
+            const score = keywords.reduce((acc, keyword) => acc + (text.includes(keyword) ? 1 : 0), 0);
+            return { law, score };
+        })
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+    if (matches.length === 0) {
+        return { mainLaw: null, alternativeLaws: [] };
+    }
+
+    const mainLaw = matches[0].law.title;
+    let alternativeLaws = matches
+        .slice(1, 5)
+        .map(item => item.law.title)
+        .slice(0, 4);
+
+    while (alternativeLaws.length < 4 && laws.length > 0) {
+        const availableLaws = laws
+            .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
+            .map(law => law.title);
+        if (availableLaws.length === 0) break;
+        const randomIndex = Math.floor(Math.random() * availableLaws.length);
+        alternativeLaws.push(availableLaws[randomIndex]);
+    }
+
+    while (alternativeLaws.length < 4 && laws.length > 0) {
+        const availableLaws = laws.map(law => law.title);
+        const randomIndex = Math.floor(Math.random() * availableLaws.length);
+        if (!alternativeLaws.includes(availableLaws[randomIndex])) {
+            alternativeLaws.push(availableLaws[randomIndex]);
+        }
+    }
+
+    return { mainLaw, alternativeLaws };
+}
+
+async function fetchLawsFromAI(query) {
+    try {
+        const normalizedQuery = normalizeQuery(query);
+        if (!normalizedQuery) {
+            throw new Error('Empty or invalid query');
         }
 
-        okSuccess.addEventListener('click', () => {
-            successModal.classList.remove('active');
+        if (searchCache.has(normalizedQuery)) {
+            return searchCache.get(normalizedQuery);
+        }
+
+        const client = new Typesense.Client({
+            nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
+            apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
+            connectionTimeoutSeconds: 5
         });
 
-        function normalizeQuery(query) {
-            if (!query || typeof query !== 'string') return '';
-            return query.trim().toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
+        try {
+            await client.collections('laws').retrieve();
+        } catch (err) {
+            throw new Error('Typesense collection "laws" not found or inaccessible');
         }
 
-        function localSearchFallback(query) {
-            const normalizedQuery = normalizeQuery(query).toLowerCase();
-            const matches = laws
-                .map(law => {
-                    const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
-                    const keywords = normalizedQuery.split(' ').filter(k => k);
-                    const score = keywords.reduce((acc, keyword) => acc + (text.includes(keyword) ? 1 : 0), 0);
-                    return { law, score };
-                })
-                .filter(item => item.score > 0)
-                .sort((a, b) => b.score - a.score);
+        const searchParameters = {
+            q: normalizedQuery,
+            query_by: 'title,description,scenario',
+            query_by_weights: '4,3,2',
+            per_page: 5,
+            typo_tokens_threshold: 1,
+            num_typos: 2,
+            include_fields: 'title,description,scenario',
+            sort_by: '_text_match:desc',
+            prefix: true,
+            infix: 'always',
+            drop_tokens_threshold: 1,
+            locale: 'auto',
+            synonyms: true, // Enable synonym search for legal terms
+            phrase_match: true // Support exact phrase queries
+        };
 
-            if (matches.length === 0) {
-                return { mainLaw: null, alternativeLaws: [] };
-            }
+        const results = await client.collections('laws').documents().search(searchParameters);
 
-            const mainLaw = matches[0].law.title;
-            let alternativeLaws = matches
+        let mainLaw = null;
+        let alternativeLaws = [];
+
+        if (results.hits && results.hits.length > 0) {
+            mainLaw = results.hits[0].document.title;
+            alternativeLaws = results.hits
                 .slice(1, 5)
-                .map(item => item.law.title)
+                .map(hit => hit.document.title)
+                .filter(title => title !== mainLaw)
                 .slice(0, 4);
-
-            // Fill alternatives if needed
-            while (alternativeLaws.length < 4 && laws.length > 0) {
-                const availableLaws = laws
-                    .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
-                    .map(law => law.title);
-                if (availableLaws.length === 0) break;
-                const randomIndex = Math.floor(Math.random() * availableLaws.length);
-                alternativeLaws.push(availableLaws[randomIndex]);
-            }
-
-            // Allow repetition if still insufficient
-            while (alternativeLaws.length < 4 && laws.length > 0) {
-                const availableLaws = laws.map(law => law.title);
-                const randomIndex = Math.floor(Math.random() * availableLaws.length);
-                if (!alternativeLaws.includes(availableLaws[randomIndex])) {
-                    alternativeLaws.push(availableLaws[randomIndex]);
-                }
-            }
-
-            return { mainLaw, alternativeLaws };
         }
 
-        async function fetchLawsFromAI(query) {
-            try {
-                const normalizedQuery = normalizeQuery(query);
-                if (!normalizedQuery) {
-                    throw new Error('Empty or invalid query');
-                }
+        if (!mainLaw || alternativeLaws.length < 4) {
+            const fallback = localSearchFallback(query);
+            if (fallback.mainLaw && !mainLaw) {
+                mainLaw = fallback.mainLaw;
+            }
+            alternativeLaws = [
+                ...alternativeLaws,
+                ...fallback.alternativeLaws.filter(title => !alternativeLaws.includes(title) && title !== mainLaw)
+            ].slice(0, 4);
+        }
 
-                if (searchCache.has(normalizedQuery)) {
-                    return searchCache.get(normalizedQuery);
-                }
+        while (alternativeLaws.length < 4 && laws.length > 0) {
+            const availableLaws = laws
+                .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
+                .map(law => law.title);
+            if (availableLaws.length === 0) break;
+            const randomIndex = Math.floor(Math.random() * availableLaws.length);
+            alternativeLaws.push(availableLaws[randomIndex]);
+        }
 
-                const client = new Typesense.Client({
-                    nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
-                    apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
-                    connectionTimeoutSeconds: 5
+        const result = { mainLaw, alternativeLaws };
+        searchCache.set(normalizedQuery, result);
+        if (searchCache.size > 50) {
+            const oldestKey = searchCache.keys().next().value;
+            searchCache.delete(oldestKey);
+        }
+
+        return result;
+    } catch (error) {
+        console.error('Typesense search error:', error.message);
+        return localSearchFallback(query);
+    }
+}
+
+function renderLawCards(mainLawTitle, alternativeLawTitles) {
+    cardsContainer.innerHTML = '';
+
+    const query = searchInput.value.trim();
+
+    if (mainLawTitle) {
+        const mainLaw = laws.find(law => law.title === mainLawTitle);
+        if (mainLaw) {
+            const mainCard = document.createElement('div');
+            mainCard.className = 'card main-law highlight';
+            mainCard.innerHTML = `
+                <div class="image_container">
+                    <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
+                </div>
+                <div class="cybercrime-title">
+                    <span>${mainLaw.title}</span>
+                </div>
+                <div class="cybercrime-description">
+                    <p><strong>Description:</strong> <span class="description-text">${mainLaw.description}</span></p>
+                    <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario}</span></p>
+                    <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    ${mainLaw.pdf ? `
+                    <a href="${mainLaw.pdf}" class="border-button" target="_blank">
+                        <span class="button-text">Read More</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                    </a>` : ''}
+                    <button class="save-button" data-title="${mainLaw.title}">
+                        <span class="button-text">Save Law</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                    </button>
+                </div>
+            `;
+            cardsContainer.appendChild(mainCard);
+
+            if (query) {
+                ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
+                    const element = mainCard.querySelector(`.${className}`);
+                    highlightText(element, query);
                 });
-
-                // Verify collection
-                try {
-                    await client.collections('laws').retrieve();
-                } catch (err) {
-                    throw new Error('Typesense collection "laws" not found or inaccessible');
-                }
-
-                const searchParameters = {
-                    q: normalizedQuery,
-                    query_by: 'title,description,scenario',
-                    query_by_weights: '4,3,2',
-                    per_page: 5,
-                    typo_tokens_threshold: 1,
-                    num_typos: 2,
-                    include_fields: 'title,description,scenario',
-                    sort_by: '_text_match:desc',
-                    prefix: true,
-                    infix: 'always',
-                    drop_tokens_threshold: 1,
-                    locale: 'auto'
-                };
-
-                const results = await client.collections('laws').documents().search(searchParameters);
-
-                let mainLaw = null;
-                let alternativeLaws = [];
-
-                if (results.hits && results.hits.length > 0) {
-                    mainLaw = results.hits[0].document.title;
-                    alternativeLaws = results.hits
-                        .slice(1, 5)
-                        .map(hit => hit.document.title)
-                        .filter(title => title !== mainLaw)
-                        .slice(0, 4);
-                }
-
-                // Fallback if insufficient results
-                if (!mainLaw || alternativeLaws.length < 4) {
-                    const fallback = localSearchFallback(query);
-                    if (fallback.mainLaw && !mainLaw) {
-                        mainLaw = fallback.mainLaw;
-                    }
-                    alternativeLaws = [
-                        ...alternativeLaws,
-                        ...fallback.alternativeLaws.filter(title => !alternativeLaws.includes(title) && title !== mainLaw)
-                    ].slice(0, 4);
-                }
-
-                // Ensure alternatives
-                while (alternativeLaws.length < 4 && laws.length > 0) {
-                    const availableLaws = laws
-                        .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
-                        .map(law => law.title);
-                    if (availableLaws.length === 0) break;
-                    const randomIndex = Math.floor(Math.random() * availableLaws.length);
-                    alternativeLaws.push(availableLaws[randomIndex]);
-                }
-
-                const result = { mainLaw, alternativeLaws };
-                searchCache.set(normalizedQuery, result);
-                if (searchCache.size > 100) {
-                    const oldestKey = searchCache.keys().next().value;
-                    searchCache.delete(oldestKey);
-                }
-
-                return result;
-            } catch (error) {
-                console.error('Typesense search error:', error.message);
-                return localSearchFallback(query);
             }
         }
+    } else {
+        cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
+        fingerprintIcon.classList.add('glow');
+        fingerprintIcon.style.opacity = '1';
+        return;
+    }
 
-            function renderLawCards(mainLawTitle, alternativeLawTitles) {
-            cardsContainer.innerHTML = '';
+    if (alternativeLawTitles.length > 0) {
+        const alternativesSection = document.createElement('div');
+        alternativesSection.innerHTML = '<h2 style="text-align: center; margin-top: 40px; margin-bottom: 20px;">Alternative Laws Suggested</h2>';
+        cardsContainer.appendChild(alternativesSection);
 
-            const query = searchInput.value.trim();
+        const alternativesContainer = document.createElement('div');
+        alternativesContainer.className = 'cards-container';
+        alternativesContainer.style.display = 'flex';
+        alternativesContainer.style.flexWrap = 'wrap';
+        alternativesContainer.style.gap = '20px';
+        alternativesContainer.style.justifyContent = 'center';
 
-            if (mainLawTitle) {
-                const mainLaw = laws.find(law => law.title === mainLawTitle);
-                if (mainLaw) {
-                    const mainCard = document.createElement('div');
-                    mainCard.className = 'card main-law highlight';
-                    mainCard.innerHTML = `
-                        <div class="image_container">
-                            <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
-                        </div>
-                        <div class="cybercrime-title">
-                            <span>${mainLaw.title}</span>
-                        </div>
-                        <div class="cybercrime-description">
-                            <p><strong>Description:</strong> <span class="description-text">${mainLaw.description}</span></p>
-                            <p><strong>Scenario:</strong> <span class="scenario-text">${mainLaw.scenario}</span></p>
-                            <p><strong>Punishment:</strong> <span class="punishment-text">${mainLaw.punishment}</span></p>
-                        </div>
-                        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                            ${mainLaw.pdf ? `
-                            <a href="${mainLaw.pdf}" class="border-button" target="_blank">
-                                <span class="button-text">Read More</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                            </a>` : ''}
-                            <button class="save-button" data-title="${mainLaw.title}">
-                                <span class="button-text">Save Law</span>
-                                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                            </button>
-                        </div>
-                    `;
-                    cardsContainer.appendChild(mainCard);
+        alternativeLawTitles.forEach(title => {
+            const law = laws.find(l => l.title === title);
+            if (law) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="image_container">
+                        <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
+                    </div>
+                    <div class="cybercrime-title" style="text-align: center; padding: 10px 0;">
+                        <span>${law.title}</span>
+                    </div>
+                    <div class="cybercrime-description" style="padding: 0 10px;">
+                        <p style="margin: 5px 0;"><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
+                        <p style="margin: 5px 0;"><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
+                        <p style="margin: 5px 0;"><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end; padding: 10px;">
+                        ${law.pdf ? `
+                        <a href="${law.pdf}" class="border-button" target="_blank">
+                            <span class="button-text">Read More</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                        </a>` : ''}
+                        <button class="save-button" data-title="${law.title}">
+                            <span class="button-text">Save Law</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                        </button>
+                    </div>
+                `;
+                alternativesContainer.appendChild(card);
 
-                    if (query) {
-                        ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
-                            const element = mainCard.querySelector(`.${className}`);
-                            highlightText(element, query);
-                        });
-                    }
+                if (query) {
+                    ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
+                        const element = card.querySelector(`.${className}`);
+                        highlightText(element, query);
+                    });
                 }
+            }
+        });
+        cardsContainer.appendChild(alternativesContainer);
+    }
+
+    document.querySelectorAll('.save-button').forEach(button => {
+        button.removeEventListener('click', saveLawHandler);
+        button.addEventListener('click', saveLawHandler);
+    });
+
+    fingerprintIcon.classList.add('glow');
+    fingerprintIcon.style.opacity = '1';
+}
+
+function saveLawHandler() {
+    const lawTitle = this.getAttribute('data-title');
+    saveLaw(lawTitle);
+}
+
+const defaultCards = [
+    {
+        title: "UN: Asian Scam Calls Now a Global Export",
+        image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
+        description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
+    },
+    {
+        title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
+        image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
+        description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
+    },
+    {
+        title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
+        image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
+        description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
+    }
+];
+
+defaultCards.forEach(cardData => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+        <div class="image_container">
+            <img src="${cardData.image}" alt="Cybercrime Image">
+        </div>
+        <div class="cybercrime-title">
+            <span>${cardData.title}</span>
+        </div>
+        <div class="cybercrime-description">
+            <p>Cybercrime</p>
+            <p>${cardData.description}</p>
+        </div>
+        <a href="News.html" class="border-button">
+            <span class="button-text">Read More</span>
+            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+        </a>
+    `;
+    cardsContainer.appendChild(card);
+});
+
+async function performSearch(query) {
+    try {
+        if (query) {
+            fingerprintIcon.classList.add('scanning');
+            fingerprintIcon.style.opacity = '1';
+            sectionTitle.textContent = 'RELEVANT LAW';
+            loaderOverlay.classList.add('active');
+
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}/searchHistory`).push({
+                    query: query,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
+            }
+
+            const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+            if (mainLaw) {
+                renderLawCards(mainLaw, alternativeLaws);
             } else {
                 cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
                 fingerprintIcon.style.opacity = '1';
-                return;
             }
-
-            if (alternativeLawTitles.length > 0) {
-                const alternativesSection = document.createElement('div');
-                alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
-                alternativesSection.style.width = '100%';
-                alternativesSection.style.textAlign = 'center';
-                alternativesSection.style.marginTop = '40px';
-                alternativesSection.style.marginBottom = '20px'; // Added spacing below the title
-                cardsContainer.appendChild(alternativesSection);
-
-                const alternativesContainer = document.createElement('div');
-                alternativesContainer.className = 'cards-container';
-                alternativesContainer.style.display = 'flex'; // Ensure flexbox for consistent alignment
-                alternativesContainer.style.flexWrap = 'wrap'; // Allow wrapping
-                alternativesContainer.style.gap = '20px'; // Consistent spacing between cards
-                alternativesContainer.style.justifyContent = 'center'; // Center the cards
-
-                alternativeLawTitles.forEach(title => {
-                    const law = laws.find(l => l.title === title);
-                    if (law) {
-                        const card = document.createElement('div');
-                        card.className = 'card';
-                        card.style.width = '300px'; // Fixed width for consistency
-                        card.style.minHeight = '400px'; // Fixed height to align cards
-                        card.style.display = 'flex';
-                        card.style.flexDirection = 'column';
-                        card.style.justifyContent = 'space-between'; // Space out content within card
-                        card.innerHTML = `
-                            <div class="image_container">
-                                <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
-                            </div>
-                            <div class="cybercrime-title">
-                                <span>${law.title}</span>
-                            </div>
-                            <div class="cybercrime-description" style="flex-grow: 1;">
-                                <p><strong>Description:</strong> <span class="description-text">${law.description}</span></p>
-                                <p><strong>Scenario:</strong> <span class="scenario-text">${law.scenario}</span></p>
-                                <p><strong>Punishment:</strong> <span class="punishment-text">${law.punishment}</span></p>
-                            </div>
-                            <div style="display: flex; gap: 10px; justify-content: flex-end; padding: 10px;">
-                                ${law.pdf ? `
-                                <a href="${law.pdf}" class="border-button" target="_blank">
-                                    <span class="button-text">Read More</span>
-                                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                                </a>` : ''}
-                                <button class="save-button" data-title="${law.title}">
-                                    <span class="button-text">Save Law</span>
-                                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-                                </button>
-                            </div>
-                        `;
-                        alternativesContainer.appendChild(card);
-
-                        if (query) {
-                            ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
-                                const element = card.querySelector(`.${className}`);
-                                highlightText(element, query);
-                            });
-                        }
-                    }
-                });
-                cardsContainer.appendChild(alternativesContainer);
-            }
-
-            document.querySelectorAll('.save-button').forEach(button => {
-                button.removeEventListener('click', saveLawHandler);
-                button.addEventListener('click', saveLawHandler);
-            });
-
+        } else {
+            sectionTitle.textContent = 'TOP ARTICLES';
+            cardsContainer.innerHTML = '';
             fingerprintIcon.classList.add('glow');
             fingerprintIcon.style.opacity = '1';
+            defaultCards.forEach(cardData => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="image_container">
+                        <img src="${cardData.image}" alt="Cybercrime Image">
+                    </div>
+                    <div class="cybercrime-title">
+                        <span>${cardData.title}</span>
+                    </div>
+                    <div class="cybercrime-description">
+                        <p>Cybercrime</p>
+                        <p>${cardData.description}</p>
+                    </div>
+                    <a href="News.html" class="border-button">
+                        <span class="button-text">Read More</span>
+                        <span class="iconer">
+                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                    </a>
+                `;
+                cardsContainer.appendChild(card);
+            });
         }
+    } catch (error) {
+        console.error('Search error:', error.message);
+        cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
+        fingerprintIcon.classList.add('glow');
+        fingerprintIcon.style.opacity = '1';
+    } finally {
+        loaderOverlay.classList.remove('active');
+    }
+}
 
-        function saveLawHandler() {
-            const lawTitle = this.getAttribute('data-title');
-            saveLaw(lawTitle);
-        }
+searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        const query = searchInput.value.trim();
+        performSearch(query);
+    }
+});
 
-        const defaultCards = [
-            {
-                title: "UN: Asian Scam Calls Now a Global Export",
-                image: "https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg",
-                description: "A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry."
-            },
-            {
-                title: "UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway",
-                image: "https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg",
-                description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
-            },
-            {
-                title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
-                image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
-                description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
-            }
-        ];
+document.querySelector('.search-icon').addEventListener('click', function() {
+    const query = searchInput.value.trim();
+    performSearch(query);
+});
 
-        defaultCards.forEach(cardData => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div class="image_container">
-                    <img src="${cardData.image}" alt="Cybercrime Image">
-                </div>
-                <div class="cybercrime-title">
-                    <span>${cardData.title}</span>
-                </div>
-                <div class="cybercrime-description">
-                    <p>Cybercrime</p>
-                    <p>${cardData.description}</p>
-                </div>
-                <a href="News.html" class="border-button">
-                    <span class="button-text">Read More</span>
-                    <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-                </a>
-            `;
-            cardsContainer.appendChild(card);
-        });
+function highlightText(element, query) {
+    if (!element || !query) return;
+    const text = element.textContent;
+    const regex = new RegExp(`(${query})`, 'gi');
+    element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
+}
 
-        async function performSearch(query) {
-            try {
-                if (query) {
-                    fingerprintIcon.classList.add('scanning');
-                    fingerprintIcon.style.opacity = '1';
-                    sectionTitle.textContent = 'RELEVANT LAW';
-                    loaderOverlay.classList.add('active');
+function updateClock() {
+    const now = new Date();
+    const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+        timeZoneName: 'short'
+    };
+    clock.textContent = now.toLocaleTimeString('en-US', options);
+}
 
-                    const user = auth.currentUser;
-                    if (user) {
-                        const sanitizedEmail = user.email.replace(/\./g, ',');
-                        database.ref(`users/${sanitizedEmail}/searchHistory`).push({
-                            query: query,
-                            timestamp: firebase.database.ServerValue.TIMESTAMP
-                        });
-                    }
+setInterval(updateClock, 1000);
+updateClock();
 
-                    const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
-                    if (mainLaw) {
-                        renderLawCards(mainLaw, alternativeLaws);
-                    } else {
-                        cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
-                        fingerprintIcon.classList.add('glow');
-                        fingerprintIcon.style.opacity = '1';
-                    }
-                } else {
-                    sectionTitle.textContent = 'TOP ARTICLES';
-                    cardsContainer.innerHTML = '';
-                    fingerprintIcon.classList.add('glow');
-                    fingerprintIcon.style.opacity = '1';
-                    defaultCards.forEach(cardData => {
-                        const card = document.createElement('div');
-                        card.className = 'card';
-                        card.innerHTML = `
-                            <div class="image_container">
-                                <img src="${cardData.image}" alt="Cybercrime Image">
-                            </div>
-                            <div class="cybercrime-title">
-                                <span>${cardData.title}</span>
-                            </div>
-                            <div class="cybercrime-description">
-                                <p>Cybercrime</p>
-                                <p>${cardData.description}</p>
-                            </div>
-                            <a href="News.html" class="border-button">
-                                <span class="button-text">Read More</span>
-                                <span class="iconer">
-                                    <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
-                                    </svg>
-                                </span>
-                            </a>
-                        `;
-                        cardsContainer.appendChild(card);
-                    });
-                }
-            } catch (error) {
-                console.error('Search error:', error.message);
-                cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
-                fingerprintIcon.classList.add('glow');
-                fingerprintIcon.style.opacity = '1';
-            } finally {
-                loaderOverlay.classList.remove('active');
-            }
-        }
-
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const query = searchInput.value.trim();
-                performSearch(query);
-            }
-        });
-
-        document.querySelector('.search-icon').addEventListener('click', function() {
-            const query = searchInput.value.trim();
-            performSearch(query);
-        });
-
-        function highlightText(element, query) {
-            if (!element || !query) return;
-            const text = element.textContent;
-            const regex = new RegExp(`(${query})`, 'gi');
-            element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
-        }
-
-        function updateClock() {
-            const now = new Date();
-            const options = {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true,
-                timeZoneName: 'short'
-            };
-            clock.textContent = now.toLocaleTimeString('en-US', options);
-        }
-
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                mobileMenuIcon.querySelector('i').classList.remove('fa-times');
-                mobileMenuIcon.querySelector('i').classList.add('fa-bars');
-            }
-        });
-    </script>
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        mobileMenuIcon.querySelector('i').classList.remove('fa-times');
+        mobileMenuIcon.querySelector('i').classList.add('fa-bars');
+    }
+});
+</script>
 </body>
 </html>
