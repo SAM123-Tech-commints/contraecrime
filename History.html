@@ -11,7 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
-        /* [Existing CSS remains unchanged, included for completeness] */
+        /* Existing CSS with additions for the copy button */
         * {
             box-sizing: border-box;
         }
@@ -63,8 +63,12 @@
         }
 
         @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .dark-theme .loader {
@@ -577,7 +581,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
+            cursor: pointer; /* Make the item clickable */
         }
 
         .history-item:hover {
@@ -900,78 +904,323 @@
         }
 
         @media (max-width: 1024px) {
-            .sidebar { width: 250px; }
-            .sidebar h1 { font-size: 22px; }
-            .sidebar ul li a { font-size: 16px; }
-            .dark-theme-label { font-size: 16px; }
-            .content { margin-left: 250px; }
-            footer { margin-left: 250px; }
-            .account-customization { right: 10px; }
-            .avatar-container .profile-pic { width: 35px; height: 35px; }
-            .avatar-loading { width: 35px; height: 35px; }
-            .avatar-loading .loader { width: 18px; height: 18px; border-width: 2px; }
-            .customization-options { top: 45px; width: 220px; }
-            .history-title-container h2 { font-size: 24px; }
-            .history-title-container i { font-size: 18px; }
-            .history-item { padding: 12px 15px; }
-            .history-item span.query { font-size: 14px; }
-            .history-item .timestamp { font-size: 11px; }
-            .history-item .copy-btn, .history-item .delete-btn { width: 32px; height: 32px; }
-            .history-item .copy-btn i, .history-item .delete-btn i { font-size: 14px; }
+            .sidebar {
+                width: 250px;
+            }
+
+            .sidebar h1 {
+                font-size: 22px;
+            }
+
+            .sidebar ul li a {
+                font-size: 16px;
+            }
+
+            .dark-theme-label {
+                font-size: 16px;
+            }
+
+            .content {
+                margin-left: 250px;
+            }
+
+            footer {
+                margin-left: 250px;
+            }
+
+            .account-customization {
+                right: 10px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 35px;
+                height: 35px;
+            }
+
+            .avatar-loading {
+                width: 35px;
+                height: 35px;
+            }
+
+            .avatar-loading .loader {
+                width: 18px;
+                height: 18px;
+                border-width: 2px;
+            }
+
+            .customization-options {
+                top: 45px;
+                width: 220px;
+            }
+
+            .history-title-container h2 {
+                font-size: 24px;
+            }
+
+            .history-title-container i {
+                font-size: 18px;
+            }
+
+            .history-item {
+                padding: 12px 15px;
+            }
+
+            .history-item span.query {
+                font-size: 14px;
+            }
+
+            .history-item .timestamp {
+                font-size: 11px;
+            }
+
+            .history-item .copy-btn,
+            .history-item .delete-btn {
+                width: 32px;
+                height: 32px;
+            }
+
+            .history-item .copy-btn i,
+            .history-item .delete-btn i {
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 768px) {
-            .sidebar { width: 200px; padding: 10px; }
-            .sidebar h1 { font-size: 20px; }
-            .sidebar ul li a { font-size: 14px; }
-            .dark-theme-label { font-size: 14px; }
-            .content { margin-left: 200px; padding: 20px; }
-            footer { margin-left: 200px; }
-            .avatar-container .profile-pic { width: 30px; height: 30px; }
-            .avatar-loading { width: 30px; height: 30px; }
-            .avatar-loading .loader { width: 15px; height: 15px; border-width: 2px; }
-            .customization-options { top: 40px; width: 200px; }
-            .history-title-container h2 { font-size: 22px; }
-            .history-title-container i { font-size: 16px; }
-            .clear-all-btn { padding: 8px 16px; font-size: 13px; }
-            .history-item { padding: 10px 12px; }
+            .sidebar {
+                width: 200px;
+                padding: 10px;
+            }
+
+            .sidebar h1 {
+                font-size: 20px;
+            }
+
+            .sidebar ul li a {
+                font-size: 14px;
+            }
+
+            .dark-theme-label {
+                font-size: 14px;
+            }
+
+            .content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            footer {
+                margin-left: 200px;
+            }
+
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
+
+            .customization-options {
+                top: 40px;
+                width: 200px;
+            }
+
+            .history-title-container h2 {
+                font-size: 22px;
+            }
+
+            .history-title-container i {
+                font-size: 16px;
+            }
+
+            .clear-all-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .history-item {
+                padding: 10px 12px;
+            }
         }
 
         @media (max-width: 480px) {
-            .container { flex-direction: column; }
-            .mobile-nav { display: block; }
-            .sidebar { width: 100%; height: auto; position: fixed; padding: 10px; transform: translateX(-100%); z-index: 2999; top: 60px; height: calc(100vh - 60px); overflow-y: auto; }
-            .sidebar.active { transform: translateX(0); z-index: 3000; }
-            .sidebar h1 { display: none; }
-            .sidebar ul li { margin: 20px 0; }
-            .sidebar ul li a { font-size: 16px; }
-            .dark-theme-label { font-size: 16px; }
-            .content { margin-left: 0; padding: 80px 15px 15px; }
-            footer { margin-left: 0; padding: 10px 20px; text-align: center; }
-            footer p { font-size: 12px; }
-            .footer-links a { font-size: 12px; margin: 0 8px; }
-            .account-customization { top: 70px; right: 10px; z-index: 998; }
-            .avatar-container .profile-pic { width: 30px; height: 30px; border-width: 1px; }
-            .avatar-loading { width: 30px; height: 30px; }
-            .avatar-loading .loader { width: 15px; height: 15px; border-width: 2px; }
-            .customization-options { top: 40px; width: 180px; z-index: 3002; }
-            .customization-options .user-info p { font-size: 10px; }
-            .customization-options label, .customization-options .file-input-label { font-size: 10px; padding: 3px 6px; }
-            .customization-options select { font-size: 10px; padding: 3px; }
-            .sidebar.active ~ .content .account-customization { display: none; }
-            .history-title-container h2 { font-size: 20px; }
-            .history-title-container i { font-size: 14px; }
-            .history-header { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .clear-all-btn { padding: 8px 16px; font-size: 12px; width: 100%; }
-            .history-item { padding: 10px 12px; }
-            .history-item span.query { font-size: 13px; }
-            .history-item .timestamp { font-size: 10px; }
-            .history-item .copy-btn, .history-item .delete-btn { width: 30px; height: 30px; }
-            .history-item .copy-btn i, .history-item .delete-btn i { font-size: 13px; }
-            .modal-content { padding: 15px 20px; max-width: 300px; }
-            .modal-content h3 { font-size: 18px; }
-            .modal-content p { font-size: 12px; }
-            .modal-btn { padding: 8px 16px; font-size: 12px; }
+            .container {
+                flex-direction: column;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                padding: 10px;
+                transform: translateX(-100%);
+                z-index: 2999;
+                top: 60px;
+                height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                z-index: 3000;
+            }
+
+            .sidebar h1 {
+                display: none;
+            }
+
+            .sidebar ul li {
+                margin: 20px 0;
+            }
+
+            .sidebar ul li a {
+                font-size: 16px;
+            }
+
+            .dark-theme-label {
+                font-size: 16px;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 80px 15px 15px;
+            }
+
+            footer {
+                margin-left: 0;
+                padding: 10px 20px;
+                text-align: center;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+
+            .footer-links a {
+                font-size: 12px;
+                margin: 0 8px;
+            }
+
+            .account-customization {
+                top: 70px;
+                right: 10px;
+                z-index: 998;
+            }
+
+            .avatar-container .profile-pic {
+                width: 30px;
+                height: 30px;
+                border-width: 1px;
+            }
+
+            .avatar-loading {
+                width: 30px;
+                height: 30px;
+            }
+
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
+
+            .customization-options {
+                top: 40px;
+                width: 180px;
+                z-index: 3002;
+            }
+
+            .customization-options .user-info p {
+                font-size: 10px;
+            }
+
+            .customization-options label,
+            .customization-options .file-input-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .customization-options select {
+                font-size: 10px;
+                padding: 3px;
+            }
+
+            .sidebar.active ~ .content .account-customization {
+                display: none;
+            }
+
+            .history-title-container h2 {
+                font-size: 20px;
+            }
+
+            .history-title-container i {
+                font-size: 14px;
+            }
+
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .clear-all-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                width: 100%;
+            }
+
+            .history-item {
+                padding: 10px 12px;
+            }
+
+            .history-item span.query {
+                font-size: 13px;
+            }
+
+            .history-item .timestamp {
+                font-size: 10px;
+            }
+
+            .history-item .copy-btn,
+            .history-item .delete-btn {
+                width: 30px;
+                height: 30px;
+            }
+
+            .history-item .copy-btn i,
+            .history-item .delete-btn i {
+                font-size: 13px;
+            }
+
+            .modal-content {
+                padding: 15px 20px;
+                max-width: 300px;
+            }
+
+            .modal-content h3 {
+                font-size: 18px;
+            }
+
+            .modal-content p {
+                font-size: 12px;
+            }
+
+            .modal-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -990,13 +1239,48 @@
         <nav class="sidebar" id="sidebar">
             <h1>Contra E-Crime</h1>
             <ul>
-                <li><a href="HomePage.html"><img src="https://i.imgur.com/OAHusQp.png" alt="Home">Home</a></li>
-                <li><a href="News.html"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
-                <li><a href="SavedLaws.html"><img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">Saved Laws</a></li>
-                <li><a href="History.html"><img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">Search History</a></li>
-                <li><a href="ContactUs.html"><img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">Contact Us</a></li>
-                <li><a href="AboutUs.html"><img src="https://i.imgur.com/lktrzpa.png" alt="About Us">About Us</a></li>
-                <li><a href="index.html"><img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">Logout</a></li>
+                <li>
+                    <a href="HomePage.html">
+                        <img src="https://i.imgur.com/OAHusQp.png" alt="Home">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="News.html">
+                        <img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">
+                        News & Insights
+                    </a>
+                </li>
+                <li>
+                    <a href="SavedLaws.html">
+                        <img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">
+                        Saved Laws
+                    </a>
+                </li>
+                <li>
+                    <a href="History.html">
+                        <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
+                        Search History
+                    </a>
+                </li>
+                <li>
+                    <a href="ContactUs.html">
+                        <img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">
+                        Contact Us
+                    </a>
+                </li>
+                <li>
+                    <a href="AboutUs.html">
+                        <img src="https://i.imgur.com/lktrzpa.png" alt="About Us">
+                        About Us
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
+                        Logout
+                    </a>
+                </li>
             </ul>
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
@@ -1206,7 +1490,7 @@
                         historyList.appendChild(li);
                     });
 
-                    // Add event listeners to history items for automatic search
+                    // Inside the historyRef.on('value', ...) callback, update the event listener for history items
                     document.querySelectorAll('.history-item').forEach((item) => {
                         item.addEventListener('click', (e) => {
                             // Prevent redirection if clicking on buttons
@@ -1214,10 +1498,11 @@
                                 return;
                             }
                             const query = item.getAttribute('data-query');
-                            localStorage.setItem('autoSearchQuery', query); // Store query for auto-search
+                            // Store the query in localStorage to be used on the homepage
+                            localStorage.setItem('autoSearchQuery', query);
                             loaderOverlay.classList.add('active');
                             setTimeout(() => {
-                                window.location.href = 'HomePage.html'; // Redirect to homepage to perform search
+                                window.location.href = 'HomePage.html';
                             }, 150);
                         });
                     });
@@ -1513,8 +1798,11 @@
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
+    
                     e.preventDefault();
+
                     loaderOverlay.classList.add('active');
+
                     setTimeout(() => {
                         window.location.href = this.href;
                     }, 150);

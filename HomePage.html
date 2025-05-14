@@ -2037,6 +2037,16 @@ const clock = document.getElementById('clock');
 
 const searchCache = new Map();
 
+// Add the auto-search logic here to handle queries from History.html
+document.addEventListener('DOMContentLoaded', () => {
+    const autoSearchQuery = localStorage.getItem('autoSearchQuery');
+    if (autoSearchQuery && searchInput) {
+        searchInput.value = autoSearchQuery; // Populate the search bar with the query
+        performSearch(autoSearchQuery); // Automatically trigger the search
+        localStorage.removeItem('autoSearchQuery'); // Clear the stored query to prevent re-triggering
+    }
+});
+
 auth.onAuthStateChanged((user) => {
     if (user) {
         const currentUser = {
@@ -2489,6 +2499,7 @@ async function fetchLawsFromAI(query) {
         return localSearchFallback(query);
     }
 }
+
 function renderLawCards(mainLawTitle, alternativeLawTitles) {
     cardsContainer.innerHTML = '';
 
@@ -2541,10 +2552,10 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
 
     if (alternativeLawTitles.length > 0) {
         const alternativesSection = document.createElement('div');
-         alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
-                alternativesSection.style.width = '100%';
-                alternativesSection.style.textAlign = 'center';
-                alternativesSection.style.marginTop = '40px';
+        alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
+        alternativesSection.style.width = '100%';
+        alternativesSection.style.textAlign = 'center';
+        alternativesSection.style.marginTop = '40px';
         cardsContainer.appendChild(alternativesSection);
 
         const alternativesContainer = document.createElement('div');
