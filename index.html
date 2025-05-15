@@ -709,11 +709,16 @@
                 <div class="buttons-container">
                     <button type="submit" class="action-btn">Login</button>
                 </div>
-                <div class="separator">or</div>
+                <div class="separator">or continue with</div>
                 <div class="buttons-container">
                     <button type="button" class="google-btn" id="googleSignInBtn">
                         <img src="https://www.google.com/favicon.ico" alt="Google Icon">
-                        Sign in with Google
+                    </button>
+                    <button type="button" class="google-btn" id="facebookSignInBtn">
+                        <img src="https://static.xx.fbcdn.net/rsrc.php/yo/r/iRmz9lCMBD2.ico" alt="Facebook Icon">
+                    </button>
+                    <button type="button" class="google-btn" id="microsoftSignInBtn">
+                        <img src="https://www.microsoft.com/favicon.ico" alt="Microsoft Icon">
                     </button>
                 </div>
                 <div class="error-message" id="loginErrorMessage"></div>
@@ -983,7 +988,7 @@
                             return;
                         }
 
-                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#_])[A-Za-z\d@$!%*?&#_]{8,}$/;
                         if (!passwordRegex.test(newPasswordValue)) {
                             resetErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
                             resetErrorMessage.style.display = 'block';
@@ -1033,6 +1038,8 @@
                 }
 
                 const googleSignInBtn = document.getElementById('googleSignInBtn');
+                const facebookSignInBtn = document.getElementById('facebookSignInBtn');
+                const microsoftSignInBtn = document.getElementById('microsoftSignInBtn');
                 const googleSignInModal = document.getElementById('googleSignInModal');
                 const googleSignInForm = document.getElementById('googleSignInForm');
                 const googleErrorMessage = document.getElementById('googleErrorMessage');
@@ -1077,6 +1084,82 @@
                     });
                 }
 
+                if (facebookSignInBtn) {
+                    facebookSignInBtn.addEventListener('click', () => {
+                        facebookSignInBtn.classList.add('loading');
+                        const provider = new firebase.auth.FacebookAuthProvider();
+                        auth.signInWithPopup(provider)
+                            .then(async (result) => {
+                                facebookSignInBtn.classList.remove('loading');
+                                const user = result.user;
+                                googleUserData = {
+                                    email: user.email,
+                                    username: user.displayName || 'Facebook User'
+                                };
+
+                                const userDoc = await db.collection('users').doc(googleUserData.email).get();
+                                if (userDoc.exists) {
+                                    await logLoginEvent(googleUserData.email);
+                                    localStorage.setItem('currentUser', JSON.stringify({
+                                        email: userDoc.data().email,
+                                        username: userDoc.data().username
+                                    }));
+                                    localStorage.setItem('rememberMe', 'true');
+                                    window.location.href = "HomePage.html";
+                                } else {
+                                    document.getElementById('google-email').value = googleUserData.email;
+                                    document.getElementById('google-username').value = googleUserData.username;
+                                    googleSignInModal.style.display = 'block';
+                                }
+                            })
+                            .catch((error) => {
+                                facebookSignInBtn.classList.remove('loading');
+                                const loginErrorMessage = document.getElementById('loginErrorMessage');
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Facebook Sign-In failed: ' + error.message;
+                            });
+                    });
+                }
+
+                if (microsoftSignInBtn) {
+                    microsoftSignInBtn.addEventListener('click', () => {
+                        microsoftSignInBtn.classList.add('loading');
+                        const provider = new firebase.auth.OAuthProvider('microsoft.com');
+                        auth.signInWithPopup(provider)
+                            .then(async (result) => {
+                                microsoftSignInBtn.classList.remove('loading');
+                                const user = result.user;
+                                googleUserData = {
+                                    email: user.email,
+                                    username: user.displayName || 'Microsoft User'
+                                };
+
+                                const userDoc = await db.collection('users').doc(googleUserData.email).get();
+                                if (userDoc.exists) {
+                                    await logLoginEvent(googleUserData.email);
+                                    localStorage.setItem('currentUser', JSON.stringify({
+                                        email: userDoc.data().email,
+                                        username: userDoc.data().username
+                                    }));
+                                    localStorage.setItem('rememberMe', 'true');
+                                    window.location.href = "HomePage.html";
+                                } else {
+                                    document.getElementById('google-email').value = googleUserData.email;
+                                    document.getElementById('google-username').value = googleUserData.username;
+                                    googleSignInModal.style.display = 'block';
+                                }
+                            })
+                            .catch((error) => {
+                                microsoftSignInBtn.classList.remove('loading');
+                                const loginErrorMessage = document.getElementById('loginErrorMessage');
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Microsoft Sign-In failed: ' + error.message;
+                            });
+                    });
+                }
+
                 if (googleSignInForm) {
                     googleSignInForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
@@ -1108,11 +1191,11 @@
                                 return;
                             }
 
-                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                            if (!passwordRegex.test(password)) {
-                                googleErrorMessage.style.display = 'block';
-                                googleErrorMessage.classList.add('show');
-                                googleErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
+                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#_])[A-Za-z\d@$!%*?&#_]{8,}$/;
+                            if (!passwordRegex.test(passwordValue)) {
+                                signupErrorMessage.style.display = 'block';
+                                signupErrorMessage.classList.add('show');
+                                signupErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&#_).';
                                 submitButton.classList.remove('loading');
                                 submitButton.disabled = false;
                                 return;
