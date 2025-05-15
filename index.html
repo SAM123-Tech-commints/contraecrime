@@ -293,24 +293,25 @@
         }
 
         .action-btn {
-            padding: 12px 40px;
+            width: 100%;
+            padding: 6px 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 600;
             background: linear-gradient(135deg, #580100, #8B0000);
             color: white;
             position: relative;
             transition: transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             z-index: 1;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .action-btn.loading {
@@ -321,13 +322,13 @@
         .action-btn.loading::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 14px;
+            height: 14px;
             top: 50%;
-            right: 10px;
+            right: 8px;
             transform: translateY(-50%);
-            border: 3px solid #fff;
-            border-top: 3px solid transparent;
+            border: 2px solid #fff;
+            border-top: 2px solid transparent;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -365,27 +366,28 @@
         }
 
         .google-btn, .microsoft-btn, .facebook-btn {
-            padding: 12px 40px;
+            width: 100%;
+            padding: 6px 12px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 600;
             background: #fff;
             color: #333;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 6px;
             transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             z-index: 1;
         }
 
         .google-btn:hover, .microsoft-btn:hover, .facebook-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-color: #580100;
         }
 
@@ -395,8 +397,38 @@
         }
 
         .google-btn img, .microsoft-btn img, .facebook-btn img {
-            width: 20px;
-            height: 20px;
+            width: 14px;
+            height: 14px;
+        }
+
+        .fb-login-button {
+            width: 100% !important;
+            padding: 6px 12px !important;
+            border: 1px solid #ddd !important;
+            border-radius: 6px !important;
+            font-family: 'Montserrat', sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            background: #fff !important;
+            color: #333 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+            cursor: pointer !important;
+        }
+
+        .fb-login-button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+            border-color: #580100 !important;
+        }
+
+        .fb-login-button img {
+            width: 14px !important;
+            height: 14px !important;
         }
 
         .error-message,
@@ -644,9 +676,25 @@
             }
 
             .action-btn,
-            .google-btn, .microsoft-btn, .facebook-btn {
-                padding: 8px 16px;
+            .google-btn, .microsoft-btn, .facebook-btn,
+            .fb-login-button {
+                width: 100%;
+                padding: 5px 10px;
                 font-size: 12px;
+            }
+
+            .google-btn img, .microsoft-btn img, .facebook-btn img,
+            .fb-login-button img {
+                width: 12px;
+                height: 12px;
+            }
+
+            .action-btn.loading::after {
+                width: 12px;
+                height: 12px;
+                border: 2px solid #fff;
+                border-top: 2px solid transparent;
+                right: 6px;
             }
 
             .separator {
@@ -723,10 +771,13 @@
                     </button>
                 </div>
                 <div class="buttons-container">
-                    <button type="button" class="facebook-btn" id="facebookSignInBtn">
+                    <fb:login-button 
+                        class="fb-login-button"
+                        scope="public_profile,email"
+                        onlogin="checkLoginState();">
                         <img src="https://www.facebook.com/favicon.ico" alt="Facebook Icon">
                         Continue with Facebook
-                    </button>
+                    </fb:login-button>
                 </div>
                 <div class="error-message" id="loginErrorMessage"></div>
             </form>
@@ -849,9 +900,31 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <!-- Facebook SDK -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : 'YOUR_APP_ID', // Replace with your Facebook App ID
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v21.0'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
     <script>
         const firebaseConfig = {
@@ -1013,7 +1086,158 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        // Facebook Login Functions
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        async function statusChangeCallback(response) {
+            const loginErrorMessage = document.getElementById('loginErrorMessage');
+            const facebookSignInModal = document.getElementById('facebookSignInModal');
+            const facebookSignInForm = document.getElementById('facebookSignInForm');
+            const facebookErrorMessage = document.getElementById('facebookErrorMessage');
+            const closeFacebookModal = document.getElementById('closeFacebookModal');
+
+            if (response.status === 'connected') {
+                // User is logged into Facebook and has authenticated your app
+                FB.api('/me', { fields: 'email,name' }, async function(apiResponse) {
+                    if (apiResponse.error) {
+                        loginErrorMessage.style.display = 'block';
+                        loginErrorMessage.classList.add('show');
+                        loginErrorMessage.textContent = 'Facebook Sign-In failed: Unable to fetch user data.';
+                        return;
+                    }
+
+                    const userData = {
+                        email: apiResponse.email,
+                        username: apiResponse.name || 'Facebook User'
+                    };
+
+                    try {
+                        // Check if user exists in Firestore
+                        const userDoc = await db.collection('users').doc(userData.email).get();
+                        if (userDoc.exists) {
+                            await logLoginEvent(userData.email);
+                            localStorage.setItem('currentUser', JSON.stringify({
+                                email: userDoc.data().email,
+                                username: userDoc.data().username
+                            }));
+                            localStorage.setItem('rememberMe', 'true');
+                            window.location.href = "HomePage.html";
+                        } else {
+                            // New user, show modal
+                            document.getElementById('facebook-email').value = userData.email;
+                            document.getElementById('facebook-username').value = userData.username;
+                            facebookSignInModal.style.display = 'block';
+                        }
+                    } catch (error) {
+                        console.error('Facebook Sign-In error:', error);
+                        loginErrorMessage.style.display = 'block';
+                        loginErrorMessage.classList.add('show');
+                        loginErrorMessage.textContent = 'An error occurred during Facebook Sign-In.';
+                    }
+                });
+            } else {
+                // User is not logged in or not authenticated
+                loginErrorMessage.style.display = 'block';
+                loginErrorMessage.classList.add('show');
+                loginErrorMessage.textContent = 'Facebook Sign-In failed: Please log in to Facebook.';
+            }
+        }
+
+        // Handle Facebook Modal Submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const facebookSignInForm = document.getElementById('facebookSignInForm');
+            const facebookErrorMessage = document.getElementById('facebookErrorMessage');
+            const closeFacebookModal = document.getElementById('closeFacebookModal');
+            const facebookSignInModal = document.getElementById('facebookSignInModal');
+
+            if (facebookSignInForm) {
+                facebookSignInForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const submitButton = facebookSignInForm.querySelector('.action-btn');
+                    submitButton.classList.add('loading');
+                    submitButton.disabled = true;
+
+                    try {
+                        const email = document.getElementById('facebook-email').value.trim();
+                        const username = document.getElementById('facebook-username').value.trim();
+                        const password = document.getElementById('facebook-password').value.trim();
+
+                        if (!username) {
+                            facebookErrorMessage.style.display = 'block';
+                            facebookErrorMessage.classList.add('show');
+                            facebookErrorMessage.textContent = 'Please enter a username.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        if (!password) {
+                            facebookErrorMessage.style.display = 'block';
+                            facebookErrorMessage.classList.add('show');
+                            facebookErrorMessage.textContent = 'Please enter a password.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                        if (!passwordRegex.test(password)) {
+                            facebookErrorMessage.style.display = 'block';
+                            facebookErrorMessage.classList.add('show');
+                            facebookErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        await db.collection('users').doc(email).set({
+                            email: email,
+                            username: username,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            provider: 'facebook'
+                        });
+
+                        await logLoginEvent(email);
+
+                        localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+                        localStorage.setItem('rememberMe', 'true');
+
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                        facebookSignInModal.style.display = 'none';
+
+                        window.location.href = "HomePage.html";
+                    } catch (error) {
+                        console.error('Facebook Sign-In submission error:', error);
+                        facebookErrorMessage.style.display = 'block';
+                        facebookErrorMessage.classList.add('show');
+                        facebookErrorMessage.textContent = 'An error occurred during sign-up. Please try again.';
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                    }
+                });
+            }
+
+            if (closeFacebookModal) {
+                closeFacebookModal.addEventListener('click', () => {
+                    facebookSignInModal.style.display = 'none';
+                    facebookErrorMessage.style.display = 'none';
+                });
+
+                window.addEventListener('click', (event) => {
+                    if (event.target === facebookSignInModal) {
+                        facebookSignInModal.style.display = 'none';
+                        facebookErrorMessage.style.display = 'none';
+                    }
+                });
+            }
+
+            // Rest of the existing code
             try {
                 // Check if we're in reset password mode
                 const urlParams = new URLSearchParams(window.location.search);
@@ -1269,18 +1493,6 @@
                     'microsoftSignInForm',
                     'microsoftErrorMessage',
                     'Microsoft'
-                );
-
-                // Facebook Sign-In
-                handleSocialSignIn(
-                    new firebase.auth.FacebookAuthProvider(),
-                    'facebookSignInModal',
-                    'facebook-email',
-                    'facebook-username',
-                    'facebook-password',
-                    'facebookSignInForm',
-                    'facebookErrorMessage',
-                    'Facebook'
                 );
 
                 const forgotPasswordLink = document.getElementById('forgotPasswordLink');
