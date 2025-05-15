@@ -571,7 +571,7 @@
 <body>
     <div class="container">
         <div class="background-image">
-            <img src="https://i.imgur.com/st5cY6l.png" alt="Website Logo" class="website-logo">
+             <img src="https://i.imgur.com/R4ZxCAK.png" alt="Website Logo" class="website-logo">
             <div class="text-container">
                 <div class="text-typewriter" id="typewriterText"></div>
             </div>
@@ -737,11 +737,11 @@
                             const username = document.getElementById('signup-username').value.trim();
                             const passwordValue = signupPassword.value.trim();
 
-                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#_])[A-Za-z\d@$!%*?&#_]{8,}$/;
                             if (!passwordRegex.test(passwordValue)) {
                                 signupErrorMessage.style.display = 'block';
                                 signupErrorMessage.classList.add('show');
-                                signupErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&#).';
+                                signupErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&#_).';
                                 submitButton.classList.remove('loading');
                                 submitButton.disabled = false;
                                 return;
