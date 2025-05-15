@@ -293,25 +293,24 @@
         }
 
         .action-btn {
-            width: 100%;
-            padding: 6px 12px;
+            padding: 12px 40px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 600;
             background: linear-gradient(135deg, #580100, #8B0000);
             color: white;
             position: relative;
             transition: transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             z-index: 1;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
         .action-btn.loading {
@@ -322,13 +321,13 @@
         .action-btn.loading::after {
             content: '';
             position: absolute;
-            width: 14px;
-            height: 14px;
+            width: 20px;
+            height: 20px;
             top: 50%;
-            right: 8px;
+            right: 10px;
             transform: translateY(-50%);
-            border: 2px solid #fff;
-            border-top: 2px solid transparent;
+            border: 3px solid #fff;
+            border-top: 3px solid transparent;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -365,70 +364,39 @@
             right: 0;
         }
 
-        .google-btn, .microsoft-btn, .facebook-btn {
-            width: 100%;
-            padding: 6px 12px;
+        .google-btn {
+            padding: 12px 40px;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 600;
             background: #fff;
             color: #333;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 10px;
             transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             z-index: 1;
         }
 
-        .google-btn:hover, .microsoft-btn:hover, .facebook-btn:hover {
+        .google-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
             border-color: #580100;
         }
 
-        .google-btn.loading, .microsoft-btn.loading, .facebook-btn.loading {
+        .google-btn.loading {
             pointer-events: none;
             opacity: 0.7;
         }
 
-        .google-btn img, .microsoft-btn img, .facebook-btn img {
-            width: 14px;
-            height: 14px;
-        }
-
-        .fb-login-button {
-            width: 100% !important;
-            padding: 6px 12px !important;
-            border: 1px solid #ddd !important;
-            border-radius: 6px !important;
-            font-family: 'Montserrat', sans-serif !important;
-            font-size: 13px !important;
-            font-weight: 600 !important;
-            background: #fff !important;
-            color: #333 !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 6px !important;
-            transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-            cursor: pointer !important;
-        }
-
-        .fb-login-button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
-            border-color: #580100 !important;
-        }
-
-        .fb-login-button img {
-            width: 14px !important;
-            height: 14px !important;
+        .google-btn img {
+            width: 20px;
+            height: 20px;
         }
 
         .error-message,
@@ -676,25 +644,9 @@
             }
 
             .action-btn,
-            .google-btn, .microsoft-btn, .facebook-btn,
-            .fb-login-button {
-                width: 100%;
-                padding: 5px 10px;
+            .google-btn {
+                padding: 8px 16px;
                 font-size: 12px;
-            }
-
-            .google-btn img, .microsoft-btn img, .facebook-btn img,
-            .fb-login-button img {
-                width: 12px;
-                height: 12px;
-            }
-
-            .action-btn.loading::after {
-                width: 12px;
-                height: 12px;
-                border: 2px solid #fff;
-                border-top: 2px solid transparent;
-                right: 6px;
             }
 
             .separator {
@@ -761,23 +713,8 @@
                 <div class="buttons-container">
                     <button type="button" class="google-btn" id="googleSignInBtn">
                         <img src="https://www.google.com/favicon.ico" alt="Google Icon">
-                        Continue with Google
+                        Sign in with Google
                     </button>
-                </div>
-                <div class="buttons-container">
-                    <button type="button" class="microsoft-btn" id="microsoftSignInBtn">
-                        <img src="https://www.microsoft.com/favicon.ico" alt="Microsoft Icon">
-                        Continue with Microsoft
-                    </button>
-                </div>
-                <div class="buttons-container">
-                    <fb:login-button 
-                        class="fb-login-button"
-                        scope="public_profile,email"
-                        onlogin="checkLoginState();">
-                        <img src="https://www.facebook.com/favicon.ico" alt="Facebook Icon">
-                        Continue with Facebook
-                    </fb:login-button>
                 </div>
                 <div class="error-message" id="loginErrorMessage"></div>
             </form>
@@ -833,56 +770,6 @@
         </div>
     </div>
 
-    <div id="microsoftSignInModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeMicrosoftModal">×</span>
-            <h2>Sign Up with Microsoft</h2>
-            <form id="microsoftSignInForm">
-                <label for="microsoft-email">Email (read-only)</label>
-                <input type="email" id="microsoft-email" readonly required>
-                
-                <label for="microsoft-username">Username</label>
-                <input type="text" id="microsoft-username" placeholder="Enter your username" required>
-                
-                <label for="microsoft-password">Password</label>
-                <div class="input-container">
-                    <input type="password" id="microsoft-password" placeholder="Enter your password" required>
-                    <i class="fas fa-eye toggle-password" id="toggleMicrosoftPassword"></i>
-                </div>
-                
-                <div class="buttons-container">
-                    <button type="submit" class="action-btn">Sign Up</button>
-                </div>
-                <div class="error-message" id="microsoftErrorMessage"></div>
-            </form>
-        </div>
-    </div>
-
-    <div id="facebookSignInModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeFacebookModal">×</span>
-            <h2>Sign Up with Facebook</h2>
-            <form id="facebookSignInForm">
-                <label for="facebook-email">Email (read-only)</label>
-                <input type="email" id="facebook-email" readonly required>
-                
-                <label for="facebook-username">Username</label>
-                <input type="text" id="facebook-username" placeholder="Enter your username" required>
-                
-                <label for="facebook-password">Password</label>
-                <div class="input-container">
-                    <input type="password" id="facebook-password" placeholder="Enter your password" required>
-                    <i class="fas fa-eye toggle-password" id="toggleFacebookPassword"></i>
-                </div>
-                
-                <div class="buttons-container">
-                    <button type="submit" class="action-btn">Sign Up</button>
-                </div>
-                <div class="error-message" id="facebookErrorMessage"></div>
-            </form>
-        </div>
-    </div>
-
     <div id="forgotPasswordModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" id="closeForgotPasswordModal">×</span>
@@ -900,31 +787,9 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
-    <!-- Facebook SDK -->
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : 'YOUR_APP_ID', // Replace with your Facebook App ID
-                cookie     : true,
-                xfbml      : true,
-                version    : 'v21.0'
-            });
-            FB.AppEvents.logPageView();
-        };
-
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
 
     <script>
         const firebaseConfig = {
@@ -955,289 +820,7 @@
             }
         }
 
-        async function handleSocialSignIn(provider, modalId, emailId, usernameId, passwordId, signInFormId, errorMessageId, providerName) {
-            const signInBtn = document.getElementById(`${providerName.toLowerCase()}SignInBtn`);
-            const signInModal = document.getElementById(modalId);
-            const signInForm = document.getElementById(signInFormId);
-            const errorMessage = document.getElementById(errorMessageId);
-            const closeModal = document.getElementById(`close${providerName}Modal`);
-            let userData = null;
-
-            if (signInBtn) {
-                signInBtn.addEventListener('click', () => {
-                    signInBtn.classList.add('loading');
-                    auth.signInWithPopup(provider)
-                        .then(async (result) => {
-                            signInBtn.classList.remove('loading');
-                            const user = result.user;
-                            userData = {
-                                email: user.email,
-                                username: user.displayName || `${providerName} User`
-                            };
-
-                            const userDoc = await db.collection('users').doc(userData.email).get();
-                            if (userDoc.exists) {
-                                await logLoginEvent(userData.email);
-                                localStorage.setItem('currentUser', JSON.stringify({
-                                    email: userDoc.data().email,
-                                    username: userDoc.data().username
-                                }));
-                                localStorage.setItem('rememberMe', 'true');
-                                window.location.href = "HomePage.html";
-                            } else {
-                                document.getElementById(emailId).value = userData.email;
-                                document.getElementById(usernameId).value = userData.username;
-                                signInModal.style.display = 'block';
-                            }
-                        })
-                        .catch((error) => {
-                            signInBtn.classList.remove('loading');
-                            const loginErrorMessage = document.getElementById('loginErrorMessage');
-                            loginErrorMessage.style.display = 'block';
-                            loginErrorMessage.classList.add('show');
-                            loginErrorMessage.textContent = `${providerName} Sign-In failed: ${error.message}`;
-                        });
-                });
-            }
-
-            if (signInForm) {
-                signInForm.addEventListener('submit', async (event) => {
-                    event.preventDefault();
-
-                    const submitButton = signInForm.querySelector('.action-btn');
-                    submitButton.classList.add('loading');
-                    submitButton.disabled = true;
-
-                    try {
-                        const email = document.getElementById(emailId).value.trim();
-                        const username = document.getElementById(usernameId).value.trim();
-                        const password = document.getElementById(passwordId).value.trim();
-
-                        if (!username) {
-                            errorMessage.style.display = 'block';
-                            errorMessage.classList.add('show');
-                            errorMessage.textContent = 'Please enter a username.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        if (!password) {
-                            errorMessage.style.display = 'block';
-                            errorMessage.classList.add('show');
-                            errorMessage.textContent = 'Please enter a password.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                        if (!passwordRegex.test(password)) {
-                            errorMessage.style.display = 'block';
-                            errorMessage.classList.add('show');
-                            errorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        await db.collection('users').doc(email).set({
-                            email: email,
-                            username: username,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            provider: providerName.toLowerCase()
-                        });
-
-                        await logLoginEvent(email);
-
-                        localStorage.setItem('currentUser', JSON.stringify({ email, username }));
-                        localStorage.setItem('rememberMe', 'true');
-
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-                        signInModal.style.display = 'none';
-
-                        window.location.href = "HomePage.html";
-                    } catch (error) {
-                        console.error(`${providerName} Sign-In submission error:`, error);
-                        errorMessage.style.display = 'block';
-                        errorMessage.classList.add('show');
-                        errorMessage.textContent = 'An error occurred during sign-up. Please try again.';
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-                    }
-                });
-            }
-
-            if (closeModal) {
-                closeModal.addEventListener('click', () => {
-                    signInModal.style.display = 'none';
-                    userData = null;
-                    errorMessage.style.display = 'none';
-                });
-
-                window.addEventListener('click', (event) => {
-                    if (event.target === signInModal) {
-                        signInModal.style.display = 'none';
-                        userData = null;
-                        errorMessage.style.display = 'none';
-                    }
-                });
-            }
-        }
-
-        // Facebook Login Functions
-        function checkLoginState() {
-            FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });
-        }
-
-        async function statusChangeCallback(response) {
-            const loginErrorMessage = document.getElementById('loginErrorMessage');
-            const facebookSignInModal = document.getElementById('facebookSignInModal');
-            const facebookSignInForm = document.getElementById('facebookSignInForm');
-            const facebookErrorMessage = document.getElementById('facebookErrorMessage');
-            const closeFacebookModal = document.getElementById('closeFacebookModal');
-
-            if (response.status === 'connected') {
-                // User is logged into Facebook and has authenticated your app
-                FB.api('/me', { fields: 'email,name' }, async function(apiResponse) {
-                    if (apiResponse.error) {
-                        loginErrorMessage.style.display = 'block';
-                        loginErrorMessage.classList.add('show');
-                        loginErrorMessage.textContent = 'Facebook Sign-In failed: Unable to fetch user data.';
-                        return;
-                    }
-
-                    const userData = {
-                        email: apiResponse.email,
-                        username: apiResponse.name || 'Facebook User'
-                    };
-
-                    try {
-                        // Check if user exists in Firestore
-                        const userDoc = await db.collection('users').doc(userData.email).get();
-                        if (userDoc.exists) {
-                            await logLoginEvent(userData.email);
-                            localStorage.setItem('currentUser', JSON.stringify({
-                                email: userDoc.data().email,
-                                username: userDoc.data().username
-                            }));
-                            localStorage.setItem('rememberMe', 'true');
-                            window.location.href = "HomePage.html";
-                        } else {
-                            // New user, show modal
-                            document.getElementById('facebook-email').value = userData.email;
-                            document.getElementById('facebook-username').value = userData.username;
-                            facebookSignInModal.style.display = 'block';
-                        }
-                    } catch (error) {
-                        console.error('Facebook Sign-In error:', error);
-                        loginErrorMessage.style.display = 'block';
-                        loginErrorMessage.classList.add('show');
-                        loginErrorMessage.textContent = 'An error occurred during Facebook Sign-In.';
-                    }
-                });
-            } else {
-                // User is not logged in or not authenticated
-                loginErrorMessage.style.display = 'block';
-                loginErrorMessage.classList.add('show');
-                loginErrorMessage.textContent = 'Facebook Sign-In failed: Please log in to Facebook.';
-            }
-        }
-
-        // Handle Facebook Modal Submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const facebookSignInForm = document.getElementById('facebookSignInForm');
-            const facebookErrorMessage = document.getElementById('facebookErrorMessage');
-            const closeFacebookModal = document.getElementById('closeFacebookModal');
-            const facebookSignInModal = document.getElementById('facebookSignInModal');
-
-            if (facebookSignInForm) {
-                facebookSignInForm.addEventListener('submit', async (event) => {
-                    event.preventDefault();
-
-                    const submitButton = facebookSignInForm.querySelector('.action-btn');
-                    submitButton.classList.add('loading');
-                    submitButton.disabled = true;
-
-                    try {
-                        const email = document.getElementById('facebook-email').value.trim();
-                        const username = document.getElementById('facebook-username').value.trim();
-                        const password = document.getElementById('facebook-password').value.trim();
-
-                        if (!username) {
-                            facebookErrorMessage.style.display = 'block';
-                            facebookErrorMessage.classList.add('show');
-                            facebookErrorMessage.textContent = 'Please enter a username.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        if (!password) {
-                            facebookErrorMessage.style.display = 'block';
-                            facebookErrorMessage.classList.add('show');
-                            facebookErrorMessage.textContent = 'Please enter a password.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                        if (!passwordRegex.test(password)) {
-                            facebookErrorMessage.style.display = 'block';
-                            facebookErrorMessage.classList.add('show');
-                            facebookErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
-
-                        await db.collection('users').doc(email).set({
-                            email: email,
-                            username: username,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                            provider: 'facebook'
-                        });
-
-                        await logLoginEvent(email);
-
-                        localStorage.setItem('currentUser', JSON.stringify({ email, username }));
-                        localStorage.setItem('rememberMe', 'true');
-
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-                        facebookSignInModal.style.display = 'none';
-
-                        window.location.href = "HomePage.html";
-                    } catch (error) {
-                        console.error('Facebook Sign-In submission error:', error);
-                        facebookErrorMessage.style.display = 'block';
-                        facebookErrorMessage.classList.add('show');
-                        facebookErrorMessage.textContent = 'An error occurred during sign-up. Please try again.';
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-                    }
-                });
-            }
-
-            if (closeFacebookModal) {
-                closeFacebookModal.addEventListener('click', () => {
-                    facebookSignInModal.style.display = 'none';
-                    facebookErrorMessage.style.display = 'none';
-                });
-
-                window.addEventListener('click', (event) => {
-                    if (event.target === facebookSignInModal) {
-                        facebookSignInModal.style.display = 'none';
-                        facebookErrorMessage.style.display = 'none';
-                    }
-                });
-            }
-
-            // Rest of the existing code
+        document.addEventListener('DOMContentLoaded', function () {
             try {
                 // Check if we're in reset password mode
                 const urlParams = new URLSearchParams(window.location.search);
@@ -1273,28 +856,6 @@
                     toggleGooglePassword.addEventListener('click', function () {
                         const type = googlePassword.getAttribute('type') === 'password' ? 'text' : 'password';
                         googlePassword.setAttribute('type', type);
-                        this.classList.toggle('fa-eye-slash');
-                    });
-                }
-
-                const toggleMicrosoftPassword = document.querySelector('#toggleMicrosoftPassword');
-                const microsoftPassword = document.querySelector('#microsoft-password');
-
-                if (toggleMicrosoftPassword && microsoftPassword) {
-                    toggleMicrosoftPassword.addEventListener('click', function () {
-                        const type = microsoftPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                        microsoftPassword.setAttribute('type', type);
-                        this.classList.toggle('fa-eye-slash');
-                    });
-                }
-
-                const toggleFacebookPassword = document.querySelector('#toggleFacebookPassword');
-                const facebookPassword = document.querySelector('#facebook-password');
-
-                if (toggleFacebookPassword && facebookPassword) {
-                    toggleFacebookPassword.addEventListener('click', function () {
-                        const type = facebookPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-                        facebookPassword.setAttribute('type', type);
                         this.classList.toggle('fa-eye-slash');
                     });
                 }
@@ -1471,29 +1032,132 @@
                     });
                 }
 
-                // Google Sign-In
-                handleSocialSignIn(
-                    new firebase.auth.GoogleAuthProvider(),
-                    'googleSignInModal',
-                    'google-email',
-                    'google-username',
-                    'google-password',
-                    'googleSignInForm',
-                    'googleErrorMessage',
-                    'Google'
-                );
+                const googleSignInBtn = document.getElementById('googleSignInBtn');
+                const googleSignInModal = document.getElementById('googleSignInModal');
+                const googleSignInForm = document.getElementById('googleSignInForm');
+                const googleErrorMessage = document.getElementById('googleErrorMessage');
+                const closeGoogleModal = document.getElementById('closeGoogleModal');
+                let googleUserData = null;
 
-                // Microsoft Sign-In
-                handleSocialSignIn(
-                    new firebase.auth.OAuthProvider('microsoft.com'),
-                    'microsoftSignInModal',
-                    'microsoft-email',
-                    'microsoft-username',
-                    'microsoft-password',
-                    'microsoftSignInForm',
-                    'microsoftErrorMessage',
-                    'Microsoft'
-                );
+                if (googleSignInBtn) {
+                    googleSignInBtn.addEventListener('click', () => {
+                        googleSignInBtn.classList.add('loading');
+                        const provider = new firebase.auth.GoogleAuthProvider();
+                        auth.signInWithPopup(provider)
+                            .then(async (result) => {
+                                googleSignInBtn.classList.remove('loading');
+                                const user = result.user;
+                                googleUserData = {
+                                    email: user.email,
+                                    username: user.displayName || 'Google User'
+                                };
+
+                                const userDoc = await db.collection('users').doc(googleUserData.email).get();
+                                if (userDoc.exists) {
+                                    await logLoginEvent(googleUserData.email);
+                                    localStorage.setItem('currentUser', JSON.stringify({
+                                        email: userDoc.data().email,
+                                        username: userDoc.data().username
+                                    }));
+                                    localStorage.setItem('rememberMe', 'true');
+                                    window.location.href = "HomePage.html";
+                                } else {
+                                    document.getElementById('google-email').value = googleUserData.email;
+                                    document.getElementById('google-username').value = googleUserData.username;
+                                    googleSignInModal.style.display = 'block';
+                                }
+                            })
+                            .catch((error) => {
+                                googleSignInBtn.classList.remove('loading');
+                                const loginErrorMessage = document.getElementById('loginErrorMessage');
+                                loginErrorMessage.style.display = 'block';
+                                loginErrorMessage.classList.add('show');
+                                loginErrorMessage.textContent = 'Google Sign-In failed: ' + error.message;
+                            });
+                    });
+                }
+
+                if (googleSignInForm) {
+                    googleSignInForm.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+
+                        const submitButton = googleSignInForm.querySelector('.action-btn');
+                        submitButton.classList.add('loading');
+                        submitButton.disabled = true;
+
+                        try {
+                            const email = document.getElementById('google-email').value.trim();
+                            const username = document.getElementById('google-username').value.trim();
+                            const password = document.getElementById('google-password').value.trim();
+
+                            if (!username) {
+                                googleErrorMessage.style.display = 'block';
+                                googleErrorMessage.classList.add('show');
+                                googleErrorMessage.textContent = 'Please enter a username.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            if (!password) {
+                                googleErrorMessage.style.display = 'block';
+                                googleErrorMessage.classList.add('show');
+                                googleErrorMessage.textContent = 'Please enter a password.';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                            if (!passwordRegex.test(password)) {
+                                googleErrorMessage.style.display = 'block';
+                                googleErrorMessage.classList.add('show');
+                                googleErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
+
+                            await db.collection('users').doc(email).set({
+                                email: email,
+                                username: username,
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+
+                            await logLoginEvent(email);
+
+                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+                            localStorage.setItem('rememberMe', 'true');
+
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            googleSignInModal.style.display = 'none';
+
+                            window.location.href = "HomePage.html";
+                        } catch (error) {
+                            console.error('Google Sign-In submission error:', error);
+                            googleErrorMessage.style.display = 'block';
+                            googleErrorMessage.classList.add('show');
+                            googleErrorMessage.textContent = 'An error occurred during sign-up. Please try again.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                        }
+                    });
+                }
+
+                if (closeGoogleModal) {
+                    closeGoogleModal.addEventListener('click', () => {
+                        googleSignInModal.style.display = 'none';
+                        googleUserData = null;
+                    });
+
+                    window.addEventListener('click', (event) => {
+                        if (event.target === googleSignInModal) {
+                            googleSignInModal.style.display = 'none';
+                            googleUserData = null;
+                        }
+                    });
+                }
 
                 const forgotPasswordLink = document.getElementById('forgotPasswordLink');
                 const forgotPasswordModal = document.getElementById('forgotPasswordModal');
@@ -1520,11 +1184,6 @@
                         const email = document.getElementById('forgot-email').value.trim();
 
                         try {
-                            const userDoc = await db.collection('users').doc(email).get();
-                            if (!userDoc.exists) {
-                                throw new Error('auth/user-not-found');
-                            }
-
                             await auth.sendPasswordResetEmail(email, {
                                 url: `${window.location.origin}/`
                             });
