@@ -292,10 +292,6 @@
             z-index: 1;
         }
 
-        .buttons-container.continue-with {
-            gap: 5px;
-        }
-
         .action-btn {
             padding: 12px 40px;
             border: none;
@@ -355,7 +351,7 @@
             content: '';
             position: absolute;
             top: 50%;
-            width: 30%; /* Reduced from 40% to 30% to make the text more visible */
+            width: 40%;
             height: 1px;
             background: #ddd;
         }
@@ -673,7 +669,7 @@
 <body>
     <div class="container">
         <div class="background-image">
-              <img src="https://i.imgur.com/1MLtqRY.png" alt="Website Logo" class="website-logo">
+           <img src="https://i.imgur.com/1MLtqRY.png" alt="Website Logo" class="website-logo">
             <div class="text-container">
                 <div class="text-typewriter" id="typewriterText"></div>
             </div>
@@ -713,16 +709,11 @@
                 <div class="buttons-container">
                     <button type="submit" class="action-btn">Login</button>
                 </div>
-                <div class="separator">or continue with</div>
-                <div class="buttons-container continue-with">
+                <div class="separator">or</div>
+                <div class="buttons-container">
                     <button type="button" class="google-btn" id="googleSignInBtn">
                         <img src="https://www.google.com/favicon.ico" alt="Google Icon">
-                    </button>
-                    <button type="button" class="google-btn" id="facebookSignInBtn">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/768px-2021_Facebook_icon.svg.png?20220821121039" alt="Facebook Icon">
-                    </button>
-                    <button type="button" class="google-btn" id="microsoftSignInBtn">
-                        <img src="https://www.microsoft.com/favicon.ico" alt="Microsoft Icon">
+                        Sign in with Google
                     </button>
                 </div>
                 <div class="error-message" id="loginErrorMessage"></div>
@@ -831,6 +822,7 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             try {
+                // Check if we're in reset password mode
                 const urlParams = new URLSearchParams(window.location.search);
                 const mode = urlParams.get('mode');
                 const oobCode = urlParams.get('oobCode');
@@ -990,17 +982,16 @@
                             submitButton.disabled = false;
                             return;
                         }
+                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#_])[A-Za-z\d@$!%*?&#_]{8,}$/;
+                            if (!passwordRegex.test(passwordValue)) {
+                                signupErrorMessage.style.display = 'block';
+                                signupErrorMessage.classList.add('show');
+                                signupErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&#_).';
+                                submitButton.classList.remove('loading');
+                                submitButton.disabled = false;
+                                return;
+                            }
 
-                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#_])[A-Za-z\d@$!%*?&#_]{8,}$/;
-                        if (!passwordRegex.test(newPasswordValue)) {
-                            resetErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
-                            resetErrorMessage.style.display = 'block';
-                            resetErrorMessage.classList.add('show');
-                            resetSuccessMessage.style.display = 'none';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            return;
-                        }
 
                         try {
                             const email = await auth.verifyPasswordResetCode(oobCode);
@@ -1041,8 +1032,6 @@
                 }
 
                 const googleSignInBtn = document.getElementById('googleSignInBtn');
-                const facebookSignInBtn = document.getElementById('facebookSignInBtn');
-                const microsoftSignInBtn = document.getElementById('microsoftSignInBtn');
                 const googleSignInModal = document.getElementById('googleSignInModal');
                 const googleSignInForm = document.getElementById('googleSignInForm');
                 const googleErrorMessage = document.getElementById('googleErrorMessage');
@@ -1087,82 +1076,6 @@
                     });
                 }
 
-                if (facebookSignInBtn) {
-                    facebookSignInBtn.addEventListener('click', () => {
-                        facebookSignInBtn.classList.add('loading');
-                        const provider = new firebase.auth.FacebookAuthProvider();
-                        auth.signInWithPopup(provider)
-                            .then(async (result) => {
-                                facebookSignInBtn.classList.remove('loading');
-                                const user = result.user;
-                                googleUserData = {
-                                    email: user.email,
-                                    username: user.displayName || 'Facebook User'
-                                };
-
-                                const userDoc = await db.collection('users').doc(googleUserData.email).get();
-                                if (userDoc.exists) {
-                                    await logLoginEvent(googleUserData.email);
-                                    localStorage.setItem('currentUser', JSON.stringify({
-                                        email: userDoc.data().email,
-                                        username: userDoc.data().username
-                                    }));
-                                    localStorage.setItem('rememberMe', 'true');
-                                    window.location.href = "HomePage.html";
-                                } else {
-                                    document.getElementById('google-email').value = googleUserData.email;
-                                    document.getElementById('google-username').value = googleUserData.username;
-                                    googleSignInModal.style.display = 'block';
-                                }
-                            })
-                            .catch((error) => {
-                                facebookSignInBtn.classList.remove('loading');
-                                const loginErrorMessage = document.getElementById('loginErrorMessage');
-                                loginErrorMessage.style.display = 'block';
-                                loginErrorMessage.classList.add('show');
-                                loginErrorMessage.textContent = 'Facebook Sign-In failed: ' + error.message;
-                            });
-                    });
-                }
-
-                if (microsoftSignInBtn) {
-                    microsoftSignInBtn.addEventListener('click', () => {
-                        microsoftSignInBtn.classList.add('loading');
-                        const provider = new firebase.auth.OAuthProvider('microsoft.com');
-                        auth.signInWithPopup(provider)
-                            .then(async (result) => {
-                                microsoftSignInBtn.classList.remove('loading');
-                                const user = result.user;
-                                googleUserData = {
-                                    email: user.email,
-                                    username: user.displayName || 'Microsoft User'
-                                };
-
-                                const userDoc = await db.collection('users').doc(googleUserData.email).get();
-                                if (userDoc.exists) {
-                                    await logLoginEvent(googleUserData.email);
-                                    localStorage.setItem('currentUser', JSON.stringify({
-                                        email: userDoc.data().email,
-                                        username: userDoc.data().username
-                                    }));
-                                    localStorage.setItem('rememberMe', 'true');
-                                    window.location.href = "HomePage.html";
-                                } else {
-                                    document.getElementById('google-email').value = googleUserData.email;
-                                    document.getElementById('google-username').value = googleUserData.username;
-                                    googleSignInModal.style.display = 'block';
-                                }
-                            })
-                            .catch((error) => {
-                                microsoftSignInBtn.classList.remove('loading');
-                                const loginErrorMessage = document.getElementById('loginErrorMessage');
-                                loginErrorMessage.style.display = 'block';
-                                loginErrorMessage.classList.add('show');
-                                loginErrorMessage.textContent = 'Microsoft Sign-In failed: ' + error.message;
-                            });
-                    });
-                }
-
                 if (googleSignInForm) {
                     googleSignInForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
@@ -1194,11 +1107,11 @@
                                 return;
                             }
 
-                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#_])[A-Za-z\d@$!%*?&#_]{8,}$/;
+                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
                             if (!passwordRegex.test(password)) {
                                 googleErrorMessage.style.display = 'block';
                                 googleErrorMessage.classList.add('show');
-                                googleErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&#_).';
+                                googleErrorMessage.textContent = 'Password is incorrect. It must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
                                 submitButton.classList.remove('loading');
                                 submitButton.disabled = false;
                                 return;
@@ -1311,6 +1224,7 @@
                     });
                 }
 
+                // Typewriter effect
                 const phrases = [
                     "Protect yourself from cybercrime today.",
                     "Contra E-Crime: Your shield online.",
