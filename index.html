@@ -292,6 +292,11 @@
             z-index: 1;
         }
 
+        /* Modified class for the "or continue with" buttons */
+        .buttons-container.continue-with {
+            gap: 5px; /* Reduced gap for closer alignment */
+        }
+
         .action-btn {
             padding: 12px 40px;
             border: none;
@@ -710,7 +715,7 @@
                     <button type="submit" class="action-btn">Login</button>
                 </div>
                 <div class="separator">or continue with</div>
-                <div class="buttons-container">
+                <div class="buttons-container continue-with">
                     <button type="button" class="google-btn" id="googleSignInBtn">
                         <img src="https://www.google.com/favicon.ico" alt="Google Icon">
                     </button>
