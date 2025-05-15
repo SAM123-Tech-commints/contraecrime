@@ -805,14 +805,17 @@ body:not(.dark-theme) .card {
 .cybercrime-description {
     font-size: 0.9rem;
     color: #ffffff;
-    line-height: 1.4;
-    text-align: left; /* Changed from justify to left for better readability */
+    line-height: 1.5; /* Increased for better readability */
+    text-align: justify; /* Retained justify with improvements */
     padding: 0 10px;
     margin: 5px 0;
     min-height: 150px; /* Ensure all descriptions have a minimum height */
     display: flex;
     flex-direction: column;
     gap: 5px; /* Space between paragraphs */
+    word-spacing: -0.5px; /* Slight adjustment to reduce gaps */
+    letter-spacing: 0.1px; /* Minor adjustment for even distribution */
+    hyphens: auto; /* Allow natural hyphenation for better justification */
 }
 
 /* Style for paragraphs inside cybercrime-description */
