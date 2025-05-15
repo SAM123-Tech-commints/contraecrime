@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Existing styles remain unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -676,8 +675,7 @@
             </div>
         </div>
         <div class="form-container">
-            <div class="halftone-background"></div
-```html
+            <div class="halftone-background"></div>
             <div class="logoname">
                 Contra E-Crime
             </div>
@@ -784,6 +782,56 @@
         </div>
     </div>
 
+    <div id="microsoftSignInModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeMicrosoftModal">×</span>
+            <h2>Sign Up with Microsoft</h2>
+            <form id="microsoftSignInForm">
+                <label for="microsoft-email">Email (read-only)</label>
+                <input type="email" id="microsoft-email" readonly required>
+                
+                <label for="microsoft-username">Username</label>
+                <input type="text" id="microsoft-username" placeholder="Enter your username" required>
+                
+                <label for="microsoft-password">Password</label>
+                <div class="input-container">
+                    <input type="password" id="microsoft-password" placeholder="Enter your password" required>
+                    <i class="fas fa-eye toggle-password" id="toggleMicrosoftPassword"></i>
+                </div>
+                
+                <div class="buttons-container">
+                    <button type="submit" class="action-btn">Sign Up</button>
+                </div>
+                <div class="error-message" id="microsoftErrorMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="facebookSignInModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeFacebookModal">×</span>
+            <h2>Sign Up with Facebook</h2>
+            <form id="facebookSignInForm">
+                <label for="facebook-email">Email (read-only)</label>
+                <input type="email" id="facebook-email" readonly required>
+                
+                <label for="facebook-username">Username</label>
+                <input type="text" id="facebook-username" placeholder="Enter your username" required>
+                
+                <label for="facebook-password">Password</label>
+                <div class="input-container">
+                    <input type="password" id="facebook-password" placeholder="Enter your password" required>
+                    <i class="fas fa-eye toggle-password" id="toggleFacebookPassword"></i>
+                </div>
+                
+                <div class="buttons-container">
+                    <button type="submit" class="action-btn">Sign Up</button>
+                </div>
+                <div class="error-message" id="facebookErrorMessage"></div>
+            </form>
+        </div>
+    </div>
+
     <div id="forgotPasswordModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" id="closeForgotPasswordModal">×</span>
@@ -834,6 +882,137 @@
             }
         }
 
+        async function handleSocialSignIn(provider, modalId, emailId, usernameId, passwordId, signInFormId, errorMessageId, providerName) {
+            const signInBtn = document.getElementById(`${providerName.toLowerCase()}SignInBtn`);
+            const signInModal = document.getElementById(modalId);
+            const signInForm = document.getElementById(signInFormId);
+            const errorMessage = document.getElementById(errorMessageId);
+            const closeModal = document.getElementById(`close${providerName}Modal`);
+            let userData = null;
+
+            if (signInBtn) {
+                signInBtn.addEventListener('click', () => {
+                    signInBtn.classList.add('loading');
+                    auth.signInWithPopup(provider)
+                        .then(async (result) => {
+                            signInBtn.classList.remove('loading');
+                            const user = result.user;
+                            userData = {
+                                email: user.email,
+                                username: user.displayName || `${providerName} User`
+                            };
+
+                            const userDoc = await db.collection('users').doc(userData.email).get();
+                            if (userDoc.exists) {
+                                await logLoginEvent(userData.email);
+                                localStorage.setItem('currentUser', JSON.stringify({
+                                    email: userDoc.data().email,
+                                    username: userDoc.data().username
+                                }));
+                                localStorage.setItem('rememberMe', 'true');
+                                window.location.href = "HomePage.html";
+                            } else {
+                                document.getElementById(emailId).value = userData.email;
+                                document.getElementById(usernameId).value = userData.username;
+                                signInModal.style.display = 'block';
+                            }
+                        })
+                        .catch((error) => {
+                            signInBtn.classList.remove('loading');
+                            const loginErrorMessage = document.getElementById('loginErrorMessage');
+                            loginErrorMessage.style.display = 'block';
+                            loginErrorMessage.classList.add('show');
+                            loginErrorMessage.textContent = `${providerName} Sign-In failed: ${error.message}`;
+                        });
+                });
+            }
+
+            if (signInForm) {
+                signInForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const submitButton = signInForm.querySelector('.action-btn');
+                    submitButton.classList.add('loading');
+                    submitButton.disabled = true;
+
+                    try {
+                        const email = document.getElementById(emailId).value.trim();
+                        const username = document.getElementById(usernameId).value.trim();
+                        const password = document.getElementById(passwordId).value.trim();
+
+                        if (!username) {
+                            errorMessage.style.display = 'block';
+                            errorMessage.classList.add('show');
+                            errorMessage.textContent = 'Please enter a username.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        if (!password) {
+                            errorMessage.style.display = 'block';
+                            errorMessage.classList.add('show');
+                            errorMessage.textContent = 'Please enter a password.';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                        if (!passwordRegex.test(password)) {
+                            errorMessage.style.display = 'block';
+                            errorMessage.classList.add('show');
+                            errorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
+                            submitButton.classList.remove('loading');
+                            submitButton.disabled = false;
+                            return;
+                        }
+
+                        await db.collection('users').doc(email).set({
+                            email: email,
+                            username: username,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            provider: providerName.toLowerCase()
+                        });
+
+                        await logLoginEvent(email);
+
+                        localStorage.setItem('currentUser', JSON.stringify({ email, username }));
+                        localStorage.setItem('rememberMe', 'true');
+
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                        signInModal.style.display = 'none';
+
+                        window.location.href = "HomePage.html";
+                    } catch (error) {
+                        console.error(`${providerName} Sign-In submission error:`, error);
+                        errorMessage.style.display = 'block';
+                        errorMessage.classList.add('show');
+                        errorMessage.textContent = 'An error occurred during sign-up. Please try again.';
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
+                    }
+                });
+            }
+
+            if (closeModal) {
+                closeModal.addEventListener('click', () => {
+                    signInModal.style.display = 'none';
+                    userData = null;
+                    errorMessage.style.display = 'none';
+                });
+
+                window.addEventListener('click', (event) => {
+                    if (event.target === signInModal) {
+                        signInModal.style.display = 'none';
+                        userData = null;
+                        errorMessage.style.display = 'none';
+                    }
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             try {
                 // Check if we're in reset password mode
@@ -870,6 +1049,28 @@
                     toggleGooglePassword.addEventListener('click', function () {
                         const type = googlePassword.getAttribute('type') === 'password' ? 'text' : 'password';
                         googlePassword.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                }
+
+                const toggleMicrosoftPassword = document.querySelector('#toggleMicrosoftPassword');
+                const microsoftPassword = document.querySelector('#microsoft-password');
+
+                if (toggleMicrosoftPassword && microsoftPassword) {
+                    toggleMicrosoftPassword.addEventListener('click', function () {
+                        const type = microsoftPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                        microsoftPassword.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+                }
+
+                const toggleFacebookPassword = document.querySelector('#toggleFacebookPassword');
+                const facebookPassword = document.querySelector('#facebook-password');
+
+                if (toggleFacebookPassword && facebookPassword) {
+                    toggleFacebookPassword.addEventListener('click', function () {
+                        const type = facebookPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                        facebookPassword.setAttribute('type', type);
                         this.classList.toggle('fa-eye-slash');
                     });
                 }
@@ -1046,132 +1247,41 @@
                     });
                 }
 
-                const googleSignInBtn = document.getElementById('googleSignInBtn');
-                const googleSignInModal = document.getElementById('googleSignInModal');
-                const googleSignInForm = document.getElementById('googleSignInForm');
-                const googleErrorMessage = document.getElementById('googleErrorMessage');
-                const closeGoogleModal = document.getElementById('closeGoogleModal');
-                let googleUserData = null;
+                // Google Sign-In
+                handleSocialSignIn(
+                    new firebase.auth.GoogleAuthProvider(),
+                    'googleSignInModal',
+                    'google-email',
+                    'google-username',
+                    'google-password',
+                    'googleSignInForm',
+                    'googleErrorMessage',
+                    'Google'
+                );
 
-                if (googleSignInBtn) {
-                    googleSignInBtn.addEventListener('click', () => {
-                        googleSignInBtn.classList.add('loading');
-                        const provider = new firebase.auth.GoogleAuthProvider();
-                        auth.signInWithPopup(provider)
-                            .then(async (result) => {
-                                googleSignInBtn.classList.remove('loading');
-                                const user = result.user;
-                                googleUserData = {
-                                    email: user.email,
-                                    username: user.displayName || 'Google User'
-                                };
+                // Microsoft Sign-In
+                handleSocialSignIn(
+                    new firebase.auth.OAuthProvider('microsoft.com'),
+                    'microsoftSignInModal',
+                    'microsoft-email',
+                    'microsoft-username',
+                    'microsoft-password',
+                    'microsoftSignInForm',
+                    'microsoftErrorMessage',
+                    'Microsoft'
+                );
 
-                                const userDoc = await db.collection('users').doc(googleUserData.email).get();
-                                if (userDoc.exists) {
-                                    await logLoginEvent(googleUserData.email);
-                                    localStorage.setItem('currentUser', JSON.stringify({
-                                        email: userDoc.data().email,
-                                        username: userDoc.data().username
-                                    }));
-                                    localStorage.setItem('rememberMe', 'true');
-                                    window.location.href = "HomePage.html";
-                                } else {
-                                    document.getElementById('google-email').value = googleUserData.email;
-                                    document.getElementById('google-username').value = googleUserData.username;
-                                    googleSignInModal.style.display = 'block';
-                                }
-                            })
-                            .catch((error) => {
-                                googleSignInBtn.classList.remove('loading');
-                                const loginErrorMessage = document.getElementById('loginErrorMessage');
-                                loginErrorMessage.style.display = 'block';
-                                loginErrorMessage.classList.add('show');
-                                loginErrorMessage.textContent = 'Google Sign-In failed: ' + error.message;
-                            });
-                    });
-                }
-
-                if (googleSignInForm) {
-                    googleSignInForm.addEventListener('submit', async (event) => {
-                        event.preventDefault();
-
-                        const submitButton = googleSignInForm.querySelector('.action-btn');
-                        submitButton.classList.add('loading');
-                        submitButton.disabled = true;
-
-                        try {
-                            const email = document.getElementById('google-email').value.trim();
-                            const username = document.getElementById('google-username').value.trim();
-                            const password = document.getElementById('google-password').value.trim();
-
-                            if (!username) {
-                                googleErrorMessage.style.display = 'block';
-                                googleErrorMessage.classList.add('show');
-                                googleErrorMessage.textContent = 'Please enter a username.';
-                                submitButton.classList.remove('loading');
-                                submitButton.disabled = false;
-                                return;
-                            }
-
-                            if (!password) {
-                                googleErrorMessage.style.display = 'block';
-                                googleErrorMessage.classList.add('show');
-                                googleErrorMessage.textContent = 'Please enter a password.';
-                                submitButton.classList.remove('loading');
-                                submitButton.disabled = false;
-                                return;
-                            }
-
-                            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                            if (!passwordRegex.test(password)) {
-                                googleErrorMessage.style.display = 'block';
-                                googleErrorMessage.classList.add('show');
-                                googleErrorMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters (e.g., @$!%*?&).';
-                                submitButton.classList.remove('loading');
-                                submitButton.disabled = false;
-                                return;
-                            }
-
-                            await db.collection('users').doc(email).set({
-                                email: email,
-                                username: username,
-                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                            });
-
-                            await logLoginEvent(email);
-
-                            localStorage.setItem('currentUser', JSON.stringify({ email, username }));
-                            localStorage.setItem('rememberMe', 'true');
-
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                            googleSignInModal.style.display = 'none';
-
-                            window.location.href = "HomePage.html";
-                        } catch (error) {
-                            console.error('Google Sign-In submission error:', error);
-                            googleErrorMessage.style.display = 'block';
-                            googleErrorMessage.classList.add('show');
-                            googleErrorMessage.textContent = 'An error occurred during sign-up. Please try again.';
-                            submitButton.classList.remove('loading');
-                            submitButton.disabled = false;
-                        }
-                    });
-                }
-
-                if (closeGoogleModal) {
-                    closeGoogleModal.addEventListener('click', () => {
-                        googleSignInModal.style.display = 'none';
-                        googleUserData = null;
-                    });
-
-                    window.addEventListener('click', (event) => {
-                        if (event.target === googleSignInModal) {
-                            googleSignInModal.style.display = 'none';
-                            googleUserData = null;
-                        }
-                    });
-                }
+                // Facebook Sign-In
+                handleSocialSignIn(
+                    new firebase.auth.FacebookAuthProvider(),
+                    'facebookSignInModal',
+                    'facebook-email',
+                    'facebook-username',
+                    'facebook-password',
+                    'facebookSignInForm',
+                    'facebookErrorMessage',
+                    'Facebook'
+                );
 
                 const forgotPasswordLink = document.getElementById('forgotPasswordLink');
                 const forgotPasswordModal = document.getElementById('forgotPasswordModal');
@@ -1198,6 +1308,11 @@
                         const email = document.getElementById('forgot-email').value.trim();
 
                         try {
+                            const userDoc = await db.collection('users').doc(email).get();
+                            if (!userDoc.exists) {
+                                throw new Error('auth/user-not-found');
+                            }
+
                             await auth.sendPasswordResetEmail(email, {
                                 url: `${window.location.origin}/`
                             });
