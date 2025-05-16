@@ -22,16 +22,19 @@
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
         }
-        .loader-overlay { 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            background-color: rgba(0, 0, 0, 0.7); 
-            display: flex; justify-content: center; 
-            align-items: center; 
-            z-index: 9999; 
-            opacity: 0; 
-            pointer-events: none; 
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s ease;
         }
         .loader-overlay.active { opacity: 1; pointer-events: all; }
@@ -351,9 +354,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
-            text-align: left;
-            display: flex;
-            align-items: center;
         }
         .option-btn::before {
             content: '';
@@ -406,12 +406,6 @@
             pointer-events: none;
             opacity: 0.6;
         }
-        .option-label {
-            font-weight: bold;
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
         .next-btn {
             background: linear-gradient(135deg, #ffcc00, #e6b800);
             color: #1e3c72;
@@ -425,43 +419,23 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin: 20px auto;
             display: none;
-            position: relative;
-            overflow: hidden;
-        }
-        .next-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.3s ease;
-        }
-        .next-btn:hover::before {
-            left: 0;
         }
         .next-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #ffd700, #f0c107);
         }
         .next-btn.visible {
             display: block;
         }
-        .next-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        }
-        .past-questions {
+        .preview-questions {
             margin-top: 30px;
             padding: 20px;
             background: #f0f0f0;
             border-radius: 10px;
-            max-height: 300px;
+            max-height: 150px;
             overflow-y: auto;
         }
-        .past-questions h3 {
+        .preview-questions h3 {
             font-size: 1.3em;
             color: #1e3c72;
             margin-bottom: 15px;
@@ -574,7 +548,7 @@
             color: #666;
             margin-top: 10px;
         }
-        .start-btn, .tutorial-btn, .restart-btn, .back-btn, .start-quiz-btn {
+        .start-btn, .tutorial-btn, .restart-btn, .back-btn, .start-quiz-btn, .exit-btn {
             background: linear-gradient(135deg, #ffcc00, #e6b800);
             color: #1e3c72;
             border: none;
@@ -587,7 +561,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin: 10px;
         }
-        .start-btn:hover, .tutorial-btn:hover, .restart-btn:hover, .back-btn:hover, .start-quiz-btn:hover {
+        .start-btn:hover, .tutorial-btn:hover, .restart-btn:hover, .back-btn:hover, .start-quiz-btn:hover, .exit-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
@@ -615,7 +589,7 @@
             margin-bottom: 20px;
         }
         .tutorial-slide img {
-            width: 150px;
+            width: 300px;
             margin: 20px 0;
             border-radius: 10px;
         }
@@ -687,21 +661,37 @@
             line-height: 1.6;
             margin-bottom: 15px;
         }
-        .correct-answers {
+        .result-summary {
             background: #f9f9f9;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        .correct-answers div {
+        .result-summary div {
             margin: 10px 0;
         }
-        .correct-answers .question {
+        .result-summary .question {
             font-weight: 600;
             color: #1e3c72;
         }
-        .correct-answers .answer {
+        .result-summary .user-answer {
+            color: #333;
+        }
+        .result-summary .correct-answer {
             color: #2ecc71;
+        }
+        .result-summary .time-taken {
+            color: #e74c3c;
+        }
+        .result-stats {
+            text-align: left;
+            padding: 15px;
+            background: #e0f7fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .result-stats div {
+            margin: 5px 0;
         }
         @keyframes zoomIn {
             from { opacity: 0; transform: scale(0.8); }
@@ -752,14 +742,16 @@
         .dark-theme .difficulty-card .description { color: #b0b0b0; }
         .dark-theme .result-modal-content h3 { color: #d8dbe0; }
         .dark-theme .result-modal-content p { color: #b0b0b0; }
-        .dark-theme .correct-answers { background: #444; }
-        .dark-theme .correct-answers .question { color: #d8dbe0; }
-        .dark-theme .past-questions { background: #444; }
-        .dark-theme .past-questions h3 { color: #d8dbe0; }
+        .dark-theme .result-summary { background: #444; }
+        .dark-theme .result-summary .question { color: #d8dbe0; }
+        .dark-theme .preview-questions { background: #444; }
+        .dark-theme .preview-questions h3 { color: #d8dbe0; }
         .dark-theme .past-question { background: #555; }
         .dark-theme .past-question .question { color: #d8dbe0; }
         .dark-theme .past-question .user-answer { color: #b0b0b0; }
         .dark-theme .past-question .correct-answer { color: #2ecc71; }
+        .dark-theme .result-stats { background: #1a3c3e; }
+        .dark-theme .result-stats div { color: #d8dbe0; }
         .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
@@ -915,8 +907,8 @@
                     <div class="options" id="options"></div>
                 </div>
                 <button class="next-btn" id="nextBtn">Next Question</button>
-                <div class="past-questions" id="pastQuestions">
-                    <h3>Past Questions</h3>
+                <div class="preview-questions" id="previewQuestions">
+                    <h3>Preview Questions</h3>
                     <div id="pastQuestionsList"></div>
                 </div>
                 <div class="score" id="score">Score: 0</div>
@@ -943,25 +935,25 @@
                         <div class="description">30 seconds per question, advanced details.</div>
                     </div>
                 </div>
-                <button class="tutorial-btn" id="tutorialBtn">Proceed to Tutorial</button>
+                <button class="tutorial-btn" id="tutorialBtn" disabled>Proceed to Tutorial</button>
             </div>
         </div>
         <div class="tutorial-modal" id="tutorialModal" style="display: none;">
             <div class="tutorial-modal-content">
                 <div class="tutorial-slide" id="slide1">
                     <h3>Welcome to the Quiz!</h3>
-                    <img src="https://images.unsplash.com/photo-1559526324-593bc073d938?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cyberlaw Quiz Interface">
-                    <p>Test your knowledge of Philippine cybercrime laws through interactive questions.</p>
+                    <img src="https://i.imgur.com/5v2j8wM.png" alt="Law Book">
+                    <p>This quiz will test your knowledge of cybercrime laws in the Philippines. Answer questions based on the laws provided.</p>
                 </div>
                 <div class="tutorial-slide" id="slide2">
                     <h3>Difficulty Levels</h3>
-                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Difficulty Selection Screen">
-                    <p>Choose Easy (60s), Medium (45s), or Hard (30s) to match your skill level.</p>
+                    <img src="https://i.imgur.com/9uQ3L8K.png" alt="Digital Security">
+                    <p>Choose from Easy (60s), Medium (45s), or Hard (30s) difficulty. Each level adjusts the timer and question complexity.</p>
                 </div>
                 <div class="tutorial-slide" id="slide3">
                     <h3>Scoring and Feedback</h3>
-                    <img src="https://images.unsplash.com/photo-1516321318427-4b1db48a4206?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Quiz Results Screen">
-                    <p>Earn 10 points per correct answer with instant feedback and final results.</p>
+                    <img src="https://i.imgur.com/Xt6kGf5.png" alt="Scoreboard">
+                    <p>Earn 10 points per correct answer. You'll get immediate feedback, and a detailed result at the end.</p>
                 </div>
                 <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
                 <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
@@ -984,15 +976,23 @@
             <div class="result-modal-content">
                 <h2>Quiz Completed!</h2>
                 <p>Your Score: <span id="finalScore"></span></p>
+                <div class="result-stats">
+                    <div><strong>Accuracy:</strong> <span id="accuracy"></span>%</div>
+                    <div><strong>Average Time per Question:</strong> <span id="avgTime"></span>s</div>
+                    <div><strong>Difficulty Analysis:</strong> <span id="difficultyAnalysis"></span></div>
+                </div>
                 <h3>Thinking Level</h3>
                 <p id="thinkingLevel"></p>
                 <h3>Remarks</h3>
                 <p id="remarks"></p>
                 <h3>Problem-Solving Skills</h3>
                 <p id="problemSolving"></p>
-                <h3>Correct Answers</h3>
-                <div class="correct-answers" id="correctAnswers"></div>
-                <button class="restart-btn" id="restartBtn">Play Again</button>
+                <h3>Detailed Results</h3>
+                <div class="result-summary" id="resultSummary"></div>
+                <div class="result-actions">
+                    <button class="restart-btn" id="restartBtn">Play Again</button>
+                    <button class="exit-btn" id="exitBtn">Go Back to Difficulty</button>
+                </div>
             </div>
         </div>
         <footer>
@@ -1023,6 +1023,7 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
+        // Initialize Particles.js
         particlesJS('particles-js', {
             particles: {
                 number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -1041,6 +1042,7 @@
             retina_detect: true
         });
 
+        // Define questions for each difficulty level
         const questions = {
             easy: [
                 {
@@ -1350,6 +1352,7 @@
             ]
         };
 
+        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1374,27 +1377,33 @@
         const scoreDisplay = document.getElementById('score');
         const resultModal = document.getElementById('resultModal');
         const finalScore = document.getElementById('finalScore');
+        const accuracyDisplay = document.getElementById('accuracy');
+        const avgTimeDisplay = document.getElementById('avgTime');
+        const difficultyAnalysis = document.getElementById('difficultyAnalysis');
         const thinkingLevel = document.getElementById('thinkingLevel');
         const remarks = document.getElementById('remarks');
         const problemSolving = document.getElementById('problemSolving');
-        const correctAnswersDiv = document.getElementById('correctAnswers');
+        const resultSummary = document.getElementById('resultSummary');
         const restartBtn = document.getElementById('restartBtn');
+        const exitBtn = document.getElementById('exitBtn');
         const tutorialSlides = document.querySelectorAll('.tutorial-slide');
         const tutorialDots = document.querySelectorAll('.tutorial-dot');
         const tutorialPrev = document.getElementById('tutorialPrev');
         const tutorialNext = document.getElementById('tutorialNext');
 
+        // State Variables
         let currentQuestion = 0;
         let score = 0;
         let timeLeft = 45;
         let timerInterval;
-        let selectedDifficulty = 'medium';
+        let selectedDifficulty = null;
         const totalQuestions = 10;
         let userAnswers = [];
         let timeTakenPerQuestion = [];
         let currentQuestionSet = [];
         let currentSlide = 1;
 
+        // Sound Effects
         const sounds = {
             start: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
             correct: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
@@ -1402,6 +1411,7 @@
             complete: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_8d1f7f1e9e.mp3'], volume: 0.5 })
         };
 
+        // Initialize Theme
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1417,6 +1427,7 @@
             }
         });
 
+        // Mobile Menu Toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -1429,6 +1440,7 @@
             }
         });
 
+        // Navigation Links with Loader
         document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:')) return;
@@ -1438,16 +1450,18 @@
             });
         });
 
+        // Difficulty Selection
         difficultyCards.forEach(card => {
             card.addEventListener('click', function() {
                 selectedDifficulty = this.dataset.difficulty;
                 difficultyCards.forEach(c => c.classList.remove('selected'));
                 this.classList.add('selected');
-                tutorialBtn.style.display = 'block';
+                tutorialBtn.disabled = false; // Enable tutorial button only when a difficulty is selected
                 timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
             });
         });
 
+        // Tutorial Navigation
         function showSlide(slideNumber) {
             tutorialSlides.forEach(slide => slide.classList.remove('active'));
             tutorialDots.forEach(dot => dot.classList.remove('active'));
@@ -1472,7 +1486,9 @@
             if (currentSlide < 3) showSlide(currentSlide + 1);
         });
 
+        // Show Tutorial or Start Quiz
         tutorialBtn.addEventListener('click', () => {
+            if (!selectedDifficulty) return; // Prevent proceeding without difficulty
             if (localStorage.getItem('skipTutorial') === 'true') {
                 startModal.style.display = 'none';
                 quizSection.classList.add('visible');
@@ -1491,6 +1507,7 @@
             }
         });
 
+        // Back to Difficulty Selection
         backBtn.addEventListener('click', () => {
             gsap.to(tutorialModal, {
                 opacity: 0,
@@ -1500,15 +1517,17 @@
                     startModal.style.display = 'flex';
                     gsap.to(startModal, { opacity: 1, duration: 0.5 });
                     difficultyCards.forEach(c => c.classList.remove('selected'));
-                    tutorialBtn.style.display = 'none';
+                    tutorialBtn.disabled = true;
                 }
             });
         });
 
+        // Start Quiz from Tutorial
         startQuizBtn.addEventListener('click', () => {
             if (dontShowAgain.checked) {
                 localStorage.setItem('skipTutorial', 'true');
             }
+            if (!selectedDifficulty) return; // Prevent starting without difficulty
             gsap.to(tutorialModal, {
                 opacity: 0,
                 duration: 0.5,
@@ -1520,6 +1539,7 @@
             });
         });
 
+        // Restart Quiz
         restartBtn.addEventListener('click', () => {
             currentQuestion = 0;
             score = 0;
@@ -1535,22 +1555,39 @@
             } else {
                 startModal.style.display = 'flex';
                 difficultyCards.forEach(c => c.classList.remove('selected'));
-                tutorialBtn.style.display = 'none';
+                tutorialBtn.disabled = true;
             }
         });
 
+        // Exit to Difficulty
+        exitBtn.addEventListener('click', () => {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            timeTakenPerQuestion = [];
+            currentQuestionSet = [];
+            pastQuestionsList.innerHTML = '';
+            resultModal.style.display = 'none';
+            startModal.style.display = 'flex';
+            difficultyCards.forEach(c => c.classList.remove('selected'));
+            tutorialBtn.disabled = true;
+        });
+
+        // Next Question Button
         nextBtn.addEventListener('click', () => {
-            if (!nextBtn.classList.contains('visible')) return;
-            nextBtn.classList.remove('visible');
-            currentQuestion++;
-            if (currentQuestion < totalQuestions) {
-                loadQuestion();
-                startTimer();
-            } else {
-                endQuiz();
+            if (nextBtn.classList.contains('visible')) {
+                nextBtn.classList.remove('visible');
+                currentQuestion++;
+                if (currentQuestion < totalQuestions) {
+                    loadQuestion();
+                    startTimer();
+                } else {
+                    endQuiz();
+                }
             }
         });
 
+        // Start Quiz Logic
         function startQuiz() {
             sounds.start.play();
             currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
@@ -1558,6 +1595,7 @@
             startTimer();
         }
 
+        // Load Question
         function loadQuestion() {
             if (currentQuestion >= totalQuestions) {
                 endQuiz();
@@ -1568,23 +1606,18 @@
             const q = currentQuestionSet[currentQuestion];
             questionText.textContent = q.text;
             options.innerHTML = '';
-            const labels = ['a', 'b', 'c', 'd'];
-            q.options.forEach((opt, index) => {
+            q.options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                const labelSpan = document.createElement('span');
-                labelSpan.className = 'option-label';
-                labelSpan.textContent = `${labels[index]}.`;
-                btn.appendChild(labelSpan);
-                const textSpan = document.createElement('span');
-                textSpan.textContent = opt;
-                btn.appendChild(textSpan);
+                btn.textContent = opt;
                 btn.onclick = () => checkAnswer(opt === q.answer, btn, opt);
                 options.appendChild(btn);
             });
             gsap.from('#questionBox', { opacity: 0, x: -50, duration: 0.5 });
+            pastQuestionsList.innerHTML = currentQuestion > 0 ? '' : pastQuestionsList.innerHTML; // Clear unless first question
         }
 
+        // Shuffle Array
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1593,6 +1626,7 @@
             return array;
         }
 
+        // Start Timer
         function startTimer() {
             clearInterval(timerInterval);
             let initialTime = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
@@ -1608,13 +1642,14 @@
                 timerCircle.style.strokeDashoffset = offset;
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    userAnswers[currentQuestion].userAnswer = null;
+                    userAnswers[currentQuestion] = { userAnswer: null };
                     showFeedback(null);
-                    nextBtn.classList.add('visible63');
+                    nextBtn.classList.add('visible');
                 }
             }, 1000);
         }
 
+        // Check Answer
         function checkAnswer(isCorrect, btn, userAnswer) {
             clearInterval(timerInterval);
             userAnswers[currentQuestion] = {
@@ -1633,7 +1668,7 @@
                 btn.classList.add('wrong');
                 sounds.wrong.play();
                 options.querySelectorAll('.option-btn').forEach(b => {
-                    if (b.children[1].textContent === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
+                    if (b.textContent === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
                 });
             }
             scoreDisplay.textContent = `Score: ${score}`;
@@ -1641,25 +1676,33 @@
             nextBtn.classList.add('visible');
         }
 
+        // Show Feedback and Update Preview Questions
         function showFeedback(userAnswer) {
-            const pastQuestion = userAnswers[currentQuestion];
-            const div = document.createElement('div');
-            div.className = 'past-question';
-            div.innerHTML = `
-                <div class="question">Q${currentQuestion + 1}: ${pastQuestion.question}</div>
-                <div class="user-answer">Your Answer: ${pastQuestion.userAnswer || 'No answer'}</div>
-                <div class="correct-answer">Correct Answer: ${pastQuestion.correctAnswer}</div>
-            `;
-            pastQuestionsList.appendChild(div);
-            pastQuestionsList.scrollTop = pastQuestionsList.scrollHeight;
+            pastQuestionsList.innerHTML = ''; // Clear preview questions
+            if (currentQuestion > 0) {
+                const pastQuestion = userAnswers[currentQuestion - 1];
+                const div = document.createElement('div');
+                div.className = 'past-question';
+                div.innerHTML = `
+                    <div class="question">Q${currentQuestion}: ${pastQuestion.question}</div>
+                    <div class="user-answer">Your Answer: ${pastQuestion.userAnswer || 'No answer'}</div>
+                    <div class="correct-answer">Correct Answer: ${pastQuestion.correctAnswer}</div>
+                `;
+                pastQuestionsList.appendChild(div);
+                pastQuestionsList.scrollTop = pastQuestionsList.scrollHeight;
+            }
         }
 
+        // End Quiz
         function endQuiz() {
             sounds.complete.play();
             confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
             finalScore.textContent = `${score} / ${totalQuestions * 10}`;
             const accuracy = (score / (totalQuestions * 10)) * 100;
-            const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / totalQuestions;
+            accuracyDisplay.textContent = accuracy.toFixed(2);
+            const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / totalQuestions || 0;
+            avgTimeDisplay.textContent = avgTime.toFixed(2);
+            difficultyAnalysis.textContent = selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1) + ' Level';
             const thinking = accuracy >= 80 ? 'Advanced' : accuracy >= 50 ? 'Intermediate' : 'Beginner';
             thinkingLevel.textContent = thinking;
             remarks.textContent = accuracy >= 80 ? 'Excellent! You have a strong grasp of cybercrime laws.' :
@@ -1669,15 +1712,19 @@
             problemSolving.textContent = problemSolvingScore >= 80 ? 'Excellent problem-solving skills! You’re quick and accurate.' :
                                         problemSolvingScore >= 50 ? 'Good problem-solving skills. Try to improve your speed.' :
                                         'Work on your problem-solving skills by practicing more.';
-            correctAnswersDiv.innerHTML = '';
+            resultSummary.innerHTML = '';
             userAnswers.forEach((qa, i) => {
                 const div = document.createElement('div');
-                div.innerHTML = `<div class="question">Q${i + 1}: ${qa.question}</div><div class="answer">Correct Answer: ${qa.correctAnswer}</div>`;
-                correctAnswersDiv.appendChild(div);
+                div.innerHTML = `
+                    <div class="question">Q${i + 1}: ${qa.question}</div>
+                    <div class="user-answer">Your Answer: ${qa.userAnswer || 'No answer'}</div>
+                    <div class="correct-answer">Correct Answer: ${qa.correctAnswer}</div>
+                    <div class="time-taken">Time Taken: ${timeTakenPerQuestion[i] || 0}s</div>
+                    <hr>
+                `;
+                resultSummary.appendChild(div);
             });
             resultModal.style.display = 'flex';
             gsap.from(resultModal, { opacity: 0, scale: 0.8, duration: 0.5 });
         }
     </script>
-</body>
-</html>
