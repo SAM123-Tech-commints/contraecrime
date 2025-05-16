@@ -414,18 +414,20 @@
             border-radius: 10px;
             font-size: 18px;
             font-weight: 600;
-            cursor: pointer;
+            cursor: pointer; 
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin: 20px auto;
             display: none;
+            pointer-events: none;
+        }
+        .next-btn.visible {
+            display: block;
+            pointer-events: auto; 
         }
         .next-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        .next-btn.visible {
-            display: block;
         }
         .preview-questions {
             margin-top: 30px;
