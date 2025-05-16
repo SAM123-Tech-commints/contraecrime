@@ -491,7 +491,7 @@
             .avatar-loading .loader {
                 width: 15px;
                 height: 15px;
-                border-width: 2px;
+                border-width: 2pxTemple;
             }
 
             .customization-options {
@@ -555,7 +555,7 @@
         .growth-section,
         .careers-section,
         .leaders-section,
-        .game-section {
+        .about-section {
             position: relative;
             z-index: 1;
             margin-bottom: 60px;
@@ -808,25 +808,6 @@
             color: #666;
         }
 
-        .growth-section button {
-            margin-top: 40px;
-            padding: 12px 30px;
-            background: linear-gradient(90deg, #8B0000, #b30000);
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .growth-section button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
-        }
-
         .careers-section {
             padding: 80px 20px;
             text-align: center;
@@ -891,14 +872,14 @@
             color: #222;
         }
 
-        .game-section {
+        .about-section {
             padding: 80px 20px;
             text-align: center;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
             border-radius: 15px;
         }
 
-        .game-section h2 {
+        .about-section h2 {
             font-family: 'Montserrat', sans-serif;
             font-size: 36px;
             font-weight: 700;
@@ -909,7 +890,7 @@
             animation: fadeInUp 1s forwards;
         }
 
-        .game-card {
+        .about-card {
             max-width: 900px;
             margin: 0 auto;
             padding: 40px;
@@ -922,12 +903,12 @@
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
-        .game-card.visible {
+        .about-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .game-card h3 {
+        .about-card h3 {
             font-family: 'Montserrat', sans-serif;
             font-size: 24px;
             font-weight: 700;
@@ -935,7 +916,7 @@
             margin-bottom: 20px;
         }
 
-        .game-card p {
+        .about-card p {
             font-family: 'Poppins', sans-serif;
             font-size: 16px;
             font-weight: 300;
@@ -943,22 +924,7 @@
             margin-bottom: 20px;
         }
 
-        .game-input {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 2px solid #8B0000;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .game-input:focus {
-            border-color: #d7b15c;
-        }
-
-        .game-button {
+        .about-button {
             padding: 12px 30px;
             background: linear-gradient(90deg, #8B0000, #b30000);
             color: #fff;
@@ -969,86 +935,38 @@
             font-size: 16px;
             font-weight: 500;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .game-button:hover {
+        .about-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
         }
 
-        .game-feedback {
-            margin-top: 20px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            color: #222;
-        }
-
-        .game-feedback.correct {
-            color: #28a745;
-        }
-
-        .game-feedback.incorrect {
-            color: #dc3545;
-        }
-
-        .game-score {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: #8B0000;
-            margin-top: 20px;
-        }
-
-        .dark-theme .game-section {
+        .dark-theme .about-section {
             background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
         }
 
-        .dark-theme .game-section h2 {
+        .dark-theme .about-section h2 {
             color: #d7b15c;
         }
 
-        .dark-theme .game-card {
+        .dark-theme .about-card {
             background: #333;
         }
 
-        .dark-theme .game-card h3 {
+        .dark-theme .about-card h3 {
             color: #e0e0e0;
         }
 
-        .dark-theme .game-card p {
+        .dark-theme .about-card p {
             color: #b0b0b0;
         }
 
-        .dark-theme .game-input {
-            border-color: #d7b15c;
-            background: #3a3b3c;
-            color: #e0e0e0;
-        }
-
-        .dark-theme .game-input:focus {
-            border-color: #b89a47;
-        }
-
-        .dark-theme .game-button {
+        .dark-theme .about-button {
             background: linear-gradient(90deg, #d7b15c, #b89a47);
             color: #222;
-        }
-
-        .dark-theme .game-feedback {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .game-feedback.correct {
-            color: #28a745;
-        }
-
-        .dark-theme .game-feedback.incorrect {
-            color: #dc3545;
-        }
-
-        .dark-theme .game-score {
-            color: #d7b15c;
         }
 
         .leaders-section {
@@ -1250,11 +1168,6 @@
             color: #b0b0b0;
         }
 
-        .dark-theme .growth-section button {
-            background: linear-gradient(90deg, #d7b15c, #b89a47);
-            color: #222;
-        }
-
         .dark-theme .careers-card a {
             color: #222;
         }
@@ -1356,7 +1269,7 @@
             .timeline-section h2,
             .growth-section h2,
             .leaders-section h2,
-            .game-section h2 {
+            .about-section h2 {
                 font-size: 32px;
             }
 
@@ -1520,14 +1433,14 @@
             .growth-section,
             .careers-section,
             .leaders-section,
-            .game-section {
+            .about-section {
                 padding: 50px 10px;
             }
 
             .timeline-section h2,
             .growth-section h2,
             .leaders-section h2,
-            .game-section h2 {
+            .about-section h2 {
                 font-size: 28px;
             }
 
@@ -1605,15 +1518,15 @@
                 font-size: 14px;
             }
 
-            .game-card {
+            .about-card {
                 padding: 20px;
             }
 
-            .game-card h3 {
+            .about-card h3 {
                 font-size: 20px;
             }
 
-            .game-card p {
+            .about-card p {
                 font-size: 14px;
             }
 
@@ -1660,8 +1573,7 @@
                 <li>
                     <a href="History.html">
                         <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
-                        Search History
-                    </a>
+                        Search                </a>
                 </li>
                 <li>
                     <a href="ContactUs.html">
@@ -1788,7 +1700,6 @@
                         <p>Educational Partner</p>
                     </div>
                 </div>
-                <button onclick="updateUserCounts()">Refresh Counts</button>
             </section>
 
             <section class="careers-section">
@@ -1799,15 +1710,12 @@
                 </div>
             </section>
 
-            <section class="game-section">
-                <h2>Test CyberSmart Trivia Challenge</h2>
-                <div class="game-card">
-                    <h3 id="gameQuestion">Click Start to Begin!</h3>
-                    <p id="gameInstruction">Type one answer at a time and press Submit. Get 5 correct answers to move to the next question!</p>
-                    <input type="text" id="gameInput" class="game-input" placeholder="Type your answer here">
-                    <button id="gameButton" class="game-button">Start</button>
-                    <div id="gameFeedback" class="game-feedback"></div>
-                    <div id="gameScore" class="game-score">Score: 0 / 20</div>
+            <section class="about-section">
+                <h2>Learn More About Us</h2>
+                <div class="about-card">
+                    <h3>Explore Cybercrime e-Laws</h3>
+                    <p>Discover how Contra E-Crime empowers users to understand cybercrime laws with ease through our platform, Weigh the Right.</p>
+                    <a href="CyberSmartTrivia.html" class="about-button">Take the CyberSmart Trivia Challenge</a>
                 </div>
             </section>
 
@@ -1925,11 +1833,34 @@
 
                 console.log('Updating UI - Total Login Events:', dailyLoginUsers, 'Active Users:', activeUsers);
 
-                document.getElementById('dailyLoginUsers').textContent = dailyLoginUsers.toString().padStart(3, '0');
-                document.getElementById('activeUsers').textContent = activeUsers.toString().padStart(3, '0');
+                const dailyLoginElement = document.getElementById('dailyLoginUsers');
+                const activeUsersElement = document.getElementById('activeUsers');
+
+                animateCount(dailyLoginElement, parseInt(dailyLoginElement.textContent), dailyLoginUsers);
+                animateCount(activeUsersElement, parseInt(activeUsersElement.textContent), activeUsers);
             } catch (error) {
                 console.error('Error updating user counts:', error);
             }
+        }
+
+        function animateCount(element, start, end) {
+            const duration = 1000;
+            const stepTime = 50;
+            const steps = duration / stepTime;
+            const increment = (end - start) / steps;
+            let current = start;
+            let step = 0;
+
+            const timer = setInterval(() => {
+                step++;
+                current += increment;
+                element.textContent = Math.round(current).toString().padStart(3, '0');
+
+                if (step >= steps) {
+                    element.textContent = end.toString().padStart(3, '0');
+                    clearInterval(timer);
+                }
+            }, stepTime);
         }
 
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
@@ -2237,7 +2168,7 @@
             }
         });
 
-        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item, .game-card');
+        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item, .about-card');
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -2254,146 +2185,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             console.log('Page loaded, updating user counts');
             await updateUserCounts();
-        });
-
-        const questions = [
-            {
-                question: "Name five mobile or web applications where users can share or post videos",
-                answers: ["tiktok", "youtube", "facebook", "instagram", "kumu", "snapchat", "threads", "bigo", "discord", "twitter"]
-            },
-            {
-                question: "List five types of devices capable of connecting to the internet",
-                answers: ["computer", "phone", "tablet", "laptop", "smart tv", "watch", "game console", "smart speaker", "camera", "router"]
-            },
-            {
-                question: "Identify five government agencies responsible for addressing or investigating cybercrime",
-                answers: ["pnp", "nbi", "doj", "dost", "ntc", "deped", "dilg", "pnp-acg", "cybercrime unit", "diCT"]
-            },
-            {
-                question: "List five professions or roles that contribute to preventing or combating cybercrime",
-                answers: ["police", "cybercrime investigator", "lawyer", "teacher", "programmer", "security expert", "hacker", "judge", "IT specialist", "government agent"]
-            },
-            {
-                question: "Name five types of personal or sensitive information that can be stolen through online activities",
-                answers: ["password", "money", "name", "photos", "account", "email", "address", "credit card", "files", "identity"]
-            },
-            {
-                question: "Identify five countries recognized for their strong cybersecurity capabilities or expertise",
-                answers: ["usa", "israel", "uk", "japan", "south korea", "germany", "australia", "canada", "france", "china"]
-            },
-            {
-                question: "List five words closely related to or associated with the concept of 'law'",
-                answers: ["law", "rules", "crime", "court", "judge", "rights", "legal", "illegal", "punish", "case"]
-            },
-            {
-                question: "Name five cybercrime-related terms that end with the letter 'g'",
-                answers: ["hacking", "phishing", "scamming", "spamming", "bullying", "stealing", "cheating", "posting", "leaking", "threatening"]
-            },
-            {
-                question: "List five terms related to online dangers or risks that end with the letter 'y'",
-                answers: ["privacy", "bully", "identity", "piracy", "spy", "phoney", "phony", "security", "anonymity", "emergency"]
-            },
-        ];
-
-        let currentQuestionIndex = -1;
-        let correctAnswers = [];
-        let score = 0;
-        let gameStarted = false;
-
-        const gameQuestion = document.getElementById('gameQuestion');
-        const gameInstruction = document.getElementById('gameInstruction');
-        const gameInput = document.getElementById('gameInput');
-        const gameButton = document.getElementById('gameButton');
-        const gameFeedback = document.getElementById('gameFeedback');
-        const gameScore = document.getElementById('gameScore');
-
-        function isAnswerCloseEnough(userAnswer, validAnswer) {
-            // Simple fuzzy matching: check if user answer contains part of valid answer or vice versa
-            return userAnswer.includes(validAnswer) || validAnswer.includes(userAnswer) ||
-                   userAnswer.replace(/\s/g, '').includes(validAnswer.replace(/\s/g, '')) ||
-                   validAnswer.toLowerCase().startsWith(userAnswer.toLowerCase().charAt(0));
-        }
-
-        function loadNextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex >= questions.length) {
-                gameQuestion.textContent = "Game Over!";
-                gameInstruction.textContent = `You completed all questions! Final Score: ${score}/${questions.length}`;
-                gameInput.style.display = 'none';
-                gameButton.style.display = 'none';
-                gameFeedback.textContent = '';
-                gameScore.textContent = `Final Score: ${score}/${questions.length}`;
-                return;
-            }
-
-            correctAnswers = [];
-            gameQuestion.textContent = questions[currentQuestionIndex].question;
-            gameInstruction.textContent = `Type one answer at a time and press Submit. Get 5 correct answers to move to the next question! (${correctAnswers.length}/5)`;
-            gameInput.value = '';
-            gameFeedback.textContent = '';
-            gameInput.style.display = 'block';
-            gameButton.textContent = 'Submit';
-        }
-
-        gameButton.addEventListener('click', () => {
-            if (!gameStarted) {
-                gameStarted = true;
-                gameButton.textContent = 'Submit';
-                loadNextQuestion();
-                return;
-            }
-
-            const userAnswer = gameInput.value.trim().toLowerCase();
-            if (!userAnswer) {
-                gameFeedback.textContent = 'Please enter an answer!';
-                gameFeedback.classList.remove('correct', 'incorrect');
-                return;
-            }
-
-            const currentQuestion = questions[currentQuestionIndex];
-            let isCorrect = false;
-            let matchedAnswer = '';
-
-            // Check for exact or close match
-            for (let validAnswer of currentQuestion.answers) {
-                if (userAnswer === validAnswer || isAnswerCloseEnough(userAnswer, validAnswer)) {
-                    if (!correctAnswers.includes(validAnswer)) {
-                        isCorrect = true;
-                        matchedAnswer = validAnswer;
-                        break;
-                    }
-                }
-            }
-
-            if (isCorrect) {
-                correctAnswers.push(matchedAnswer);
-                gameFeedback.textContent = `Correct! ${matchedAnswer} is accepted. (${correctAnswers.length}/5)`;
-                gameFeedback.classList.add('correct');
-                gameFeedback.classList.remove('incorrect');
-            } else if (correctAnswers.includes(userAnswer)) {
-                gameFeedback.textContent = 'You already submitted this answer!';
-                gameFeedback.classList.remove('correct', 'incorrect');
-            } else {
-                gameFeedback.textContent = 'Not quite right. Try another answer!';
-                gameFeedback.classList.add('incorrect');
-                gameFeedback.classList.remove('correct');
-            }
-
-            gameInput.value = '';
-            gameInstruction.textContent = `Type one answer at a time and press Submit. Get 5 correct answers to move to the next question! (${correctAnswers.length}/5)`;
-
-            if (correctAnswers.length >= 5) {
-                score++;
-                gameScore.textContent = `Score: ${score}/${questions.length}`;
-                gameFeedback.textContent = 'Great job! Moving to the next question...';
-                setTimeout(loadNextQuestion, 1000);
-            }
-        });
-
-        gameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && gameStarted) {
-                gameButton.click();
-            }
+            setInterval(updateUserCounts, 60000);
         });
     </script>
 </body>
