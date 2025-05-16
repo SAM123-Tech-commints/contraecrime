@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contra E-Crime</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -877,10 +877,24 @@
             text-align: center;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
             border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/diagonal-noise.png');
+            opacity: 0.1;
+            z-index: 0;
         }
 
         .about-section h2 {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 36px;
             font-weight: 700;
             color: #8B0000;
@@ -888,25 +902,39 @@
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s forwards;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
         }
 
         .about-card {
             max-width: 900px;
             margin: 0 auto;
             padding: 40px;
-            background: #fff;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+            border: 2px solid #8B0000;
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
             position: relative;
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.3s ease;
             overflow: hidden;
+            animation: neonGlow 2s infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(139, 0, 0, 0.5), 0 0 20px rgba(139, 0, 0, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(139, 0, 0, 0.8), 0 0 30px rgba(139, 0, 0, 0.5);
+            }
         }
 
         .about-card:hover {
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
         }
 
         .about-card.visible {
@@ -917,39 +945,54 @@
         .about-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), rgba(215, 177, 92, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, transparent 70%);
+            transform: rotate(45deg);
             z-index: 0;
+            transition: opacity 0.3s ease;
         }
 
         .about-card:hover::before {
-            opacity: 1;
+            opacity: 0.5;
         }
 
         .about-card h3 {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 28px;
             font-weight: 700;
-            color: #222;
+            color: #fff;
             margin-bottom: 15px;
             position: relative;
             z-index: 1;
-            background: linear-gradient(90deg, #8B0000, #b30000);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px #8B0000;
+            animation: glitchText 2s infinite;
+        }
+
+        @keyframes glitchText {
+            0% {
+                text-shadow: 0 0 10px #8B0000, 2px 0 0 #ff3333, -2px 0 0 #33ffcc;
+            }
+            2% {
+                text-shadow: 0 0 10px #8B0000, -2px 0 0 #ff3333, 2px 0 0 #33ffcc;
+            }
+            4% {
+                text-shadow: none;
+            }
+            100% {
+                text-shadow: none;
+            }
         }
 
         .about-card p {
             font-family: 'Poppins', sans-serif;
             font-size: 16px;
             font-weight: 300;
-            color: #555;
+            color: #ccc;
             margin-bottom: 30px;
             line-height: 1.7;
             position: relative;
@@ -963,51 +1006,67 @@
             padding: 15px 40px;
             background: linear-gradient(90deg, #8B0000, #b30000);
             color: #fff;
-            border: none;
+            border: 2px solid #ff3333;
             border-radius: 50px;
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 18px;
             font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
             position: relative;
             z-index: 1;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+            animation: pulseButton 1.5s infinite;
+        }
+
+        @keyframes pulseButton {
+            0% {
+                box-shadow: 0 0 15px rgba(139, 0, 0, 0.5), 0 0 25px rgba(139, 0, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(139, 0, 0, 0.8), 0 0 35px rgba(139, 0, 0, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(139, 0, 0, 0.5), 0 0 25px rgba(139, 0, 0, 0.3);
+            }
         }
 
         .about-button:hover {
-            background: linear-gradient(90deg, #b30000, #d7b15c);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.3);
+            background: linear-gradient(90deg, #ff3333, #ff6666);
+            border-color: #33ffcc;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.8);
         }
 
         .about-button:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
+            transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.5);
         }
 
         .dark-theme .about-section {
-            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+            background: linear-gradient(180deg, rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.6));
         }
 
         .dark-theme .about-section h2 {
             color: #d7b15c;
+            text-shadow: 0 0 10px rgba(215, 177, 92, 0.5);
         }
 
         .dark-theme .about-card {
-            background: #333;
+            background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+            border-color: #d7b15c;
         }
 
         .dark-theme .about-card::before {
-            background: linear-gradient(135deg, rgba(215, 177, 92, 0.1), rgba(139, 0, 0, 0.1));
+            background: radial-gradient(circle, rgba(215, 177, 92, 0.2) 0%, transparent 70%);
         }
 
         .dark-theme .about-card h3 {
-            background: linear-gradient(90deg, #d7b15c, #b89a47);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+            color: #d7b15c;
+            text-shadow: 0 0 10px #d7b15c;
         }
 
         .dark-theme .about-card p {
@@ -1016,12 +1075,14 @@
 
         .dark-theme .about-button {
             background: linear-gradient(90deg, #d7b15c, #b89a47);
-            color: #222;
+            border-color: #33ffcc;
+            color: #121212;
         }
 
         .dark-theme .about-button:hover {
-            background: linear-gradient(90deg, #b89a47, #8B0000);
-            box-shadow: 0 8px 20px rgba(215, 177, 92, 0.3);
+            background: linear-gradient(90deg, #33ffcc, #66ffcc);
+            border-color: #ff3333;
+            box-shadow: 0 0 30px rgba(51, 255, 204, 0.8);
         }
 
         .leaders-section {
@@ -1331,6 +1392,23 @@
             .careers-card h2 {
                 font-size: 28px;
             }
+
+            .about-card {
+                padding: 30px;
+            }
+
+            .about-card h3 {
+                font-size: 24px;
+            }
+
+            .about-card p {
+                font-size: 14px;
+            }
+
+            .about-button {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1391,6 +1469,23 @@
             .growth-grid,
             .leaders-grid {
                 gap: 30px;
+            }
+
+            .about-card {
+                padding: 25px;
+            }
+
+            .about-card h3 {
+                font-size: 22px;
+            }
+
+            .about-card p {
+                font-size: 13px;
+            }
+
+            .about-button {
+                padding: 10px 25px;
+                font-size: 14px;
             }
         }
 
@@ -1582,12 +1677,12 @@
             }
 
             .about-card p {
-                font-size: 14px;
+                font-size: 12px;
             }
 
             .about-button {
-                padding: 12px 30px;
-                font-size: 16px;
+                padding: 10px 20px;
+                font-size: 14px;
             }
 
             .leader-item img {
@@ -1633,7 +1728,8 @@
                 <li>
                     <a href="History.html">
                         <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
-                        Search                </a>
+                        Search
+                    </a>
                 </li>
                 <li>
                     <a href="ContactUs.html">
@@ -1773,9 +1869,9 @@
             <section class="about-section">
                 <h2>Learn More About Us</h2>
                 <div class="about-card">
-                    <h3>Explore Cybercrime e-Laws</h3>
-                    <p>Discover how Contra E-Crime empowers users to understand cybercrime laws with ease through our platform, Weigh the Right.</p>
-                    <a href="Game.html" class="about-button">Take the CyberSmart Trivia Challenge</a>
+                    <h3>Cybercrime e-Laws Mission</h3>
+                    <p>Dive into Contra E-Crime's mission to make cybercrime laws accessible and fun through Weigh the Right. Test your knowledge now!</p>
+                    <a href="Game.html" class="about-button">Play CyberSmart Trivia</a>
                 </div>
             </section>
 
@@ -2176,7 +2272,7 @@
                 database.ref(`users/${sanitizedEmail}`).update({
                     borderType: borderType,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
+                                    })
                 .catch(error => {
                     console.error('Error saving border type:', error);
                     alert('Failed to save border type: ' + error.message);
@@ -2186,66 +2282,55 @@
             }
         });
 
-        if (localStorage.getItem('darkTheme') === 'enabled') {
+        themeToggle.addEventListener('change', () => {
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('darkTheme', body.classList.contains('dark-theme'));
+        });
+
+        if (localStorage.getItem('darkTheme') === 'true') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
 
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
-        });
-
-        mobileMenuIcon.addEventListener('click', function() {
+        mobileMenuIcon.addEventListener('click', () => {
             sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
             }
         });
 
-        document.querySelectorAll('a[href]').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-                    
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-                    
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
-        });
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
 
-        const items = document.querySelectorAll('.timeline-item, .growth-item, .careers-card, .leader-item, .about-card');
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
+        function handleScroll() {
+            const elements = document.querySelectorAll('.timeline-item, .growth-item, .leader-item, .careers-card');
+            elements.forEach((el) => {
+                if (isElementInViewport(el)) {
+                    el.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1 });
+        }
 
-        items.forEach(item => {
-            observer.observe(item);
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', handleScroll);
+
+        window.addEventListener('load', () => {
+            loaderOverlay.classList.remove('active');
+            updateUserCounts();
         });
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log('Page loaded, updating user counts');
-            await updateUserCounts();
-            setInterval(updateUserCounts, 60000);
+        window.addEventListener('resize', () => {
+            customizationMenu.classList.remove('active');
         });
     </script>
 </body>
