@@ -1575,8 +1575,9 @@
 
         // Next Question Button
         nextBtn.addEventListener('click', () => {
-            if (nextBtn.classList.contains('visible')) {
+            if (nextBtn.classList.contains('visible') && currentQuestion < totalQuestions) {
                 nextBtn.classList.remove('visible');
+                options.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('correct', 'wrong', 'disabled'));
                 currentQuestion++;
                 if (currentQuestion < totalQuestions) {
                     loadQuestion();
@@ -1606,10 +1607,10 @@
             const q = currentQuestionSet[currentQuestion];
             questionText.textContent = q.text;
             options.innerHTML = '';
-            q.options.forEach(opt => {
+            q.options.forEach((opt, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                btn.textContent = opt;
+                btn.textContent = `${String.fromCharCode(97 + index)}. ${opt}`; // a, b, c, d labels
                 btn.onclick = () => checkAnswer(opt === q.answer, btn, opt);
                 options.appendChild(btn);
             });
@@ -1668,12 +1669,12 @@
                 btn.classList.add('wrong');
                 sounds.wrong.play();
                 options.querySelectorAll('.option-btn').forEach(b => {
-                    if (b.textContent === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
+                    if (b.textContent.replace(/^[a-d]\.\s/, '') === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
                 });
             }
             scoreDisplay.textContent = `Score: ${score}`;
             showFeedback(userAnswer);
-            nextBtn.classList.add('visible');
+            nextBtn.classList.add('visible'); // Ensure next button is always visible after answer
         }
 
         // Show Feedback and Update Preview Questions
