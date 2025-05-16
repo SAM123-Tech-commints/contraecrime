@@ -1542,9 +1542,6 @@
                 </div>
                 <p>Find the right law for you!</p>
             </div>
-            <div id="azIndex" style="display: flex; justify-content: center; margin-bottom: 20px;">
-
-</div>
             <section class="articles">
                 <h2 id="sectionTitle">TOP ARTICLES</h2>
                 <div class="cards-container" id="cardsContainer">
@@ -2113,6 +2110,14 @@ fingerprintIcon.addEventListener('click', () => {
     setTimeout(() => {
         window.location.href = 'HomePage.html';
     }, 150);
+
+    // Option 1 (Alternative): Restart the animation instead of navigating
+    /*
+    fingerprintIcon.classList.remove('scanning', 'glow'); // Remove existing animation classes
+    void fingerprintIcon.offsetWidth; // Force reflow to restart animation
+    fingerprintIcon.classList.add('glow'); // Re-add the glow animation (or 'scanning' if preferred)
+    fingerprintIcon.style.opacity = '1'; // Ensure visibility
+    */
 });
 
 auth.onAuthStateChanged((user) => {
@@ -2493,12 +2498,6 @@ function localSearchFallback(query) {
     return { mainLaw, alternativeLaws };
 }
 
-function generateTags(text) {
-    const doc = nlp(text);
-    const nouns = doc.nouns().out('array');
-    return nouns.filter(word => word.length > 2).slice(0, 5); // Top 5 tags
-}
-
 async function fetchLawsFromAI(query) {
     try {
         const normalizedQuery = normalizeQuery(query);
@@ -2529,7 +2528,7 @@ async function fetchLawsFromAI(query) {
             per_page: 5,
             typo_tokens_threshold: 1,
             num_typos: 2,
-            include_fields: 'title,description,scenario,category,tags,first_letter',
+            include_fields: 'title,description,scenario',
             sort_by: '_text_match:desc',
             prefix: true,
             infix: 'always',
@@ -2537,8 +2536,7 @@ async function fetchLawsFromAI(query) {
             locale: 'auto',
             synonyms: true,
             phrase_match: true,
-            split_join_tokens: 'always',
-            facet_by: 'category,tags,first_letter'
+            split_join_tokens: 'always' // Enable keyword splitting
         };
 
         const results = await client.collections('laws').documents().search(searchParameters);
@@ -2575,7 +2573,7 @@ async function fetchLawsFromAI(query) {
             alternativeLaws.push(availableLaws[randomIndex]);
         }
 
-        const result = { mainLaw, alternativeLaws, facet_counts: results.facet_counts };
+        const result = { mainLaw, alternativeLaws };
         searchCache.set(normalizedQuery, result);
         if (searchCache.size > 50) {
             const oldestKey = searchCache.keys().next().value;
@@ -2587,88 +2585,6 @@ async function fetchLawsFromAI(query) {
         console.error('Typesense search error:', error.message);
         return localSearchFallback(query);
     }
-}
-
-function renderFilters(facetCounts) {
-    const filtersContainer = document.createElement('div');
-    filtersContainer.className = 'filters-container';
-    filtersContainer.style.display = 'flex';
-    filtersContainer.style.flexWrap = 'wrap';
-    filtersContainer.style.justifyContent = 'center';
-    filtersContainer.style.marginBottom = '20px';
-
-    // A-Z Index
-    const azContainer = document.createElement('div');
-    azContainer.style.display = 'flex';
-    azContainer.style.flexWrap = 'wrap';
-    azContainer.style.gap = '5px';
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    letters.forEach(letter => {
-        const count = facetCounts.first_letter?.[letter] || 0;
-        const link = document.createElement('a');
-        link.href = '#';
-        link.textContent = letter;
-        link.style.textDecoration = 'none';
-        link.style.color = count > 0 ? 'blue' : 'gray';
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            performSearch(searchInput.value, { filter_by: `first_letter:${letter}` });
-        });
-        azContainer.appendChild(link);
-    });
-    filtersContainer.appendChild(azContainer);
-
-    // Tag Cloud
-    const tagContainer = document.createElement('div');
-    tagContainer.style.display = 'flex';
-    tagContainer.style.flexWrap = 'wrap';
-    tagContainer.style.gap = '5px';
-    const topTags = Object.entries(facetCounts.tags || {}).sort((a, b) => b[1] - a[1]).slice(0, 10);
-    topTags.forEach(([tag, count]) => {
-        const tagElement = document.createElement('span');
-        tagElement.textContent = `${tag} (${count})`;
-        tagElement.style.padding = '5px 10px';
-        tagElement.style.backgroundColor = '#eee';
-        tagElement.style.borderRadius = '5px';
-        tagElement.style.cursor = 'pointer';
-        tagElement.addEventListener('click', () => {
-            performSearch(searchInput.value, { filter_by: `tags:${tag}` });
-        });
-        tagContainer.appendChild(tagElement);
-    });
-    filtersContainer.appendChild(tagContainer);
-
-    // Category Filters
-    const categoryContainer = document.createElement('div');
-    categoryContainer.style.display = 'flex';
-    categoryContainer.style.flexWrap = 'wrap';
-    categoryContainer.style.gap = '5px';
-    const categories = Object.entries(facetCounts.category || {}).sort((a, b) => b[1] - a[1]);
-    categories.forEach(([category, count]) => {
-        const categoryElement = document.createElement('span');
-        categoryElement.textContent = `${category} (${count})`;
-        categoryElement.style.padding = '5px 10px';
-        categoryElement.style.backgroundColor = '#eee';
-        categoryElement.style.borderRadius = '5px';
-        categoryElement.style.cursor = 'pointer';
-        categoryElement.addEventListener('click', () => {
-            performSearch(searchInput.value, { filter_by: `category:${category}` });
-        });
-        categoryContainer.appendChild(categoryElement);
-    });
-    filtersContainer.appendChild(categoryContainer);
-
-    // Clear Filters Button
-    const clearButton = document.createElement('button');
-    clearButton.textContent = 'Clear Filters';
-    clearButton.style.margin = '10px';
-    clearButton.addEventListener('click', () => {
-        performSearch(searchInput.value);
-    });
-    filtersContainer.appendChild(clearButton);
-
-    // Insert filters before cardsContainer
-    cardsContainer.parentNode.insertBefore(filtersContainer, cardsContainer);
 }
 
 function renderLawCards(mainLawTitle, alternativeLawTitles) {
@@ -2832,7 +2748,7 @@ defaultCards.forEach(cardData => {
     cardsContainer.appendChild(card);
 });
 
-async function performSearch(query, filters = {}) {
+async function performSearch(query) {
     try {
         if (query) {
             fingerprintIcon.classList.add('scanning');
@@ -2849,10 +2765,9 @@ async function performSearch(query, filters = {}) {
                 });
             }
 
-            const { mainLaw, alternativeLaws, facet_counts } = await fetchLawsFromAI(query, filters);
+            const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
             if (mainLaw) {
                 renderLawCards(mainLaw, alternativeLaws);
-                renderFilters(facet_counts);
             } else {
                 cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
@@ -2880,7 +2795,7 @@ async function performSearch(query, filters = {}) {
                     <a href="News.html" class="border-button">
                         <span class="button-text">Read More</span>
                         <span class="iconer">
-                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="[invalid url, do not cite]
+                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
                             </svg>
