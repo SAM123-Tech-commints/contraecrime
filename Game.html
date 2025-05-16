@@ -414,7 +414,6 @@
             border-radius: 10px;
             font-size: 18px;
             font-weight: 600;
-            cursor: pointer; 
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin: 20px auto;
@@ -423,7 +422,8 @@
         }
         .next-btn.visible {
             display: block;
-            pointer-events: auto; 
+            pointer-events: auto;
+            cursor: pointer; /* Ensure cursor indicates clickability */
         }
         .next-btn:hover {
             transform: translateY(-3px);
@@ -831,7 +831,7 @@
                 overflow-y: auto;
                 background-size: cover;
                 background-position: center;
-                background-color: #1a1a1a;
+                background-color: #1a1 Mabron1a1a;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -929,7 +929,7 @@
                     <div class="difficulty-card" data-difficulty="medium">
                         <div class="emoji">📜📜</div>
                         <div class="label">Medium</div>
-                        <div class="description">45 seconds per question, scenario-based.</div>
+                        <div class="description">45 seconds per question, mixed easy and scenario-based.</div>
                     </div>
                     <div class="difficulty-card" data-difficulty="hard">
                         <div class="emoji">📜📜📜</div>
@@ -950,7 +950,7 @@
                 <div class="tutorial-slide" id="slide2">
                     <h3>Difficulty Levels</h3>
                     <img src="https://i.imgur.com/9uQ3L8K.png" alt="Digital Security">
-                    <p>Choose from Easy (60s), Medium (45s), or Hard (30s) difficulty. Each level adjusts the timer and question complexity.</p>
+                    <p>Choose from Easy (60s), Medium (45s, mixed questions), or Hard (30s) difficulty. Each level adjusts the timer and question complexity.</p>
                 </div>
                 <div class="tutorial-slide" id="slide3">
                     <h3>Scoring and Feedback</h3>
@@ -1171,11 +1171,11 @@
                 },
                 {
                     text: "What might happen under BIR Revenue Regulation No. 9-2001?",
-                    answer: "An online seller is penalized for filing taxes manually",
+                    answer: "An online seller is punished for filing taxes manually",
                     options: [
                         "A hacker is fined for unauthorized access",
                         "A person is imprisoned for child pornography",
-                        "An online seller is penalized for filing taxes manually",
+                        "An online seller is punished for filing taxes manually",
                         "A company is sued for data breach"
                     ]
                 },
@@ -1577,23 +1577,32 @@
 
         // Next Question Button
         nextBtn.addEventListener('click', () => {
-            if (nextBtn.classList.contains('visible') && currentQuestion < totalQuestions) {
-                nextBtn.classList.remove('visible');
-                options.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('correct', 'wrong', 'disabled'));
-                currentQuestion++;
-                if (currentQuestion < totalQuestions) {
-                    loadQuestion();
-                    startTimer();
-                } else {
-                    endQuiz();
-                }
+            if (!nextBtn.classList.contains('visible')) {
+                console.warn('Next button clicked but not visible'); // Debug log
+                return;
+            }
+            nextBtn.classList.remove('visible');
+            options.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('correct', 'wrong', 'disabled'));
+            currentQuestion++;
+            if (currentQuestion < totalQuestions) {
+                loadQuestion();
+                startTimer();
+            } else {
+                endQuiz();
             }
         });
 
         // Start Quiz Logic
         function startQuiz() {
             sounds.start.play();
-            currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
+            if (selectedDifficulty === 'medium') {
+                // Mix 5 easy and 5 medium questions
+                const easyQuestions = shuffleArray([...questions.easy]).slice(0, 5);
+                const mediumQuestions = shuffleArray([...questions.medium]).slice(0, 5);
+                currentQuestionSet = shuffleArray([...easyQuestions, ...mediumQuestions]);
+            } else {
+                currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
+            }
             loadQuestion();
             startTimer();
         }
@@ -1648,6 +1657,7 @@
                     userAnswers[currentQuestion] = { userAnswer: null };
                     showFeedback(null);
                     nextBtn.classList.add('visible');
+                    nextBtn.style.pointerEvents = 'auto';
                 }
             }, 1000);
         }
@@ -1676,7 +1686,9 @@
             }
             scoreDisplay.textContent = `Score: ${score}`;
             showFeedback(userAnswer);
-            nextBtn.classList.add('visible'); // Ensure next button is always visible after answer
+            nextBtn.classList.add('visible');
+            nextBtn.style.pointerEvents = 'auto'; // Force pointer events
+            console.log('Next button state:', nextBtn.classList, nextBtn.style.pointerEvents); // Debug log
         }
 
         // Show Feedback and Update Preview Questions
@@ -1731,3 +1743,5 @@
             gsap.from(resultModal, { opacity: 0, scale: 0.8, duration: 0.5 });
         }
     </script>
+</body>
+</html>
