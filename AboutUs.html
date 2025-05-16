@@ -491,7 +491,7 @@
             .avatar-loading .loader {
                 width: 15px;
                 height: 15px;
-                border-width: 2pxTemple;
+                border-width: 2px;
             }
 
             .customization-options {
@@ -884,7 +884,7 @@
             font-size: 36px;
             font-weight: 700;
             color: #8B0000;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1s forwards;
@@ -896,11 +896,17 @@
             padding: 40px;
             background: #fff;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             position: relative;
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .about-card:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
         }
 
         .about-card.visible {
@@ -908,40 +914,77 @@
             transform: translateY(0);
         }
 
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), rgba(215, 177, 92, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .about-card:hover::before {
+            opacity: 1;
+        }
+
         .about-card h3 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: #222;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(90deg, #8B0000, #b30000);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
 
         .about-card p {
             font-family: 'Poppins', sans-serif;
             font-size: 16px;
             font-weight: 300;
-            color: #666;
-            margin-bottom: 20px;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .about-button {
-            padding: 12px 30px;
+            padding: 15px 40px;
             background: linear-gradient(90deg, #8B0000, #b30000);
             color: #fff;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: 18px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            position: relative;
+            z-index: 1;
         }
 
         .about-button:hover {
+            background: linear-gradient(90deg, #b30000, #d7b15c);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .about-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
         }
 
         .dark-theme .about-section {
@@ -956,8 +999,15 @@
             background: #333;
         }
 
+        .dark-theme .about-card::before {
+            background: linear-gradient(135deg, rgba(215, 177, 92, 0.1), rgba(139, 0, 0, 0.1));
+        }
+
         .dark-theme .about-card h3 {
-            color: #e0e0e0;
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
 
         .dark-theme .about-card p {
@@ -967,6 +1017,11 @@
         .dark-theme .about-button {
             background: linear-gradient(90deg, #d7b15c, #b89a47);
             color: #222;
+        }
+
+        .dark-theme .about-button:hover {
+            background: linear-gradient(90deg, #b89a47, #8B0000);
+            box-shadow: 0 8px 20px rgba(215, 177, 92, 0.3);
         }
 
         .leaders-section {
@@ -1528,6 +1583,11 @@
 
             .about-card p {
                 font-size: 14px;
+            }
+
+            .about-button {
+                padding: 12px 30px;
+                font-size: 16px;
             }
 
             .leader-item img {
