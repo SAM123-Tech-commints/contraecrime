@@ -201,7 +201,7 @@
         }
         .quiz-section {
             position: relative;
-            z-index: 1000;
+            z-index: 1000; /* Ensure quiz section is above particles-js */
             max-width: 900px;
             margin: 0 auto;
             background: #fff;
@@ -231,7 +231,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            z-index: 0; /* Behind quiz content */
         }
         .progress-container {
             width: 100%;
@@ -436,8 +436,8 @@
             padding: 20px;
             background: #f0f0f0;
             border-radius: 10px;
-            height: 120px;
-            overflow: hidden;
+            max-height: 150px;
+            overflow-y: auto;
         }
         .preview-questions h3 {
             font-size: 1.3em;
@@ -681,34 +681,21 @@
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        .result-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
+        .result-summary div {
+            margin: 10px 0;
         }
-        .result-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            margin-right: 10px;
-            transition: transform 0.5s ease, background-color 0.5s ease;
+        .result-summary .question {
+            font-weight: 600;
+            color: #1e3c72;
         }
-        .result-circle.correct {
-            background: linear-gradient(45deg, #28a745, #20c997);
+        .result-summary .user-answer {
+            color: #333;
         }
-        .result-circle.wrong {
-            background: linear-gradient(45deg, #dc3545, #ff6b6b);
+        .result-summary .correct-answer {
+            color: #2ecc71;
         }
-        .result-item:hover .result-circle {
-            transform: scale(1.1);
+        .result-summary .time-taken {
+            color: #e74c3c;
         }
         .result-stats {
             text-align: left;
@@ -719,50 +706,6 @@
         }
         .result-stats div {
             margin: 5px 0;
-        }
-        .pause-logo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            cursor: pointer;
-            z-index: 1001;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            display: none;
-        }
-        .pause-logo:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-        .pause-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .pause-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .pause-text {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1002;
         }
         @keyframes zoomIn {
             from { opacity: 0; transform: scale(0.8); }
@@ -802,6 +745,7 @@
         .dark-theme .result-modal-content h3 { color: #d8dbe0; }
         .dark-theme .result-modal-content p { color: #b0b0b0; }
         .dark-theme .result-summary { background: #444; }
+        .dark-theme .result-summary .question { color: #d8dbe0; }
         .dark-theme .preview-questions { background: #444; }
         .dark-theme .preview-questions h3 { color: #d8dbe0; }
         .dark-theme .past-question { background: #555; }
@@ -966,14 +910,10 @@
                 </div>
                 <button class="next-btn" id="nextBtn">Next Question</button>
                 <div class="preview-questions" id="previewQuestions">
-                    <h3>Previous Question</h3>
+                    <h3>Preview Questions</h3>
                     <div id="pastQuestionsList"></div>
                 </div>
                 <div class="score" id="score">Score: 0</div>
-                <div class="pause-overlay" id="pauseOverlay">
-                    <img src="https://i.imgur.com/Dccn8pc.png" class="pause-logo" id="pauseLogo" alt="Pause/Resume">
-                    <span class="pause-text" id="pauseText">Paused</span>
-                </div>
             </section>
         </main>
         <div class="start-modal" id="startModal">
@@ -1008,7 +948,7 @@
                 <div class="tutorial-slide" id="slide1">
                     <h3>Welcome to the Quiz!</h3>
                     <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book">
-                    <p>This quiz will test your knowledge of cybercrime laws in the Philippines. Answer questions based on the laws provided.</p>
+                    <p>This quiz will test your knowledge of cybercrime laws or even terms in the Philippines or in the World. Answer questions based on the laws provided.</p>
                 </div>
                 <div class="tutorial-slide" id="slide2">
                     <h3>Difficulty Levels</h3>
@@ -1456,14 +1396,11 @@
         const tutorialDots = document.querySelectorAll('.tutorial-dot');
         const tutorialPrev = document.getElementById('tutorialPrev');
         const tutorialNext = document.getElementById('tutorialNext');
-        const pauseOverlay = document.getElementById('pauseOverlay');
-        const pauseLogo = document.getElementById('pauseLogo');
-        const pauseText = document.getElementById('pauseText');
 
         // State Variables
         let currentQuestion = 0;
         let score = 0;
-        let timeLeft = 0;
+        let timeLeft = 45;
         let timerInterval;
         let selectedDifficulty = null;
         const totalQuestions = 10;
@@ -1471,7 +1408,6 @@
         let timeTakenPerQuestion = [];
         let currentQuestionSet = [];
         let currentSlide = 1;
-        let isPaused = false;
 
         // Sound Effects
         const sounds = {
@@ -1539,24 +1475,6 @@
             });
         });
 
-        // Pause/Resume Functionality
-        pauseLogo.addEventListener('click', () => {
-            isPaused = !isPaused;
-            pauseText.textContent = isPaused ? 'Paused' : 'Resumed';
-            pauseOverlay.classList.toggle('active', isPaused);
-            if (isPaused) {
-                clearInterval(timerInterval);
-                options.querySelectorAll('.option-btn').forEach(btn => btn.classList.add('disabled'));
-                nextBtn.classList.remove('visible');
-                nextBtn.style.display = 'none';
-                sounds.wrong.play();
-            } else {
-                startTimer();
-                options.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('disabled'));
-                sounds.start.play();
-            }
-        });
-
         // Tutorial Navigation
         function showSlide(slideNumber) {
             tutorialSlides.forEach(slide => slide.classList.remove('active'));
@@ -1578,289 +1496,274 @@
             if (currentSlide > 1) showSlide(currentSlide - 1);
         });
 
-        tutorialNext.addEventListener('click', () => {
-            if (currentSlide < 3) showSlide(currentSlide + 1);
-        });
+tutorialNext.addEventListener('click', () => {
+    if (currentSlide < 3) showSlide(currentSlide + 1);
+});
 
-        // Tutorial Button
-        tutorialBtn.addEventListener('click', () => {
-            startModal.style.display = 'none';
-            if (localStorage.getItem('dontShowTutorial') === 'true' && dontShowAgain.checked) {
-                startQuiz();
-            } else {
-                tutorialModal.style.display = 'flex';
-                showSlide(1);
-            }
-        });
+// Tutorial Button
+tutorialBtn.addEventListener('click', () => {
+    startModal.style.display = 'none';
+    if (localStorage.getItem('dontShowTutorial') === 'true' && dontShowAgain.checked) {
+        startQuiz();
+    } else {
+        tutorialModal.style.display = 'flex';
+        showSlide(1);
+    }
+});
 
-        // Back to Difficulty Selection
-        backBtn.addEventListener('click', () => {
-            tutorialModal.style.display = 'none';
-            startModal.style.display = 'flex';
-        });
+// Back to Difficulty Selection
+backBtn.addEventListener('click', () => {
+    tutorialModal.style.display = 'none';
+    startModal.style.display = 'flex';
+});
 
-        // Start Quiz
-        startQuizBtn.addEventListener('click', () => {
-            if (dontShowAgain.checked) {
-                localStorage.setItem('dontShowTutorial', 'true');
-            }
-            tutorialModal.style.display = 'none';
-            startQuiz();
-        });
+// Start Quiz
+startQuizBtn.addEventListener('click', () => {
+    if (dontShowAgain.checked) {
+        localStorage.setItem('dontShowTutorial', 'true');
+    }
+    tutorialModal.style.display = 'none';
+    startQuiz();
+});
 
-        // Shuffle Array Function
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+// Shuffle Array Function
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
-        // Start Quiz Function
-        function startQuiz() {
-            sounds.start.play();
-            if (selectedDifficulty === 'medium') {
-                const easyQuestions = shuffleArray([...questions.easy]).slice(0, 5);
-                const mediumQuestions = shuffleArray([...questions.medium]).slice(0, 5);
-                currentQuestionSet = shuffleArray([...easyQuestions, ...mediumQuestions]);
-            } else {
-                currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
-            }
-            quizSection.classList.add('visible');
-            pauseLogo.style.display = 'block';
-            loadQuestion();
-            startTimer();
-        }
+// Start Quiz Function
+function startQuiz() {
+    sounds.start.play();
+    if (selectedDifficulty === 'medium') {
+        // Mix 5 easy and 5 medium questions
+        const easyQuestions = shuffleArray([...questions.easy]).slice(0, 5);
+        const mediumQuestions = shuffleArray([...questions.medium]).slice(0, 5);
+        currentQuestionSet = shuffleArray([...easyQuestions, ...mediumQuestions]);
+    } else {
+        currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
+    }
+    quizSection.classList.add('visible');
+    loadQuestion();
+    startTimer();
+}
 
-        // Load Question
-        function loadQuestion() {
-            const question = currentQuestionSet[currentQuestion];
-            questionText.textContent = question.text;
-            options.innerHTML = '';
-            question.options.forEach((option, index) => {
-                const btn = document.createElement('button');
-                btn.classList.add('option-btn');
-                btn.innerHTML = `${String.fromCharCode(97 + index)}. ${option}`;
-                btn.addEventListener('click', () => checkAnswer(option === question.answer, btn, option));
-                options.appendChild(btn);
-            });
-            progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
-            progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
-            pastQuestionsList.innerHTML = currentQuestion > 0 ? `
-                <div class="past-question">
-                    <div class="question">Q${currentQuestion}: ${userAnswers[currentQuestion - 1].question}</div>
-                    <div class="user-answer">Your Answer: ${userAnswers[currentQuestion - 1].userAnswer}</div>
-                    <div class="correct-answer">Correct Answer: ${userAnswers[currentQuestion - 1].correctAnswer}</div>
-                </div>
-            ` : '';
-        }
+// Load Question
+function loadQuestion() {
+    const question = currentQuestionSet[currentQuestion];
+    questionText.textContent = question.text;
+    options.innerHTML = '';
+    question.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.classList.add('option-btn');
+        btn.innerHTML = `${String.fromCharCode(97 + index)}. ${option}`;
+        btn.addEventListener('click', () => checkAnswer(option === question.answer, btn, option));
+        options.appendChild(btn);
+    });
+    progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
+    progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
+    pastQuestionsList.innerHTML = userAnswers.map((ans, idx) => `
+        <div class="past-question">
+            <div class="question">Q${idx + 1}: ${ans.question}</div>
+            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
+            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+        </div>
+    `).join('');
+}
 
-        // Start Timer
-        function startTimer() {
-            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
-            timerText.textContent = timeLeft;
-            const totalTime = timeLeft;
-            timerCircle.style.strokeDashoffset = 0;
-            timerInterval = setInterval(() => {
-                if (!isPaused) {
-                    timeLeft--;
-                    timerText.textContent = timeLeft;
-                    const offset = 188 * (1 - timeLeft / totalTime);
-                    timerCircle.style.strokeDashoffset = offset;
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        checkAnswer(false, null, 'Time Out');
-                    }
-                }
-            }, 1000);
-        }
-
-        // Check Answer
-        function checkAnswer(isCorrect, btn, userAnswer) {
-            if (isPaused) return;
+// Start Timer
+function startTimer() {
+    timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+    timerText.textContent = timeLeft;
+    const totalTime = timeLeft;
+    timerCircle.style.strokeDashoffset = 0;
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerText.textContent = timeLeft;
+        const offset = 188 * (1 - timeLeft / totalTime);
+        timerCircle.style.strokeDashoffset = offset;
+        if (timeLeft <= 0) {
             clearInterval(timerInterval);
-            userAnswers[currentQuestion] = {
-                question: currentQuestionSet[currentQuestion].text,
-                correctAnswer: currentQuestionSet[currentQuestion].answer,
-                userAnswer: userAnswer
-            };
-            timeTakenPerQuestion[currentQuestion] = (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30) - timeLeft;
-            options.querySelectorAll('.option-btn').forEach(b => b.classList.add('disabled'));
-            if (isCorrect) {
-                score += 10;
-                btn.classList.add('correct');
-                sounds.correct.play();
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-            } else {
-                btn && btn.classList.add('wrong');
-                sounds.wrong.play();
-                options.querySelectorAll('.option-btn').forEach(b => {
-                    if (b.textContent.replace(/^[a-d]\.\s/, '') === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
-                });
-            }
-            scoreDisplay.textContent = `Score: ${score}`;
-            showFeedback(userAnswer);
-            nextBtn.classList.add('visible');
-            nextBtn.style.display = 'block';
-            nextBtn.style.pointerEvents = 'auto';
-            nextBtn.style.cursor = 'pointer';
-            nextBtn.style.opacity = '1';
-            console.log('Next button state:', {
-                classList: nextBtn.classList.toString(),
-                pointerEvents: nextBtn.style.pointerEvents,
-                display: nextBtn.style.display,
-                zIndex: nextBtn.style.zIndex,
-                opacity: nextBtn.style.opacity
-            });
-            setTimeout(() => {
-                nextBtn.classList.add('visible');
-                nextBtn.style.display = 'block';
-                nextBtn.style.pointerEvents = 'auto';
-                nextBtn.style.cursor = 'pointer';
-                console.log('Next button styles reapplied');
-            }, 100);
+            checkAnswer(false, null, 'Time Out');
         }
+    }, 1000);
+}
 
-        // Show Feedback
-        function showFeedback(userAnswer) {
-            pastQuestionsList.innerHTML = currentQuestion > 0 ? `
-                <div class="past-question">
-                    <div class="question">Q${currentQuestion}: ${userAnswers[currentQuestion - 1].question}</div>
-                    <div class="user-answer">Your Answer: ${userAnswers[currentQuestion - 1].userAnswer}</div>
-                    <div class="correct-answer">Correct Answer: ${userAnswers[currentQuestion - 1].correctAnswer}</div>
-                </div>
-            ` : '';
-        }
-
-        // Next Button
-        nextBtn.addEventListener('click', (e) => {
-            if (!nextBtn.classList.contains('visible')) {
-                console.warn('Next button clicked but not visible. Event ignored.', {
-                    classList: nextBtn.classList.toString(),
-                    pointerEvents: nextBtn.style.pointerEvents,
-                    target: e.target
-                });
-                return;
-            }
-            if (isPaused) return;
-            console.log('Next button clicked successfully');
-            nextBtn.classList.remove('visible');
-            nextBtn.style.display = 'none';
-            nextBtn.style.pointerEvents = 'none';
-            options.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('correct', 'wrong', 'disabled'));
-            currentQuestion++;
-            if (currentQuestion < totalQuestions) {
-                loadQuestion();
-                startTimer();
-            } else {
-                endQuiz();
-            }
+// Check Answer
+function checkAnswer(isCorrect, btn, userAnswer) {
+    clearInterval(timerInterval);
+    userAnswers[currentQuestion] = {
+        question: currentQuestionSet[currentQuestion].text,
+        correctAnswer: currentQuestionSet[currentQuestion].answer,
+        userAnswer: userAnswer
+    };
+    timeTakenPerQuestion[currentQuestion] = (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30) - timeLeft;
+    options.querySelectorAll('.option-btn').forEach(b => b.classList.add('disabled'));
+    if (isCorrect) {
+        score += 10;
+        btn.classList.add('correct');
+        sounds.correct.play();
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    } else {
+        btn && btn.classList.add('wrong');
+        sounds.wrong.play();
+        options.querySelectorAll('.option-btn').forEach(b => {
+            if (b.textContent.replace(/^[a-d]\.\s/, '') === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
         });
+    }
+    scoreDisplay.textContent = `Score: ${score}`;
+    showFeedback(userAnswer);
+    // Force button visibility and interactivity
+    nextBtn.classList.add('visible');
+    nextBtn.style.display = 'block';
+    nextBtn.style.pointerEvents = 'auto';
+    nextBtn.style.cursor = 'pointer';
+    nextBtn.style.opacity = '1';
+    console.log('Next button state:', {
+        classList: nextBtn.classList.toString(),
+        pointerEvents: nextBtn.style.pointerEvents,
+        display: nextBtn.style.display,
+        zIndex: nextBtn.style.zIndex,
+        opacity: nextBtn.style.opacity
+    });
+    // Redundancy: Reapply styles after a short delay
+    setTimeout(() => {
+        nextBtn.classList.add('visible');
+        nextBtn.style.display = 'block';
+        nextBtn.style.pointerEvents = 'auto';
+        nextBtn.style.cursor = 'pointer';
+        console.log('Next button styles reapplied');
+    }, 100);
+}
 
-        // End Quiz
-        function endQuiz() {
-            sounds.complete.play();
-            quizSection.style.display = 'none';
-            pauseLogo.style.display = 'none';
-            pauseOverlay.classList.remove('active');
-            resultModal.style.display = 'flex';
-            finalScore.textContent = score;
-            const correctAnswers = userAnswers.filter(ans => ans.userAnswer === ans.correctAnswer).length;
-            const accuracy = (correctAnswers / totalQuestions) * 100;
-            accuracyDisplay.textContent = accuracy.toFixed(2);
-            const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / totalQuestions;
-            avgTimeDisplay.textContent = avgTime.toFixed(2);
-            difficultyAnalysis.textContent = `You played on ${selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1)} mode.`;
-            
-            // Thinking Level Assessment
-            let thinkingLevelText = '';
-            if (accuracy >= 80) {
-                thinkingLevelText = 'Excellent! You demonstrate strong analytical skills in cyberlaw.';
-            } else if (accuracy >= 50) {
-                thinkingLevelText = 'Good! You have a solid understanding but could refine your knowledge.';
-            } else {
-                thinkingLevelText = 'Needs Improvement. Consider reviewing cyberlaw concepts.';
-            }
-            thinkingLevel.textContent = thinkingLevelText;
+// Show Feedback
+function showFeedback(userAnswer) {
+    pastQuestionsList.innerHTML = userAnswers.map((ans, idx) => `
+        <div class="past-question">
+            <div class="question">Q${idx + 1}: ${ans.question}</div>
+            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
+            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+        </div>
+    `).join('');
+}
 
-            // Remarks
-            let remarksText = '';
-            if (score >= 80) {
-                remarksText = 'Outstanding performance! You’re well-versed in cybercrime laws.';
-            } else if (score >= 50) {
-                remarksText = 'Good effort! Keep practicing to master the laws.';
-            } else {
-                remarksText = 'Don’t give up! Review the laws and try again.';
-            }
-            remarks.textContent = remarksText;
-
-            // Problem-Solving Skills
-            let problemSolvingText = '';
-            if (avgTime < 10) {
-                problemSolvingText = 'Fast and accurate! Your problem-solving skills are top-notch.';
-            } else if (avgTime < 20) {
-                problemSolvingText = 'Balanced approach! You solve problems effectively.';
-            } else {
-                problemSolvingText = 'Take your time to analyze questions for better results.';
-            }
-            problemSolving.textContent = problemSolvingText;
-
-            // Result Summary with Circular Indicators
-            resultSummary.innerHTML = '';
-            userAnswers.forEach((answer, index) => {
-                const isCorrect = answer.userAnswer === answer.correctAnswer;
-                const resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
-                resultItem.innerHTML = `
-                    <div class="result-circle ${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? 10 : 0}</div>
-                    <div>
-                        <strong>Question ${index + 1}:</strong> ${answer.question}<br>
-                        <strong>Your Answer:</strong> ${answer.userAnswer}<br>
-                        <strong>Correct Answer:</strong> ${answer.correctAnswer}
-                    </div>
-                `;
-                resultSummary.appendChild(resultItem);
-            });
-
-            // Confetti for High Scores
-            if (score >= 80) {
-                confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-            }
-        }
-
-        // Restart Quiz
-        restartBtn.addEventListener('click', () => {
-            resultModal.style.display = 'none';
-            quizSection.style.display = 'block';
-            currentQuestion = 0;
-            score = 0;
-            userAnswers = [];
-            timeTakenPerQuestion = [];
-            scoreDisplay.textContent = `Score: ${score}`;
-            startQuiz();
+// Next Button
+nextBtn.addEventListener('click', (e) => {
+    if (!nextBtn.classList.contains('visible')) {
+        console.warn('Next button clicked but not visible. Event ignored.', {
+            classList: nextBtn.classList.toString(),
+            pointerEvents: nextBtn.style.pointerEvents,
+            target: e.target
         });
+        return;
+    }
+    console.log('Next button clicked successfully');
+    nextBtn.classList.remove('visible');
+    nextBtn.style.display = 'none';
+    nextBtn.style.pointerEvents = 'none';
+    options.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('correct', 'wrong', 'disabled'));
+    currentQuestion++;
+    if (currentQuestion < totalQuestions) {
+        loadQuestion();
+        startTimer();
+    } else {
+        endQuiz();
+    }
+});
 
-        // Exit to Difficulty Selection
-        exitBtn.addEventListener('click', () => {
-            resultModal.style.display = 'none';
-            startModal.style.display = 'flex';
-            quizSection.style.display = 'block';
-            currentQuestion = 0;
-            score = 0;
-            userAnswers = [];
-            timeTakenPerQuestion = [];
-            scoreDisplay.textContent = `Score: ${score}`;
-            selectedDifficulty = null;
-            difficultyCards.forEach(c => c.classList.remove('selected'));
-            tutorialBtn.disabled = true;
-        });
+// End Quiz
+function endQuiz() {
+    sounds.complete.play();
+    quizSection.style.display = 'none';
+    resultModal.style.display = 'flex';
+    finalScore.textContent = score;
+    const correctAnswers = userAnswers.filter(ans => ans.userAnswer === ans.correctAnswer).length;
+    const accuracy = (correctAnswers / totalQuestions) * 100;
+    accuracyDisplay.textContent = accuracy.toFixed(2);
+    const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / totalQuestions;
+    avgTimeDisplay.textContent = avgTime.toFixed(2);
+    difficultyAnalysis.textContent = `You played on ${selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1)} difficulty.`;
+    
+    // Thinking Level
+    let thinkingLevelText = '';
+    if (accuracy >= 80) {
+        thinkingLevelText = 'Excellent critical thinking! You have a strong grasp of cybercrime laws.';
+    } else if (accuracy >= 50) {
+        thinkingLevelText = 'Good analytical skills! Consider reviewing some concepts for improvement.';
+    } else {
+        thinkingLevelText = 'Needs improvement. Focus on understanding key legal provisions.';
+    }
+    thinkingLevel.textContent = thinkingLevelText;
 
-        // Initialize Quiz
-        window.addEventListener('load', () => {
-            quizSection.style.display = 'none';
-            startModal.style.display = 'flex';
-        });
-    </script>
-</body>
-</html>
+    // Remarks
+    let remarksText = '';
+    if (score >= 80) {
+        remarksText = 'Outstanding performance! You’re well-versed in cybercrime laws.';
+    } else if (score >= 50) {
+        remarksText = 'Solid effort! A bit more practice can boost your score.';
+    } else {
+        remarksText = 'Keep studying! Review the laws to improve your understanding.';
+    }
+    remarks.textContent = remarksText;
+
+    // Problem-Solving Skills
+    let problemSolvingText = '';
+    if (avgTime < 10) {
+        problemSolvingText = 'Excellent problem-solving speed! You answer quickly and accurately.';
+    } else if (avgTime < 20) {
+        problemSolvingText = 'Good problem-solving skills! Try to answer a bit faster.';
+    } else {
+        problemSolvingText = 'Work on your speed. Practice to improve decision-making time.';
+    }
+    problemSolving.textContent = problemSolvingText;
+
+    // Detailed Results
+    resultSummary.innerHTML = userAnswers.map((ans, idx) => `
+        <div>
+            <div class="question">Q${idx + 1}: ${ans.question}</div>
+            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
+            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+            <div class="time-taken">Time Taken: ${timeTakenPerQuestion[idx]}s</div>
+        </div>
+    `).join('');
+}
+
+// Restart Quiz
+restartBtn.addEventListener('click', () => {
+    resultModal.style.display = 'none';
+    quizSection.style.display = 'block';
+    currentQuestion = 0;
+    score = 0;
+    userAnswers = [];
+    timeTakenPerQuestion = [];
+    scoreDisplay.textContent = 'Score: 0';
+    startQuiz();
+});
+
+// Exit to Difficulty Selection
+exitBtn.addEventListener('click', () => {
+    resultModal.style.display = 'none';
+    startModal.style.display = 'flex';
+    quizSection.style.display = 'block';
+    currentQuestion = 0;
+    score = 0;
+    userAnswers = [];
+    timeTakenPerQuestion = [];
+    scoreDisplay.textContent = 'Score: 0';
+    difficultyCards.forEach(c => c.classList.remove('selected'));
+    tutorialBtn.disabled = true;
+    selectedDifficulty = null;
+});
+
+// Initialize
+window.addEventListener('load', () => {
+    loaderOverlay.classList.add('active');
+    setTimeout(() => {
+        loaderOverlay.classList.remove('active');
+        startModal.style.display = 'flex';
+    }, 150);
+});
+</script>
