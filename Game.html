@@ -909,10 +909,6 @@
                     <div class="options" id="options"></div>
                 </div>
                 <button class="next-btn" id="nextBtn">Next Question</button>
-                <div class="preview-questions" id="previewQuestions">
-                    <h3>Preview Questions</h3>
-                    <div id="pastQuestionsList"></div>
-                </div>
                 <div class="score" id="score">Score: 0</div>
             </section>
         </main>
@@ -1565,13 +1561,6 @@ function loadQuestion() {
     });
     progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
     progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
-    pastQuestionsList.innerHTML = userAnswers.map((ans, idx) => `
-        <div class="past-question">
-            <div class="question">Q${idx + 1}: ${ans.question}</div>
-            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
-            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
-        </div>
-    `).join('');
 }
 
 // Start Timer
@@ -1641,13 +1630,6 @@ function checkAnswer(isCorrect, btn, userAnswer) {
 
 // Show Feedback
 function showFeedback(userAnswer) {
-    pastQuestionsList.innerHTML = userAnswers.map((ans, idx) => `
-        <div class="past-question">
-            <div class="question">Q${idx + 1}: ${ans.question}</div>
-            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
-            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
-        </div>
-    `).join('');
 }
 
 // Next Button
