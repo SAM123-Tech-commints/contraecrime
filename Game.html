@@ -22,19 +22,16 @@
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
         }
-        .loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
+        .loader-overlay { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background-color: rgba(0, 0, 0, 0.7); 
+            display: flex; justify-content: center; 
+            align-items: center; 
+            z-index: 9999; 
+            opacity: 0; 
+            pointer-events: none; 
             transition: opacity 0.3s ease;
         }
         .loader-overlay.active { opacity: 1; pointer-events: all; }
@@ -354,6 +351,9 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            text-align: left;
+            display: flex;
+            align-items: center;
         }
         .option-btn::before {
             content: '';
@@ -406,6 +406,12 @@
             pointer-events: none;
             opacity: 0.6;
         }
+        .option-label {
+            font-weight: bold;
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
         .next-btn {
             background: linear-gradient(135deg, #ffcc00, #e6b800);
             color: #1e3c72;
@@ -419,13 +425,33 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin: 20px auto;
             display: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .next-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+        .next-btn:hover::before {
+            left: 0;
         }
         .next-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #ffd700, #f0c107);
         }
         .next-btn.visible {
             display: block;
+        }
+        .next-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
         .past-questions {
             margin-top: 30px;
@@ -924,18 +950,18 @@
             <div class="tutorial-modal-content">
                 <div class="tutorial-slide" id="slide1">
                     <h3>Welcome to the Quiz!</h3>
-                    <img src="https://i.imgur.com/LmyboLf.png" alt="Quiz Introduction">
-                    <p>This quiz will test your knowledge of cybercrime laws in the Philippines. Answer questions based on the laws provided.</p>
+                    <img src="https://images.unsplash.com/photo-1559526324-593bc073d938?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Cyberlaw Quiz Interface">
+                    <p>Test your knowledge of Philippine cybercrime laws through interactive questions.</p>
                 </div>
                 <div class="tutorial-slide" id="slide2">
                     <h3>Difficulty Levels</h3>
-                    <img src="https://i.imgur.com/plDR615.png" alt="Difficulty Levels">
-                    <p>Choose from Easy (60s), Medium (45s), or Hard (30s) difficulty. Each level adjusts the timer and question complexity.</p>
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Difficulty Selection Screen">
+                    <p>Choose Easy (60s), Medium (45s), or Hard (30s) to match your skill level.</p>
                 </div>
                 <div class="tutorial-slide" id="slide3">
                     <h3>Scoring and Feedback</h3>
-                    <img src="https://i.imgur.com/uufEuJo.png" alt="Scoring">
-                    <p>Earn 10 points per correct answer. You'll get immediate feedback, and a detailed result at the end.</p>
+                    <img src="https://images.unsplash.com/photo-1516321318427-4b1db48a4206?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Quiz Results Screen">
+                    <p>Earn 10 points per correct answer with instant feedback and final results.</p>
                 </div>
                 <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
                 <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
@@ -997,7 +1023,6 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Initialize Particles.js
         particlesJS('particles-js', {
             particles: {
                 number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -1016,7 +1041,6 @@
             retina_detect: true
         });
 
-        // Define questions for each difficulty level
         const questions = {
             easy: [
                 {
@@ -1326,7 +1350,6 @@
             ]
         };
 
-        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1361,7 +1384,6 @@
         const tutorialPrev = document.getElementById('tutorialPrev');
         const tutorialNext = document.getElementById('tutorialNext');
 
-        // State Variables
         let currentQuestion = 0;
         let score = 0;
         let timeLeft = 45;
@@ -1373,7 +1395,6 @@
         let currentQuestionSet = [];
         let currentSlide = 1;
 
-        // Sound Effects
         const sounds = {
             start: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
             correct: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
@@ -1381,7 +1402,6 @@
             complete: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_8d1f7f1e9e.mp3'], volume: 0.5 })
         };
 
-        // Initialize Theme
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1397,7 +1417,6 @@
             }
         });
 
-        // Mobile Menu Toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -1410,7 +1429,6 @@
             }
         });
 
-        // Navigation Links with Loader
         document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:')) return;
@@ -1420,7 +1438,6 @@
             });
         });
 
-        // Difficulty Selection
         difficultyCards.forEach(card => {
             card.addEventListener('click', function() {
                 selectedDifficulty = this.dataset.difficulty;
@@ -1431,7 +1448,6 @@
             });
         });
 
-        // Tutorial Navigation
         function showSlide(slideNumber) {
             tutorialSlides.forEach(slide => slide.classList.remove('active'));
             tutorialDots.forEach(dot => dot.classList.remove('active'));
@@ -1456,7 +1472,6 @@
             if (currentSlide < 3) showSlide(currentSlide + 1);
         });
 
-        // Show Tutorial or Start Quiz
         tutorialBtn.addEventListener('click', () => {
             if (localStorage.getItem('skipTutorial') === 'true') {
                 startModal.style.display = 'none';
@@ -1476,7 +1491,6 @@
             }
         });
 
-        // Back to Difficulty Selection
         backBtn.addEventListener('click', () => {
             gsap.to(tutorialModal, {
                 opacity: 0,
@@ -1491,7 +1505,6 @@
             });
         });
 
-        // Start Quiz from Tutorial
         startQuizBtn.addEventListener('click', () => {
             if (dontShowAgain.checked) {
                 localStorage.setItem('skipTutorial', 'true');
@@ -1507,7 +1520,6 @@
             });
         });
 
-        // Restart Quiz
         restartBtn.addEventListener('click', () => {
             currentQuestion = 0;
             score = 0;
@@ -1527,8 +1539,8 @@
             }
         });
 
-        // Next Question Button
         nextBtn.addEventListener('click', () => {
+            if (!nextBtn.classList.contains('visible')) return;
             nextBtn.classList.remove('visible');
             currentQuestion++;
             if (currentQuestion < totalQuestions) {
@@ -1539,7 +1551,6 @@
             }
         });
 
-        // Start Quiz Logic
         function startQuiz() {
             sounds.start.play();
             currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
@@ -1547,7 +1558,6 @@
             startTimer();
         }
 
-        // Load Question
         function loadQuestion() {
             if (currentQuestion >= totalQuestions) {
                 endQuiz();
@@ -1558,17 +1568,23 @@
             const q = currentQuestionSet[currentQuestion];
             questionText.textContent = q.text;
             options.innerHTML = '';
-            q.options.forEach(opt => {
+            const labels = ['a', 'b', 'c', 'd'];
+            q.options.forEach((opt, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                btn.textContent = opt;
+                const labelSpan = document.createElement('span');
+                labelSpan.className = 'option-label';
+                labelSpan.textContent = `${labels[index]}.`;
+                btn.appendChild(labelSpan);
+                const textSpan = document.createElement('span');
+                textSpan.textContent = opt;
+                btn.appendChild(textSpan);
                 btn.onclick = () => checkAnswer(opt === q.answer, btn, opt);
                 options.appendChild(btn);
             });
             gsap.from('#questionBox', { opacity: 0, x: -50, duration: 0.5 });
         }
 
-        // Shuffle Array
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1577,7 +1593,6 @@
             return array;
         }
 
-        // Start Timer
         function startTimer() {
             clearInterval(timerInterval);
             let initialTime = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
@@ -1595,12 +1610,11 @@
                     clearInterval(timerInterval);
                     userAnswers[currentQuestion].userAnswer = null;
                     showFeedback(null);
-                    nextBtn.classList.add('visible');
+                    nextBtn.classList.add('visible63');
                 }
             }, 1000);
         }
 
-        // Check Answer
         function checkAnswer(isCorrect, btn, userAnswer) {
             clearInterval(timerInterval);
             userAnswers[currentQuestion] = {
@@ -1619,7 +1633,7 @@
                 btn.classList.add('wrong');
                 sounds.wrong.play();
                 options.querySelectorAll('.option-btn').forEach(b => {
-                    if (b.textContent === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
+                    if (b.children[1].textContent === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
                 });
             }
             scoreDisplay.textContent = `Score: ${score}`;
@@ -1627,7 +1641,6 @@
             nextBtn.classList.add('visible');
         }
 
-        // Show Feedback and Update Past Questions
         function showFeedback(userAnswer) {
             const pastQuestion = userAnswers[currentQuestion];
             const div = document.createElement('div');
@@ -1641,7 +1654,6 @@
             pastQuestionsList.scrollTop = pastQuestionsList.scrollHeight;
         }
 
-        // End Quiz
         function endQuiz() {
             sounds.complete.play();
             confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
@@ -1667,3 +1679,5 @@
             gsap.from(resultModal, { opacity: 0, scale: 0.8, duration: 0.5 });
         }
     </script>
+</body>
+</html>
