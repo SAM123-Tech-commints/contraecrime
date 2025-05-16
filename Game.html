@@ -431,58 +431,35 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
-        .effects-container {
+        .preview-questions {
             margin-top: 30px;
             padding: 20px;
             background: #f0f0f0;
             border-radius: 10px;
             max-height: 150px;
             overflow-y: auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
         }
-        .effects-container h3 {
+        .preview-questions h3 {
             font-size: 1.3em;
             color: #1e3c72;
             margin-bottom: 15px;
-            width: 100%;
-            text-align: center;
         }
-        .effect-btn {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
+        .past-question {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #fff;
             border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
         }
-        .effect-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        .past-question .question {
+            font-weight: 600;
+            color: #1e3c72;
         }
-        .effect-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .past-question .user-answer {
+            color: #333;
         }
-        .effect-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.3s ease;
-        }
-        .effect-btn:hover::before {
-            left: 0;
+        .past-question .correct-answer {
+            color: #2ecc71;
         }
         .score {
             font-size: 1.5em;
@@ -769,383 +746,8 @@
         .dark-theme .result-modal-content p { color: #b0b0b0; }
         .dark-theme .result-summary { background: #444; }
         .dark-theme .result-summary .question { color: #d8dbe0; }
-        .dark-theme .effects-container { background: #444; }
-        .dark-theme .effects-container h3 { color: #d8dbe0; }
-        .dark-theme .result-stats { background: #1a3c3e; }
-        .dark-theme .result-stats div { color: #d8dbe0; }
-        .mobile-nav {
-            display: none;
-            background-image: url('https://i.imgur.com/bNRxAhZ.png');
-            padding: 15px;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        .mobile-nav .logo {
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .mobile-nav .menu-icon {
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            position: absolute;
-            right: 15px;
-            top: 15px;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 15px 30px;
-            text-align: center;
-            margin-left: 290px;
-            z-index: 1;
-            transition: margin-left 0.3s ease;
-        }
-        footer p { margin: 0; font-size: 14px; }
-        .footer-links { margin-top: 5px; }
-        .footer-links a {
-            color: #d7b15c;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 14px;
-        }
-        .footer-links a:hover { text-decoration: underline; }
-        .dark-theme footer { background-color: #1a1a1a; }
-        @media (max-width: 1024px) {
-            .sidebar { width: 250px; }
-            .sidebar h1 { font-size: 22px; }
-            .sidebar ul li a { font-size: 16px; }
-            .dark-theme-label { font-size: 16px; }
-            .content { margin-left: 250px; }
-            footer { margin-left: 250px; }
-            .quiz-section h1 { font-size: 32px; }
-            .difficulty-card { width: 160px; }
-        }
-        @media (max-width: 768px) {
-            .sidebar { width: 200px; padding: 10px; }
-            .sidebar h1 { font-size: 20px; }
-            .sidebar ul li a { font-size: 14px; }
-            .dark-theme-label { font-size: 14px; }
-            .content { margin-left: 200px; }
-            footer { margin-left: 200px; }
-            .quiz-section { padding: 30px; }
-            .options { grid-template-columns: 1fr; }
-            .difficulty-card { width: 140px; }
-        }
-        @media (max-width: 480px) {
-            .container { flex-direction: column; }
-            .mobile-nav { display: block; }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: fixed;
-                padding: 15px;
-                transform: translateX(-100%);
-                z-index: 999;
-                top: 60px;
-                height: calc(100vh - 60px);
-                overflow-y: auto;
-                background-size: cover;
-                background-position: center;
-                background-color: #1a1a1a;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
-            .sidebar.active { transform: translateX(0); }
-            .sidebar h1 { display: none; }
-            .sidebar ul { margin: 0; }
-            .sidebar ul li { margin: 20px 0; }
-            .sidebar ul li a { font-size: 16px; }
-            .dark-theme-container { margin-top: 20px; margin-bottom: 15px; }
-            .dark-theme-label { font-size: 16px; }
-            .content { margin-left: 0; }
-            footer { margin-left: 0; padding: 10px 20px; text-align: center; }
-            .footer-links a { font-size: 12px; margin: 0 8px; }
-            .quiz-section { padding: 20px; }
-            .quiz-section h1 { font-size: 28px; }
-            .difficulty-options { flex-direction: column; align-items: center; }
-            .difficulty-card { width: 80%; max-width: 300px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="loader-overlay" id="loaderOverlay">
-        <div class="loader"></div>
-    </div>
-    <div class="mobile-nav">
-        <a href="HomePage.html" class="logo">Contra E-Crime</a>
-        <div class="menu-icon" id="mobileMenuIcon">
-            <i class="fas fa-bars"></i>
-        </div>
-    </div>
-
-    <div class="container">
-        <nav class="sidebar" id="sidebar">
-            <h1>Contra E-Crime</h1>
-            <ul>
-                <li><a href="HomePage.html"><img src="https://i.imgur.com/OAHusQp.png" alt="Home">Home</a></li>
-                <li><a href="News.html" target="_self" onclick="return true;"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
-                <li><a href="SavedLaws.html"><img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">Saved Laws</a></li>
-                <li><a href="History.html"><img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">Search History</a></li>
-                <li><a href="ContactUs.html"><img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">Contact Us</a></li>
-                <li><a href="AboutUs.html"><img src="https://i.imgur.com/lktrzpa.png" alt="About Us">About Us</a></li>
-                <li><a href="index.html"><img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">Logout</a></li>
-            </ul>
-            <div class="dark-theme-container">
-                <div class="dark-theme-label">
-                    <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
-                    <span>Dark Theme</span>
-                </div>
-                <div class="toggle-switch">
-                    <label class="switch-label">
-                        <input type="checkbox" class="checkbox" id="themeToggle">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-        </nav>
-        <main class="content">
-            <div class="header"></div>
-            <section class="quiz-section" id="quizSection">
-                <div id="particles-js"></div>
-                <h1>CyberLaw Quiz Master</h1>
-                <div class="progress-container">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-                <div class="progress-text" id="progressText"></div>
-                <div class="timer-container">
-                    <svg class="timer-svg">
-                        <circle class="timer-circle" cx="35" cy="35" r="30"></circle>
-                    </svg>
-                    <span class="timer-text" id="timerText"></span>
-                </div>
-                <div class="question-box" id="questionBox">
-                    <div class="question-text" id="questionText"></div>
-                    <div class="options" id="options"></div>
-                </div>
-                <button class="next-btn" id="nextBtn">Next Question</button>
-                <div class="effects-container" id="effectsContainer">
-                    <h3>Power-Ups</h3>
-                    <button class="effect-btn" id="extraTimeBtn" data-uses="2">+10 Seconds (<span id="extraTimeUses">2</span>)</button>
-                    <button class="effect-btn" id="stopTimeBtn" data-uses="1">Stop Time (<span id="stopTimeUses">1</span>)</button>
-                </div>
-                <div class="score" id="score">Score: 0</div>
-            </section>
-        </main>
-        <div class="start-modal" id="startModal">
-            <div class="start-modal-content">
-                <h2>Welcome to CyberLaw Quiz Master!</h2>
-                <p>Select your difficulty level to begin:</p>
-                <div class="difficulty-options">
-                    <div class="difficulty-card" data-difficulty="easy">
-                        <div class="emoji">📜</div>
-                        < успех: 1em;
-            margin-bottom: 10px;
-        }
-        .difficulty-card .label {
-            font-size: 20px;
-            color: #333;
-            font-weight: 600;
-        }
-        .difficulty-card .description {
-            font-size: 14px;
-            color: #666;
-            margin-top: 10px;
-        }
-        .start-btn, .tutorial-btn, .restart-btn, .back-btn, .start-quiz-btn, .exit-btn, .back-about-btn {
-            background: linear-gradient(135deg, #ffcc00, #e6b800);
-            color: #1e3c72;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            margin: 10px;
-        }
-        .back-about-btn {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: #fff;
-        }
-        .start-btn:hover, .tutorial-btn:hover, .restart-btn:hover, .back-btn:hover, .start-quiz-btn:hover, .exit-btn:hover, .back-about-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        .tutorial-modal-content {
-            padding: 0;
-            overflow: hidden;
-        }
-        .tutorial-slide {
-            display: none;
-            padding: 40px;
-            text-align: center;
-        }
-        .tutorial-slide.active {
-            display: block;
-        }
-        .tutorial-slide h3 {
-            font-size: 28px;
-            color: #1e3c72;
-            margin-bottom: 20px;
-        }
-        .tutorial-slide p {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .tutorial-slide img {
-            width: 300px;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
-        .tutorial-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .tutorial-dot {
-            width: 12px;
-            height: 12px;
-            background: #ddd;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .tutorial-dot.active {
-            background: #ffcc00;
-        }
-        .tutorial-prev, .tutorial-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 20px;
-            border-radius: 50%;
-            transition: background 0.3s ease;
-        }
-        .tutorial-prev:hover, .tutorial-next:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-        .tutorial-prev {
-            left: 20px;
-        }
-        .tutorial-next {
-            right: 20px;
-        }
-        .dont-show-again {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .dont-show-again label {
-            font-size: 14px;
-            color: #666;
-        }
-        .dont-show-again input {
-            cursor: pointer;
-        }
-        .result-modal-content {
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        .result-modal-content h3 {
-            font-size: 22px;
-            color: #1e3c72;
-            margin: 20px 0 10px;
-        }
-        .result-modal-content p {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        .result-summary {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .result-summary div {
-            margin: 10px 0;
-        }
-        .result-summary .question {
-            font-weight: 600;
-            color: #1e3c72;
-        }
-        .result-summary .user-answer {
-            color: #333;
-        }
-        .result-summary .correct-answer {
-            color: #2ecc71;
-        }
-        .result-summary .time-taken {
-            color: #e74c3c;
-        }
-        .result-stats {
-            text-align: left;
-            padding: 15px;
-            background: #e0f7fa;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .result-stats div {
-            margin: 5px 0;
-        }
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-        }
-        body.dark-theme { background-color: #121212; color: #e0e0e0; }
-        .dark-theme .content { background: linear-gradient(135deg, #28292c 0%, #1a1a1a 100%); }
-        .dark-theme .content::before { background-color: rgba(40, 41, 44, 0.9); }
-        .dark-theme .quiz-section { background: #333; }
-        .dark-theme .quiz-section h1 { color: #d8dbe0; }
-        .dark-theme .progress-text { color: #d8dbe0; }
-        .dark-theme .question-box { background-color: #444; color: #d8dbe0; }
-        .dark-theme .score { color: #d8dbe0; }
-        .dark-theme .start-modal-content, .dark-theme .tutorial-modal-content, .dark-theme .result-modal-content { background: #333; color: #d8dbe0; }
-        .dark-theme .start-modal-content h2, .dark-theme .tutorial-modal-content h2, .dark-theme .result-modal-content h2 { color: #d8dbe0; }
-        .dark-theme .tutorial-slide h3 { color: #d8dbe0; }
-        .dark-theme .tutorial-slide p { color: #b0b0b0; }
-        .dark-theme .dont-show-again label { color: #b0b0b0; }
-        .dark-theme .difficulty-card { background: #444; }
-        .dark-theme .difficulty-card .label { color: #d8dbe0; }
-        .dark-theme .difficulty-card .description { color: #b0b0b0; }
-        .dark-theme .result-modal-content h3 { color: #d8dbe0; }
-        .dark-theme .result-modal-content p { color: #b0b0b0; }
-        .dark-theme .result-summary { background: #444; }
-        .dark-theme .result-summary .question { color: #d8dbe0; }
-        .dark-theme .effects-container { background: #444; }
-        .dark-theme .effects-container h3 { color: #d8dbe0; }
+        .dark-theme .preview-questions { background: #444; }
+        .dark-theme .preview-questions h3 { color: #d8dbe0; }
         .dark-theme .past-question { background: #555; }
         .dark-theme .past-question .question { color: #d8dbe0; }
         .dark-theme .past-question .user-answer { color: #b0b0b0; }
@@ -1307,10 +909,9 @@
                     <div class="options" id="options"></div>
                 </div>
                 <button class="next-btn" id="nextBtn">Next Question</button>
-                <div class="effects-container" id="effectsContainer">
-                    <h3>Power-Ups</h3>
-                    <button class="effect-btn" id="extraTimeBtn" data-uses="2">+10 Seconds (<span id="extraTimeUses">2</span>)</button>
-                    <button class="effect-btn" id="stopTimeBtn" data-uses="1">Stop Time (<span id="stopTimeUses">1</span>)</button>
+                <div class="preview-questions" id="previewQuestions">
+                    <h3>Preview Questions</h3>
+                    <div id="pastQuestionsList"></div>
                 </div>
                 <div class="score" id="score">Score: 0</div>
             </section>
@@ -1418,7 +1019,7 @@
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
             projectId: "contra-e-crime",
-            storageBucket: "contra-e-crime.appspot.com",
+            storageBucket: "contra-e-crime.firebasestorage.app",
             messagingSenderId: "198995444405",
             appId: "1:198995444405:web:5f8c6eed561461b36034fc",
             measurementId: "G-7Y2E24DD42"
@@ -1744,7 +1345,7 @@
                     ]
                 },
                 {
-                    text: "What is the tél: maximum imprisonment for violations under the Electronic Commerce Act?",
+                    text: "What is the maximum imprisonment for violations under the Electronic Commerce Act?",
                     answer: "Six years",
                     options: [
                         "Six months",
@@ -1761,393 +1362,408 @@
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
-const startModal = document.getElementById('startModal');
-const tutorialModal = document.getElementById('tutorialModal');
-const resultModal = document.getElementById('resultModal');
-const quizSection = document.getElementById('quizSection');
-const progressBar = document.getElementById('progressBar');
-const progressText = document.getElementById('progressText');
-const timerText = document.getElementById('timerText');
-const timerCircle = document.querySelector('.timer-circle');
-const questionBox = document.getElementById('questionBox');
-const questionText = document.getElementById('questionText');
-const optionsContainer = document.getElementById('options');
-const nextBtn = document.getElementById('nextBtn');
-const extraTimeBtn = document.getElementById('extraTimeBtn');
-const stopTimeBtn = document.getElementById('stopTimeBtn');
-const scoreElement = document.getElementById('score');
-const tutorialBtn = document.getElementById('tutorialBtn');
-const backAboutBtn = document.getElementById('backAboutBtn');
-const backBtn = document.getElementById('backBtn');
-const startQuizBtn = document.getElementById('startQuizBtn');
-const dontShowAgain = document.getElementById('dontShowAgain');
-const restartBtn = document.getElementById('restartBtn');
-const exitBtn = document.getElementById('exitBtn');
-const loaderOverlay = document.getElementById('loaderOverlay');
+        const loaderOverlay = document.getElementById('loaderOverlay');
+        const quizSection = document.getElementById('quizSection');
+        const startModal = document.getElementById('startModal');
+        const tutorialModal = document.getElementById('tutorialModal');
+        const tutorialBtn = document.getElementById('tutorialBtn');
+        const backBtn = document.getElementById('backBtn');
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        const dontShowAgain = document.getElementById('dontShowAgain');
+        const difficultyCards = document.querySelectorAll('.difficulty-card');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const timerText = document.getElementById('timerText');
+        const timerCircle = document.querySelector('.timer-circle');
+        const questionText = document.getElementById('questionText');
+        const options = document.getElementById('options');
+        const nextBtn = document.getElementById('nextBtn');
+        const pastQuestionsList = document.getElementById('pastQuestionsList');
+        const scoreDisplay = document.getElementById('score');
+        const resultModal = document.getElementById('resultModal');
+        const finalScore = document.getElementById('finalScore');
+        const accuracyDisplay = document.getElementById('accuracy');
+        const avgTimeDisplay = document.getElementById('avgTime');
+        const difficultyAnalysis = document.getElementById('difficultyAnalysis');
+        const thinkingLevel = document.getElementById('thinkingLevel');
+        const remarks = document.getElementById('remarks');
+        const problemSolving = document.getElementById('problemSolving');
+        const resultSummary = document.getElementById('resultSummary');
+        const restartBtn = document.getElementById('restartBtn');
+        const exitBtn = document.getElementById('exitBtn');
+        const backAboutBtn = document.getElementById('backAboutBtn');
+        const tutorialSlides = document.querySelectorAll('.tutorial-slide');
+        const tutorialDots = document.querySelectorAll('.tutorial-dot');
+        const tutorialPrev = document.getElementById('tutorialPrev');
+        const tutorialNext = document.getElementById('tutorialNext');
 
-// Game State
-let currentQuestionIndex = 0;
-let score = 0;
-let selectedDifficulty = null;
-let timer = null;
-let timeLeft = 0;
-let totalTimeTaken = 0;
-let correctAnswers = 0;
-let questionStartTime = 0;
-let results = [];
-let isTimerRunning = true;
-let powerUpUses = {
-    extraTime: 2,
-    stopTime: 1
-};
+        // State Variables
+        let currentQuestion = 0;
+        let score = 0;
+        let timeLeft = 45;
+        let timerInterval;
+        let selectedDifficulty = null;
+        const totalQuestions = 10;
+        let userAnswers = [];
+        let timeTakenPerQuestion = [];
+        let currentQuestionSet = [];
+        let currentSlide = 1;
 
-// Sound Effects
-const correctSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-reward-952.mp3'] });
-const wrongSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-error-1000.mp3'] });
-const clickSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-click-button-1110.mp3'] });
+        // Sound Effects
+        const sounds = {
+            start: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
+            correct: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
+            wrong: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_4d7d1c55f9.mp3'], volume: 0.5 }),
+            complete: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_8d1f7f1e9e.mp3'], volume: 0.5 })
+        };
 
-// Theme Toggle
-themeToggle.addEventListener('change', () => {
-    body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-});
+        // Initialize Theme
+        if (localStorage.getItem('darkTheme') === 'enabled') {
+            body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
 
-// Load Theme
-if (localStorage.getItem('theme') === 'dark') {
-    body.classList.add('dark-theme');
-    themeToggle.checked = true;
-}
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('dark-theme');
+                localStorage.setItem('darkTheme', 'enabled');
+            } else {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('darkTheme', 'disabled');
+            }
+        });
 
-// Mobile Menu Toggle
-mobileMenuIcon.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-    mobileMenuIcon.innerHTML = sidebar.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-});
+        // Mobile Menu Toggle
+        mobileMenuIcon.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            const icon = mobileMenuIcon.querySelector('i');
+            if (sidebar.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
 
-// Difficulty Selection
-document.querySelectorAll('.difficulty-card').forEach(card => {
-    card.addEventListener('click', () => {
-        document.querySelectorAll('.difficulty-card').forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        selectedDifficulty = card.dataset.difficulty;
-        tutorialBtn.disabled = false;
-        clickSound.play();
-    });
-});
+        // Navigation Links with Loader
+        document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:')) return;
+                e.preventDefault();
+                loaderOverlay.classList.add('active');
+                setTimeout(() => { window.location.href = this.href; }, 150);
+            });
+        });
 
-// Tutorial Navigation
-let currentSlide = 1;
-const slides = document.querySelectorAll('.tutorial-slide');
-const dots = document.querySelectorAll('.tutorial-dot');
-const tutorialPrev = document.getElementById('tutorialPrev');
-const tutorialNext = document.getElementById('tutorialNext');
+        // Back to About Us
+        backAboutBtn.addEventListener('click', () => {
+            loaderOverlay.classList.add('active');
+            setTimeout(() => {
+                window.location.href = 'AboutUs.html';
+            }, 150);
+        });
 
-function showSlide(slideIndex) {
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    document.getElementById(`slide${slideIndex}`).classList.add('active');
-    dots[slideIndex - 1].classList.add('active');
-    tutorialPrev.style.display = slideIndex === 1 ? 'none' : 'block';
-    tutorialNext.style.display = slideIndex === slides.length ? 'none' : 'block';
-    currentSlide = slideIndex;
-}
+        // Difficulty Selection
+        difficultyCards.forEach(card => {
+            card.addEventListener('click', function() {
+                selectedDifficulty = this.dataset.difficulty;
+                difficultyCards.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                tutorialBtn.disabled = false;
+                timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+            });
+        });
 
-tutorialPrev.addEventListener('click', () => {
-    if (currentSlide > 1) {
-        showSlide(currentSlide - 1);
-        clickSound.play();
-    }
-});
+        // Tutorial Navigation
+        function showSlide(slideNumber) {
+            tutorialSlides.forEach(slide => slide.classList.remove('active'));
+            tutorialDots.forEach(dot => dot.classList.remove('active'));
+            document.getElementById(`slide${slideNumber}`).classList.add('active');
+            document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
+            currentSlide = slideNumber;
+            tutorialPrev.style.display = currentSlide === 1 ? 'none' : 'block';
+            tutorialNext.style.display = currentSlide === 3 ? 'none' : 'block';
+        }
+
+        tutorialDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                showSlide(parseInt(this.dataset.slide));
+            });
+        });
+
+        tutorialPrev.addEventListener('click', () => {
+            if (currentSlide > 1) showSlide(currentSlide - 1);
+        });
 
 tutorialNext.addEventListener('click', () => {
-    if (currentSlide < slides.length) {
-        showSlide(currentSlide + 1);
-        clickSound.play();
-    }
+    if (currentSlide < 3) showSlide(currentSlide + 1);
 });
 
-dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-        showSlide(parseInt(dot.dataset.slide));
-        clickSound.play();
-    });
-});
-
-// Modal Navigation
+// Tutorial Button
 tutorialBtn.addEventListener('click', () => {
-    if (!localStorage.getItem('skipTutorial') || localStorage.getItem('skipTutorial') === 'false') {
-        startModal.style.display = 'none';
+    startModal.style.display = 'none';
+    if (localStorage.getItem('dontShowTutorial') === 'true' && dontShowAgain.checked) {
+        startQuiz();
+    } else {
         tutorialModal.style.display = 'flex';
         showSlide(1);
-    } else {
-        startQuiz();
     }
-    clickSound.play();
 });
 
-backAboutBtn.addEventListener('click', () => {
-    window.location.href = 'AboutUs.html';
-    clickSound.play();
-});
-
+// Back to Difficulty Selection
 backBtn.addEventListener('click', () => {
     tutorialModal.style.display = 'none';
     startModal.style.display = 'flex';
-    clickSound.play();
-});
-
-startQuizBtn.addEventListener('click', () => {
-    if (dontShowAgain.checked) {
-        localStorage.setItem('skipTutorial', 'true');
-    }
-    startQuiz();
-    clickSound.play();
-});
-
-restartBtn.addEventListener('click', () => {
-    resultModal.style.display = 'none';
-    startModal.style.display = 'flex';
-    resetGame();
-    clickSound.play();
-});
-
-exitBtn.addEventListener('click', () => {
-    resultModal.style.display = 'none';
-    startModal.style.display = 'flex';
-    resetGame();
-    clickSound.play();
 });
 
 // Start Quiz
-function startQuiz() {
+startQuizBtn.addEventListener('click', () => {
+    if (dontShowAgain.checked) {
+        localStorage.setItem('dontShowTutorial', 'true');
+    }
     tutorialModal.style.display = 'none';
+    startQuiz();
+});
+
+// Shuffle Array Function
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Start Quiz Function
+function startQuiz() {
+    sounds.start.play();
+    if (selectedDifficulty === 'medium') {
+        // Mix 5 easy and 5 medium questions
+        const easyQuestions = shuffleArray([...questions.easy]).slice(0, 5);
+        const mediumQuestions = shuffleArray([...questions.medium]).slice(0, 5);
+        currentQuestionSet = shuffleArray([...easyQuestions, ...mediumQuestions]);
+    } else {
+        currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
+    }
     quizSection.classList.add('visible');
-    timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
     loadQuestion();
     startTimer();
-    updatePowerUpButtons();
 }
 
 // Load Question
 function loadQuestion() {
-    const question = questions[selectedDifficulty][currentQuestionIndex];
+    const question = currentQuestionSet[currentQuestion];
     questionText.textContent = question.text;
-    optionsContainer.innerHTML = '';
-    question.options.forEach(option => {
+    options.innerHTML = '';
+    question.options.forEach((option, index) => {
         const btn = document.createElement('button');
         btn.classList.add('option-btn');
-        btn.textContent = option;
-        btn.addEventListener('click', () => checkAnswer(option, question.answer));
-        optionsContainer.appendChild(btn);
+        btn.innerHTML = `${String.fromCharCode(97 + index)}. ${option}`;
+        btn.addEventListener('click', () => checkAnswer(option === question.answer, btn, option));
+        options.appendChild(btn);
     });
-    progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questions[selectedDifficulty].length}`;
-    progressBar.style.width = `${((currentQuestionIndex + 1) / questions[selectedDifficulty].length) * 100}%`;
-    questionStartTime = Date.now();
+    progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
+    progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
+    pastQuestionsList.innerHTML = userAnswers.map((ans, idx) => `
+        <div class="past-question">
+            <div class="question">Q${idx + 1}: ${ans.question}</div>
+            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
+            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+        </div>
+    `).join('');
 }
 
-// Timer
+// Start Timer
 function startTimer() {
+    timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
     timerText.textContent = timeLeft;
+    const totalTime = timeLeft;
     timerCircle.style.strokeDashoffset = 0;
-    timer = setInterval(() => {
-        if (isTimerRunning) {
-            timeLeft--;
-            timerText.textContent = timeLeft;
-            const offset = (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30)) * 188;
-            timerCircle.style.strokeDashoffset = offset;
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                checkAnswer(null, questions[selectedDifficulty][currentQuestionIndex].answer);
-            }
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerText.textContent = timeLeft;
+        const offset = 188 * (1 - timeLeft / totalTime);
+        timerCircle.style.strokeDashoffset = offset;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            checkAnswer(false, null, 'Time Out');
         }
     }, 1000);
 }
 
 // Check Answer
-function checkAnswer(selected, correct) {
-    clearInterval(timer);
-    isTimerRunning = false;
-    const timeTaken = ((Date.now() - questionStartTime) / 1000).toFixed(2);
-    totalTimeTaken += parseFloat(timeTaken);
-    const isCorrect = selected === correct;
+function checkAnswer(isCorrect, btn, userAnswer) {
+    clearInterval(timerInterval);
+    userAnswers[currentQuestion] = {
+        question: currentQuestionSet[currentQuestion].text,
+        correctAnswer: currentQuestionSet[currentQuestion].answer,
+        userAnswer: userAnswer
+    };
+    timeTakenPerQuestion[currentQuestion] = (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30) - timeLeft;
+    options.querySelectorAll('.option-btn').forEach(b => b.classList.add('disabled'));
     if (isCorrect) {
         score += 10;
-        correctAnswers++;
-        correctSound.play();
+        btn.classList.add('correct');
+        sounds.correct.play();
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
     } else {
-        wrongSound.play();
+        btn && btn.classList.add('wrong');
+        sounds.wrong.play();
+        options.querySelectorAll('.option-btn').forEach(b => {
+            if (b.textContent.replace(/^[a-d]\.\s/, '') === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
+        });
     }
-    scoreElement.textContent = `Score: ${score}`;
-    document.querySelectorAll('.option-btn').forEach(btn => {
-        btn.classList.add('disabled');
-        if (btn.textContent === correct) {
-            btn.classList.add('correct');
-        } else if (btn.textContent === selected) {
-            btn.classList.add('wrong');
-        }
-    });
-    results.push({
-        question: questions[selectedDifficulty][currentQuestionIndex].text,
-        userAnswer: selected || 'None',
-        correctAnswer: correct,
-        timeTaken: timeTaken,
-        isCorrect: isCorrect
-    });
+    scoreDisplay.textContent = `Score: ${score}`;
+    showFeedback(userAnswer);
+    // Force button visibility and interactivity
     nextBtn.classList.add('visible');
+    nextBtn.style.display = 'block';
+    nextBtn.style.pointerEvents = 'auto';
+    nextBtn.style.cursor = 'pointer';
+    nextBtn.style.opacity = '1';
+    console.log('Next button state:', {
+        classList: nextBtn.classList.toString(),
+        pointerEvents: nextBtn.style.pointerEvents,
+        display: nextBtn.style.display,
+        zIndex: nextBtn.style.zIndex,
+        opacity: nextBtn.style.opacity
+    });
+    // Redundancy: Reapply styles after a short delay
+    setTimeout(() => {
+        nextBtn.classList.add('visible');
+        nextBtn.style.display = 'block';
+        nextBtn.style.pointerEvents = 'auto';
+        nextBtn.style.cursor = 'pointer';
+        console.log('Next button styles reapplied');
+    }, 100);
 }
 
-// Next Question
-nextBtn.addEventListener('click', () => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions[selectedDifficulty].length) {
-        timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+// Show Feedback
+function showFeedback(userAnswer) {
+    pastQuestionsList.innerHTML = userAnswers.map((ans, idx) => `
+        <div class="past-question">
+            <div class="question">Q${idx + 1}: ${ans.question}</div>
+            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
+            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+        </div>
+    `).join('');
+}
+
+// Next Button
+nextBtn.addEventListener('click', (e) => {
+    if (!nextBtn.classList.contains('visible')) {
+        console.warn('Next button clicked but not visible. Event ignored.', {
+            classList: nextBtn.classList.toString(),
+            pointerEvents: nextBtn.style.pointerEvents,
+            target: e.target
+        });
+        return;
+    }
+    console.log('Next button clicked successfully');
+    nextBtn.classList.remove('visible');
+    nextBtn.style.display = 'none';
+    nextBtn.style.pointerEvents = 'none';
+    options.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('correct', 'wrong', 'disabled'));
+    currentQuestion++;
+    if (currentQuestion < totalQuestions) {
         loadQuestion();
         startTimer();
-        isTimerRunning = true;
-        nextBtn.classList.remove('visible');
     } else {
-        showResults();
-    }
-    clickSound.play();
-});
-
-// Power-Ups
-extraTimeBtn.addEventListener('click', () => {
-    if (powerUpUses.extraTime > 0) {
-        timeLeft += 10;
-        timerText.textContent = timeLeft;
-        powerUpUses.extraTime--;
-        extraTimeBtn.querySelector('span').textContent = powerUpUses.extraTime;
-        extraTimeBtn.disabled = powerUpUses.extraTime === 0;
-        clickSound.play();
+        endQuiz();
     }
 });
 
-stopTimeBtn.addEventListener('click', () => {
-    if (powerUpUses.stopTime > 0) {
-        isTimerRunning = false;
-        clearInterval(timer);
-        powerUpUses.stopTime--;
-        stopTimeBtn.querySelector('span').textContent = powerUpUses.stopTime;
-        stopTimeBtn.disabled = true;
-        clickSound.play();
-    }
-});
-
-function updatePowerUpButtons() {
-    extraTimeBtn.querySelector('span').textContent = powerUpUses.extraTime;
-    stopTimeBtn.querySelector('span').textContent = powerUpUses.stopTime;
-    extraTimeBtn.disabled = powerUpUses.extraTime === 0;
-    stopTimeBtn.disabled = powerUpUses.stopTime === 0;
-}
-
-// Show Results
-function showResults() {
+// End Quiz
+function endQuiz() {
+    sounds.complete.play();
     quizSection.style.display = 'none';
     resultModal.style.display = 'flex';
-    const accuracy = ((correctAnswers / questions[selectedDifficulty].length) * 100).toFixed(2);
-    const avgTime = (totalTimeTaken / questions[selectedDifficulty].length).toFixed(2);
-    document.getElementById('finalScore').textContent = score;
-    document.getElementById('accuracy').textContent = accuracy;
-    document.getElementById('avgTime').textContent = avgTime;
-
-    let difficultyAnalysis = '';
-    if (selectedDifficulty === 'easy') {
-        difficultyAnalysis = 'You handled basic cyberlaw questions well. Try Medium for more scenarios!';
-    } else if (selectedDifficulty === 'medium') {
-        difficultyAnalysis = 'Good job with mixed questions. Ready for Hard mode challenges?';
+    finalScore.textContent = score;
+    const correctAnswers = userAnswers.filter(ans => ans.userAnswer === ans.correctAnswer).length;
+    const accuracy = (correctAnswers / totalQuestions) * 100;
+    accuracyDisplay.textContent = accuracy.toFixed(2);
+    const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / totalQuestions;
+    avgTimeDisplay.textContent = avgTime.toFixed(2);
+    difficultyAnalysis.textContent = `You played on ${selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1)} difficulty.`;
+    
+    // Thinking Level
+    let thinkingLevelText = '';
+    if (accuracy >= 80) {
+        thinkingLevelText = 'Excellent critical thinking! You have a strong grasp of cybercrime laws.';
+    } else if (accuracy >= 50) {
+        thinkingLevelText = 'Good analytical skills! Consider reviewing some concepts for improvement.';
     } else {
-        difficultyAnalysis = 'Impressive performance on advanced questions!';
+        thinkingLevelText = 'Needs improvement. Focus on understanding key legal provisions.';
     }
-    document.getElementById('difficultyAnalysis').textContent = difficultyAnalysis;
+    thinkingLevel.textContent = thinkingLevelText;
 
-    let thinkingLevel = '';
-    if (accuracy > 80) {
-        thinkingLevel = 'You demonstrate strong critical thinking and understanding of cyberlaw concepts.';
-    } else if (accuracy > 50) {
-        thinkingLevel = 'You show moderate analytical skills. Reviewing key laws may help improve.';
-    } else {
-        thinkingLevel = 'You may need to study cyberlaw basics to enhance your understanding.';
-    }
-    document.getElementById('thinkingLevel').textContent = thinkingLevel;
-
-    let remarks = '';
+    // Remarks
+    let remarksText = '';
     if (score >= 80) {
-        remarks = 'Excellent! You have a solid grasp of cybercrime laws.';
+        remarksText = 'Outstanding performance! You’re well-versed in cybercrime laws.';
     } else if (score >= 50) {
-        remarks = 'Good effort! Some areas could use more practice.';
+        remarksText = 'Solid effort! A bit more practice can boost your score.';
     } else {
-        remarks = 'Keep studying! Focus on key cyberlaw principles.';
+        remarksText = 'Keep studying! Review the laws to improve your understanding.';
     }
-    document.getElementById('remarks').textContent = remarks;
+    remarks.textContent = remarksText;
 
-    let problemSolving = '';
-    if (avgTime < 15) {
-        problemSolving = 'You solve problems quickly and efficiently.';
-    } else if (avgTime < 30) {
-        problemSolving = 'You take a balanced approach to problem-solving.';
+    // Problem-Solving Skills
+    let problemSolvingText = '';
+    if (avgTime < 10) {
+        problemSolvingText = 'Excellent problem-solving speed! You answer quickly and accurately.';
+    } else if (avgTime < 20) {
+        problemSolvingText = 'Good problem-solving skills! Try to answer a bit faster.';
     } else {
-        problemSolving = 'You may benefit from faster decision-making under time constraints.';
+        problemSolvingText = 'Work on your speed. Practice to improve decision-making time.';
     }
-    document.getElementById('problemSolving').textContent = problemSolving;
+    problemSolving.textContent = problemSolvingText;
 
-    const resultSummary = document.getElementById('resultSummary');
-    resultSummary.innerHTML = '';
-    results.forEach(result => {
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <div class="question">${result.question}</div>
-            <div class="user-answer">Your Answer: ${result.userAnswer}</div>
-            <div class="correct-answer">Correct Answer: ${result.correctAnswer}</div>
-            <div class="time-taken">Time Taken: ${result.timeTaken}s</div>
-        `;
-        resultSummary.appendChild(div);
-    });
+    // Detailed Results
+    resultSummary.innerHTML = userAnswers.map((ans, idx) => `
+        <div>
+            <div class="question">Q${idx + 1}: ${ans.question}</div>
+            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
+            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+            <div class="time-taken">Time Taken: ${timeTakenPerQuestion[idx]}s</div>
+        </div>
+    `).join('');
 }
 
-// Reset Game
-function resetGame() {
-    currentQuestionIndex = 0;
-    score = 0;
-    correctAnswers = 0;
-    totalTimeTaken = 0;
-    results = [];
-    isTimerRunning = true;
-    powerUpUses = { extraTime: 2, stopTime: 1 };
-    scoreElement.textContent = 'Score: 0';
+// Restart Quiz
+restartBtn.addEventListener('click', () => {
+    resultModal.style.display = 'none';
     quizSection.style.display = 'block';
-    document.querySelectorAll('.difficulty-card').forEach(card => card.classList.remove('selected'));
+    currentQuestion = 0;
+    score = 0;
+    userAnswers = [];
+    timeTakenPerQuestion = [];
+    scoreDisplay.textContent = 'Score: 0';
+    startQuiz();
+});
+
+// Exit to Difficulty Selection
+exitBtn.addEventListener('click', () => {
+    resultModal.style.display = 'none';
+    startModal.style.display = 'flex';
+    quizSection.style.display = 'block';
+    currentQuestion = 0;
+    score = 0;
+    userAnswers = [];
+    timeTakenPerQuestion = [];
+    scoreDisplay.textContent = 'Score: 0';
+    difficultyCards.forEach(c => c.classList.remove('selected'));
     tutorialBtn.disabled = true;
     selectedDifficulty = null;
-    updatePowerUpButtons();
-}
-
-// Loader
-function showLoader() {
-    loaderOverlay.classList.add('active');
-}
-
-function hideLoader() {
-    loaderOverlay.classList.remove('active');
-}
+});
 
 // Initialize
 window.addEventListener('load', () => {
-    hideLoader();
-    startModal.style.display = 'flex';
+    loaderOverlay.classList.add('active');
+    setTimeout(() => {
+        loaderOverlay.classList.remove('active');
+        startModal.style.display = 'flex';
+    }, 150);
 });
-
-// Handle navigation with loader
-document.querySelectorAll('.sidebar ul li a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        showLoader();
-        setTimeout(() => {
-            window.location.href = link.href;
-        }, 500);
-    });
-});
-    </script>
-</body>
-</html>
+</script>
