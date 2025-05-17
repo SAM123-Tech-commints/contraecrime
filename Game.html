@@ -157,7 +157,7 @@
             font-size: 18px;
         }
         .dark-theme-label img {
-            width: 30px;
+            width: 30 Wpx;
             height: 30px;
             border-radius: 50%;
         }
@@ -528,11 +528,14 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 1002;
             overflow-y: auto;
+        }
+        .start-modal.active, .tutorial-modal.active, .result-modal.active, .redemption-modal.active {
+            display: flex;
         }
         .start-modal-content, .tutorial-modal-content, .result-modal-content, .redemption-modal-content {
             background: #fff;
@@ -955,7 +958,7 @@
             .dark-theme-label { font-size: 16px; }
             .content {
                 margin-left: 0;
-                padding: 70px 15px 15px 15px;
+                padding: 70px 15px 15px  главное15px;
                 overflow-y: auto;
                 min-height: 100vh;
             }
@@ -1086,7 +1089,7 @@
                 <div class="score" id="score">Score: 0</div>
             </section>
         </main>
-        <div class="start-modal" id="startModal">
+        <div class="start-modal active" id="startModal">
             <div class="start-modal-content">
                 <h2>Welcome to CyberLaw Quiz Master!</h2>
                 <p>Select your difficulty level to begin:</p>
@@ -1113,9 +1116,9 @@
                 </div>
             </div>
         </div>
-        <div class="tutorial-modal" id="tutorialModal" style="display: none;">
+        <div class="tutorial-modal" id="tutorialModal">
             <div class="tutorial-modal-content">
-                <div class="tutorial-slide" id="slide1">
+                <div class="tutorial-slide active" id="slide1">
                     <h3>Welcome to the Quiz!</h3>
                     <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book">
                     <p>Test your knowledge of cybercrime laws in the Philippines and worldwide. Answer questions based on legal provisions. Use power-ups like Extra Time or Time Freeze to strategize!</p>
@@ -1147,7 +1150,7 @@
                 </div>
             </div>
         </div>
-        <div class="result-modal" id="resultModal" style="display: none;">
+        <div class="result-modal" id="resultModal">
             <div class="result-modal-content">
                 <h2>Quiz Completed!</h2>
                 <p>Your Score: <span id="finalScore"></span></p>
@@ -1170,7 +1173,7 @@
                 </div>
             </div>
         </div>
-        <div class="redemption-modal" id="redemptionModal" style="display: none;">
+        <div class="redemption-modal" id="redemptionModal">
             <div class="redemption-modal-content">
                 <h2>Redemption Round</h2>
                 <p id="redemptionMessage"></p>
@@ -1182,7 +1185,9 @@
         </div>
         <div class="notification" id="timeUpNotification">Time's Up!</div>
         <footer>
-            <p>© 2025 Contra E-Crime. All rights reserved.</p>
+            <p>© 2025 Contra E-Crime
+
+. All rights reserved.</p>
             <div class="footer-links">
                 <a href="PrivacyPolicy.html">Privacy Policy</a>
                 <a href="TermsOfUse.html">Terms of Use</a>
@@ -1194,6 +1199,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script>
+        // Firebase initialization
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
@@ -1203,26 +1209,41 @@
             appId: "1:198995444405:web:5f8c6eed561461b36034fc",
             measurementId: "G-7Y2E24DD42"
         };
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: '#ffcc00' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.5, random: false },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: '#ffcc00', opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
-                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
-            },
-            retina_detect: true
-        });
+
+        try {
+            const app = firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+            const db = firebase.firestore();
+            console.log('Firebase initialized successfully');
+        } catch (error) {
+            console.error('Firebase initialization failed:', error);
+        }
+
+        // Particles.js initialization
+        try {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: '#ffcc00' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.5, random: false },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: true, distance: 150, color: '#ffcc00', opacity: 0.4, width: 1 },
+                    move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                    modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+                },
+                retina_detect: true
+            });
+            console.log('Particles.js initialized');
+        } catch (error) {
+            console.error('Particles.js initialization failed:', error);
+        }
+
+        // Questions data
         const questions = {
             easy: [
                 {
@@ -1544,7 +1565,7 @@
                         "PHP 100,000",
                         "PHP 1,000,000",
                         "₱1,000",
-                        "PHP 5,000,000"
+                        "PHP plaf5,000,000"
                     ],
                     explanation: "The maximum fine for third offenses under BIR Revenue Regulation No. 9-2001 is ₱1,000."
                 },
@@ -1561,6 +1582,8 @@
                 }
             ]
         };
+
+        // DOM elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1590,466 +1613,651 @@
         const avgTimeDisplay = document.getElementById('avgTime');
         const difficultyAnalysis = document.getElementById('difficultyAnalysis');
         const thinkingLevel = document.getElementById('thinkingLevel');
-        const remarks = document.getElementById('remarks');
-        const problemSolving = document.getElementById('problemSolving');
-        const resultSummary = document.getElementById('resultSummary');
-        const restartBtn = document.getElementById('restartBtn');
-        const exitBtn = document.getElementById('exitBtn');
-        const backAboutBtn = document.getElementById('backAboutBtn');
-        const redemptionModal = document.getElementById('redemptionModal');
-        const redemptionMessage = document.getElementById('redemptionMessage');
-        const startRedemptionBtn = document.getElementById('startRedemptionBtn');
-        const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
-        const timeUpNotification = document.getElementById('timeUpNotification');
-        const extraTime1 = document.getElementById('extraTime1');
-        const extraTime2 = document.getElementById('extraTime2');
-        const timeFreeze = document.getElementById('timeFreeze');
-        const tutorialSlides = document.querySelectorAll('.tutorial-slide');
-        const tutorialDots = document.querySelectorAll('.tutorial-dot');
-        const tutorialPrev = document.getElementById('tutorialPrev');
-        const tutorialNext = document.getElementById('tutorialNext');
+const remarks = document.getElementById('remarks');
+const problemSolving = document.getElementById('problemSolving');
+const resultSummary = document.getElementById('resultSummary');
+const restartBtn = document.getElementById('restartBtn');
+const exitBtn = document.getElementById('exitBtn');
+const redemptionModal = document.getElementById('redemptionModal');
+const redemptionMessage = document.getElementById('redemptionMessage');
+const startRedemptionBtn = document.getElementById('startRedemptionBtn');
+const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
+const timeUpNotification = document.getElementById('timeUpNotification');
+const tutorialSlides = document.querySelectorAll('.tutorial-slide');
+const tutorialDots = document.querySelectorAll('.tutorial-dot');
+const tutorialPrev = document.getElementById('tutorialPrev');
+const tutorialNext = document.getElementById('tutorialNext');
+const extraTime1 = document.getElementById('extraTime1');
+const extraTime2 = document.getElementById('extraTime2');
+const timeFreeze = document.getElementById('timeFreeze');
+const backAboutBtn = document.getElementById('backAboutBtn');
 
-        let currentQuestion = 0;
-        let score = 0;
-        let timeLeft = 0;
-        let timerInterval;
-        let selectedDifficulty = null;
-        let currentQuestionSet = [];
-        let userAnswers = [];
-        let timeTakenPerQuestion = [];
-        let powerUps = { extraTime1: true, extraTime2: true, timeFreeze: true };
-        let isAnswerSubmitted = false;
-        let usedPowerUpThisQuestion = false;
-        let isTimeStopped = false;
-        let isRedemptionRound = false;
-let redemptionQuestions = [];
-let totalQuestionsAnswered = 0;
-let correctAnswers = 0;
-let startTime;
-
-// Sound effects
-const correctSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-game-success-alert-2039.mp3'] });
-const wrongSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-game-fail-trombone-1942.mp3'] });
-const clickSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-click-button-1110.mp3'] });
-
-// Toggle dark theme
-themeToggle.addEventListener('change', () => {
-    body.classList.toggle('dark-theme');
-    localStorage.setItem('darkTheme', body.classList.contains('dark-theme'));
-});
-
-// Mobile menu toggle
-mobileMenuIcon.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-});
-
-// Close sidebar when clicking outside
-document.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target) && sidebar.classList.contains('active')) {
-        sidebar.classList.remove('active');
+    let clickSound, correctSound, wrongSound, timeUpSound, gameOverSound;
+    try {
+        clickSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/click-button.mp3'] });
+        correctSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/correct-answer.mp3'] });
+        wrongSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/wrong-answer.mp3'] });
+        timeUpSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/time-up.mp3'] });
+        gameOverSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/game-over.mp3'] });
+        console.log('Sound effects initialized successfully');
+    } catch (error) {
+        console.error('Sound initialization failed:', error);
     }
-});
 
-// Load theme preference
-if (localStorage.getItem('darkTheme') === 'true') {
-    body.classList.add('dark-theme');
-    themeToggle.checked = true;
-}
+    // Function to play sound with error handling
+    function playSound(sound) {
+        try {
+            if (sound) {
+                sound.play();
+                console.log('Playing sound:', sound._src);
+            } else {
+                console.warn('Sound object is undefined');
+            }
+        } catch (error) {
+            console.warn('Sound playback failed:', error);
+        }
+    }
 
-// Show loader
-function showLoader() {
-    loaderOverlay.classList.add('active');
-}
-
-// Hide loader
-function hideLoader() {
-    loaderOverlay.classList.remove('active');
-}
+// Quiz state
+let currentQuestionIndex = 0;
+let score = 0;
+let selectedDifficulty = null;
+let timerInterval;
+let timeLeft = 0;
+let totalTimeTaken = 0;
+let questionStartTime = 0;
+let correctAnswers = 0;
+let wrongAnswers = [];
+let isRedemption = false;
+let currentSlide = 1;
+let isFrozen = false;
+let extraTime1Used = false;
+let extraTime2Used = false;
+let timeFreezeUsed = false;
 
 // Initialize quiz
 function initQuiz() {
-    showLoader();
-    setTimeout(() => {
-        quizSection.classList.add('visible');
-        startModal.style.display = 'flex';
-        hideLoader();
-    }, 500);
-}
+    try {
+        // Load saved difficulty
+        const savedDifficulty = localStorage.getItem('selectedDifficulty');
+        if (savedDifficulty) {
+            const card = document.querySelector(`.difficulty-card[data-difficulty="${savedDifficulty}"]`);
+            if (card) {
+                difficultyCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedDifficulty = savedDifficulty;
+                tutorialBtn.disabled = false;
+                console.log('Loaded saved difficulty:', savedDifficulty);
+            }
+        }
 
-// Select difficulty
-difficultyCards.forEach(card => {
-    card.addEventListener('click', () => {
-        difficultyCards.forEach(c => c.classList.remove('selected'));
-        card.classList.add('selected');
-        selectedDifficulty = card.dataset.difficulty;
-        tutorialBtn.disabled = false;
-    });
-});
+        // GSAP animations for quiz section
+        gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' });
 
-// Tutorial navigation
-let currentSlide = 1;
+        // Theme toggle
+        themeToggle.addEventListener('change', () => {
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('darkTheme', body.classList.contains('dark-theme'));
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
 
-function showSlide(slideNumber) {
-    tutorialSlides.forEach(slide => slide.classList.remove('active'));
-    tutorialDots.forEach(dot => dot.classList.remove('active'));
-    document.getElementById(`slide${slideNumber}`).classList.add('active');
-    document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
-    tutorialPrev.style.display = slideNumber === 1 ? 'none' : 'block';
-    tutorialNext.style.display = slideNumber === tutorialSlides.length ? 'none' : 'block';
-    currentSlide = slideNumber;
-}
+        // Load theme preference
+        if (localStorage.getItem('darkTheme') === 'true') {
+            body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
 
-tutorialDots.forEach(dot => {
-    dot.addEventListener('click', () => {
-        showSlide(parseInt(dot.dataset.slide));
-    });
-});
+        // Mobile menu toggle
+        mobileMenuIcon.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
 
-tutorialPrev.addEventListener('click', () => {
-    if (currentSlide > 1) showSlide(currentSlide - 1);
-});
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
 
-tutorialNext.addEventListener('click', () => {
-    if (currentSlide < tutorialSlides.length) showSlide(currentSlide + 1);
-});
+        // Difficulty selection
+        difficultyCards.forEach(card => {
+            card.addEventListener('click', () => {
+                try {
+                    difficultyCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedDifficulty = card.dataset.difficulty;
+                    localStorage.setItem('selectedDifficulty', selectedDifficulty);
+                    tutorialBtn.disabled = false;
+                    console.log('Difficulty selected:', selectedDifficulty);
+                    try {
+                        clickSound.play();
+                    } catch (error) {
+                        console.warn('Sound playback failed:', error);
+                    }
+                } catch (error) {
+                    console.error('Error in difficulty selection:', error);
+                }
+            });
+        });
 
-// Start tutorial
-tutorialBtn.addEventListener('click', () => {
-    if (localStorage.getItem('dontShowTutorial') === 'true' && !dontShowAgain.checked) {
-        startQuiz();
-    } else {
-        startModal.style.display = 'none';
-        tutorialModal.style.display = 'flex';
-        showSlide(1);
+        // Tutorial button
+        tutorialBtn.addEventListener('click', () => {
+            try {
+                if (!selectedDifficulty) {
+                    showNotification('Please select a difficulty first!');
+                    return;
+                }
+                console.log('Tutorial button clicked, difficulty:', selectedDifficulty);
+                startModal.classList.remove('active');
+                tutorialModal.classList.add('active');
+                showSlide(1);
+                try {
+                    clickSound.play();
+                } catch (error) {
+                    console.warn('Sound playback failed:', error);
+                }
+            } catch (error) {
+                console.error('Error in tutorial button handler:', error);
+            }
+        });
+
+        // Notification for disabled tutorial button
+        tutorialBtn.addEventListener('mouseover', () => {
+            if (tutorialBtn.disabled) {
+                showNotification('Please select a difficulty first!');
+            }
+        });
+
+        // Tutorial navigation
+        tutorialPrev.addEventListener('click', () => {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+                try {
+                    clickSound.play();
+                } catch (error) {
+                    console.warn('Sound playback failed:', error);
+                }
+            }
+        });
+
+        tutorialNext.addEventListener('click', () => {
+            if (currentSlide < tutorialSlides.length) {
+                showSlide(currentSlide + 1);
+                try {
+                    clickSound.play();
+                } catch (error) {
+                    console.warn('Sound playback failed:', error);
+                }
+            }
+        });
+
+        tutorialDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                showSlide(parseInt(dot.dataset.slide));
+                try {
+                    clickSound.play();
+                } catch (error) {
+                    console.warn('Sound playback failed:', error);
+                }
+            });
+        });
+
+        // Back to difficulty selection
+        backBtn.addEventListener('click', () => {
+            tutorialModal.classList.remove('active');
+            startModal.classList.add('active');
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        // Start quiz
+        startQuizBtn.addEventListener('click', () => {
+            if (dontShowAgain.checked) {
+                localStorage.setItem('dontShowTutorial', 'true');
+            }
+            startQuiz();
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        // Back to About Us
+        backAboutBtn.addEventListener('click', () => {
+            window.location.href = 'AboutUs.html';
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        // Power-ups
+        extraTime1.addEventListener('click', () => applyExtraTime(1));
+        extraTime2.addEventListener('click', () => applyExtraTime(2));
+        timeFreeze.addEventListener('click', () => applyTimeFreeze());
+
+        // Next question
+        nextBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            loadQuestion();
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        // Exit game
+        exitGameBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            showResult();
+            try {
+                gameOverSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        // Restart quiz
+        restartBtn.addEventListener('click', () => {
+            resetQuiz();
+            startModal.classList.add('active');
+            resultModal.classList.remove('active');
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        // Exit to difficulty
+        exitBtn.addEventListener('click', () => {
+            resetQuiz();
+            resultModal.classList.remove('active');
+            startModal.classList.add('active');
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        // Redemption round
+        startRedemptionBtn.addEventListener('click', () => {
+            redemptionModal.classList.remove('active');
+            isRedemption = true;
+            currentQuestionIndex = 0;
+            loadQuestion();
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        skipRedemptionBtn.addEventListener('click', () => {
+            redemptionModal.classList.remove('active');
+            showResult();
+            try {
+                clickSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+        });
+
+        console.log('Quiz initialized');
+    } catch (error) {
+        console.error('Error initializing quiz:', error);
     }
-    clickSound.play();
-});
+}
 
-// Back to difficulty selection
-backBtn.addEventListener('click', () => {
-    tutorialModal.style.display = 'none';
-    startModal.style.display = 'flex';
-    clickSound.play();
-});
+// Show tutorial slide
+function showSlide(slideNumber) {
+    try {
+        console.log('Showing slide:', slideNumber);
+        tutorialSlides.forEach(slide => slide.classList.remove('active'));
+        tutorialDots.forEach(dot => dot.classList.remove('active'));
+        document.getElementById(`slide${slideNumber}`).classList.add('active');
+        document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
+        tutorialPrev.style.display = slideNumber === 1 ? 'none' : 'block';
+        tutorialNext.style.display = slideNumber === tutorialSlides.length ? 'none' : 'block';
+        currentSlide = slideNumber;
+    } catch (error) {
+        console.error('Error showing slide:', error);
+    }
+}
+
+// Show notification
+function showNotification(message) {
+    try {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        notification.classList.add('visible');
+        setTimeout(() => {
+            notification.classList.remove('visible');
+            setTimeout(() => notification.remove(), 500);
+        }, 2000);
+    } catch (error) {
+        console.error('Error showing notification:', error);
+    }
+}
 
 // Start quiz
-startQuizBtn.addEventListener('click', () => {
-    if (dontShowAgain.checked) {
-        localStorage.setItem('dontShowTutorial', 'true');
-    }
-    startQuiz();
-    clickSound.play();
-});
-
-// Back to About Us
-backAboutBtn.addEventListener('click', () => {
-    window.location.href = 'AboutUs.html';
-    clickSound.play();
-});
-
-// Shuffle array
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-// Start quiz logic
 function startQuiz() {
-    tutorialModal.style.display = 'none';
-    currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, 10);
-    currentQuestion = 0;
-    score = 0;
-    userAnswers = [];
-    timeTakenPerQuestion = [];
-    totalQuestionsAnswered = 0;
-    correctAnswers = 0;
-    powerUps = { extraTime1: true, extraTime2: true, timeFreeze: true };
-    isRedemptionRound = false;
-    redemptionQuestions = [];
-    scoreDisplay.textContent = `Score: ${score}`;
-    loadQuestion();
+    try {
+        tutorialModal.classList.remove('active');
+        quizSection.classList.add('visible');
+        currentQuestionIndex = 0;
+        score = 0;
+        correctAnswers = 0;
+        wrongAnswers = [];
+        totalTimeTaken = 0;
+        isRedemption = false;
+        extraTime1Used = false;
+        extraTime2Used = false;
+        timeFreezeUsed = false;
+        extraTime1.disabled = false;
+        extraTime2.disabled = false;
+        timeFreeze.disabled = false;
+        scoreDisplay.textContent = 'Score: 0';
+        loadQuestion();
+        console.log('Quiz started, difficulty:', selectedDifficulty);
+    } catch (error) {
+        console.error('Error starting quiz:', error);
+    }
 }
 
 // Load question
 function loadQuestion() {
-    if (currentQuestion >= currentQuestionSet.length && !isRedemptionRound) {
-        showRedemptionModal();
-        return;
+    try {
+        const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
+        if (currentQuestionIndex >= questionList.length) {
+            if (!isRedemption && wrongAnswers.length > 0) {
+                showRedemptionModal();
+            } else {
+                showResult();
+            }
+            return;
+        }
+
+        const question = questionList[currentQuestionIndex];
+        questionText.textContent = question.text;
+        options.innerHTML = '';
+        explanation.textContent = '';
+        explanation.classList.remove('visible');
+        nextBtn.classList.remove('visible');
+        exitGameBtn.classList.add('visible');
+
+        question.options.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
+            button.addEventListener('click', () => checkAnswer(option, question.answer));
+            options.appendChild(button);
+        });
+
+        progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
+        progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
+
+        // Set timer based on difficulty
+        timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+        timerText.textContent = `${timeLeft}s`;
+        timerCircle.style.strokeDashoffset = 0;
+        questionStartTime = Date.now();
+
+        clearInterval(timerInterval);
+        if (!isFrozen) {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        console.log('Loaded question:', question.text);
+    } catch (error) {
+        console.error('Error loading question:', error);
     }
-    if (isRedemptionRound && currentQuestion >= redemptionQuestions.length) {
-        showResults();
-        return;
-    }
-    const questionData = isRedemptionRound ? redemptionQuestions[currentQuestion] : currentQuestionSet[currentQuestion];
-    questionText.textContent = questionData.text;
-    options.innerHTML = '';
-    shuffleArray([...questionData.options]).forEach(option => {
-        const btn = document.createElement('button');
-        btn.classList.add('option-btn');
-        btn.innerHTML = `<i class="fas fa-check"></i> ${option}`;
-        btn.addEventListener('click', () => selectOption(option, questionData));
-        options.appendChild(btn);
-    });
-    explanation.style.display = 'none';
-    nextBtn.classList.remove('visible');
-    exitGameBtn.classList.remove('visible');
-    isAnswerSubmitted = false;
-    usedPowerUpThisQuestion = false;
-    isTimeStopped = false;
-    updateProgress();
-    startTimer();
-    updatePowerUpButtons();
 }
 
-// Update progress bar
-function updateProgress() {
-    const totalQuestions = isRedemptionRound ? redemptionQuestions.length : currentQuestionSet.length;
-    const progress = ((currentQuestion + 1) / totalQuestions) * 100;
-    progressBar.style.width = `${progress}%`;
-    progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
+// Update timer
+function updateTimer() {
+    try {
+        if (isFrozen) return;
+        timeLeft--;
+        timerText.textContent = `${timeLeft}s`;
+        const circumference = 188;
+        const offset = (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30)) * circumference;
+        timerCircle.style.strokeDashoffset = offset;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timeUpNotification.classList.add('visible');
+            try {
+                timeUpSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
+            }
+            setTimeout(() => {
+                timeUpNotification.classList.remove('visible');
+                wrongAnswers.push(questions[selectedDifficulty][currentQuestionIndex]);
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 2000);
+        }
+    } catch (error) {
+        console.error('Error updating timer:', error);
+    }
 }
 
-// Start timer
-function startTimer() {
-    clearInterval(timerInterval);
-    timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
-    timerText.textContent = `${timeLeft}s`;
-    startTime = Date.now();
-    timerCircle.style.strokeDashoffset = 0;
-    timerInterval = setInterval(() => {
-        if (!isTimeStopped) {
-            timeLeft--;
-            timerText.textContent = `${timeLeft}s`;
-            const circumference = 188;
-            const offset = (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30)) * circumference;
-            timerCircle.style.strokeDashoffset = offset;
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                timeUp();
+// Check answer
+function checkAnswer(selected, correct) {
+    try {
+        clearInterval(timerInterval);
+        totalTimeTaken += (Date.now() - questionStartTime) / 1000;
+        const buttons = options.querySelectorAll('.option-btn');
+        buttons.forEach(btn => {
+            btn.classList.add('disabled');
+            if (btn.textContent.includes(correct)) {
+                btn.classList.add('correct');
+            }
+            if (btn.textContent.includes(selected) && selected !== correct) {
+                btn.classList.add('wrong');
+            }
+        });
+
+        explanation.textContent = questions[selectedDifficulty][currentQuestionIndex].explanation;
+        explanation.classList.add('visible');
+
+        if (selected === correct) {
+            score += isRedemption ? 5 : 10;
+            correctAnswers++;
+            scoreDisplay.textContent = `Score: ${score}`;
+            try {
+                correctSound.play();
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            } catch (error) {
+                console.warn('Sound or confetti failed:', error);
+            }
+        } else {
+            if (!isRedemption) {
+                wrongAnswers.push(questions[selectedDifficulty][currentQuestionIndex]);
+            }
+            try {
+                wrongSound.play();
+            } catch (error) {
+                console.warn('Sound playback failed:', error);
             }
         }
-    }, 1000);
-}
 
-// Time up
-function timeUp() {
-    if (!isAnswerSubmitted) {
-        const questionData = isRedemptionRound ? redemptionQuestions[currentQuestion] : currentQuestionSet[currentQuestion];
-        userAnswers.push({
-            question: questionData.text,
-            userAnswer: 'No answer',
-            correctAnswer: questionData.answer,
-            isCorrect: false,
-            timeTaken: (Date.now() - startTime) / 1000
-        });
-        timeTakenPerQuestion.push((Date.now() - startTime) / 1000);
-        totalQuestionsAnswered++;
-        showExplanation(questionData, false);
-        timeUpNotification.classList.add('visible');
-        setTimeout(() => timeUpNotification.classList.remove('visible'), 2000);
-        wrongSound.play();
+        nextBtn.classList.add('visible');
+        console.log('Answer checked, selected:', selected, 'correct:', correct);
+    } catch (error) {
+        console.error('Error checking answer:', error);
     }
 }
 
-// Select option
-function selectOption(selected, questionData) {
-    if (isAnswerSubmitted) return;
-    isAnswerSubmitted = true;
-    clearInterval(timerInterval);
-    const isCorrect = selected === questionData.answer;
-    const timeTaken = (Date.now() - startTime) / 1000;
-    userAnswers.push({
-        question: questionData.text,
-        userAnswer: selected,
-        correctAnswer: questionData.answer,
-        isCorrect,
-        timeTaken
-    });
-    timeTakenPerQuestion.push(timeTaken);
-    totalQuestionsAnswered++;
-    if (isCorrect) {
-        score += isRedemptionRound ? 5 : 10;
-        correctAnswers++;
-        scoreDisplay.textContent = `Score: ${score}`;
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-        correctSound.play();
-    } else {
-        wrongSound.play();
-    }
-    showExplanation(questionData, isCorrect);
-}
-
-// Show explanation
-function showExplanation(questionData, isCorrect) {
-    const buttons = options.querySelectorAll('.option-btn');
-    buttons.forEach(btn => {
-        const optionText = btn.textContent.slice(2).trim();
-        btn.classList.add('disabled');
-        if (optionText === questionData.answer) {
-            btn.classList.add('correct');
-        } else if (optionText === userAnswers[userAnswers.length - 1].userAnswer && !isCorrect) {
-            btn.classList.add('wrong');
-        }
-    });
-    explanation.textContent = questionData.explanation;
-    explanation.classList.add('visible');
-    nextBtn.classList.add('visible');
-    exitGameBtn.classList.add('visible');
-}
-
-// Next question
-nextBtn.addEventListener('click', () => {
-    currentQuestion++;
-    loadQuestion();
-    clickSound.play();
-});
-
-// Exit game
-exitGameBtn.addEventListener('click', () => {
-    clearInterval(timerInterval);
-    quizSection.classList.remove('visible');
-    startModal.style.display = 'flex';
-    clickSound.play();
-});
-
-// Power-up buttons
-extraTime1.addEventListener('click', () => usePowerUp('extraTime1'));
-extraTime2.addEventListener('click', () => usePowerUp('extraTime2'));
-timeFreeze.addEventListener('click', () => usePowerUp('timeFreeze'));
-
-function usePowerUp(powerUp) {
-    if (isAnswerSubmitted || usedPowerUpThisQuestion || !powerUps[powerUp]) return;
-    usedPowerUpThisQuestion = true;
-    powerUps[powerUp] = false;
-    if (powerUp === 'extraTime1' || powerUp === 'extraTime2') {
+// Apply extra time
+function applyExtraTime(number) {
+    try {
+        if ((number === 1 && extraTime1Used) || (number === 2 && extraTime2Used)) return;
         timeLeft += 10;
         timerText.textContent = `${timeLeft}s`;
-    } else if (powerUp === 'timeFreeze') {
-        isTimeStopped = true;
-        timerText.textContent = 'Paused';
+        if (number === 1) {
+            extraTime1Used = true;
+            extraTime1.disabled = true;
+        } else {
+            extraTime2Used = true;
+            extraTime2.disabled = true;
+        }
+        try {
+            clickSound.play();
+        } catch (error) {
+            console.warn('Sound playback failed:', error);
+        }
+        console.log(`Extra time ${number} applied, new time: ${timeLeft}s`);
+    } catch (error) {
+        console.error('Error applying extra time:', error);
     }
-    updatePowerUpButtons();
-    clickSound.play();
 }
 
-function updatePowerUpButtons() {
-    extraTime1.disabled = !powerUps.extraTime1 || usedPowerUpThisQuestion || isAnswerSubmitted;
-    extraTime2.disabled = !powerUps.extraTime2 || usedPowerUpThisQuestion || isAnswerSubmitted;
-    timeFreeze.disabled = !powerUps.timeFreeze || usedPowerUpThisQuestion || isAnswerSubmitted;
+// Apply time freeze
+function applyTimeFreeze() {
+    try {
+        if (timeFreezeUsed) return;
+        isFrozen = true;
+        timeFreezeUsed = true;
+        timeFreeze.disabled = true;
+        clearInterval(timerInterval);
+        try {
+            clickSound.play();
+        } catch (error) {
+            console.warn('Sound playback failed:', error);
+        }
+        console.log('Time freeze applied');
+    } catch (error) {
+        console.error('Error applying time freeze:', error);
+    }
 }
 
 // Show redemption modal
 function showRedemptionModal() {
-    clearInterval(timerInterval);
-    redemptionQuestions = userAnswers
-        .filter(answer => !answer.isCorrect)
-        .map(answer => currentQuestionSet.find(q => q.text === answer.question))
-        .filter(q => q)
-        .slice(0, 3);
-    if (redemptionQuestions.length > 0) {
-        redemptionMessage.textContent = `You got ${redemptionQuestions.length} question(s) wrong. Try the redemption round to earn back points (5 points per correct answer).`;
-        redemptionModal.style.display = 'flex';
-    } else {
-        showResults();
+    try {
+        const numQuestions = Math.min(wrongAnswers.length, 3);
+        redemptionMessage.textContent = `You got ${wrongAnswers.length} question(s) wrong. You can attempt ${numQuestions} question(s) in the redemption round to earn 5 points each.`;
+        redemptionModal.classList.add('active');
+        console.log('Showing redemption modal');
+    } catch (error) {
+        console.error('Error showing redemption modal:', error);
     }
 }
 
-// Start redemption round
-startRedemptionBtn.addEventListener('click', () => {
-    redemptionModal.style.display = 'none';
-    isRedemptionRound = true;
-    currentQuestion = 0;
-    loadQuestion();
-    clickSound.play();
-});
+// Show result
+function showResult() {
+    try {
+        quizSection.classList.remove('visible');
+        resultModal.classList.add('active');
+        finalScore.textContent = score;
+        const accuracy = questions[selectedDifficulty].length > 0 ? ((correctAnswers / questions[selectedDifficulty].length) * 100).toFixed(2) : 0;
+        accuracyDisplay.textContent = accuracy;
+        const avgTime = correctAnswers + wrongAnswers.length > 0 ? (totalTimeTaken / (correctAnswers + wrongAnswers.length)).toFixed(2) : 0;
+        avgTimeDisplay.textContent = avgTime;
 
-// Skip redemption round
-skipRedemptionBtn.addEventListener('click', () => {
-    redemptionModal.style.display = 'none';
-    showResults();
-    clickSound.play();
-});
+        // Difficulty analysis
+        let analysis = '';
+        if (selectedDifficulty === 'easy') {
+            analysis = accuracy >= 80 ? 'Excellent grasp of basics!' : 'Review basic cybercrime laws.';
+        } else if (selectedDifficulty === 'medium') {
+            analysis = accuracy >= 70 ? 'Good scenario analysis!' : 'Practice scenario-based questions.';
+        } else {
+            analysis = accuracy >= 60 ? 'Strong legal knowledge!' : 'Study penalties and advanced laws.';
+        }
+        difficultyAnalysis.textContent = analysis;
 
-// Show results
-function showResults() {
-    clearInterval(timerInterval);
-    quizSection.classList.remove('visible');
-    finalScore.textContent = score;
-    const accuracy = totalQuestionsAnswered > 0 ? ((correctAnswers / totalQuestionsAnswered) * 100).toFixed(2) : 0;
-    accuracyDisplay.textContent = accuracy;
-    const avgTime = timeTakenPerQuestion.length > 0 ? (timeTakenPerQuestion.reduce((a, b) => a + b, 0) / timeTakenPerQuestion.length).toFixed(2) : 0;
-    avgTimeDisplay.textContent = avgTime;
-    difficultyAnalysis.textContent = `You played on ${selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1)} difficulty.`;
-    
-    // Thinking level
-    let thinkingText = '';
-    if (accuracy >= 80) {
-        thinkingText = 'Excellent critical thinking! You have a strong grasp of cybercrime laws.';
-    } else if (accuracy >= 50) {
-        thinkingText = 'Good analytical skills! Consider reviewing some concepts for better mastery.';
-    } else {
-        thinkingText = 'You’re on your way! Focus on understanding key provisions to improve.';
+        // Thinking level
+        const thinking = accuracy >= 80 ? 'Analytical and precise' : accuracy >= 60 ? 'Logical but needs refinement' : 'Needs structured thinking';
+        thinkingLevel.textContent = thinking;
+
+        // Remarks
+        const remark = score >= 80 ? 'Outstanding performance!' : score >= 50 ? 'Good effort, keep practicing!' : 'More study needed.';
+        remarks.textContent = remark;
+
+        // Problem-solving skills
+        const problemSolvingText = accuracy >= 70 ? 'Effective problem solver!' : 'Improve by analyzing explanations.';
+        problemSolving.textContent = problemSolvingText;
+
+        // Result summary
+        resultSummary.innerHTML = '';
+        const allQuestions = isRedemption ? wrongAnswers : questions[selectedDifficulty];
+        allQuestions.forEach((q, index) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.innerHTML = `
+                <div class="question">Q${index + 1}: ${q.text}</div>
+                <div class="user-answer ${q.userAnswer === q.answer ? '' : 'incorrect'}">
+                    Your Answer: ${q.userAnswer || 'None'}
+                </div>
+                <div class="correct-answer">Correct Answer: ${q.answer}</div>
+                <div class="time-taken">Time Taken: ${(q.timeTaken || 0).toFixed(2)}s</div>
+            `;
+            resultSummary.appendChild(block);
+        });
+
+        try {
+            gameOverSound.play();
+        } catch (error) {
+            console.warn('Sound playback failed:', error);
+        }
+        console.log('Showing results, score:', score);
+    } catch (error) {
+        console.error('Error showing result:', error);
     }
-    thinkingLevel.textContent = thinkingText;
-
-    // Remarks
-    let remarksText = '';
-    if (score >= 80) {
-        remarksText = 'Outstanding performance! You’re well-versed in cybercrime legislation.';
-    } else if (score >= 50) {
-        remarksText = 'Solid effort! Brush up on some details to boost your score.';
-    } else {
-        remarksText = 'Keep practicing! Familiarity with laws will improve your results.';
-    }
-    remarks.textContent = remarksText;
-
-    // Problem-solving skills
-    let problemSolvingText = '';
-    if (avgTime < 10) {
-        problemSolvingText = 'Lightning-fast decision-making! You solve problems efficiently.';
-    } else if (avgTime < 20) {
-        problemSolvingText = 'Balanced approach! You take time to make informed choices.';
-    } else {
-        problemSolvingText = 'Thoughtful analysis! Speed will improve with practice.';
-    }
-    problemSolving.textContent = problemSolvingText;
-
-    // Result summary
-    resultSummary.innerHTML = '';
-    userAnswers.forEach((answer, index) => {
-        const block = document.createElement('div');
-        block.classList.add('question-block');
-        block.innerHTML = `
-            <div class="question">Q${index + 1}: ${answer.question}</div>
-            <div class="user-answer ${answer.isCorrect ? '' : 'incorrect'}">Your Answer: ${answer.userAnswer}</div>
-            <div class="correct-answer">Correct Answer: ${answer.correctAnswer}</div>
-            <div class="time-taken">Time Taken: ${answer.timeTaken.toFixed(2)}s</div>
-        `;
-        resultSummary.appendChild(block);
-    });
-
-    resultModal.style.display = 'flex';
 }
 
-// Restart quiz
-restartBtn.addEventListener('click', () => {
-    resultModal.style.display = 'none';
-    startQuiz();
-    clickSound.play();
-});
+// Reset quiz
+function resetQuiz() {
+    try {
+        currentQuestionIndex = 0;
+        score = 0;
+        correctAnswers = 0;
+        wrongAnswers = [];
+        totalTimeTaken = 0;
+        isRedemption = false;
+        scoreDisplay.textContent = 'Score: 0';
+        progressBar.style.width = '0%';
+        progressText.textContent = '';
+        questionText.textContent = '';
+        options.innerHTML = '';
+        explanation.textContent = '';
+        clearInterval(timerInterval);
+        console.log('Quiz reset');
+    } catch (error) {
+        console.error('Error resetting quiz:', error);
+    }
+}
 
-// Exit to difficulty selection
-exitBtn.addEventListener('click', () => {
-    resultModal.style.display = 'none';
-    startModal.style.display = 'flex';
-    clickSound.play();
+// Window load
+window.addEventListener('load', () => {
+    try {
+        loaderOverlay.classList.remove('active');
+        initQuiz();
+        console.log('Page loaded');
+    } catch (error) {
+        console.error('Error on page load:', error);
+    }
 });
-
-// Initialize on load
-window.addEventListener('load', initQuiz);
     </script>
 </body>
 </html>
