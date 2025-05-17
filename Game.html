@@ -226,7 +226,7 @@
         }
         .quiz-section {
             position: relative;
-            z-index: 1000;
+            z-index: 1;
             max-width: 900px;
             margin: 0 auto;
             background: #fff;
@@ -360,6 +360,21 @@
             background: #666;
             cursor: not-allowed;
             opacity: 0.6;
+        }
+        .mute-btn {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            margin-left: 10px;
+        }
+        .mute-btn:hover {
+            transform: scale(1.1);
         }
         .question-box {
             background: #f9f9f9;
@@ -790,6 +805,34 @@
         .notification.visible {
             display: block;
         }
+        .redemption-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .redemption-box {
+            background: linear-gradient(135deg, #ffcc00, #e6b800);
+            color: #1e3c72;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .redemption-box:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
         body.dark-theme { background-color: #121212; color: #e0e0e0; }
         .dark-theme .content { background: linear-gradient(135deg, #28292c 0%, #1a1a1a 100%); }
         .dark-theme .content::before { background-color: rgba(40, 41, 44, 0.9); }
@@ -899,7 +942,7 @@
             .timer-svg { width: 50px; height: 50px; }
             .timer-circle { cx: 25; cy: 25; r: 20; stroke-width: 4; stroke-dasharray: 125.6; }
             .timer-text { font-size: 16px; transform: translate(-50%, -50%); }
-            .power-up-btn { font-size: 12px; padding: 8px; }
+            .power-up-btn, .mute-btn { font-size: 12px; padding: 8px; }
             .difficulty-options { flex-direction: column; align-items: center; }
             .difficulty-card { width: 90%; max-width: 300px; }
             .start-modal-content, .tutorial-modal-content, .result-modal-content, .redemption-modal-content { padding: 20px; }
@@ -908,6 +951,7 @@
             .tutorial-slide h3 { font-size: 22px; }
             .tutorial-slide p { font-size: 14px; }
             .tutorial-prev, .tutorial-next { font-size: 16px; padding: 8px; }
+            .redemption-box { width: 80px; height: 80px; font-size: 16px; }
         }
         @keyframes rotation {
             0% { transform: rotate(0deg); }
@@ -995,6 +1039,7 @@
                     <button class="power-up-btn" id="extraTime1" title="Add 10 seconds"><i class="fas fa-clock"></i> Extra Time 1</button>
                     <button class="power-up-btn" id="extraTime2" title="Add 10 seconds"><i class="fas fa-clock"></i> Extra Time 2</button>
                     <button class="power-up-btn" id="timeFreeze" title="Freeze Timer"><i class="fas fa-pause"></i> Time Freeze</button>
+                    <button class="mute-btn" id="muteBtn" title="Toggle Sound"><i class="fas fa-volume-up"></i></button>
                 </div>
                 <div class="question-box" id="questionBox">
                     <div class="question-text" id="questionText"></div>
@@ -1050,7 +1095,7 @@
                 <div class="tutorial-slide" id="slide3">
                     <h3>Scoring & Feedback</h3>
                     <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Scoreboard">
-                    <p>Earn 10 points per correct answer. After using Time Freeze, get an explanation. View detailed results at the end, with a redemption round for wrong answers. Exit anytime with the Exit Game button. Effects like button scaling and shaking enhance your experience!</p>
+                    <p>Earn 10 points per correct answer. After the quiz, choose redemption questions to recover points. View detailed results, with animations and sounds enhancing your experience!</p>
                 </div>
                 <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
                 <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
@@ -1095,9 +1140,9 @@
         <div class="redemption-modal" id="redemptionModal" style="display: none;">
             <div class="redemption-modal-content">
                 <h2>Redemption Round</h2>
-                <p>You can earn extra points by answering up to 3 questions from your incorrect answers.</p>
+                <p>Choose a box to answer a redemption question and earn extra points!</p>
+                <div class="redemption-boxes" id="redemptionBoxes"></div>
                 <div class="redemption-actions">
-                    <button class="start-redemption-btn" id="startRedemptionBtn"><i class="fas fa-play"></i> Start Redemption</button>
                     <button class="skip-redemption-btn" id="skipRedemptionBtn"><i class="fas fa-forward"></i> Skip Redemption</button>
                 </div>
             </div>
@@ -1517,8 +1562,8 @@
         const resultSummary = document.getElementById('resultSummary');
         const restartBtn = document.getElementById('restartBtn');
         const exitBtn = document.getElementById('exitBtn');
-        const startRedemptionBtn = document.getElementById('startRedemptionBtn');
         const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
+        const muteBtn = document.getElementById('muteBtn');
 
         let currentQuestionIndex = 0;
         let score = 0;
@@ -1536,17 +1581,25 @@
         let isRedemptionRound = false;
         let redemptionQuestions = [];
         let redemptionQuestionIndex = 0;
+        let isMuted = false;
 
-        const correctSound = new Howl({ src: ['https://www.soundjay.com/buttons/sounds/button-3.mp3'] });
-        const wrongSound = new Howl({ src: ['https://www.soundjay.com/buttons/sounds/button-4.mp3'] });
-        const timeUpSound = new Howl({ src: ['https://www.soundjay.com/misc/sounds/fail-buzzer-01.mp3'] });
+        const correctSound = new Howl({ src: ['https://freesound.org/data/previews/587/587230_4332999-lq.mp3'], volume: 0.3 });
+        const wrongSound = new Howl({ src: ['https://freesound.org/data/previews/587/587231_4332999-lq.mp3'], volume: 0.3 });
+        const timeUpSound = new Howl({ src: ['https://freesound.org/data/previews/587/587232_4332999-lq.mp3'], volume: 0.3 });
+        const bgMusic = new Howl({
+            src: ['https://freesound.org/data/previews/614/614095_228582-lq.mp3'],
+            volume: 0.2,
+            loop: true,
+            autoplay: true
+        });
 
         // Theme and sidebar handling
         themeToggle.addEventListener('change', () => {
             body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+                        localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
         });
 
+        // Load saved theme
         if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1554,6 +1607,16 @@
 
         mobileMenuIcon.addEventListener('click', () => {
             sidebar.classList.toggle('active');
+        });
+
+        // Mute/Unmute sound
+        muteBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            bgMusic.mute(isMuted);
+            correctSound.mute(isMuted);
+            wrongSound.mute(isMuted);
+            timeUpSound.mute(isMuted);
+            muteBtn.innerHTML = `<i class="fas fa-volume-${isMuted ? 'mute' : 'up'}"></i>`;
         });
 
         // Utility functions
@@ -1573,24 +1636,27 @@
             return array;
         }
 
-        // Quiz initialization
+        // Initialize quiz
         function initializeQuiz() {
-            showLoader();
             quizSection.classList.remove('visible');
             startModal.style.display = 'flex';
-            difficultyCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    difficultyCards.forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    selectedDifficulty = card.dataset.difficulty;
-                    tutorialBtn.disabled = false;
-                });
-            });
-            setTimeout(() => {
-                hideLoader();
-                quizSection.classList.add('visible');
-            }, 500);
+            tutorialModal.style.display = 'none';
+            resultModal.style.display = 'none';
+            redemptionModal.style.display = 'none';
+            difficultyCards.forEach(card => card.classList.remove('selected'));
+            tutorialBtn.disabled = true;
+            selectedDifficulty = '';
         }
+
+        // Difficulty selection
+        difficultyCards.forEach(card => {
+            card.addEventListener('click', () => {
+                difficultyCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedDifficulty = card.dataset.difficulty;
+                tutorialBtn.disabled = false;
+            });
+        });
 
         // Tutorial handling
         tutorialBtn.addEventListener('click', () => {
@@ -1612,38 +1678,29 @@
             startQuiz();
         });
 
-        document.getElementById('backAboutBtn').addEventListener('click', () => {
-            window.location.href = 'AboutUs.html';
-        });
-
-        const tutorialSlides = document.querySelectorAll('.tutorial-slide');
-        const tutorialDots = document.querySelectorAll('.tutorial-dot');
-        const tutorialPrev = document.getElementById('tutorialPrev');
-        const tutorialNext = document.getElementById('tutorialNext');
-
         function showTutorialSlide(slideNumber) {
-            tutorialSlides.forEach(slide => slide.classList.remove('active'));
-            tutorialDots.forEach(dot => dot.classList.remove('active'));
+            document.querySelectorAll('.tutorial-slide').forEach(slide => slide.classList.remove('active'));
+            document.querySelectorAll('.tutorial-dot').forEach(dot => dot.classList.remove('active'));
             document.getElementById(`slide${slideNumber}`).classList.add('active');
             document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
-            tutorialPrev.style.display = slideNumber === 1 ? 'none' : 'block';
-            tutorialNext.style.display = slideNumber === tutorialSlides.length ? 'none' : 'block';
+            document.getElementById('tutorialPrev').style.display = slideNumber === 1 ? 'none' : 'block';
+            document.getElementById('tutorialNext').style.display = slideNumber === 3 ? 'none' : 'block';
         }
 
-        tutorialDots.forEach(dot => {
+        document.querySelectorAll('.tutorial-dot').forEach(dot => {
             dot.addEventListener('click', () => {
                 showTutorialSlide(parseInt(dot.dataset.slide));
             });
         });
 
-        tutorialPrev.addEventListener('click', () => {
+        document.getElementById('tutorialPrev').addEventListener('click', () => {
             const currentSlide = parseInt(document.querySelector('.tutorial-dot.active').dataset.slide);
             if (currentSlide > 1) showTutorialSlide(currentSlide - 1);
         });
 
-        tutorialNext.addEventListener('click', () => {
+        document.getElementById('tutorialNext').addEventListener('click', () => {
             const currentSlide = parseInt(document.querySelector('.tutorial-dot.active').dataset.slide);
-            if (currentSlide < tutorialSlides.length) showTutorialSlide(currentSlide + 1);
+            if (currentSlide < 3) showTutorialSlide(currentSlide + 1);
         });
 
         // Quiz logic
@@ -1687,6 +1744,12 @@
             questionStartTime = Date.now();
             startTimer();
             updatePowerUpButtons();
+            // Ensure clickability
+            quizSection.style.pointerEvents = 'auto';
+            document.querySelectorAll('.option-btn, .power-up-btn').forEach(btn => {
+                btn.style.cursor = 'pointer';
+                btn.style.pointerEvents = 'auto';
+            });
         }
 
         function startTimer() {
@@ -1711,7 +1774,7 @@
         function showTimeUpNotification() {
             const notification = document.getElementById('timeUpNotification');
             notification.classList.add('visible');
-            timeUpSound.play();
+            if (!isMuted) timeUpSound.play();
             setTimeout(() => {
                 notification.classList.remove('visible');
             }, 2000);
@@ -1735,7 +1798,7 @@
             explanation.textContent = question.explanation;
             explanation.style.display = 'block';
             disablePowerUps();
-            showNextOrExitButtons();
+            showNextOrRedemption();
         }
 
         function selectOption(selected, correct) {
@@ -1764,31 +1827,36 @@
                 score += 10;
                 correctAnswers++;
                 scoreDisplay.textContent = `Score: ${score}`;
-                correctSound.play();
+                if (!isMuted) correctSound.play();
                 confetti({
                     particleCount: 100,
                     spread: 70,
                     origin: { y: 0.6 }
                 });
             } else {
-                wrongSound.play();
+                if (!isMuted) wrongSound.play();
             }
             explanation.textContent = question.explanation;
             explanation.style.display = 'block';
             disablePowerUps();
-            showNextOrExitButtons();
+            showNextOrRedemption();
         }
 
-        function showNextOrExitButtons() {
+        function showNextOrRedemption() {
             if (currentQuestionIndex < currentQuestions.length - 1) {
                 nextBtn.classList.add('visible');
+                exitGameBtn.classList.add('visible');
+            } else if (!isRedemptionRound) {
+                showRedemptionModal();
+            } else {
+                showResultModal();
             }
-            exitGameBtn.classList.add('visible');
         }
 
         function disablePowerUps() {
             document.querySelectorAll('.power-up-btn').forEach(btn => {
                 btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
             });
         }
 
@@ -1796,19 +1864,23 @@
             document.getElementById('extraTime1').disabled = usedPowerUps.extraTime1 || isTimeFrozen;
             document.getElementById('extraTime2').disabled = usedPowerUps.extraTime2 || isTimeFrozen;
             document.getElementById('timeFreeze').disabled = usedPowerUps.timeFreeze;
+            document.querySelectorAll('.power-up-btn:not(:disabled)').forEach(btn => {
+                btn.style.cursor = 'pointer';
+                btn.style.pointerEvents = 'auto';
+            });
         }
 
         nextBtn.addEventListener('click', () => {
             currentQuestionIndex++;
             if (currentQuestionIndex < currentQuestions.length) {
                 loadQuestion();
-            } else {
-                endQuiz();
             }
         });
 
         exitGameBtn.addEventListener('click', () => {
-            endQuiz();
+            clearInterval(timerInterval);
+            quizSection.classList.remove('visible');
+            initializeQuiz();
         });
 
         document.getElementById('extraTime1').addEventListener('click', () => {
@@ -1842,30 +1914,31 @@
             }
         });
 
-        function endQuiz() {
-            clearInterval(timerInterval);
+        function showRedemptionModal() {
+            redemptionModal.style.display = 'flex';
             quizSection.classList.remove('visible');
-            if (wrongAnswers.length > 0 && !isRedemptionRound) {
-                showRedemptionModal();
-            } else {
-                showResultModal();
+            // Ensure at least one redemption question
+            redemptionQuestions = wrongAnswers.length > 0 ? shuffleArray([...wrongAnswers]) : shuffleArray([...currentQuestions]).slice(0, 1);
+            const numBoxes = Math.min(Math.max(wrongAnswers.length, 1), 3);
+            const redemptionBoxes = document.getElementById('redemptionBoxes');
+            redemptionBoxes.innerHTML = '';
+            for (let i = 0; i < numBoxes; i++) {
+                const box = document.createElement('button');
+                box.classList.add('redemption-box');
+                box.textContent = `Box ${i + 1}`;
+                box.addEventListener('click', () => startRedemptionQuestion(i));
+                redemptionBoxes.appendChild(box);
             }
         }
 
-        function showRedemptionModal() {
-            redemptionModal.style.display = 'flex';
-            redemptionQuestions = shuffleArray([...wrongAnswers]).slice(0, Math.min(3, wrongAnswers.length));
-            redemptionQuestionIndex = 0;
-        }
-
-        startRedemptionBtn.addEventListener('click', () => {
+        function startRedemptionQuestion(boxIndex) {
             redemptionModal.style.display = 'none';
             isRedemptionRound = true;
-            currentQuestions = redemptionQuestions;
+            currentQuestions = [redemptionQuestions[boxIndex % redemptionQuestions.length]];
             currentQuestionIndex = 0;
             quizSection.classList.add('visible');
             loadQuestion();
-        });
+        }
 
         skipRedemptionBtn.addEventListener('click', () => {
             redemptionModal.style.display = 'none';
@@ -1874,10 +1947,11 @@
 
         function showResultModal() {
             resultModal.style.display = 'flex';
+            quizSection.classList.remove('visible');
             finalScore.textContent = score;
-            const accuracy = (correctAnswers / currentQuestions.length) * 100;
+            const accuracy = (correctAnswers / (currentQuestions.length + (isRedemptionRound ? redemptionQuestions.length : 0))) * 100;
             accuracyDisplay.textContent = accuracy.toFixed(2);
-            const avgTime = totalTimeTaken / currentQuestions.length;
+            const avgTime = totalTimeTaken / (currentQuestions.length + (isRedemptionRound ? redemptionQuestions.length : 0));
             avgTimeDisplay.textContent = avgTime.toFixed(2);
             const difficultyAnalysis = `You answered ${correctAnswers} out of ${currentQuestions.length} questions correctly on ${selectedDifficulty} difficulty.`;
             difficultyAnalysisDisplay.textContent = difficultyAnalysis;
@@ -1926,7 +2000,7 @@
         });
 
         // Initialize quiz on page load
-        if (localStorage.getItem('skipTutorial') === 'true') {
+        if (localStorage.getItem('skipTutorial') === 'true' && selectedDifficulty) {
             startModal.style.display = 'flex';
             quizSection.classList.remove('visible');
         } else {
