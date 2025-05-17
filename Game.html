@@ -49,10 +49,6 @@
             box-sizing: border-box;
             animation: rotation 1s linear infinite;
         }
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
         .dark-theme .loader {
             border-color: #d7b15c;
             border-bottom-color: transparent;
@@ -71,7 +67,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1001;
+            z-index: 1002;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         .mobile-nav .logo {
@@ -101,8 +97,11 @@
             top: 0;
             left: 0;
             transition: transform 0.3s ease;
-            z-index: 1000;
+            z-index: 1001;
             overflow-y: auto;
+        }
+        .sidebar.active {
+            z-index: 1001; /* Ensure sidebar stays in front on mobile */
         }
         .sidebar h1 {
             text-align: center;
@@ -297,10 +296,6 @@
             background-size: 30px 30px;
             animation: moveStripes 2s linear infinite;
         }
-        @keyframes moveStripes {
-            0% { background-position: 0 0; }
-            100% { background-position: 30px 0; }
-        }
         .progress-text {
             font-size: 1.2em;
             margin-bottom: 10px;
@@ -349,6 +344,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         .power-up-btn:hover {
             transform: scale(1.1);
@@ -406,6 +405,10 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
             touch-action: manipulation;
         }
         .option-btn::before {
@@ -489,6 +492,10 @@
             position: relative;
             z-index: 1000;
             touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         .exit-game-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -613,6 +620,10 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin: 10px;
             touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         .back-about-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -750,29 +761,6 @@
         .result-stats div {
             margin: 5px 0;
         }
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
         body.dark-theme { background-color: #121212; color: #e0e0e0; }
         .dark-theme .content { background: linear-gradient(135deg, #28292c 0%, #1a1a1a 100%); }
         .dark-theme .content::before { background-color: rgba(40, 41, 44, 0.9); }
@@ -847,7 +835,7 @@
                 left: 0;
                 padding: 15px;
                 transform: translateX(-100%);
-                z-index: 1000;
+                z-index: 1001; /* Ensure sidebar stays in front */
                 overflow-y: auto;
                 background-size: cover;
                 background-position: center;
@@ -890,6 +878,38 @@
             .tutorial-slide h3 { font-size: 22px; }
             .tutorial-slide p { font-size: 14px; }
             .tutorial-prev, .tutorial-next { font-size: 16px; padding: 8px; }
+        }
+        /* Moved Effects to Bottom */
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes moveStripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 30px 0; }
         }
     </style>
 </head>
@@ -942,9 +962,9 @@
                     </svg>
                     <span class="timer-text" id="timerText"></span>
                     <div class="power-ups">
-                        <button class="power-up-btn" id="addTime1" title="Add 10 seconds">+10s</button>
-                        <button class="power-up-btn" id="addTime2" title="Add 10 seconds">+10s</button>
-                        <button class="power-up-btn" id="timeStop" title="Stop Timer">⏸</button>
+                        <button class="power-up-btn" id="extraTime1" title="Add 10 seconds"><i class="fas fa-clock"></i> Extra Time 1</button>
+                        <button class="power-up-btn" id="extraTime2" title="Add 10 seconds"><i class="fas fa-clock"></i> Extra Time 2</button>
+                        <button class="power-up-btn" id="timeFreeze" title="Freeze Timer"><i class="fas fa-pause"></i> Time Freeze</button>
                     </div>
                 </div>
                 <div class="question-box" id="questionBox">
@@ -952,8 +972,8 @@
                     <div class="options" id="options"></div>
                     <div class="explanation" id="explanation"></div>
                 </div>
-                <button class="next-btn" id="nextBtn">Next Question</button>
-                <button class="exit-game-btn" id="exitGameBtn">Exit Game</button>
+                <button class="next-btn" id="nextBtn"><i class="fas fa-arrow-right"></i> Next Question</button>
+                <button class="exit-game-btn" id="exitGameBtn"><i class="fas fa-door-open"></i> Exit Game</button>
                 <div class="score" id="score">Score: 0</div>
             </section>
         </main>
@@ -979,8 +999,8 @@
                     </div>
                 </div>
                 <div class="start-modal-actions">
-                    <button class="tutorial-btn" id="tutorialBtn" disabled>Proceed to Tutorial</button>
-                    <button class="back-about-btn" id="backAboutBtn">Back to About Us</button>
+                    <button class="tutorial-btn" id="tutorialBtn" disabled><i class="fas fa-info-circle"></i> Proceed to Tutorial</button>
+                    <button class="back-about-btn" id="backAboutBtn"><i class="fas fa-arrow-left"></i> Back to About Us</button>
                 </div>
             </div>
         </div>
@@ -989,17 +1009,17 @@
                 <div class="tutorial-slide" id="slide1">
                     <h3>Welcome to the Quiz!</h3>
                     <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book">
-                    <p>Test your knowledge of cybercrime laws in the Philippines and worldwide. Answer questions based on legal provisions. Use power-ups like +10 seconds or Time Stop to strategize!</p>
+                    <p>Test your knowledge of cybercrime laws in the Philippines and worldwide. Answer questions based on legal provisions. Use power-ups like Extra Time or Time Freeze to strategize!</p>
                 </div>
                 <div class="tutorial-slide" id="slide2">
                     <h3>Gameplay & Power-Ups</h3>
                     <img src="https://i.imgur.com/TCTi8I2.jpeg" alt="Digital Security">
-                    <p>Choose Easy (60s), Medium (45s), or Hard (30s). Use two +10s power-ups to add time or one Time Stop to pause the timer and review. Questions are randomized each game.</p>
+                    <p>Choose Easy (60s), Medium (45s), or Hard (30s). Use two Extra Time power-ups to add 10 seconds each or one Time Freeze to pause the timer and review explanations. Questions are randomized each game. Effects include confetti bursts for correct answers and animations for feedback.</p>
                 </div>
                 <div class="tutorial-slide" id="slide3">
                     <h3>Scoring & Feedback</h3>
                     <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Scoreboard">
-                    <p>Earn 10 points per correct answer. After using Time Stop, get an explanation. View detailed results at the end. Exit anytime with the Exit Game button.</p>
+                    <p>Earn 10 points per correct answer. After using Time Freeze, get an explanation. View detailed results at the end. Exit anytime with the Exit Game button. Effects like button scaling and shaking enhance your experience!</p>
                 </div>
                 <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
                 <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
@@ -1009,8 +1029,8 @@
                     <div class="tutorial-dot" data-slide="3"></div>
                 </div>
                 <div class="tutorial-actions">
-                    <button class="back-btn" id="backBtn">Back to Difficulty</button>
-                    <button class="start-quiz-btn" id="startQuizBtn">Start Quiz Now</button>
+                    <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Difficulty</button>
+                    <button class="start-quiz-btn" id="startQuizBtn"><i class="fas fa-play"></i> Start Quiz Now</button>
                 </div>
                 <div class="dont-show-again">
                     <input type="checkbox" id="dontShowAgain">
@@ -1036,8 +1056,8 @@
                 <h3>Detailed Results</h3>
                 <div class="result-summary" id="resultSummary"></div>
                 <div class="result-actions">
-                    <button class="restart-btn" id="restartBtn">Play Again</button>
-                    <button class="exit-btn" id="exitBtn">Go Back to Difficulty</button>
+                    <button class="restart-btn" id="restartBtn"><i class="fas fa-redo"></i> Play Again</button>
+                    <button class="exit-btn" id="exitBtn"><i class="fas fa-times"></i> Go Back to Difficulty</button>
                 </div>
             </div>
         </div>
@@ -1459,9 +1479,9 @@
         const tutorialDots = document.querySelectorAll('.tutorial-dot');
         const tutorialPrev = document.getElementById('tutorialPrev');
         const tutorialNext = document.getElementById('tutorialNext');
-        const addTime1 = document.getElementById('addTime1');
-        const addTime2 = document.getElementById('addTime2');
-        const timeStop = document.getElementById('timeStop');
+        const extraTime1 = document.getElementById('extraTime1');
+        const extraTime2 = document.getElementById('extraTime2');
+        const timeFreeze = document.getElementById('timeFreeze');
         let currentQuestion = 0;
         let score = 0;
         let timeLeft = 45;
@@ -1472,7 +1492,7 @@
         let timeTakenPerQuestion = [];
         let currentQuestionSet = [];
         let currentSlide = 1;
-        let powerUps = { addTime1: true, addTime2: true, timeStop: true };
+        let powerUps = { extraTime1: true, extraTime2: true, timeFreeze: true };
         let isTimeStopped = false;
         const sounds = {
             start: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
@@ -1549,7 +1569,7 @@
             tutorialModal.style.display = 'none';
             startModal.style.display = 'flex';
         });
- startQuizBtn.addEventListener('click', () => {
+        startQuizBtn.addEventListener('click', () => {
             if (!selectedDifficulty) {
                 alert('Please select a difficulty level first!');
                 tutorialModal.style.display = 'none';
@@ -1568,23 +1588,31 @@
                 startModal.style.display = 'flex';
             }
         });
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-               function startQuiz() {
+function shuffleArray(array) {
+    // Input validation
+    if (!Array.isArray(array) || array.length === 0) {
+        return array;
+    }
+    // Fisher-Yates shuffle algorithm
+    for (let i = array.length - 1; i >= 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        // Swap elements using a temporary variable (for broader compatibility)
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+        function startQuiz() {
             if (!sounds.start) {
                 console.warn('Sound not loaded, proceeding without sound.');
             } else {
                 sounds.start.play();
             }
-            powerUps = { addTime1: true, addTime2: true, timeStop: true };
-            addTime1.disabled = false;
-            addTime2.disabled = false;
-            timeStop.disabled = false;
+            powerUps = { extraTime1: true, extraTime2: true, timeFreeze: true };
+            extraTime1.disabled = false;
+            extraTime2.disabled = false;
+            timeFreeze.disabled = false;
 
             if (!questions[selectedDifficulty]) {
                 throw new Error(`No questions available for difficulty: ${selectedDifficulty}`);
@@ -1593,144 +1621,149 @@
             if (selectedDifficulty === 'medium') {
                 const easyQuestions = shuffleArray([...questions.easy]).slice(0, 5);
                 const mediumQuestions = shuffleArray([...questions.medium]).slice(0, 5);
-                currentQuestionSet = shuffleArray([...easyQuestions, ...mediumQuestions]);
+                currentQuestionSet = [...easyQuestions, ...mediumQuestions];
             } else {
                 currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
             }
 
-            quizSection.style.display = 'block'; // Ensure the quiz section is not hidden
+            if (currentQuestionSet.length < totalQuestions) {
+                throw new Error(`Not enough questions for difficulty: ${selectedDifficulty}`);
+            }
+
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            timeTakenPerQuestion = [];
+            scoreDisplay.textContent = `Score: ${score}`;
             quizSection.classList.add('visible');
             loadQuestion();
             startTimer();
+        }
+
+        function startTimer() {
+            timerText.textContent = timeLeft;
+            timerCircle.style.strokeDashoffset = 0;
+            clearInterval(timerInterval);
+            if (!isTimeStopped) {
+                timerInterval = setInterval(() => {
+                    if (isTimeStopped) return;
+                    timeLeft--;
+                    timerText.textContent = timeLeft;
+                    const offset = (188 * (timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30)));
+                    timerCircle.style.strokeDashoffset = 188 - offset;
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        handleTimeout();
+                    }
+                }, 1000);
+            }
+        }
+
+        extraTime1.addEventListener('click', () => {
+            if (powerUps.extraTime1) {
+                sounds.powerUp.play();
+                timeLeft += 10;
+                timerText.textContent = timeLeft;
+                powerUps.extraTime1 = false;
+                extraTime1.disabled = true;
+                startTimer();
+            }
+        });
+
+        extraTime2.addEventListener('click', () => {
+            if (powerUps.extraTime2) {
+                sounds.powerUp.play();
+                timeLeft += 10;
+                timerText.textContent = timeLeft;
+                powerUps.extraTime2 = false;
+                extraTime2.disabled = true;
+                startTimer();
+            }
+        });
+
+        timeFreeze.addEventListener('click', () => {
+            if (powerUps.timeFreeze) {
+                sounds.powerUp.play();
+                isTimeStopped = true;
+                clearInterval(timerInterval);
+                powerUps.timeFreeze = false;
+                timeFreeze.disabled = true;
+                options.querySelectorAll('.option-btn').forEach(btn => btn.classList.add('disabled'));
+                explanation.classList.add('visible');
+            }
+        });
+
+        function handleTimeout() {
+            userAnswers.push({ question: currentQuestionSet[currentQuestion].text, answer: 'No answer', correct: false });
+            timeTakenPerQuestion.push(selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30);
+            explanation.textContent = currentQuestionSet[currentQuestion].explanation;
+            explanation.classList.add('visible');
+            options.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.add('disabled');
+                if (btn.textContent === currentQuestionSet[currentQuestion].answer) {
+                    btn.classList.add('correct');
+                }
+            });
+            nextBtn.classList.add('visible');
             exitGameBtn.classList.add('visible');
         }
+
         function loadQuestion() {
             const question = currentQuestionSet[currentQuestion];
             questionText.textContent = question.text;
             options.innerHTML = '';
             explanation.classList.remove('visible');
-            explanation.textContent = '';
-            const shuffledOptions = shuffleArray([...question.options]);
-            shuffledOptions.forEach((option, index) => {
-                const btn = document.createElement('button');
-                btn.classList.add('option-btn');
-                btn.innerHTML = `${String.fromCharCode(97 + index)}. ${option}`;
-                btn.addEventListener('click', () => checkAnswer(option === question.answer, btn, option));
-                options.appendChild(btn);
-            });
-            progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
-            progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
-        }
-        function startTimer() {
-            if (isTimeStopped) return;
+            nextBtn.classList.remove('visible');
+            exitGameBtn.classList.remove('visible');
+            isTimeStopped = false;
             timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
-            timerText.textContent = timeLeft;
-            const totalTime = timeLeft;
-            timerCircle.style.strokeDashoffset = 0;
-            timerInterval = setInterval(() => {
-                if (!isTimeStopped) {
-                    timeLeft--;
-                    timerText.textContent = timeLeft;
-                    const offset = 188 * (1 - timeLeft / totalTime);
-                    timerCircle.style.strokeDashoffset = offset;
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        checkAnswer(false, null, 'Time Out');
+            startTimer();
+
+            const startTime = Date.now();
+            progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
+            progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
+
+            shuffleArray(question.options).forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('option-btn');
+                button.textContent = option;
+                button.addEventListener('click', () => {
+                    const timeTaken = (Date.now() - startTime) / 1000;
+                    timeTakenPerQuestion.push(timeTaken);
+                    clearInterval(timerInterval);
+                    options.querySelectorAll('.option-btn').forEach(btn => btn.classList.add('disabled'));
+                    const isCorrect = option === question.answer;
+                    userAnswers.push({ question: question.text, answer: option, correct: isCorrect });
+                    if (isCorrect) {
+                        score += 10;
+                        scoreDisplay.textContent = `Score: ${score}`;
+                        button.classList.add('correct');
+                        sounds.correct.play();
+                        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                    } else {
+                        button.classList.add('wrong');
+                        sounds.wrong.play();
+                        options.querySelectorAll('.option-btn').forEach(btn => {
+                            if (btn.textContent === question.answer) {
+                                btn.classList.add('correct');
+                            }
+                        });
                     }
-                }
-            }, 1000);
-        }
-        addTime1.addEventListener('click', () => {
-            if (powerUps.addTime1 && !isTimeStopped) {
-                sounds.powerUp.play();
-                timeLeft += 10;
-                timerText.textContent = timeLeft;
-                powerUps.addTime1 = false;
-                addTime1.disabled = true;
-                confetti({ particleCount: 50, spread: 50,
-                                    originY: 0.6 });
-            }
-        });
-
-        addTime2.addEventListener('click', () => {
-            if (powerUps.addTime2 && !isTimeStopped) {
-                sounds.powerUp.play();
-                timeLeft += 10;
-                timerText.textContent = timeLeft;
-                powerUps.addTime2 = false;
-                addTime2.disabled = true;
-                confetti({ particleCount: 50, spread: 50, originY: 0.6 });
-            }
-        });
-
-        timeStop.addEventListener('click', () => {
-            if (powerUps.timeStop) {
-                sounds.powerUp.play();
-                isTimeStopped = true;
-                clearInterval(timerInterval);
-                powerUps.timeStop = false;
-                timeStop.disabled = true;
-                const question = currentQuestionSet[currentQuestion];
-                explanation.textContent = question.explanation;
-                explanation.classList.add('visible');
-                gsap.fromTo('.explanation', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
-                confetti({ particleCount: 50, spread: 50, originY: 0.6 });
-            }
-        });
-
-        function checkAnswer(isCorrect, button, selectedOption) {
-            clearInterval(timerInterval);
-            const question = currentQuestionSet[currentQuestion];
-            const timeTaken = (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30) - timeLeft;
-            timeTakenPerQuestion.push(timeTaken);
-            userAnswers.push({
-                question: question.text,
-                userAnswer: selectedOption,
-                correctAnswer: question.answer,
-                isCorrect,
-                timeTaken
-            });
-
-            const buttons = options.querySelectorAll('.option-btn');
-            buttons.forEach(btn => {
-                btn.classList.add('disabled');
-                if (btn.textContent.includes(question.answer)) {
-                    btn.classList.add('correct');
-                } else if (btn === button && !isCorrect) {
-                    btn.classList.add('wrong');
-                }
-            });
-
-            if (isCorrect) {
-                score += 10;
-                scoreDisplay.textContent = `Score: ${score}`;
-                sounds.correct.play();
-                confetti({ particleCount: 100, spread: 70, originY: 0.6 });
-                gsap.to(button, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 });
-            } else {
-                sounds.wrong.play();
-                if (!isTimeStopped) {
                     explanation.textContent = question.explanation;
                     explanation.classList.add('visible');
-                    gsap.fromTo('.explanation', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
-                }
-                if (button) {
-                    gsap.to(button, { x: -5, duration: 0.1, repeat: 3, yoyo: true });
-                }
-            }
-
-            nextBtn.classList.add('visible');
+                    nextBtn.classList.add('visible');
+                    exitGameBtn.classList.add('visible');
+                });
+                options.appendChild(button);
+            });
         }
 
         nextBtn.addEventListener('click', () => {
             currentQuestion++;
-            isTimeStopped = false;
             if (currentQuestion < totalQuestions) {
                 loadQuestion();
-                startTimer();
-                nextBtn.classList.remove('visible');
             } else {
-                endQuiz();
+                showResults();
             }
         });
 
@@ -1738,108 +1771,96 @@
             clearInterval(timerInterval);
             quizSection.classList.remove('visible');
             startModal.style.display = 'flex';
-            resetQuiz();
+            currentQuestion = 0;
+            score = 0;
+            scoreDisplay.textContent = `Score: ${score}`;
+            progressBar.style.width = '0%';
+            progressText.textContent = '';
         });
 
         restartBtn.addEventListener('click', () => {
             resultModal.style.display = 'none';
-            resetQuiz();
             startQuiz();
         });
 
         exitBtn.addEventListener('click', () => {
             resultModal.style.display = 'none';
             startModal.style.display = 'flex';
-            resetQuiz();
-        });
-
-        function resetQuiz() {
             currentQuestion = 0;
             score = 0;
-            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
-            userAnswers = [];
-            timeTakenPerQuestion = [];
-            scoreDisplay.textContent = 'Score: 0';
+            scoreDisplay.textContent = `Score: ${score}`;
             progressBar.style.width = '0%';
             progressText.textContent = '';
-            powerUps = { addTime1: true, addTime2: true, timeStop: true };
-            addTime1.disabled = false;
-            addTime2.disabled = false;
-            timeStop.disabled = false;
-            isTimeStopped = false;
-            quizSection.classList.remove('visible');
-        }
+        });
 
-        function endQuiz() {
+        function showResults() {
             sounds.complete.play();
             quizSection.classList.remove('visible');
             resultModal.style.display = 'flex';
             finalScore.textContent = score;
-            const accuracy = (score / (totalQuestions * 10)) * 100;
+            const correctAnswers = userAnswers.filter(answer => answer.correct).length;
+            const accuracy = (correctAnswers / totalQuestions) * 100;
             accuracyDisplay.textContent = accuracy.toFixed(2);
             const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / timeTakenPerQuestion.length;
             avgTimeDisplay.textContent = avgTime.toFixed(2);
 
-            let difficultyText = selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1);
-            if (selectedDifficulty === 'medium') {
-                const easyCorrect = userAnswers.filter((ans, idx) => ans.isCorrect && idx < 5).length;
-                const mediumCorrect = userAnswers.filter((ans, idx) => ans.isCorrect && idx >= 5).length;
-                difficultyText += ` (Easy: ${easyCorrect}/5, Medium: ${mediumCorrect}/5)`;
+            let difficultyMessage = '';
+            if (selectedDifficulty === 'easy') {
+                difficultyMessage = 'You handled basic cybercrime law questions well.';
+            } else if (selectedDifficulty === 'medium') {
+                difficultyMessage = 'You managed a mix of basic and scenario-based questions effectively.';
             } else {
-                const correctCount = userAnswers.filter(ans => ans.isCorrect).length;
-                difficultyText += ` (${correctCount}/${totalQuestions})`;
+                difficultyMessage = 'You tackled advanced cybercrime law questions with confidence.';
             }
-            difficultyAnalysis.textContent = difficultyText;
+            difficultyAnalysis.textContent = difficultyMessage;
 
-            let thinkingLevelText, remarksText, problemSolvingText;
+            let thinkingMessage = '';
             if (accuracy >= 80) {
-                thinkingLevelText = 'Advanced: You demonstrate a strong understanding of cybercrime laws.';
-                remarksText = 'Excellent performance! You have a solid grasp of legal concepts.';
-                problemSolvingText = 'You excel at analyzing and solving complex legal scenarios.';
+                thinkingMessage = 'You demonstrate strong analytical thinking, with a deep understanding of cybercrime laws.';
             } else if (accuracy >= 50) {
-                thinkingLevelText = 'Intermediate: You have a good foundation but can improve.';
-                remarksText = 'Good effort! Review some concepts to boost your score.';
-                problemSolvingText = 'You show decent problem-solving skills but may need practice.';
+                thinkingMessage = 'You show moderate analytical skills, with room to deepen your legal knowledge.';
             } else {
-                thinkingLevelText = 'Beginner: You need to build your knowledge further.';
-                remarksText = 'Keep studying! Focus on key legal provisions.';
-                problemSolvingText = 'Work on analyzing scenarios to improve your skills.';
+                thinkingMessage = 'Your analytical thinking needs improvement; consider reviewing cybercrime laws in detail.';
             }
-            thinkingLevel.textContent = thinkingLevelText;
-            remarks.textContent = remarksText;
-            problemSolving.textContent = problemSolvingText;
+            thinkingLevel.textContent = thinkingMessage;
+
+            let remarksMessage = '';
+            if (score >= 80) {
+                remarksMessage = 'Excellent performance! You have a solid grasp of cybercrime laws.';
+            } else if (score >= 50) {
+                remarksMessage = 'Good effort! You understand the basics but can improve on details.';
+            } else {
+                remarksMessage = 'Needs improvement. Focus on studying cybercrime laws more thoroughly.';
+            }
+            remarks.textContent = remarksMessage;
+
+            let problemSolvingMessage = '';
+            if (avgTime <= 15) {
+                problemSolvingMessage = 'You solve problems quickly, showing excellent decision-making skills.';
+            } else if (avgTime <= 30) {
+                problemSolvingMessage = 'You have decent problem-solving skills, with a balanced approach to decision-making.';
+            } else {
+                problemSolvingMessage = 'Your problem-solving speed could improve; try practicing under timed conditions.';
+            }
+            problemSolving.textContent = problemSolvingMessage;
 
             resultSummary.innerHTML = '';
-            userAnswers.forEach((ans, idx) => {
-                const div = document.createElement('div');
-                div.innerHTML = `
-                    <div class="question">Q${idx + 1}: ${ans.question}</div>
-                    <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
-                    <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
-                    <div class="time-taken">Time Taken: ${ans.timeTaken}s</div>
+            userAnswers.forEach((answer, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('result-summary');
+                questionDiv.innerHTML = `
+                    <div class="question">Question ${index + 1}: ${answer.question}</div>
+                    <div class="user-answer">Your Answer: ${answer.answer}</div>
+                    <div class="correct-answer">Correct Answer: ${currentQuestionSet[index].answer}</div>
+                    <div class="time-taken">Time Taken: ${timeTakenPerQuestion[index].toFixed(2)}s</div>
                 `;
-                resultSummary.appendChild(div);
+                resultSummary.appendChild(questionDiv);
             });
-
-            confetti({ particleCount: 200, spread: 90, duration: 3000 });
-            gsap.from('.result-modal-content', { opacity: 0, scale: 0.8, duration: 0.5 });
         }
 
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                mobileMenuIcon.querySelector('i').classList.add('fa-bars');
-                mobileMenuIcon.querySelector('i').classList.remove('fa-times');
-            }
+        window.addEventListener('load', () => {
+            loaderOverlay.classList.remove('active');
         });
-
-document.addEventListener('DOMContentLoaded', () => {
-    quizSection.style.display = 'none';
-    startModal.style.display = 'flex'; // Ensure modal is visible
-    setTimeout(() => {
-        gsap.to('.start-modal-content', { opacity: 1, scale: 1, duration: 0.5 });
-    }, 100);
-});
     </script>
 </body>
 </html>
