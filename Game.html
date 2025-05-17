@@ -157,7 +157,7 @@
             font-size: 18px;
         }
         .dark-theme-label img {
-            width: 30 Wpx;
+            width: 30px;
             height: 30px;
             border-radius: 50%;
         }
@@ -533,6 +533,9 @@
             justify-content: center;
             z-index: 1002;
             overflow-y: auto;
+            padding: 10px;
+            box-sizing: border-box;
+            overscroll-behavior: contain;
         }
         .start-modal.active, .tutorial-modal.active, .result-modal.active, .redemption-modal.active {
             display: flex;
@@ -547,6 +550,8 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             animation: zoomIn 0.5s ease;
             position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         .start-modal-actions {
             display: flex;
@@ -579,6 +584,8 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            touch-action: manipulation;
+            min-height: 44px;
         }
         .difficulty-card::before {
             content: '';
@@ -616,7 +623,7 @@
             color: #666;
             margin-top: 10px;
         }
-        .start-btn, .tutorial-btn, .restart-btn, .back-btn, .start-quiz-btn, .exit-btn, .back-about-btn, .start-redemption-btn, .skip-redemption-btn {
+        .start-btn, .tutorial-btn, .restart-btn, .back-btn, .start-quiz-btn, .exit-btn, .back-about-btn, .skip-redemption-btn {
             background: linear-gradient(135deg, #ffcc00, #e6b800);
             color: #1e3c72;
             border: none;
@@ -633,12 +640,13 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            min-height: 44px;
         }
         .back-about-btn, .skip-redemption-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: #fff;
         }
-        .start-btn:hover, .tutorial-btn:hover, .restart-btn:hover, .back-btn:hover, .start-quiz-btn:hover, .exit-btn:hover, .back-about-btn:hover, .start-redemption-btn:hover, .skip-redemption-btn:hover {
+        .start-btn:hover, .tutorial-btn:hover, .restart-btn:hover, .back-btn:hover, .start-quiz-btn:hover, .exit-btn:hover, .back-about-btn:hover, .skip-redemption-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
@@ -683,6 +691,7 @@
             border-radius: 50%;
             cursor: pointer;
             transition: background 0.3s ease;
+            min-height: 44px;
         }
         .tutorial-dot.active {
             background: #ffcc00;
@@ -699,6 +708,7 @@
             font-size: 20px;
             border-radius: 50%;
             transition: background 0.3s ease;
+            min-height: 44px;
         }
         .tutorial-prev:hover, .tutorial-next:hover {
             background: rgba(0, 0, 0, 0.8);
@@ -851,6 +861,42 @@
         .notification.visible {
             display: block;
         }
+        .dice-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .dice-btn {
+            background: linear-gradient(135deg, #ffcc00, #e6b800);
+            color: #1e3c72;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            min-width: 60px;
+            text-align: center;
+            touch-action: manipulation;
+            min-height: 44px;
+        }
+        .dice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .dice-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .dark-theme .dice-btn {
+            background: linear-gradient(135deg, #d7b15c, #b89b4a);
+            color: #d8dbe0;
+        }
         body.dark-theme { background-color: #121212; color: #e0e0e0; }
         .dark-theme .content { background: linear-gradient(135deg, #28292c 0%, #1a1a1a 100%); }
         .dark-theme .content::before { background-color: rgba(40, 41, 44, 0.9); }
@@ -958,7 +1004,7 @@
             .dark-theme-label { font-size: 16px; }
             .content {
                 margin-left: 0;
-                padding: 70px 15px 15px  главное15px;
+                padding: 70px 15px 15px 15px;
                 overflow-y: auto;
                 min-height: 100vh;
             }
@@ -967,22 +1013,47 @@
             .quiz-section { padding: 20px; }
             .quiz-section h1 { font-size: 24px; }
             .question-text { font-size: 1.2em; }
-            .option-btn { font-size: 1em; padding: 12px; }
-            .next-btn, .exit-game-btn { font-size: 16px; padding: 12px 25px; }
+            .option-btn { font-size: 1em; padding: 12px; min-height: 44px; }
+            .next-btn, .exit-game-btn { font-size: 16px; padding: 12px 25px; min-height: 44px; }
             .score { font-size: 1.3em; }
             .progress-text { font-size: 1em; }
             .timer-svg { width: 50px; height: 50px; }
             .timer-circle { stroke-dasharray: 125.6; }
             .timer-text { font-size: 16px; margin-left: 8px; }
-            .power-up-btn { font-size: 12px; padding: 8px; }
-            .difficulty-options { flex-direction: column; align-items: center; }
-            .difficulty-card { width: 90%; max-width: 300px; }
-            .start-modal-content, .tutorial-modal-content, .result-modal-content, .redemption-modal-content { padding: 20px; }
-            .start-modal-content h2, .tutorial-modal-content h2, .result-modal-content h2, .redemption-modal-content h2 { font-size: 24px; }
-            .tutorial-slide img { width: 100%; max-width: 250px; }
+            .power-up-btn { font-size: 12px; padding: 8px; min-height: 44px; }
+            .difficulty-options { flex-direction: column; align-items: center; gap: 15px; }
+            .difficulty-card { width: 100%; max-width: 280px; padding: 15px; }
+            .start-modal-content, .tutorial-modal-content, .result-modal-content, .redemption-modal-content {
+                padding: 15px;
+                width: 95%;
+                max-width: 360px;
+                max-height: 90vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                margin: 10px;
+                box-sizing: border-box;
+            }
+            .start-modal-content h2, .tutorial-modal-content h2, .result-modal-content h2, .redemption-modal-content h2 {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+            .start-modal-actions, .tutorial-actions, .result-actions, .redemption-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .start-btn, .tutorial-btn, .restart-btn, .back-btn, .start-quiz-btn, .exit-btn, .back-about-btn, .skip-redemption-btn {
+                padding: 10px 20px;
+                font-size: 16px;
+                width: 100%;
+                max-width: 280px;
+            }
+            .tutorial-slide img { max-width: 200px; }
             .tutorial-slide h3 { font-size: 22px; }
             .tutorial-slide p { font-size: 14px; }
-            .tutorial-prev, .tutorial-next { font-size: 16px; padding: 8px; }
+            .tutorial-prev, .tutorial-next { font-size: 14px; padding: 6px; }
+            .tutorial-nav { gap: 8px; }
+            .dont-show-again { font-size: 12px; }
+            button, .difficulty-card, .tutorial-dot { -webkit-tap-highlight-color: transparent; }
         }
         @keyframes rotation {
             0% { transform: rotate(0deg); }
@@ -1131,7 +1202,7 @@
                 <div class="tutorial-slide" id="slide3">
                     <h3>Scoring & Redemption</h3>
                     <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Scoreboard">
-                    <p>Earn 10 points per correct answer, 5 in redemption. Explanations follow each answer. A redemption round (1-3 questions based on mistakes) lets you recover points. Exit anytime with the Exit Game button!</p>
+                    <p>Earn 10 points per correct answer, 5 in redemption. Explanations follow each answer. A redemption round (1 question from up to 3 mistakes) lets you recover points. Exit anytime with the Exit Game button!</p>
                 </div>
                 <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
                 <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
@@ -1177,17 +1248,15 @@
             <div class="redemption-modal-content">
                 <h2>Redemption Round</h2>
                 <p id="redemptionMessage"></p>
+                <div class="dice-container" id="diceContainer"></div>
                 <div class="redemption-actions">
-                    <button class="start-redemption-btn" id="startRedemptionBtn"><i class="fas fa-play"></i> Start Redemption</button>
                     <button class="skip-redemption-btn" id="skipRedemptionBtn"><i class="fas fa-forward"></i> Skip Redemption</button>
                 </div>
             </div>
         </div>
         <div class="notification" id="timeUpNotification">Time's Up!</div>
         <footer>
-            <p>© 2025 Contra E-Crime
-
-. All rights reserved.</p>
+            <p>© 2025 Contra E-Crime. All rights reserved.</p>
             <div class="footer-links">
                 <a href="PrivacyPolicy.html">Privacy Policy</a>
                 <a href="TermsOfUse.html">Terms of Use</a>
@@ -1470,175 +1539,169 @@
                 }
             ],
             hard: [
-                {
-                    text: "What is the maximum penalty under the Electronic Commerce Act for violations?",
-                    answer: "PHP 1,000,000 or six years imprisonment",
-                    options: [
-                        "PHP 100,000 and six months imprisonment",
-                        "PHP 1,000,000 or six years imprisonment",
-                        "Reclusion perpetua and PHP 5,000,000 fine",
-                        "Fine up to ₱1,000 and six months imprisonment"
-                    ],
-                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) specifies a maximum penalty of PHP 1,000,000 or up to six years imprisonment for violations."
-                },
-                {
-                    text: "What penalty does the Anti-Child Pornography Act impose?",
-                    answer: "Reclusion perpetua and a fine of PHP 2,000,000 to PHP 5,000,000",
-                    options: [
-                        "PHP 100,000 and six months to three years imprisonment",
-                        "Reclusion perpetua and a fine of PHP 2,000,000 to PHP 5,000,000",
-                        "Fine up to ₱1,000 and six months imprisonment",
-                        "PHP 1,000,000 or six years imprisonment"
-                    ],
-                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) imposes reclusion perpetua and fines ranging from PHP 2,000,000 to PHP 5,000,000."
-                },
-                {
-                    text: "What are the penalties for third and subsequent offenses under BIR Revenue Regulation No. 9-2001?",
-                    answer: "Fine up to ₱1,000 and imprisonment up to 6 months",
-                    options: [
-                        "PHP 100,000 and six months imprisonment",
-                        "Reclusion perpetua and PHP 5,000,000 fine",
-                        "Fine up to ₱1,000 and imprisonment up to 6 months",
-                        "PHP 1,000,000 or six years imprisonment"
-                    ],
-                    explanation: "BIR Revenue Regulation No. 9-2001 specifies a fine up to ₱1,000 and up to 6 months imprisonment for third and subsequent offenses."
-                },
-                {
-                    text: "What is the minimum penalty for online fraud under the Electronic Commerce Act?",
-                    answer: "PHP 100,000 and six months to three years imprisonment",
-                    options: [
-                        "PHP 100,000 and six months to three years imprisonment",
-                        "Reclusion perpetua and PHP 2,000,000 fine",
-                        "Fine up to ₱1,000 and six months imprisonment",
-                        "PHP 1,000,000 or six years imprisonment"
-                    ],
-                    explanation: "The minimum penalty for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is PHP 100,000 and 6 months to 3 years imprisonment."
-                },
-                {
-                    text: "What fine range does the Anti-Child Pornography Act specify?",
-                    answer: "PHP 2,000,000 to PHP 5,000,000",
-                    options: [
-                        "PHP 100,000 to PHP 1,000,000",
-                        "PHP 2,000,000 to PHP 5,000,000",
-                        "Up to ₱1,000",
-                        "PHP 500,000 to PHP 1,000,000"
-                    ],
-                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) specifies fines between PHP 2,000,000 and PHP 5,000,000."
-                },
-                {
-                    text: "Under BIR Revenue Regulation No. 9-2001, what happens to first and second offenses?",
-                    answer: "They may be settled through compromise penalties",
-                    options: [
-                        "They may be settled through compromise penalties",
-                        "They result in reclusion perpetua",
-                        "They lead to a fine of PHP 1,000,000",
-                        "They are punished with six years imprisonment"
-                    ],
-                    explanation: "First and second offenses under BIR Revenue Regulation No. 9-2001 can be settled through compromise penalties."
-                },
-                {
-                    text: "What is the imprisonment range for online fraud under the Electronic Commerce Act?",
-                    answer: "Six months to three years",
-                    options: [
-                        "Six months to three years",
-                        "Up to six months",
-                        "Three to six years",
-                        "Reclusion perpetua"
-                    ],
-                    explanation: "The imprisonment range for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is 6 months to 3 years."
-                },
-                {
-                    text: "What penalty does the Anti-Child Pornography Act include alongside a fine?",
-                    answer: "Reclusion perpetua",
-                    options: [
-                        "Six months imprisonment",
-                        "Reclusion perpetua",
-                        "Three years imprisonment",
-                        "Fine only, no imprisonment"
-                    ],
-                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) includes reclusion perpetua alongside its fine penalties."
-                },
-                {
-                    text: "What is the maximum fine for third offenses under BIR Revenue Regulation No. 9-2001?",
-                    answer: "₱1,000",
-                    options: [
-                        "PHP 100,000",
-                        "PHP 1,000,000",
-                        "₱1,000",
-                        "PHP plaf5,000,000"
-                    ],
-                    explanation: "The maximum fine for third offenses under BIR Revenue Regulation No. 9-2001 is ₱1,000."
-                },
-                {
-                    text: "What is the maximum imprisonment for violations under the Electronic Commerce Act?",
-                    answer: "Six years",
-                    options: [
-                        "Six months",
-                        "Three years",
-                        "Six years",
-                        "Reclusion perpetua"
-                    ],
-                    explanation: "The maximum imprisonment for violations under the Electronic Commerce Act of 2000 (RA 8792) is six years."
-                }
-            ]
-        };
+            {
+                text: "What is the maximum penalty under the Electronic Commerce Act for violations?",
+                answer: "PHP 1,000,000 or six years imprisonment",
+                options: [
+                    "PHP 100,000 and six months imprisonment",
+                    "PHP 1,000,000 or six years imprisonment",
+                    "Reclusion perpetua and PHP 5,000,000 fine",
+                    "Fine up to ₱1,000 and six months imprisonment"
+                ],
+                explanation: "The Electronic Commerce Act of 2000 (RA 8792) specifies a maximum penalty of PHP 1,000,000 or up to six years imprisonment for violations."
+            },
+            {
+                text: "What penalty does the Anti-Child Pornography Act impose?",
+                answer: "Reclusion perpetua and a fine of PHP 2,000,000 to PHP 5,000,000",
+                options: [
+                    "PHP 100,000 and six months to three years imprisonment",
+                    "Reclusion perpetua and a fine of PHP 2,000,000 to PHP 5,000,000",
+                    "Fine up to ₱1,000 and six months imprisonment",
+                    "PHP 1,000,000 or six years imprisonment"
+                ],
+                explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) imposes reclusion perpetua and fines ranging from PHP 2,000,000 to PHP 5,000,000."
+            },
+            {
+                text: "What are the penalties for third and subsequent offenses under BIR Revenue Regulation No. 9-2001?",
+                answer: "Fine up to ₱1,000 and imprisonment up to 6 months",
+                options: [
+                    "PHP 100,000 and six months imprisonment",
+                    "Reclusion perpetua and PHP 5,000,000 fine",
+                    "Fine up to ₱1,000 and imprisonment up to 6 months",
+                    "PHP 1,000,000 or six years imprisonment"
+                ],
+                explanation: "BIR Revenue Regulation No. 9-2001 specifies a fine up to ₱1,000 and up to 6 months imprisonment for third and subsequent offenses."
+            },
+            {
+                text: "What is the minimum penalty for online fraud under the Electronic Commerce Act?",
+                answer: "PHP 100,000 and six months to three years imprisonment",
+                options: [
+                    "PHP 100,000 and six months to three years imprisonment",
+                    "Reclusion perpetua and PHP 2,000,000 fine",
+                    "Fine up to ₱1,000 and six months imprisonment",
+                    "PHP 1,000,000 or six years imprisonment"
+                ],
+                explanation: "The minimum penalty for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is PHP 100,000 and 6 months to 3 years imprisonment."
+            },
+            {
+                text: "What fine range does the Anti-Child Pornography Act specify?",
+                answer: "PHP 2,000,000 to PHP 5,000,000",
+                options: [
+                    "PHP 100,000 to PHP 1,000,000",
+                    "PHP 2,000,000 to PHP 5,000,000",
+                    "Up to ₱1,000",
+                    "PHP 500,000 to PHP 1,000,000"
+                ],
+                explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) specifies fines between PHP 2,000,000 and PHP 5,000,000."
+            },
+            {
+                text: "Under BIR Revenue Regulation No. 9-2001, what happens to first and second offenses?",
+                answer: "They may be settled through compromise penalties",
+                options: [
+                    "They may be settled through compromise penalties",
+                    "They result in reclusion perpetua",
+                    "They lead to a fine of PHP 1,000,000",
+                    "They are punished with six years imprisonment"
+                ],
+                explanation: "First and second offenses under BIR Revenue Regulation No. 9-2001 can be settled through compromise penalties."
+            },
+            {
+                text: "What is the imprisonment range for online fraud under the Electronic Commerce Act?",
+                answer: "Six months to three years",
+                options: [
+                    "Six months to three years",
+                    "Up to six months",
+                    "Three to six years",
+                    "Reclusion perpetua"
+                ],
+                explanation: "The imprisonment range for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is 6 months to 3 years."
+            },
+            {
+                text: "What penalty does the Anti-Child Pornography Act include alongside a fine?",
+                answer: "Reclusion perpetua",
+                options: [
+                    "Six months to three years imprisonment",
+                    "Reclusion perpetua",
+                    "Up to six months imprisonment",
+                    "Three to six years imprisonment"
+                ],
+                explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) includes reclusion perpetua as a penalty alongside fines of PHP 2,000,000 to PHP 5,000,000 for serious violations."
+            },
+            {
+                text: "What section of the Electronic Commerce Act defines hacking penalties?",
+                answer: "Section 33",
+                options: [
+                    "Section 10",
+                    "Section 33",
+                    "Section 15",
+                    "Section 25"
+                ],
+                explanation: "Section 33 of the Electronic Commerce Act of 2000 (RA 8792) defines penalties for hacking and unauthorized access, including fines and imprisonment."
+            },
+            {
+                text: "What is the penalty for non-compliance with BIR Revenue Regulation No. 9-2001 for large taxpayers?",
+                answer: "Fine of ₱1,000 per return",
+                options: [
+                    "Fine of ₱100,000 per return",
+                    "Reclusion perpetua",
+                    "Fine of ₱1,000 per return",
+                    "PHP 1,000,000 fine"
+                ],
+                explanation: "BIR Revenue Regulation No. 9-2001 imposes a fine of ₱1,000 per return for non-compliance with electronic filing requirements for large taxpayers."
+            }
+        ]
+    };
 
-        // DOM elements
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
-        const sidebar = document.getElementById('sidebar');
-        const loaderOverlay = document.getElementById('loaderOverlay');
-        const quizSection = document.getElementById('quizSection');
-        const startModal = document.getElementById('startModal');
-        const tutorialModal = document.getElementById('tutorialModal');
-        const tutorialBtn = document.getElementById('tutorialBtn');
-        const backBtn = document.getElementById('backBtn');
-        const startQuizBtn = document.getElementById('startQuizBtn');
-        const dontShowAgain = document.getElementById('dontShowAgain');
-        const difficultyCards = document.querySelectorAll('.difficulty-card');
-        const progressBar = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const timerText = document.getElementById('timerText');
-        const timerCircle = document.querySelector('.timer-circle');
-        const questionText = document.getElementById('questionText');
-        const options = document.getElementById('options');
-        const explanation = document.getElementById('explanation');
-        const nextBtn = document.getElementById('nextBtn');
-        const exitGameBtn = document.getElementById('exitGameBtn');
-        const scoreDisplay = document.getElementById('score');
-        const resultModal = document.getElementById('resultModal');
-        const finalScore = document.getElementById('finalScore');
-        const accuracyDisplay = document.getElementById('accuracy');
-        const avgTimeDisplay = document.getElementById('avgTime');
-        const difficultyAnalysis = document.getElementById('difficultyAnalysis');
-        const thinkingLevel = document.getElementById('thinkingLevel');
-const remarks = document.getElementById('remarks');
-const problemSolving = document.getElementById('problemSolving');
-const resultSummary = document.getElementById('resultSummary');
-const restartBtn = document.getElementById('restartBtn');
-const exitBtn = document.getElementById('exitBtn');
-const redemptionModal = document.getElementById('redemptionModal');
-const redemptionMessage = document.getElementById('redemptionMessage');
-const startRedemptionBtn = document.getElementById('startRedemptionBtn');
-const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
-const timeUpNotification = document.getElementById('timeUpNotification');
-const tutorialSlides = document.querySelectorAll('.tutorial-slide');
-const tutorialDots = document.querySelectorAll('.tutorial-dot');
-const tutorialPrev = document.getElementById('tutorialPrev');
-const tutorialNext = document.getElementById('tutorialNext');
-const extraTime1 = document.getElementById('extraTime1');
-const extraTime2 = document.getElementById('extraTime2');
-const timeFreeze = document.getElementById('timeFreeze');
-const backAboutBtn = document.getElementById('backAboutBtn');
+    // DOM elements
+    const loaderOverlay = document.getElementById('loaderOverlay');
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+    const sidebar = document.getElementById('sidebar');
+    const themeToggle = document.getElementById('themeToggle');
+    const quizSection = document.getElementById('quizSection');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const timerText = document.getElementById('timerText');
+    const timerCircle = document.querySelector('.timer-circle');
+    const extraTime1 = document.getElementById('extraTime1');
+    const extraTime2 = document.getElementById('extraTime2');
+    const timeFreeze = document.getElementById('timeFreeze');
+    const questionText = document.getElementById('questionText');
+    const options = document.getElementById('options');
+    const explanation = document.getElementById('explanation');
+    const nextBtn = document.getElementById('nextBtn');
+    const exitGameBtn = document.getElementById('exitGameBtn');
+    const scoreElement = document.getElementById('score');
+    const startModal = document.getElementById('startModal');
+    const tutorialModal = document.getElementById('tutorialModal');
+    const resultModal = document.getElementById('resultModal');
+    const redemptionModal = document.getElementById('redemptionModal');
+    const tutorialBtn = document.getElementById('tutorialBtn');
+    const backAboutBtn = document.getElementById('backAboutBtn');
+    const backBtn = document.getElementById('backBtn');
+    const startQuizBtn = document.getElementById('startQuizBtn');
+    const dontShowAgain = document.getElementById('dontShowAgain');
+    const finalScore = document.getElementById('finalScore');
+    const accuracy = document.getElementById('accuracy');
+    const avgTime = document.getElementById('avgTime');
+    const difficultyAnalysis = document.getElementById('difficultyAnalysis');
+    const thinkingLevel = document.getElementById('thinkingLevel');
+    const remarks = document.getElementById('remarks');
+    const problemSolving = document.getElementById('problemSolving');
+    const resultSummary = document.getElementById('resultSummary');
+    const restartBtn = document.getElementById('restartBtn');
+    const exitBtn = document.getElementById('exitBtn');
+    const timeUpNotification = document.getElementById('timeUpNotification');
+    const redemptionMessage = document.getElementById('redemptionMessage');
+    const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
 
+    // Sound effects
     let clickSound, correctSound, wrongSound, timeUpSound, gameOverSound;
     try {
-        clickSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/click-button.mp3'] });
-        correctSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/correct-answer.mp3'] });
-        wrongSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/wrong-answer.mp3'] });
-        timeUpSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/time-up.mp3'] });
-        gameOverSound = new Howl({ src: ['https://cdn.jsdelivr.net/gh/xai-org/grok-assets/sounds/game-over.mp3'] });
+        clickSound = new Howl({ src: ['https://freesound.org/data/previews/612/612609_5674468-lq.mp3'] });
+        correctSound = new Howl({ src: ['https://freesound.org/data/previews/582/582614_1462108-lq.mp3'] });
+        wrongSound = new Howl({ src: ['https://freesound.org/data/previews/476/476021_5674468-lq.mp3'] });
+        timeUpSound = new Howl({ src: ['https://freesound.org/data/previews/397/397356_1676145-lq.mp3'] });
+        gameOverSound = new Howl({ src: ['https://freesound.org/data/previews/531/531695_11068309-lq.mp3'] });
         console.log('Sound effects initialized successfully');
     } catch (error) {
         console.error('Sound initialization failed:', error);
@@ -1658,606 +1721,437 @@ const backAboutBtn = document.getElementById('backAboutBtn');
         }
     }
 
-// Quiz state
-let currentQuestionIndex = 0;
-let score = 0;
-let selectedDifficulty = null;
-let timerInterval;
-let timeLeft = 0;
-let totalTimeTaken = 0;
-let questionStartTime = 0;
-let correctAnswers = 0;
-let wrongAnswers = [];
-let isRedemption = false;
-let currentSlide = 1;
-let isFrozen = false;
-let extraTime1Used = false;
-let extraTime2Used = false;
-let timeFreezeUsed = false;
+    // Quiz state
+    let selectedDifficulty = null;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timeLeft = 0;
+    let timerInterval = null;
+    let isFrozen = false;
+    let questionStartTime = 0;
+    let wrongAnswers = [];
+    let userAnswers = [];
+    let isRedemption = false;
 
-// Initialize quiz
-function initQuiz() {
-    try {
-        // Load saved difficulty
-        const savedDifficulty = localStorage.getItem('selectedDifficulty');
-        if (savedDifficulty) {
-            const card = document.querySelector(`.difficulty-card[data-difficulty="${savedDifficulty}"]`);
-            if (card) {
-                difficultyCards.forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                selectedDifficulty = savedDifficulty;
-                tutorialBtn.disabled = false;
-                console.log('Loaded saved difficulty:', savedDifficulty);
-            }
-        }
+    // GSAP animations
+    gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, delay: 0.5 });
 
-        // GSAP animations for quiz section
-        gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' });
+    // Event listeners
+    mobileMenuIcon.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        playSound(clickSound);
+    });
 
-        // Theme toggle
-        themeToggle.addEventListener('change', () => {
-            body.classList.toggle('dark-theme');
-            localStorage.setItem('darkTheme', body.classList.contains('dark-theme'));
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
+    themeToggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark-theme');
+        localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        playSound(clickSound);
+    });
+
+    document.querySelectorAll('.difficulty-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.difficulty-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedDifficulty = card.dataset.difficulty;
+            tutorialBtn.disabled = false;
+            playSound(clickSound);
         });
+    });
 
-        // Load theme preference
-        if (localStorage.getItem('darkTheme') === 'true') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        // Mobile menu toggle
-        mobileMenuIcon.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        // Close sidebar when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target) && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-            }
-        });
-
-        // Difficulty selection
-        difficultyCards.forEach(card => {
-            card.addEventListener('click', () => {
-                try {
-                    difficultyCards.forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    selectedDifficulty = card.dataset.difficulty;
-                    localStorage.setItem('selectedDifficulty', selectedDifficulty);
-                    tutorialBtn.disabled = false;
-                    console.log('Difficulty selected:', selectedDifficulty);
-                    try {
-                        clickSound.play();
-                    } catch (error) {
-                        console.warn('Sound playback failed:', error);
-                    }
-                } catch (error) {
-                    console.error('Error in difficulty selection:', error);
-                }
-            });
-        });
-
-        // Tutorial button
-        tutorialBtn.addEventListener('click', () => {
-            try {
-                if (!selectedDifficulty) {
-                    showNotification('Please select a difficulty first!');
-                    return;
-                }
-                console.log('Tutorial button clicked, difficulty:', selectedDifficulty);
-                startModal.classList.remove('active');
-                tutorialModal.classList.add('active');
-                showSlide(1);
-                try {
-                    clickSound.play();
-                } catch (error) {
-                    console.warn('Sound playback failed:', error);
-                }
-            } catch (error) {
-                console.error('Error in tutorial button handler:', error);
-            }
-        });
-
-        // Notification for disabled tutorial button
-        tutorialBtn.addEventListener('mouseover', () => {
-            if (tutorialBtn.disabled) {
+    tutorialBtn.addEventListener('click', () => {
+        try {
+            if (!selectedDifficulty) {
                 showNotification('Please select a difficulty first!');
+                return;
             }
-        });
+            startModal.classList.remove('active');
+            tutorialModal.classList.add('active');
+            showSlide(1);
+            playSound(clickSound);
+        } catch (error) {
+            console.error('Error in tutorial button handler:', error);
+        }
+    });
 
-        // Tutorial navigation
-        tutorialPrev.addEventListener('click', () => {
-            if (currentSlide > 1) {
-                showSlide(currentSlide - 1);
-                try {
-                    clickSound.play();
-                } catch (error) {
-                    console.warn('Sound playback failed:', error);
-                }
-            }
-        });
+    backAboutBtn.addEventListener('click', () => {
+        window.location.href = 'AboutUs.html';
+        playSound(clickSound);
+    });
 
-        tutorialNext.addEventListener('click', () => {
-            if (currentSlide < tutorialSlides.length) {
-                showSlide(currentSlide + 1);
-                try {
-                    clickSound.play();
-                } catch (error) {
-                    console.warn('Sound playback failed:', error);
-                }
-            }
-        });
-
-        tutorialDots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                showSlide(parseInt(dot.dataset.slide));
-                try {
-                    clickSound.play();
-                } catch (error) {
-                    console.warn('Sound playback failed:', error);
-                }
-            });
-        });
-
-        // Back to difficulty selection
-        backBtn.addEventListener('click', () => {
-            tutorialModal.classList.remove('active');
-            startModal.classList.add('active');
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        // Start quiz
-        startQuizBtn.addEventListener('click', () => {
-            if (dontShowAgain.checked) {
-                localStorage.setItem('dontShowTutorial', 'true');
-            }
-            startQuiz();
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        // Back to About Us
-        backAboutBtn.addEventListener('click', () => {
-            window.location.href = 'AboutUs.html';
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        // Power-ups
-        extraTime1.addEventListener('click', () => applyExtraTime(1));
-        extraTime2.addEventListener('click', () => applyExtraTime(2));
-        timeFreeze.addEventListener('click', () => applyTimeFreeze());
-
-        // Next question
-        nextBtn.addEventListener('click', () => {
-            currentQuestionIndex++;
-            loadQuestion();
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        // Exit game
-        exitGameBtn.addEventListener('click', () => {
-            clearInterval(timerInterval);
-            showResult();
-            try {
-                gameOverSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        // Restart quiz
-        restartBtn.addEventListener('click', () => {
-            resetQuiz();
-            startModal.classList.add('active');
-            resultModal.classList.remove('active');
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        // Exit to difficulty
-        exitBtn.addEventListener('click', () => {
-            resetQuiz();
-            resultModal.classList.remove('active');
-            startModal.classList.add('active');
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        // Redemption round
-        startRedemptionBtn.addEventListener('click', () => {
-            redemptionModal.classList.remove('active');
-            isRedemption = true;
-            currentQuestionIndex = 0;
-            loadQuestion();
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        skipRedemptionBtn.addEventListener('click', () => {
-            redemptionModal.classList.remove('active');
-            showResult();
-            try {
-                clickSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-        });
-
-        console.log('Quiz initialized');
-    } catch (error) {
-        console.error('Error initializing quiz:', error);
-    }
-}
-
-// Show tutorial slide
-function showSlide(slideNumber) {
-    try {
-        console.log('Showing slide:', slideNumber);
-        tutorialSlides.forEach(slide => slide.classList.remove('active'));
-        tutorialDots.forEach(dot => dot.classList.remove('active'));
-        document.getElementById(`slide${slideNumber}`).classList.add('active');
-        document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
-        tutorialPrev.style.display = slideNumber === 1 ? 'none' : 'block';
-        tutorialNext.style.display = slideNumber === tutorialSlides.length ? 'none' : 'block';
-        currentSlide = slideNumber;
-    } catch (error) {
-        console.error('Error showing slide:', error);
-    }
-}
-
-// Show notification
-function showNotification(message) {
-    try {
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.textContent = message;
-        document.body.appendChild(notification);
-        notification.classList.add('visible');
-        setTimeout(() => {
-            notification.classList.remove('visible');
-            setTimeout(() => notification.remove(), 500);
-        }, 2000);
-    } catch (error) {
-        console.error('Error showing notification:', error);
-    }
-}
-
-// Start quiz
-function startQuiz() {
-    try {
+    backBtn.addEventListener('click', () => {
         tutorialModal.classList.remove('active');
+        startModal.classList.add('active');
+        playSound(clickSound);
+    });
+
+    startQuizBtn.addEventListener('click', () => {
+        if (dontShowAgain.checked) {
+            localStorage.setItem('skipTutorial', 'true');
+        }
+        tutorialModal.classList.remove('active');
+        startQuiz();
+        playSound(clickSound);
+    });
+
+    document.querySelectorAll('.tutorial-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            showSlide(parseInt(dot.dataset.slide));
+            playSound(clickSound);
+        });
+    });
+
+    document.getElementById('tutorialPrev').addEventListener('click', () => {
+        showSlide(Math.max(1, parseInt(document.querySelector('.tutorial-dot.active').dataset.slide) - 1));
+        playSound(clickSound);
+    });
+
+    document.getElementById('tutorialNext').addEventListener('click', () => {
+        showSlide(Math.min(3, parseInt(document.querySelector('.tutorial-dot.active').dataset.slide) + 1));
+        playSound(clickSound);
+    });
+
+    extraTime1.addEventListener('click', () => {
+        if (!extraTime1.disabled) {
+            timeLeft += 10;
+            timerText.textContent = `${timeLeft}s`;
+            extraTime1.disabled = true;
+            playSound(clickSound);
+        }
+    });
+
+    extraTime2.addEventListener('click', () => {
+        if (!extraTime2.disabled) {
+            timeLeft += 10;
+            timerText.textContent = `${timeLeft}s`;
+            extraTime2.disabled = true;
+            playSound(clickSound);
+        }
+    });
+
+    timeFreeze.addEventListener('click', () => {
+        if (!timeFreeze.disabled) {
+            isFrozen = true;
+            clearInterval(timerInterval);
+            timeFreeze.disabled = true;
+            playSound(clickSound);
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentQuestionIndex++;
+        loadQuestion();
+        playSound(clickSound);
+    });
+
+    exitGameBtn.addEventListener('click', () => {
+        clearInterval(timerInterval);
+        showResult();
+        playSound(gameOverSound);
+    });
+
+    restartBtn.addEventListener('click', () => {
+        resetQuiz();
+        startModal.classList.add('active');
+        resultModal.classList.remove('active');
+        playSound(clickSound);
+    });
+
+    exitBtn.addEventListener('click', () => {
+        resetQuiz();
+        resultModal.classList.remove('active');
+        startModal.classList.add('active');
+        playSound(clickSound);
+    });
+
+    skipRedemptionBtn.addEventListener('click', () => {
+        redemptionModal.classList.remove('active');
+        showResult();
+        playSound(clickSound);
+    });
+
+    // Functions
+    function showSlide(slideNumber) {
+        document.querySelectorAll('.tutorial-slide').forEach(slide => slide.classList.remove('active'));
+        document.getElementById(`slide${slideNumber}`).classList.add('active');
+        document.querySelectorAll('.tutorial-dot').forEach(dot => dot.classList.remove('active'));
+        document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
+    }
+
+    function showNotification(message) {
+        timeUpNotification.textContent = message;
+        timeUpNotification.classList.add('visible');
+        setTimeout(() => {
+            timeUpNotification.classList.remove('visible');
+        }, 2000);
+    }
+
+    function startQuiz() {
+        if (localStorage.getItem('skipTutorial') === 'true') {
+            tutorialModal.classList.remove('active');
+        }
         quizSection.classList.add('visible');
         currentQuestionIndex = 0;
         score = 0;
-        correctAnswers = 0;
         wrongAnswers = [];
-        totalTimeTaken = 0;
-        isRedemption = false;
-        extraTime1Used = false;
-        extraTime2Used = false;
-        timeFreezeUsed = false;
-        extraTime1.disabled = false;
-        extraTime2.disabled = false;
-        timeFreeze.disabled = false;
-        scoreDisplay.textContent = 'Score: 0';
+        userAnswers = [];
+        scoreElement.textContent = `Score: ${score}`;
         loadQuestion();
-        console.log('Quiz started, difficulty:', selectedDifficulty);
-    } catch (error) {
-        console.error('Error starting quiz:', error);
     }
-}
 
-// Load question
-function loadQuestion() {
-    try {
-        const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
-        if (currentQuestionIndex >= questionList.length) {
-            if (!isRedemption && wrongAnswers.length > 0) {
-                showRedemptionModal();
-            } else {
-                showResult();
+    function loadQuestion() {
+        try {
+            const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
+            if (currentQuestionIndex >= questionList.length) {
+                if (isRedemption) {
+                    showResult();
+                } else {
+                    showRedemptionModal();
+                }
+                return;
             }
+
+            const question = questionList[currentQuestionIndex];
+            questionText.textContent = question.text;
+            options.innerHTML = '';
+            explanation.textContent = '';
+            explanation.classList.remove('visible');
+            nextBtn.classList.remove('visible');
+            exitGameBtn.classList.add('visible');
+
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
+                button.addEventListener('click', () => checkAnswer(option, question.answer));
+                options.appendChild(button);
+            });
+
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
+
+            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+            timerText.textContent = `${timeLeft}s`;
+            timerCircle.style.strokeDashoffset = 0;
+            questionStartTime = Date.now();
+
+            clearInterval(timerInterval);
+            if (!isFrozen) {
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+
+            extraTime1.disabled = false;
+            extraTime2.disabled = false;
+            timeFreeze.disabled = false;
+
+            console.log('Loaded question:', question.text);
+        } catch (error) {
+            console.error('Error loading question:', error);
+        }
+    }
+
+    function updateTimer() {
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            showNotification("Time's Up!");
+            playSound(timeUpSound);
+            explanation.textContent = `Time's up! The correct answer was: ${questions[selectedDifficulty][currentQuestionIndex].answer}.`;
+            explanation.classList.add('visible');
+            nextBtn.classList.add('visible');
+            exitGameBtn.classList.add('visible');
+            userAnswers.push({
+                question: questions[selectedDifficulty][currentQuestionIndex].text,
+                userAnswer: 'None (Time Up)',
+                correctAnswer: questions[selectedDifficulty][currentQuestionIndex].answer,
+                timeTaken: (Date.now() - questionStartTime) / 1000,
+                isCorrect: false
+            });
+            wrongAnswers.push(questions[selectedDifficulty][currentQuestionIndex]);
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.add('disabled'));
             return;
         }
 
-        const question = questionList[currentQuestionIndex];
-        questionText.textContent = question.text;
-        options.innerHTML = '';
-        explanation.textContent = '';
-        explanation.classList.remove('visible');
-        nextBtn.classList.remove('visible');
-        exitGameBtn.classList.add('visible');
-
-        question.options.forEach(option => {
-            const button = document.createElement('button');
-            button.className = 'option-btn';
-            button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
-            button.addEventListener('click', () => checkAnswer(option, question.answer));
-            options.appendChild(button);
-        });
-
-        progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
-        progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
-
-        // Set timer based on difficulty
-        timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
-        timerText.textContent = `${timeLeft}s`;
-        timerCircle.style.strokeDashoffset = 0;
-        questionStartTime = Date.now();
-
-        clearInterval(timerInterval);
-        if (!isFrozen) {
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-
-        console.log('Loaded question:', question.text);
-    } catch (error) {
-        console.error('Error loading question:', error);
-    }
-}
-
-// Update timer
-function updateTimer() {
-    try {
-        if (isFrozen) return;
         timeLeft--;
         timerText.textContent = `${timeLeft}s`;
         const circumference = 188;
-        const offset = (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30)) * circumference;
+        const offset = circumference * (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30));
         timerCircle.style.strokeDashoffset = offset;
-
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            timeUpNotification.classList.add('visible');
-            try {
-                timeUpSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
-            setTimeout(() => {
-                timeUpNotification.classList.remove('visible');
-                wrongAnswers.push(questions[selectedDifficulty][currentQuestionIndex]);
-                currentQuestionIndex++;
-                loadQuestion();
-            }, 2000);
-        }
-    } catch (error) {
-        console.error('Error updating timer:', error);
     }
-}
 
-// Check answer
-function checkAnswer(selected, correct) {
-    try {
+    function checkAnswer(selectedOption, correctAnswer) {
         clearInterval(timerInterval);
-        totalTimeTaken += (Date.now() - questionStartTime) / 1000;
-        const buttons = options.querySelectorAll('.option-btn');
-        buttons.forEach(btn => {
+        const timeTaken = (Date.now() - questionStartTime) / 1000;
+        const isCorrect = selectedOption === correctAnswer;
+
+        document.querySelectorAll('.option-btn').forEach(btn => {
             btn.classList.add('disabled');
-            if (btn.textContent.includes(correct)) {
+            if (btn.textContent.includes(correctAnswer)) {
                 btn.classList.add('correct');
             }
-            if (btn.textContent.includes(selected) && selected !== correct) {
+            if (btn.textContent.includes(selectedOption) && !isCorrect) {
                 btn.classList.add('wrong');
             }
         });
 
-        explanation.textContent = questions[selectedDifficulty][currentQuestionIndex].explanation;
-        explanation.classList.add('visible');
-
-        if (selected === correct) {
+        if (isCorrect) {
             score += isRedemption ? 5 : 10;
-            correctAnswers++;
-            scoreDisplay.textContent = `Score: ${score}`;
-            try {
-                correctSound.play();
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-            } catch (error) {
-                console.warn('Sound or confetti failed:', error);
-            }
+            scoreElement.textContent = `Score: ${score}`;
+            explanation.textContent = questions[selectedDifficulty][currentQuestionIndex].explanation;
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            playSound(correctSound);
         } else {
+            explanation.textContent = `Incorrect. The correct answer was: ${correctAnswer}. ${questions[selectedDifficulty][currentQuestionIndex].explanation}`;
             if (!isRedemption) {
                 wrongAnswers.push(questions[selectedDifficulty][currentQuestionIndex]);
             }
-            try {
-                wrongSound.play();
-            } catch (error) {
-                console.warn('Sound playback failed:', error);
-            }
+            playSound(wrongSound);
         }
 
+        explanation.classList.add('visible');
         nextBtn.classList.add('visible');
-        console.log('Answer checked, selected:', selected, 'correct:', correct);
-    } catch (error) {
-        console.error('Error checking answer:', error);
-    }
-}
+        exitGameBtn.classList.add('visible');
 
-// Apply extra time
-function applyExtraTime(number) {
-    try {
-        if ((number === 1 && extraTime1Used) || (number === 2 && extraTime2Used)) return;
-        timeLeft += 10;
-        timerText.textContent = `${timeLeft}s`;
-        if (number === 1) {
-            extraTime1Used = true;
-            extraTime1.disabled = true;
-        } else {
-            extraTime2Used = true;
-            extraTime2.disabled = true;
-        }
+        userAnswers.push({
+            question: questions[selectedDifficulty][currentQuestionIndex].text,
+            userAnswer: selectedOption,
+            correctAnswer: correctAnswer,
+            timeTaken: timeTaken,
+            isCorrect: isCorrect
+        });
+    }
+
+    function showRedemptionModal() {
         try {
-            clickSound.play();
-        } catch (error) {
-            console.warn('Sound playback failed:', error);
-        }
-        console.log(`Extra time ${number} applied, new time: ${timeLeft}s`);
-    } catch (error) {
-        console.error('Error applying extra time:', error);
-    }
-}
+            if (wrongAnswers.length === 0) {
+                showResult();
+                return;
+            }
+            const numQuestions = Math.min(wrongAnswers.length, 3);
+            redemptionMessage.textContent = `You got ${wrongAnswers.length} question(s) wrong. Choose one dice to select a question for the redemption round (5 points).`;
+            const diceContainer = document.getElementById('diceContainer');
+            diceContainer.innerHTML = '';
 
-// Apply time freeze
-function applyTimeFreeze() {
-    try {
-        if (timeFreezeUsed) return;
-        isFrozen = true;
-        timeFreezeUsed = true;
-        timeFreeze.disabled = true;
+            for (let i = 0; i < numQuestions; i++) {
+                const diceBtn = document.createElement('button');
+                diceBtn.className = 'dice-btn';
+                diceBtn.textContent = `Dice ${i + 1}`;
+                diceBtn.addEventListener('click', () => {
+                    const randomIndex = Math.floor(Math.random() * wrongAnswers.length);
+                    wrongAnswers = [wrongAnswers[randomIndex]];
+                    redemptionModal.classList.remove('active');
+                    isRedemption = true;
+                    currentQuestionIndex = 0;
+                    loadQuestion();
+                    playSound(clickSound);
+                });
+                diceContainer.appendChild(diceBtn);
+            }
+
+            redemptionModal.classList.add('active');
+            console.log('Showing redemption modal with', numQuestions, 'dice');
+        } catch (error) {
+            console.error('Error showing redemption modal:', error);
+        }
+    }
+
+    function showResult() {
         clearInterval(timerInterval);
-        try {
-            clickSound.play();
-        } catch (error) {
-            console.warn('Sound playback failed:', error);
-        }
-        console.log('Time freeze applied');
-    } catch (error) {
-        console.error('Error applying time freeze:', error);
-    }
-}
-
-// Show redemption modal
-function showRedemptionModal() {
-    try {
-        const numQuestions = Math.min(wrongAnswers.length, 3);
-        redemptionMessage.textContent = `You got ${wrongAnswers.length} question(s) wrong. You can attempt ${numQuestions} question(s) in the redemption round to earn 5 points each.`;
-        redemptionModal.classList.add('active');
-        console.log('Showing redemption modal');
-    } catch (error) {
-        console.error('Error showing redemption modal:', error);
-    }
-}
-
-// Show result
-function showResult() {
-    try {
         quizSection.classList.remove('visible');
         resultModal.classList.add('active');
+
         finalScore.textContent = score;
-        const accuracy = questions[selectedDifficulty].length > 0 ? ((correctAnswers / questions[selectedDifficulty].length) * 100).toFixed(2) : 0;
-        accuracyDisplay.textContent = accuracy;
-        const avgTime = correctAnswers + wrongAnswers.length > 0 ? (totalTimeTaken / (correctAnswers + wrongAnswers.length)).toFixed(2) : 0;
-        avgTimeDisplay.textContent = avgTime;
+        const correctCount = userAnswers.filter(ans => ans.isCorrect).length;
+        const totalQuestions = userAnswers.length;
+        const accuracyPercent = totalQuestions > 0 ? ((correctCount / totalQuestions) * 100).toFixed(2) : 0;
+        accuracy.textContent = accuracyPercent;
 
-        // Difficulty analysis
-        let analysis = '';
-        if (selectedDifficulty === 'easy') {
-            analysis = accuracy >= 80 ? 'Excellent grasp of basics!' : 'Review basic cybercrime laws.';
-        } else if (selectedDifficulty === 'medium') {
-            analysis = accuracy >= 70 ? 'Good scenario analysis!' : 'Practice scenario-based questions.';
-        } else {
-            analysis = accuracy >= 60 ? 'Strong legal knowledge!' : 'Study penalties and advanced laws.';
-        }
-        difficultyAnalysis.textContent = analysis;
+        const totalTime = userAnswers.reduce((sum, ans) => sum + ans.timeTaken, 0);
+        const avgTimePerQuestion = totalQuestions > 0 ? (totalTime / totalQuestions).toFixed(2) : 0;
+        avgTime.textContent = avgTimePerQuestion;
 
-        // Thinking level
-        const thinking = accuracy >= 80 ? 'Analytical and precise' : accuracy >= 60 ? 'Logical but needs refinement' : 'Needs structured thinking';
-        thinkingLevel.textContent = thinking;
+        difficultyAnalysis.textContent = `You played on ${selectedDifficulty} mode. ${
+            selectedDifficulty === 'easy' ? 'Great start! Try Medium for more scenarios.' :
+            selectedDifficulty === 'medium' ? 'Good mix of basics and scenarios! Ready for Hard?' :
+            'Impressive handling of advanced details! Keep mastering cyberlaws.'
+        }`;
 
-        // Remarks
-        const remark = score >= 80 ? 'Outstanding performance!' : score >= 50 ? 'Good effort, keep practicing!' : 'More study needed.';
-        remarks.textContent = remark;
+        thinkingLevel.textContent = accuracyPercent > 80 ? 'Excellent analytical skills!' :
+                                   accuracyPercent > 50 ? 'Good understanding, keep practicing!' :
+                                   'Needs improvement, review the laws!';
 
-        // Problem-solving skills
-        const problemSolvingText = accuracy >= 70 ? 'Effective problem solver!' : 'Improve by analyzing explanations.';
-        problemSolving.textContent = problemSolvingText;
+        remarks.textContent = score >= 80 ? 'Outstanding! You’re a cyberlaw expert!' :
+                             score >= 50 ? 'Well done! Solid grasp of cyberlaws.' :
+                             'Keep studying to boost your score!';
 
-        // Result summary
+        problemSolving.textContent = avgTimePerQuestion < 10 ? 'Lightning-fast decisions!' :
+                                    avgTimePerQuestion < 20 ? 'Steady and thoughtful!' :
+                                    'Take your time to analyze carefully.';
+
         resultSummary.innerHTML = '';
-        const allQuestions = isRedemption ? wrongAnswers : questions[selectedDifficulty];
-        allQuestions.forEach((q, index) => {
+        userAnswers.forEach((ans, index) => {
             const block = document.createElement('div');
             block.className = 'question-block';
             block.innerHTML = `
-                <div class="question">Q${index + 1}: ${q.text}</div>
-                <div class="user-answer ${q.userAnswer === q.answer ? '' : 'incorrect'}">
-                    Your Answer: ${q.userAnswer || 'None'}
-                </div>
-                <div class="correct-answer">Correct Answer: ${q.answer}</div>
-                <div class="time-taken">Time Taken: ${(q.timeTaken || 0).toFixed(2)}s</div>
+                <div class="question">Q${index + 1}: ${ans.question}</div>
+                <div class="user-answer ${ans.isCorrect ? '' : 'incorrect'}">Your Answer: ${ans.userAnswer}</div>
+                <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+                <div class="time-taken">Time Taken: ${ans.timeTaken.toFixed(2)}s</div>
             `;
             resultSummary.appendChild(block);
         });
 
         try {
-            gameOverSound.play();
+            if (firebase.auth().currentUser) {
+                const userId = firebase.auth().currentUser.uid;
+                firebase.firestore().collection('quizResults').add({
+                    userId: userId,
+                    score: score,
+                    accuracy: accuracyPercent,
+                    avgTime: avgTimePerQuestion,
+                    difficulty: selectedDifficulty,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log('Quiz results saved to Firestore');
+                }).catch(error => {
+                    console.error('Error saving quiz results:', error);
+                });
+            }
         } catch (error) {
-            console.warn('Sound playback failed:', error);
+            console.error('Firestore save error:', error);
         }
-        console.log('Showing results, score:', score);
-    } catch (error) {
-        console.error('Error showing result:', error);
-    }
-}
 
-// Reset quiz
-function resetQuiz() {
-    try {
+        playSound(gameOverSound);
+    }
+
+    function resetQuiz() {
+        selectedDifficulty = null;
         currentQuestionIndex = 0;
         score = 0;
-        correctAnswers = 0;
+        timeLeft = 0;
+        isFrozen = false;
         wrongAnswers = [];
-        totalTimeTaken = 0;
+        userAnswers = [];
         isRedemption = false;
-        scoreDisplay.textContent = 'Score: 0';
-        progressBar.style.width = '0%';
-        progressText.textContent = '';
-        questionText.textContent = '';
-        options.innerHTML = '';
-        explanation.textContent = '';
+        scoreElement.textContent = `Score: ${score}`;
+        quizSection.classList.remove('visible');
+        document.querySelectorAll('.difficulty-card').forEach(card => card.classList.remove('selected'));
+        tutorialBtn.disabled = true;
         clearInterval(timerInterval);
-        console.log('Quiz reset');
-    } catch (error) {
-        console.error('Error resetting quiz:', error);
     }
-}
 
-// Window load
-window.addEventListener('load', () => {
-    try {
-        loaderOverlay.classList.remove('active');
-        initQuiz();
-        console.log('Page loaded');
-    } catch (error) {
-        console.error('Error on page load:', error);
+    // Initialize
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeToggle.checked = true;
     }
-});
-    </script>
-</body>
-</html>
+
+    loaderOverlay.classList.add('active');
+    setTimeout(() => {
+        loaderOverlay.classList.remove('active');
+    }, 1000);
+
+    console.log('Quiz app initialized');
+</script>
