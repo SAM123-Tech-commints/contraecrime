@@ -1549,12 +1549,24 @@
             tutorialModal.style.display = 'none';
             startModal.style.display = 'flex';
         });
-        startQuizBtn.addEventListener('click', () => {
+ startQuizBtn.addEventListener('click', () => {
+            if (!selectedDifficulty) {
+                alert('Please select a difficulty level first!');
+                tutorialModal.style.display = 'none';
+                startModal.style.display = 'flex';
+                return;
+            }
             if (dontShowAgain.checked) {
                 localStorage.setItem('dontShowTutorial', 'true');
             }
             tutorialModal.style.display = 'none';
-            startQuiz();
+            try {
+                startQuiz();
+            } catch (error) {
+                console.error('Error starting quiz:', error);
+                alert('Failed to start the quiz. Please try again or check the console for errors.');
+                startModal.style.display = 'flex';
+            }
         });
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -1563,12 +1575,21 @@
             }
             return array;
         }
-        function startQuiz() {
-            sounds.start.play();
+               function startQuiz() {
+            if (!sounds.start) {
+                console.warn('Sound not loaded, proceeding without sound.');
+            } else {
+                sounds.start.play();
+            }
             powerUps = { addTime1: true, addTime2: true, timeStop: true };
             addTime1.disabled = false;
             addTime2.disabled = false;
             timeStop.disabled = false;
+
+            if (!questions[selectedDifficulty]) {
+                throw new Error(`No questions available for difficulty: ${selectedDifficulty}`);
+            }
+
             if (selectedDifficulty === 'medium') {
                 const easyQuestions = shuffleArray([...questions.easy]).slice(0, 5);
                 const mediumQuestions = shuffleArray([...questions.medium]).slice(0, 5);
@@ -1576,6 +1597,8 @@
             } else {
                 currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
             }
+
+            quizSection.style.display = 'block'; // Ensure the quiz section is not hidden
             quizSection.classList.add('visible');
             loadQuestion();
             startTimer();
