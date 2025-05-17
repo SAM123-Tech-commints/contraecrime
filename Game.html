@@ -1652,7 +1652,7 @@
         ]
     };
 
-// DOM elements
+    // DOM elements
     const loaderOverlay = document.getElementById('loaderOverlay');
     const mobileMenuIcon = document.getElementById('mobileMenuIcon');
     const sidebar = document.getElementById('sidebar');
@@ -1665,13 +1665,12 @@
     const extraTime1 = document.getElementById('extraTime1');
     const extraTime2 = document.getElementById('extraTime2');
     const timeFreeze = document.getElementById('timeFreeze');
-    const questionBox = document.getElementById('questionBox');
     const questionText = document.getElementById('questionText');
-    const optionsContainer = document.getElementById('options');
+    const options = document.getElementById('options');
     const explanation = document.getElementById('explanation');
     const nextBtn = document.getElementById('nextBtn');
     const exitGameBtn = document.getElementById('exitGameBtn');
-    const scoreDisplay = document.getElementById('score');
+    const scoreElement = document.getElementById('score');
     const startModal = document.getElementById('startModal');
     const tutorialModal = document.getElementById('tutorialModal');
     const resultModal = document.getElementById('resultModal');
@@ -1681,11 +1680,6 @@
     const backBtn = document.getElementById('backBtn');
     const startQuizBtn = document.getElementById('startQuizBtn');
     const dontShowAgain = document.getElementById('dontShowAgain');
-    const tutorialPrev = document.getElementById('tutorialPrev');
-    const tutorialNext = document.getElementById('tutorialNext');
-    const tutorialDots = document.querySelectorAll('.tutorial-dot');
-    const restartBtn = document.getElementById('restartBtn');
-    const exitBtn = document.getElementById('exitBtn');
     const finalScore = document.getElementById('finalScore');
     const accuracy = document.getElementById('accuracy');
     const avgTime = document.getElementById('avgTime');
@@ -1694,511 +1688,470 @@
     const remarks = document.getElementById('remarks');
     const problemSolving = document.getElementById('problemSolving');
     const resultSummary = document.getElementById('resultSummary');
-    const redemptionMessage = document.getElementById('redemptionMessage');
-    const diceContainer = document.getElementById('diceContainer');
-    const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const exitBtn = document.getElementById('exitBtn');
     const timeUpNotification = document.getElementById('timeUpNotification');
+    const redemptionMessage = document.getElementById('redemptionMessage');
+    const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
 
-    // Game state
-    let currentDifficulty = null;
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let timer = 0;
-    let timerInterval = null;
-    let questionsList = [];
-    let userAnswers = [];
-    let incorrectQuestions = [];
-    let timePerQuestion = [];
-    let powerUpsUsed = { extraTime1: false, extraTime2: false, timeFreeze: false };
-    let isTimeFrozen = false;
-    let redemptionIndex = 0;
-
-    // Audio setup
-    const sounds = {
-        correct: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-reward-952.mp3'] }),
-        wrong: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3'] }),
-        timeUp: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-game-show-wrong-answer-950.mp3'] }),
-        click: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3'] })
-    };
-
-    // Utility functions
-    const showLoader = () => {
-        loaderOverlay.classList.add('active');
-    };
-
-    const hideLoader = () => {
-        loaderOverlay.classList.remove('active');
-    };
-
-    const shuffleArray = (array) => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    };
-
-    const saveToLocalStorage = (key, value) => {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-        } catch (error) {
-            console.error('Error saving to localStorage:', error);
-        }
-    };
-
-    const getFromLocalStorage = (key) => {
-        try {
-            const value = localStorage.getItem(key);
-            return value ? JSON.parse(value) : null;
-        } catch (error) {
-            console.error('Error reading from localStorage:', error);
-            return null;
-        }
-    };
-
-    // Mobile menu toggle
-    mobileMenuIcon.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        mobileMenuIcon.innerHTML = sidebar.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        sounds.click.play();
-    });
-
-    // Dark theme toggle
-    themeToggle.addEventListener('change', () => {
-        document.body.classList.toggle('dark-theme');
-        saveToLocalStorage('darkTheme', themeToggle.checked);
-        sounds.click.play();
-    });
-
-    // Initialize theme
-    const savedTheme = getFromLocalStorage('darkTheme');
-    if (savedTheme) {
-        themeToggle.checked = true;
-        document.body.classList.add('dark-theme');
+    // Sound effects
+    let clickSound, correctSound, wrongSound, timeUpSound, gameOverSound;
+    try {
+        clickSound = new Howl({ src: ['https://freesound.org/data/previews/612/612609_5674468-lq.mp3'] });
+        correctSound = new Howl({ src: ['https://freesound.org/data/previews/582/582614_1462108-lq.mp3'] });
+        wrongSound = new Howl({ src: ['https://freesound.org/data/previews/476/476021_5674468-lq.mp3'] });
+        timeUpSound = new Howl({ src: ['https://freesound.org/data/previews/397/397356_1676145-lq.mp3'] });
+        gameOverSound = new Howl({ src: ['https://freesound.org/data/previews/531/531695_11068309-lq.mp3'] });
+        console.log('Sound effects initialized successfully');
+    } catch (error) {
+        console.error('Sound initialization failed:', error);
     }
 
-    // Difficulty selection
+    // Function to play sound with error handling
+    function playSound(sound) {
+        try {
+            if (sound) {
+                sound.play();
+                console.log('Playing sound:', sound._src);
+            } else {
+                console.warn('Sound object is undefined');
+            }
+        } catch (error) {
+            console.warn('Sound playback failed:', error);
+        }
+    }
+
+    // Quiz state
+    let selectedDifficulty = null;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timeLeft = 0;
+    let timerInterval = null;
+    let isFrozen = false;
+    let questionStartTime = 0;
+    let wrongAnswers = [];
+    let userAnswers = [];
+    let isRedemption = false;
+
+    // GSAP animations
+    gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, delay: 0.5 });
+
+    // Event listeners
+    mobileMenuIcon.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        playSound(clickSound);
+    });
+
+    themeToggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark-theme');
+        localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        playSound(clickSound);
+    });
+
     document.querySelectorAll('.difficulty-card').forEach(card => {
         card.addEventListener('click', () => {
             document.querySelectorAll('.difficulty-card').forEach(c => c.classList.remove('selected'));
             card.classList.add('selected');
-            currentDifficulty = card.dataset.difficulty;
+            selectedDifficulty = card.dataset.difficulty;
             tutorialBtn.disabled = false;
-            sounds.click.play();
+            playSound(clickSound);
         });
     });
 
-    // Modal navigation
     tutorialBtn.addEventListener('click', () => {
-        startModal.classList.remove('active');
-        tutorialModal.classList.add('active');
-        showTutorialSlide(1);
-        sounds.click.play();
+        try {
+            if (!selectedDifficulty) {
+                showNotification('Please select a difficulty first!');
+                return;
+            }
+            startModal.classList.remove('active');
+            tutorialModal.classList.add('active');
+            showSlide(1);
+            playSound(clickSound);
+        } catch (error) {
+            console.error('Error in tutorial button handler:', error);
+        }
     });
 
     backAboutBtn.addEventListener('click', () => {
         window.location.href = 'AboutUs.html';
-        sounds.click.play();
+        playSound(clickSound);
     });
 
     backBtn.addEventListener('click', () => {
         tutorialModal.classList.remove('active');
         startModal.classList.add('active');
-        sounds.click.play();
+        playSound(clickSound);
     });
 
     startQuizBtn.addEventListener('click', () => {
         if (dontShowAgain.checked) {
-            saveToLocalStorage('skipTutorial', true);
+            localStorage.setItem('skipTutorial', 'true');
         }
         tutorialModal.classList.remove('active');
-        startGame();
-        sounds.click.play();
+        startQuiz();
+        playSound(clickSound);
     });
 
-    // Tutorial navigation
-    let currentSlide = 1;
-    const showTutorialSlide = (slideNumber) => {
-        document.querySelectorAll('.tutorial-slide').forEach(slide => slide.classList.remove('active'));
-        document.getElementById(`slide${slideNumber}`).classList.add('active');
-        tutorialDots.forEach(dot => dot.classList.remove('active'));
-        document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
-        currentSlide = slideNumber;
-        tutorialPrev.style.display = currentSlide === 1 ? 'none' : 'block';
-        tutorialNext.style.display = currentSlide === 3 ? 'none' : 'block';
-    };
-
-    tutorialPrev.addEventListener('click', () => {
-        if (currentSlide > 1) {
-            showTutorialSlide(currentSlide - 1);
-            sounds.click.play();
-        }
-    });
-
-    tutorialNext.addEventListener('click', () => {
-        if (currentSlide < 3) {
-            showTutorialSlide(currentSlide + 1);
-            sounds.click.play();
-        }
-    });
-
-    tutorialDots.forEach(dot => {
+    document.querySelectorAll('.tutorial-dot').forEach(dot => {
         dot.addEventListener('click', () => {
-            showTutorialSlide(parseInt(dot.dataset.slide));
-            sounds.click.play();
+            showSlide(parseInt(dot.dataset.slide));
+            playSound(clickSound);
         });
     });
 
-    // Game logic
-    const startGame = () => {
-        showLoader();
-        quizSection.classList.remove('visible');
-        score = 0;
-        currentQuestionIndex = 0;
-        userAnswers = [];
-        incorrectQuestions = [];
-        timePerQuestion = [];
-        powerUpsUsed = { extraTime1: false, extraTime2: false, timeFreeze: false };
-        scoreDisplay.textContent = 'Score: 0';
-        questionsList = shuffleArray([...questions[currentDifficulty]]).slice(0, 10);
-        setTimeout(() => {
-            quizSection.classList.add('visible');
-            loadQuestion();
-            hideLoader();
-        }, 500);
-    };
+    document.getElementById('tutorialPrev').addEventListener('click', () => {
+        showSlide(Math.max(1, parseInt(document.querySelector('.tutorial-dot.active').dataset.slide) - 1));
+        playSound(clickSound);
+    });
 
-    const startTimer = () => {
-        const timeLimits = { easy: 60, medium: 45, hard: 30 };
-        timer = timeLimits[currentDifficulty];
-        timerText.textContent = `${timer}s`;
-        const circumference = 188;
-        timerCircle.style.strokeDashoffset = 0;
+    document.getElementById('tutorialNext').addEventListener('click', () => {
+        showSlide(Math.min(3, parseInt(document.querySelector('.tutorial-dot.active').dataset.slide) + 1));
+        playSound(clickSound);
+    });
 
-        if (timerInterval) clearInterval(timerInterval);
-        timerInterval = setInterval(() => {
-            if (!isTimeFrozen) {
-                timer--;
-                timerText.textContent = `${timer}s`;
-                const offset = circumference - (timer / timeLimits[currentDifficulty]) * circumference;
-                timerCircle.style.strokeDashoffset = offset;
-
-                if (timer <= 0) {
-                    clearInterval(timerInterval);
-                    timeUp();
-                }
-            }
-        }, 1000);
-    };
-
-    const loadQuestion = () => {
-        const question = questionsList[currentQuestionIndex];
-        questionText.textContent = question.text;
-        optionsContainer.innerHTML = '';
-        explanation.style.display = 'none';
-        nextBtn.classList.remove('visible');
-        exitGameBtn.classList.remove('visible');
-        progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionsList.length}`;
-        progressBar.style.width = `${((currentQuestionIndex + 1) / questionsList.length) * 100}%`;
-
-        shuffleArray(question.options).forEach(option => {
-            const button = document.createElement('button');
-            button.classList.add('option-btn');
-            button.innerHTML = `<i class="fas fa-check-circle"></i> ${option}`;
-            button.addEventListener('click', () => checkAnswer(option, question.answer));
-            optionsContainer.appendChild(button);
-        });
-
-        resetPowerUps();
-        startTimer();
-    };
-
-    const resetPowerUps = () => {
-        extraTime1.disabled = powerUpsUsed.extraTime1;
-        extraTime2.disabled = powerUpsUsed.extraTime2 || !powerUpsUsed.extraTime1;
-        timeFreeze.disabled = powerUpsUsed.timeFreeze;
-    };
-
-    const checkAnswer = (selected, correct) => {
-        clearInterval(timerInterval);
-        timePerQuestion.push(timeLimits[currentDifficulty] - timer);
-        const isCorrect = selected === correct;
-        userAnswers.push({ question: questionsList[currentQuestionIndex].text, selected, correct, isCorrect, timeTaken: timeLimits[currentDifficulty] - timer });
-
-        document.querySelectorAll('.option-btn').forEach(btn => {
-            btn.classList.add('disabled');
-            if (btn.textContent.includes(correct)) {
-                btn.classList.add('correct');
-            }
-            if (btn.textContent.includes(selected) && !isCorrect) {
-                btn.classList.add('wrong');
-            }
-        });
-
-        explanation.textContent = questionsList[currentQuestionIndex].explanation;
-        explanation.classList.add('visible');
-
-        if (isCorrect) {
-            score += 10;
-            scoreDisplay.textContent = `Score: ${score}`;
-            sounds.correct.play();
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-        } else {
-            sounds.wrong.play();
-            incorrectQuestions.push(questionsList[currentQuestionIndex]);
-        }
-
-        nextBtn.classList.add('visible');
-        exitGameBtn.classList.add('visible');
-    };
-
-    const timeUp = () => {
-        clearInterval(timerInterval);
-        timeUpNotification.classList.add('visible');
-        sounds.timeUp.play();
-        setTimeout(() => {
-            timeUpNotification.classList.remove('visible');
-        }, 2000);
-
-        userAnswers.push({
-            question: questionsList[currentQuestionIndex].text,
-            selected: 'None (Time Up)',
-            correct: questionsList[currentQuestionIndex].answer,
-            isCorrect: false,
-            timeTaken: timeLimits[currentDifficulty]
-        });
-        incorrectQuestions.push(questionsList[currentQuestionIndex]);
-
-        document.querySelectorAll('.option-btn').forEach(btn => {
-            btn.classList.add('disabled');
-            if (btn.textContent.includes(questionsList[currentQuestionIndex].answer)) {
-                btn.classList.add('correct');
-            }
-        });
-
-        explanation.textContent = questionsList[currentQuestionIndex].explanation;
-        explanation.classList.add('visible');
-        nextBtn.classList.add('visible');
-        exitGameBtn.classList.add('visible');
-    };
-
-    // Power-up handlers
     extraTime1.addEventListener('click', () => {
-        if (!powerUpsUsed.extraTime1) {
-            timer += 10;
-            powerUpsUsed.extraTime1 = true;
+        if (!extraTime1.disabled) {
+            timeLeft += 10;
+            timerText.textContent = `${timeLeft}s`;
             extraTime1.disabled = true;
-            extraTime2.disabled = powerUpsUsed.extraTime2;
-            sounds.click.play();
+            playSound(clickSound);
         }
     });
 
     extraTime2.addEventListener('click', () => {
-        if (!powerUpsUsed.extraTime2 && powerUpsUsed.extraTime1) {
-            timer += 10;
-            powerUpsUsed.extraTime2 = true;
+        if (!extraTime2.disabled) {
+            timeLeft += 10;
+            timerText.textContent = `${timeLeft}s`;
             extraTime2.disabled = true;
-            sounds.click.play();
+            playSound(clickSound);
         }
     });
 
     timeFreeze.addEventListener('click', () => {
-        if (!powerUpsUsed.timeFreeze) {
-            isTimeFrozen = true;
-            powerUpsUsed.timeFreeze = true;
+        if (!timeFreeze.disabled) {
+            isFrozen = true;
+            clearInterval(timerInterval);
             timeFreeze.disabled = true;
-            setTimeout(() => {
-                isTimeFrozen = false;
-            }, 5000);
-            sounds.click.play();
+            playSound(clickSound);
         }
     });
 
-    // Navigation buttons
     nextBtn.addEventListener('click', () => {
         currentQuestionIndex++;
-        if (currentQuestionIndex < questionsList.length) {
-            loadQuestion();
-        } else {
-            if (incorrectQuestions.length > 0) {
-                showRedemptionRound();
-            } else {
-                showResults();
-            }
-        }
-        sounds.click.play();
+        loadQuestion();
+        playSound(clickSound);
     });
 
     exitGameBtn.addEventListener('click', () => {
-        quizSection.classList.remove('visible');
-        startModal.classList.add('active');
         clearInterval(timerInterval);
-        sounds.click.play();
+        showResult();
+        playSound(gameOverSound);
     });
 
-    // Redemption round
-    const showRedemptionRound = () => {
-        quizSection.classList.remove('visible');
-        redemptionModal.classList.add('active');
-        redemptionIndex = 0;
-        const maxQuestions = Math.min(incorrectQuestions.length, 3);
-        redemptionMessage.textContent = `You got ${incorrectQuestions.length} question(s) wrong. Roll the dice to answer up to ${maxQuestions} question(s) for 5 points each!`;
-        diceContainer.innerHTML = '';
+    restartBtn.addEventListener('click', () => {
+        resetQuiz();
+        startModal.classList.add('active');
+        resultModal.classList.remove('active');
+        playSound(clickSound);
+    });
 
-        for (let i = 0; i < maxQuestions; i++) {
-            const btn = document.createElement('button');
-            btn.classList.add('dice-btn');
-            btn.textContent = `Dice ${i + 1}`;
-            btn.addEventListener('click', () => {
-                btn.disabled = true;
-                loadRedemptionQuestion(incorrectQuestions[redemptionIndex]);
-                redemptionIndex++;
-                if (redemptionIndex >= maxQuestions) {
-                    diceContainer.innerHTML = '';
-                }
-            });
-            diceContainer.appendChild(btn);
-        }
-        sounds.click.play();
-    };
+    exitBtn.addEventListener('click', () => {
+        resetQuiz();
+        resultModal.classList.remove('active');
+        startModal.classList.add('active');
+        playSound(clickSound);
+    });
 
-    const loadRedemptionQuestion = (question) => {
+    skipRedemptionBtn.addEventListener('click', () => {
         redemptionModal.classList.remove('active');
+        showResult();
+        playSound(clickSound);
+    });
+
+    // Functions
+    function showSlide(slideNumber) {
+        document.querySelectorAll('.tutorial-slide').forEach(slide => slide.classList.remove('active'));
+        document.getElementById(`slide${slideNumber}`).classList.add('active');
+        document.querySelectorAll('.tutorial-dot').forEach(dot => dot.classList.remove('active'));
+        document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
+    }
+
+    function showNotification(message) {
+        timeUpNotification.textContent = message;
+        timeUpNotification.classList.add('visible');
+        setTimeout(() => {
+            timeUpNotification.classList.remove('visible');
+        }, 2000);
+    }
+
+    function startQuiz() {
+        if (localStorage.getItem('skipTutorial') === 'true') {
+            tutorialModal.classList.remove('active');
+        }
         quizSection.classList.add('visible');
-        questionText.textContent = question.text;
-        optionsContainer.innerHTML = '';
-        explanation.style.display = 'none';
-        nextBtn.classList.remove('visible');
-        exitGameBtn.classList.remove('visible');
-        progressText.textContent = `Redemption Question ${redemptionIndex + 1}`;
-        progressBar.style.width = '100%';
+        currentQuestionIndex = 0;
+        score = 0;
+        wrongAnswers = [];
+        userAnswers = [];
+        scoreElement.textContent = `Score: ${score}`;
+        loadQuestion();
+    }
 
-        shuffleArray(question.options).forEach(option => {
-            const button = document.createElement('button');
-            button.classList.add('option-btn');
-            button.innerHTML = `<i class="fas fa-check-circle"></i> ${option}`;
-            button.addEventListener('click', () => checkRedemptionAnswer(option, question.answer));
-            optionsContainer.appendChild(button);
-        });
+    function loadQuestion() {
+        try {
+            const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
+            if (currentQuestionIndex >= questionList.length) {
+                if (isRedemption) {
+                    showResult();
+                } else {
+                    showRedemptionModal();
+                }
+                return;
+            }
 
-        resetPowerUps();
-        startTimer();
-    };
+            const question = questionList[currentQuestionIndex];
+            questionText.textContent = question.text;
+            options.innerHTML = '';
+            explanation.textContent = '';
+            explanation.classList.remove('visible');
+            nextBtn.classList.remove('visible');
+            exitGameBtn.classList.add('visible');
 
-    const checkRedemptionAnswer = (selected, correct) => {
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
+                button.addEventListener('click', () => checkAnswer(option, question.answer));
+                options.appendChild(button);
+            });
+
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
+
+            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+            timerText.textContent = `${timeLeft}s`;
+            timerCircle.style.strokeDashoffset = 0;
+            questionStartTime = Date.now();
+
+            clearInterval(timerInterval);
+            if (!isFrozen) {
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+
+            extraTime1.disabled = false;
+            extraTime2.disabled = false;
+            timeFreeze.disabled = false;
+
+            console.log('Loaded question:', question.text);
+        } catch (error) {
+            console.error('Error loading question:', error);
+        }
+    }
+
+    function updateTimer() {
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            showNotification("Time's Up!");
+            playSound(timeUpSound);
+            explanation.textContent = `Time's up! The correct answer was: ${questions[selectedDifficulty][currentQuestionIndex].answer}.`;
+            explanation.classList.add('visible');
+            nextBtn.classList.add('visible');
+            exitGameBtn.classList.add('visible');
+            userAnswers.push({
+                question: questions[selectedDifficulty][currentQuestionIndex].text,
+                userAnswer: 'None (Time Up)',
+                correctAnswer: questions[selectedDifficulty][currentQuestionIndex].answer,
+                timeTaken: (Date.now() - questionStartTime) / 1000,
+                isCorrect: false
+            });
+            wrongAnswers.push(questions[selectedDifficulty][currentQuestionIndex]);
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.add('disabled'));
+            return;
+        }
+
+        timeLeft--;
+        timerText.textContent = `${timeLeft}s`;
+        const circumference = 188;
+        const offset = circumference * (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30));
+        timerCircle.style.strokeDashoffset = offset;
+    }
+
+    function checkAnswer(selectedOption, correctAnswer) {
         clearInterval(timerInterval);
-        timePerQuestion.push(timeLimits[currentDifficulty] - timer);
-        const isCorrect = selected === correct;
-        userAnswers.push({ question: incorrectQuestions[redemptionIndex - 1].text, selected, correct, isCorrect, timeTaken: timeLimits[currentDifficulty] - timer });
+        const timeTaken = (Date.now() - questionStartTime) / 1000;
+        const isCorrect = selectedOption === correctAnswer;
 
         document.querySelectorAll('.option-btn').forEach(btn => {
             btn.classList.add('disabled');
-            if (btn.textContent.includes(correct)) {
+            if (btn.textContent.includes(correctAnswer)) {
                 btn.classList.add('correct');
             }
-            if (btn.textContent.includes(selected) && !isCorrect) {
+            if (btn.textContent.includes(selectedOption) && !isCorrect) {
                 btn.classList.add('wrong');
             }
         });
 
-        explanation.textContent = incorrectQuestions[redemptionIndex - 1].explanation;
-        explanation.classList.add('visible');
-
         if (isCorrect) {
-            score += 5;
-            scoreDisplay.textContent = `Score: ${score}`;
-            sounds.correct.play();
-            confetti({ particleCount: 50, spread: 50, origin: { y: 0.6 } });
+            score += isRedemption ? 5 : 10;
+            scoreElement.textContent = `Score: ${score}`;
+            explanation.textContent = questions[selectedDifficulty][currentQuestionIndex].explanation;
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            playSound(correctSound);
         } else {
-            sounds.wrong.play();
+            explanation.textContent = `Incorrect. The correct answer was: ${correctAnswer}. ${questions[selectedDifficulty][currentQuestionIndex].explanation}`;
+            if (!isRedemption) {
+                wrongAnswers.push(questions[selectedDifficulty][currentQuestionIndex]);
+            }
+            playSound(wrongSound);
         }
 
+        explanation.classList.add('visible');
         nextBtn.classList.add('visible');
         exitGameBtn.classList.add('visible');
-    };
 
-    skipRedemptionBtn.addEventListener('click', () => {
-        redemptionModal.classList.remove('active');
-        showResults();
-        sounds.click.play();
-    });
+        userAnswers.push({
+            question: questions[selectedDifficulty][currentQuestionIndex].text,
+            userAnswer: selectedOption,
+            correctAnswer: correctAnswer,
+            timeTaken: timeTaken,
+            isCorrect: isCorrect
+        });
+    }
 
-    // Results display
-    const showResults = () => {
+    function showRedemptionModal() {
+        try {
+            if (wrongAnswers.length === 0) {
+                showResult();
+                return;
+            }
+            const numQuestions = Math.min(wrongAnswers.length, 3);
+            redemptionMessage.textContent = `You got ${wrongAnswers.length} question(s) wrong. Choose one dice to select a question for the redemption round (5 points).`;
+            const diceContainer = document.getElementById('diceContainer');
+            diceContainer.innerHTML = '';
+
+            for (let i = 0; i < numQuestions; i++) {
+                const diceBtn = document.createElement('button');
+                diceBtn.className = 'dice-btn';
+                diceBtn.textContent = `Dice ${i + 1}`;
+                diceBtn.addEventListener('click', () => {
+                    const randomIndex = Math.floor(Math.random() * wrongAnswers.length);
+                    wrongAnswers = [wrongAnswers[randomIndex]];
+                    redemptionModal.classList.remove('active');
+                    isRedemption = true;
+                    currentQuestionIndex = 0;
+                    loadQuestion();
+                    playSound(clickSound);
+                });
+                diceContainer.appendChild(diceBtn);
+            }
+
+            redemptionModal.classList.add('active');
+            console.log('Showing redemption modal with', numQuestions, 'dice');
+        } catch (error) {
+            console.error('Error showing redemption modal:', error);
+        }
+    }
+
+    function showResult() {
+        clearInterval(timerInterval);
         quizSection.classList.remove('visible');
         resultModal.classList.add('active');
-        finalScore.textContent = score;
 
-        const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
+        finalScore.textContent = score;
+        const correctCount = userAnswers.filter(ans => ans.isCorrect).length;
         const totalQuestions = userAnswers.length;
-        const accuracyPercent = ((correctAnswers / totalQuestions) * 100).toFixed(2);
+        const accuracyPercent = totalQuestions > 0 ? ((correctCount / totalQuestions) * 100).toFixed(2) : 0;
         accuracy.textContent = accuracyPercent;
 
-        const avgTimeTaken = (timePerQuestion.reduce((a, b) => a + b, 0) / timePerQuestion.length).toFixed(2);
-        avgTime.textContent = avgTimeTaken;
+        const totalTime = userAnswers.reduce((sum, ans) => sum + ans.timeTaken, 0);
+        const avgTimePerQuestion = totalQuestions > 0 ? (totalTime / totalQuestions).toFixed(2) : 0;
+        avgTime.textContent = avgTimePerQuestion;
 
-        difficultyAnalysis.textContent = `You played on ${currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1)} mode.`;
+        difficultyAnalysis.textContent = `You played on ${selectedDifficulty} mode. ${
+            selectedDifficulty === 'easy' ? 'Great start! Try Medium for more scenarios.' :
+            selectedDifficulty === 'medium' ? 'Good mix of basics and scenarios! Ready for Hard?' :
+            'Impressive handling of advanced details! Keep mastering cyberlaws.'
+        }`;
 
-        thinkingLevel.textContent = accuracyPercent > 80 ? 'High analytical thinking with strong grasp of cyberlaw concepts.' :
-                                   accuracyPercent > 50 ? 'Moderate analytical skills with room for deeper understanding.' :
-                                   'Basic understanding, suggesting need for further study.';
+        thinkingLevel.textContent = accuracyPercent > 80 ? 'Excellent analytical skills!' :
+                                   accuracyPercent > 50 ? 'Good understanding, keep practicing!' :
+                                   'Needs improvement, review the laws!';
 
-        remarks.textContent = accuracyPercent > 80 ? 'Excellent performance! You have a solid understanding of cybercrime laws.' :
-                              accuracyPercent > 50 ? 'Good effort! Review explanations to strengthen your knowledge.' :
-                              'Keep practicing! Focus on key legal provisions to improve.';
+        remarks.textContent = score >= 80 ? 'Outstanding! You’re a cyberlaw expert!' :
+                             score >= 50 ? 'Well done! Solid grasp of cyberlaws.' :
+                             'Keep studying to boost your score!';
 
-        problemSolving.textContent = avgTimeTaken < 20 ? 'Quick and effective decision-making under pressure.' :
-                                     avgTimeTaken < 40 ? 'Balanced approach to problem-solving with steady pace.' :
-                                     'Slower decision-making, possibly due to complex questions or hesitation.';
+        problemSolving.textContent = avgTimePerQuestion < 10 ? 'Lightning-fast decisions!' :
+                                    avgTimePerQuestion < 20 ? 'Steady and thoughtful!' :
+                                    'Take your time to analyze carefully.';
 
         resultSummary.innerHTML = '';
-        userAnswers.forEach((answer, index) => {
+        userAnswers.forEach((ans, index) => {
             const block = document.createElement('div');
-            block.classList.add('question-block');
+            block.className = 'question-block';
             block.innerHTML = `
-                <div class="question">Q${index + 1}: ${answer.question}</div>
-                <div class="user-answer ${answer.isCorrect ? '' : 'incorrect'}">
-                    Your Answer: ${answer.selected}
-                </div>
-                <div class="correct-answer">Correct Answer: ${answer.correct}</div>
-                <div class="time-taken">Time Taken: ${answer.timeTaken}s</div>
+                <div class="question">Q${index + 1}: ${ans.question}</div>
+                <div class="user-answer ${ans.isCorrect ? '' : 'incorrect'}">Your Answer: ${ans.userAnswer}</div>
+                <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+                <div class="time-taken">Time Taken: ${ans.timeTaken.toFixed(2)}s</div>
             `;
             resultSummary.appendChild(block);
         });
-        sounds.click.play();
-    };
 
-    restartBtn.addEventListener('click', () => {
-        resultModal.classList.remove('active');
-        startModal.classList.add('active');
-        document.querySelectorAll('.difficulty-card').forEach(c => c.classList.remove('selected'));
-        tutorialBtn.disabled = true;
-        currentDifficulty = null;
-        sounds.click.play();
-    });
+        try {
+            if (firebase.auth().currentUser) {
+                const userId = firebase.auth().currentUser.uid;
+                firebase.firestore().collection('quizResults').add({
+                    userId: userId,
+                    score: score,
+                    accuracy: accuracyPercent,
+                    avgTime: avgTimePerQuestion,
+                    difficulty: selectedDifficulty,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log('Quiz results saved to Firestore');
+                }).catch(error => {
+                    console.error('Error saving quiz results:', error);
+                });
+            }
+        } catch (error) {
+            console.error('Firestore save error:', error);
+        }
 
-    exitBtn.addEventListener('click', () => {
-        resultModal.classList.remove('active');
-        startModal.classList.add('active');
-        document.querySelectorAll('.difficulty-card').forEach(c => c.classList.remove('selected'));
-        tutorialBtn.disabled = true;
-        currentDifficulty = null;
-        sounds.click.play();
-    });
-
-    // Check if tutorial should be skipped
-    const skipTutorial = getFromLocalStorage('skipTutorial');
-    if (skipTutorial) {
-        startModal.classList.add('active');
-        tutorialModal.classList.remove('active');
-    } else {
-        startModal.classList.add('active');
+        playSound(gameOverSound);
     }
 
-    // GSAP animations
-    gsap.from('.quiz-section', { opacity: 0, y: 50, duration: 1, ease: 'power2.out', delay: 0.5 });
-    gsap.from('.sidebar', { x: -290, duration: 0.8, ease: 'power2.out' });
-    gsap.from('.difficulty-card', { opacity: 0, y: 30, stagger: 0.2, duration: 0.8, ease: 'power2.out' });
-    </script>
-</body>
-</html>
+    function resetQuiz() {
+        selectedDifficulty = null;
+        currentQuestionIndex = 0;
+        score = 0;
+        timeLeft = 0;
+        isFrozen = false;
+        wrongAnswers = [];
+        userAnswers = [];
+        isRedemption = false;
+        scoreElement.textContent = `Score: ${score}`;
+        quizSection.classList.remove('visible');
+        document.querySelectorAll('.difficulty-card').forEach(card => card.classList.remove('selected'));
+        tutorialBtn.disabled = true;
+        clearInterval(timerInterval);
+    }
+
+    // Initialize
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeToggle.checked = true;
+    }
+
+    loaderOverlay.classList.add('active');
+    setTimeout(() => {
+        loaderOverlay.classList.remove('active');
+    }, 1000);
+
+    console.log('Quiz app initialized');
+</script>
