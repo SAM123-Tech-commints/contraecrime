@@ -305,7 +305,7 @@
         }
         .timer-container {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             margin-bottom: 20px;
             position: relative;
@@ -336,6 +336,8 @@
         .power-ups {
             display: flex;
             gap: 10px;
+            position: relative;
+            z-index: 1002;
         }
         .power-up-btn {
             background: linear-gradient(135deg, #9b59b6, #8e44ad);
@@ -351,6 +353,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            pointer-events: auto;
         }
         .power-up-btn:hover {
             transform: scale(1.1);
@@ -359,6 +362,25 @@
             background: #666;
             cursor: not-allowed;
             opacity: 0.6;
+        }
+        .mute-btn {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            pointer-events: auto;
+        }
+        .mute-btn:hover {
+            transform: scale(1.1);
         }
         .question-box {
             background: #f9f9f9;
@@ -396,6 +418,40 @@
             position: relative;
             z-index: 1;
         }
+        .redemption-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .redemption-box {
+            background: linear-gradient(135deg, #ffcc00, #e6b800);
+            color: #1e3c72;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            pointer-events: auto;
+        }
+        .redemption-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .redemption-box.selected {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
         .option-btn {
             background: linear-gradient(135deg, #4a90e2, #357abd);
             color: #fff;
@@ -413,6 +469,7 @@
             justify-content: center;
             gap: 5px;
             touch-action: manipulation;
+            pointer-events: auto;
         }
         .option-btn::before {
             content: '';
@@ -504,6 +561,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            pointer-events: auto;
         }
         .exit-game-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -633,6 +691,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            pointer-events: auto;
         }
         .back-about-btn, .skip-redemption-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -1002,11 +1061,12 @@
                         <circle class="timer-circle" cx="35" cy="35" r="30"></circle>
                     </svg>
                     <span class="timer-text" id="timerText"></span>
-                    <div class="power-ups">
-                        <button class="power-up-btn" id="extraTime1" title="Add 10 seconds"><i class="fas fa-clock"></i> Extra Time 1</button>
-                        <button class="power-up-btn" id="extraTime2" title="Add 10 seconds"><i class="fas fa-clock"></i> Extra Time 2</button>
-                        <button class="power-up-btn" id="timeFreeze" title="Freeze Timer"><i class="fas fa-pause"></i> Time Freeze</button>
-                    </div>
+                </div>
+                <div class="power-ups">
+                    <button class="power-up-btn" id="extraTime1" title="Add 10 seconds"><i class="fas fa-clock"></i> Extra Time 1</button>
+                    <button class="power-up-btn" id="extraTime2" title="Add 10 seconds"><i class="fas fa-clock"></i> Extra Time 2</button>
+                    <button class="power-up-btn" id="timeFreeze" title="Freeze Timer"><i class="fas fa-pause"></i> Time Freeze</button>
+                    <button class="mute-btn" id="muteBtn" title="Toggle Sound"><i class="fas fa-volume-up"></i> Mute</button>
                 </div>
                 <div class="question-box" id="questionBox">
                     <div class="question-text" id="questionText"></div>
@@ -1057,12 +1117,12 @@
                 <div class="tutorial-slide" id="slide2">
                     <h3>Gameplay & Power-Ups</h3>
                     <img src="https://i.imgur.com/TCTi8I2.jpeg" alt="Digital Security">
-                    <p>Choose Easy (60s), Medium (45s), or Hard (30s). Use two Extra Time power-ups to add 10 seconds each or one Time Freeze to pause the timer and review explanations. Questions are randomized each game. Effects include confetti bursts for correct answers and animations for feedback.</p>
+                    <p>Choose Easy (60s), Medium (45s), or Hard (30s). Use two Extra Time power-ups to add 10 seconds each or one Time Freeze to pause the timer and review explanations. Questions are randomized each game.</p>
                 </div>
                 <div class="tutorial-slide" id="slide3">
-                    <h3>Scoring & Feedback</h3>
+                    <h3>Scoring & Redemption</h3>
                     <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Scoreboard">
-                    <p>Earn 10 points per correct answer. After using Time Freeze, get an explanation. View detailed results at the end, including a redemption round for wrong answers. Exit anytime with the Exit Game button. Effects like button scaling and shaking enhance your experience!</p>
+                    <p>Earn 10 points per correct answer. At the end, enter a redemption round with 1-3 questions based on wrong answers, presented as clickable boxes. Exit anytime with the Exit Game button.</p>
                 </div>
                 <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
                 <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
@@ -1107,9 +1167,9 @@
         <div class="redemption-modal" id="redemptionModal" style="display: none;">
             <div class="redemption-modal-content">
                 <h2>Redemption Round</h2>
-                <p>Answer 3 questions to earn extra points! These are based on your wrong answers or random questions.</p>
+                <p>Choose a box to answer a question based on your wrong answers and earn extra points!</p>
+                <div class="redemption-options" id="redemptionOptions"></div>
                 <div class="redemption-actions">
-                    <button class="start-redemption-btn" id="startRedemptionBtn"><i class="fas fa-play"></i> Start Redemption</button>
                     <button class="skip-redemption-btn" id="skipRedemptionBtn"><i class="fas fa-forward"></i> Skip Redemption</button>
                 </div>
             </div>
@@ -1536,69 +1596,217 @@
         const extraTime1 = document.getElementById('extraTime1');
         const extraTime2 = document.getElementById('extraTime2');
         const timeFreeze = document.getElementById('timeFreeze');
+        const muteBtn = document.getElementById('muteBtn');
         const redemptionModal = document.getElementById('redemptionModal');
-        const startRedemptionBtn = document.getElementById('startRedemptionBtn');
+        const redemptionOptions = document.getElementById('redemptionOptions');
         const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
         const timeUpNotification = document.getElementById('timeUpNotification');
-        let currentQuestion = 0;
+        let currentQuestionIndex = 0;
         let score = 0;
-        let timeLeft = 45;
+        let timeLeft = 0;
         let timerInterval;
         let selectedDifficulty = null;
-        const totalQuestions = 10;
-        let userAnswers = [];
-        let timeTakenPerQuestion = [];
-        let currentQuestionSet = [];
-        let currentSlide = 1;
-        let powerUps = { extraTime1: true, extraTime2: true, timeFreeze: true };
-        let isTimeStopped = false;
-        let isAnswerSubmitted = false;
+        let currentQuestions = [];
+        let results = [];
+        let wrongAnswers = [];
         let redemptionQuestions = [];
         let redemptionAnswers = [];
-        let isRedemptionMode = false;
+        let isRedemptionRound = false;
         let redemptionQuestionIndex = 0;
+        let questionStartTime = 0;
+        let totalTimeTaken = 0;
+        let correctAnswers = 0;
+        let usedPowerUps = { extraTime1: false, extraTime2: false, timeFreeze: false };
+        let isTimeFrozen = false;
+        let isMuted = false;
         const sounds = {
-            start: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
-            correct: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
-            wrong: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_4d7d1c55f9.mp3'], volume: 0.5 }),
-            complete: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_8d1f7f1e9e.mp3'], volume: 0.5 }),
-            powerUp: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 })
+            start: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3'], volume: 0.3 }),
+            correct: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3'], volume: 0.3 }),
+                       wrong: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-error-1246.mp3'], volume: 0.3 }),
+            timeUp: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-game-over-trombone-1940.mp3'], volume: 0.3 }),
+            powerUp: new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-quick-positive-beep-2979.mp3'], volume: 0.3 }),
+            background: new Howl({
+                src: ['https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3'],
+                volume: 0.2,
+                loop: true,
+                autoplay: false
+            })
         };
-        if (localStorage.getItem('darkTheme') === 'enabled') {
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
-        themeToggle.addEventListener('change', function() {
+
+        // Theme toggle handler
+        themeToggle.addEventListener('change', () => {
             body.classList.toggle('dark-theme');
-            localStorage.setItem('darkTheme', this.checked ? 'enabled' : 'disabled');
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+            sounds.powerUp.play();
         });
-        mobileMenuIcon.addEventListener('click', function() {
+
+        // Mobile menu toggle
+        mobileMenuIcon.addEventListener('click', () => {
             sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
         });
-        document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:')) return;
-                e.preventDefault();
-                loaderOverlay.classList.add('active');
-                setTimeout(() => { window.location.href = this.href; }, 150);
-            });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 480 && sidebar.classList.contains('active')) {
+                if (!sidebar.contains(e.target) && !mobileMenuIcon.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
         });
-        backAboutBtn.addEventListener('click', () => {
-            loaderOverlay.classList.add('active');
-            setTimeout(() => { window.location.href = 'AboutUs.html'; }, 150);
+
+        // Show loader on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loaderOverlay.classList.remove('active');
+                quizSection.classList.add('visible');
+                startModal.style.display = 'flex';
+            }, 1000);
         });
+
+        // Difficulty selection
         difficultyCards.forEach(card => {
-            card.addEventListener('click', function() {
-                selectedDifficulty = this
-                .dataset.difficulty;
+            card.addEventListener('click', () => {
                 difficultyCards.forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
+                card.classList.add('selected');
+                selectedDifficulty = card.dataset.difficulty;
                 tutorialBtn.disabled = false;
+                sounds.powerUp.play();
             });
         });
+
+        // Tutorial navigation
+        let currentSlide = 1;
+        function showSlide(slideNumber) {
+            tutorialSlides.forEach(slide => slide.classList.remove('active'));
+            tutorialDots.forEach(dot => dot.classList.remove('active'));
+            document.getElementById(`slide${slideNumber}`).classList.add('active');
+            document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
+            tutorialPrev.style.display = slideNumber === 1 ? 'none' : 'block';
+            tutorialNext.style.display = slideNumber === tutorialSlides.length ? 'none' : 'block';
+            currentSlide = slideNumber;
+        }
+
+        tutorialDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                showSlide(parseInt(dot.dataset.slide));
+                sounds.powerUp.play();
+            });
+        });
+
+        tutorialPrev.addEventListener('click', () => {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+                sounds.powerUp.play();
+            }
+        });
+
+        tutorialNext.addEventListener('click', () => {
+            if (currentSlide < tutorialSlides.length) {
+                showSlide(currentSlide + 1);
+                sounds.powerUp.play();
+            }
+        });
+
+        // Tutorial button handler
+        tutorialBtn.addEventListener('click', () => {
+            if (!dontShowAgain.checked || !localStorage.getItem('skipTutorial')) {
+                startModal.style.display = 'none';
+                tutorialModal.style.display = 'flex';
+                showSlide(1);
+                sounds.start.play();
+            } else {
+                startQuiz();
+            }
+        });
+
+        // Back to difficulty selection
+        backBtn.addEventListener('click', () => {
+            tutorialModal.style.display = 'none';
+            startModal.style.display = 'flex';
+            sounds.powerUp.play();
+        });
+
+        // Start quiz
+        startQuizBtn.addEventListener('click', () => {
+            if (dontShowAgain.checked) {
+                localStorage.setItem('skipTutorial', 'true');
+            }
+            startQuiz();
+        });
+
+        // Back to About Us
+        backAboutBtn.addEventListener('click', () => {
+            window.location.href = 'AboutUs.html';
+        });
+
+        // Mute button handler
+        muteBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i> Unmute' : '<i class="fas fa-volume-up"></i> Mute';
+            sounds.background.volume(isMuted ? 0 : 0.2);
+            Howler.mute(isMuted);
+            if (!isMuted) {
+                sounds.powerUp.play();
+            }
+        });
+
+        // Power-up handlers
+        extraTime1.addEventListener('click', () => {
+            if (!usedPowerUps.extraTime1 && !isTimeFrozen) {
+                timeLeft += 10;
+                timerText.textContent = `${timeLeft}s`;
+                usedPowerUps.extraTime1 = true;
+                extraTime1.disabled = true;
+                sounds.powerUp.play();
+            }
+        });
+
+        extraTime2.addEventListener('click', () => {
+            if (!usedPowerUps.extraTime2 && !isTimeFrozen) {
+                timeLeft += 10;
+                timerText.textContent = `${timeLeft}s`;
+                usedPowerUps.extraTime2 = true;
+                extraTime2.disabled = true;
+                sounds.powerUp.play();
+            }
+        });
+
+        timeFreeze.addEventListener('click', () => {
+            if (!usedPowerUps.timeFreeze) {
+                isTimeFrozen = true;
+                clearInterval(timerInterval);
+                usedPowerUps.timeFreeze = true;
+                timeFreeze.disabled = true;
+                timerText.textContent = 'Paused';
+                sounds.powerUp.play();
+            }
+        });
+
+        function startQuiz() {
+            tutorialModal.style.display = 'none';
+            sounds.background.play();
+            currentQuestions = shuffleArray([...questions[selectedDifficulty]]).slice(0, 10);
+            currentQuestionIndex = 0;
+            score = 0;
+            results = [];
+            wrongAnswers = [];
+            correctAnswers = 0;
+            totalTimeTaken = 0;
+            usedPowerUps = { extraTime1: false, extraTime2: false, timeFreeze: false };
+            extraTime1.disabled = false;
+            extraTime2.disabled = false;
+            timeFreeze.disabled = false;
+            isTimeFrozen = false;
+            scoreDisplay.textContent = 'Score: 0';
+            loadQuestion();
+        }
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -1608,338 +1816,312 @@
             return array;
         }
 
-        function startQuiz() {
-            sounds.start.play();
-            startModal.style.display = 'none';
-            tutorialModal.style.display = 'none';
-            quizSection.classList.add('visible');
-            currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
-            currentQuestion = 0;
-            score = 0;
-            userAnswers = [];
-            timeTakenPerQuestion = [];
-            isAnswerSubmitted = false;
-            scoreDisplay.textContent = `Score: ${score}`;
-            powerUps = { extraTime1: true, extraTime2: true, timeFreeze: true };
-            extraTime1.disabled = false;
-            extraTime2.disabled = false;
-            timeFreeze.disabled = false;
-            loadQuestion();
-        }
-
         function loadQuestion() {
-            if (isRedemptionMode && redemptionQuestionIndex < redemptionQuestions.length) {
-                const question = redemptionQuestions[redemptionQuestionIndex];
-                questionText.textContent = question.text;
-                options.innerHTML = '';
-                shuffleArray([...question.options]).forEach(option => {
-                    const btn = document.createElement('button');
-                    btn.classList.add('option-btn');
-                    btn.textContent = option;
-                    btn.addEventListener('click', () => checkAnswer(btn, question.answer));
-                    options.appendChild(btn);
-                });
-                explanation.style.display = 'none';
-                progressText.textContent = `Redemption Question ${redemptionQuestionIndex + 1} of ${redemptionQuestions.length}`;
-                progressBar.style.width = `${((redemptionQuestionIndex + 1) / redemptionQuestions.length) * 100}%`;
-                resetTimer(30);
-            } else if (currentQuestion < totalQuestions && !isRedemptionMode) {
-                const question = currentQuestionSet[currentQuestion];
-                questionText.textContent = question.text;
-                options.innerHTML = '';
-                shuffleArray([...question.options]).forEach(option => {
-                    const btn = document.createElement('button');
-                    btn.classList.add('option-btn');
-                    btn.textContent = option;
-                    btn.addEventListener('click', () => checkAnswer(btn, question.answer));
-                    options.appendChild(btn);
-                });
-                explanation.style.display = 'none';
-                progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
-                progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
-                resetTimer(selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30);
-                nextBtn.classList.remove('visible');
-                exitGameBtn.classList.add('visible');
-                isAnswerSubmitted = false;
-                enablePowerUps();
-            } else {
-                endQuiz();
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.text;
+            options.innerHTML = '';
+            explanation.style.display = 'none';
+            nextBtn.classList.remove('visible');
+            exitGameBtn.classList.add('visible');
+            questionStartTime = Date.now();
+
+            const shuffledOptions = shuffleArray([...question.options]);
+            shuffledOptions.forEach(option => {
+                const btn = document.createElement('button');
+                btn.classList.add('option-btn');
+                btn.textContent = option;
+                btn.addEventListener('click', () => handleAnswer(option, question));
+                options.appendChild(btn);
+            });
+
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+
+            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+            timerText.textContent = `${timeLeft}s`;
+            if (!isTimeFrozen) {
+                startTimer();
             }
         }
 
-        function resetTimer(seconds) {
+        function startTimer() {
             clearInterval(timerInterval);
-            timeLeft = seconds;
-            timerText.textContent = `${timeLeft}s`;
-            const circumference = 188;
-            timerCircle.style.strokeDashoffset = 0;
-            isTimeStopped = false;
             timerInterval = setInterval(() => {
-                if (!isTimeStopped) {
+                if (!isTimeFrozen) {
                     timeLeft--;
                     timerText.textContent = `${timeLeft}s`;
-                    const offset = circumference - (timeLeft / seconds) * circumference;
-                    timerCircle.style.strokeDashoffset = offset;
+                    const circumference = 188;
+                    const offset = (timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30)) * circumference;
+                    timerCircle.style.strokeDashoffset = circumference - offset;
+
                     if (timeLeft <= 0) {
                         clearInterval(timerInterval);
                         timeUpNotification.classList.add('visible');
-                        setTimeout(() => timeUpNotification.classList.remove('visible'), 2000);
-                        disablePowerUps();
-                        if (!isAnswerSubmitted && !isRedemptionMode) {
-                            userAnswers.push({ question: currentQuestionSet[currentQuestion].text, answer: 'None', correctAnswer: currentQuestionSet[currentQuestion].answer, timeTaken: seconds });
-                            timeTakenPerQuestion.push(seconds);
-                        }
-                        if (isRedemptionMode) {
-                            redemptionAnswers.push({ question: redemptionQuestions[redemptionQuestionIndex].text, answer: 'None', correctAnswer: redemptionQuestions[redemptionQuestionIndex].answer });
-                            redemptionQuestionIndex++;
-                            loadQuestion();
-                        } else {
-                            currentQuestion++;
-                            loadQuestion();
-                        }
+                        sounds.timeUp.play();
+                        setTimeout(() => {
+                            timeUpNotification.classList.remove('visible');
+                            results.push({
+                                question: currentQuestions[currentQuestionIndex].text,
+                                userAnswer: 'None (Time Up)',
+                                correctAnswer: currentQuestions[currentQuestionIndex].answer,
+                                timeTaken: (Date.now() - questionStartTime) / 1000
+                            });
+                            wrongAnswers.push(currentQuestions[currentQuestionIndex]);
+                            showExplanation(currentQuestions[currentQuestionIndex], false);
+                        }, 2000);
                     }
                 }
             }, 1000);
         }
 
-        function checkAnswer(btn, correctAnswer) {
-            if (isAnswerSubmitted && !isRedemptionMode) return;
-            isAnswerSubmitted = true;
+        function handleAnswer(selectedOption, question) {
             clearInterval(timerInterval);
-            const selectedAnswer = btn.textContent;
-            const isCorrect = selectedAnswer === correctAnswer;
-            const questionData = isRedemptionMode ? redemptionQuestions[redemptionQuestionIndex] : currentQuestionSet[currentQuestion];
-            disablePowerUps();
-            document.querySelectorAll('.option-btn').forEach(button => {
-                button.classList.add('disabled');
-                if (button.textContent === correctAnswer) {
-                    button.classList.add('correct');
+            const isCorrect = selectedOption === question.answer;
+            const timeTaken = (Date.now() - questionStartTime) / 1000;
+            totalTimeTaken += timeTaken;
+
+            const buttons = options.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.classList.add('disabled');
+                if (btn.textContent === question.answer) {
+                    btn.classList.add('correct');
                 }
-                if (button.textContent === selectedAnswer && !isCorrect) {
-                    button.classList.add('wrong');
+                if (btn.textContent === selectedOption && !isCorrect) {
+                    btn.classList.add('wrong');
                 }
             });
+
             if (isCorrect) {
+                score += 10;
+                correctAnswers++;
+                scoreDisplay.textContent = `Score: ${score}`;
                 sounds.correct.play();
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-                if (!isRedemptionMode) score += 10;
-                else score += 5;
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
             } else {
                 sounds.wrong.play();
+                wrongAnswers.push(question);
             }
-            explanation.textContent = questionData.explanation;
+
+            results.push({
+                question: question.text,
+                userAnswer: selectedOption,
+                correctAnswer: question.answer,
+                timeTaken: timeTaken
+            });
+
+            showExplanation(question, isCorrect);
+        }
+
+        function showExplanation(question, isCorrect) {
+            explanation.textContent = question.explanation;
+            explanation.style.display = 'block';
             explanation.classList.add('visible');
-            if (!isRedemptionMode) {
-                userAnswers.push({
-                    question: questionData.text,
-                    answer: selectedAnswer,
-                    correctAnswer: correctAnswer,
-                    timeTaken: (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30) - timeLeft
-                });
-                timeTakenPerQuestion.push((selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30) - timeLeft);
-                nextBtn.classList.add('visible');
-            } else {
-                redemptionAnswers.push({
-                    question: questionData.text,
-                    answer: selectedAnswer,
-                    correctAnswer: correctAnswer
-                });
-                nextBtn.classList.add('visible');
-            }
-            scoreDisplay.textContent = `Score: ${score}`;
-        }
-
-        function enablePowerUps() {
-            extraTime1.disabled = !powerUps.extraTime1;
-            extraTime2.disabled = !powerUps.extraTime2;
-            timeFreeze.disabled = !powerUps.timeFreeze;
-        }
-
-        function disablePowerUps() {
-            extraTime1.disabled = true;
-            extraTime2.disabled = true;
-            timeFreeze.disabled = true;
-        }
-
-        extraTime1.addEventListener('click', () => {
-            if (powerUps.extraTime1 && !isAnswerSubmitted) {
-                sounds.powerUp.play();
-                timeLeft += 10;
-                timerText.textContent = `${timeLeft}s`;
-                powerUps.extraTime1 = false;
-                extraTime1.disabled = true;
-            }
-        });
-
-        extraTime2.addEventListener('click', () => {
-            if (powerUps.extraTime2 && !isAnswerSubmitted) {
-                sounds.powerUp.play();
-                timeLeft += 10;
-                timerText.textContent = `${timeLeft}s`;
-                powerUps.extraTime2 = false;
-                extraTime2.disabled = true;
-            }
-        });
-
-        timeFreeze.addEventListener('click', () => {
-            if (powerUps.timeFreeze && !isAnswerSubmitted) {
-                sounds.powerUp.play();
-                isTimeStopped = true;
-                powerUps.timeFreeze = false;
+            nextBtn.classList.add('visible');
+            if (isTimeFrozen) {
                 timeFreeze.disabled = true;
             }
-        });
+        }
 
         nextBtn.addEventListener('click', () => {
-            if (isRedemptionMode) {
-                redemptionQuestionIndex++;
+            currentQuestionIndex++;
+            if (currentQuestionIndex < currentQuestions.length) {
                 loadQuestion();
             } else {
-                currentQuestion++;
-                loadQuestion();
+                showRedemptionRound();
             }
+            sounds.powerUp.play();
         });
 
-        exitGameBtn.addEventListener('click', () => {
-            clearInterval(timerInterval);
-            startModal.style.display = 'flex';
-            quizSection.classList.remove('visible');
-            difficultyCards.forEach(card => card.classList.remove('selected'));
-            tutorialBtn.disabled = true;
-            selectedDifficulty = null;
-        });
-
-        function endQuiz() {
-            clearInterval(timerInterval);
-            sounds.complete.play();
-            const wrongAnswers = userAnswers.filter(answer => answer.answer !== answer.correctAnswer);
-            redemptionQuestions = wrongAnswers.length > 0 ? shuffleArray(wrongAnswers.map(answer => currentQuestionSet.find(q => q.text === answer.question))).slice(0, 3) : shuffleArray([...questions[selectedDifficulty]]).slice(0, 3);
-            if (wrongAnswers.length > 0 || true) {
+        function showRedemptionRound() {
+            if (wrongAnswers.length > 0) {
+                redemptionQuestions = shuffleArray([...wrongAnswers]).slice(0, Math.min(3, wrongAnswers.length));
                 redemptionModal.style.display = 'flex';
+                redemptionOptions.innerHTML = '';
+                redemptionAnswers = [];
+
+                redemptionQuestions.forEach((_, index) => {
+                    const box = document.createElement('button');
+                    box.classList.add('redemption-box');
+                    box.textContent = `Box ${index + 1}`;
+                    box.addEventListener('click', () => handleRedemptionBox(index));
+                    redemptionOptions.appendChild(box);
+                });
             } else {
                 showResults();
             }
         }
 
-        startRedemptionBtn.addEventListener('click', () => {
-            redemptionModal.style.display = 'none';
-            isRedemptionMode = true;
-            redemptionQuestionIndex = 0;
-            redemptionAnswers = [];
-            loadQuestion();
-        });
+        function handleRedemptionBox(index) {
+            const boxes = redemptionOptions.querySelectorAll('.redemption-box');
+            boxes.forEach(box => box.classList.add('disabled'));
+            boxes[index].classList.add('selected');
+            isRedemptionRound = true;
+            redemptionQuestionIndex = index;
+            loadRedemptionQuestion();
+        }
+
+        function loadRedemptionQuestion() {
+            const question = redemptionQuestions[redemptionQuestionIndex];
+            questionText.textContent = question.text;
+            options.innerHTML = '';
+            explanation.style.display = 'none';
+            nextBtn.classList.remove('visible');
+            exitGameBtn.classList.add('visible');
+
+            const shuffledOptions = shuffleArray([...question.options]);
+            shuffledOptions.forEach(option => {
+                const btn = document.createElement('button');
+                btn.classList.add('option-btn');
+                btn.textContent = option;
+                btn.addEventListener('click', () => handleRedemptionAnswer(option, question));
+                options.appendChild(btn);
+            });
+
+            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+            timerText.textContent = `${timeLeft}s`;
+            startTimer();
+        }
+
+        function handleRedemptionAnswer(selectedOption, question) {
+            clearInterval(timerInterval);
+            const isCorrect = selectedOption === question.answer;
+            const timeTaken = (Date.now() - questionStartTime) / 1000;
+            totalTimeTaken += timeTaken;
+
+            const buttons = options.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.classList.add('disabled');
+                if (btn.textContent === question.answer) {
+                    btn.classList.add('correct');
+                }
+                if (btn.textContent === selectedOption && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            if (isCorrect) {
+                score += 5;
+                correctAnswers++;
+                scoreDisplay.textContent = `Score: ${score}`;
+                sounds.correct.play();
+                confetti({
+                    particleCount: 50,
+                    spread: 50,
+                    origin: { y: 0.6 }
+                });
+            } else {
+                sounds.wrong.play();
+            }
+
+            redemptionAnswers.push({
+                question: question.text,
+                userAnswer: selectedOption,
+                correctAnswer: question.answer,
+                timeTaken: timeTaken
+            });
+
+            showExplanation(question, isCorrect);
+            nextBtn.classList.add('visible');
+        }
 
         skipRedemptionBtn.addEventListener('click', () => {
             redemptionModal.style.display = 'none';
             showResults();
+            sounds.powerUp.play();
         });
 
         function showResults() {
-            quizSection.classList.remove('visible');
+            sounds.background.stop();
+            quizSection.style.display = 'none';
             resultModal.style.display = 'flex';
             finalScore.textContent = score;
-            const correctAnswers = userAnswers.filter(answer => answer.answer === answer.correctAnswer).length;
-            const accuracy = (correctAnswers / totalQuestions) * 100;
+
+            const accuracy = (correctAnswers / (currentQuestions.length + redemptionAnswers.length)) * 100;
             accuracyDisplay.textContent = accuracy.toFixed(2);
-            const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / timeTakenPerQuestion.length || 0;
+            const avgTime = totalTimeTaken / (currentQuestions.length + redemptionAnswers.length);
             avgTimeDisplay.textContent = avgTime.toFixed(2);
-            difficultyAnalysis.textContent = `You played at ${selectedDifficulty} difficulty. ${selectedDifficulty === 'easy' ? 'Great for beginners!' : selectedDifficulty === 'medium' ? 'Balanced challenge!' : 'Tough questions!'}`;
-            thinkingLevel.textContent = accuracy > 80 ? 'Excellent critical thinking!' : accuracy > 50 ? 'Good analytical skills!' : 'Keep practicing!';
-            remarks.textContent = accuracy > 80 ? 'Outstanding performance!' : accuracy > 50 ? 'Solid effort!' : 'Try again to improve!';
-            problemSolving.textContent = accuracy > 80 ? 'Strong problem-solving skills!' : accuracy > 50 ? 'Competent problem-solving!' : 'More practice needed!';
-            resultSummary.innerHTML = userAnswers.map((answer, i) => `
-                <div>
-                    <p class="question">Q${i + 1}: ${answer.question}</p>
-                    <p class="user-answer">Your Answer: ${answer.answer}</p>
-                    <p class="correct-answer">Correct Answer: ${answer.correctAnswer}</p>
-                    <p class="time-taken">Time Taken: ${answer.timeTaken}s</p>
-                </div>
-            `).join('');
-            if (isRedemptionMode) {
-                resultSummary.innerHTML += '<h3>Redemption Round Results</h3>' + redemptionAnswers.map((answer, i) => `
-                    <div>
-                        <p class="question">Redemption Q${i + 1}: ${answer.question}</p>
-                        <p class="user-answer">Your Answer: ${answer.answer}</p>
-                        <p class="correct-answer">Correct Answer: ${answer.correctAnswer}</p>
-                    </div>
-                `).join('');
+            difficultyAnalysis.textContent = `You played on ${selectedDifficulty} mode.`;
+
+            let thinkingLevelText = '';
+            if (accuracy > 80) {
+                thinkingLevelText = 'Excellent analytical skills! You demonstrate a strong understanding of cybercrime laws.';
+            } else if (accuracy > 50) {
+                thinkingLevelText = 'Good effort! You have a fair grasp of the concepts but could benefit from reviewing key laws.';
+            } else {
+                thinkingLevelText = 'Needs improvement. Consider studying the Electronic Commerce Act and Anti-Child Pornography Act.';
             }
-            isRedemptionMode = false;
+            thinkingLevel.textContent = thinkingLevelText;
+
+            let remarksText = score >= 80 ? 'Outstanding performance!' : score >= 50 ? 'Solid attempt!' : 'Keep practicing!';
+            remarks.textContent = remarksText;
+
+            let problemSolvingText = '';
+            if (avgTime < 10) {
+                problemSolvingText = 'Quick decision-making! You handle questions efficiently.';
+            } else if (avgTime < 20) {
+                problemSolvingText = 'Balanced approach. You take time to think through answers.';
+            } else {
+                problemSolvingText = 'Take your time, but try to be more decisive to improve efficiency.';
+            }
+            problemSolving.textContent = problemSolvingText;
+
+            resultSummary.innerHTML = '';
+            results.forEach(result => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <div class="question">${result.question}</div>
+                    <div class="user-answer">Your Answer: ${result.userAnswer}</div>
+                    <div class="correct-answer">Correct Answer: ${result.correctAnswer}</div>
+                    <div class="time-taken">Time Taken: ${result.timeTaken.toFixed(2)}s</div>
+                `;
+                resultSummary.appendChild(div);
+            });
+
+            redemptionAnswers.forEach(result => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <div class="question">Redemption: ${result.question}</div>
+                    <div class="user-answer">Your Answer: ${result.userAnswer}</div>
+                    <div class="correct-answer">Correct Answer: ${result.correctAnswer}</div>
+                    <div class="time-taken">Time Taken: ${result.timeTaken.toFixed(2)}s</div>
+                `;
+                resultSummary.appendChild(div);
+            });
         }
 
         restartBtn.addEventListener('click', () => {
             resultModal.style.display = 'none';
+            quizSection.style.display = 'block';
             startQuiz();
+            sounds.start.play();
+        });
+
+        exitGameBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            sounds.background.stop();
+            quizSection.style.display = 'none';
+            startModal.style.display = 'flex';
+            sounds.powerUp.play();
         });
 
         exitBtn.addEventListener('click', () => {
             resultModal.style.display = 'none';
+            quizSection.style.display = 'block';
             startModal.style.display = 'flex';
-            difficultyCards.forEach(card => card.classList.remove('selected'));
-            tutorialBtn.disabled = true;
-            selectedDifficulty = null;
+            sounds.powerUp.play();
         });
 
-        tutorialBtn.addEventListener('click', () => {
-            if (!dontShowAgain.checked && localStorage.getItem('skipTutorial') !== 'true') {
-                startModal.style.display = 'none';
-                tutorialModal.style.display = 'flex';
-                showSlide(1);
-            } else {
-                startQuiz();
-            }
+        // Ensure pointer events are correctly handled
+        document.querySelectorAll('.option-btn, .power-up-btn, .mute-btn, .next-btn, .exit-game-btn, .redemption-box').forEach(element => {
+            element.style.pointerEvents = 'auto';
         });
 
-        backBtn.addEventListener('click', () => {
-            tutorialModal.style.display = 'none';
-            startModal.style.display = 'flex';
-        });
-
-        startQuizBtn.addEventListener('click', startQuiz);
-
-        dontShowAgain.addEventListener('change', () => {
-            localStorage.setItem('skipTutorial', dontShowAgain.checked);
-        });
-
-        function showSlide(slideNumber) {
-            currentSlide = slideNumber;
-            tutorialSlides.forEach(slide => slide.classList.remove('active'));
-            document.getElementById(`slide${slideNumber}`).classList.add('active');
-            tutorialDots.forEach(dot => dot.classList.remove('active'));
-            document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
-            tutorialPrev.style.display = slideNumber === 1 ? 'none' : 'block';
-            tutorialNext.style.display = slideNumber === tutorialSlides.length ? 'none' : 'block';
-        }
-
-        tutorialPrev.addEventListener('click', () => {
-            if (currentSlide > 1) showSlide(currentSlide - 1);
-        });
-
-        tutorialNext.addEventListener('click', () => {
-            if (currentSlide < tutorialSlides.length) showSlide(currentSlide + 1);
-        });
-
-        tutorialDots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                showSlide(parseInt(dot.dataset.slide));
-            });
-        });
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                mobileMenuIcon.querySelector('i').classList.add('fa-bars');
-                mobileMenuIcon.querySelector('i').classList.remove('fa-times');
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            quizSection.classList.add('visible');
-            if (localStorage.getItem('skipTutorial') === 'true') {
-                dontShowAgain.checked = true;
-            }
-        });
+        // Initialize loader
+        loaderOverlay.classList.add('active');
     </script>
 </body>
 </html>
-</xaiArtifact>
