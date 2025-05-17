@@ -304,6 +304,7 @@
             font-weight: 600;
         }
         .timer-container {
+             .timer-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -329,9 +330,11 @@
             font-size: 20px;
             color: #ffcc00;
             font-weight: 600;
-            left: 50%;
             top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
         }
         .power-ups {
             display: flex;
@@ -820,6 +823,13 @@
         .dark-theme .result-stats { background: #1a3c3e; }
         .dark-theme .result-stats div { color: #d8dbe0; }
         .dark-theme .notification { background: #c0392b; }
+                }
+        .dark-theme .timer-circle {
+            stroke: #d7b15c;
+        }
+        .dark-theme .timer-text {
+            color: #d7b15c;
+        }
         footer {
             background-color: #333;
             color: white;
@@ -1667,17 +1677,17 @@
             }
         }
 
-        function resetTimer(seconds) {
+ function resetTimer(seconds) {
             clearInterval(timerInterval);
             timeLeft = seconds;
-            timerText.textContent = `${timeLeft}s`;
-            const circumference = 188;
+            timerText.textContent = timeLeft; // Removed 's' suffix to fit inside circle
+            const circumference = window.innerWidth <= 480 ? 125.6 : 188;
             timerCircle.style.strokeDashoffset = 0;
             isTimeStopped = false;
             timerInterval = setInterval(() => {
                 if (!isTimeStopped) {
                     timeLeft--;
-                    timerText.textContent = `${timeLeft}s`;
+                    timerText.textContent = timeLeft > 0 ? timeLeft : 0; // Ensure no negative values
                     const offset = circumference - (timeLeft / seconds) * circumference;
                     timerCircle.style.strokeDashoffset = offset;
                     if (timeLeft <= 0) {
