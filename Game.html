@@ -1810,13 +1810,13 @@
             }
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            quizSection.style.display = 'none';
-            startModal.style.display = 'flex';
-            setTimeout(() => {
-                gsap.to('.start-modal-content', { opacity: 1, scale: 1, duration: 0.5 });
-            }, 100);
-        });
+document.addEventListener('DOMContentLoaded', () => {
+    quizSection.style.display = 'none';
+    startModal.style.display = 'flex'; // Ensure modal is visible
+    setTimeout(() => {
+        gsap.to('.start-modal-content', { opacity: 1, scale: 1, duration: 0.5 });
+    }, 100);
+});
     </script>
 </body>
 </html>
