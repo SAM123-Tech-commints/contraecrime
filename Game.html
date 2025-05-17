@@ -21,6 +21,7 @@
             background-color: #f7f7f7;
             transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
+            overscroll-behavior: none;
         }
         .loader-overlay {
             position: fixed;
@@ -61,6 +62,32 @@
             min-height: 100vh;
             flex-direction: column;
         }
+        .mobile-nav {
+            display: none;
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            background-size: cover;
+            background-position: center;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .mobile-nav .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .mobile-nav .menu-icon {
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+        }
         .sidebar {
             width: 290px;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
@@ -71,7 +98,11 @@
             padding: 20px;
             height: 100vh;
             position: fixed;
+            top: 0;
+            left: 0;
             transition: transform 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
         }
         .sidebar h1 {
             text-align: center;
@@ -177,10 +208,12 @@
         .content {
             flex: 1;
             margin-left: 290px;
-            padding: 50px 30px 30px 30px;
+            padding: 80px 30px 30px 30px;
             position: relative;
             background: linear-gradient(135deg, #f7f7f7 0%, #e0e0e0 100%);
             transition: background-color 0.3s ease, margin-left 0.3s ease;
+            overflow-y: auto;
+            min-height: 100vh;
         }
         .content::before {
             content: '';
@@ -192,16 +225,9 @@
             background-color: rgba(200, 200, 200, 0.1);
             z-index: 0;
         }
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
         .quiz-section {
             position: relative;
-            z-index: 1000; /* Ensure quiz section is above particles-js */
+            z-index: 1000;
             max-width: 900px;
             margin: 0 auto;
             background: #fff;
@@ -211,6 +237,7 @@
             opacity: 0;
             transform: scale(0.95);
             transition: opacity 0.5s ease, transform 0.5s ease;
+            touch-action: manipulation;
         }
         .quiz-section.visible {
             opacity: 1;
@@ -231,7 +258,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Behind quiz content */
+            z-index: 0;
         }
         .progress-container {
             width: 100%;
@@ -284,8 +311,10 @@
         .timer-container {
             display: flex;
             justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
             position: relative;
+            gap: 20px;
         }
         .timer-svg {
             width: 70px;
@@ -305,6 +334,29 @@
             color: #ffcc00;
             font-weight: 600;
             transform: translate(35px, 43px);
+        }
+        .power-ups {
+            display: flex;
+            gap: 10px;
+        }
+        .power-up-btn {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .power-up-btn:hover {
+            transform: scale(1.1);
+        }
+        .power-up-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
         }
         .question-box {
             background: #f9f9f9;
@@ -354,6 +406,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            touch-action: manipulation;
         }
         .option-btn::before {
             content: '';
@@ -406,7 +459,21 @@
             pointer-events: none;
             opacity: 0.6;
         }
-        .next-btn {
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #e0f7fa;
+            border-radius: 8px;
+            color: #1e3c72;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .explanation.visible {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .next-btn, .exit-game-btn {
             background: linear-gradient(135deg, #ffcc00, #e6b800);
             color: #1e3c72;
             border: none;
@@ -416,50 +483,24 @@
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
+            margin: 20px 10px;
             display: none;
-            pointer-events: none;
+            cursor: pointer;
             position: relative;
             z-index: 1000;
+            touch-action: manipulation;
         }
-        .next-btn.visible {
-            display: block !important;
-            pointer-events: auto !important;
-            cursor: pointer !important;
+        .exit-game-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: #fff;
         }
-        .next-btn:hover {
+        .next-btn.visible, .exit-game-btn.visible {
+            display: inline-block;
+            pointer-events: auto;
+        }
+        .next-btn:hover, .exit-game-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        .preview-questions {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        .preview-questions h3 {
-            font-size: 1.3em;
-            color: #1e3c72;
-            margin-bottom: 15px;
-        }
-        .past-question {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .past-question .question {
-            font-weight: 600;
-            color: #1e3c72;
-        }
-        .past-question .user-answer {
-            color: #333;
-        }
-        .past-question .correct-answer {
-            color: #2ecc71;
         }
         .score {
             font-size: 1.5em;
@@ -478,7 +519,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 1002;
+            overflow-y: auto;
         }
         .start-modal-content, .tutorial-modal-content, .result-modal-content {
             background: #fff;
@@ -570,6 +612,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin: 10px;
+            touch-action: manipulation;
         }
         .back-about-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -726,6 +769,10 @@
             50% { transform: translateX(5px); }
             75% { transform: translateX(-5px); }
         }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         body.dark-theme { background-color: #121212; color: #e0e0e0; }
         .dark-theme .content { background: linear-gradient(135deg, #28292c 0%, #1a1a1a 100%); }
         .dark-theme .content::before { background-color: rgba(40, 41, 44, 0.9); }
@@ -746,36 +793,9 @@
         .dark-theme .result-modal-content p { color: #b0b0b0; }
         .dark-theme .result-summary { background: #444; }
         .dark-theme .result-summary .question { color: #d8dbe0; }
-        .dark-theme .preview-questions { background: #444; }
-        .dark-theme .preview-questions h3 { color: #d8dbe0; }
-        .dark-theme .past-question { background: #555; }
-        .dark-theme .past-question .question { color: #d8dbe0; }
-        .dark-theme .past-question .user-answer { color: #b0b0b0; }
-        .dark-theme .past-question .correct-answer { color: #2ecc71; }
+        .dark-theme .explanation { background: #1a3c3e; color: #d8dbe0; }
         .dark-theme .result-stats { background: #1a3c3e; }
         .dark-theme .result-stats div { color: #d8dbe0; }
-        .mobile-nav {
-            display: none;
-            background-image: url('https://i.imgur.com/bNRxAhZ.png');
-            padding: 15px;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        .mobile-nav .logo {
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .mobile-nav .menu-icon {
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            position: absolute;
-            right: 15px;
-            top: 15px;
-        }
         footer {
             background-color: #333;
             color: white;
@@ -821,13 +841,13 @@
             .mobile-nav { display: block; }
             .sidebar {
                 width: 100%;
-                height: auto;
+                height: calc(100vh - 60px);
                 position: fixed;
+                top: 60px;
+                left: 0;
                 padding: 15px;
                 transform: translateX(-100%);
-                z-index: 999;
-                top: 60px;
-                height: calc(100vh - 60px);
+                z-index: 1000;
                 overflow-y: auto;
                 background-size: cover;
                 background-position: center;
@@ -843,13 +863,33 @@
             .sidebar ul li a { font-size: 16px; }
             .dark-theme-container { margin-top: 20px; margin-bottom: 15px; }
             .dark-theme-label { font-size: 16px; }
-            .content { margin-left: 0; }
+            .content {
+                margin-left: 0;
+                padding: 70px 15px 15px 15px;
+                overflow-y: auto;
+                min-height: 100vh;
+            }
             footer { margin-left: 0; padding: 10px 20px; text-align: center; }
             .footer-links a { font-size: 12px; margin: 0 8px; }
             .quiz-section { padding: 20px; }
-            .quiz-section h1 { font-size: 28px; }
+            .quiz-section h1 { font-size: 24px; }
+            .question-text { font-size: 1.2em; }
+            .option-btn { font-size: 1em; padding: 12px; }
+            .next-btn, .exit-game-btn { font-size: 16px; padding: 12px 25px; }
+            .score { font-size: 1.3em; }
+            .progress-text { font-size: 1em; }
+            .timer-svg { width: 50px; height: 50px; }
+            .timer-circle { cx: 25; cy: 25; r: 20; stroke-width: 4; stroke-dasharray: 125.6; }
+            .timer-text { font-size: 16px; transform: translate(25px, 31px); }
+            .power-up-btn { font-size: 12px; padding: 8px; }
             .difficulty-options { flex-direction: column; align-items: center; }
-            .difficulty-card { width: 80%; max-width: 300px; }
+            .difficulty-card { width: 90%; max-width: 300px; }
+            .start-modal-content, .tutorial-modal-content, .result-modal-content { padding: 20px; }
+            .start-modal-content h2, .tutorial-modal-content h2, .result-modal-content h2 { font-size: 24px; }
+            .tutorial-slide img { width: 100%; max-width: 250px; }
+            .tutorial-slide h3 { font-size: 22px; }
+            .tutorial-slide p { font-size: 14px; }
+            .tutorial-prev, .tutorial-next { font-size: 16px; padding: 8px; }
         }
     </style>
 </head>
@@ -863,13 +903,12 @@
             <i class="fas fa-bars"></i>
         </div>
     </div>
-
     <div class="container">
         <nav class="sidebar" id="sidebar">
             <h1>Contra E-Crime</h1>
             <ul>
                 <li><a href="HomePage.html"><img src="https://i.imgur.com/OAHusQp.png" alt="Home">Home</a></li>
-                <li><a href="News.html" target="_self" onclick="return true;"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
+                <li><a href="News.html"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
                 <li><a href="SavedLaws.html"><img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">Saved Laws</a></li>
                 <li><a href="History.html"><img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">Search History</a></li>
                 <li><a href="ContactUs.html"><img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">Contact Us</a></li>
@@ -890,7 +929,6 @@
             </div>
         </nav>
         <main class="content">
-            <div class="header"></div>
             <section class="quiz-section" id="quizSection">
                 <div id="particles-js"></div>
                 <h1>CyberLaw Quiz Master</h1>
@@ -903,12 +941,19 @@
                         <circle class="timer-circle" cx="35" cy="35" r="30"></circle>
                     </svg>
                     <span class="timer-text" id="timerText"></span>
+                    <div class="power-ups">
+                        <button class="power-up-btn" id="addTime1" title="Add 10 seconds">+10s</button>
+                        <button class="power-up-btn" id="addTime2" title="Add 10 seconds">+10s</button>
+                        <button class="power-up-btn" id="timeStop" title="Stop Timer">⏸</button>
+                    </div>
                 </div>
                 <div class="question-box" id="questionBox">
                     <div class="question-text" id="questionText"></div>
                     <div class="options" id="options"></div>
+                    <div class="explanation" id="explanation"></div>
                 </div>
                 <button class="next-btn" id="nextBtn">Next Question</button>
+                <button class="exit-game-btn" id="exitGameBtn">Exit Game</button>
                 <div class="score" id="score">Score: 0</div>
             </section>
         </main>
@@ -944,17 +989,17 @@
                 <div class="tutorial-slide" id="slide1">
                     <h3>Welcome to the Quiz!</h3>
                     <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book">
-                    <p>This quiz will test your knowledge of cybercrime laws or even terms in the Philippines or in the World. Answer questions based on the laws provided.</p>
+                    <p>Test your knowledge of cybercrime laws in the Philippines and worldwide. Answer questions based on legal provisions. Use power-ups like +10 seconds or Time Stop to strategize!</p>
                 </div>
                 <div class="tutorial-slide" id="slide2">
-                    <h3>Difficulty Levels</h3>
+                    <h3>Gameplay & Power-Ups</h3>
                     <img src="https://i.imgur.com/TCTi8I2.jpeg" alt="Digital Security">
-                    <p>Choose from Easy (60s), Medium (45s, mixed questions), or Hard (30s) difficulty. Each level adjusts the timer and question complexity.</p>
+                    <p>Choose Easy (60s), Medium (45s), or Hard (30s). Use two +10s power-ups to add time or one Time Stop to pause the timer and review. Questions are randomized each game.</p>
                 </div>
                 <div class="tutorial-slide" id="slide3">
-                    <h3>Scoring and Feedback</h3>
+                    <h3>Scoring & Feedback</h3>
                     <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Scoreboard">
-                    <p>Earn 10 points per correct answer. You'll get immediate feedback, and a detailed result at the end.</p>
+                    <p>Earn 10 points per correct answer. After using Time Stop, get an explanation. View detailed results at the end. Exit anytime with the Exit Game button.</p>
                 </div>
                 <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
                 <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
@@ -1005,11 +1050,9 @@
             </div>
         </footer>
     </div>
-
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
@@ -1020,11 +1063,8 @@
             appId: "1:198995444405:web:5f8c6eed561461b36034fc",
             measurementId: "G-7Y2E24DD42"
         };
-
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-
-        // Initialize Particles.js
         particlesJS('particles-js', {
             particles: {
                 number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -1042,8 +1082,6 @@
             },
             retina_detect: true
         });
-
-        // Define questions
         const questions = {
             easy: [
                 {
@@ -1054,7 +1092,8 @@
                         "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
                         "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
                         "Data Privacy Act of 2012 (Republic Act No. 10173)"
-                    ]
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) establishes the legal framework for electronic transactions in the Philippines, addressing offenses like hacking and unauthorized access."
                 },
                 {
                     text: "What does the Anti-Child Pornography Act of 2009 criminalize?",
@@ -1064,7 +1103,8 @@
                         "Production, distribution, and possession of child pornography",
                         "Manual filing of tax returns",
                         "Unauthorized access to personal data"
-                    ]
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) specifically targets the production, distribution, and possession of child pornography to protect minors from exploitation."
                 },
                 {
                     text: "Which law regulates the electronic filing of tax returns?",
@@ -1074,7 +1114,8 @@
                         "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
                         "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
                         "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)"
-                    ]
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 mandates electronic filing of tax returns for certain taxpayers to streamline tax administration."
                 },
                 {
                     text: "What is the main focus of the Electronic Commerce Act of 2000?",
@@ -1084,7 +1125,8 @@
                         "Child pornography prevention",
                         "Taxation of online businesses",
                         "Data privacy protection"
-                    ]
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) focuses on facilitating electronic transactions while penalizing related cybercrimes like online fraud."
                 },
                 {
                     text: "Which law deals with child-related cybercrimes?",
@@ -1094,7 +1136,8 @@
                         "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
                         "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
                         "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)"
-                    ]
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) addresses cybercrimes involving child exploitation, such as producing or sharing child pornography."
                 },
                 {
                     text: "What type of offenses does the Electronic Commerce Act address?",
@@ -1104,7 +1147,8 @@
                         "Child pornography distribution",
                         "Tax evasion through manual filing",
                         "Identity theft and fraud"
-                    ]
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) penalizes offenses like hacking and unauthorized access to electronic systems."
                 },
                 {
                     text: "Which law was promulgated in 2009 to protect children?",
@@ -1114,7 +1158,8 @@
                         "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
                         "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
                         "Data Privacy Act of 2012 (Republic Act No. 10173)"
-                    ]
+                    ],
+                    explanation: "Promulgated in 2009, the Anti-Child Pornography Act (RA 9775) aims to protect children by criminalizing child pornography activities."
                 },
                 {
                     text: "What is the purpose of BIR Revenue Regulation No. 9-2001?",
@@ -1124,7 +1169,8 @@
                         "Regulate electronic filing of tax returns",
                         "Address hacking and cracking",
                         "Protect personal data privacy"
-                    ]
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 regulates the electronic filing of tax returns to enhance efficiency in tax compliance."
                 },
                 {
                     text: "Which law imposes penalties for online fraud and scams?",
@@ -1134,7 +1180,8 @@
                         "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
                         "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
                         "Anti-Bullying Act of 2013 (Republic Act No. 10627)"
-                    ]
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) imposes penalties for online fraud and scams to ensure trust in electronic transactions."
                 },
                 {
                     text: "What does the Anti-Child Pornography Act aim to prevent?",
@@ -1144,7 +1191,8 @@
                         "Unauthorized access to electronic systems",
                         "Manual tax filing violations",
                         "Online scams and fraud"
-                    ]
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) aims to prevent the production and distribution of child pornography to safeguard minors."
                 }
             ],
             medium: [
@@ -1156,7 +1204,8 @@
                         "An account on an e-commerce app is hacked, leading to unauthorized orders",
                         "Filing taxes manually despite eFPS mandate",
                         "Sharing personal data without consent"
-                    ]
+                    ],
+                    explanation: "Hacking an e-commerce account to place unauthorized orders violates the Electronic Commerce Act of 2000 (RA 8792), which addresses unauthorized access and fraud."
                 },
                 {
                     text: "Which scenario describes a violation of the Anti-Child Pornography Act?",
@@ -1166,7 +1215,8 @@
                         "Installing a secret camera in a child's bedroom to observe them",
                         "Filing taxes manually instead of using eFPS",
                         "Selling counterfeit goods online"
-                    ]
+                    ],
+                    explanation: "Installing a secret camera to observe a child violates the Anti-Child Pornography Act of 2009 (RA 9775) if used to produce or distribute child pornography."
                 },
                 {
                     text: "What might happen under BIR Revenue Regulation No. 9-2001?",
@@ -1176,7 +1226,8 @@
                         "A person is imprisoned for child pornography",
                         "An online seller is punished for filing taxes manually",
                         "A company is sued for data breach"
-                    ]
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 penalizes taxpayers, like online sellers, for failing to file taxes electronically when required."
                 },
                 {
                     text: "Which scenario involves the Electronic Commerce Act?",
@@ -1186,7 +1237,8 @@
                         "A secret camera records a child in their bedroom",
                         "An online seller ignores eFPS requirements",
                         "A website leaks user data"
-                    ]
+                    ],
+                    explanation: "Unauthorized orders due to a hacked account fall under the Electronic Commerce Act of 2000 (RA 8792), which covers cybercrimes like hacking."
                 },
                 {
                     text: "What action violates the Anti-Child Pornography Act of 2009?",
@@ -1196,7 +1248,8 @@
                         "Observing a child via a secret camera in their bedroom",
                         "Filing taxes manually despite notices",
                         "Distributing fake news online"
-                    ]
+                    ],
+                    explanation: "Using a secret camera to observe a child for exploitative purposes violates the Anti-Child Pornography Act of 2009 (RA 9775)."
                 },
                 {
                     text: "Under which law might an online seller face penalties for manual tax filing?",
@@ -1206,7 +1259,8 @@
                         "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
                         "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
                         "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)"
-                    ]
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 imposes penalties for non-compliance with electronic tax filing requirements."
                 },
                 {
                     text: "What scenario might lead to penalties under the Electronic Commerce Act?",
@@ -1216,7 +1270,8 @@
                         "Recording a child with a hidden camera",
                         "Ignoring eFPS tax filing requirements",
                         "Posting defamatory content online"
-                    ]
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) penalizes unauthorized transactions caused by hacking, such as placing orders without consent."
                 },
                 {
                     text: "Which scenario is related to the Anti-Child Pornography Act?",
@@ -1226,7 +1281,8 @@
                         "An online seller files taxes manually",
                         "A hacker places unauthorized orders",
                         "A company fails to secure user data"
-                    ]
+                    ],
+                    explanation: "Installing a camera to watch a child for exploitative purposes violates the Anti-Child Pornography Act of 2009 (RA 9775)."
                 },
                 {
                     text: "What might violate BIR Revenue Regulation No. 9-2001?",
@@ -1236,7 +1292,8 @@
                         "Distributing child pornography",
                         "An online seller continuously files taxes manually",
                         "Sharing personal information without consent"
-                    ]
+                    ],
+                    explanation: "Continuous manual tax filing by an online seller violates BIR Revenue Regulation No. 9-2001, which mandates electronic filing."
                 },
                 {
                     text: "Which scenario involves a potential violation of the Electronic Commerce Act?",
@@ -1246,7 +1303,8 @@
                         "A child is recorded without consent",
                         "An online seller avoids eFPS filing",
                         "A website suffers a data breach"
-                    ]
+                    ],
+                    explanation: "Hacking leading to unauthorized purchases is a violation of the Electronic Commerce Act of 2000 (RA 8792)."
                 }
             ],
             hard: [
@@ -1258,7 +1316,8 @@
                         "PHP 1,000,000 or six years imprisonment",
                         "Reclusion perpetua and PHP 5,000,000 fine",
                         "Fine up to ₱1,000 and six months imprisonment"
-                    ]
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) specifies a maximum penalty of PHP 1,000,000 or up to six years imprisonment for violations."
                 },
                 {
                     text: "What penalty does the Anti-Child Pornography Act impose?",
@@ -1268,7 +1327,8 @@
                         "Reclusion perpetua and a fine of PHP 2,000,000 to PHP 5,000,000",
                         "Fine up to ₱1,000 and six months imprisonment",
                         "PHP 1,000,000 or six years imprisonment"
-                    ]
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) imposes reclusion perpetua and fines ranging from PHP 2,000,000 to PHP 5,000,000."
                 },
                 {
                     text: "What are the penalties for third and subsequent offenses under BIR Revenue Regulation No. 9-2001?",
@@ -1278,7 +1338,8 @@
                         "Reclusion perpetua and PHP 5,000,000 fine",
                         "Fine up to ₱1,000 and imprisonment up to 6 months",
                         "PHP 1,000,000 or six years imprisonment"
-                    ]
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 specifies a fine up to ₱1,000 and up to 6 months imprisonment for third and subsequent offenses."
                 },
                 {
                     text: "What is the minimum penalty for online fraud under the Electronic Commerce Act?",
@@ -1288,7 +1349,8 @@
                         "Reclusion perpetua and PHP 2,000,000 fine",
                         "Fine up to ₱1,000 and six months imprisonment",
                         "PHP 1,000,000 or six years imprisonment"
-                    ]
+                    ],
+                    explanation: "The minimum penalty for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is PHP 100,000 and 6 months to 3 years imprisonment."
                 },
                 {
                     text: "What fine range does the Anti-Child Pornography Act specify?",
@@ -1298,7 +1360,8 @@
                         "PHP 2,000,000 to PHP 5,000,000",
                         "Up to ₱1,000",
                         "PHP 500,000 to PHP 1,000,000"
-                    ]
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) specifies fines between PHP 2,000,000 and PHP 5,000,000."
                 },
                 {
                     text: "Under BIR Revenue Regulation No. 9-2001, what happens to first and second offenses?",
@@ -1308,7 +1371,8 @@
                         "They result in reclusion perpetua",
                         "They lead to a fine of PHP 1,000,000",
                         "They are punished with six years imprisonment"
-                    ]
+                    ],
+                    explanation: "First and second offenses under BIR Revenue Regulation No. 9-2001 can be settled through compromise penalties."
                 },
                 {
                     text: "What is the imprisonment range for online fraud under the Electronic Commerce Act?",
@@ -1318,7 +1382,8 @@
                         "Up to six months",
                         "Three to six years",
                         "Reclusion perpetua"
-                    ]
+                    ],
+                    explanation: "The imprisonment range for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is 6 months to 3 years."
                 },
                 {
                     text: "What penalty does the Anti-Child Pornography Act include alongside a fine?",
@@ -1328,7 +1393,8 @@
                         "Reclusion perpetua",
                         "Three years imprisonment",
                         "Fine only, no imprisonment"
-                    ]
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) includes reclusion perpetua alongside its fine penalties."
                 },
                 {
                     text: "What is the maximum fine for third offenses under BIR Revenue Regulation No. 9-2001?",
@@ -1338,7 +1404,8 @@
                         "PHP 1,000,000",
                         "₱1,000",
                         "PHP 5,000,000"
-                    ]
+                    ],
+                    explanation: "The maximum fine for third offenses under BIR Revenue Regulation No. 9-2001 is ₱1,000."
                 },
                 {
                     text: "What is the maximum imprisonment for violations under the Electronic Commerce Act?",
@@ -1348,12 +1415,11 @@
                         "Three years",
                         "Six years",
                         "Reclusion perpetua"
-                    ]
+                    ],
+                    explanation: "The maximum imprisonment for violations under the Electronic Commerce Act of 2000 (RA 8792) is six years."
                 }
             ]
         };
-
-        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -1373,8 +1439,9 @@
         const timerCircle = document.querySelector('.timer-circle');
         const questionText = document.getElementById('questionText');
         const options = document.getElementById('options');
+        const explanation = document.getElementById('explanation');
         const nextBtn = document.getElementById('nextBtn');
-        const pastQuestionsList = document.getElementById('pastQuestionsList');
+        const exitGameBtn = document.getElementById('exitGameBtn');
         const scoreDisplay = document.getElementById('score');
         const resultModal = document.getElementById('resultModal');
         const finalScore = document.getElementById('finalScore');
@@ -1392,8 +1459,9 @@
         const tutorialDots = document.querySelectorAll('.tutorial-dot');
         const tutorialPrev = document.getElementById('tutorialPrev');
         const tutorialNext = document.getElementById('tutorialNext');
-
-        // State Variables
+        const addTime1 = document.getElementById('addTime1');
+        const addTime2 = document.getElementById('addTime2');
+        const timeStop = document.getElementById('timeStop');
         let currentQuestion = 0;
         let score = 0;
         let timeLeft = 45;
@@ -1404,45 +1472,29 @@
         let timeTakenPerQuestion = [];
         let currentQuestionSet = [];
         let currentSlide = 1;
-
-        // Sound Effects
+        let powerUps = { addTime1: true, addTime2: true, timeStop: true };
+        let isTimeStopped = false;
         const sounds = {
             start: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
             correct: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 }),
             wrong: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_4d7d1c55f9.mp3'], volume: 0.5 }),
-            complete: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_8d1f7f1e9e.mp3'], volume: 0.5 })
+            complete: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_8d1f7f1e9e.mp3'], volume: 0.5 }),
+            powerUp: new Howl({ src: ['https://cdn.pixabay.com/audio/2023/07/31/audio_2e5d6c2f8e.mp3'], volume: 0.5 })
         };
-
-        // Initialize Theme
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
-
         themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('darkTheme', this.checked ? 'enabled' : 'disabled');
         });
-
-        // Mobile Menu Toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         });
-
-        // Navigation Links with Loader
         document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:')) return;
@@ -1451,16 +1503,10 @@
                 setTimeout(() => { window.location.href = this.href; }, 150);
             });
         });
-
-        // Back to About Us
         backAboutBtn.addEventListener('click', () => {
             loaderOverlay.classList.add('active');
-            setTimeout(() => {
-                window.location.href = 'AboutUs.html';
-            }, 150);
+            setTimeout(() => { window.location.href = 'AboutUs.html'; }, 150);
         });
-
-        // Difficulty Selection
         difficultyCards.forEach(card => {
             card.addEventListener('click', function() {
                 selectedDifficulty = this.dataset.difficulty;
@@ -1470,8 +1516,6 @@
                 timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
             });
         });
-
-        // Tutorial Navigation
         function showSlide(slideNumber) {
             tutorialSlides.forEach(slide => slide.classList.remove('active'));
             tutorialDots.forEach(dot => dot.classList.remove('active'));
@@ -1481,271 +1525,298 @@
             tutorialPrev.style.display = currentSlide === 1 ? 'none' : 'block';
             tutorialNext.style.display = currentSlide === 3 ? 'none' : 'block';
         }
-
         tutorialDots.forEach(dot => {
             dot.addEventListener('click', function() {
                 showSlide(parseInt(this.dataset.slide));
             });
         });
-
         tutorialPrev.addEventListener('click', () => {
             if (currentSlide > 1) showSlide(currentSlide - 1);
         });
-
-tutorialNext.addEventListener('click', () => {
-    if (currentSlide < 3) showSlide(currentSlide + 1);
-});
-
-// Tutorial Button
-tutorialBtn.addEventListener('click', () => {
-    startModal.style.display = 'none';
-    if (localStorage.getItem('dontShowTutorial') === 'true' && dontShowAgain.checked) {
-        startQuiz();
-    } else {
-        tutorialModal.style.display = 'flex';
-        showSlide(1);
-    }
-});
-
-// Back to Difficulty Selection
-backBtn.addEventListener('click', () => {
-    tutorialModal.style.display = 'none';
-    startModal.style.display = 'flex';
-});
-
-// Start Quiz
-startQuizBtn.addEventListener('click', () => {
-    if (dontShowAgain.checked) {
-        localStorage.setItem('dontShowTutorial', 'true');
-    }
-    tutorialModal.style.display = 'none';
-    startQuiz();
-});
-
-// Shuffle Array Function
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-// Start Quiz Function
-function startQuiz() {
-    sounds.start.play();
-    if (selectedDifficulty === 'medium') {
-        // Mix 5 easy and 5 medium questions
-        const easyQuestions = shuffleArray([...questions.easy]).slice(0, 5);
-        const mediumQuestions = shuffleArray([...questions.medium]).slice(0, 5);
-        currentQuestionSet = shuffleArray([...easyQuestions, ...mediumQuestions]);
-    } else {
-        currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
-    }
-    quizSection.classList.add('visible');
-    loadQuestion();
-    startTimer();
-}
-
-// Load Question
-function loadQuestion() {
-    const question = currentQuestionSet[currentQuestion];
-    questionText.textContent = question.text;
-    options.innerHTML = '';
-    question.options.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.classList.add('option-btn');
-        btn.innerHTML = `${String.fromCharCode(97 + index)}. ${option}`;
-        btn.addEventListener('click', () => checkAnswer(option === question.answer, btn, option));
-        options.appendChild(btn);
-    });
-    progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
-    progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
-}
-
-// Start Timer
-function startTimer() {
-    timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
-    timerText.textContent = timeLeft;
-    const totalTime = timeLeft;
-    timerCircle.style.strokeDashoffset = 0;
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        timerText.textContent = timeLeft;
-        const offset = 188 * (1 - timeLeft / totalTime);
-        timerCircle.style.strokeDashoffset = offset;
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            checkAnswer(false, null, 'Time Out');
+        tutorialNext.addEventListener('click', () => {
+            if (currentSlide < 3) showSlide(currentSlide + 1);
+        });
+        tutorialBtn.addEventListener('click', () => {
+            startModal.style.display = 'none';
+            if (localStorage.getItem('dontShowTutorial') === 'true' && dontShowAgain.checked) {
+                startQuiz();
+            } else {
+                tutorialModal.style.display = 'flex';
+                showSlide(1);
+            }
+        });
+        backBtn.addEventListener('click', () => {
+            tutorialModal.style.display = 'none';
+            startModal.style.display = 'flex';
+        });
+        startQuizBtn.addEventListener('click', () => {
+            if (dontShowAgain.checked) {
+                localStorage.setItem('dontShowTutorial', 'true');
+            }
+            tutorialModal.style.display = 'none';
+            startQuiz();
+        });
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
         }
-    }, 1000);
-}
-
-// Check Answer
-function checkAnswer(isCorrect, btn, userAnswer) {
-    clearInterval(timerInterval);
-    userAnswers[currentQuestion] = {
-        question: currentQuestionSet[currentQuestion].text,
-        correctAnswer: currentQuestionSet[currentQuestion].answer,
-        userAnswer: userAnswer
-    };
-    timeTakenPerQuestion[currentQuestion] = (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30) - timeLeft;
-    options.querySelectorAll('.option-btn').forEach(b => b.classList.add('disabled'));
-    if (isCorrect) {
-        score += 10;
-        btn.classList.add('correct');
-        sounds.correct.play();
-        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    } else {
-        btn && btn.classList.add('wrong');
-        sounds.wrong.play();
-        options.querySelectorAll('.option-btn').forEach(b => {
-            if (b.textContent.replace(/^[a-d]\.\s/, '') === userAnswers[currentQuestion].correctAnswer) b.classList.add('correct');
+        function startQuiz() {
+            sounds.start.play();
+            powerUps = { addTime1: true, addTime2: true, timeStop: true };
+            addTime1.disabled = false;
+            addTime2.disabled = false;
+            timeStop.disabled = false;
+            if (selectedDifficulty === 'medium') {
+                const easyQuestions = shuffleArray([...questions.easy]).slice(0, 5);
+                const mediumQuestions = shuffleArray([...questions.medium]).slice(0, 5);
+                currentQuestionSet = shuffleArray([...easyQuestions, ...mediumQuestions]);
+            } else {
+                currentQuestionSet = shuffleArray([...questions[selectedDifficulty]]).slice(0, totalQuestions);
+            }
+            quizSection.classList.add('visible');
+            loadQuestion();
+            startTimer();
+            exitGameBtn.classList.add('visible');
+        }
+        function loadQuestion() {
+            const question = currentQuestionSet[currentQuestion];
+            questionText.textContent = question.text;
+            options.innerHTML = '';
+            explanation.classList.remove('visible');
+            explanation.textContent = '';
+            const shuffledOptions = shuffleArray([...question.options]);
+            shuffledOptions.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.classList.add('option-btn');
+                btn.innerHTML = `${String.fromCharCode(97 + index)}. ${option}`;
+                btn.addEventListener('click', () => checkAnswer(option === question.answer, btn, option));
+                options.appendChild(btn);
+            });
+            progressText.textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
+            progressBar.style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
+        }
+        function startTimer() {
+            if (isTimeStopped) return;
+            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+            timerText.textContent = timeLeft;
+            const totalTime = timeLeft;
+            timerCircle.style.strokeDashoffset = 0;
+            timerInterval = setInterval(() => {
+                if (!isTimeStopped) {
+                    timeLeft--;
+                    timerText.textContent = timeLeft;
+                    const offset = 188 * (1 - timeLeft / totalTime);
+                    timerCircle.style.strokeDashoffset = offset;
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        checkAnswer(false, null, 'Time Out');
+                    }
+                }
+            }, 1000);
+        }
+        addTime1.addEventListener('click', () => {
+            if (powerUps.addTime1 && !isTimeStopped) {
+                sounds.powerUp.play();
+                timeLeft += 10;
+                timerText.textContent = timeLeft;
+                powerUps.addTime1 = false;
+                addTime1.disabled = true;
+                confetti({ particleCount: 50, spread: 50,
+                                    originY: 0.6 });
+            }
         });
-    }
-    scoreDisplay.textContent = `Score: ${score}`;
-    showFeedback(userAnswer);
-    // Force button visibility and interactivity
-    nextBtn.classList.add('visible');
-    nextBtn.style.display = 'block';
-    nextBtn.style.pointerEvents = 'auto';
-    nextBtn.style.cursor = 'pointer';
-    nextBtn.style.opacity = '1';
-    console.log('Next button state:', {
-        classList: nextBtn.classList.toString(),
-        pointerEvents: nextBtn.style.pointerEvents,
-        display: nextBtn.style.display,
-        zIndex: nextBtn.style.zIndex,
-        opacity: nextBtn.style.opacity
-    });
-    // Redundancy: Reapply styles after a short delay
-    setTimeout(() => {
-        nextBtn.classList.add('visible');
-        nextBtn.style.display = 'block';
-        nextBtn.style.pointerEvents = 'auto';
-        nextBtn.style.cursor = 'pointer';
-        console.log('Next button styles reapplied');
-    }, 100);
-}
 
-// Show Feedback
-function showFeedback(userAnswer) {
-}
-
-// Next Button
-nextBtn.addEventListener('click', (e) => {
-    if (!nextBtn.classList.contains('visible')) {
-        console.warn('Next button clicked but not visible. Event ignored.', {
-            classList: nextBtn.classList.toString(),
-            pointerEvents: nextBtn.style.pointerEvents,
-            target: e.target
+        addTime2.addEventListener('click', () => {
+            if (powerUps.addTime2 && !isTimeStopped) {
+                sounds.powerUp.play();
+                timeLeft += 10;
+                timerText.textContent = timeLeft;
+                powerUps.addTime2 = false;
+                addTime2.disabled = true;
+                confetti({ particleCount: 50, spread: 50, originY: 0.6 });
+            }
         });
-        return;
-    }
-    console.log('Next button clicked successfully');
-    nextBtn.classList.remove('visible');
-    nextBtn.style.display = 'none';
-    nextBtn.style.pointerEvents = 'none';
-    options.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('correct', 'wrong', 'disabled'));
-    currentQuestion++;
-    if (currentQuestion < totalQuestions) {
-        loadQuestion();
-        startTimer();
-    } else {
-        endQuiz();
-    }
-});
 
-// End Quiz
-function endQuiz() {
-    sounds.complete.play();
-    quizSection.style.display = 'none';
-    resultModal.style.display = 'flex';
-    finalScore.textContent = score;
-    const correctAnswers = userAnswers.filter(ans => ans.userAnswer === ans.correctAnswer).length;
-    const accuracy = (correctAnswers / totalQuestions) * 100;
-    accuracyDisplay.textContent = accuracy.toFixed(2);
-    const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / totalQuestions;
-    avgTimeDisplay.textContent = avgTime.toFixed(2);
-    difficultyAnalysis.textContent = `You played on ${selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1)} difficulty.`;
-    
-    // Thinking Level
-    let thinkingLevelText = '';
-    if (accuracy >= 80) {
-        thinkingLevelText = 'Excellent critical thinking! You have a strong grasp of cybercrime laws.';
-    } else if (accuracy >= 50) {
-        thinkingLevelText = 'Good analytical skills! Consider reviewing some concepts for improvement.';
-    } else {
-        thinkingLevelText = 'Needs improvement. Focus on understanding key legal provisions.';
-    }
-    thinkingLevel.textContent = thinkingLevelText;
+        timeStop.addEventListener('click', () => {
+            if (powerUps.timeStop) {
+                sounds.powerUp.play();
+                isTimeStopped = true;
+                clearInterval(timerInterval);
+                powerUps.timeStop = false;
+                timeStop.disabled = true;
+                const question = currentQuestionSet[currentQuestion];
+                explanation.textContent = question.explanation;
+                explanation.classList.add('visible');
+                gsap.fromTo('.explanation', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+                confetti({ particleCount: 50, spread: 50, originY: 0.6 });
+            }
+        });
 
-    // Remarks
-    let remarksText = '';
-    if (score >= 80) {
-        remarksText = 'Outstanding performance! You’re well-versed in cybercrime laws.';
-    } else if (score >= 50) {
-        remarksText = 'Solid effort! A bit more practice can boost your score.';
-    } else {
-        remarksText = 'Keep studying! Review the laws to improve your understanding.';
-    }
-    remarks.textContent = remarksText;
+        function checkAnswer(isCorrect, button, selectedOption) {
+            clearInterval(timerInterval);
+            const question = currentQuestionSet[currentQuestion];
+            const timeTaken = (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30) - timeLeft;
+            timeTakenPerQuestion.push(timeTaken);
+            userAnswers.push({
+                question: question.text,
+                userAnswer: selectedOption,
+                correctAnswer: question.answer,
+                isCorrect,
+                timeTaken
+            });
 
-    // Problem-Solving Skills
-    let problemSolvingText = '';
-    if (avgTime < 10) {
-        problemSolvingText = 'Excellent problem-solving speed! You answer quickly and accurately.';
-    } else if (avgTime < 20) {
-        problemSolvingText = 'Good problem-solving skills! Try to answer a bit faster.';
-    } else {
-        problemSolvingText = 'Work on your speed. Practice to improve decision-making time.';
-    }
-    problemSolving.textContent = problemSolvingText;
+            const buttons = options.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.classList.add('disabled');
+                if (btn.textContent.includes(question.answer)) {
+                    btn.classList.add('correct');
+                } else if (btn === button && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
 
-    // Detailed Results
-    resultSummary.innerHTML = userAnswers.map((ans, idx) => `
-        <div>
-            <div class="question">Q${idx + 1}: ${ans.question}</div>
-            <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
-            <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
-            <div class="time-taken">Time Taken: ${timeTakenPerQuestion[idx]}s</div>
-        </div>
-    `).join('');
-}
+            if (isCorrect) {
+                score += 10;
+                scoreDisplay.textContent = `Score: ${score}`;
+                sounds.correct.play();
+                confetti({ particleCount: 100, spread: 70, originY: 0.6 });
+                gsap.to(button, { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 });
+            } else {
+                sounds.wrong.play();
+                if (!isTimeStopped) {
+                    explanation.textContent = question.explanation;
+                    explanation.classList.add('visible');
+                    gsap.fromTo('.explanation', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+                }
+                if (button) {
+                    gsap.to(button, { x: -5, duration: 0.1, repeat: 3, yoyo: true });
+                }
+            }
 
-// Restart Quiz
-restartBtn.addEventListener('click', () => {
-    resultModal.style.display = 'none';
-    quizSection.style.display = 'block';
-    currentQuestion = 0;
-    score = 0;
-    userAnswers = [];
-    timeTakenPerQuestion = [];
-    scoreDisplay.textContent = 'Score: 0';
-    startQuiz();
-});
+            nextBtn.classList.add('visible');
+        }
 
-// Exit to Difficulty Selection
-exitBtn.addEventListener('click', () => {
-    resultModal.style.display = 'none';
-    startModal.style.display = 'flex';
-    quizSection.style.display = 'block';
-    currentQuestion = 0;
-    score = 0;
-    userAnswers = [];
-    timeTakenPerQuestion = [];
-    scoreDisplay.textContent = 'Score: 0';
-    difficultyCards.forEach(c => c.classList.remove('selected'));
-    tutorialBtn.disabled = true;
-    selectedDifficulty = null;
-});
+        nextBtn.addEventListener('click', () => {
+            currentQuestion++;
+            isTimeStopped = false;
+            if (currentQuestion < totalQuestions) {
+                loadQuestion();
+                startTimer();
+                nextBtn.classList.remove('visible');
+            } else {
+                endQuiz();
+            }
+        });
 
-// Initialize
-window.addEventListener('load', () => {
-    loaderOverlay.classList.add('active');
-    setTimeout(() => {
-        loaderOverlay.classList.remove('active');
-        startModal.style.display = 'flex';
-    }, 150);
-});
-</script>
+        exitGameBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            quizSection.classList.remove('visible');
+            startModal.style.display = 'flex';
+            resetQuiz();
+        });
+
+        restartBtn.addEventListener('click', () => {
+            resultModal.style.display = 'none';
+            resetQuiz();
+            startQuiz();
+        });
+
+        exitBtn.addEventListener('click', () => {
+            resultModal.style.display = 'none';
+            startModal.style.display = 'flex';
+            resetQuiz();
+        });
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+            userAnswers = [];
+            timeTakenPerQuestion = [];
+            scoreDisplay.textContent = 'Score: 0';
+            progressBar.style.width = '0%';
+            progressText.textContent = '';
+            powerUps = { addTime1: true, addTime2: true, timeStop: true };
+            addTime1.disabled = false;
+            addTime2.disabled = false;
+            timeStop.disabled = false;
+            isTimeStopped = false;
+            quizSection.classList.remove('visible');
+        }
+
+        function endQuiz() {
+            sounds.complete.play();
+            quizSection.classList.remove('visible');
+            resultModal.style.display = 'flex';
+            finalScore.textContent = score;
+            const accuracy = (score / (totalQuestions * 10)) * 100;
+            accuracyDisplay.textContent = accuracy.toFixed(2);
+            const avgTime = timeTakenPerQuestion.reduce((a, b) => a + b, 0) / timeTakenPerQuestion.length;
+            avgTimeDisplay.textContent = avgTime.toFixed(2);
+
+            let difficultyText = selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1);
+            if (selectedDifficulty === 'medium') {
+                const easyCorrect = userAnswers.filter((ans, idx) => ans.isCorrect && idx < 5).length;
+                const mediumCorrect = userAnswers.filter((ans, idx) => ans.isCorrect && idx >= 5).length;
+                difficultyText += ` (Easy: ${easyCorrect}/5, Medium: ${mediumCorrect}/5)`;
+            } else {
+                const correctCount = userAnswers.filter(ans => ans.isCorrect).length;
+                difficultyText += ` (${correctCount}/${totalQuestions})`;
+            }
+            difficultyAnalysis.textContent = difficultyText;
+
+            let thinkingLevelText, remarksText, problemSolvingText;
+            if (accuracy >= 80) {
+                thinkingLevelText = 'Advanced: You demonstrate a strong understanding of cybercrime laws.';
+                remarksText = 'Excellent performance! You have a solid grasp of legal concepts.';
+                problemSolvingText = 'You excel at analyzing and solving complex legal scenarios.';
+            } else if (accuracy >= 50) {
+                thinkingLevelText = 'Intermediate: You have a good foundation but can improve.';
+                remarksText = 'Good effort! Review some concepts to boost your score.';
+                problemSolvingText = 'You show decent problem-solving skills but may need practice.';
+            } else {
+                thinkingLevelText = 'Beginner: You need to build your knowledge further.';
+                remarksText = 'Keep studying! Focus on key legal provisions.';
+                problemSolvingText = 'Work on analyzing scenarios to improve your skills.';
+            }
+            thinkingLevel.textContent = thinkingLevelText;
+            remarks.textContent = remarksText;
+            problemSolving.textContent = problemSolvingText;
+
+            resultSummary.innerHTML = '';
+            userAnswers.forEach((ans, idx) => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <div class="question">Q${idx + 1}: ${ans.question}</div>
+                    <div class="user-answer">Your Answer: ${ans.userAnswer}</div>
+                    <div class="correct-answer">Correct Answer: ${ans.correctAnswer}</div>
+                    <div class="time-taken">Time Taken: ${ans.timeTaken}s</div>
+                `;
+                resultSummary.appendChild(div);
+            });
+
+            confetti({ particleCount: 200, spread: 90, duration: 3000 });
+            gsap.from('.result-modal-content', { opacity: 0, scale: 0.8, duration: 0.5 });
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                mobileMenuIcon.querySelector('i').classList.add('fa-bars');
+                mobileMenuIcon.querySelector('i').classList.remove('fa-times');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            quizSection.style.display = 'none';
+            startModal.style.display = 'flex';
+            setTimeout(() => {
+                gsap.to('.start-modal-content', { opacity: 1, scale: 1, duration: 0.5 });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
