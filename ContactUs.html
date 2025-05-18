@@ -11,6 +11,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * {
             box-sizing: border-box;
@@ -428,9 +430,9 @@
         }
 
         .dark-theme .customization-options .user-info {
-    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-    color: #e0e0e0; 
-}
+            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            color: #e0e0e0; 
+        }
 
         .dark-theme .customization-options .user-info p {
             color: #e0e0e0;
@@ -755,6 +757,219 @@
             top: 15px;
         }
 
+        /* FAQ and Map Styles */
+        .additional-info {
+            max-width: 1300px;
+            margin: 50px auto 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            padding: 0 30px;
+        }
+
+        .faq-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .faq-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-section h2 {
+            font-size: 32px;
+            color: #333;
+            margin: 0 0 20px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .faq-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #8B0000;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item h3 {
+            font-size: 20px;
+            color: #8B0000;
+            margin: 0;
+            padding: 15px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item h3:hover {
+            color: #580100;
+        }
+
+        .faq-item h3::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 16px;
+            color: #8B0000;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active h3::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-item p {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            padding: 0 0 15px;
+            display: none;
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .map-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .map-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .map-section h2 {
+            font-size: 32px;
+            color: #333;
+            margin: 0 0 20px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .map-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #8B0000;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: height 0.3s ease;
+        }
+
+        .map-controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .map-controls button {
+            padding: 10px 20px;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .map-controls button:hover {
+            background-color: #580100;
+            transform: scale(1.05);
+        }
+
+        .dark-theme .faq-section,
+        .dark-theme .map-section {
+            background: #3a3b3c;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-theme .faq-section h2,
+        .dark-theme .map-section h2 {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .faq-section h2::after,
+        .dark-theme .map-section h2::after {
+            background-color: #d7b15c;
+        }
+
+        .dark-theme .faq-item h3 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .faq-item h3:hover {
+            color: #c19d4f;
+        }
+
+        .dark-theme .faq-item h3::after {
+            color: #d7b15c;
+        }
+
+        .dark-theme .faq-item p {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .faq-item {
+            border-bottom-color: #555;
+        }
+
+        .dark-theme .map-controls button {
+            background-color: #d7b15c;
+            color: #121212;
+        }
+
+        .dark-theme .map-controls button:hover {
+            background-color: #c19d4f;
+        }
+
         /* Media Queries for Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
@@ -841,6 +1056,29 @@
                 top: 45px;
                 width: 220px;
             }
+
+            .additional-info {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 20px;
+            }
+
+            .faq-section h2,
+            .map-section h2 {
+                font-size: 28px;
+            }
+
+            .faq-item h3 {
+                font-size: 18px;
+            }
+
+            .faq-item p {
+                font-size: 14px;
+            }
+
+            #map {
+                height: 350px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -907,6 +1145,20 @@
             .customization-options {
                 top: 40px;
                 width: 200px;
+            }
+
+            .faq-section,
+            .map-section {
+                padding: 20px;
+            }
+
+            #map {
+                height: 300px;
+            }
+
+            .map-controls button {
+                padding: 8px 15px;
+                font-size: 14px;
             }
         }
 
@@ -1058,6 +1310,38 @@
             .customization-options select {
                 font-size: 10px;
                 padding: 3px;
+            }
+
+            .additional-info {
+                padding: 0 15px;
+                margin: 30px auto 0;
+            }
+
+            .faq-section h2,
+            .map-section h2 {
+                font-size: 24px;
+            }
+
+            .faq-item h3 {
+                font-size: 16px;
+            }
+
+            .faq-item p {
+                font-size: 12px;
+            }
+
+            #map {
+                height: 250px;
+            }
+
+            .map-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .map-controls button {
+                padding: 8px 12px;
+                font-size: 12px;
             }
 
             /* Hide account-customization when sidebar is active */
@@ -1224,6 +1508,41 @@
                         </div>
                         <div class="error-message" id="errorMessage">
                             There was an error sending your message. Please try again later.
+                        </div>
+                    </div>
+                </div>
+                <!-- FAQ and Map Section -->
+                <div class="additional-info">
+                    <div class="faq-section">
+                        <h2>Frequently Asked Questions</h2>
+                        <div class="faq-item">
+                            <h3>How do I report a cybercrime incident?</h3>
+                            <p>To report a cybercrime, use our contact form above, email us at contraecrimecc@gmail.com, or reach out via our social media channels. Provide detailed information, such as the nature of the incident, timestamps, and any evidence, to help us assist you promptly.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>What types of cybercrimes does Contra E-Crime address?</h3>
+                            <p>We handle a wide range of cybercrimes, including phishing, online fraud, identity theft, hacking, malware distribution, cyberbullying, and data breaches. Contact us for guidance on any cybercrime issue.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>How can I protect myself from online threats?</h3>
+                            <p>Stay safe by using strong, unique passwords, enabling two-factor authentication, avoiding suspicious links or downloads, and keeping your software updated. Visit our News & Insights page for detailed cybersecurity tips.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Can I access legal resources or saved laws on your platform?</h3>
+                            <p>Yes, registered users can access our Saved Laws section to view and manage legal resources related to cybercrime. Log in and navigate to the Saved Laws page to explore relevant laws and regulations.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>How quickly will I receive a response to my inquiry?</h3>
+                            <p>We aim to respond to all inquiries within 24-48 hours. For urgent matters, please indicate the urgency in your message, and we’ll prioritize your request.</p>
+                        </div>
+                    </div>
+                    <div class="map-section">
+                        <h2>Our Location</h2>
+                        <div id="map"></div>
+                        <div class="map-controls">
+                            <button id="zoomIn">Zoom In</button>
+                            <button id="zoomOut">Zoom Out</button>
+                            <button id="resetMap">Reset View</button>
                         </div>
                     </div>
                 </div>
@@ -1602,6 +1921,49 @@
                     console.log('FAILED...', error);
                     errorMessage.classList.add('visible');
                 });
+        });
+
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-item h3').forEach(item => {
+            item.addEventListener('click', () => {
+                const faqItem = item.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+
+                // Toggle the clicked item if it wasn't already active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Initialize Leaflet Map
+        const map = L.map('map').setView([14.676678, 121.035618], 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        const marker = L.marker([14.676678, 121.035618]).addTo(map)
+            .bindPopup('<b>Contra E-Crime</b><br>Regalado Hwy, Novaliches, Quezon City, Metro Manila')
+            .openPopup();
+
+        // Map Controls
+        document.getElementById('zoomIn').addEventListener('click', () => {
+            map.zoomIn();
+        });
+
+        document.getElementById('zoomOut').addEventListener('click', () => {
+            map.zoomOut();
+        });
+
+        document.getElementById('resetMap').addEventListener('click', () => {
+            map.setView([14.676678, 121.035618], 15);
         });
     </script>
 </body>
