@@ -2057,392 +2057,425 @@ px;
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
-            authDomain: "contra-e-crime.firebaseapp.com",
-            projectId: "contra-e-crime",
-            storageBucket: "contra-e-crime.firebasestorage.app",
-            messagingSenderId: "198995444405",
-            appId: "1:198995444405:web:5f8c6eed561461b36034fc",
-            measurementId: "G-7Y2E24DD42",
-            databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
+      // Initialize Firebase (unchanged)
+const firebaseConfig = {
+    apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
+    authDomain: "contra-e-crime.firebaseapp.com",
+    projectId: "contra-e-crime",
+    storageBucket: "contra-e-crime.firebasestorage.app",
+    messagingSenderId: "198995444405",
+    appId: "1:198995444405:web:5f8c6eed561461b36034fc",
+    measurementId: "G-7Y2E24DD42",
+    databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
+const db = firebase.firestore();
+
+// Existing user count functions (unchanged)
+async function calculateDailyLoginUsers() {
+    try {
+        const querySnapshot = await db.collection('loginEvents').get();
+        console.log('Total Login Events:', querySnapshot.size);
+        return querySnapshot.size;
+    } catch (error) {
+        console.error('Error calculating total login events:', error);
+        return 0;
+    }
+}
+
+async function calculateActiveUsers() {
+    try {
+        const querySnapshot = await db.collection('loginEvents').get();
+        const uniqueUsers = new Set();
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+            if (data.userEmail) {
+                uniqueUsers.add(data.userEmail);
+            }
+        });
+        console.log('Active Users (Unique Users):', uniqueUsers.size);
+        return uniqueUsers.size;
+    } catch (error) {
+        console.error('Error calculating active users:', error);
+        return 0;
+    }
+}
+
+async function updateUserCounts() {
+    try {
+        const dailyLoginUsers = await calculateDailyLoginUsers();
+        const activeUsers = await calculateActiveUsers();
+
+        console.log('Updating UI - Total Login Events:', dailyLoginUsers, 'Active Users:', activeUsers);
+
+        const dailyLoginElement = document.getElementById('dailyLoginUsers');
+        const activeUsersElement = document.getElementById('activeUsers');
+
+        animateCount(dailyLoginElement, parseInt(dailyLoginElement.textContent), dailyLoginUsers);
+        animateCount(activeUsersElement, parseInt(activeUsersElement.textContent), activeUsers);
+    } catch (error) {
+        console.error('Error updating user counts:', error);
+    }
+}
+
+function animateCount(element, start, end) {
+    const duration = 1000;
+    const stepTime = 50;
+    const steps = duration / stepTime;
+    const increment = (end - start) / steps;
+    let current = start;
+    let step = 0;
+
+    const timer = setInterval(() => {
+        step++;
+        current += increment;
+        element.textContent = Math.round(current).toString().padStart(3, '0');
+
+        if (step >= steps) {
+            element.textContent = end.toString().padStart(3, '0');
+            clearInterval(timer);
+        }
+    }, stepTime);
+}
+
+// Cloudinary configuration (unchanged)
+const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
+const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+
+// DOM elements
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+const sidebar = document.getElementById('sidebar');
+const loaderOverlay = document.getElementById('loaderOverlay');
+const profilePic = document.getElementById('profilePic');
+const customizationMenu = document.getElementById('customizationMenu');
+const avatarInput = document.getElementById('avatarInput');
+const avatarLoading = document.getElementById('avatarLoading');
+const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+const borderColorPicker = document.getElementById('borderColorPicker');
+const borderTypeSelect = document.getElementById('borderTypeSelect');
+const usernameDisplay = document.getElementById('usernameDisplay');
+const emailDisplay = document.getElementById('emailDisplay');
+const createdAtDisplay = document.getElementById('createdAtDisplay');
+
+// Show loader on page load
+window.addEventListener('load', () => {
+    updateUserCounts();
+    setTimeout(() => {
+        loaderOverlay.classList.remove('active');
+    }, 150);
+});
+
+// Dark theme toggle
+if (localStorage.getItem('darkTheme') === 'enabled') {
+    body.classList.add('dark-theme');
+    themeToggle.checked = true;
+}
+
+themeToggle.addEventListener('change', function() {
+    if (this.checked) {
+        body.classList.add('dark-theme');
+        localStorage.setItem('darkTheme', 'enabled');
+    } else {
+        body.classList.remove('dark-theme');
+        localStorage.setItem('darkTheme', 'disabled');
+    }
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            darkTheme: this.checked
+        }).catch(error => {
+            console.error('Error saving theme preference:', error);
+        });
+    }
+});
+
+// Mobile menu toggle
+mobileMenuIcon.addEventListener('click', function() {
+    sidebar.classList.toggle('active');
+    const icon = mobileMenuIcon.querySelector('i');
+    if (sidebar.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (sidebar.classList.contains('active') &&
+        !sidebar.contains(e.target) &&
+        !mobileMenuIcon.contains(e.target)) {
+        sidebar.classList.remove('active');
+        mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+});
+
+// Handle external navigation with loader
+document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:') && !this.href.includes('github.com')) return;
+
+        e.preventDefault();
+        loaderOverlay.classList.add('active');
+
+        setTimeout(() => {
+            window.location.href = this.href;
+        }, 150);
+    });
+});
+
+// Existing avatar and customization logic (unchanged)
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        const currentUser = {
+            username: user.displayName || 'User',
+            email: user.email,
+            createdAt: user.metadata.creationTime
         };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
-        const db = firebase.firestore();
+        usernameDisplay.textContent = `${currentUser.username}`;
+        emailDisplay.textContent = `${currentUser.email}`;
+        createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
 
-        async function calculateDailyLoginUsers() {
-            try {
-                const querySnapshot = await db.collection('loginEvents').get();
-                console.log('Total Login Events:', querySnapshot.size);
-                return querySnapshot.size;
-            } catch (error) {
-                console.error('Error calculating total login events:', error);
-                return 0;
-            }
-        }
+        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
-        async function calculateActiveUsers() {
-            try {
-                const querySnapshot = await db.collection('loginEvents').get();
-                const uniqueUsers = new Set();
-                querySnapshot.forEach(doc => {
-                    const data = doc.data();
-                    if (data.userEmail) {
-                        uniqueUsers.add(data.userEmail);
-                    }
-                });
-                console.log('Active Users (Unique Users):', uniqueUsers.size);
-                return uniqueUsers.size;
-            } catch (error) {
-                console.error('Error calculating active users:', error);
-                return 0;
-            }
-        }
-
-        async function updateUserCounts() {
-            try {
-                const dailyLoginUsers = await calculateDailyLoginUsers();
-                const activeUsers = await calculateActiveUsers();
-
-                console.log('Updating UI - Total Login Events:', dailyLoginUsers, 'Active Users:', activeUsers);
-
-                const dailyLoginElement = document.getElementById('dailyLoginUsers');
-                const activeUsersElement = document.getElementById('activeUsers');
-
-                animateCount(dailyLoginElement, parseInt(dailyLoginElement.textContent), dailyLoginUsers);
-                animateCount(activeUsersElement, parseInt(activeUsersElement.textContent), activeUsers);
-            } catch (error) {
-                console.error('Error updating user counts:', error);
-            }
-        }
-
-        function animateCount(element, start, end) {
-            const duration = 1000;
-            const stepTime = 50;
-            const steps = duration / stepTime;
-            const increment = (end - start) / steps;
-            let current = start;
-            let step = 0;
-
-            const timer = setInterval(() => {
-                step++;
-                current += increment;
-                element.textContent = Math.round(current).toString().padStart(3, '0');
-
-                if (step >= steps) {
-                    element.textContent = end.toString().padStart(3, '0');
-                    clearInterval(timer);
+        const userRef = database.ref(`users/${sanitizedEmail}`);
+        userRef.once('value', (snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+                if (userData.avatarUrl) {
+                    profilePic.src = userData.avatarUrl;
+                } else {
+                    profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
                 }
-            }, stepTime);
+                if (userData.avatarBgColor) {
+                    profilePic.style.backgroundColor = userData.avatarBgColor;
+                    avatarBgColorPicker.value = userData.avatarBgColor;
+                }
+                if (userData.borderColor) {
+                    profilePic.style.borderColor = userData.borderColor;
+                    borderColorPicker.value = userData.borderColor;
+                }
+                if (userData.borderType) {
+                    profilePic.style.borderStyle = userData.borderType;
+                    borderTypeSelect.value = userData.borderType;
+                }
+            }
+        }, (error) => {
+            console.error('Error loading user customization:', error);
+            alert('Failed to load user customization: ' + error.message);
+        });
+    } else {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    }
+});
+
+profilePic.addEventListener('click', () => {
+    customizationMenu.classList.toggle('active');
+});
+
+document.addEventListener('click', (e) => {
+    if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+        customizationMenu.classList.remove('active');
+    }
+});
+
+avatarInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const maxSize = 2 * 1024 * 1024;
+    if (!validTypes.includes(file.type)) {
+        alert('Please upload a valid image (JPG, JPEG, PNG).');
+        return;
+    }
+    if (file.size > maxSize) {
+        alert('Image size must be less than 2MB.');
+        return;
+    }
+
+    const user = auth.currentUser;
+    if (!user) {
+        alert('You must be logged in to upload an avatar.');
+        avatarLoading.classList.remove('active');
+        return;
+    }
+
+    avatarLoading.classList.add('active');
+
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const maxDimension = 300;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+            if (width > maxDimension) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+            }
+        } else {
+            if (height > maxDimension) {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+            }
         }
 
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
-        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
 
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
-        const sidebar = document.getElementById('sidebar');
-        const loaderOverlay = document.getElementById('loaderOverlay');
-        const profilePic = document.getElementById('profilePic');
-        const customizationMenu = document.getElementById('customizationMenu');
-        const avatarInput = document.getElementById('avatarInput');
-        const avatarLoading = document.getElementById('avatarLoading');
-        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
-        const borderColorPicker = document.getElementById('borderColorPicker');
-        const borderTypeSelect = document.getElementById('borderTypeSelect');
-        const usernameDisplay = document.getElementById('usernameDisplay');
-        const emailDisplay = document.getElementById('emailDisplay');
-        const createdAtDisplay = document.getElementById('createdAtDisplay');
-
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentUser = {
-                    username: user.displayName || 'User',
-                    email: user.email,
-                    createdAt: user.metadata.creationTime
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                usernameDisplay.textContent = `${currentUser.username}`;
-                emailDisplay.textContent = `${currentUser.email}`;
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
-
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
-                        if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
-                            avatarBgColorPicker.value = userData.avatarBgColor;
-                        }
-                        if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
-                            borderColorPicker.value = userData.borderColor;
-                        }
-                        if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
-                            borderTypeSelect.value = userData.borderType;
-                        }
-                    }
-                }, (error) => {
-                    console.error('Error loading user customization:', error);
-                    alert('Failed to load user customization: ' + error.message);
-                });
-            } else {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'index.html';
-            }
-        });
-
-        profilePic.addEventListener('click', () => {
-            customizationMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
-            }
-        });
-
-        avatarInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPG, JPEG, PNG).');
-                return;
-            }
-            if (file.size > maxSize) {
-                alert('Image size must be less than 2MB.');
-                return;
-            }
-
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to upload an avatar.');
+        canvas.toBlob((blob) => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser || !currentUser.email) {
+                alert('User not logged in.');
                 avatarLoading.classList.remove('active');
                 return;
             }
 
-            avatarLoading.classList.add('active');
+            const formData = new FormData();
+            formData.append('file', blob);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxDimension = 300;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxDimension) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    }
-                } else {
-                    if (height > maxDimension) {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        alert('User not logged in.');
-                                                avatarLoading.classList.remove('active');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.secure_url) {
-                            profilePic.src = data.secure_url;
-                            const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-                            database.ref(`users/${sanitizedEmail}`).update({
-                                avatarUrl: data.secure_url
-                            }).then(() => {
-                                console.log('Avatar URL saved to Firebase');
-                                avatarLoading.classList.remove('active');
-                            }).catch(error => {
-                                console.error('Error saving avatar URL:', error);
-                                alert('Failed to save avatar: ' + error.message);
-                                avatarLoading.classList.remove('active');
-                            });
-                        } else {
-                            alert('Failed to upload image.');
-                            avatarLoading.classList.remove('active');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error uploading image:', error);
-                        alert('Failed to upload image: ' + error.message);
+            fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.secure_url) {
+                    profilePic.src = data.secure_url;
+                    const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+                    database.ref(`users/${sanitizedEmail}`).update({
+                        avatarUrl: data.secure_url
+                    }).then(() => {
+                        console.log('Avatar URL saved to Firebase');
+                        avatarLoading.classList.remove('active');
+                    }).catch(error => {
+                        console.error('Error saving avatar URL:', error);
+                        alert('Failed to save avatar: ' + error.message);
                         avatarLoading.classList.remove('active');
                     });
-                }, 'image/jpeg', 0.8);
-            };
-
-            img.onerror = () => {
-                alert('Error loading image.');
-                avatarLoading.classList.remove('active');
-            };
-        });
-
-        avatarBgColorPicker.addEventListener('change', (e) => {
-            const color = e.target.value;
-            profilePic.style.backgroundColor = color;
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color
-                }).catch(error => {
-                    console.error('Error saving background color:', error);
-                    alert('Failed to save background color: ' + error.message);
-                });
-            }
-        });
-
-        borderColorPicker.addEventListener('change', (e) => {
-            const color = e.target.value;
-            profilePic.style.borderColor = color;
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color
-                }).catch(error => {
-                    console.error('Error saving border color:', error);
-                    alert('Failed to save border color: ' + error.message);
-                });
-            }
-        });
-
-        borderTypeSelect.addEventListener('change', (e) => {
-            const type = e.target.value;
-            profilePic.style.borderStyle = type;
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: type
-                }).catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
-                });
-            }
-        });
-
-        themeToggle.addEventListener('change', () => {
-            body.classList.toggle('dark-theme');
-            const isDarkTheme = body.classList.contains('dark-theme');
-            localStorage.setItem('darkTheme', isDarkTheme);
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    darkTheme: isDarkTheme
-                }).catch(error => {
-                    console.error('Error saving theme preference:', error);
-                });
-            }
-        });
-
-        const savedTheme = localStorage.getItem('darkTheme');
-        if (savedTheme === 'true') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        mobileMenuIcon.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            mobileMenuIcon.innerHTML = sidebar.classList.contains('active')
-                ? '<i class="fas fa-times"></i>'
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        document.addEventListener('click', (e) => {
-            if (sidebar.classList.contains('active') &&
-                !sidebar.contains(e.target) &&
-                !mobileMenuIcon.contains(e.target)) {
-                sidebar.classList.remove('active');
-                mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        });
-
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                faqItem.classList.toggle('active');
-
-                const answer = faqItem.querySelector('.faq-answer');
-                if (faqItem.classList.contains('active')) {
-                    const scrollHeight = answer.scrollHeight;
-                    answer.style.maxHeight = `${scrollHeight}px`;
                 } else {
-                    answer.style.maxHeight = '0';
+                    alert('Failed to upload image.');
+                    avatarLoading.classList.remove('active');
                 }
+            })
+            .catch(error => {
+                console.error('Error uploading image:', error);
+                alert('Failed to upload image: ' + error.message);
+                avatarLoading.classList.remove('active');
             });
+        }, 'image/jpeg', 0.8);
+    };
+
+    img.onerror = () => {
+        alert('Error loading image.');
+        avatarLoading.classList.remove('active');
+    };
+});
+
+avatarBgColorPicker.addEventListener('change', (e) => {
+    const color = e.target.value;
+    profilePic.style.backgroundColor = color;
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            avatarBgColor: color
+        }).catch(error => {
+            console.error('Error saving background color:', error);
+            alert('Failed to save background color: ' + error.message);
         });
+    }
+});
 
-        function handleScrollAnimations() {
-            const elements = document.querySelectorAll('.timeline-item, .growth-item, .leader-item, .careers-card, .about-card');
-            const windowHeight = window.innerHeight;
+borderColorPicker.addEventListener('change', (e) => {
+    const color = e.target.value;
+    profilePic.style.borderColor = color;
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            borderColor: color
+        }).catch(error => {
+            console.error('Error saving border color:', error);
+            alert('Failed to save border color: ' + error.message);
+        });
+    }
+});
 
-            elements.forEach(element => {
-                const rect = element.getBoundingClientRect();
-                if (rect.top <= windowHeight * 0.8) {
-                    element.classList.add('visible');
-                }
-            });
+borderTypeSelect.addEventListener('change', (e) => {
+    const type = e.target.value;
+    profilePic.style.borderStyle = type;
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        database.ref(`users/${sanitizedEmail}`).update({
+            borderType: type
+        }).catch(error => {
+            console.error('Error saving border type:', error);
+            alert('Failed to save border type: ' + error.message);
+        });
+    }
+});
+
+// FAQ toggle
+const faqQuestions = document.querySelectorAll('.faq-question');
+faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        faqItem.classList.toggle('active');
+
+        const answer = faqItem.querySelector('.faq-answer');
+        if (faqItem.classList.contains('active')) {
+            const scrollHeight = answer.scrollHeight;
+            answer.style.maxHeight = `${scrollHeight}px`;
+        } else {
+            answer.style.maxHeight = '0';
         }
+    });
+});
 
-        window.addEventListener('scroll', handleScrollAnimations);
-        window.addEventListener('load', handleScrollAnimations);
+// Scroll animations
+function handleScrollAnimations() {
+    const elements = document.querySelectorAll('.timeline-item, .growth-item, .leader-item, .careers-card, .about-card');
+    const windowHeight = window.innerHeight;
 
-        window.addEventListener('load', () => {
-            updateUserCounts();
-            loaderOverlay.classList.remove('active');
-        });
+    elements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= windowHeight * 0.8) {
+            element.classList.add('visible');
+        }
+    });
+}
 
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        });
-    </script>
-</body>
-</html>
+window.addEventListener('scroll', handleScrollAnimations);
+window.addEventListener('load', handleScrollAnimations);
+
+// Handle resize for mobile menu
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+});
