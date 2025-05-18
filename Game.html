@@ -1902,47 +1902,6 @@ const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
 const tutorialPrev = document.getElementById('tutorialPrev');
 const tutorialNext = document.getElementById('tutorialNext');
 
-// Sound effects
-let clickSound, correctSound, wrongSound, timeUpSound, gameOverSound;
-try {
-        let clickSound = new Howl({
-        src: ['https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-77336/zapsplat_multimedia_button_click_bright_001_92098.mp3'],
-        volume: 0.5
-    });
-    let correctSound = new Howl({
-        src: ['https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-46623/zapsplat_multimedia_game_sound_positive_action_success_001_49670.mp3'],
-        volume: 0.6
-    });
-    let wrongSound = new Howl({
-        src: ['https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-61906/zapsplat_multimedia_game_sound_negative_error_001_61906.mp3'],
-        volume: 0.6
-    });
-    let timeUpSound = new Howl({
-        src: ['https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-77336/zapsplat_multimedia_alert_error_003_77336.mp3'],
-        volume: 0.7
-    });
-    let gameOverSound = new Howl({
-        src: ['https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-46623/zapsplat_multimedia_game_sound_game_over_001_49668.mp3'],
-        volume: 0.6
-    });
-    console.log('Sound effects initialized successfully');
-} catch (error) {
-    console.error('Sound initialization failed:', error);
-}
-
-// Function to play sound with error handling
-function playSound(sound) {
-    try {
-        if (sound) {
-            sound.play();
-            console.log('Playing sound:', sound._src);
-        } else {
-            console.warn('Sound object is undefined');
-        }
-    } catch (error) {
-        console.warn('Sound playback failed:', error);
-    }
-}
 
 let selectedDifficulty = null;
 let currentQuestionIndex = 0;
