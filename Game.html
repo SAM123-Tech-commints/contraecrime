@@ -350,6 +350,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            min-height: 44px;
         }
         .power-up-btn:hover {
             transform: scale(1.1);
@@ -412,6 +413,7 @@
             justify-content: center;
             gap: 5px;
             touch-action: manipulation;
+            min-height: 44px;
         }
         .option-btn::before {
             content: '';
@@ -503,6 +505,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            min-height: 44px;
         }
         .exit-game-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -1070,6 +1073,7 @@
                 font-size: 16px;
                 width: 100%;
                 max-width: 280px;
+                min-height: 44px;
             }
             .tutorial-slide img { max-width: 200px; }
             .tutorial-slide h3 { font-size: 20px; }
@@ -1129,7 +1133,7 @@
             <h1>Contra E-Crime</h1>
             <ul>
                 <li><a href="HomePage.html"><img src="https://i.imgur.com/OAHusQp.png" alt="Home">Home</a></li>
-                <li><a href="News.html" target="_self" onclick="return true;"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
+                <li><a href="News.html"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
                 <li><a href="SavedLaws.html"><img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">Saved Laws</a></li>
                 <li><a href="History.html"><img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">Search History</a></li>
                 <li><a href="ContactUs.html"><img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">Contact Us</a></li>
@@ -1361,7 +1365,7 @@
             console.error('Particles.js initialization failed:', error);
         }
 
-        // Questions data (unchanged)
+        // Questions data
         const questions = {
             easy: [
                 {
@@ -1626,22 +1630,22 @@
                     answer: "PHP 100,000 and six months to three years imprisonment",
                     options: [
                         "PHP 100,000 and six months to three years imprisonment",
-                        "Reclusion perpetua and PHP 2,000,000 fine",
-                        "Fine up to ₱1,000 and six months imprisonment",
-                        "PHP 1,000,000 or six years imprisonment"
-                    ],
-                    explanation: "The minimum penalty for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is PHP 100,000 and 6 months to 3 years imprisonment."
-                },
-                {
-                    text: "What fine range does the Anti-Child Pornography Act specify?",
-                    answer: "PHP 2,000,000 to PHP 5,000,000",
-                    options: [
-                        "PHP 100,000 to PHP 1,000,000",
-                        "PHP 2,000,000 to PHP 5,000,000",
-                        "Up to ₱1,000",
-                        "PHP 500,000 to PHP 1,000,000"
-                    ],
-                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) specifies fines ranging from PHP 2,000,000 to PHP 5,000,000 for violations, reflecting the severity of offenses involving child exploitation."
+"PHP 1,000,000 or six years imprisonment",
+"Fine up to ₱1,000",
+"PHP 500,000 and three years imprisonment"
+],
+explanation: "The Electronic Commerce Act of 2000 (RA 8792) sets a minimum penalty of PHP 100,000 and six months to three years imprisonment for online fraud."
+},
+{
+text: "What fine range does the Anti-Child Pornography Act specify?",
+answer: "PHP 2,000,000 to PHP 5,000,000",
+options: [
+"PHP 100,000 to PHP 1,000,000",
+"PHP 2,000,000 to PHP 5,000,000",
+"Up to ₱1,000",
+"PHP 500,000 to PHP 1,000,000"
+],
+explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) specifies fines ranging from PHP 2,000,000 to PHP 5,000,000 for violations, reflecting the severity of offenses involving child exploitation."
 },
 {
 text: "Under the Electronic Commerce Act, what is the penalty for unauthorized access?",
@@ -1776,26 +1780,26 @@ let currentSlide = 1;
 
 // Difficulty settings
 const difficultySettings = {
-easy: { time: 60, points: 10 },
-medium: { time: 45, points: 10 },
-hard: { time: 30, points: 10 }
+    easy: { time: 60, points: 10 },
+    medium: { time: 45, points: 10 },
+    hard: { time: 30, points: 10 }
 };
 
 // Helper functions
 function shuffleArray(array) {
-for (let i = array.length - 1; i > 0; i--) {
-const j = Math.floor(Math.random() * (i + 1));
-[array[i], array[j]] = [array[j], array[i]];
-}
-return array;
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 function showLoader() {
-loaderOverlay.classList.add('active');
+    loaderOverlay.classList.add('active');
 }
 
 function hideLoader() {
-loaderOverlay.classList.remove('active');
+    loaderOverlay.classList.remove('active');
 }
 
 function startTimer() {
@@ -1847,7 +1851,7 @@ function displayQuestion() {
     shuffledOptions.forEach(option => {
         const button = document.createElement('button');
         button.classList.add('option-btn');
-        button.innerHTML = `<i class="fas fa-gavel"></i> ${option}`; // Fixed: Used template literal for HTML
+        button.innerHTML = `<i class="fas fa-gavel"></i> ${option}`; // Fixed: Wrapped in backticks
         button.addEventListener('click', () => handleAnswer(option));
         optionsContainer.appendChild(button);
     });
@@ -2032,11 +2036,13 @@ function showResults() {
         const block = document.createElement('div');
         block.classList.add('question-block');
         block.innerHTML = `
-            Q${index + 1}: ${answer.question}
-            Your Answer: ${answer.userAnswer}
-            Correct Answer: ${answer.correctAnswer}
-            Time Taken: ${answer.timeTaken}s
-        `; // Fixed: Used template literal for HTML
+            <div class="question">Q${index + 1}: ${answer.question}</div>
+            <div class="user-answer ${answer.isCorrect ? '' : 'incorrect'}">
+                Your Answer: ${answer.userAnswer}
+            </div>
+            <div class="correct-answer">Correct Answer: ${answer.correctAnswer}</div>
+            <div class="time-taken">Time Taken: ${answer.timeTaken}s</div>
+        `;
         resultSummary.appendChild(block);
     });
 }
@@ -2062,13 +2068,157 @@ function resetGame() {
     selectedDifficulty = null;
 }
 
+// Event listeners
+difficultyCards.forEach(card => {
+    card.addEventListener('click', () => {
+        sounds.click.play();
+        difficultyCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedDifficulty = card.dataset.difficulty;
+        tutorialBtn.disabled = false;
+    });
+});
+
+tutorialBtn.addEventListener('click', () => {
+    sounds.click.play();
+    startModal.classList.remove('active');
+    const showTutorial = localStorage.getItem('showTutorial') !== 'false';
+    if (showTutorial) {
+        tutorialModal.classList.add('active');
+        showSlide(1);
+    } else {
+        startQuiz();
+    }
+});
+
+backAboutBtn.addEventListener('click', () => {
+    sounds.click.play();
+    window.location.href = 'AboutUs.html';
+});
+
+backBtn.addEventListener('click', () => {
+    sounds.click.play();
+    tutorialModal.classList.remove('active');
+    startModal.classList.add('active');
+});
+
+startQuizBtn.addEventListener('click', () => {
+    sounds.click.play();
+    if (dontShowAgain.checked) {
+        localStorage.setItem('showTutorial', 'false');
+    }
+    startQuiz();
+});
+
+nextBtn.addEventListener('click', nextQuestion);
+
+exitGameBtn.addEventListener('click', () => {
+    sounds.click.play();
+    resetGame();
+});
+
+restartBtn.addEventListener('click', () => {
+    sounds.click.play();
+    resetGame();
+    startQuiz();
+});
+
+exitBtn.addEventListener('click', () => {
+    sounds.click.play();
+    resetGame();
+});
+
+skipRedemptionBtn.addEventListener('click', () => {
+    sounds.click.play();
+    redemptionModal.classList.remove('active');
+    showResults();
+});
+
+extraTime1.addEventListener('click', () => {
+    if (!powerUpsUsed.extraTime1) {
+        sounds.click.play();
+        addExtraTime('extraTime1');
+        powerUpsUsed.extraTime1 = true;
+    }
+});
+
+extraTime2.addEventListener('click', () => {
+    if (!powerUpsUsed.extraTime2) {
+        sounds.click.play();
+        addExtraTime('extraTime2');
+        powerUpsUsed.extraTime2 = true;
+    }
+});
+
+timeFreeze.addEventListener('click', () => {
+    if (!powerUpsUsed.timeFreeze) {
+        sounds.click.play();
+        freezeTimer();
+        powerUpsUsed.timeFreeze = true;
+    }
+});
+
+mobileMenuIcon.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+});
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+    localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+});
+
+tutorialDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+        sounds.click.play();
+        showSlide(parseInt(dot.dataset.slide));
+    });
+});
+
+tutorialPrev.addEventListener('click', () => {
+    sounds.click.play();
+    showSlide(currentSlide - 1);
+});
+
+tutorialNext.addEventListener('click', () => {
+    sounds.click.play();
+    showSlide(currentSlide + 1);
+});
+
 function showSlide(slideNumber) {
     if (slideNumber < 1 || slideNumber > tutorialSlides.length) return;
     currentSlide = slideNumber;
     tutorialSlides.forEach(slide => slide.classList.remove('active'));
     tutorialDots.forEach(dot => dot.classList.remove('active'));
-    document.getElementById(`slide${slideNumber}`).classList.add('active'); // Fixed: Added backticks
-    document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active'); // Fixed: Added quotes and backticks
+    document.getElementById(`slide${slideNumber}`).classList.add('active');
+    document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active'); // Fixed: Added quotes
     tutorialPrev.style.display = slideNumber === 1 ? 'none' : 'block';
     tutorialNext.style.display = slideNumber === tutorialSlides.length ? 'none' : 'block';
 }
+
+function startQuiz() {
+    if (!selectedDifficulty) {
+        alert('Please select a difficulty level!');
+        return;
+    }
+    showLoader();
+    setTimeout(() => {
+        tutorialModal.classList.remove('active');
+        quizSection.classList.add('visible');
+        currentQuestions = shuffleArray([...questions[selectedDifficulty]]).slice(0, 10);
+        displayQuestion();
+        hideLoader();
+    }, 1000);
+}
+
+// Initialize theme
+if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-theme');
+    themeToggle.checked = true;
+}
+
+// Firebase auth state
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = 'index.html';
+    }
+});
