@@ -29,7 +29,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -84,17 +84,21 @@
             right: 15px;
             top: 15px;
         }
-       .sidebar {
+        .sidebar {
             width: 290px;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
             background-size: cover;
             background-position: center;
+            background-color: #1a1a1a;
             color: white;
             padding: 20px;
             height: 100vh;
             position: fixed;
+            top: 0;
+            left: 0;
             transition: transform 0.3s ease;
-            display: block;
+            z-index: 1001;
+            overflow-y: auto;
         }
         .sidebar.active {
             z-index: 1001;
@@ -538,7 +542,7 @@
         }
         .start-modal-content, .tutorial-modal-content, .result-modal-content, .redemption-modal-content {
             background: #fff;
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px;
             text-align: center;
             width: 90%;
@@ -557,27 +561,27 @@
             margin-top: 20px;
         }
         .start-modal-content h2, .tutorial-modal-content h2, .result-modal-content h2, .redemption-modal-content h2 {
-            font-size: 32px;
+            font-size: 28px;
             color: #1e3c72;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
         .difficulty-options {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
+            gap: 20px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
         .difficulty-card {
             background: #fff;
-            border-radius: 15px;
-            padding: 20px;
-            width: 180px;
+            border-radius: 12px;
+            padding: 15px;
+            width: 160px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
             touch-action: manipulation;
@@ -599,38 +603,38 @@
         }
         .difficulty-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
         .difficulty-card.selected {
             border: 3px solid #ffcc00;
             box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
         }
         .difficulty-card .emoji {
-            font-size: 40px;
-            margin-bottom: 10px;
+            font-size: 32px;
+            margin-bottom: 8px;
         }
         .difficulty-card .label {
-            font-size: 20px;
+            font-size: 18px;
             color: #333;
             font-weight: 600;
         }
         .difficulty-card .description {
-            font-size: 14px;
+            font-size: 13px;
             color: #666;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         .start-btn, .tutorial-btn, .restart-btn, .back-btn, .start-quiz-btn, .exit-btn, .back-about-btn, .skip-redemption-btn {
             background: linear-gradient(135deg, #ffcc00, #e6b800);
             color: #1e3c72;
             border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 18px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            margin: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            margin: 8px;
             touch-action: manipulation;
             display: inline-flex;
             align-items: center;
@@ -644,16 +648,97 @@
         }
         .start-btn:hover, .tutorial-btn:hover, .restart-btn:hover, .back-btn:hover, .start-quiz-btn:hover, .exit-btn:hover, .back-about-btn:hover, .skip-redemption-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
         }
         .tutorial-modal-content {
-            padding: 40px;
-            max-width: 700px;
+            padding: 30px;
+            max-width: 800px;
             overflow: hidden;
+        }
+        .slide-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .slide-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        .slide-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .slide-image {
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .slide-text {
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .feature-highlight {
+            background: rgba(255,204,0,0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+        .feature-highlight i {
+            color: #ffcc00;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        .dark-theme .feature-card {
+            background: rgba(0,0,0,0.2);
+        }
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        .feature-card h4 {
+            margin: 10px 0;
+            color: #1e3c72;
+        }
+        .dark-theme .feature-card h4 {
+            color: #d8dbe0;
+        }
+        .feature-list {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        .feature-list li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feature-list i {
+            color: #ffcc00;
+            width: 20px;
         }
         .tutorial-slide {
             display: none;
-            padding: 20px 0;
+            padding: 0;
             text-align: center;
         }
         .tutorial-slide.active {
@@ -662,7 +747,7 @@
         .tutorial-slide h3 {
             font-size: 28px;
             color: #1e3c72;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .dark-theme .tutorial-slide h3 {
             color: #d8dbe0;
@@ -671,48 +756,28 @@
             font-size: 16px;
             color: #666;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .dark-theme .tutorial-slide p {
             color: #b0b0b0;
         }
-        .slide-image {
-            max-width: 100%;
-            height: auto;
-            margin: 15px 0;
-            border-radius: 10px;
-        }
-        .highlight-box {
-            background: rgba(255, 204, 0, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-weight: 600;
-            color: #333;
-            display: inline-block;
-        }
-        .dark-theme .highlight-box {
-            background: rgba(215, 177, 92, 0.1);
-            color: #d8dbe0;
-        }
         .tutorial-nav {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin: 20px 0;
+            gap: 10px;
+            margin-top: 20px;
         }
         .tutorial-dot {
-            width: 8px;
-            height: 8px;
+            width: 12px;
+            height: 12px;
             background: #ddd;
             border-radius: 50%;
             cursor: pointer;
             transition: background 0.3s ease;
+            min-height: 44px;
         }
         .tutorial-dot.active {
             background: #ffcc00;
-            width: 10px;
-            height: 10px;
         }
         .tutorial-prev, .tutorial-next {
             position: absolute;
@@ -721,11 +786,12 @@
             background: rgba(0, 0, 0, 0.5);
             color: #fff;
             border: none;
-            padding: 8px;
+            padding: 10px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 20px;
             border-radius: 50%;
             transition: background 0.3s ease;
+            min-height: 44px;
         }
         .tutorial-prev:hover, .tutorial-next:hover {
             background: rgba(0, 0, 0, 0.8);
@@ -740,15 +806,15 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             margin-top: 20px;
         }
         .dont-show-again {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
         .dont-show-again label {
             font-size: 14px;
@@ -765,43 +831,43 @@
             overflow-y: auto;
         }
         .result-modal-content h3, .redemption-modal-content h3 {
-            font-size: 22px;
+            font-size: 20px;
             color: #1e3c72;
-            margin: 20px 0 10px;
+            margin: 15px 0 8px;
         }
         .result-modal-content p, .redemption-modal-content p {
-            font-size: 16px;
+            font-size: 15px;
             color: #666;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .result-summary, .redemption-summary {
             background: #f9f9f9;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
         .result-summary:hover, .redemption-summary:hover {
             transform: translateY(-5px);
         }
         .result-summary h3, .redemption-summary h3 {
-            font-size: 24px;
+            font-size: 22px;
             color: #1e3c72;
-            margin-bottom: 15px;
-            padding: 10px;
+            margin-bottom: 12px;
+            padding: 8px;
             background: linear-gradient(135deg, #ffcc00, #e6b800);
-            border-radius: 8px;
+            border-radius: 6px;
             text-align: center;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
         .result-summary .question-block, .redemption-summary .question-block {
             background: #fff;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             transition: background 0.3s ease;
         }
         .result-summary .question-block:hover, .redemption-summary .question-block:hover {
@@ -810,57 +876,57 @@
         .result-summary .question, .redemption-summary .question {
             font-weight: 600;
             color: #1e3c72;
-            font-size: 18px;
-            margin-bottom: 8px;
+            font-size: 16px;
+            margin-bottom: 6px;
         }
         .result-summary .user-answer, .redemption-summary .user-answer {
             color: #333;
-            font-size: 16px;
-            margin-bottom: 8px;
+            font-size: 15px;
+            margin-bottom: 6px;
         }
         .result-summary .correct-answer, .redemption-summary .correct-answer {
             color: #2ecc71;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .result-summary .correct-answer::before, .redemption-summary .correct-answer::before {
             content: '\f058';
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
             color: #2ecc71;
-            font-size: 18px;
+            font-size: 16px;
         }
         .result-summary .user-answer.incorrect, .redemption-summary .user-answer.incorrect {
             color: #e74c3c;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .result-summary .user-answer.incorrect::before, .redemption-summary .user-answer.incorrect::before {
             content: '\f057';
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
             color: #e74c3c;
-            font-size: 18px;
+            font-size: 16px;
         }
         .result-summary .time-taken, .redemption-summary .time-taken {
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
             font-style: italic;
         }
         .result-stats {
             text-align: left;
-            padding: 15px;
+            padding: 12px;
             background: #e0f7fa;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
         }
         .result-stats div {
-            margin: 5px 0;
+            margin: 4px 0;
         }
         .notification {
             position: fixed;
@@ -869,13 +935,13 @@
             transform: translate(-50%, -50%);
             background: #e74c3c;
             color: #fff;
-            padding: 20px 40px;
-            border-radius: 10px;
-            font-size: 24px;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 20px;
             font-weight: 600;
             z-index: 1003;
             display: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             animation: fadeInOut 2s ease;
         }
         .notification.visible {
@@ -884,50 +950,38 @@
         .dice-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 30px 0;
+            gap: 12px;
+            margin: 15px 0;
             flex-wrap: wrap;
         }
-        .dice-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .dice-option:hover {
-            transform: translateY(-5px);
-        }
-        .dice-icon {
-            font-size: 50px;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .dice-btn {
             background: linear-gradient(135deg, #ffcc00, #e6b800);
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-        .dice-icon:hover {
-            transform: rotate(15deg) scale(1.1);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-        .dice-label {
-            margin-top: 10px;
+            color: #1e3c72;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 15px;
             font-weight: 600;
-            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            min-width: 60px;
+            text-align: center;
+            touch-action: manipulation;
+            min-height: 44px;
         }
-        .dark-theme .dice-label {
-            color: #e0e0e0;
+        .dice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
         }
-        .wrong-count {
-            color: #e74c3c;
-            font-weight: 700;
+        .dice-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            opacity: 0.6;
         }
-        .dark-theme .wrong-count {
-            color: #ff6b6b;
+        .dark-theme .dice-btn {
+            background: linear-gradient(135deg, #d7b15c, #b89b4a);
+            color: #d8dbe0;
         }
         body.dark-theme { background-color: #121212; color: #e0e0e0; }
         .dark-theme .content { background: linear-gradient(135deg, #28292c 0%, #1a1a1a 100%); }
@@ -939,6 +993,9 @@
         .dark-theme .score { color: #d8dbe0; }
         .dark-theme .start-modal-content, .dark-theme .tutorial-modal-content, .dark-theme .result-modal-content, .dark-theme .redemption-modal-content { background: #333; color: #d8dbe0; }
         .dark-theme .start-modal-content h2, .dark-theme .tutorial-modal-content h2, .dark-theme .result-modal-content h2, .dark-theme .redemption-modal-content h2 { color: #d8dbe0; }
+        .dark-theme .tutorial-slide h3 { color: #d8dbe0; }
+        .dark-theme .tutorial-slide p { color: #b0b0b0; }
+        .dark-theme .dont-show-again label { color: #b0b0b0; }
         .dark-theme .difficulty-card { background: #444; }
         .dark-theme .difficulty-card .label { color: #d8dbe0; }
         .dark-theme .difficulty-card .description { color: #b0b0b0; }
@@ -991,7 +1048,7 @@
             .content { margin-left: 250px; }
             footer { margin-left: 250px; }
             .quiz-section h1 { font-size: 32px; }
-            .difficulty-card { width: 160px; }
+            .difficulty-card { width: 150px; }
         }
         @media (max-width: 768px) {
             .sidebar { width: 200px; padding: 10px; }
@@ -1003,6 +1060,15 @@
             .quiz-section { padding: 30px; }
             .options { grid-template-columns: 1fr; }
             .difficulty-card { width: 140px; }
+            .slide-content {
+                flex-direction: column;
+            }
+            .slide-image {
+                max-width: 200px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
         @media (max-width: 480px) {
             .container { flex-direction: column; }
@@ -1020,14 +1086,15 @@
                 background-size: cover;
                 background-position: center;
                 background-color: #1a1a1a;
-                display: block;
+                display: flex;
+                flex-direction: column;
             }
             .sidebar.active { transform: translateX(0); }
             .sidebar h1 { display: none; }
             .sidebar ul { margin: 0; }
             .sidebar ul li { margin: 20px 0; }
             .sidebar ul li a { font-size: 16px; }
-            .dark-theme-container { margin-top: 20px; }
+            .dark-theme-container { margin: 20px 0; }
             .dark-theme-label { font-size: 16px; }
             .content {
                 margin-left: 0;
@@ -1048,8 +1115,8 @@
             .timer-circle { stroke-dasharray: 125.6; }
             .timer-text { font-size: 16px; margin-left: 8px; }
             .power-up-btn { font-size: 12px; padding: 8px; min-height: 44px; }
-            .difficulty-options { flex-direction: column; align-items: center; gap: 15px; }
-            .difficulty-card { width: 100%; max-width: 280px; padding: 15px; }
+            .difficulty-options { flex-direction: column; align-items: center; gap: 12px; }
+            .difficulty-card { width: 100%; max-width: 280px; padding: 12px; }
             .start-modal-content, .tutorial-modal-content, .result-modal-content, .redemption-modal-content {
                 padding: 15px;
                 width: 95%;
@@ -1062,7 +1129,7 @@
             }
             .start-modal-content h2, .tutorial-modal-content h2, .result-modal-content h2, .redemption-modal-content h2 {
                 font-size: 20px;
-                margin-bottom: 15px;
+                margin-bottom: 12px;
             }
             .start-modal-actions, .tutorial-actions, .result-actions, .redemption-actions {
                 flex-direction: column;
@@ -1074,11 +1141,11 @@
                 width: 100%;
                 max-width: 280px;
             }
-            .tutorial-slide img { max-width: 200px; }
-            .tutorial-slide h3 { font-size: 22px; }
+            .tutorial-slide img { max-width: 180px; }
+            .tutorial-slide h3 { font-size: 20px; }
             .tutorial-slide p { font-size: 14px; }
             .tutorial-prev, .tutorial-next { font-size: 14px; padding: 6px; }
-            .tutorial-nav { gap: 6px; }
+            .tutorial-nav { gap: 8px; }
             .dont-show-again { font-size: 12px; }
             button, .difficulty-card, .tutorial-dot { -webkit-tap-highlight-color: transparent; }
         }
@@ -1119,13 +1186,6 @@
             0% { background-position: 0 0; }
             100% { background-position: 30px 0; }
         }
-        @keyframes diceRoll {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(90deg) scale(1.2); }
-            50% { transform: rotate(180deg) scale(1); }
-            75% { transform: rotate(270deg) scale(1.2); }
-            100% { transform: rotate(360deg) scale(1); }
-        }
     </style>
 </head>
 <body>
@@ -1139,65 +1199,30 @@
         </div>
     </div>
     <div class="container">
-       <nav class="sidebar" id="sidebar">
-    <h1>Contra E-Crime</h1>
-    <ul>
-        <li>
-            <a href="HomePage.html">
-                <img src="https://i.imgur.com/OAHusQp.png" alt="Home">
-                Home
-            </a>
-        </li>
-        <li>
-            <a href="News.html" target="_self" onclick="return true;">
-                <img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">
-                News & Insights
-            </a>
-        </li>
-        <li>
-            <a href="SavedLaws.html">
-                <img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">
-                Saved Laws
-            </a>
-        </li>
-        <li>
-            <a href="History.html">
-                <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
-                Search History
-            </a>
-        </li>
-        <li>
-            <a href="ContactUs.html">
-                <img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">
-                Contact Us
-            </a>
-        </li>
-        <li>
-            <a href="AboutUs.html">
-                <img src="https://i.imgur.com/lktrzpa.png" alt="About Us">
-                About Us
-            </a>
-        </li>
-        <li>
-            <a href="index.html">
-                <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
-                Logout
-            </a>
-        </li>
-    </ul>
-    <div class="dark-theme-container">
-        <div class="dark-theme-label">
-            <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
-            <span>Dark Theme</span>
-        </div>
-        <div class="toggle-switch">
-            <label class="switch-label">
-                <input type="checkbox" class="checkbox" id="themeToggle">
-                <span class="slider"></span>
-            </label>
-        </div>
-    </div>
-</nav>
+        <nav class="sidebar" id="sidebar">
+            <h1>Contra E-Crime</h1>
+            <ul>
+                <li><a href="HomePage.html"><img src="https://i.imgur.com/OAHusQp.png" alt="Home">Home</a></li>
+                <li><a href="News.html"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
+                <li><a href="SavedLaws.html"><img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">Saved Laws</a></li>
+                <li><a href="History.html"><img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">Search History</a></li>
+                <li><a href="ContactUs.html"><img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">Contact Us</a></li>
+                <li><a href="AboutUs.html"><img src="https://i.imgur.com/lktrzpa.png" alt="About Us">About Us</a></li>
+                <li><a href="index.html"><img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">Logout</a></li>
+            </ul>
+            <div class="dark-theme-container">
+                <div class="dark-theme-label">
+                    <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
+                    <span>Dark Theme</span>
+                </div>
+                <div class="toggle-switch">
+                    <label class="switch-label">
+                        <input type="checkbox" class="checkbox" id="themeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </nav>
         <main class="content">
             <section class="quiz-section" id="quizSection">
                 <div id="particles-js"></div>
@@ -1258,49 +1283,92 @@
         </div>
         <div class="tutorial-modal" id="tutorialModal">
             <div class="tutorial-modal-content">
-                <!-- Slide 1 - Welcome -->
                 <div class="tutorial-slide active" id="slide1">
-                    <h3>Welcome to CyberLaw Quiz Master</h3>
-                    <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book" class="slide-image">
-                    <p>Test your knowledge of cybercrime laws in the Philippines and worldwide through this interactive quiz.</p>
-                    <div class="highlight-box">Use special power-ups to help you succeed!</div>
+                    <div class="slide-header">
+                        <i class="fas fa-book slide-icon"></i>
+                        <h3>Introduction to CyberLaw Quiz</h3>
+                    </div>
+                    <div class="slide-content">
+                        <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book" class="slide-image">
+                        <p class="slide-text">Welcome to the CyberLaw Quiz Master! Test your knowledge of cybercrime laws in the Philippines and globally.</p>
+                        <div class="feature-highlight">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Answer questions based on legal provisions to earn points!</span>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Slide 2 - Gameplay -->
                 <div class="tutorial-slide" id="slide2">
-                    <h3>How to Play</h3>
-                    <p><strong>Time Limits:</strong> Easy: 60s | Medium: 45s | Hard: 30s per question</p>
-                    <p><strong>Power-Ups:</strong> 2x Extra Time (+10s), 1x Time Freeze (pause timer)</p>
-                    <p><strong>Scoring:</strong> 10 points per correct answer, 5 points in redemption</p>
+                    <div class="slide-header">
+                        <i class="fas fa-tools slide-icon"></i>
+                        <h3>Power-Ups & Difficulty</h3>
+                    </div>
+                    <div class="slide-content">
+                        <img src="https://i.imgur.com/TCTi8I2.jpeg" alt="Digital Security" class="slide-image">
+                        <p class="slide-text">Choose your difficulty and use power-ups wisely to tackle tough questions.</p>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <i class="fas fa-tachometer-alt feature-icon"></i>
+                                <h4>Difficulty Levels</h4>
+                                <ul class="feature-list">
+                                    <li><i class="fas fa-check"></i> Easy: 60s</li>
+                                    <li><i class="fas fa-check"></i> Medium: 45s</li>
+                                    <li><i class="fas fa-check"></i> Hard: 30s</li>
+                                </ul>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-bolt feature-icon"></i>
+                                <h4>Power-Ups</h4>
+                                <ul class="feature-list">
+                                    <li><i class="fas fa-check"></i> Extra Time 1 & 2: +10s</li>
+                                    <li><i class="fas fa-check"></i> Time Freeze: Pause Timer</li>
+                                    <li><i class="fas fa-check"></i> One power-up per round</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Slide 3 - Redemption -->
                 <div class="tutorial-slide" id="slide3">
-                    <h3>Redemption Round</h3>
-                    <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Redemption" class="slide-image">
-                    <p>After the main quiz, you'll get a chance to recover points from questions you missed.</p>
-                    <div class="highlight-box">Roll the dice to select a redemption question!</div>
-                    <p><strong>Features:</strong> Earn 5 points per correct redemption answer, Detailed explanations for all answers</p>
+                    <div class="slide-header">
+                        <i class="fas fa-star slide-icon"></i>
+                        <h3>Scoring & Redemption</h3>
+                    </div>
+                    <div class="slide-content">
+                        <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Scoreboard" class="slide-image">
+                        <p class="slide-text">Earn points and recover from mistakes in the redemption round.</p>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <i class="fas fa-trophy feature-icon"></i>
+                                <h4>Scoring</h4>
+                                <ul class="feature-list">
+                                    <li><i class="fas fa-check"></i> Main Round: 10 points per correct answer</li>
+                                    <li><i class="fas fa-check"></i> Redemption: 5 points per correct answer</li>
+                                </ul>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-redo feature-icon"></i>
+                                <h4>Redemption Round</h4>
+                                <ul class="feature-list">
+                                    <li><i class="fas fa-check"></i> Fix up to 3 wrong answers</li>
+                                    <li><i class="fas fa-check"></i> Detailed explanations provided</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Navigation -->
                 <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
                 <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
-                
                 <div class="tutorial-nav">
                     <div class="tutorial-dot active" data-slide="1"></div>
                     <div class="tutorial-dot" data-slide="2"></div>
                     <div class="tutorial-dot" data-slide="3"></div>
                 </div>
-
                 <div class="tutorial-actions">
-                    <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="start-quiz-btn" id="startQuizBtn"><i class="fas fa-play"></i> Start Quiz</button>
+                    <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Difficulty</button>
+                    <button class="start-quiz-btn" id="startQuizBtn"><i class="fas fa-play"></i> Start Quiz Now</button>
                 </div>
-
                 <div class="dont-show-again">
                     <input type="checkbox" id="dontShowAgain">
-                    <label for="dontShowAgain">Skip tutorial next time</label>
+                    <label for="dontShowAgain">Don't show this tutorial again</label>
                 </div>
             </div>
         </div>
@@ -2117,7 +2185,7 @@
         });
 
         if (isCorrect) {
-            score += isRedemption ? 5 : 10;
+            score += isRedemption ? 10 : 10;
             scoreElement.textContent = `Score: ${score}`;
             explanation.textContent = questions[selectedDifficulty][currentQuestionIndex].explanation;
             confetti({
@@ -2155,7 +2223,7 @@
             }
             
             const numQuestions = Math.min(wrongAnswers.length, 3);
-            redemptionMessage.innerHTML = `You got <span class="wrong-count">${wrongAnswers.length}</span> question(s) wrong. Roll a die to select a question for redemption (worth 5 points).`;
+            redemptionMessage.innerHTML = `You got <span class="wrong-count">${wrongAnswers.length}</span> question(s) wrong. Roll a die to select a question for redemption (worth 10 points).`;
             
             const diceContainer = document.getElementById('diceContainer');
             diceContainer.innerHTML = '';
