@@ -954,35 +954,56 @@
             margin: 15px 0;
             flex-wrap: wrap;
         }
-        .dice-btn {
-            background: linear-gradient(135deg, #ffcc00, #e6b800);
-            color: #1e3c72;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 600;
+
+        .dice-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .dice-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .dice-icon {
+            font-size: 50px;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ffcc00, #e6b800);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-            min-width: 60px;
-            text-align: center;
-            touch-action: manipulation;
-            min-height: 44px;
         }
-        .dice-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+
+        .dice-icon:hover {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
-        .dice-btn:disabled {
-            background: #666;
-            cursor: not-allowed;
-            opacity: 0.6;
+
+        .dice-label {
+            margin-top: 10px;
+            font-weight: 600;
+            color: #333;
         }
-        .dark-theme .dice-btn {
-            background: linear-gradient(135deg, #d7b15c, #b89b4a);
-            color: #d8dbe0;
+
+        .dark-theme .dice-label {
+            color: #e0e0e0;
         }
+
+        .wrong-count {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+        .dark-theme .wrong-count {
+            color: #ff6b6b;
+        }
+
         body.dark-theme { background-color: #121212; color: #e0e0e0; }
         .dark-theme .content { background: linear-gradient(135deg, #28292c 0%, #1a1a1a 100%); }
         .dark-theme .content::before { background-color: rgba(40, 41, 44, 0.9); }
@@ -1185,6 +1206,13 @@
         @keyframes moveStripes {
             0% { background-position: 0 0; }
             100% { background-position: 30px 0; }
+        }
+        @keyframes diceRoll {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.2); }
+            50% { transform: rotate(180deg) scale(1); }
+            75% { transform: rotate(270deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
         }
     </style>
 </head>
