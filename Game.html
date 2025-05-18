@@ -1858,34 +1858,31 @@
     });
 
     extraTime1.addEventListener('click', () => {
-        if (!powerUpsUsed.extraTime1 && !extraTime1.disabled) {
+        if (!extraTime1.disabled && !powerUpsUsed.extraTime1) {
             timeLeft += 10;
             timerText.textContent = `${timeLeft}s`;
             powerUpsUsed.extraTime1 = true;
             extraTime1.disabled = true;
-            extraTime1.classList.add('used');
             playSound(clickSound);
         }
     });
 
     extraTime2.addEventListener('click', () => {
-        if (!powerUpsUsed.extraTime2 && !extraTime2.disabled) {
+        if (!extraTime2.disabled && !powerUpsUsed.extraTime2) {
             timeLeft += 10;
             timerText.textContent = `${timeLeft}s`;
             powerUpsUsed.extraTime2 = true;
             extraTime2.disabled = true;
-            extraTime2.classList.add('used');
             playSound(clickSound);
         }
     });
 
     timeFreeze.addEventListener('click', () => {
-        if (!powerUpsUsed.timeFreeze && !timeFreeze.disabled) {
+        if (!timeFreeze.disabled && !powerUpsUsed.timeFreeze) {
             isFrozen = true;
             clearInterval(timerInterval);
             powerUpsUsed.timeFreeze = true;
             timeFreeze.disabled = true;
-            timeFreeze.classList.add('used');
             playSound(clickSound);
         }
     });
@@ -1956,9 +1953,6 @@
         extraTime1.disabled = false;
         extraTime2.disabled = false;
         timeFreeze.disabled = false;
-        extraTime1.classList.remove('used');
-        extraTime2.classList.remove('used');
-        timeFreeze.classList.remove('used');
         scoreElement.textContent = `Score: ${score}`;
         loadQuestion();
     }
@@ -2004,13 +1998,9 @@
                 timerInterval = setInterval(updateTimer, 1000);
             }
 
-            // Update power-up buttons based on global usage
             extraTime1.disabled = powerUpsUsed.extraTime1;
             extraTime2.disabled = powerUpsUsed.extraTime2;
             timeFreeze.disabled = powerUpsUsed.timeFreeze;
-            extraTime1.classList.toggle('used', powerUpsUsed.extraTime1);
-            extraTime2.classList.toggle('used', powerUpsUsed.extraTime2);
-            timeFreeze.classList.toggle('used', powerUpsUsed.timeFreeze);
 
             console.log('Loaded question:', question.text);
         } catch (error) {
@@ -2212,9 +2202,6 @@
         extraTime1.disabled = false;
         extraTime2.disabled = false;
         timeFreeze.disabled = false;
-        extraTime1.classList.remove('used');
-        extraTime2.classList.remove('used');
-        timeFreeze.classList.remove('used');
         scoreElement.textContent = `Score: ${score}`;
         quizSection.classList.remove('visible');
         document.querySelectorAll('.difficulty-card').forEach(card => card.classList.remove('selected'));
