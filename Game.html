@@ -1696,7 +1696,7 @@
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     const timerText = document.getElementById('timerText');
-    const timerEXTRA = document.querySelector('.timer-circle');
+    const timerCircle = document.querySelector('.timer-circle');
     const extraTime1 = document.getElementById('extraTime1');
     const extraTime2 = document.getElementById('extraTime2');
     const timeFreeze = document.getElementById('timeFreeze');
@@ -1989,7 +1989,7 @@
             timerCircle.style.strokeDashoffset = 0;
             questionStartTime = Date.now();
 
-            // Reset isFrozen for the new question
+            // Reset isFrozen for the new question to ensure timer runs unless newly frozen
             isFrozen = false;
 
             clearInterval(timerInterval);
