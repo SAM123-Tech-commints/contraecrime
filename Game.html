@@ -1696,7 +1696,7 @@
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     const timerText = document.getElementById('timerText');
-    const timerCircle = document.querySelector('.timer-circle');
+    const timerEXTRA = document.querySelector('.timer-circle');
     const extraTime1 = document.getElementById('extraTime1');
     const extraTime2 = document.getElementById('extraTime2');
     const timeFreeze = document.getElementById('timeFreeze');
@@ -1766,11 +1766,9 @@
     let wrongAnswers = [];
     let userAnswers = [];
     let isRedemption = false;
-    let powerUpsUsed = {
-        extraTime1: false,
-        extraTime2: false,
-        timeFreeze: false
-    };
+    let extraTime1Used = false;
+    let extraTime2Used = false;
+    let timeFreezeUsed = false;
 
     // GSAP animations
     gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, delay: 0.5 });
@@ -1858,30 +1856,30 @@
     });
 
     extraTime1.addEventListener('click', () => {
-        if (!extraTime1.disabled && !powerUpsUsed.extraTime1) {
+        if (!extraTime1Used && !extraTime1.disabled) {
             timeLeft += 10;
             timerText.textContent = `${timeLeft}s`;
-            powerUpsUsed.extraTime1 = true;
+            extraTime1Used = true;
             extraTime1.disabled = true;
             playSound(clickSound);
         }
     });
 
     extraTime2.addEventListener('click', () => {
-        if (!extraTime2.disabled && !powerUpsUsed.extraTime2) {
+        if (!extraTime2Used && !extraTime2.disabled) {
             timeLeft += 10;
             timerText.textContent = `${timeLeft}s`;
-            powerUpsUsed.extraTime2 = true;
+            extraTime2Used = true;
             extraTime2.disabled = true;
             playSound(clickSound);
         }
     });
 
     timeFreeze.addEventListener('click', () => {
-        if (!timeFreeze.disabled && !powerUpsUsed.timeFreeze) {
+        if (!timeFreezeUsed && !timeFreeze.disabled) {
             isFrozen = true;
             clearInterval(timerInterval);
-            powerUpsUsed.timeFreeze = true;
+            timeFreezeUsed = true;
             timeFreeze.disabled = true;
             playSound(clickSound);
         }
@@ -1945,11 +1943,9 @@
         wrongAnswers = [];
         userAnswers = [];
         isRedemption = false;
-        powerUpsUsed = {
-            extraTime1: false,
-            extraTime2: false,
-            timeFreeze: false
-        };
+        extraTime1Used = false;
+        extraTime2Used = false;
+        timeFreezeUsed = false;
         extraTime1.disabled = false;
         extraTime2.disabled = false;
         timeFreeze.disabled = false;
@@ -1993,14 +1989,18 @@
             timerCircle.style.strokeDashoffset = 0;
             questionStartTime = Date.now();
 
+            // Reset isFrozen for the new question
+            isFrozen = false;
+
             clearInterval(timerInterval);
             if (!isFrozen) {
                 timerInterval = setInterval(updateTimer, 1000);
             }
 
-            extraTime1.disabled = powerUpsUsed.extraTime1;
-            extraTime2.disabled = powerUpsUsed.extraTime2;
-            timeFreeze.disabled = powerUpsUsed.timeFreeze;
+            // Update power-up button states based on usage
+            extraTime1.disabled = extraTime1Used;
+            extraTime2.disabled = extraTime2Used;
+            timeFreeze.disabled = timeFreezeUsed;
 
             console.log('Loaded question:', question.text);
         } catch (error) {
@@ -2194,11 +2194,9 @@
         wrongAnswers = [];
         userAnswers = [];
         isRedemption = false;
-        powerUpsUsed = {
-            extraTime1: false,
-            extraTime2: false,
-            timeFreeze: false
-        };
+        extraTime1Used = false;
+        extraTime2Used = false;
+        timeFreezeUsed = false;
         extraTime1.disabled = false;
         extraTime2.disabled = false;
         timeFreeze.disabled = false;
