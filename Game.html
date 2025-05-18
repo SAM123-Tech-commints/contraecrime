@@ -1688,92 +1688,92 @@
     };
 
     // DOM elements
-    const loaderOverlay = document.getElementById('loaderOverlay');
-    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
-    const sidebar = document.getElementById('sidebar');
-    const themeToggle = document.getElementById('themeToggle');
-    const quizSection = document.getElementById('quizSection');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const timerText = document.getElementById('timerText');
-    const timerCircle = document.querySelector('.timer-circle');
-    const extraTime1 = document.getElementById('extraTime1');
-    const extraTime2 = document.getElementById('extraTime2');
-    const timeFreeze = document.getElementById('timeFreeze');
-    const questionText = document.getElementById('questionText');
-    const options = document.getElementById('options');
-    const explanation = document.getElementById('explanation');
-    const nextBtn = document.getElementById('nextBtn');
-    const exitGameBtn = document.getElementById('exitGameBtn');
-    const scoreElement = document.getElementById('score');
-    const startModal = document.getElementById('startModal');
-    const tutorialModal = document.getElementById('tutorialModal');
-    const resultModal = document.getElementById('resultModal');
-    const redemptionModal = document.getElementById('redemptionModal');
-    const tutorialBtn = document.getElementById('tutorialBtn');
-    const backAboutBtn = document.getElementById('backAboutBtn');
-    const backBtn = document.getElementById('backBtn');
-    const startQuizBtn = document.getElementById('startQuizBtn');
-    const dontShowAgain = document.getElementById('dontShowAgain');
-    const finalScore = document.getElementById('finalScore');
-    const accuracy = document.getElementById('accuracy');
-    const avgTime = document.getElementById('avgTime');
-    const difficultyAnalysis = document.getElementById('difficultyAnalysis');
-    const thinkingLevel = document.getElementById('thinkingLevel');
-    const remarks = document.getElementById('remarks');
-    const problemSolving = document.getElementById('problemSolving');
-    const resultSummary = document.getElementById('resultSummary');
-    const restartBtn = document.getElementById('restartBtn');
-    const exitBtn = document.getElementById('exitBtn');
-    const timeUpNotification = document.getElementById('timeUpNotification');
-    const redemptionMessage = document.getElementById('redemptionMessage');
-    const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
+const loaderOverlay = document.getElementById('loaderOverlay');
+const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+const sidebar = document.getElementById('sidebar');
+const themeToggle = document.getElementById('themeToggle');
+const quizSection = document.getElementById('quizSection');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+const timerText = document.getElementById('timerText');
+const timerCircle = document.querySelector('.timer-circle');
+const extraTime1 = document.getElementById('extraTime1');
+const extraTime2 = document.getElementById('extraTime2');
+const timeFreeze = document.getElementById('timeFreeze');
+const questionText = document.getElementById('questionText');
+const options = document.getElementById('options');
+const explanation = document.getElementById('explanation');
+const nextBtn = document.getElementById('nextBtn');
+const exitGameBtn = document.getElementById('exitGameBtn');
+const scoreElement = document.getElementById('score');
+const startModal = document.getElementById('startModal');
+const tutorialModal = document.getElementById('tutorialModal');
+const resultModal = document.getElementById('resultModal');
+const redemptionModal = document.getElementById('redemptionModal');
+const tutorialBtn = document.getElementById('tutorialBtn');
+const backAboutBtn = document.getElementById('backAboutBtn');
+const backBtn = document.getElementById('backBtn');
+const startQuizBtn = document.getElementById('startQuizBtn');
+const dontShowAgain = document.getElementById('dontShowAgain');
+const finalScore = document.getElementById('finalScore');
+const accuracy = document.getElementById('accuracy');
+const avgTime = document.getElementById('avgTime');
+const difficultyAnalysis = document.getElementById('difficultyAnalysis');
+const thinkingLevel = document.getElementById('thinkingLevel');
+const remarks = document.getElementById('remarks');
+const problemSolving = document.getElementById('problemSolving');
+const resultSummary = document.getElementById('resultSummary');
+const restartBtn = document.getElementById('restartBtn');
+const exitBtn = document.getElementById('exitBtn');
+const timeUpNotification = document.getElementById('timeUpNotification');
+const redemptionMessage = document.getElementById('redemptionMessage');
+const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
 
-    // Sound effects
-    let clickSound, correctSound, wrongSound, timeUpSound, gameOverSound;
+// Sound effects
+let clickSound, correctSound, wrongSound, timeUpSound, gameOverSound;
+try {
+    clickSound = new Howl({ src: ['https://freesound.org/data/previews/612/612609_5674468-lq.mp3'] });
+    correctSound = new Howl({ src: ['https://freesound.org/data/previews/582/582614_1462108-lq.mp3'] });
+    wrongSound = new Howl({ src: ['https://freesound.org/data/previews/476/476021_5674468-lq.mp3'] });
+    timeUpSound = new Howl({ src: ['https://freesound.org/data/previews/397/397356_1676145-lq.mp3'] });
+    gameOverSound = new Howl({ src: ['https://freesound.org/data/previews/531/531695_11068309-lq.mp3'] });
+    console.log('Sound effects initialized successfully');
+} catch (error) {
+    console.error('Sound initialization failed:', error);
+}
+
+// Function to play sound with error handling
+function playSound(sound) {
     try {
-        clickSound = new Howl({ src: ['https://freesound.org/data/previews/612/612609_5674468-lq.mp3'] });
-        correctSound = new Howl({ src: ['https://freesound.org/data/previews/582/582614_1462108-lq.mp3'] });
-        wrongSound = new Howl({ src: ['https://freesound.org/data/previews/476/476021_5674468-lq.mp3'] });
-        timeUpSound = new Howl({ src: ['https://freesound.org/data/previews/397/397356_1676145-lq.mp3'] });
-        gameOverSound = new Howl({ src: ['https://freesound.org/data/previews/531/531695_11068309-lq.mp3'] });
-        console.log('Sound effects initialized successfully');
-    } catch (error) {
-        console.error('Sound initialization failed:', error);
-    }
-
-    // Function to play sound with error handling
-    function playSound(sound) {
-        try {
-            if (sound) {
-                sound.play();
-                console.log('Playing sound:', sound._src);
-            } else {
-                console.warn('Sound object is undefined');
-            }
-        } catch (error) {
-            console.warn('Sound playback failed:', error);
+        if (sound) {
+            sound.play();
+            console.log('Playing sound:', sound._src);
+        } else {
+            console.warn('Sound object is undefined');
         }
+    } catch (error) {
+        console.warn('Sound playback failed:', error);
     }
+}
 
-    let selectedDifficulty = null;
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let timeLeft = 0;
-    let timerInterval = null;
-    let isFrozen = false;
-    let questionStartTime = 0;
-    let wrongAnswers = [];
-    let userAnswers = [];
-    let isRedemption = false;
-    let extraTime1Used = false;
-    let extraTime2Used = false;
-    let timeFreezeUsed = false;
+let selectedDifficulty = null;
+let currentQuestionIndex = 0;
+let score = 0;
+let timeLeft = 0;
+let timerInterval = null;
+let isFrozen = false;
+let questionStartTime = 0;
+let wrongAnswers = [];
+let userAnswers = [];
+let isRedemption = false;
+let extraTime1Used = false;
+let extraTime2Used = false;
+let timeFreezeUsed = false;
 
-    // GSAP animations
-    gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, delay: 0.5 });
+// GSAP animations
+gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, delay: 0.5 });
 
-    // Event listeners
+// Event listeners
 mobileMenuIcon.addEventListener('click', function() {
     sidebar.classList.toggle('active');
     const icon = mobileMenuIcon.querySelector('i');
@@ -1787,170 +1787,173 @@ mobileMenuIcon.addEventListener('click', function() {
     playSound(clickSound);
 });
 
-    themeToggle.addEventListener('change', () => {
-        document.body.classList.toggle('dark-theme');
-        localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+themeToggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark-theme');
+    localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+    playSound(clickSound);
+});
+
+document.querySelectorAll('.difficulty-card').forEach(card => {
+    card.addEventListener('click', () => {
+        document.querySelectorAll('.difficulty-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedDifficulty = card.dataset.difficulty;
+        tutorialBtn.disabled = false;
         playSound(clickSound);
     });
+});
 
-    document.querySelectorAll('.difficulty-card').forEach(card => {
-        card.addEventListener('click', () => {
-            document.querySelectorAll('.difficulty-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            selectedDifficulty = card.dataset.difficulty;
-            tutorialBtn.disabled = false;
-            playSound(clickSound);
-        });
-    });
-
-    tutorialBtn.addEventListener('click', () => {
-        try {
-            if (!selectedDifficulty) {
-                showNotification('Please select a difficulty first!');
-                return;
-            }
-            startModal.classList.remove('active');
-            tutorialModal.classList.add('active');
-            showSlide(1);
-            playSound(clickSound);
-        } catch (error) {
-            console.error('Error in tutorial button handler:', error);
+tutorialBtn.addEventListener('click', () => {
+    try {
+        if (!selectedDifficulty) {
+            showNotification('Please select a difficulty first!');
+            return;
         }
-    });
+        startModal.classList.remove('active');
+        tutorialModal.classList.add('active');
+        showSlide(1);
+        playSound(clickSound);
+    } catch (error) {
+        console.error('Error in tutorial button handler:', error);
+    }
+});
 
-    backAboutBtn.addEventListener('click', () => {
-        window.location.href = 'AboutUs.html';
+backAboutBtn.addEventListener('click', () => {
+    window.location.href = 'AboutUs.html';
+    playSound(clickSound);
+});
+
+backBtn.addEventListener('click', () => {
+    tutorialModal.classList.remove('active');
+    startModal.classList.add('active');
+    playSound(clickSound);
+});
+
+startQuizBtn.addEventListener('click', () => {
+    if (dontShowAgain.checked) {
+        localStorage.setItem('skipTutorial', 'true');
+    }
+    tutorialModal.classList.remove('active');
+    startQuiz();
+    playSound(clickSound);
+});
+
+document.querySelectorAll('.tutorial-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+        showSlide(parseInt(dot.dataset.slide));
         playSound(clickSound);
     });
+});
 
-    backBtn.addEventListener('click', () => {
-        tutorialModal.classList.remove('active');
-        startModal.classList.add('active');
+document.getElementById('tutorialPrev').addEventListener('click', () => {
+    showSlide(Math.max(1, parseInt(document.querySelector('.tutorial-dot.active').dataset.slide) - 1));
+    playSound(clickSound);
+});
+
+document.getElementById('tutorialNext').addEventListener('click', () => {
+    showSlide(Math.min(3, parseInt(document.querySelector('.tutorial-dot.active').dataset.slide) + 1));
+    playSound(clickSound);
+});
+
+extraTime1.addEventListener('click', () => {
+    if (!extraTime1.disabled) {
+        timeLeft += 10;
+        timerText.textContent = `${timeLeft}s`;
+        extraTime1.disabled = true;
+        extraTime1Used = true; // Lock after use
         playSound(clickSound);
-    });
+    }
+});
 
-    startQuizBtn.addEventListener('click', () => {
-        if (dontShowAgain.checked) {
-            localStorage.setItem('skipTutorial', 'true');
-        }
-        tutorialModal.classList.remove('active');
-        startQuiz();
+extraTime2.addEventListener('click', () => {
+    if (!extraTime2.disabled) {
+        timeLeft += 10;
+        timerText.textContent = `${timeLeft}s`;
+        extraTime2.disabled = true;
+        extraTime2Used = true; // Lock after use
         playSound(clickSound);
-    });
+    }
+});
 
-    document.querySelectorAll('.tutorial-dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-            showSlide(parseInt(dot.dataset.slide));
-            playSound(clickSound);
-        });
-    });
-
-    document.getElementById('tutorialPrev').addEventListener('click', () => {
-        showSlide(Math.max(1, parseInt(document.querySelector('.tutorial-dot.active').dataset.slide) - 1));
-        playSound(clickSound);
-    });
-
-    document.getElementById('tutorialNext').addEventListener('click', () => {
-        showSlide(Math.min(3, parseInt(document.querySelector('.tutorial-dot.active').dataset.slide) + 1));
-        playSound(clickSound);
-    });
-
-    extraTime1.addEventListener('click', () => {
-        if (!extraTime1.disabled) {
-            timeLeft += 10;
-            timerText.textContent = `${timeLeft}s`;
-            extraTime1.disabled = true;
-            playSound(clickSound);
-        }
-    });
-
-    extraTime2.addEventListener('click', () => {
-        if (!extraTime2.disabled) {
-            timeLeft += 10;
-            timerText.textContent = `${timeLeft}s`;
-            extraTime2.disabled = true;
-            playSound(clickSound);
-        }
-    });
-
-    timeFreeze.addEventListener('click', () => {
-        if (!timeFreeze.disabled) {
-            isFrozen = true;
-            clearInterval(timerInterval);
-            timeFreeze.disabled = true;
-            playSound(clickSound);
-        }
-    });
-
-    nextBtn.addEventListener('click', () => {
-        currentQuestionIndex++;
-        loadQuestion();
-        playSound(clickSound);
-    });
-
-    exitGameBtn.addEventListener('click', () => {
+timeFreeze.addEventListener('click', () => {
+    if (!timeFreeze.disabled) {
+        isFrozen = true;
         clearInterval(timerInterval);
-        showResult();
-        playSound(gameOverSound);
-    });
-
-    restartBtn.addEventListener('click', () => {
-        resetQuiz();
-        startModal.classList.add('active');
-        resultModal.classList.remove('active');
+        timeFreeze.disabled = true;
+        timeFreezeUsed = true; // Lock after use
         playSound(clickSound);
-    });
-
-    exitBtn.addEventListener('click', () => {
-        resetQuiz();
-        resultModal.classList.remove('active');
-        startModal.classList.add('active');
-        playSound(clickSound);
-    });
-
-    skipRedemptionBtn.addEventListener('click', () => {
-        redemptionModal.classList.remove('active');
-        showResult();
-        playSound(clickSound);
-    });
-
-    // Functions
-    function showSlide(slideNumber) {
-        document.querySelectorAll('.tutorial-slide').forEach(slide => slide.classList.remove('active'));
-        document.getElementById(`slide${slideNumber}`).classList.add('active');
-        document.querySelectorAll('.tutorial-dot').forEach(dot => dot.classList.remove('active'));
-        document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
     }
+});
 
-    function showNotification(message) {
-        timeUpNotification.textContent = message;
-        timeUpNotification.classList.add('visible');
-        setTimeout(() => {
-            timeUpNotification.classList.remove('visible');
-        }, 2000);
+nextBtn.addEventListener('click', () => {
+    currentQuestionIndex++;
+    loadQuestion();
+    playSound(clickSound);
+});
+
+exitGameBtn.addEventListener('click', () => {
+    clearInterval(timerInterval);
+    showResult();
+    playSound(gameOverSound);
+});
+
+restartBtn.addEventListener('click', () => {
+    resetQuiz();
+    startModal.classList.add('active');
+    resultModal.classList.remove('active');
+    playSound(clickSound);
+});
+
+exitBtn.addEventListener('click', () => {
+    resetQuiz();
+    resultModal.classList.remove('active');
+    startModal.classList.add('active');
+    playSound(clickSound);
+});
+
+skipRedemptionBtn.addEventListener('click', () => {
+    redemptionModal.classList.remove('active');
+    showResult();
+    playSound(clickSound);
+});
+
+// Functions
+function showSlide(slideNumber) {
+    document.querySelectorAll('.tutorial-slide').forEach(slide => slide.classList.remove('active'));
+    document.getElementById(`slide${slideNumber}`).classList.add('active');
+    document.querySelectorAll('.tutorial-dot').forEach(dot => dot.classList.remove('active'));
+    document.querySelector(`.tutorial-dot[data-slide="${slideNumber}"]`).classList.add('active');
+}
+
+function showNotification(message) {
+    timeUpNotification.textContent = message;
+    timeUpNotification.classList.add('visible');
+    setTimeout(() => {
+        timeUpNotification.classList.remove('visible');
+    }, 2000);
+}
+
+function startQuiz() {
+    if (localStorage.getItem('skipTutorial') === 'true') {
+        tutorialModal.classList.remove('active');
     }
+    quizSection.classList.add('visible');
+    currentQuestionIndex = 0;
+    score = 0;
+    wrongAnswers = [];
+    userAnswers = [];
+    isRedemption = false;
+    extraTime1Used = false;
+    extraTime2Used = false;
+    timeFreezeUsed = false;
+    extraTime1.disabled = false;
+    extraTime2.disabled = false;
+    timeFreeze.disabled = false;
+    scoreElement.textContent = `Score: ${score}`;
+    loadQuestion();
+}
 
-    function startQuiz() {
-        if (localStorage.getItem('skipTutorial') === 'true') {
-            tutorialModal.classList.remove('active');
-        }
-        quizSection.classList.add('visible');
-        currentQuestionIndex = 0;
-        score = 0;
-        wrongAnswers = [];
-        userAnswers = [];
-        isRedemption = false;
-        extraTime1Used = false;
-        extraTime2Used = false;
-        timeFreezeUsed = false;
-        extraTime1.disabled = false;
-        extraTime2.disabled = false;
-        timeFreeze.disabled = false;
-        scoreElement.textContent = `Score: ${score}`;
-        loadQuestion();
-    }
-
-  function loadQuestion() {
+function loadQuestion() {
     try {
         const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
         if (currentQuestionIndex >= questionList.length) {
@@ -1991,9 +1994,9 @@ mobileMenuIcon.addEventListener('click', function() {
             timerInterval = setInterval(updateTimer, 1000);
         }
 
-        extraTime1.disabled = extraTime1Used; 
-        extraTime2.disabled = extraTime2Used; 
-        timeFreeze.disabled = timeFreezeUsed; 
+        extraTime1.disabled = extraTime1Used;
+        extraTime2.disabled = extraTime2Used;
+        timeFreeze.disabled = timeFreezeUsed;
 
         console.log('Loaded question:', question.text);
     } catch (error) {
@@ -2023,7 +2026,7 @@ function updateTimer() {
     }
 
     timeLeft--;
-    timerText.textContent = `${timeLeft}s`; // Fixed typo: timerText.content -> timerText.textContent
+    timerText.textContent = `${timeLeft}s`;
     const circumference = 188;
     const offset = circumference * (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30));
     timerCircle.style.strokeDashoffset = offset;
@@ -2085,14 +2088,6 @@ function showRedemptionModal() {
         redemptionMessage.textContent = `You got ${wrongAnswers.length} question(s) wrong. Choose one dice to select a question for the redemption round (5 points).`;
         const diceContainer = document.getElementById('diceContainer');
         diceContainer.innerHTML = '';
-
-        // Reset power-ups at the start of the redemption round [NEW]
-        extraTime1Used = false;
-        extraTime2Used = false;
-        timeFreezeUsed = false;
-        extraTime1.disabled = false;
-        extraTime2.disabled = false;
-        timeFreeze.disabled = false;
 
         for (let i = 0; i < numQuestions; i++) {
             const diceBtn = document.createElement('button');
