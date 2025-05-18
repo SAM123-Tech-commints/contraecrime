@@ -679,6 +679,41 @@
             margin: 20px 0;
             border-radius: 10px;
         }
+        .tutorial-slide-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .tutorial-slide-content h3 {
+            font-size: 24px;
+            color: #2e2e2e;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: none;
+        }
+        .tutorial-slide-content p {
+            font-size: 14px;
+            color: #2e2e2e;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .tutorial-image {
+            width: 200px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .dark-theme .tutorial-slide-content h3 {
+            color: #d8dbe0;
+        }
+        .dark-theme .tutorial-slide-content p {
+            color: #b0b0b0;
+        }
         .tutorial-nav {
             display: flex;
             justify-content: center;
@@ -954,7 +989,7 @@
             background: #666;
         }
         .dark-theme .result-summary .question, .dark-theme .redemption-summary .question { color: #d8dbe0; }
-        .dark-theme .result-summary .user-answer, .dark-theme .redemption-summary .user-answer { color: #b0b0b0; }
+        .dark-theme .result-summary .user-answer, .redemption-summary .user-answer { color: #b0b0b0; }
         .dark-theme .result-summary .correct-answer, .dark-theme .redemption-summary .correct-answer { color: #2ecc71; }
         .dark-theme .result-summary .user-answer.incorrect, .dark-theme .redemption-summary .user-answer.incorrect { color: #e74c3c; }
         .dark-theme .result-summary .time-taken, .dark-theme .redemption-summary .time-taken { color: #b0b0b0; }
@@ -1260,9 +1295,11 @@
         <div class="tutorial-modal" id="tutorialModal">
             <div class="tutorial-modal-content">
                 <div class="tutorial-slide active" id="slide1">
-                    <h3>Welcome to the Quiz!</h3>
-                    <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book">
-                    <p>Test your knowledge of cybercrime laws in the Philippines and worldwide. Answer questions based on legal provisions. Use power-ups like Extra Time or Time Freeze to strategize!</p>
+                    <div class="tutorial-slide-content">
+                        <h3>Introduction to CyberLaw Quiz</h3>
+                        <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book" class="tutorial-image">
+                        <p>Evaluate your expertise in Philippine and global cybercrime laws. Answer questions based on legal provisions and utilize strategic power-ups: Extra Time (+10s) or Time Freeze (pause timer) to enhance your performance.</p>
+                    </div>
                 </div>
                 <div class="tutorial-slide" id="slide2">
                     <h3>Gameplay & Power-Ups</h3>
@@ -1985,56 +2022,52 @@ mobileMenuIcon.addEventListener('click', function() {
         loadQuestion();
     }
 
-    function loadQuestion() {
-        try {
-            const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
-            if (currentQuestionIndex >= questionList.length) {
-                if (isRedemption) {
-                    showResult();
-                } else {
-                    showRedemptionModal();
-                }
-                return;
+function loadQuestion() {
+    try {
+        const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
+        if (currentQuestionIndex >= questionList.length) {
+            if (isRedemption) {
+                showResult();
+            } else {
+                showRedemptionModal();
             }
-
-            const question = questionList[currentQuestionIndex];
-            questionText.textContent = question.text;
-            options.innerHTML = '';
-            explanation.textContent = '';
-            explanation.classList.remove('visible');
-            nextBtn.classList.remove('visible');
-            exitGameBtn.classList.add('visible');
-
-            question.options.forEach(option => {
-                const button = document.createElement('button');
-                button.className = 'option-btn';
-                button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
-                button.addEventListener('click', () => checkAnswer(option, question.answer));
-                options.appendChild(button);
-            });
-
-            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
-            progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
-
-            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
-            timerText.textContent = `${timeLeft}s`;
-            timerCircle.style.strokeDashoffset = 0;
-            questionStartTime = Date.now();
-
-            clearInterval(timerInterval);
-            if (!isFrozen) {
-                timerInterval = setInterval(updateTimer, 1000);
-            }
-
-            extraTime1.disabled = false;
-            extraTime2.disabled = false;
-            timeFreeze.disabled = false;
-
-            console.log('Loaded question:', question.text);
-        } catch (error) {
-            console.error('Error loading question:', error);
+            return;
         }
+
+        const question = questionList[currentQuestionIndex];
+        questionText.textContent = question.text;
+        options.innerHTML = '';
+        explanation.textContent = '';
+        explanation.classList.remove('visible');
+        nextBtn.classList.remove('visible');
+        exitGameBtn.classList.add('visible');
+
+        question.options.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
+            button.addEventListener('click', () => checkAnswer(option, question.answer));
+            options.appendChild(button);
+        });
+
+        progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
+        progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
+
+        timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+        timerText.textContent = `${timeLeft}s`;
+        timerCircle.style.strokeDashoffset = 0;
+        questionStartTime = Date.now();
+
+        clearInterval(timerInterval);
+        if (!isFrozen) {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        console.log('Loaded question:', question.text);
+    } catch (error) {
+        console.error('Error loading question:', error);
     }
+}
 
     function updateTimer() {
         if (timeLeft <= 0) {
