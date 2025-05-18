@@ -84,21 +84,17 @@
             right: 15px;
             top: 15px;
         }
-        .sidebar {
+       .sidebar {
             width: 290px;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
             background-size: cover;
             background-position: center;
-            background-color: #1a1a1a;
             color: white;
             padding: 20px;
             height: 100vh;
             position: fixed;
-            top: 0;
-            left: 0;
             transition: transform 0.3s ease;
-            z-index: 1001;
-            overflow-y: auto;
+            display: block;
         }
         .sidebar.active {
             z-index: 1001;
@@ -991,16 +987,14 @@
                 background-size: cover;
                 background-position: center;
                 background-color: #1a1a1a;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+                display: block;
             }
             .sidebar.active { transform: translateX(0); }
             .sidebar h1 { display: none; }
             .sidebar ul { margin: 0; }
             .sidebar ul li { margin: 20px 0; }
             .sidebar ul li a { font-size: 16px; }
-            .dark-theme-container { margin-top: 20px; margin-bottom: 15px; }
+            .dark-theme-container { margin-top: 20px; }
             .dark-theme-label { font-size: 16px; }
             .content {
                 margin-left: 0;
@@ -1105,65 +1099,65 @@
         </div>
     </div>
     <div class="container">
-        <nav class="sidebar" id="sidebar">
-            <h1>Contra E-Crime</h1>
-            <ul>
-                <li>
-                    <a href="HomePage.html">
-                        <img src="https://i.imgur.com/OAHusQp.png" alt="Home">
-                        Home
-                    </a>
-                </li>
-                <li>
-                   <a href="News.html" target="_self" onclick="return true;">
-                    <img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">
-                    News & Insights
-                </a>
-                </li>
-                <li>
-                    <a href="SavedLaws.html">
-                        <img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">
-                        Saved Laws
-                    </a>
-                </li>
-                <li>
-                    <a href="History.html">
-                        <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
-                        Search History
-                    </a>
-                </li>
-                <li>
-                    <a href="ContactUs.html">
-                        <img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">
-                        Contact Us
-                    </a>
-                </li>
-                <li>
-                    <a href="AboutUs.html">
-                        <img src="https://i.imgur.com/lktrzpa.png" alt="About Us">
-                        About Us
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html">
-                        <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
-                        Logout
-                    </a>
-                </li>
-            </ul>
-            <div class="dark-theme-container">
-                <div class="dark-theme-label">
-                    <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
-                    <span>Dark Theme</span>
-                </div>
-                <div class="toggle-switch">
-                    <label class="switch-label">
-                        <input type="checkbox" class="checkbox" id="themeToggle">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-        </nav>
+       <nav class="sidebar" id="sidebar">
+    <h1>Contra E-Crime</h1>
+    <ul>
+        <li>
+            <a href="HomePage.html">
+                <img src="https://i.imgur.com/OAHusQp.png" alt="Home">
+                Home
+            </a>
+        </li>
+        <li>
+            <a href="News.html" target="_self" onclick="return true;">
+                <img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">
+                News & Insights
+            </a>
+        </li>
+        <li>
+            <a href="SavedLaws.html">
+                <img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">
+                Saved Laws
+            </a>
+        </li>
+        <li>
+            <a href="History.html">
+                <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
+                Search History
+            </a>
+        </li>
+        <li>
+            <a href="ContactUs.html">
+                <img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">
+                Contact Us
+            </a>
+        </li>
+        <li>
+            <a href="AboutUs.html">
+                <img src="https://i.imgur.com/lktrzpa.png" alt="About Us">
+                About Us
+            </a>
+        </li>
+        <li>
+            <a href="index.html">
+                <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
+                Logout
+            </a>
+        </li>
+    </ul>
+    <div class="dark-theme-container">
+        <div class="dark-theme-label">
+            <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
+            <span>Dark Theme</span>
+        </div>
+        <div class="toggle-switch">
+            <label class="switch-label">
+                <input type="checkbox" class="checkbox" id="themeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+</nav>
         <main class="content">
             <section class="quiz-section" id="quizSection">
                 <div id="particles-js"></div>
