@@ -1025,7 +1025,13 @@
             .sidebar ul { margin: 0; }
             .sidebar ul li { margin: 20px 0; }
             .sidebar ul li a { font-size: 16px; }
-            .dark-theme-container { margin-top: 20px; margin-bottom: 15px; }
+            .dark-theme-container {
+                order: -1; /* Move to top */
+                margin-top: 0;
+                margin-bottom: 20px;
+                padding-top: 15px;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
             .dark-theme-label { font-size: 16px; }
             .content {
                 margin-left: 0;
@@ -1763,18 +1769,17 @@
     const redemptionMessage = document.getElementById('redemptionMessage');
     const skipRedemptionBtn = document.getElementById('skipRedemptionBtn');
 
-    // Sound effects
-    let clickSound, correctSound, wrongSound, timeUpSound, gameOverSound;
-    try {
-        clickSound = new Howl({ src: ['https://freesound.org/data/previews/612/612609_5674468-lq.mp3'] });
-        correctSound = new Howl({ src: ['https://freesound.org/data/previews/582/582614_1462108-lq.mp3'] });
-        wrongSound = new Howl({ src: ['https://freesound.org/data/previews/476/476021_5674468-lq.mp3'] });
-        timeUpSound = new Howl({ src: ['https://freesound.org/data/previews/397/397356_1676145-lq.mp3'] });
-        gameOverSound = new Howl({ src: ['https://freesound.org/data/previews/531/531695_11068309-lq.mp3'] });
-        console.log('Sound effects initialized successfully');
-    } catch (error) {
-        console.error('Sound initialization failed:', error);
-    }
+        let clickSound, correctSound, wrongSound, timeUpSound, gameOverSound;
+        try {
+            clickSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3'] });
+            correctSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3'] });
+            wrongSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3'] });
+            timeUpSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3'] });
+            gameOverSound = new Howl({ src: ['https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3'] });
+            console.log('Sound effects initialized successfully');
+        } catch (error) {
+            console.error('Sound initialization failed:', error);
+        }
 
     // Function to play sound with error handling
     function playSound(sound) {
@@ -1791,16 +1796,21 @@
     }
 
     // Quiz state
-    let selectedDifficulty = null;
-    let currentQuestionIndex = 0;
-    let score = 0;
-    let timeLeft = 0;
-    let timerInterval = null;
-    let isFrozen = false;
-    let questionStartTime = 0;
-    let wrongAnswers = [];
-    let userAnswers = [];
-    let isRedemption = false;
+        let selectedDifficulty = null;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 0;
+        let timerInterval = null;
+        let isFrozen = false;
+        let questionStartTime = 0;
+        let wrongAnswers = [];
+        let userAnswers = [];
+        let isRedemption = false;
+        let powerupsUsed = {
+            extraTime1: false,
+            extraTime2: false,
+            timeFreeze: false
+        };
 
     // GSAP animations
     gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, delay: 0.5 });
@@ -1888,31 +1898,34 @@ mobileMenuIcon.addEventListener('click', function() {
     });
 
     extraTime1.addEventListener('click', () => {
-        if (!extraTime1.disabled) {
-            timeLeft += 10;
-            timerText.textContent = `${timeLeft}s`;
-            extraTime1.disabled = true;
-            playSound(clickSound);
-        }
-    });
+            if (!powerupsUsed.extraTime1) {
+                timeLeft += 10;
+                timerText.textContent = `${timeLeft}s`;
+                powerupsUsed.extraTime1 = true;
+                extraTime1.disabled = true;
+                playSound(clickSound);
+            }
+        });
 
-    extraTime2.addEventListener('click', () => {
-        if (!extraTime2.disabled) {
-            timeLeft += 10;
-            timerText.textContent = `${timeLeft}s`;
-            extraTime2.disabled = true;
-            playSound(clickSound);
-        }
-    });
+        extraTime2.addEventListener('click', () => {
+            if (!powerupsUsed.extraTime2) {
+                timeLeft += 10;
+                timerText.textContent = `${timeLeft}s`;
+                powerupsUsed.extraTime2 = true;
+                extraTime2.disabled = true;
+                playSound(clickSound);
+            }
+        });
 
-    timeFreeze.addEventListener('click', () => {
-        if (!timeFreeze.disabled) {
-            isFrozen = true;
-            clearInterval(timerInterval);
-            timeFreeze.disabled = true;
-            playSound(clickSound);
-        }
-    });
+        timeFreeze.addEventListener('click', () => {
+            if (!powerupsUsed.timeFreeze) {
+                isFrozen = true;
+                clearInterval(timerInterval);
+                powerupsUsed.timeFreeze = true;
+                timeFreeze.disabled = true;
+                playSound(clickSound);
+            }
+        });
 
     nextBtn.addEventListener('click', () => {
         currentQuestionIndex++;
@@ -1975,17 +1988,17 @@ mobileMenuIcon.addEventListener('click', function() {
         loadQuestion();
     }
 
-    function loadQuestion() {
-        try {
-            const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
-            if (currentQuestionIndex >= questionList.length) {
-                if (isRedemption) {
-                    showResult();
-                } else {
-                    showRedemptionModal();
+ function loadQuestion() {
+            try {
+                const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
+                if (currentQuestionIndex >= questionList.length) {
+                    if (isRedemption) {
+                        showResult();
+                    } else {
+                        showRedemptionModal();
+                    }
+                    return;
                 }
-                return;
-            }
 
             const question = questionList[currentQuestionIndex];
             questionText.textContent = question.text;
@@ -2203,43 +2216,68 @@ mobileMenuIcon.addEventListener('click', function() {
         playSound(gameOverSound);
     }
 
-    function resetQuiz() {
-        selectedDifficulty = null;
-        currentQuestionIndex = 0;
-        score = 0;
-        timeLeft = 0;
-        isFrozen = false;
-        wrongAnswers = [];
-        userAnswers = [];
-        isRedemption = false;
-        scoreElement.textContent = `Score: ${score}`;
-        quizSection.classList.remove('visible');
-        document.querySelectorAll('.difficulty-card').forEach(card => card.classList.remove('selected'));
-        tutorialBtn.disabled = true;
-        clearInterval(timerInterval);
-    }
-
-    // Initialize theme from localStorage
-    if (localStorage.getItem('darkTheme') === 'enabled') {
-        document.body.classList.add('dark-theme');
-        document.getElementById('themeToggle').checked = true;
-    }
-
-    // Theme toggle event listener
-    document.getElementById('themeToggle').addEventListener('change', function() {
-        if (this.checked) {
-            document.body.classList.add('dark-theme');
-            localStorage.setItem('darkTheme', 'enabled');
-        } else {
-            document.body.classList.remove('dark-theme');
-            localStorage.setItem('darkTheme', 'disabled');
+function resetQuiz() {
+            selectedDifficulty = null;
+            currentQuestionIndex = 0;
+            score = 0;
+            timeLeft = 0;
+            isFrozen = false;
+            wrongAnswers = [];
+            userAnswers = [];
+            isRedemption = false;
+            powerupsUsed = {
+                extraTime1: false,
+                extraTime2: false,
+                timeFreeze: false
+            };
+            scoreElement.textContent = `Score: ${score}`;
+            quizSection.classList.remove('visible');
+            document.querySelectorAll('.difficulty-card').forEach(card => card.classList.remove('selected'));
+            tutorialBtn.disabled = true;
+            clearInterval(timerInterval);
         }
-    });
 
-    loaderOverlay.classList.add('active');
-    setTimeout(() => {
-        loaderOverlay.classList.remove('active');
-    }, 1000);
+        if (localStorage.getItem('darkTheme') === 'enabled') {
+            body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('dark-theme');
+                localStorage.setItem('darkTheme', 'enabled');
+            } else {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('darkTheme', 'disabled');
+            }
+        });
+
+        mobileMenuIcon.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            const icon = mobileMenuIcon.querySelector('i');
+            if (sidebar.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        document.querySelectorAll('a[href]').forEach(link => {
+            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+                link.addEventListener('click', function(e) {
+    
+                    e.preventDefault();
+
+                    loaderOverlay.classList.add('active');
+
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 150);
+                });
+            }
+        });
 
     console.log('Quiz app initialized');
 </script>
