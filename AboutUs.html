@@ -461,9 +461,7 @@
             }
 
             .avatar-loading {
-                width: 35
-
-px;
+                width: 35px;
                 height: 35px;
             }
 
@@ -741,1022 +739,1021 @@ px;
         }
 
         .growth-section {
-        padding: 80px 20px;
-        text-align: center;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-        border-radius: 15px;
-    }
-
-    .growth-section h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 36px;
-        font-weight: 700;
-        color: _
-
-#8B0000;
-        margin-bottom: 50px;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: fadeInUp 1s forwards;
-    }
-
-    .growth-grid {
-        display: flex;
-        justify-content: center;
-        gap: 50px;
-        flex-wrap: wrap;
-    }
-
-    .growth-item {
-        background: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    .growth-item.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .growth-item:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .growth-item i {
-        font-size: 36px;
-        color: #8B0000;
-        margin-bottom: 15px;
-        transition: color 0.3s ease;
-    }
-
-    .growth-item:hover i {
-        color: #b30000;
-    }
-
-    .growth-item h3 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 26px;
-        font-weight: 700;
-        color: #222;
-        margin-bottom: 8px;
-    }
-
-    .growth-item p {
-        font-family: 'Poppins', sans-serif;
-        font-size: 14px;
-        font-weight: 300;
-        color: #666;
-    }
-
-    .careers-section {
-        padding: 80px 20px;
-        text-align: center;
-    }
-
-    .careers-card {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 50px;
-        background: linear-gradient(135deg, #8B0000, #b30000);
-        border-radius: 15px;
-        color: #fff;
-        text-align: left;
-        position: relative;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .careers-card.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .careers-card h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 32px;
-        font-weight: 700;
-        margin-bottom: 20px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .careers-card p {
-        font-family: 'Poppins', sans-serif;
-        font-size: 16px;
-        font-weight: 300;
-        margin-bottom: 30px;
-        line-height: 1.6;
-        position: relative;
-        z-index: 1;
-    }
-
-    .careers-card a {
-        display: inline-block;
-        padding: 12px 30px;
-        background: #fff;
-        color: #8B0000;
-        text-decoration: none;
-        border-radius: 25px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 16px;
-        font-weight: 500;
-        position: relative;
-        z-index: 1;
-        transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    .careers-card a:hover {
-        background: #d7b15c;
-        color: #222;
-    }
-
-    .about-section {
-        padding: 80px 20px;
-        text-align: center;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-        border-radius: 15px;
-    }
-
-    .about-section h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 36px;
-        font-weight: 700;
-        color: #8B0000;
-        margin-bottom: 40px;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: fadeInUp 1s forwards;
-    }
-
-    .about-card {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 40px;
-        background: #fff;
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        position: relative;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.3s ease;
-        overflow: hidden;
-    }
-
-    .about-card:hover {
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-        transform: translateY(-5px);
-    }
-
-    .about-card.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .about-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), rgba(215, 177, 92, 0.1));
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: 0;
-    }
-
-    .about-card:hover::before {
-        opacity: 1;
-    }
-
-    .about-card h3 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 28px;
-        font-weight: 700;
-        color: #222;
-        margin-bottom: 15px;
-        position: relative;
-        z-index: 1;
-        background: linear-gradient(90deg, #8B0000, #b30000);
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-    }
-
-    .about-card p {
-        font-family: 'Poppins', sans-serif;
-        font-size: 16px;
-        font-weight: 300;
-        color: #555;
-        margin-bottom: 30px;
-        line-height: 1.7;
-        position: relative;
-        z-index: 1;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .about-button {
-        padding: 15px 40px;
-        background: linear-gradient(90deg, #8B0000, #b30000);
-        color: #fff;
-        border: none;
-        border-radius: 50px;
-        cursor: pointer;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 18px;
-        font-weight: 600;
-        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-        text-decoration: none;
-        display: inline-block;
-        position: relative;
-        z-index: 1;
-    }
-
-    .about-button:hover {
-        background: linear-gradient(90deg, #b30000, #d7b15c);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(139, 0, 0, 0.3);
-    }
-
-    .about-button:active {
-        transform: translateY(0);
-        box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
-    }
-
-    .dark-theme .about-section {
-        background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-    }
-
-    .dark-theme .about-section h2 {
-        color: #d7b15c;
-    }
-
-    .dark-theme .about-card {
-        background: #333;
-    }
-
-    .dark-theme .about-card::before {
-        background: linear-gradient(135deg, rgba(215, 177, 92, 0.1), rgba(139, 0, 0, 0.1));
-    }
-
-    .dark-theme .about-card h3 {
-        background: linear-gradient(90deg, #d7b15c, #b89a47);
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-    }
-
-    .dark-theme .about-card p {
-        color: #b0b0b0;
-    }
-
-    .dark-theme .about-button {
-        background: linear-gradient(90deg, #d7b15c, #b89a47);
-        color: #222;
-    }
-
-    .dark-theme .about-button:hover {
-        background: linear-gradient(90deg, #b89a47, #8B0000);
-        box-shadow: 0 8px 20px rgba(215, 177, 92, 0.3);
-    }
-
-    .faq-section {
-        padding: 80px 20px;
-        text-align: center;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-        border-radius: 15px;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: fadeInUp 1s forwards;
-    }
-
-    .faq-section h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 36px;
-        font-weight: 700;
-        color: #8B0000;
-        margin-bottom: 50px;
-    }
-
-    .faq-container {
-        max-width: 900px;
-        margin: 0 auto;
-    }
-
-    .faq-item {
-        background: #fff;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        overflow: hidden;
-    }
-
-    .faq-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .faq-question {
-        padding: 20px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 18px;
-        font-weight: 600;
-        color: #222;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: linear-gradient(90deg, #f9f9f9, #ffffff);
-        transition: background 0.3s ease;
-    }
-
-    .faq-question:hover {
-        background: linear-gradient(90deg, #f0f0f0, #f7f7f7);
-    }
-
-    .faq-question i {
-        transition: transform 0.3s ease;
-        color: #8B0000;
-    }
-
-    .faq-item.active .faq-question i {
-        transform: rotate(180deg);
-    }
-
-    .faq-answer {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        background: #fff;
-    }
-
-    .faq-item.active .faq-answer {
-        max-height: 500px; /* Adjust based on content */
-    }
-
-    .faq-answer p {
-        padding: 20px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 15px;
-        font-weight: 300;
-        color: #555;
-        line-height: 1.7;
-        margin: 0;
-    }
-
-    .faq-answer a {
-        color: #d7b15c;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .faq-answer a:hover {
-        color: #b30000;
-    }
-
-    .dark-theme .faq-section {
-        background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-    }
-
-    .dark-theme .faq-section h2 {
-        color: #d7b15c;
-    }
-
-    .dark-theme .faq-item {
-        background: #333;
-    }
-
-    .dark-theme .faq-question {
-        color: #e0e0e0;
-        background: linear-gradient(90deg, #3a3b3c, #333);
-    }
-
-    .dark-theme .faq-question:hover {
-        background: linear-gradient(90deg, #4a4b4c, #3a3b3c);
-    }
-
-    .dark-theme .faq-question i {
-        color: #d7b15c;
-    }
-
-    .dark-theme .faq-answer {
-        background: #333;
-    }
-
-    .dark-theme .faq-answer p {
-        color: #b0b0b0;
-    }
-
-    .dark-theme .faq-answer a {
-        color: #ffeb3b;
-    }
-
-    .dark-theme .faq-answer a:hover {
-        color: #d7b15c;
-    }
-
-    .leaders-section {
-        padding: 80px 20px;
-        text-align: center;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
-        border-radius: 15px;
-    }
-
-    .leaders-section h2 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 36px;
-        font-weight: 700;
-        color: #8B0000;
-        margin-bottom: 50px;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: fadeInUp 1s forwards;
-    }
-
-    .leaders-grid {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        flex-wrap: wrap;
-    }
-
-    .leader-item {
-        background: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    .leader-item.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .leader-item:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .leader-item img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        margin-bottom: 15px;
-        border: 3px solid #8B0000;
-        transition: border-color 0.3s ease;
-    }
-
-    .leader-item:hover img {
-        border-color: #d7b15c;
-    }
-
-    .leader-item h3 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 18px;
-        font-weight: 700;
-        color: #222;
-        margin-bottom: 5px;
-    }
-
-    .leader-item p {
-        font-family: 'Poppins', sans-serif;
-        font-size: 14px;
-        font-weight: 300;
-        color: #666;
-    }
-
-    footer {
-        background-color: #333;
-        color: white;
-        padding: 15px 30px;
-        text-align: center;
-        margin-left: 290px;
-        z-index: 1;
-        transition: margin-left 0.3s ease;
-    }
-
-    footer p {
-        margin: 0;
-        font-size: 14px;
-    }
-
-    .footer-links {
-        margin-top: 5px;
-    }
-
-    .footer-links a {
-        color: #d7b15c;
-        text-decoration: none;
-        margin: 0 10px;
-        font-size: 14px;
-    }
-
-    .footer-links a:hover {
-        text-decoration: underline;
-    }
-
-    .dark-theme footer {
-        background-color: #1a1a1a;
-    }
-
-    body.dark-theme {
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-
-    .dark-theme .content {
-        background: linear-gradient(135deg, #121212, #2c2c2c);
-    }
-
-    .dark-theme .content::before {
-        background: rgba(40, 41, 44, 0.6);
-    }
-
-    .dark-theme .hero-section {
-        background: linear-gradient(180deg, rgba(40, 41, 44, 0.95), rgba(40, 41, 44, 0.7));
-    }
-
-    .dark-theme .hero-section h1 {
-        color: #e0e0e0;
-    }
-
-    .dark-theme .hero-section h1 span {
-        background: linear-gradient(90deg, #d7b15c, #b89a47);
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-    }
-
-    .dark-theme .hero-section h1 span::after {
-        background: linear-gradient(to right, #d7b15c, #8B0000);
-    }
-
-    .dark-theme .hero-section p {
-        color: #b0b0b0;
-    }
-
-    .dark-theme .timeline-section {
-        background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-    }
-
-    .dark-theme .timeline-section h2 {
-        color: #d7b15c;
-    }
-
-    .dark-theme .timeline-content {
-        background: #333;
-    }
-
-    .dark-theme .timeline-content h3 {
-        color: #e0e0e0;
-    }
-
-    .dark-theme .timeline-content p {
-        color: #b0b0b0;
-    }
-
-    .dark-theme .timeline-image {
-        box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
-    }
-
-    .dark-theme .timeline-marker {
-        background: linear-gradient(135deg, #d7b15c, #b89a47);
-    }
-
-    .dark-theme .growth-section {
-        background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-    }
-
-    .dark-theme .growth-section h2 {
-        color: #d7b15c;
-    }
-
-    .dark-theme .growth-item {
-        background: #333;
-    }
-
-    .dark-theme .growth-item i {
-        color: #d7b15c;
-    }
-
-    .dark-theme .growth-item:hover i {
-        color: #b89a47;
-    }
-
-    .dark-theme .growth-item h3 {
-        color: #e0e0e0;
-    }
-
-    .dark-theme .growth-item p {
-        color: #b0b0b0;
-    }
-
-    .dark-theme .careers-card a {
-        color: #222;
-    }
-
-    .dark-theme .leaders-section {
-        background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
-    }
-
-    .dark-theme .leaders-section h2 {
-        color: #d7b15c;
-    }
-
-    .dark-theme .leader-item {
-        background: #333;
-    }
-
-    .dark-theme .leader-item h3 {
-        color: #e0e0e0;
-    }
-
-    .dark-theme .leader-item p {
-        color: #b0b0b0;
-    }
-
-    .dark-theme .leader-item img {
-        border-color: #d7b15c;
-    }
-
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .mobile-nav {
-        display: none;
-        background-image: url('https://i.imgur.com/bNRxAhZ.png');
-        padding: 15px;
-        position: fixed;
-        width: 100%;
-        z-index: 3000;
-    }
-
-    .mobile-nav .logo {
-        color: white;
-        font-size: 20px;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    .mobile-nav .menu-icon {
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        position: absolute;
-        right: 15px;
-        top: 15px;
-    }
-
-    @media (max-width: 1024px) {
-        .sidebar {
-            width: 250px;
-        }
-
-        .sidebar h1 {
-            font-size: 22px;
-        }
-
-        .sidebar ul li a {
-            font-size: 16px;
-        }
-
-        .dark-theme-label {
-            font-size: 16px;
-        }
-
-        .content {
-            margin-left: 250px;
-            padding: 50px 30px 30px;
-        }
-
-        footer {
-            margin-left: 250px;
-        }
-
-        .hero-section h1 {
-            font-size: 42px;
-        }
-
-        .hero-section p {
-            font-size: 16px;
-        }
-
-        .hero-image {
-            height: 300px;
-        }
-
-        .timeline-section h2,
-        .growth-section h2,
-        .leaders-section h2,
-        .about-section h2,
-        .faq-section h2 {
-            font-size: 32px;
-        }
-
-        .careers-card h2 {
-            font-size: 28px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .sidebar {
-            width: 200px;
-            padding: 10px;
-        }
-
-        .sidebar h1 {
-            font-size: 20px;
-        }
-
-        .sidebar ul li a {
-            font-size: 14px;
-        }
-
-        .dark-theme-label {
-            font-size: 14px;
-        }
-
-        .content {
-            margin-left: 200px;
-            padding: 40px 20px 20px;
-        }
-
-        footer {
-            margin-left: 200px;
-        }
-
-        .timeline::before {
-            left: 20px;
-        }
-
-        .timeline-item {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .timeline-item.right {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .timeline-content {
-            width: 100%;
-            margin-left: 40px;
-        }
-
-        .timeline-marker {
-            left: 20px;
-            transform: none;
-        }
-
-        .timeline-image {
-            height: 120px;
-        }
-
-        .growth-grid,
-        .leaders-grid {
-            gap: 30px;
-        }
-
-        .faq-question {
-            font-size: 16px;
-        }
-
-        .faq-answer p {
-            font-size: 14px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .container {
-            flex-direction: column;
-        }
-
-        .mobile-nav {
-            display: block;
-        }
-
-        .sidebar {
-            width: 100%;
-            height: auto;
-            position: fixed;
-            padding: 10px;
-            transform: translateX(-100%);
-            z-index: 2999;
-            top: 60px;
-            height: calc(100vh - 60px);
-            overflow-y: auto;
-        }
-
-        .sidebar.active {
-            transform: translateX(0);
-            z-index: 3000;
-        }
-
-        .sidebar h1 {
-            display: none;
-        }
-
-        .sidebar ul li {
-            margin: 20px 0;
-        }
-
-        .sidebar ul li a {
-            font-size: 16px;
-        }
-
-        .dark-theme-label {
-            font-size: 16px;
-        }
-
-        .content {
-            margin-left: 0;
-            padding: 80px 15px 15px;
-            overflow-x: hidden;
-        }
-
-        footer {
-            margin-left: 0;
-            padding: 10px 20px;
+            padding: 80px 20px;
             text-align: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            border-radius: 15px;
         }
 
-        footer p {
-            font-size: 12px;
+        .growth-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
         }
 
-        .footer-links a {
-            font-size: 12px;
-            margin: 0 8px;
-        }
-
-        .header {
-            justify-content: center;
-        }
-
-        .hero-section {
-            padding: 20px 10px;
-            min-height: 100vh;
+        .growth-grid {
             display: flex;
-            flex-direction: column;
             justify-content: center;
-        }
-
-        .hero-section h1 {
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-
-        .hero-section p {
-            font-size: 12px;
-            margin-bottom: 20px;
-        }
-
-        .hero-image {
-            width: 100%;
-            height: 150px;
-        }
-
-        .timeline-section,
-        .growth-section,
-        .careers-section,
-        .leaders-section,
-        .about-section,
-        .faq-section {
-            padding: 50px 10px;
-        }
-
-        .timeline-section h2,
-        .growth-section h2,
-        .leaders-section h2,
-        .about-section h2,
-        .faq-section h2 {
-            font-size: 28px;
-        }
-
-        .timeline::before {
-            left: 20px;
-        }
-
-        .timeline-item {
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 60px;
-        }
-
-        .timeline-item.right {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .timeline-content {
-            width: 100%;
-            margin-left: 40px;
-            padding: 15px;
-            overflow: visible;
-        }
-
-        .timeline-content h3 {
-            font-size: 18px;
-            line-height: 1.4;
-            margin-bottom: 8px;
-        }
-
-        .timeline-content p {
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        .timeline-content::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 30px;
-            height: 2px;
-            background-color: #8B0000;
-        }
-
-        .timeline-image {
-            height: 100px;
-        }
-
-        .timeline-marker {
-            left: 20px;
-            transform: none;
-        }
-
-        .growth-grid,
-        .leaders-grid {
-            gap: 20px;
+            gap: 50px;
+            flex-wrap: wrap;
         }
 
         .growth-item {
-            padding: 20px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .growth-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .growth-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .growth-item i {
+            font-size: 36px;
+            color: #8B0000;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .growth-item:hover i {
+            color: #b30000;
+        }
+
+        .growth-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .growth-item p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+        }
+
+        .careers-section {
+            padding: 80px 20px;
+            text-align: center;
         }
 
         .careers-card {
-            padding: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 50px;
+            background: linear-gradient(135deg, #8B0000, #b30000);
+            border-radius: 15px;
+            color: #fff;
+            text-align: left;
+            position: integral;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .careers-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .careers-card h2 {
-            font-size: 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .careers-card p {
-            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .careers-card a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #fff;
+            color: #8B0000;
+            text-decoration: none;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .careers-card a:hover {
+            background: #d7b15c;
+            color: #222;
+        }
+
+        .about-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            border-radius: 15px;
+        }
+
+        .about-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
         }
 
         .about-card {
-            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .about-card:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .about-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), rgba(215, 177, 92, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .about-card:hover::before {
+            opacity: 1;
         }
 
         .about-card h3 {
-            font-size: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(90deg, #8B0000, #b30000);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
 
         .about-card p {
-            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .about-button {
-            padding: 12px 30px;
-            font-size: 16px;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #8B0000, #b30000);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-button:hover {
+            background: linear-gradient(90deg, #b30000, #d7b15c);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .about-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.2);
+        }
+
+        .dark-theme .about-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+        }
+
+        .dark-theme .about-section h2 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .about-card {
+            background: #333;
+        }
+
+        .dark-theme .about-card::before {
+            background: linear-gradient(135deg, rgba(215, 177, 92, 0.1), rgba(139, 0, 0, 0.1));
+        }
+
+        .dark-theme .about-card h3 {
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .dark-theme .about-card p {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .about-button {
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+            color: #222;
+        }
+
+        .dark-theme .about-button:hover {
+            background: linear-gradient(90deg, #b89a47, #8B0000);
+            box-shadow: 0 8px 20px rgba(215, 177, 92, 0.3);
+        }
+
+        .faq-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            border-radius: 15px;
+        }
+
+        .faq-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .faq-item.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .faq-question {
-            font-size: 14px;
-            padding: 15px;
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #222;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f7f7f7;
+        }
+
+        .faq-question i {
+            font-size: 20px;
+            color: #8B0000;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-question {
+            background: linear-gradient(90deg, #8B0000, #b30000);
+            color: #fff;
+        }
+
+        .faq-item.active .faq-question i {
+            color: #fff;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #fff;
         }
 
         .faq-answer p {
-            font-size: 12px;
-            padding: 15px;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .dark-theme .faq-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+        }
+
+        .dark-theme .faq-section h2 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .faq-item {
+            background: #333;
+        }
+
+        .dark-theme .faq-question {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .faq-question:hover {
+            background: #4a4b4c;
+        }
+
+        .dark-theme .faq-item.active .faq-question {
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+            color: #222;
+        }
+
+        .dark-theme .faq-item.active .faq-question i {
+            color: #222;
+        }
+
+        .dark-theme .faq-answer {
+            background: #333;
+        }
+
+        .dark-theme .faq-answer p {
+            color: #b0b0b0;
+        }
+
+        .leaders-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            border-radius: 15px;
+        }
+
+        .leaders-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .leaders-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .leader-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .leader-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .leader-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
         .leader-item img {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #8B0000;
+            transition: border-color 0.3s ease;
         }
-    }
+
+        .leader-item:hover img {
+            border-color: #d7b15c;
+        }
+
+        .leader-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        .leader-item p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            margin-left: 290px;
+            z-index: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            margin-top: 5px;
+        }
+
+        .footer-links a {
+            color: #d7b15c;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-theme footer {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-theme {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-theme .content {
+            background: linear-gradient(135deg, #121212, #2c2c2c);
+        }
+
+        .dark-theme .content::before {
+            background: rgba(40, 41, 44, 0.6);
+        }
+
+        .dark-theme .hero-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.95), rgba(40, 41, 44, 0.7));
+        }
+
+        .dark-theme .hero-section h1 {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .hero-section h1 span {
+            background: linear-gradient(90deg, #d7b15c, #b89a47);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .dark-theme .hero-section h1 span::after {
+            background: linear-gradient(to right, #d7b15c, #8B0000);
+        }
+
+        .dark-theme .hero-section p {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .timeline-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+        }
+
+        .dark-theme .timeline-section h2 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .timeline-content {
+            background: #333;
+        }
+
+        .dark-theme .timeline-content h3 {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .timeline-content p {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .timeline-image {
+            box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-theme .timeline-marker {
+            background: linear-gradient(135deg, #d7b15c, #b89a47);
+        }
+
+        .dark-theme .growth-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+        }
+
+        .dark-theme .growth-section h2 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .growth-item {
+            background: #333;
+        }
+
+        .dark-theme .growth-item i {
+            color: #d7b15c;
+        }
+
+        .dark-theme .growth-item:hover i {
+            color: #b89a47;
+        }
+
+        .dark-theme .growth-item h3 {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .growth-item p {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .careers-card a {
+            color: #222;
+        }
+
+        .dark-theme .leaders-section {
+            background: linear-gradient(180deg, rgba(40, 41, 44, 0.9), rgba(40, 41, 44, 0.6));
+        }
+
+        .dark-theme .leaders-section h2 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .leader-item {
+            background: #333;
+        }
+
+        .dark-theme .leader-item h3 {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .leader-item p {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .leader-item img {
+            border-color: #d7b15c;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-nav {
+            display: none;
+            background-image: url('https://i.imgur.com/bNRxAhZ.png');
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            z-index: 3000;
+        }
+
+        .mobile-nav .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .mobile-nav .menu-icon {
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+            }
+
+            .sidebar h1 {
+                font-size: 22px;
+            }
+
+            .sidebar ul li a {
+                font-size: 16px;
+            }
+
+            .dark-theme-label {
+                font-size: 16px;
+            }
+
+            .content {
+                margin-left: 250px;
+                padding: 50px 30px 30px;
+            }
+
+            footer {
+                margin-left: 250px;
+            }
+
+            .hero-section h1 {
+                font-size: 42px;
+            }
+
+            .hero-section p {
+                font-size: 16px;
+            }
+
+            .hero-image {
+                height: 300px;
+            }
+
+            .timeline-section h2,
+            .growth-section h2,
+            .leaders-section h2,
+            .about-section h2,
+            .faq-section h2 {
+                font-size: 32px;
+            }
+
+            .careers-card h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+                padding: 10px;
+            }
+
+            .sidebar h1 {
+                font-size: 20px;
+            }
+
+            .sidebar ul li a {
+                font-size: 14px;
+            }
+
+            .dark-theme-label {
+                font-size: 14px;
+            }
+
+            .content {
+                margin-left: 200px;
+                padding: 40px 20px 20px;
+            }
+
+            footer {
+                margin-left: 200px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timeline-item.right {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin-left: 40px;
+            }
+
+            .timeline-marker {
+                left: 20px;
+                transform: none;
+            }
+
+            .timeline-image {
+                height: 120px;
+            }
+
+            .growth-grid,
+            .leaders-grid {
+                gap: 30px;
+            }
+
+            .faq-question {
+                font-size: 16px;
+            }
+
+            .faq-answer p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                padding: 10px;
+                transform: translateX(-100%);
+                z-index: 2999;
+                top: 60px;
+                height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                z-index: 3000;
+            }
+
+            .sidebar h1 {
+                display: none;
+            }
+
+            .sidebar ul li {
+                margin: 20px 0;
+            }
+
+            .sidebar ul li a {
+                font-size: 16px;
+            }
+
+            .dark-theme-label {
+                font-size: 16px;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 80px 15px 15px;
+                overflow-x: hidden;
+            }
+
+            footer {
+                margin-left: 0;
+                padding: 10px 20px;
+                text-align: center;
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+
+            .footer-links a {
+                font-size: 12px;
+                margin: 0 8px;
+            }
+
+            .header {
+                justify-content: center;
+            }
+
+            .hero-section {
+                padding: 20px 10px;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .hero-section h1 {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+
+            .hero-section p {
+                font-size: 12px;
+                margin-bottom: 20px;
+            }
+
+            .hero-image {
+                width: 100%;
+                height: 150px;
+            }
+
+            .timeline-section,
+            .growth-section,
+            .careers-section,
+            .leaders-section,
+            .about-section,
+            .faq-section {
+                padding: 50px 10px;
+            }
+
+            .timeline-section h2,
+            .growth-section h2,
+            .leaders-section h2,
+            .about-section h2,
+            .faq-section h2 {
+                font-size: 28px;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 60px;
+            }
+
+            .timeline-item.right {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timeline-content {
+                width: 100%;
+                margin-left: 40px;
+                padding: 15px;
+                overflow: visible;
+            }
+
+            .timeline-content h3 {
+                font-size: 18px;
+                line-height: 1.4;
+                margin-bottom: 8px;
+            }
+
+            .timeline-content p {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .timeline-content::before {
+                content: '';
+                position: absolute;
+                left: -30px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 30px;
+                height: 2px;
+                background-color: #8B0000;
+            }
+
+            .timeline-image {
+                height: 100px;
+            }
+
+            .timeline-marker {
+                left: 20px;
+                transform: none;
+            }
+
+            .growth-grid,
+            .leaders-grid {
+                gap: 20px;
+            }
+
+            .growth-item {
+                padding: 20px;
+            }
+
+            .careers-card {
+                padding: 30px;
+            }
+
+            .careers-card h2 {
+                font-size: 24px;
+            }
+
+            .careers-card p {
+                font-size: 14px;
+            }
+
+            .about-card {
+                padding: 20px;
+            }
+
+            .about-card h3 {
+                font-size: 20px;
+            }
+
+            .about-card p {
+                font-size: 14px;
+            }
+
+            .about-button {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+
+            .faq-question {
+                font-size: 14px;
+                padding: 15px;
+            }
+
+            .faq-answer p {
+                font-size: 12px;
+                padding: 15px;
+            }
+
+            .faq-item.active .faq-answer {
+                max-height: 300px;
+            }
+
+            .leader-item img {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1781,10 +1778,10 @@ px;
                     </a>
                 </li>
                 <li>
-                    <a href="News.html" target="_self" onclick="return true;">
-                        <img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">
-                        News & Insights
-                    </a>
+                   <a href="News.html" target="_self" onclick="return true;">
+                    <img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">
+                    News & Insights
+                </a>
                 </li>
                 <li>
                     <a href="SavedLaws.html">
@@ -1947,12 +1944,11 @@ px;
                 <div class="faq-container">
                     <div class="faq-item">
                         <div class="faq-question">
-                            Who can use Weigh the Right?
+                            What is Contra E-Crime?
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Weigh the Right is a platform crafted with a broad audience in mind, reflecting Contra e-Crime’s mission to make cybercrime laws accessible to all. Primarily, it serves senior high school students, particularly those in ICT and law programs, who are eager to deepen their understanding of cybercrime legislation as part of their academic journey.</p>
-                            <p>IT and law students at the tertiary level also find immense value in the platform, as it provides them with practical, case-based insights into Philippine cyber laws, aligning with their studies and future careers. Legal enthusiasts, who may not have formal legal training but are passionate about understanding digital rights, can explore the platform’s resources to broaden their knowledge.</p>
+                            <p>Contra E-Crime is a student-led project by Grade 12 ICT students from STI College Fairview, launched in 2025. Our platform, Weigh the Right, simplifies access to cybercrime laws in the Philippines for students and non-experts.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -1961,35 +1957,34 @@ px;
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Weigh the Right operates as a Problem-Based Cybercrime Law Finder, a core offering of Contra e-Crime, designed to simplify the process of understanding cybercrime laws in the Philippines. Users begin by accessing the platform’s intuitive search engine, where they can input specific cybercrime cases, scenarios, or queries—whether they’re dealing with online harassment, data theft, or other digital offenses.</p>
-                            <p>The platform then processes these inputs and delivers a curated selection of relevant cybercrime laws, accompanied by simplified explanations that break down legal terminology into digestible language. Beyond just listing laws, Weigh the Right provides case-based insights, drawing from real-world examples to illustrate how these regulations apply in practical situations, which is particularly helpful for students and non-experts.</p>
+                            <p>Weigh the Right allows users to search and explore cybercrime laws through an intuitive interface. Built with HTML, CSS, JavaScript, and Firebase, it offers real-time data management and secure user authentication.</p>
                         </div>
                     </div>
                     <div class="faq-item">
                         <div class="faq-question">
-                            Is Weigh the Right free to use?
+                            Is Contra E-Crime free to use?
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>At its current stage, Weigh the Right is entirely free to use, a decision rooted in Contra e-Crime’s commitment to accessibility and social impact as a technopreneurship initiative. During this testing and development phase, all features of the platform—ranging from its search engine to its case-based legal insights—are available at no cost, allowing users to explore cybercrime laws without financial barriers.</p>
+                            <p>Yes, Contra E-Crime is a free educational platform designed to help users understand cybercrime laws. No subscription or payment is required to access our resources.</p>
                         </div>
                     </div>
                     <div class="faq-item">
                         <div class="faq-question">
-                            Can I access Weigh the Right on mobile devices?
+                            Can I save laws for later reference?
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Yes, Weigh the Right is designed to be fully responsive, ensuring seamless access across a variety of devices, including smartphones, tablets, and computers, reflecting Contra e-Crime’s commitment to accessibility and user convenience. Whether you’re a student researching cybercrime laws on your phone during a commute, a professional using a tablet to understand digital rights, or a cybercrime victim seeking legal clarity on a desktop, the platform adapts to your device’s screen size and functionality without compromising on user experience.</p>
+                            <p>Yes, registered users can save cybercrime laws to their personal accounts using the "Saved Laws" feature, accessible from the sidebar.</p>
                         </div>
                     </div>
                     <div class="faq-item">
                         <div class="faq-question">
-                            How can I provide feedback or suggest improvements?
+                            How can I contact the team?
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Contra e-Crime values user input as a cornerstone of its commitment to continuous improvement, and Weigh the Right offers multiple avenues for you to share your feedback or suggest enhancements. You can directly email your suggestions, comments, or concerns to our dedicated support team at <a href="mailto:cc.contraecrime@gmail.com" style="color: #d7b15c; text-decoration: none;">cc.contraecrime@gmail.com</a>, where our team, led by Operations Manager Hanna Daniella S. Ventura, will review your input to enhance the platform’s functionality and user experience.</p>
+                            <p>You can reach us via the "Contact Us" page linked in the sidebar or footer. We’re also available at the SHS Expo to discuss the project in person!</p>
                         </div>
                     </div>
                 </div>
@@ -2273,114 +2268,122 @@ px;
                     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                     if (!currentUser || !currentUser.email) {
                         alert('User not logged in.');
-                                                avatarLoading.classList.remove('active');
+                        avatarLoading.classList.remove('active');
                         return;
                     }
 
                     const formData = new FormData();
                     formData.append('file', blob);
                     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                    formData.append('folder', `avatars/${currentUser.email}`);
 
                     fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.secure_url) {
-                            profilePic.src = data.secure_url;
-                            const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-                            database.ref(`users/${sanitizedEmail}`).update({
-                                avatarUrl: data.secure_url
-                            }).then(() => {
-                                console.log('Avatar URL saved to Firebase');
-                                avatarLoading.classList.remove('active');
-                            }).catch(error => {
-                                console.error('Error saving avatar URL:', error);
-                                alert('Failed to save avatar: ' + error.message);
-                                avatarLoading.classList.remove('active');
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                                try {
+                                    const parsed = JSON.parse(text);
+                                    errorMessage = parsed.error?.message || text;
+                                } catch (e) {
+                                    errorMessage = text.includes('Invalid cloud name')
+                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                        : text.includes('Invalid upload preset')
+                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                        : text.includes('Unsigned uploads are not allowed')
+                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                        : text || 'Unknown error occurred';
+                                }
+                                throw new Error(errorMessage);
                             });
-                        } else {
-                            alert('Failed to upload image.');
-                            avatarLoading.classList.remove('active');
                         }
+                        return response.json();
                     })
-                    .catch(error => {
-                        console.error('Error uploading image:', error);
-                        alert('Failed to upload image: ' + error.message);
-                        avatarLoading.classList.remove('active');
-                    });
-                }, 'image/jpeg', 0.8);
-            };
+                    .then(data => {
+                            const avatarUrl = data.secure_url;
+                            const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+                            const userRef = database.ref(`users/${sanitizedEmail}`);
 
-            img.onerror = () => {
-                alert('Error loading image.');
-                avatarLoading.classList.remove('active');
+                            userRef.update({ avatarUrl })
+                                .then(() => {
+                                    profilePic.src = avatarUrl;
+                                    avatarLoading.classList.remove('active');
+                                    customizationMenu.classList.remove('active');
+                                    alert('Avatar updated successfully!');
+                                })
+                                .catch(error => {
+                                    console.error('Error updating avatar URL in database:', error);
+                                    alert('Failed to update avatar in database: ' + error.message);
+                                    avatarLoading.classList.remove('active');
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error uploading avatar to Cloudinary:', error);
+                            alert('Failed to upload avatar: ' + error.message);
+                            avatarLoading.classList.remove('active');
+                        });
+                }, file.type);
             };
         });
 
-        avatarBgColorPicker.addEventListener('change', (e) => {
-            const color = e.target.value;
+        avatarBgColorPicker.addEventListener('change', () => {
+            const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
+
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color
-                }).catch(error => {
-                    console.error('Error saving background color:', error);
-                    alert('Failed to save background color: ' + error.message);
-                });
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.update({ avatarBgColor: color })
+                    .catch(error => {
+                        console.error('Error updating avatar background color:', error);
+                        alert('Failed to update avatar background color: ' + error.message);
+                    });
             }
         });
 
-        borderColorPicker.addEventListener('change', (e) => {
-            const color = e.target.value;
+        borderColorPicker.addEventListener('change', () => {
+            const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
+
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color
-                }).catch(error => {
-                    console.error('Error saving border color:', error);
-                    alert('Failed to save border color: ' + error.message);
-                });
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.update({ borderColor: color })
+                    .catch(error => {
+                        console.error('Error updating border color:', error);
+                        alert('Failed to update border color: ' + error.message);
+                    });
             }
         });
 
-        borderTypeSelect.addEventListener('change', (e) => {
-            const type = e.target.value;
-            profilePic.style.borderStyle = type;
+        borderTypeSelect.addEventListener('change', () => {
+            const borderType = borderTypeSelect.value;
+            profilePic.style.borderStyle = borderType;
+
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: type
-                }).catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
-                });
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.update({ borderType })
+                    .catch(error => {
+                        console.error('Error updating border type:', error);
+                        alert('Failed to update border type: ' + error.message);
+                    });
             }
         });
 
         themeToggle.addEventListener('change', () => {
             body.classList.toggle('dark-theme');
-            const isDarkTheme = body.classList.contains('dark-theme');
-            localStorage.setItem('darkTheme', isDarkTheme);
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    darkTheme: isDarkTheme
-                }).catch(error => {
-                    console.error('Error saving theme preference:', error);
-                });
-            }
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
         });
 
-        const savedTheme = localStorage.getItem('darkTheme');
-        if (savedTheme === 'true') {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
@@ -2392,57 +2395,87 @@ px;
                 : '<i class="fas fa-bars"></i>';
         });
 
-        document.addEventListener('click', (e) => {
-            if (sidebar.classList.contains('active') &&
-                !sidebar.contains(e.target) &&
-                !mobileMenuIcon.contains(e.target)) {
-                sidebar.classList.remove('active');
-                mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        });
-
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                faqItem.classList.toggle('active');
-
-                const answer = faqItem.querySelector('.faq-answer');
-                if (faqItem.classList.contains('active')) {
-                    const scrollHeight = answer.scrollHeight;
-                    answer.style.maxHeight = `${scrollHeight}px`;
-                } else {
-                    answer.style.maxHeight = '0';
-                }
-            });
-        });
-
-        function handleScrollAnimations() {
-            const elements = document.querySelectorAll('.timeline-item, .growth-item, .leader-item, .careers-card, .about-card');
-            const windowHeight = window.innerHeight;
-
-            elements.forEach(element => {
-                const rect = element.getBoundingClientRect();
-                if (rect.top <= windowHeight * 0.8) {
-                    element.classList.add('visible');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', handleScrollAnimations);
-        window.addEventListener('load', handleScrollAnimations);
-
-        window.addEventListener('load', () => {
-            updateUserCounts();
-            loaderOverlay.classList.remove('active');
-        });
-
         window.addEventListener('resize', () => {
             if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active');
                 mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        function handleScroll() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const growthItems = document.querySelectorAll('.growth-item');
+            const careersCard = document.querySelector('.careers-card');
+            const aboutCard = document.querySelector('.about-card');
+            const faqItems = document.querySelectorAll('.faq-item');
+            const leaderItems = document.querySelectorAll('.leader-item');
+
+            timelineItems.forEach(item => {
+                if (isElementInViewport(item)) {
+                    item.classList.add('visible');
+                }
+            });
+
+            growthItems.forEach(item => {
+                if (isElementInViewport(item)) {
+                    item.classList.add('visible');
+                }
+            });
+
+            if (isElementInViewport(careersCard)) {
+                careersCard.classList.add('visible');
+            }
+
+            if (isElementInViewport(aboutCard)) {
+                aboutCard.classList.add('visible');
+            }
+
+            faqItems.forEach(item => {
+                if (isElementInViewport(item)) {
+                    item.classList.add('visible');
+                }
+            });
+
+            leaderItems.forEach(item => {
+                if (isElementInViewport(item)) {
+                    item.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('load', () => {
+            handleScroll();
+            updateUserCounts();
+            loaderOverlay.classList.remove('active');
+        });
+
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                faqQuestions.forEach(q => {
+                    q.parentElement.classList.remove('active');
+                    q.nextElementSibling.style.maxHeight = '0';
+                });
+
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    const answer = question.nextElementSibling;
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
     </script>
-</body>
-</html>
