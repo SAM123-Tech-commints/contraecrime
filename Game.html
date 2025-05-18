@@ -679,41 +679,6 @@
             margin: 20px 0;
             border-radius: 10px;
         }
-        .tutorial-slide-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .tutorial-slide-content h3 {
-            font-size: 24px;
-            color: #2e2e2e;
-            margin-bottom: 20px;
-            font-weight: 700;
-            text-shadow: none;
-        }
-        .tutorial-slide-content p {
-            font-size: 14px;
-            color: #2e2e2e;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        .tutorial-image {
-            width: 200px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .dark-theme .tutorial-slide-content h3 {
-            color: #d8dbe0;
-        }
-        .dark-theme .tutorial-slide-content p {
-            color: #b0b0b0;
-        }
         .tutorial-nav {
             display: flex;
             justify-content: center;
@@ -989,7 +954,7 @@
             background: #666;
         }
         .dark-theme .result-summary .question, .dark-theme .redemption-summary .question { color: #d8dbe0; }
-        .dark-theme .result-summary .user-answer, .redemption-summary .user-answer { color: #b0b0b0; }
+        .dark-theme .result-summary .user-answer, .dark-theme .redemption-summary .user-answer { color: #b0b0b0; }
         .dark-theme .result-summary .correct-answer, .dark-theme .redemption-summary .correct-answer { color: #2ecc71; }
         .dark-theme .result-summary .user-answer.incorrect, .dark-theme .redemption-summary .user-answer.incorrect { color: #e74c3c; }
         .dark-theme .result-summary .time-taken, .dark-theme .redemption-summary .time-taken { color: #b0b0b0; }
@@ -1295,11 +1260,9 @@
         <div class="tutorial-modal" id="tutorialModal">
             <div class="tutorial-modal-content">
                 <div class="tutorial-slide active" id="slide1">
-                    <div class="tutorial-slide-content">
-                        <h3>Introduction to CyberLaw Quiz</h3>
-                        <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book" class="tutorial-image">
-                        <p>Evaluate your expertise in Philippine and global cybercrime laws. Answer questions based on legal provisions and utilize strategic power-ups: Extra Time (+10s) or Time Freeze (pause timer) to enhance your performance.</p>
-                    </div>
+                    <h3>Welcome to the Quiz!</h3>
+                    <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book">
+                    <p>Test your knowledge of cybercrime laws in the Philippines and worldwide. Answer questions based on legal provisions. Use power-ups like Extra Time or Time Freeze to strategize!</p>
                 </div>
                 <div class="tutorial-slide" id="slide2">
                     <h3>Gameplay & Power-Ups</h3>
