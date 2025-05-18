@@ -1230,10 +1230,10 @@
                     <p>Test your knowledge of cybercrime laws in the Philippines and worldwide. Answer questions based on legal provisions. Use power-ups like Extra Time or Time Freeze to strategize!</p>
                 </div>
                 <div class="tutorial-slide" id="slide2">
-                    <h3>Gameplay & Power-Ups</h3>
-                    <img src="https://i.imgur.com/TCTi8I2.jpeg" alt="Digital Security">
-                    <p>Choose Easy (60s), Medium (45s), or Hard (30s). Use one power-up per question: two Extra Time (add 10s each) or one Time Freeze (pause timer). Questions are randomized. Enjoy confetti for correct answers!</p>
-                </div>
+                <h3>Gameplay & Power-Ups</h3>
+                <img src="https://i.imgur.com/TCTi8I2.jpeg" alt="Digital Security">
+                <p>Choose Easy (60s), Medium (45s), or Hard (30s). Use each power-up once per round (refreshes each round): two Extra Time (add 10s each) or one Time Freeze (pause timer). Questions are randomized. Enjoy confetti for correct answers!</p>
+            </div>
                 <div class="tutorial-slide" id="slide3">
                     <h3>Scoring & Redemption</h3>
                     <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Scoreboard">
@@ -1769,7 +1769,6 @@
     let extraTime1Used = false;
     let extraTime2Used = false;
     let timeFreezeUsed = false;
-    let questionCounter = 0; 
 
     // GSAP animations
     gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, delay: 0.5 });
@@ -1944,7 +1943,6 @@ mobileMenuIcon.addEventListener('click', function() {
         extraTime1Used = false;
         extraTime2Used = false;
         timeFreezeUsed = false;
-        questionCounter = 0; 
         extraTime1.disabled = false;
         extraTime2.disabled = false;
         timeFreeze.disabled = false;
@@ -1962,20 +1960,6 @@ mobileMenuIcon.addEventListener('click', function() {
                 showRedemptionModal();
             }
             return;
-        }
-
-        // Increment question counter and reset power-ups every 10 questions (main quiz only) [NEW]
-        if (!isRedemption) {
-            questionCounter++;
-            // Reset power-ups every 10 questions
-            if (questionCounter % 10 === 0 && questionCounter > 0) {
-                extraTime1Used = false;
-                extraTime2Used = false;
-                timeFreezeUsed = false;
-                extraTime1.disabled = false;
-                extraTime2.disabled = false;
-                timeFreeze.disabled = false;
-            }
         }
 
         const question = questionList[currentQuestionIndex];
@@ -2039,7 +2023,7 @@ function updateTimer() {
     }
 
     timeLeft--;
-    timerText.content = `${timeLeft}s`;
+    timerText.textContent = `${timeLeft}s`; // Fixed typo: timerText.content -> timerText.textContent
     const circumference = 188;
     const offset = circumference * (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30));
     timerCircle.style.strokeDashoffset = offset;
@@ -2101,6 +2085,14 @@ function showRedemptionModal() {
         redemptionMessage.textContent = `You got ${wrongAnswers.length} question(s) wrong. Choose one dice to select a question for the redemption round (5 points).`;
         const diceContainer = document.getElementById('diceContainer');
         diceContainer.innerHTML = '';
+
+        // Reset power-ups at the start of the redemption round [NEW]
+        extraTime1Used = false;
+        extraTime2Used = false;
+        timeFreezeUsed = false;
+        extraTime1.disabled = false;
+        extraTime2.disabled = false;
+        timeFreeze.disabled = false;
 
         for (let i = 0; i < numQuestions; i++) {
             const diceBtn = document.createElement('button');
