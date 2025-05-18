@@ -1109,6 +1109,86 @@
             animation: gradientAnimation 10s ease infinite;
         }
 
+                
+        .slider-container {
+            width: 100%;
+            max-width: 1080px;
+            margin: 0 auto 30px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            position: relative;
+            height: 300px; 
+        }
+
+        .slider {
+            display: flex;
+            width: 400%; 
+            height: 100%;
+            animation: slide 20s infinite;
+        }
+
+        .slide {
+            width: 25%; 
+            flex-shrink: 0;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Navigation Dots */
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .slider-dots input {
+            display: none;
+        }
+
+        .slider-dots label {
+            width: 10px;
+            height: 10px;
+            background: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .slider-dots input:checked + label {
+            background: #d7b15c; 
+        }
+
+        .dark-theme .slider-dots label {
+            background: #666;
+        }
+
+        .dark-theme .slider-dots input:checked + label {
+            background: #d7b15c;
+        }
+
+
+        @keyframes slide {
+            0%, 20% { transform: translateX(0); }
+            25%, 45% { transform: translateX(-25%); }
+            50%, 70% { transform: translateX(-50%); }
+            75%, 95% { transform: translateX(-75%); }
+            100% { transform: translateX(0); }
+        }
+
+
+        #slide1:checked ~ .slider { transform: translateX(0); animation: none; }
+        #slide2:checked ~ .slider { transform: translateX(-25%); animation: none; }
+        #slide3:checked ~ .slider { transform: translateX(-50%); animation: none; }
+        #slide4:checked ~ .slider { transform: translateX(-75%); animation: none; }
+
         @keyframes gradientAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -1118,6 +1198,10 @@
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
+            }
+
+            slider-container {
+                height: 250px;
             }
 
             .sidebar h1 {
@@ -1198,6 +1282,10 @@
                 padding: 10px;
             }
 
+            .slider-container {
+                height: 200px;
+            }
+
             .sidebar h1 {
                 font-size: 20px;
             }
@@ -1266,6 +1354,10 @@
         @media (max-width: 480px) {
             .container {
                 flex-direction: column;
+            }
+
+            .slider-container {
+                height: 150px;
             }
 
             .mobile-nav {
@@ -1542,6 +1634,33 @@
                 </div>
                 <p>Find the right law for you!</p>
             </div>
+            <div class="slider-container">
+        <input type="radio" name="slider" id="slide1" checked>
+        <input type="radio" name="slider" id="slide2">
+        <input type="radio" name="slider" id="slide3">
+        <input type="radio" name="slider" id="slide4">
+        <div class="slider">
+            <div class="slide">
+                <img src="https://i.imgur.com/3MXTZ24.jpeg" alt="Cybercrime Banner 1">
+            </div>
+            <div class="slide">
+                <img src="https://i.imgur.com/DFIMneN.jpeg" alt="Cybercrime Banner 2">
+            </div>
+            <div class="slide">
+                <img src="https://i.imgur.com/jzcjS0U.png" alt="Cybercrime Banner 3">
+            </div>
+            <div class="slide">
+                <img src="https://i.imgur.com/hyQnro3.jpeg" alt="Cybercrime Banner 4">
+            </div>
+        </div>
+        <div class="slider-dots">
+            <label for="slide1"></label>
+            <label for="slide2"></label>
+            <label for="slide3"></label>
+            <label for="slide4"></label>
+        </div>
+    </div>
+    <div class="cards-container" id="cardsContainer">
             <section class="articles">
                 <h2 id="sectionTitle">TOP ARTICLES</h2>
                 <div class="cards-container" id="cardsContainer">
