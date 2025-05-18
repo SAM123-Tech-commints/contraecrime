@@ -93,7 +93,7 @@
             padding: 20px;
             height: 100vh;
             position: fixed;
-            transition: transform 0.IRY ease;
+            transition: transform 0.3s ease;
             display: block;
         }
         .sidebar.active {
@@ -1330,97 +1330,77 @@
                 </div>
             </div>
         </div>
-        <div class="tutorial-modal" id="tutorialModal">
-    <div class="tutorial-modal-content">
-        <!-- Slide 1 - Welcome -->
-        <div class="tutorial-slide active" id="slide1">
-            <div class="slide-header">
-                <div class="slide-icon">👨‍⚖️</div>
-                <h3>Welcome to CyberLaw Quiz Master</h3>
-            </div>
-            <div class="slide-content">
-                <img src="https://i.imgur.com/Ho1v1YP.png" alt="Law Book" class="slide-image">
-                <div class="slide-text">
-                    <p>Test your knowledge of cybercrime laws in the Philippines and worldwide through this interactive quiz.</p>
-                    <div class="feature-highlight">
-                        <i class="fas fa-bolt"></i>
-                        <span>Use special power-ups to help you succeed!</span>
+        <div class="tutorial-modal" id="tutorialModal" style="display: none;">
+            <div class="tutorial-modal-content">
+                <!-- Slide 1 - Welcome to the Quiz -->
+                <div class="tutorial-slide active" id="slide1">
+                    <div class="slide-header">
+                        <div class="slide-icon">👨‍⚖️</div>
+                        <h3>Welcome to the Quiz!</h3>
+                    </div>
+                    <div class="slide-content">
+                        <img src="https://i.imgur.com/5v2j8wM.png" alt="Law Book" class="slide-image">
+                        <div class="slide-text">
+                            <p>This quiz will test your knowledge of cybercrime laws in the Philippines. Answer questions based on the laws provided.</p>
+                            <div class="feature-highlight">
+                                <i class="fas fa-book"></i>
+                                <span>Learn about cybercrime laws interactively!</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Slide 2 - Gameplay -->
-        <div class="tutorial-slide" id="slide2">
-            <div class="slide-header">
-                <div class="slide-icon">🎮</div>
-                <h3>How to Play</h3>
-            </div>
-            <div class="slide-content">
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">⏱️</div>
-                        <h4>Time Limits</h4>
-                        <p>Easy: 60s | Medium: 45s | Hard: 30s per question</p>
+                <!-- Slide 2 - Difficulty Levels -->
+                <div class="tutorial-slide" id="slide2">
+                    <div class="slide-header">
+                        <div class="slide-icon">⚖️</div>
+                        <h3>Difficulty Levels</h3>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">✨</div>
-                        <h4>Power-Ups</h4>
-                        <p>2x Extra Time (+10s)<br>1x Time Freeze (pause timer)</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
-                        <h4>Scoring</h4>
-                        <p>10 points per correct answer<br>5 points in redemption</p>
+                    <div class="slide-content">
+                        <img src="https://i.imgur.com/9uQ3L8K.png" alt="Digital Security" class="slide-image">
+                        <div class="slide-text">
+                            <p>Choose from Easy (60s), Medium (45s), or Hard (30s) difficulty. Each level adjusts the timer and question complexity.</p>
+                            <div class="feature-highlight">
+                                <i class="fas fa-clock"></i>
+                                <span>Time limits tailored to your skill level!</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Slide 3 - Redemption -->
-        <div class="tutorial-slide" id="slide3">
-            <div class="slide-header">
-                <div class="slide-icon">🔄</div>
-                <h3>Redemption Round</h3>
-            </div>
-            <div class="slide-content">
-                <img src="https://i.imgur.com/cvsWr1c.jpeg" alt="Redemption" class="slide-image">
-                <div class="slide-text">
-                    <p>After the main quiz, you'll get a chance to recover points from questions you missed.</p>
-                    <div class="feature-highlight">
-                        <i class="fas fa-dice"></i>
-                        <span>Roll the dice to select a redemption question!</span>
+                <!-- Slide 3 - Scoring and Feedback -->
+                <div class="tutorial-slide" id="slide3">
+                    <div class="slide-header">
+                        <div class="slide-icon">🏆</div>
+                        <h3>Scoring and Feedback</h3>
                     </div>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check-circle"></i> Earn 10 points per correct redemption answer</li>
-                        <li><i class="fas fa-info-circle"></i> Detailed explanations for all answers</li>
-                    </ul>
+                    <div class="slide-content">
+                        <img src="https://i.imgur.com/Xt6kGf5.png" alt="Scoreboard" class="slide-image">
+                        <div class="slide-text">
+                            <p>Earn 10 points per correct answer. You'll get immediate feedback, and a detailed result at the end.</p>
+                            <div class="feature-highlight">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Learn from detailed answer explanations!</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
-        <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
-        
-        <div class="tutorial-nav">
-            <div class="tutorial-dot active" data-slide="1"></div>
-            <div class="tutorial-dot" data-slide="2"></div>
-            <div class="tutorial-dot" data-slide="3"></div>
-        </div>
-
-        <div class="tutorial-actions">
-            <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button>
-            <button class="start-quiz-btn" id="startQuizBtn"><i class="fas fa-play"></i> Start Quiz</button>
-        </div>
-
-        <div class="dont-show-again">
-            <input type="checkbox" id="dontShowAgain">
-            <label for="dontShowAgain">Skip tutorial next time</label>
+                <!-- Navigation -->
+                <button class="tutorial-prev" id="tutorialPrev"><i class="fas fa-chevron-left"></i></button>
+                <button class="tutorial-next" id="tutorialNext"><i class="fas fa-chevron-right"></i></button>
+                <div class="tutorial-nav">
+                    <div class="tutorial-dot active" data-slide="1"></div>
+                    <div class="tutorial-dot" data-slide="2"></div>
+                    <div class="tutorial-dot" data-slide="3"></div>
+                </div>
+                <div class="tutorial-actions">
+                    <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back to Difficulty</button>
+                    <button class="start-quiz-btn" id="startQuizBtn"><i class="fas fa-play"></i> Start Quiz Now</button>
+                </div>
+                <div class="dont-show-again">
+                    <input type="checkbox" id="dontShowAgain">
+                    <label for="dontShowAgain">Don't show this tutorial again</label>
         </div>
     </div>
 </div>
-    </div>
         <div class="result-modal" id="resultModal">
             <div class="result-modal-content">
                 <h2>Quiz Completed!</h2>
