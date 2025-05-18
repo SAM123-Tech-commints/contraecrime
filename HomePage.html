@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
-    <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -1571,7 +1570,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/typesense@1.14.0/dist/typesense.min.js"></script>
-    <script src="https://unpkg.com/compromise@latest/builds/compromise.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -2088,53 +2086,46 @@ const clock = document.getElementById('clock');
     }
 ];
 
-const searchCache = new Map();
-const MAX_CACHE_SIZE = 50;
 
-// Initialize Typesense client with optimized configuration
-const typesenseClient = new Typesense.Client({
-    nodes: [{
-        host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net',
-        port: '443',
-        protocol: 'https'
-    }],
-    apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
-    connectionTimeoutSeconds: 10,
-    retryIntervalSeconds: 0.5,
-    numRetries: 3,
-    cacheSearchResultsForSeconds: 120
-});
+const searchCache = new Map();
 
 // Auto-search logic for handling queries from History.html
 document.addEventListener('DOMContentLoaded', () => {
     const autoSearchQuery = localStorage.getItem('autoSearchQuery');
     if (autoSearchQuery && searchInput) {
-        searchInput.value = autoSearchQuery;
+        searchInput.value = autoSearchQuery; // Populate the search bar
         auth.onAuthStateChanged((user) => {
             if (user) {
-                performSearch(autoSearchQuery);
-                localStorage.removeItem('autoSearchQuery');
+                performSearch(autoSearchQuery); // Trigger search after user is authenticated
+                localStorage.removeItem('autoSearchQuery'); // Clear the stored query
             }
         });
     }
 });
 
-// Fingerprint icon navigation
+// Add click event listener for fingerprintIcon to navigate to homepage
 fingerprintIcon.addEventListener('click', () => {
+    // Option 2: Navigate to HomePage.html with loader transition
     loaderOverlay.classList.add('active');
     setTimeout(() => {
         window.location.href = 'HomePage.html';
     }, 150);
+
+    // Option 1 (Alternative): Restart the animation instead of navigating
+    /*
+    fingerprintIcon.classList.remove('scanning', 'glow'); // Remove existing animation classes
+    void fingerprintIcon.offsetWidth; // Force reflow to restart animation
+    fingerprintIcon.classList.add('glow'); // Re-add the glow animation (or 'scanning' if preferred)
+    fingerprintIcon.style.opacity = '1'; // Ensure visibility
+    */
 });
 
-// User authentication and profile handling
 auth.onAuthStateChanged((user) => {
     if (user) {
         const currentUser = {
             username: user.displayName || 'User',
             email: user.email,
-            createdAt: user.metadata.creationTime,
-            estimatedAge: estimateUserAge(user.metadata.creationTime)
+            createdAt: user.metadata.creationTime
         };
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
@@ -2143,49 +2134,39 @@ auth.onAuthStateChanged((user) => {
         createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
 
         const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
         const userRef = database.ref(`users/${sanitizedEmail}`);
         userRef.once('value', (snapshot) => {
-            const userData = snapshot.val() || {};
-            profilePic.src = userData.avatarUrl || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-            profilePic.style.backgroundColor = userData.avatarBgColor || '#cccccc';
-            profilePic.style.borderColor = userData.borderColor || '#000000';
-            profilePic.style.borderStyle = userData.borderType || 'solid';
-            avatarBgColorPicker.value = userData.avatarBgColor || '#cccccc';
-            borderColorPicker.value = userData.borderColor || '#000000';
-            borderTypeSelect.value = userData.borderType || 'solid';
+            const userData = snapshot.val();
+            if (userData) {
+                if (userData.avatarUrl) {
+                    profilePic.src = userData.avatarUrl;
+                } else {
+                    profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                }
+                if (userData.avatarBgColor) {
+                    profilePic.style.backgroundColor = userData.avatarBgColor;
+                    avatarBgColorPicker.value = userData.avatarBgColor;
+                }
+                if (userData.borderColor) {
+                    profilePic.style.borderColor = userData.borderColor;
+                    borderColorPicker.value = userData.borderColor;
+                }
+                if (userData.borderType) {
+                    profilePic.style.borderStyle = userData.borderType;
+                    borderTypeSelect.value = userData.borderType;
+                }
+            }
         }, (error) => {
             console.error('Error loading user customization:', error);
             alert('Failed to load user customization: ' + error.message);
         });
-
-        // Restrict content for child users
-        if (currentUser.estimatedAge < 18) {
-            restrictChildContent();
-        }
     } else {
         localStorage.removeItem('currentUser');
         window.location.href = 'index.html';
     }
 });
 
-// Estimate user age (simplified heuristic)
-function estimateUserAge(creationTime) {
-    const creationDate = new Date(creationTime);
-    const currentYear = new Date().getFullYear();
-    const yearsSinceCreation = currentYear - creationDate.getFullYear();
-    return 13 + yearsSinceCreation; // Assume minimum age of 13 at account creation
-}
-
-// Restrict sensitive content for child users
-function restrictChildContent() {
-    const sensitiveLaws = laws.filter(law => law.description.includes('explicit') || law.scenario.includes('explicit'));
-    sensitiveLaws.forEach(law => {
-        const card = document.querySelector(`.card[data-title="${law.title}"]`);
-        if (card) card.classList.add('hidden');
-    });
-}
-
-// Profile customization
 profilePic.addEventListener('click', () => {
     customizationMenu.classList.toggle('active');
 });
@@ -2276,12 +2257,12 @@ avatarInput.addEventListener('change', (event) => {
                             errorMessage = parsed.error?.message || text;
                         } catch (e) {
                             errorMessage = text.includes('Invalid cloud name')
-                                ? 'Invalid Cloudinary cloud name.'
+                                ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
                                 : text.includes('Invalid upload preset')
-                                ? 'Invalid upload preset.'
+                                ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
                                 : text.includes('Unsigned uploads are not allowed')
-                                ? 'Unsigned uploads are not allowed.'
-                                : text || 'Unknown error';
+                                ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                : text || 'Unknown error occurred';
                         }
                         throw new Error(errorMessage);
                     });
@@ -2289,12 +2270,15 @@ avatarInput.addEventListener('change', (event) => {
                 return response.json();
             })
             .then(data => {
-                if (data.error) throw new Error(data.error.message || 'Failed to upload image');
+                if (data.error) {
+                    throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                }
+
                 const avatarUrl = data.secure_url;
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
                 database.ref(`users/${sanitizedEmail}`).update({
-                    avatarUrl,
+                    avatarUrl: avatarUrl,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
                 })
                 .then(() => {
@@ -2302,20 +2286,20 @@ avatarInput.addEventListener('change', (event) => {
                     avatarLoading.classList.remove('active');
                 })
                 .catch(error => {
-                    console.error('Error saving avatar URL:', error);
-                    alert('Failed to save avatar URL: ' + error.message);
+                    console.error('Error saving avatar URL to Firebase:', error);
+                    alert('Failed to save avatar URL to Firebase: ' + error.message);
                     avatarLoading.classList.remove('active');
                 });
             })
             .catch(error => {
-                console.error('Error uploading avatar:', error);
-                alert(`Failed to upload avatar: ${error.message}`);
+                console.error('Error uploading avatar to Cloudinary:', error);
+                alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
                 avatarLoading.classList.remove('active');
             });
         }, file.type, 0.6);
     };
     img.onerror = () => {
-        alert('Failed to process image.');
+        alert('Failed to process the image. Please try a different file.');
         avatarLoading.classList.remove('active');
     };
 });
@@ -2323,13 +2307,15 @@ avatarInput.addEventListener('change', (event) => {
 avatarBgColorPicker.addEventListener('change', () => {
     const color = avatarBgColorPicker.value;
     profilePic.style.backgroundColor = color;
+
     const user = auth.currentUser;
     if (user) {
         const sanitizedEmail = user.email.replace(/\./g, ',');
         database.ref(`users/${sanitizedEmail}`).update({
             avatarBgColor: color,
             updatedAt: firebase.database.ServerValue.TIMESTAMP
-        }).catch(error => {
+        })
+        .catch(error => {
             console.error('Error saving avatar background color:', error);
             alert('Failed to save avatar background color: ' + error.message);
         });
@@ -2341,13 +2327,15 @@ avatarBgColorPicker.addEventListener('change', () => {
 borderColorPicker.addEventListener('change', () => {
     const color = borderColorPicker.value;
     profilePic.style.borderColor = color;
+
     const user = auth.currentUser;
     if (user) {
         const sanitizedEmail = user.email.replace(/\./g, ',');
         database.ref(`users/${sanitizedEmail}`).update({
             borderColor: color,
             updatedAt: firebase.database.ServerValue.TIMESTAMP
-        }).catch(error => {
+        })
+        .catch(error => {
             console.error('Error saving border color:', error);
             alert('Failed to save border color: ' + error.message);
         });
@@ -2359,13 +2347,15 @@ borderColorPicker.addEventListener('change', () => {
 borderTypeSelect.addEventListener('change', () => {
     const borderType = borderTypeSelect.value;
     profilePic.style.borderStyle = borderType;
+
     const user = auth.currentUser;
     if (user) {
         const sanitizedEmail = user.email.replace(/\./g, ',');
         database.ref(`users/${sanitizedEmail}`).update({
-            borderType,
+            borderType: borderType,
             updatedAt: firebase.database.ServerValue.TIMESTAMP
-        }).catch(error => {
+        })
+        .catch(error => {
             console.error('Error saving border type:', error);
             alert('Failed to save border type: ' + error.message);
         });
@@ -2374,39 +2364,48 @@ borderTypeSelect.addEventListener('change', () => {
     }
 });
 
-// Theme toggle
 if (localStorage.getItem('darkTheme') === 'enabled') {
     body.classList.add('dark-theme');
     themeToggle.checked = true;
 }
 
 themeToggle.addEventListener('change', function() {
-    body.classList.toggle('dark-theme', this.checked);
-    localStorage.setItem('darkTheme', this.checked ? 'enabled' : 'disabled');
+    if (this.checked) {
+        body.classList.add('dark-theme');
+        localStorage.setItem('darkTheme', 'enabled');
+    } else {
+        body.classList.remove('dark-theme');
+        localStorage.setItem('darkTheme', 'disabled');
+    }
 });
 
-// Mobile menu toggle
-mobileMenuIcon.addEventListener('click', () => {
+mobileMenuIcon.addEventListener('click', function() {
     sidebar.classList.toggle('active');
     const icon = mobileMenuIcon.querySelector('i');
-    icon.classList.toggle('fa-bars', !sidebar.classList.contains('active'));
-    icon.classList.toggle('fa-times', sidebar.classList.contains('active'));
+    if (sidebar.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
 });
 
-// Page transition loader
 document.querySelectorAll('a[href]').forEach(link => {
-    if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#') && link.href.includes(window.location.hostname)) {
-        link.addEventListener('click', (e) => {
+    if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
+        link.addEventListener('click', function(e) {
+            if (!this.href.includes(window.location.hostname)) return;
+
             e.preventDefault();
             loaderOverlay.classList.add('active');
+
             setTimeout(() => {
-                window.location.href = link.href;
+                window.location.href = this.href;
             }, 150);
         });
     }
 });
 
-// Save law to Firebase
 function saveLaw(lawTitle) {
     const user = auth.currentUser;
     if (!user) {
@@ -2415,7 +2414,8 @@ function saveLaw(lawTitle) {
     }
 
     const sanitizedEmail = user.email.replace(/\./g, ',');
-    database.ref(`users/${sanitizedEmail}/savedLaws`).push().set({
+    const lawRef = database.ref(`users/${sanitizedEmail}/savedLaws`).push();
+    lawRef.set({
         title: lawTitle,
         timestamp: firebase.database.ServerValue.TIMESTAMP
     })
@@ -2432,80 +2432,52 @@ okSuccess.addEventListener('click', () => {
     successModal.classList.remove('active');
 });
 
-// Translate query to English (placeholder for external API)
-async function translateQuery(query, targetLang = 'en') {
-    try {
-        // Placeholder: Use Google Translate API or similar in production
-        // For demo, assume query is in English, Tagalog, or Taglish
-        const doc = nlp(query.trim().toLowerCase());
-        const isTagalog = doc.has('#Tagalog') || query.match(/^(?:[a-zA-Z\s]+|[a-zA-Z\s]*(?:ng|sa|ang|si|mga|ay|kung|pag)[a-zA-Z\s]*)$/i);
-        if (isTagalog && targetLang === 'en') {
-            // Simulate translation (replace common Tagalog words)
-            const tagalogMap = {
-                'hacker': 'hacking',
-                'panloloko': 'fraud',
-                'pagnanakaw': 'theft',
-                'krimen': 'crime'
-            };
-            let translated = query.toLowerCase();
-            Object.entries(tagalogMap).forEach(([tagalog, english]) => {
-                translated = translated.replace(new RegExp(`\\b${tagalog}\\b`, 'gi'), english);
-            });
-            return translated;
-        }
-        return query; // Return original if no translation needed
-    } catch (error) {
-        console.error('Translation error:', error);
-        return query; // Fallback to original query
-    }
-}
-
-// Normalize query with NLP
-function normalizeQuery(query, language = 'en') {
+function normalizeQuery(query) {
     if (!query || typeof query !== 'string') return '';
+    // Enhanced normalization with Compromise
     const doc = nlp(query.trim().toLowerCase());
-    let normalized = doc
+    const normalized = doc
         .normalize({ punctuation: true, possessives: true, plurals: true, contractions: true })
         .text()
-        .replace(/[^a-z0-9\s]/g, ' ')
-        .split(/\s+/)
-        .filter(word => word.length > 2 && /^[a-z0-9]+$/.test(word))
-        .join(' ');
-
-    // Handle Tagalog/Taglish specific normalization
-    if (language === 'tl' || language === 'taglish') {
-        const tagalogStopwords = ['ng', 'sa', 'ang', 'si', 'mga', 'ay', 'kung', 'pag'];
-        normalized = normalized
-            .split(/\s+/)
-            .filter(word => !tagalogStopwords.includes(word))
-            .join(' ');
-    }
-
+        .replace(/[^a-z0-9\s]/g, ' ') // Remove special characters
+        .split(/\s+/) // Split into words
+        .filter(word => word.length > 1) // Remove single-character words
+        .join(' '); // Rejoin for Typesense
     return normalized;
 }
 
-// Local search fallback
-function localSearchFallback(query, language = 'en') {
-    const normalizedQuery = normalizeQuery(query, language);
-    const keywords = normalizedQuery.split(/\s+/).filter(k => k.length > 2);
-    if (!keywords.length) return { mainLaw: null, alternativeLaws: [] };
+function localSearchFallback(query) {
+    const normalizedQuery = normalizeQuery(query);
+    const keywords = normalizedQuery.split(/\s+/).filter(k => k.length > 1); // Split into keywords
+    if (keywords.length === 0) {
+        return { mainLaw: null, alternativeLaws: [] };
+    }
 
     const matches = laws
         .map(law => {
             const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
+            // Score based on keyword matches (exact and partial)
             let score = 0;
             keywords.forEach(keyword => {
-                const regex = new RegExp(`\\b${keyword}\\b`, 'i');
-                if (regex.test(text)) score += 3;
-                else if (text.includes(keyword)) score += 1;
-                if (law.title.toLowerCase().match(regex)) score += 5;
+                const regex = new RegExp(`\\b${keyword}\\b`, 'i'); // Exact word match
+                if (regex.test(text)) {
+                    score += 2; // Higher weight for exact matches
+                } else if (text.includes(keyword)) {
+                    score += 1; // Partial match
+                }
+                // Boost score for title matches
+                if (law.title.toLowerCase().match(regex)) {
+                    score += 3;
+                }
             });
             return { law, score };
         })
         .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score);
+        .sort((a, b) => b.score - a.score); // Sort by score descending
 
-    if (!matches.length) return { mainLaw: null, alternativeLaws: [] };
+    if (matches.length === 0) {
+        return { mainLaw: null, alternativeLaws: [] };
+    }
 
     const mainLaw = matches[0].law.title;
     let alternativeLaws = matches
@@ -2513,58 +2485,66 @@ function localSearchFallback(query, language = 'en') {
         .map(item => item.law.title)
         .slice(0, 4);
 
+    // Fill remaining slots with random laws if needed
     while (alternativeLaws.length < 4 && laws.length > 0) {
         const availableLaws = laws
             .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
             .map(law => law.title);
-        if (!availableLaws.length) break;
-        alternativeLaws.push(availableLaws[Math.floor(Math.random() * availableLaws.length)]);
+        if (availableLaws.length === 0) break;
+        const randomIndex = Math.floor(Math.random() * availableLaws.length);
+        alternativeLaws.push(availableLaws[randomIndex]);
     }
 
     return { mainLaw, alternativeLaws };
 }
 
-// Fetch laws from Typesense
-async function fetchLawsFromAI(query, language = 'en') {
+async function fetchLawsFromAI(query) {
     try {
-        // Translate query to English for Typesense
-        const translatedQuery = await translateQuery(query, 'en');
-        const normalizedQuery = normalizeQuery(translatedQuery, language);
-        if (!normalizedQuery) throw new Error('Invalid query');
+        const normalizedQuery = normalizeQuery(query);
+        if (!normalizedQuery) {
+            throw new Error('Empty or invalid query');
+        }
 
         if (searchCache.has(normalizedQuery)) {
             return searchCache.get(normalizedQuery);
         }
 
-        // Advanced Typesense search parameters
+        const client = new Typesense.Client({
+            nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
+            apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
+            connectionTimeoutSeconds: 5
+        });
+
+        try {
+            await client.collections('laws').retrieve();
+        } catch (err) {
+            throw new Error('Typesense collection "laws" not found or inaccessible');
+        }
+
         const searchParameters = {
             q: normalizedQuery,
             query_by: 'title,description,scenario',
-            query_by_weights: '5,3,2',
+            query_by_weights: '4,3,2',
             per_page: 5,
             typo_tokens_threshold: 1,
             num_typos: 2,
             include_fields: 'title,description,scenario',
-            sort_by: '_text_match:desc,_semantic_score:desc',
+            sort_by: '_text_match:desc',
             prefix: true,
             infix: 'always',
             drop_tokens_threshold: 1,
-            locale: language === 'tl' ? 'tl' : 'en',
+            locale: 'auto',
             synonyms: true,
             phrase_match: true,
-            split_join_tokens: 'always',
-            enable_synonyms: true,
-            exhaustive_search: true,
-            max_candidates: 100,
-            min_len_1typo: 3,
-            min_len_2typo: 6
+            split_join_tokens: 'always' // Enable keyword splitting
         };
 
-        const results = await typesenseClient.collections('laws').documents().search(searchParameters);
+        const results = await client.collections('laws').documents().search(searchParameters);
+
         let mainLaw = null;
         let alternativeLaws = [];
 
-        if (results.hits?.length) {
+        if (results.hits && results.hits.length > 0) {
             mainLaw = results.hits[0].document.title;
             alternativeLaws = results.hits
                 .slice(1, 5)
@@ -2573,115 +2553,142 @@ async function fetchLawsFromAI(query, language = 'en') {
                 .slice(0, 4);
         }
 
-        // Fallback to local search if needed
         if (!mainLaw || alternativeLaws.length < 4) {
-            const fallback = localSearchFallback(translatedQuery, language);
-            if (fallback.mainLaw && !mainLaw) mainLaw = fallback.mainLaw;
+            const fallback = localSearchFallback(query);
+            if (fallback.mainLaw && !mainLaw) {
+                mainLaw = fallback.mainLaw;
+            }
             alternativeLaws = [
                 ...alternativeLaws,
                 ...fallback.alternativeLaws.filter(title => !alternativeLaws.includes(title) && title !== mainLaw)
             ].slice(0, 4);
         }
 
-        // Ensure alternative laws are filled
         while (alternativeLaws.length < 4 && laws.length > 0) {
             const availableLaws = laws
                 .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
                 .map(law => law.title);
-            if (!availableLaws.length) break;
-            alternativeLaws.push(availableLaws[Math.floor(Math.random() * availableLaws.length)]);
+            if (availableLaws.length === 0) break;
+            const randomIndex = Math.floor(Math.random() * availableLaws.length);
+            alternativeLaws.push(availableLaws[randomIndex]);
         }
 
         const result = { mainLaw, alternativeLaws };
         searchCache.set(normalizedQuery, result);
-        if (searchCache.size > MAX_CACHE_SIZE) {
-            searchCache.delete(searchCache.keys().next().value);
+        if (searchCache.size > 50) {
+            const oldestKey = searchCache.keys().next().value;
+            searchCache.delete(oldestKey);
         }
 
         return result;
     } catch (error) {
-        console.error('Typesense search error:', error);
-        return localSearchFallback(query, language);
+        console.error('Typesense search error:', error.message);
+        return localSearchFallback(query);
     }
 }
 
-// User feedback
-async function collectUserFeedback(lawTitle, rating, comment) {
-    const user = auth.currentUser;
-    if (!user) {
-        alert('You must be logged in to submit feedback.');
-        return;
-    }
-
-    const sanitizedEmail = user.email.replace(/\./g, ',');
-    try {
-        await database.ref(`users/${sanitizedEmail}/feedback`).push().set({
-            lawTitle,
-            rating,
-            comment,
-            timestamp: firebase.database.ServerValue.TIMESTAMP
-        });
-        alert('Thank you for your feedback!');
-    } catch (error) {
-        console.error('Error saving feedback:', error);
-        alert('Failed to save feedback: ' + error.message);
-    }
-}
-
-// Search analytics
-async function trackSearchAnalytics(query, results, language) {
-    const user = auth.currentUser;
-    const analyticsData = {
-        query,
-        language,
-        resultCount: results.mainLaw ? 1 + (results.alternativeLaws?.length || 0) : 0,
-        mainLaw: results.mainLaw || null,
-        timestamp: firebase.database.ServerValue.TIMESTAMP
-    };
-
-    try {
-        await database.ref('analytics/searches').push().set(analyticsData);
-        if (user) {
-            const sanitizedEmail = user.email.replace(/\./g, ',');
-            await database.ref(`users/${sanitizedEmail}/analytics`).push().set(analyticsData);
-        }
-    } catch (error) {
-        console.error('Error tracking analytics:', error);
-    }
-}
-
-// Render law cards
-function renderLawCards(mainLawTitle, alternativeLawTitles, query, language = 'en') {
+function renderLawCards(mainLawTitle, alternativeLawTitles) {
     cardsContainer.innerHTML = '';
+
+    const query = searchInput.value.trim();
 
     if (mainLawTitle) {
         const mainLaw = laws.find(law => law.title === mainLawTitle);
         if (mainLaw) {
-            const mainCard = createLawCard(mainLaw, true, query, language);
+            const mainCard = document.createElement('div');
+            mainCard.className = 'card main-law highlight';
+            mainCard.innerHTML = `
+                <div class="image_container">
+                    <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
+                </div>
+                <div class="cybercrime-title">
+                    <span>${mainLaw.title.trim()}</span>
+                </div>
+                <div class="cybercrime-description">
+                    <p><strong>Description:</strong> ${mainLaw.description.trim()}</p>
+                    <p><strong>Scenario:</strong> ${mainLaw.scenario.trim()}</p>
+                    <p><strong>Punishment:</strong> ${mainLaw.punishment.trim()}</p>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    ${mainLaw.pdfwebsite ? `
+                    <a href="${mainLaw.pdfwebsite}" class="border-button" target="_blank">
+                        <span class="button-text">Read More</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                    </a>` : ''}
+                    <button class="save-button" data-title="${mainLaw.title}">
+                        <span class="button-text">Save Law</span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                    </button>
+                </div>
+            `;
             cardsContainer.appendChild(mainCard);
+
+            if (query) {
+                ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
+                    const element = mainCard.querySelector(`.${className}`);
+                    if (element) highlightText(element, query);
+                });
+            }
         }
     } else {
-        cardsContainer.innerHTML = '<p>No relevant laws found. Try a different query.</p>';
+        cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
         fingerprintIcon.classList.add('glow');
         fingerprintIcon.style.opacity = '1';
         return;
     }
 
-    if (alternativeLawTitles.length) {
+    if (alternativeLawTitles.length > 0) {
         const alternativesSection = document.createElement('div');
         alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
-        alternativesSection.style.cssText = 'width: 100%; text-align: center; margin-top: 40px;';
+        alternativesSection.style.width = '100%';
+        alternativesSection.style.textAlign = 'center';
+        alternativesSection.style.marginTop = '40px';
         cardsContainer.appendChild(alternativesSection);
 
         const alternativesContainer = document.createElement('div');
         alternativesContainer.className = 'cards-container';
-        alternativesContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;';
+        alternativesContainer.style.display = 'flex';
+        alternativesContainer.style.flexWrap = 'wrap';
+        alternativesContainer.style.gap = '20px';
+        alternativesContainer.style.justifyContent = 'center';
 
         alternativeLawTitles.forEach(title => {
             const law = laws.find(l => l.title === title);
             if (law) {
-                const card = createLawCard(law, false, query, language);
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="image_container">
+                        <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
+                    </div>
+                    <div class="cybercrime-title">
+                        <span>${law.title.trim()}</span>
+                    </div>
+                    <div class="cybercrime-description">
+                        <p><strong>Description:</strong> ${law.description.trim()}</p>
+                        <p><strong>Scenario:</strong> ${law.scenario.trim()}</p>
+                        <p><strong>Punishment:</strong> ${law.punishment.trim()}</p>
+                    </div>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end; padding: 10px;">
+                        ${law.pdfwebsite ? `
+                        <a href="${law.pdfwebsite}" class="border-button" target="_blank">
+                            <span class="button-text">Read More</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+                        </a>` : ''}
+                        <button class="save-button" data-title="${law.title}">
+                            <span class="button-text">Save Law</span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
+                        </button>
+                    </div>
+                `;
                 alternativesContainer.appendChild(card);
+
+                if (query) {
+                    ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
+                        const element = card.querySelector(`.${className}`);
+                        if (element) highlightText(element, query);
+                    });
+                }
             }
         });
         cardsContainer.appendChild(alternativesContainer);
@@ -2696,97 +2703,11 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, query, language = 'e
     fingerprintIcon.style.opacity = '1';
 }
 
-// Create law card with feedback form
-function createLawCard(law, isMain, query, language) {
-    const card = document.createElement('div');
-    card.className = `card ${isMain ? 'main-law highlight' : ''}`;
-    card.setAttribute('data-title', law.title);
-
-    // Translate content for Tagalog/Taglish if needed
-    const title = language === 'tl' ? translateToTagalog(law.title) : law.title;
-    const description = language === 'tl' ? translateToTagalog(law.description) : law.description;
-    const scenario = language === 'tl' ? translateToTagalog(law.scenario) : law.scenario;
-    const punishment = language === 'tl' ? translateToTagalog(law.punishment) : law.punishment;
-
-    card.innerHTML = `
-        <div class="image_container">
-            <img src="${law.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
-        </div>
-        <div class="cybercrime-title">
-            <span>${title.trim()}</span>
-        </div>
-        <div class="cybercrime-description">
-            <p><strong>Description:</strong> <span class="description-text">${description.trim()}</span></p>
-            <p><strong>Scenario:</strong> <span class="scenario-text">${scenario.trim()}</span></p>
-            <p><strong>Punishment:</strong> <span class="punishment-text">${punishment.trim()}</span></p>
-        </div>
-        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-            ${law.pdfwebsite ? `
-            <a href="${law.pdfwebsite}" class="border-button" target="_blank">
-                <span class="button-text">${language === 'tl' ? 'Magbasa Pa' : 'Read More'}</span>
-                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-            </a>` : ''}
-            <button class="save-button" data-title="${law.title}">
-                <span class="button-text">${language === 'tl' ? 'I-save ang Batas' : 'Save Law'}</span>
-                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
-            </button>
-        </div>
-        <div class="feedback-container" style="margin-top: 10px; padding: 10px; border-top: 1px solid #ccc;">
-            <label for="rating-${law.title.replace(/\s/g, '-')}" style="font-size: 14px;">${language === 'tl' ? 'I-rate ang batas na ito:' : 'Rate this law:'}</label>
-            <select id="rating-${law.title.replace(/\s/g, '-')}" style="margin: 0 10px; padding: 5px;">
-                <option value="1">1 Star</option>
-                <option value="2">2 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="5">5 Stars</option>
-            </select>
-            <textarea placeholder="${language === 'tl' ? 'Iyong puna (opsyonal)' : 'Your feedback (optional)'}" style="width: 100%; height: 50px; margin-top: 5px; padding: 5px; font-size: 14px;"></textarea>
-            <button class="submit-feedback" style="margin-top: 5px; padding: 5px 10px; background: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer;">${language === 'tl' ? 'Isumite' : 'Submit'}</button>
-        </div>
-    `;
-
-    if (query) {
-        ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
-            const element = card.querySelector(`.${className}`);
-            if (element) highlightText(element, query);
-        });
-    }
-
-    // Feedback form handler
-    const submitButton = card.querySelector('.submit-feedback');
-    submitButton.addEventListener('click', async () => {
-        const rating = card.querySelector('select').value;
-        const comment = card.querySelector('textarea').value.trim();
-        await collectUserFeedback(law.title, parseInt(rating), comment);
-    });
-
-    return card;
-}
-
-// Placeholder for Tagalog translation
-function translateToTagalog(text) {
-    // In production, use a translation API (e.g., Google Translate)
-    // For demo, return original text or simulate basic translation
-    const translationMap = {
-        'hacking': 'pag-hack',
-        'fraud': 'panloloko',
-        'unauthorized access': 'hindi awtorisadong pag-access',
-        'electronic transactions': 'mga elektronikong transaksyon'
-    };
-    let translated = text;
-    Object.entries(translationMap).forEach(([english, tagalog]) => {
-        translated = translated.replace(new RegExp(`\\b${english}\\b`, 'gi'), tagalog);
-    });
-    return translated;
-}
-
-// Save law handler
 function saveLawHandler() {
     const lawTitle = this.getAttribute('data-title');
     saveLaw(lawTitle);
 }
 
-// Default cards
 const defaultCards = [
     {
         title: "UN: Asian Scam Calls Now a Global Export",
@@ -2799,39 +2720,34 @@ const defaultCards = [
         description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
     },
     {
-        title: "Southeast Asia Cyber Fraud at ‘Inflection Point’",
+        title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
         image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
         description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
     }
 ];
 
-// Render default cards
-function renderDefaultCards() {
-    cardsContainer.innerHTML = '';
-    defaultCards.forEach(cardData => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <div class="image_container">
-                <img src="${cardData.image}" alt="Cybercrime Image">
-            </div>
-            <div class="cybercrime-title">
-                <span>${cardData.title}</span>
-            </div>
-            <div class="cybercrime-description">
-                <p>Cybercrime</p>
-                <p>${cardData.description}</p>
-            </div>
-            <a href="News.html" class="border-button">
-                <span class="button-text">Read More</span>
-                <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
-            </a>
-        `;
-        cardsContainer.appendChild(card);
-    });
-}
+defaultCards.forEach(cardData => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+        <div class="image_container">
+            <img src="${cardData.image}" alt="Cybercrime Image">
+        </div>
+        <div class="cybercrime-title">
+            <span>${cardData.title}</span>
+        </div>
+        <div class="cybercrime-description">
+            <p>Cybercrime</p>
+            <p>${cardData.description}</p>
+        </div>
+        <a href="News.html" class="border-button">
+            <span class="button-text">Read More</span>
+            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
+        </a>
+    `;
+    cardsContainer.appendChild(card);
+});
 
-// Perform search
 async function performSearch(query) {
     try {
         if (query) {
@@ -2843,36 +2759,55 @@ async function performSearch(query) {
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
-                await database.ref(`users/${sanitizedEmail}/searchHistory`).push({
-                    query,
+                database.ref(`users/${sanitizedEmail}/searchHistory`).push({
+                    query: query,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
             }
 
-            // Detect language (simplified)
-            const doc = nlp(query.trim().toLowerCase());
-            const isTagalog = doc.has('#Tagalog') || query.match(/^(?:[a-zA-Z\s]+|[a-zA-Z\s]*(?:ng|sa|ang|si|mga|ay|kung|pag)[a-zA-Z\s]*)$/i);
-            const language = isTagalog ? 'tl' : 'en';
-
-            const results = await fetchLawsFromAI(query, language);
-            await trackSearchAnalytics(query, results, language);
-
-            if (results.mainLaw) {
-                renderLawCards(results.mainLaw, results.alternativeLaws, query, language);
+            const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+            if (mainLaw) {
+                renderLawCards(mainLaw, alternativeLaws);
             } else {
-                cardsContainer.innerHTML = '<p>No relevant laws found. Try a different query.</p>';
+                cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
                 fingerprintIcon.style.opacity = '1';
             }
         } else {
             sectionTitle.textContent = 'TOP ARTICLES';
-            renderDefaultCards();
+            cardsContainer.innerHTML = '';
             fingerprintIcon.classList.add('glow');
             fingerprintIcon.style.opacity = '1';
+            defaultCards.forEach(cardData => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="image_container">
+                        <img src="${cardData.image}" alt="Cybercrime Image">
+                    </div>
+                    <div class="cybercrime-title">
+                        <span>${cardData.title}</span>
+                    </div>
+                    <div class="cybercrime-description">
+                        <p>Cybercrime</p>
+                        <p>${cardData.description}</p>
+                    </div>
+                    <a href="News.html" class="border-button">
+                        <span class="button-text">Read More</span>
+                        <span class="iconer">
+                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                    </a>
+                `;
+                cardsContainer.appendChild(card);
+            });
         }
     } catch (error) {
-        console.error('Search error:', error);
-        cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please try again.</p>`;
+        console.error('Search error:', error.message);
+        cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
         fingerprintIcon.classList.add('glow');
         fingerprintIcon.style.opacity = '1';
     } finally {
@@ -2880,46 +2815,40 @@ async function performSearch(query) {
     }
 }
 
-// Search event listeners
-searchInput.addEventListener('keypress', (e) => {
+searchInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-        performSearch(searchInput.value.trim());
+        const query = searchInput.value.trim();
+        performSearch(query);
     }
 });
 
-document.querySelector('.search-icon').addEventListener('click', () => {
-    performSearch(searchInput.value.trim());
+document.querySelector('.search-icon').addEventListener('click', function() {
+    const query = searchInput.value.trim();
+    performSearch(query);
 });
 
-// Highlight search terms
 function highlightText(element, query) {
     if (!element || !query) return;
     const text = element.textContent;
-    const keywords = normalizeQuery(query).split(/\s+/);
-    let highlighted = text;
-    keywords.forEach(keyword => {
-        const regex = new RegExp(`\\b(${keyword})\\b`, 'gi');
-        highlighted = highlighted.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
-    });
-    element.innerHTML = highlighted;
+    const regex = new RegExp(`(${query})`, 'gi');
+    element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
 }
 
-// Clock update
 function updateClock() {
     const now = new Date();
-    clock.textContent = now.toLocaleTimeString('en-US', {
+    const options = {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
         hour12: true,
         timeZoneName: 'short'
-    });
+    };
+    clock.textContent = now.toLocaleTimeString('en-US', options);
 }
 
 setInterval(updateClock, 1000);
 updateClock();
 
-// Responsive sidebar
 window.addEventListener('resize', () => {
     if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
         sidebar.classList.remove('active');
@@ -2927,9 +2856,6 @@ window.addEventListener('resize', () => {
         mobileMenuIcon.querySelector('i').classList.add('fa-bars');
     }
 });
-
-// Initial render
-renderDefaultCards();
 </script>
 </body>
 </html>
