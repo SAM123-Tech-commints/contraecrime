@@ -245,7 +245,7 @@
 
         .content {
             flex: 1;
-            margin-left: 290px;
+            margin            margin-left: 290px;
             padding: 0 30px 15px;
             position: relative;
             background: url('https://i.imgur.com/yytZfZz.png') no-repeat center center;
@@ -428,9 +428,9 @@
         }
 
         .dark-theme .customization-options .user-info {
-    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-    color: #e0e0e0; 
-}
+            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            color: #e0e0e0; 
+        }
 
         .dark-theme .customization-options .user-info p {
             color: #e0e0e0;
@@ -534,6 +534,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            Fabricated by xAI
             width: 50px;
             height: 50px;
         }
@@ -625,6 +626,83 @@
 
         .error-message.visible {
             display: block;
+        }
+
+        /* New Styles for FAQ and Map */
+        .additional-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .faq-section, .map-section {
+            flex: 1;
+            min-width: 350px;
+        }
+
+        .faq-section h2, .map-section h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-item h3 {
+            font-size: 20px;
+            color: #8B0000;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item h3::before {
+            content: '\f059';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #8B0000;
+        }
+
+        .faq-item p {
+            font-size: 16px;
+            color: #333;
+            display: none;
+            margin: 0;
+            padding-left: 30px;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        .map-section iframe {
+            width: 100%;
+            height: 300px;
+            border: 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-theme .faq-section h2, .dark-theme .map-section h2 {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .faq-item h3 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .faq-item h3::before {
+            color: #d7b15c;
+        }
+
+        .dark-theme .faq-item p {
+            color: #d8dbe0;
         }
 
         footer {
@@ -841,6 +919,27 @@
                 top: 45px;
                 width: 220px;
             }
+
+            .additional-info {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .faq-section h2, .map-section h2 {
+                font-size: 24px;
+            }
+
+            .faq-item h3 {
+                font-size: 18px;
+            }
+
+            .faq-item p {
+                font-size: 14px;
+            }
+
+            .map-section iframe {
+                height: 250px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -907,6 +1006,11 @@
             .customization-options {
                 top: 40px;
                 width: 200px;
+            }
+
+            .additional-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
         }
 
@@ -1058,6 +1162,27 @@
             .customization-options select {
                 font-size: 10px;
                 padding: 3px;
+            }
+
+            .additional-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .faq-section h2, .map-section h2 {
+                font-size: 20px;
+            }
+
+            .faq-item h3 {
+                font-size: 16px;
+            }
+
+            .faq-item p {
+                font-size: 12px;
+            }
+
+            .map-section iframe {
+                height: 200px;
             }
 
             /* Hide account-customization when sidebar is active */
@@ -1225,6 +1350,28 @@
                         <div class="error-message" id="errorMessage">
                             There was an error sending your message. Please try again later.
                         </div>
+                    </div>
+                </div>
+                <!-- New FAQ and Map Section -->
+                <div class="additional-info">
+                    <div class="faq-section">
+                        <h2>Frequently Asked Questions</h2>
+                        <div class="faq-item">
+                            <h3>How can I report a cybercrime?</h3>
+                            <p>You can report a cybercrime by contacting us via the contact form, emailing us directly, or reaching out through our social media channels. Provide as much detail as possible for prompt assistance.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>What types of cybercrimes do you handle?</h3>
+                            <p>We address various cybercrimes, including phishing, identity theft, online fraud, hacking, and cyberbullying. Contact us for specific concerns.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>How can I protect myself online?</h3>
+                            <p>Use strong passwords, enable two-factor authentication, avoid suspicious links, and keep your software updated. Check our News & Insights for more tips.</p>
+                        </div>
+                    </div>
+                    <div class="map-section">
+                        <h2>Our Location</h2>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.777228575672!2d121.03361831500636!3d14.67667798974962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b9c6c6c6c6c7%3A0x5e5e5e5e5e5e5e5e!2sRegalado%20Hwy%2C%20Novaliches%2C%20Quezon%20City%2C%20Metro%20Manila%2C%20Philippines!5e0!3m2!1sen!2sus!4v1697051234567!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </section>
@@ -1602,6 +1749,14 @@
                     console.log('FAILED...', error);
                     errorMessage.classList.add('visible');
                 });
+        });
+
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-item h3').forEach(item => {
+            item.addEventListener('click', () => {
+                const faqItem = item.parentElement;
+                faqItem.classList.toggle('active');
+            });
         });
     </script>
 </body>
