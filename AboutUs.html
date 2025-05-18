@@ -2354,15 +2354,20 @@
             }
         });
 
-        themeToggle.addEventListener('change', () => {
-            body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-        });
-
-        if (localStorage.getItem('theme') === 'dark') {
+        if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
+
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                body.classList.add('dark-theme');
+                localStorage.setItem('darkTheme', 'enabled');
+            } else {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('darkTheme', 'disabled');
+            }
+        });
 
         mobileMenuIcon.addEventListener('click', () => {
             sidebar.classList.toggle('active');
@@ -2460,6 +2465,22 @@
                 }
             });
         });
+        // Handle external and internal navigation links with loader
+document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Skip external links, mailto links, and links with target="_blank"
+        if (!this.href.includes(window.location.hostname) || 
+            this.href.startsWith('mailto:') || 
+            this.target === '_blank') return;
+        
+        e.preventDefault();
+        loaderOverlay.classList.add('active');
+        
+        setTimeout(() => {
+            window.location.href = this.href;
+        }, 150);
+    });
+});
     </script>
 </body>
 </html>
