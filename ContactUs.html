@@ -428,9 +428,9 @@
         }
 
         .dark-theme .customization-options .user-info {
-    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-    color: #e0e0e0; 
-}
+            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+            color: #e0e0e0; 
+        }
 
         .dark-theme .customization-options .user-info p {
             color: #e0e0e0;
@@ -755,6 +755,92 @@
             top: 15px;
         }
 
+        /* FAQ and Map Styles */
+        .additional-info {
+            max-width: 1300px;
+            margin: 50px auto;
+            padding: 0 30px;
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .faq-section, .map-section {
+            flex: 1;
+            min-width: 350px;
+        }
+
+        .faq-section h2, .map-section h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .faq-item h3 {
+            font-size: 20px;
+            color: #8B0000;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item h3::before {
+            content: '\f059';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #8B0000;
+        }
+
+        .faq-item p {
+            font-size: 16px;
+            color: #333;
+            display: none;
+            margin: 0;
+            padding-left: 30px;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        .map-section iframe {
+            width: 100%;
+            height: 400px;
+            border: 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-theme .faq-section h2, .dark-theme .map-section h2 {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .faq-item h3 {
+            color: #d7b15c;
+        }
+
+        .dark-theme .faq-item h3::before {
+            color: #d7b15c;
+        }
+
+        .dark-theme .faq-item p {
+            color: #d8dbe0;
+        }
+
+        .dark-theme .faq-item {
+            border-bottom: 1px solid #555;
+        }
+
         /* Media Queries for Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
@@ -841,6 +927,28 @@
                 top: 45px;
                 width: 220px;
             }
+
+            .additional-info {
+                flex-direction: column;
+                gap: 30px;
+                padding: 0 20px;
+            }
+
+            .faq-section h2, .map-section h2 {
+                font-size: 24px;
+            }
+
+            .faq-item h3 {
+                font-size: 18px;
+            }
+
+            .faq-item p {
+                font-size: 14px;
+            }
+
+            .map-section iframe {
+                height: 300px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -907,6 +1015,22 @@
             .customization-options {
                 top: 40px;
                 width: 200px;
+            }
+
+            .faq-section h2, .map-section h2 {
+                font-size: 22px;
+            }
+
+            .faq-item h3 {
+                font-size: 16px;
+            }
+
+            .faq-item p {
+                font-size: 14px;
+            }
+
+            .map-section iframe {
+                height: 250px;
             }
         }
 
@@ -1058,6 +1182,27 @@
             .customization-options select {
                 font-size: 10px;
                 padding: 3px;
+            }
+
+            .additional-info {
+                padding: 0 15px;
+                gap: 20px;
+            }
+
+            .faq-section h2, .map-section h2 {
+                font-size: 20px;
+            }
+
+            .faq-item h3 {
+                font-size: 16px;
+            }
+
+            .faq-item p {
+                font-size: 12px;
+            }
+
+            .map-section iframe {
+                height: 200px;
             }
 
             /* Hide account-customization when sidebar is active */
@@ -1226,6 +1371,32 @@
                             There was an error sending your message. Please try again later.
                         </div>
                     </div>
+                </div>
+            </section>
+            <!-- FAQ and Map Section -->
+            <section class="additional-info">
+                <div class="faq-section">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-item">
+                        <h3>How do I report a cybercrime incident?</h3>
+                        <p>You can report a cybercrime by using our contact form, emailing contraecrimecc@gmail.com, or messaging us on our social media platforms. Please provide detailed information about the incident, including dates, times, and any evidence, to help us assist you promptly.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>What types of cybercrimes does Contra E-Crime address?</h3>
+                        <p>We handle a wide range of cybercrimes, including phishing scams, identity theft, online fraud, hacking, malware distribution, and cyberbullying. Contact us to discuss your specific case and receive guidance.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How can I protect myself from online threats?</h3>
+                        <p>To stay safe online, use strong, unique passwords, enable two-factor authentication, avoid clicking suspicious links, and keep your software updated. Visit our News & Insights page for detailed tips and resources on cybersecurity.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Can I track the status of my reported case?</h3>
+                        <p>After reporting a case, you’ll receive a confirmation email with a reference number. Use this number to follow up via email or phone. We aim to provide updates as your case progresses, subject to privacy and legal constraints.</p>
+                    </div>
+                </div>
+                <div class="map-section">
+                    <h2>Our Location</h2>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.777228575672!2d121.03361831500636!3d14.67667798974962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b9c6c6c6c6c7%3A0x5e5e5e5e5e5e5e5e!2sRegalado%20Hwy%2C%20Novaliches%2C%20Quezon%20City%2C%20Metro%20Manila%2C%20Philippines!5e0!3m2!1sen!2sus!4v1697051234567!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </section>
         </main>
@@ -1602,6 +1773,14 @@
                     console.log('FAILED...', error);
                     errorMessage.classList.add('visible');
                 });
+        });
+
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-item h3').forEach(item => {
+            item.addEventListener('click', () => {
+                const faqItem = item.parentElement;
+                faqItem.classList.toggle('active');
+            });
         });
     </script>
 </body>
