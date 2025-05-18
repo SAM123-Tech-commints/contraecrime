@@ -1108,13 +1108,48 @@
         <nav class="sidebar" id="sidebar">
             <h1>Contra E-Crime</h1>
             <ul>
-                <li><a href="HomePage.html"><img src="https://i.imgur.com/OAHusQp.png" alt="Home">Home</a></li>
-                <li><a href="News.html"><img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">News & Insights</a></li>
-                <li><a href="SavedLaws.html"><img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">Saved Laws</a></li>
-                <li><a href="History.html"><img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">Search History</a></li>
-                <li><a href="ContactUs.html"><img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">Contact Us</a></li>
-                <li><a href="AboutUs.html"><img src="https://i.imgur.com/lktrzpa.png" alt="About Us">About Us</a></li>
-                <li><a href="index.html"><img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">Logout</a></li>
+                <li>
+                    <a href="HomePage.html">
+                        <img src="https://i.imgur.com/OAHusQp.png" alt="Home">
+                        Home
+                    </a>
+                </li>
+                <li>
+                   <a href="News.html" target="_self" onclick="return true;">
+                    <img src="https://i.imgur.com/FNALwXX.png" alt="News & Insights">
+                    News & Insights
+                </a>
+                </li>
+                <li>
+                    <a href="SavedLaws.html">
+                        <img src="https://i.imgur.com/VChoqhD.png" alt="Saved Laws">
+                        Saved Laws
+                    </a>
+                </li>
+                <li>
+                    <a href="History.html">
+                        <img src="https://i.imgur.com/cnaDfEq.png" alt="Search History">
+                        Search History
+                    </a>
+                </li>
+                <li>
+                    <a href="ContactUs.html">
+                        <img src="https://i.imgur.com/T7bI4RJ.png" alt="Contact Us">
+                        Contact Us
+                    </a>
+                </li>
+                <li>
+                    <a href="AboutUs.html">
+                        <img src="https://i.imgur.com/lktrzpa.png" alt="About Us">
+                        About Us
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <img src="https://i.imgur.com/2jjsgOq.png" alt="Logout">
+                        Logout
+                    </a>
+                </li>
             </ul>
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
@@ -1737,10 +1772,18 @@
     gsap.to(quizSection, { opacity: 1, scale: 1, duration: 0.5, delay: 0.5 });
 
     // Event listeners
-    mobileMenuIcon.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
-        playSound(clickSound);
-    });
+mobileMenuIcon.addEventListener('click', function() {
+    sidebar.classList.toggle('active');
+    const icon = mobileMenuIcon.querySelector('i');
+    if (sidebar.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+    playSound(clickSound);
+});
 
     themeToggle.addEventListener('change', () => {
         document.body.classList.toggle('dark-theme');
@@ -2142,11 +2185,22 @@
         clearInterval(timerInterval);
     }
 
-    // Initialize
-    if (localStorage.getItem('theme') === 'dark') {
+    // Initialize theme from localStorage
+    if (localStorage.getItem('darkTheme') === 'enabled') {
         document.body.classList.add('dark-theme');
-        themeToggle.checked = true;
+        document.getElementById('themeToggle').checked = true;
     }
+
+    // Theme toggle event listener
+    document.getElementById('themeToggle').addEventListener('change', function() {
+        if (this.checked) {
+            document.body.classList.add('dark-theme');
+            localStorage.setItem('darkTheme', 'enabled');
+        } else {
+            document.body.classList.remove('dark-theme');
+            localStorage.setItem('darkTheme', 'disabled');
+        }
+    });
 
     loaderOverlay.classList.add('active');
     setTimeout(() => {
