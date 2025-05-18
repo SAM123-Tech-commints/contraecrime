@@ -1311,15 +1311,15 @@
                 <div class="difficulty-options">
                     <div class="difficulty-card" data-difficulty="easy">
                         <div class="label">Easy</div>
-                        <div class="description">60 seconds per question, basic law questions.</div>
+                        <div class="description">40 seconds per question, basic law questions.</div>
                     </div>
                     <div class="difficulty-card" data-difficulty="medium">
                         <div class="label">Medium</div>
-                        <div class="description">45 seconds per question, mixed easy and scenario-based.</div>
+                        <div class="description">35 seconds per question, mixed easy and scenario-based.</div>
                     </div>
                     <div class="difficulty-card" data-difficulty="hard">
                         <div class="label">Hard</div>
-                        <div class="description">30 seconds per question, advanced details.</div>
+                        <div class="description">20 seconds per question, advanced details.</div>
                     </div>
                 </div>
                 <div class="start-modal-actions">
@@ -1357,7 +1357,7 @@
                     <div class="feature-card">
                         <div class="feature-icon">⏱️</div>
                         <h4>Time Limits</h4>
-                        <p>Easy: 60s | Medium: 45s | Hard: 30s per question</p>
+                        <p>Easy: 40s | Medium: 35s | Hard: 20s per question</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">✨</div>
@@ -2198,7 +2198,7 @@ function loadQuestion() {
         progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
         progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
 
-        timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+        timeLeft = selectedDifficulty === 'easy' ? 40 : selectedDifficulty === 'medium' ? 35 : 20;
         timerText.textContent = `${timeLeft}s`;
         timerCircle.style.strokeDashoffset = 0;
         questionStartTime = Date.now();
@@ -2246,7 +2246,7 @@ function updateTimer() {
     timeLeft--;
     timerText.textContent = `${timeLeft}s`;
     const circumference = 188;
-    const offset = circumference * (1 - timeLeft / (selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30));
+    const offset = circumference * (1 - timeLeft / (selectedDifficulty === 'easy' ? 40 : selectedDifficulty === 'medium' ? 35 : 20));
     timerCircle.style.strokeDashoffset = offset;
 }
 
