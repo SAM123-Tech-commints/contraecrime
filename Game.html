@@ -1985,52 +1985,56 @@ mobileMenuIcon.addEventListener('click', function() {
         loadQuestion();
     }
 
-function loadQuestion() {
-    try {
-        const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
-        if (currentQuestionIndex >= questionList.length) {
-            if (isRedemption) {
-                showResult();
-            } else {
-                showRedemptionModal();
+    function loadQuestion() {
+        try {
+            const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
+            if (currentQuestionIndex >= questionList.length) {
+                if (isRedemption) {
+                    showResult();
+                } else {
+                    showRedemptionModal();
+                }
+                return;
             }
-            return;
+
+            const question = questionList[currentQuestionIndex];
+            questionText.textContent = question.text;
+            options.innerHTML = '';
+            explanation.textContent = '';
+            explanation.classList.remove('visible');
+            nextBtn.classList.remove('visible');
+            exitGameBtn.classList.add('visible');
+
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
+                button.addEventListener('click', () => checkAnswer(option, question.answer));
+                options.appendChild(button);
+            });
+
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
+
+            timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
+            timerText.textContent = `${timeLeft}s`;
+            timerCircle.style.strokeDashoffset = 0;
+            questionStartTime = Date.now();
+
+            clearInterval(timerInterval);
+            if (!isFrozen) {
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+
+            extraTime1.disabled = false;
+            extraTime2.disabled = false;
+            timeFreeze.disabled = false;
+
+            console.log('Loaded question:', question.text);
+        } catch (error) {
+            console.error('Error loading question:', error);
         }
-
-        const question = questionList[currentQuestionIndex];
-        questionText.textContent = question.text;
-        options.innerHTML = '';
-        explanation.textContent = '';
-        explanation.classList.remove('visible');
-        nextBtn.classList.remove('visible');
-        exitGameBtn.classList.add('visible');
-
-        question.options.forEach(option => {
-            const button = document.createElement('button');
-            button.className = 'option-btn';
-            button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
-            button.addEventListener('click', () => checkAnswer(option, question.answer));
-            options.appendChild(button);
-        });
-
-        progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
-        progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
-
-        timeLeft = selectedDifficulty === 'easy' ? 60 : selectedDifficulty === 'medium' ? 45 : 30;
-        timerText.textContent = `${timeLeft}s`;
-        timerCircle.style.strokeDashoffset = 0;
-        questionStartTime = Date.now();
-
-        clearInterval(timerInterval);
-        if (!isFrozen) {
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-
-        console.log('Loaded question:', question.text);
-    } catch (error) {
-        console.error('Error loading question:', error);
     }
-}
 
     function updateTimer() {
         if (timeLeft <= 0) {
