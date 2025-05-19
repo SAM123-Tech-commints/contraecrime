@@ -403,7 +403,7 @@
         .customization-options .user-info p::before {
             content: attr(data-label);
             font-weight: 700;
-            color: #ff3333; 
+            color: #ff3333;
             margin-right: 5px;
         }
 
@@ -470,7 +470,7 @@
 
         .dark-theme .customization-options .user-info {
             background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-            color: #e0e0e0; 
+            color: #e0e0e0;
         }
 
         .dark-theme .customization-options .user-info p {
@@ -478,7 +478,7 @@
         }
 
         .dark-theme .customization-options .user-info p::before {
-            color: #ffeb3b; 
+            color: #ffeb3b;
         }
 
         .dark-theme .customization-options label,
@@ -686,80 +686,63 @@
         }
 
         .laws-content {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px 0;
         }
 
-        .laws-header {
+        .laws-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-        }
-
-        .laws-search-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 20px;
-        }
-
-        .laws-search-input {
-            width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .laws-search-input:focus {
-            border-color: #8B0000;
-        }
-
-        .laws-search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-            font-size: 18px;
-        }
-
-        .laws-sort-container {
-            display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 10px;
         }
 
-        .laws-sort-label {
+        .laws-controls select {
+            padding: 8px;
             font-size: 14px;
-            color: #333;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background-color: #fff;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .laws-sort-select {
-            padding: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
+        .dark-theme .laws-controls select {
+            background-color: #3a3b3c;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+
+        .laws-controls select:focus {
+            outline: none;
+            border-color: #8B0000;
+        }
+
+        .laws-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .law-card {
             background-color: #fff;
-            border: 1px solid #ddd;
             border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 15px;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
             cursor: pointer;
         }
 
         .law-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .dark-theme .law-card {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .law-card h3 {
@@ -769,79 +752,41 @@
             transition: color 0.3s ease;
         }
 
+        .dark-theme .law-card h3 {
+            color: #e0e0e0;
+        }
+
         .law-card p {
             font-size: 14px;
             color: #666;
-            line-height: 1.5;
             margin: 0 0 10px;
+            line-height: 1.5;
             transition: color 0.3s ease;
-        }
-
-        .law-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .law-tag {
-            background-color: #f0f0f0;
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .law-tag:hover {
-            background-color: #8B0000;
-            color: #fff;
-        }
-
-        .dark-theme .laws-search-input {
-            background-color: #3a3b3c;
-            border-color: #555;
-            color: #e0e0e0;
-        }
-
-        .dark-theme .laws-search-input:focus {
-            border-color: #ff6b6b;
-        }
-
-        .dark-theme .laws-search-icon {
-            color: #b0b0b0;
-        }
-
-        .dark-theme .laws-sort-label {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .laws-sort-select {
-            background-color: #3a3b3c;
-            border-color: #555;
-            color: #e0e0e0;
-        }
-
-        .dark-theme .law-card {
-            background-color: #1e1e1e;
-            border-color: #444;
-        }
-
-        .dark-theme .law-card h3 {
-            color: #e0e0e0;
         }
 
         .dark-theme .law-card p {
             color: #b0b0b0;
         }
 
+        .law-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .law-tag {
+            background-color: #f0f0f0;
+            color: #333;
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 12px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
         .dark-theme .law-tag {
             background-color: #444;
             color: #e0e0e0;
-        }
-
-        .dark-theme .law-tag:hover {
-            background-color: #ff6b6b;
-            color: #fff;
         }
 
         .card-container {
@@ -1233,6 +1178,10 @@
                 top: 45px;
                 width: 220px;
             }
+
+            .laws-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
         }
 
         @media (max-width: 768px) {
@@ -1287,6 +1236,19 @@
             .customization-options {
                 top: 40px;
                 width: 200px;
+            }
+
+            .laws-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .laws-controls select {
+                width: 100%;
+            }
+
+            .laws-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1404,19 +1366,6 @@
             .customization-options select {
                 font-size: 10px;
                 padding: 3px;
-            }
-
-            .laws-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .laws-search-container {
-                max-width: 100%;
-            }
-
-            .laws-sort-container {
-                margin-top: 10px;
             }
         }
     </style>
@@ -1539,843 +1488,33 @@
                 </div>
 
                 <div class="news-content active">
-                     <!-- Page 1 Articles -->
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/LgZmTZb.jpeg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>False information! Masungi Georeserve denies labor dispute allegations</h2>
-            <div class="news-meta">BILYONARYO.COM | May 19, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>The operator of Masungi Georeserve, a well-known conservation site in the Philippines, has strongly denied allegations related to a long-running labor dispute involving a former caretaker.</p>
-        <p>The case, which has lasted for seven years, involves an alleged former employee who filed a claim against First United Constructors Corporation and Gina Lopez Dumaliang for ₱4,700 in back pay.</p>
-        <p>The dispute has drawn public attention following commentary by columnist Victor Agustin, who raised concerns about labor practices at the site.</p>
-        <p>RELATED STORY: ADVERTISEMENT Agustin noted that although the caretaker won favorable rulings from the Court of Appeals and the National Labor Relations Commission (NLRC), he declined reinstatement andsought work elsewhere, suggesting potential issues in how the organization treats its workers.</p>
-        <p>Masungi issued a statement vehemently denying the claims.</p>
-        <p>“This is false information! This person has never been an employee of Masungi, nor was he involved in Masungi in any way,” the statement said, calling on the public and media to help combat disinformation against environmental defenders.</p>
-        <a href="https://bilyonaryo.com/2025/05/19/false-information-masungi-georeserve-denies-labor-dispute-allegations/nature/" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/RMtu4Px.png" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>Google eyes deeper ties with Phl on digital infra, workforce dev't</h2>
-            <div class="news-meta">Raffy Ayeng - Daily Tribune | May 19, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>BUSINESS Google eyes deeper ties with Phl on digital infra, workforce dev't DTI Raffy Ayeng Published on: 19 May 2025, 17:19 The Department of Trade and Industry (DTI) is exploring a strategic partnership with Google to strengthen the Philippines’ digital infrastructure and workforce capabilities.</p>
-        <p>Trade Secretary Cristina Roque met with Google Vice President and Global Head for Government Affairs and Public Policy Karan Bhatia on 15 May in Jeju, South Korea, during the APEC Ministers Responsible for Trade Meeting.</p>
-        <p>Discussions centered on advancing data center infrastructure, enhancing internet connectivity, and expanding cooperation in digital skills development.</p>
-        <p>“The Philippines stands ready to be a vital partner in the global digital value chain. With our young, tech-savvy population and rapidly strengthening infrastructure, we are laying the foundation for inclusive innovation and sustainable growth,” said Roque.</p>
-        <p>ADVERTISEMENT The trade secretary highlighted the country’s growing role in electronics, semiconductors, and machinery exports, as well as its potential to support advanced manufacturing operations for major tech firms like Google.</p>
-        <p>She also cited Google’s contributions to subsea internet cable investments and support for the IT-BPM sector since it began operations in the country in 2013.</p>
-        <p>With 110 million citizens and strong digital habits, the Philippines is becoming a key destination for hyperscaler firms.</p>
-        <p>Roque pointed to government incentives through the CREATE MORE law and the country’s robust digital infrastructure, including 19 international subsea cables, 13 cable landing stations, over 840,000 km of domestic fiber optics, and 25 data centers with a total rack capacity of 19,000.</p>
-        <p>Hyperscalers refer to large-scale data centers designed to handle massive volumes of data and support high-demand applications.</p>
-        <p>Unlike traditional on-site data centers, hyperscalers are built for scalability, enabling tech companies to deliver cloud services, storage, and computing power on a much larger and more efficient scale.</p>
-        <p>These facilities are essential for supporting global digital platforms, including streaming, e-commerce, and enterprise solutions.</p>
-        <p>Roque reaffirmed government support for hyperscaler growth through policies on talent development, intellectual property protection, and data privacy and cybersecurity.</p>
-        <p>She also praised Google’s partnership with DTI on the Google Career Certificates program, now being implemented through more than 1,300 Negosyo Centers across 16 regions.</p>
-        <p>The secretary called for deeper collaboration to enhance digital programs for MSMEs, especially women and youth entrepreneurs.</p>
-        <a href="https://tribune.net.ph/2025/05/19/google-eyes-deeper-ties-with-phl-on-digital-infra-workforce-devt" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/oX2gms3.jpeg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>Marcos to PMA graduates: Stay mentally sharp amid cyber threats</h2>
-            <div class="news-meta">Ruth Abbey Gita-Carlos - PNA | May 17, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>MANILA – President Ferdinand R. Marcos Jr. on Saturday called on 266 members of the Philippine Military Academy (PMA) “Siklab-Laya” Class of 2025 to stay “mentally sharp” amid the growing threat of cyber warfare.</p>
-        <p>Speaking at the commencement rites at Fort del Pilar in Baguio City, Marcos reminded the cadets that modern warfare now extends beyond traditional domains.</p>
-        <p>“Beyond recognition, the most important lesson you carry is the understanding that warfare today goes beyond land, seas, and skies,” he said, noting that the new battleground takes place in cyberspace.</p>
-        <p>“We have battles that are invisible to radar – ones that take place in cyberspace, in protecting information, in safeguarding the environment, and in helping communities during crises.”</p>
-        <p>He reminded the graduates that physical strength and agility are no longer enough and “what we need just as much are your mental sharpness and your compassion.”</p>
-        <p>Marcos advised them to apply what they have learned during their training and courses in the academy, especially in such areas as artificial intelligence, drone technology, strategic thinking, and ethical leadership.</p>
-        <a href="https://www.pna.gov.ph/articles/1250314" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/rqB93ok.jpeg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>Study: PH cybersecurity readiness remains low at 6%</h2>
-            <div class="news-meta">Newsbytes.PH | May 16, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>According to the 2025 Cybersecurity Readiness Index of tech giant Cisco, only 6 percent of organizations in Philippines have achieved the “Mature” level of readiness required to effectively withstand today’s cybersecurity threats.</p>
-        <p>This is a slight increase from last year’s rankings, in which 1% of organizations in Philippines were designated as Mature.</p>
-        <p>This demonstrates that despite a slight improvement from last year, cybersecurity preparedness remains low as hyperconnectivity and AI introduce new complexities for security practitioners, the report said.</p>
-        <p>The study said that the lack of cybersecurity readiness in Philippines is alarming as 75% of respondents anticipate business disruptions from cyber incidents within the next 12 to 24 months.</p>
-        <p>AI is revolutionizing security and escalating threat levels, with 8 in 10 organizations (85%) facing AI-related security incidents last year, it noted.</p>
-        <p>However, only 71% of respondents are confident their employees fully understand AI related threats, and 59% believe their teams fully grasp how malicious actors are using AI to execute sophisticated attacks. This awareness gap leaves organizations critically exposed, the report added.</p>
-        <p>“AI opens up new possibilities but also adds complexity to an already challenging security landscape. Over the past year, we have seen companies worldwide, including those in the Philippines, continue to grapple with evolving threats like the rise of shadow AI, talent shortages, and complex security infrastructures. This underscores the need for a different approach to security— one that not only leverages AI for security but also ensures AI itself is secure and scalable,” said Zaza Soriano-Nicart, managing director of Cisco Philippines.</p>
-        <a href="https://newsbytes.ph/2025/05/16/study-ph-cybersecurity-readiness-remains-low-at-6/" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/9Jd8mgr.png" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>NSA: Defense pact with Germany a milestone in PH's security efforts</h2>
-            <div class="news-meta">Priam Nepomuceno - PNA | May 16, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>MANILA – National Security Adviser (NSA) Eduardo Año on Friday hailed the signing of the Arrangement Concerning Defense Cooperation between the Philippines and Germany, touting it as a "significant milestone" in the country's ongoing efforts to strengthen its national defense and security posture.</p>
-        <p>"This agreement, signed by Defense Secretary Gilberto Teodoro Jr. and German Federal Minister of Defence Boris Pistorius in Berlin, represents a deepening of the longstanding relationship between our two nations, building on the 1974 Administrative Agreement that enabled training opportunities for members of the Armed Forces of the Philippines (AFP) in Germany," Año said in a press statement.</p>
-        <p>Año, who is also director general of the National Security Council, said the expanded scope of this new arrangement covers cybersecurity, defense armament and logistics.</p>
-        <p>It also includes United Nations peacekeeping efforts which reflect a shared commitment to mutual security, regional and global stability.</p>
-        <p>"As we continue to navigate complex regional challenges, particularly in the West Philippine Sea, this agreement underscores the importance of fostering robust defense and security partnerships with like-minded nations that uphold the rules-based international order, sovereignty, and peaceful coexistence among nations," Año said.</p>
-        <a href="https://www.pna.gov.ph/articles/1250265" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/Wg5Ev0i.jpeg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>Philippines poll body records over 3M cyberattacks during mid-term elections</h2>
-            <div class="news-meta">Anadolu staff - AA | May 15, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>ANKARA – The Philippines Commission on Elections (COMELEC) website and precinct finder apps recorded over 3 million cyberattacks aimed at taking over the systems and to inject malicious information during this week's crucial mid-term polls, local media reported Thursday.</p>
-        <p>They were the subject of cyberattacks from May 11-14, covering the eve of the elections to the canvassing of votes, the Manila Times reported, citing Comelec spokesman John Rex Laudiangco.</p>
-        <p>Laudiangco said the COMELEC precinct finder registered 76.81 million visits, with at least 1.45 million identified as hacking attacks.</p>
-        <p>The COMELEC website registered 113.41 million visits with mitigated confirmed attacks of 1.75 million, he added.</p>
-        <p>None of the attempts were successful because of the security measures and constant monitoring by the Comelec Cybersecurity Division and the Department of Information and Communications Technology (DICT), he added.</p>
-        <p>Although most of the hacking attempts appeared to originate from abroad, the Comelec cybersecurity experts were convinced that the hackers were actually based in the Philippines, using foreign locations to mislead authorities, Laudiangco said.</p>
-        <a href="https://www.aa.com.tr/en/asia-pacific/philippines-poll-body-records-over-3m-cyberattacks-during-mid-term-elections/3568303" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/OKZlkKh.jpeg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>Voyeurism cases down 39% in first 4 months of 2025</h2>
-            <div class="news-meta">Christopher Lloyd Caliwan - PNA | May 14, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>MANILA – The Philippine National Police Anti-Cybercrime Group (PNP-ACG) said incidents of voyeurism in the first four months of 2025 have decreased by 39 percent.</p>
-        <p>In a statement on Tuesday, PNP-ACG acting director Brig. Gen. Bernard Yang said the 86 incidents of voyeurism logged from Jan. 1 to May 1 are lower than the 141 recorded in the same period last year.</p>
-        <p>Yang attributed the decrease to their ongoing public awareness initiatives through a series of dialogues, seminars, and informative social media campaigns.</p>
-        <p>"These efforts have contributed to a decline in cybercrimes, particularly photo and video voyeurism, as more people become aware of the risks associated with sharing explicit content online," Yang said.</p>
-        <p>He said the ACG continues to boost its proactive cyber patrolling and digital literacy campaign in line with President Ferdinand R. Marcos Jr.’s directive to beef up the government’s anti-cybercrime efforts.</p>
-        <p>“The decrease in reported cybercrime cases reflects our collaborative efforts in promoting safer online environment, especially for the youth, who are among the most vulnerable to crimes like photo and video voyeurism. “We assure the public that the ACG remains fully committed to its mandate of eradicating cybercrime,” he said.</p>
-        <p>Yang said from January to March 2025, the PNP ACG conducted a total of 360 police operations, including 193 entrapment operations and 131 service of warrants of arrest, which led to the arrest of 369 individuals involved in various cybercriminal activities.</p>
-        <a href="https://www.pna.gov.ph/articles/1250043" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/q47cshi.jpeg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>369 arrested for cybercrimes in first quarter of 2025</h2>
-            <div class="news-meta">Jason Sigales - INQUIRER.net | May 14, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>MANILA, Philippines — The Philippine National Police Anti-Cybercrime Group (PNP ACG) arrested 369 individuals for cybercrimes in the first quarter of 2025.</p>
-        <p>The arrests were a result of 360 police operations from January to March 2025, the PNP ACG said in a statement on Tuesday night.</p>
-        <p>Among the offenses allegedly committed by the suspects were the sale of registered subscriber identity module (SIM) cards and prohibited devices like text blast machines and international mobile subscriber identity (IMSI) catchers, the police said.</p>
-        <a href="https://newsinfo.inquirer.net/2060465/369-arrested-for-cybercrimes-in-first-quarter-of-2025" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/TOGHUdD.png" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>More than 1.2-M hacking attempts on precinct finder page monitored: Comelec</h2>
-            <div class="news-meta">Lyza Aquino - ABS-CBN News | May 12, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>MANILA -- The Commission on Elections (Comelec) recorded around 1.27-million attempted hacking attacks on its Precinct Finder Page on Monday, the day of the midterm elections.</p>
-        <p>Comelec Spokesperson Atty. John Rex Laudiangco also said that these incidents are categorized as DIDOS or deliberated denial of service, which is a way or "crowding" the webpage so that voters can't access the site.</p>
-        <p>"Meron pong 43.7 million na browse at visits sa webpage na yan. Out of the 43 million na yan, 14.11 million yung legitimate na nag-search ng kanilang presinto. So the rest ay DIDOS o deliberated denial of service. Talagang finaflood, kina-crowd ang webpage natin para hindi magamit ng mga kababayan natin. May deliberate attack," he said.</p>
-        <p>"1.27 million po doon ay mitigated attack totoong hacking attempts na na-mitigate ng ating cyber security division so ganyan kabigat ang kinakaharap natin," he added.</p>
-        <a href="https://www.abs-cbn.com/news/nation/2025/5/12/more-than-1-2-m-hacking-attempts-on-precinct-finder-page-monitored-comelec-2329" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-<div class="news-item" data-page="1">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://i.imgur.com/GInuOFa.jpeg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>Cyber wake-up Call: Only 6% of PH firms are ready for AI-era threats</h2>
-            <div class="news-meta">BILYONARYO.COM | May 11, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>Only 6% of organizations in the Philippines are considered fully equipped to counter modern cybersecurity threats, according to Cisco’s 2025 Cybersecurity Readiness Index released on Saturday.</p>
-        <p>The figure marks a slight improvement from 1% last year, but overall readiness remains low amid a growing threat landscape driven by artificial intelligence (AI) and increased connectivity.</p>
-        <p>AI has emerged as both a tool for strengthening cybersecurity and a vector for new threats. Cisco said 85% of Philippine firms reported experiencing AI-related security incidents in the past year. However, only 71% of respondents believe their employees understand AI-related threats, while just 59% think their teams grasp how malicious actors use AI to conduct attacks.</p>
-        <p>“As AI transforms the enterprise, we are dealing with an entirely new class of risks at unprecedented scale — putting even more pressure on our infrastructure and those who defend it,” said Jeetu Patel, Cisco’s chief product officer.</p>
-        <a href="https://bilyonaryo.com/2025/05/11/cyber-wake-up-call-only-6-of-ph-firms-are-ready-for-ai-era-threats/technology/" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-    <!-- Page 2 Articles -->
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://i.imgur.com/xsfbBf6.jpeg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>PNP: 16 cases vs fake news so far pending in courts</h2>
-                <div class="news-meta">Jason Sigales - INQUIRER.net | May 10, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA, Philippines — Sixteen cases against fake news filed by the Philippine National Police (PNP) so far are pending in courts.</p>
-            <p>This was according to data from the PNP Anti-Cybercrime Group (ACG) shared by Public Information Office Chief Col. Randulf Tuaño at the Saturday News Forum in Quezon City.</p>
-            <p>The cases were filed as early as the time of then-PNP Chief Gen. Benjamin Acorda Jr. up until the formation of the agency’s Joint Anti-Fake News Action Committee (JAFNAC), Tuaño added.</p>
-            <p>Data on the profiles, numbers and locations of the respondents in these cases was not immediately available from the PNP.</p>
-            <p>(Coordination became easier. It’s not only dependent on the ACG, but it’s now with the committee for easy coordination and investigation of fake news.)</p>
-            <a href="https://newsinfo.inquirer.net/2059844/pnp-16-cases-vs-fake-news-so-far-pending-in-courts" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
+                    <!-- Page 1 Articles -->
+                    <div class="news-item" data-page="1">
+                        <div class="news-header" onclick="toggleDetails(this)">
+                            <img src="https://i.imgur.com/LgZmTZb.jpeg" alt="News Image" class="news-image">
+                            <div class="news-title">
+                                <h2>False information! Masungi Georeserve denies labor dispute allegations</h2>
+                                <div class="news-meta">BILYONARYO.COM | May 19, 2025</div>
+                            </div>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="news-details">
+                            <p>The operator of Masungi Georeserve, a well-known conservation site in the Philippines, has strongly denied allegations related to a long-running labor dispute involving a former caretaker.</p>
+                            <p>The case, which has lasted for seven years, involves an alleged former employee who filed a claim against First United Constructors Corporation and Gina Lopez Dumaliang for ₱4,700 in back pay.</p>
+                            <p>The dispute has drawn public attention following commentary by columnist Victor Agustin, who raised concerns about labor practices at the site.</p>
+                            <p>RELATED STORY: ADVERTISEMENT Agustin noted that although the caretaker won favorable rulings from the Court of Appeals and the National Labor Relations Commission (NLRC), he declined reinstatement and sought work elsewhere, suggesting potential issues in how the organization treats its workers.</p>
+                            <p>Masungi issued a statement vehemently denying the claims.</p>
+                            <p>“This is false information! This person has never been an employee of Masungi, nor was he involved in Masungi in any way,” the statement said, calling on the public and media to help combat disinformation against environmental defenders.</p>
+                            <a href="https://bilyonaryo.com/2025/05/19/false-information-masungi-georeserve-denies-labor-dispute-allegations/nature/" target="_blank" class="read-more">Read more</a>
+                        </div>
+                    </div>
 
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://files01.pna.gov.ph/category-list/2025/05/09/050925-pco-secretary-jay-ruiz-during-threat-monitoring-center-launch-via-raymond-dela-cruz.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>24/7 threat monitoring center launched vs. online disinformation</h2>
-                <div class="news-meta">Raymond Carl Dela Cruz - PNA | May 9, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA – The inter-agency ‘Task Force KKK (Katotohanan, Katapatan, Katarungan) sa Halalan’ on Friday launched its new threat monitoring center that seeks to combat online disinformation and other election violations.</p>
-            <p>During the launching ceremony at the Cybercrime Investigation and Coordinating Center (CICC) office in Diliman, Quezon City, Presidential Communications Office (PCO) Secretary Jay Ruiz said the facility seeks to protect the integrity of the elections.</p>
-            <p>“Elections are the bedrock of democracy. President Ferdinand R. Marcos Jr. has issued a directive to make this election clean and fair. It aims to safeguard the integrity of the 2025 national and local elections,” Ruiz said.</p>
-            <p>He said there are reports of foreign state-sponsored groups that are attempting to influence the country’s elections.</p>
-            <p>“Lalo tayong mag-ingat dahil eleksyon po ito. Ang pino-protektahan natin dito ay boto ng bawat Pilipino. Magkaisa po tayo, labanan natin ang fake news (Let’s be extra careful because this is the elections. We’re protecting the vote of every Filipino. Let’s work together to combat fake news),” Ruiz said.</p>
-            <p>Analysts from various government agencies are housed within the facility and are tasked with gathering reports of disinformation or ‘fake news,’ malicious artificial intelligence (AI)-generated content, and other election violations under Commission on Elections (Comelec) Resolution No. 1164.</p>
-            <p>After gathering reports, they will use their tools to determine whether an online post is false and considered a violation.</p>
-            <p>Reports of vote-buying are said to be addressed within an hour, AI-generated content is detected within minutes using software tools, while disinformation posts are flagged, and a  to date, Task Force KKK has partnered with Meta, Google, TikTok, X, and other online platforms for the quick takedown of misinformation.</p>
-            <p>In cases where disinformation has already spread, the task force will issue statements debunking false narratives.</p>
-            <p>On the other hand, Comelec Commissioner Nelson Celis clarified that posts that are not found to violate Resolution No. 1164 will not be taken down in respect of freedom of speech.</p>
-            <p>“Ang online disinformation as an election offense ay may penalty of one to a maximum of six years imprisonment. Kaya kayong mga troll farms magtago-tago na kayo. Meron kaming tools para ma-trace ang origin ng mga posts na yan (Online disinformation as an election offense is penalized by one to six years imprisonment. That’s why troll farms should begin hiding, we have tools to trace the origin of such posts),” Celis said.</p>
-            <p>He added Comelec’s efforts to combat online disinformation on the elections began in 2023 as ‘Task Force Kontra Fake News.’</p>
-            <p>In Malacañang, Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro said the 24/7 threat monitoring center is proof that the government acts quickly and is united when the truth is at stake.</p>
-            <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin at tapusin ang (It is a real-time digital command post ready to identify, deter, and end) online misinformation and disinformation,” Castro said in a press briefing.</p>
-            <a href="https://www.pna.gov.ph/articles/1249812" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://od2-image-api.abs-cbn.com/prod/20250509100544/b133303cc8969c51ebb168b185009a33551d1337a5d044e902fd445e55508a3c.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Halalan Threat Monitoring Center to fight 'fake news'</h2>
-                <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA — The Commission on Elections-led Task Force KKK sa Halalan has formally opened its Threat Monitoring Center on Friday, a few days ahead of the 2025 midterm polls.</p>
-            <p>Task Force KKK, which stands for Katotohanan, Katapatan, Katarungan, aims to push for truthful, honest and fair polls this coming Monday, May 12, 2025.</p>
-            <p>The Threat Monitoring Center is an inter-agency center with employees from Comelec, Department of Information and Communications Technology, Cybercrime Investigation and Coordinating Center, Philippine National Police- Anti-Cybercrime Group, National Bureau of Investigation, and the National Intelligence Coordinating Agency.</p>
-            <p>This is also supported by various election watchdogs as well as social media platforms like Meta for Facebook, TikTok, Google, and X formerly Twitter.</p>
-            <p>They will monitor and verify online posts and social media messages that could violate election laws.</p>
-            <p>Social media companies vowed to take down posts if proven that these have "fake news" content.</p>
-            <p>Presidential Communications Office Secretary Jay Ruiz said the center will be a big help to fight misinformation and disinformation during and even after the elections on Monday.</p>
-            <p>“We now have the plague of disinformation particularly thorugh fake accounts, bots, and deceptive online practice…. Marami malilinlang, maraming maloloko. Ito po ang pineprevent natin dahil dito sa KKK,” Ruiz said.</p>
-            <p>Ruiz urged social media platforms to comply and to respond quickly since a single fake news can affect the public.</p>
-            <a href="https://www.abs-cbn.com/news/nation/2025/5/9/halalan-threat-monitoring-center-to-fight-fake-news-1746" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://i.imgur.com/bKFkUHf.jpeg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>PBBM directs DICT to monitor threats to May 12 elections</h2>
-                <div class="news-meta">PND - PIA | May 9, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>With his administration’s commitment to ensuring a peaceful, clean, and fair elections for the nation’s future, President Ferdinand R. Marcos Jr. has ordered government agencies to monitor possible digital threats to the May 12 midterm elections around the clock.</p>
-            <p>Presidential Communications Office Undersecretary and Palace Press Officer Claire Castro also said the Department of Information and Communications Technology (DICT) Cybercrime Investigation and Coordinating Center is closely working with the Commission on Elections (COMELEC).</p>
-            <p>Castro said the DICT and COMELEC collaboration and cooperation would help establish a real-time digital command and ensure honest, orderly, and peaceful elections.</p>
-            <p>“Ito ay isang real time digital command post na handang tukuyin, pigilin, at tapusin ang online misinformation and disinformation,” the Palace Press Officer said.</p>
-            <p>Castro noted that, “Kaisa ang administrasyon ni Pangulong Marcos Jr., ating itataguyod ang isang halalang mapayapa, malinis at makatarungan para sa bayan para sa kinabukasan at para sa isang Bagong Pilipinas.”</p>
-            <p>For the May 12, 2025, midterm elections, the Comelec formed Task Force Katotohanan, Katapatan, at Katarungan sa Halalan (Task Force KKK sa Halalan) to monitor election threats.</p>
-            <p>The unprecedented joint DICT-COMELEC threat monitoring center will operate for two days to ensure the smooth and credible conduct of Monday’s elections.</p>
-            <p>In a briefing on Friday, Castro said the joint initiative manifests the government’s commitment to safeguard the truth.</p>
-            <p>Castro also said election watchdogs are coordinating with COMELEC to ensure the peaceful and honest conduct of the May 12 elections.</p>
-            <p>“Para sa hangaring malinis at tapat na halalan, nagsama-sama ang lahat ng election watchdogs mula sa mga pribadong organisasyon, simbahan, kabataan at iba pang sektor,” Castro said.</p>
-            <p>“Sa kanilang mahigpit na pagbabantay, matitiyak na ang bawat boto ay mabibilang nang tama, at ang bawat boses ng mga mamamayan ay maririnig,” Castro said.</p>
-            <p>Castro added that the Philippine National Police (PNP) assured the public that it is 100 percent ready for the 2025 national and local elections.</p>
-            <p>Quoting Philippine National Police Chief Gen. Rommel Marbil, Castro said the PNP’s commitment is to serve the Filipino people, not the politicians, and continue with its duty to protect the sanctity of the vote.</p>
-            <a href="https://pia.gov.ph/pbbm-directs-dict-to-monitor-threats-to-may-12-elections/" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://od2-image-api.abs-cbn.com/prod/20250509100528/c4db0490353238e4d1868ff8183a43cf8d44c32929c18e0e00d88ae7baf2a65e.jpg?w=306&h=204" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Cyber terrorists? Gov't mulls new label on 'fake news' peddlers</h2>
-                <div class="news-meta">Jekki Pascual - ABS-CBN News | May 9, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA — The Philippine government is now studying whether people who spread "fake news" or disinformation and misinformation can be classified as cyber terrorists, similar to what is done in other countries.</p>
-            <p>Presidential Communications Office Secretary Jay Ruiz said there is an ongoing study on whether they will move towards that direction, especially with what he calls a plague of disinformation now happening. He clarified however, that this will only apply to fake news peddlers whose posts affect national security or bigger issues that could affect the public.</p>
-            <p>“Pinag-iisipan po namin ng DICT na ihanay sa mga cyber terrorist yung mga ganyang nagpapakalat ng sobrang masamang impormasyon sa utak ng ating mga kababayan,” he said.</p>
-            <p>This comes as Ruiz led the opening of the Threat Monitoring Center of the Commission on Elections with the help of various agencies, including the Department of Information and Communications Technology.</p>
-            <p>Comelec Commissioner Nelson Celis warned fake news peddlers that they have a way to check and determine the origin of fake news and that there is a prison sentence of up to 6 years for those proven guilty of spreading lies online.</p>
-            <p>“Pagna-trace kayo mga troll farm kayo, mag-ingat kayo, magtago na kayo, umalis na kayo ng bansa dahil election offense po yan. One year ang pinakamababa, six years max. Matrace namin sino yung origin hanggang kumakalat. Meron kaming tools at ma trace naming troll farms niyo,” said Celis.</p>
-            <p>However, officials also warned that one of the biggest threats is misinformation and disinformation coming from other countries or based overseas. They have monitored some of these cases and urged the public not to believe immediately in any social media posts from unknown or suspicious accounts.</p>
-            <p>“Isa pang nakakabahalang kumakalat na balita sa Reuters tungkol sa mga foreign companies, mga nasa ibang bansa na nag mamanipulate ditto sa darating na halalan,” Ruiz said.</p>
-            <p>DICT Asec. Aboy Paraiso added, “When you see fake news, we have tools to see where they came from and it’s outside interference that really hampers, threatens these elections.”</p>
-            <p>Officials now urge the public to be vigilant as fake news posts are rampant, both election-related and not.</p>
-            <a href="https://www.abs-cbn.com/news/technology/2025/5/9/gov-t-mulls-classifying-fake-news-peddlers-as-cyber-terrorists-1742" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://files01.pna.gov.ph/category-list/2022/07/25/20220428110552.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>PNP-ACG nabs 153 cybercrime suspects in April</h2>
-                <div class="news-meta">Christopher Lloyd Caliwan - PNA | May 8, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA – The Philippine National Police Anti-Cybercrime Group (PNP-ACG) operatives arrested 153 persons for cybercrimes nationwide in April, a police official said Thursday.</p>
-            <p>ACG Director Brig. Gen. Bernard Yang said the group also rescued 11 minor victims of online sexual abuse and trafficking in persons in 159 operations.</p>
-            <p>Yang said the operatives conducted nine entrapment operations against fake dentists, resulting in the arrest of 14 individuals, in coordination with the Philippine Dental Association.</p>
-            <p>He said the operations were the result of the PNP-ACG’s proactive cyber patrolling.</p>
-            <p>“Actually, marami na pong nagbe-venture (many have been venturing) into this kind of illegal activity at nakita nilang medyo lucrative itong illegal business na ito (and we found it is a lucrative business),” Yang said in a media interview at Camp Crame.</p>
-            <p>One of those arrested was a 25-year-old man caught in the act of installing dental braces on a police officer posing as a patient inside a hotel in Cotabato City.</p>
-            <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid
-              <p>Yang said the suspect had no formal training or education in dentistry and was self-taught through online resources. Most of his clients were students who paid minimal fees for the procedures.</p>
-            <p>He warned the public about the risks of getting procedures from unlicensed individuals, even if these cost cheaper.</p>
-            <p>"These fake dentists offering service without a license can cause serious risks, including health complications, financial loss, the spread of infections, and long-term damage to your teeth. If you are aware of anyone offering unauthorized dental services, report it immediately to the nearest ACG office for appropriate action," he said. (PNA)</p>
-            <a href="https://www.pna.gov.ph/articles/1249660" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://insiderph.com/uploads/articles/thumb_cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector-1-561x421.webp" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>CIBI’s Fraud Bureau leads cybercrime defense push in financial sector</h2>
-                <div class="news-meta">Corrie S. Narisma - InsiderPH | May 7, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>With cybercrime incidents in the Philippines tripling to 10,004 in 2024, the need for stronger industry collaboration has never been more urgent.</p>
-            <p>Recognizing this growing threat, CIBI Information Inc., the country’s first and only local credit bureau, has officially launched the Fraud Bureau, a pioneering initiative aimed at uniting the financial sector against fraud.</p>
-            <p>According to the Cybercrime Investigation and Coordinating Center (CICC), the sharp increase in digital threats underscores the necessity for a coordinated, data-driven response. CIBI’s Fraud Bureau seeks to do just that—offering a secure platform for banks, fintech companies, and financial institutions to share information on suspicious applicant behavior, blacklist data, and real-time application trends.</p>
-            <p>The Fraud Bureau’s primary objective is to create a unified intelligence-sharing ecosystem that promotes proactive fraud detection, rapid identification of risks, and robust cybercrime prevention. By pooling insights and resources, members of the Bureau can build stronger defenses and foster transparency and trust in the Philippine financial system.</p>
-            <p>“The significant increase in fraudulent activity highlights the urgent need for coordinated action,” said CIBI president and CEO Pia Arellano. “CIBI recognizes that data-driven collaboration is essential to tackling fraud. This initiative strengthens industry-wide defenses and supports greater trust and transparency in our financial ecosystem.”</p>
-            <p>As the nation’s leading credit reporting agency, CIBI has long championed financial inclusion and informed decision-making. The Fraud Bureau aligns with this mission by empowering financial institutions to combat fraud while protecting consumers and promoting sustainable fintech innovation. — Ed: Corrie S. Narisma</p>
-            <a href="https://insiderph.com/cibis-fraud-bureau-leads-cybercrime-defense-push-in-financial-sector" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://media.philstar.com/photos/2025/05/06/fake-news_2025-05-06_21-38-06.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Vlogger charged over fake news</h2>
-                <div class="news-meta">Emmanuel Tupas - The Philippine Star | May 7, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA, Philippines — Criminal charges were filed yesterday against a vlogger for allegedly spreading false information about a supposed police raid on the house of former president Rodrigo Duterte in Davao City.</p>
-            <p>Members of the Davao City police and Anti-Cybercrime Group filed the complaint against the vlogger for allegedly violating Article 154 of the Revised Penal Code or the unlawful use of means of publication and unlawful utterances in relation to Republic Act 10175 or the Cybercrime Prevention Act.</p>
-            <p>The Philippine National Police withheld the identity of the vlogger, who posted on social media on April 30 that 30 members of the PNP Criminal Investigation and Detection Group and 90 Special Action Force commandos raided the house of Duterte.</p>
-            <p>Due to the false information, hundreds of Duterte’s supporters rushed to his property.</p>
-            <p>Col. Randulf Tuano, PNP public information officer, said the PNP would disclose the vlogger’s identity once an arrest warrant is issued against the respondent.</p>
-            <a href="https://www.philstar.com/nation/2025/05/07/2441122/vlogger-charged-over-fake-news" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://images.gmanews.tv/webpics/2020/11/pnp_2020_11_06_00_38_37.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>PNP files cybercrime raps vs. vlogger over ‘fake news’ on raid vs Duterte</h2>
-                <div class="news-meta">Joviland Rita - GMA Integrated News | May 6, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>The Philippine National Police (PNP) said Tuesday a cybercrime complaint was filed against a vlogger for spreading fake news on the alleged raid on the house of former President Rodrigo Duterte.</p>
-            <p>According to the PNP, the complaint against the vlogger is for unlawful use of means of publication and unlawful utterances under the Revised Penal Code in relation to the Cybercrime Prevention Act of 2012.</p>
-            <p>The complaint was filed by the Police Regional Office 11 and the Anti-Cybercrime Group.</p>
-            <p>“Ito po kaugnay sa report ng vlogger na meron 30 [Criminal Investigation and Detection Group] at 90 [Special Action Force] personnel na nanggaling sa Luzon na ni-raid ang bahay ng dating pangulo noong gabi noong April 30,” PNP public information office head Police Colonel Randulf Tuaño said in a press briefing.</p>
-            <p>(This is in relation to the vlogger's report that 30 Criminal Investigation and Detection Group and 90 Special Action Force personnel from Luzon raided the former president's house on the night of April 30.)</p>
-            <a href="https://www.gmanetwork.com/news/topstories/nation/945170/pnp-files-cybercrime-raps-vs-vlogger-over-fake-news-on-raid-vs-duterte/story/" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="2">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://i.imgur.com/hjgx02V.png" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>DOJ-Office of Cybercrime, FBI, and GCash Strengthen Collaboration to Combat Cybercrime Threats</h2>
-                <div class="news-meta">DOJ | April 29, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>The Department of Justice-Office of Cybercrime (DOJ-OOC) recently held a strategic meeting with representatives from GCash, the Philippines’ leading mobile wallet platform, and officials from the Federal Bureau of Investigation (FBI) in Manila. The meeting focused on reinforcing efforts to combat the rising threat of cybercrime involving the digital finance sector.</p>
-            <p>Recognizing the increasing sophistication of cybercriminal activities, the DOJ-OOC, FBI, and GCash discussed ways to enhance information sharing, streamline coordination in investigations, and develop proactive measures to detect and prevent online financial crimes. The meeting underscored the critical importance of strong partnerships between law enforcement agencies and private sector stakeholders in safeguarding digital financial ecosystems.</p>
-            <p>All parties reaffirmed their commitment to work collaboratively in identifying and addressing emerging threats, ensuring swift action against cybercriminals, and protecting the public’s trust in digital platforms. This joint initiative marks a significant step toward building a more secure and resilient digital economy in the Philippines.</p>
-            <a href="https://www.doj.gov.ph/news_article.html?newsid=8k3UwFELkbsBcHF_NCkRosp8fYMJ6G3c_Vu80NsuqVo" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <!-- Page 2 Articles (Formerly Page 1) -->
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://regmedia.co.uk/2023/09/20/shutterstock_call_center.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>UN: Asian Scam Calls Now a Global Export</h2>
-                <div class="news-meta">The Register | April 22, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>A new report from the United Nations Office on Drugs and Crime (UNODC) warns that scam calls originating in Asia have become a global problem, fueled by organized crime networks that have turned fraud into a multi-billion-dollar industry.</p>
-            <p>The UNODC report, published today, highlights how Southeast Asian cybercrime groups, initially focused on regional targets, have expanded their operations worldwide, using advanced technology and human trafficking to scale their fraudulent activities.</p>
-            <p>"These groups operate like multinational corporations, with sophisticated structures and global reach," the report states. It estimates that such scams generated $40 billion in 2024 alone, with call centers in countries like Cambodia, Myanmar, and the Philippines playing a central role.</p>
-            <p>The report also notes the role of forced labor, with tens of thousands of people trafficked into scam compounds, where they are coerced into making fraudulent calls under threat of violence.</p>
-            <a href="https://www.theregister.com/2025/04/22/un_asian_scam_calls/" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://c-assets.papillon.io/image/fetch/s--YnOMApIW--/f_auto/https://dkf1ato8y5dsg.cloudfront.net/uploads/8/79/1000x1000-global-threat-report.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>UN: Global Expansion of Southeast Asian Cyber-Fraud Operations Underway</h2>
-                <div class="news-meta">SC Media | April 22, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>The United Nations Office on Drugs and Crime (UNODC) released a report today detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent.</p>
-            <p>According to the UNODC, these operations, often based in countries like Cambodia, Laos, and the Philippines, have grown from local scams into a $40 billion industry in 2024, driven by advanced technology and the exploitation of trafficked labor.</p>
-            <p>"The scale of these operations is unprecedented," said a UNODC spokesperson. "They use everything from fake investment schemes to romance scams, targeting victims globally through phone calls, text messages, and online platforms."</p>
-            <p>The report also highlights the human cost, with an estimated 200,000 people trafficked into scam compounds across Southeast Asia, forced to perpetrate fraud under brutal conditions.</p>
-            <a href="https://www.scworld.com/brief/un-global-expansion-of-southeast-asian-cyber-fraud-operations-underway" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global</h2>
-                <div class="news-meta">The Record | April 22, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>United Nations report warns that cyber fraud originating in Southeast Asia has reached an "inflection point," with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers.</p>
-            <p>The UN Office on Drugs and Crime (UNODC) report, released on April 22, details how scam operations in countries like Cambodia, Myanmar, and the Philippines have scaled up, using advanced tech to target victims worldwide with fraudulent calls, texts, and online schemes.</p>
-            <p>"These are not small-time operations anymore," the report notes. "They are highly organized, transnational crime syndicates that generated an estimated $40 billion in 2024, with no signs of slowing down."</p>
-            <p>The UNODC also emphasizes the human trafficking element, noting that many workers in these scam centers are victims themselves, forced to participate under threat of violence or death.</p>
-            <a href="https://therecord.media/southeast-asia-cyber-fraud-at-inflection-point" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://files01.pna.gov.ph/category-list/2023/08/22/holiday-08212023rn.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Public Warned vs. Online Booking Scams Amid Travel Season</h2>
-                <div class="news-meta">Christopher Lloyd Caliwan - PNA | April 22, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA – The Philippine National Police (PNP) on Tuesday warned the public against online scammers offering tour packages that appear too good to be true as the summer travel season peaks.</p>
-            <p>PNP Chief Gen. Rommel Francisco Marbil issued the reminder as the police force’s Anti-Cybercrime Group (ACG) arrested 45 persons for cybercrimes from April 11 to 17 in line with President Ferdinand R. Marcos Jr.’s directive to intensify the campaign against cybercrimes.</p>
-            <p>“We urge everyone to verify the legitimacy of travel agencies and booking platforms before making any transactions,” Marbil said in a statement.</p>
-            <p>“To cybercriminals preying on innocent citizens, especially during this peak travel season, be warned: the PNP is actively monitoring, patrolling, and ready to act. There will be no safe space for scammers in the digital world,” he added.</p>
-            <p>The PNP-ACG conducted 313 cyber patrolling activities and carried out 13 digital forensic examinations from April 11 to 17, resulting in the arrest of 45, including 32 through entrapment operations.</p>
-            <p>The ACG called on the public to stay vigilant and immediately report any suspicious or harmful online activity through the ACG’s official hotlines and verified social media accounts.</p>
-            <p>Marbil said the PNP remains steadfast in its mission to ensure that every Filipino enjoys a safer and more secure cyberspace under the Bagong Pilipinas framework.</p>
-            <p>He lauded ACG’s consistent and high-impact performance, emphasizing the importance of public trust and law enforcement’s evolving role in cyberspace.</p>
-            <p>The PNP chief also commended the Criminal Investigation and Detection Group’s (CIDG) intensified operations in apprehending the 37 wanted individuals and fugitives on April 14.</p>
-            <p>“I salute our CIDG teams nationwide for their relentless commitment and swift action in taking 37 fugitives off the streets in just one day. Your bravery and perseverance in carrying out this difficult task not only strengthen public safety but also bring hope to victims still waiting for justice,” he said.</p>
-            <p>He assured the public that the CIDG remains relentless in its efforts to account for and arrest all wanted persons and criminals nationwide.</p>
-            <a href="https://www.pna.gov.ph/articles/1248432" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://i.imgur.com/KOft8nD.png" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Philippines, UAE Sign Security Pact to Combat Cybercrime, Trafficking</h2>
-                <div class="news-meta">Ellie Aben - Arab News | April 22, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA: The Philippines has signed a new security agreement with the UAE to tackle transnational and organized crime, officials said on Tuesday.</p>
-            <p>Signed by Philippine Interior Secretary Juanito Victor Remulla and UAE Interior Minister Sheikh Saif bin Zayed Al-Nahyan, the new deal focuses on cybercrime, drug trafficking, and human trafficking.</p>
-            <p>“Transnational crimes with global networks powered by new technologies and the ease of cross-border movement of persons and criminal syndicates need more international cooperation and partnerships,” Alfonso Ver, Philippine ambassador to the UAE, told Arab News on Tuesday.</p>
-            <p>“This is one concrete step to address the growing menace above … We have gone into new and heretofore unexplored areas of bilateral cooperation, moving beyond the issues of OFWs (Overseas Filipino Workers), migration, and oil,” Ver added.</p>
-            <p>The Philippines and the UAE celebrated 50 years of diplomatic relations last year. The two countries have been working to expand security ties over the past few years, with discussions ongoing for a wide-ranging bilateral defense pact.</p>
-            <p>In 2021, the Philippines posted a defense attache in the UAE, making it the only country in the Middle East where Manila has such representation. The two countries also signed several treaties on extradition, mutual legal assistance, and transfer of prisoners in February.</p>
-            <p>Ver said the new agreement was a “milestone” that provides a “strategic framework” that will help guide Philippine-UAE “future engagements in a more structured, sustainable, and effective” manner. It is also expected to promote the exchange of best practices and expertise.</p>
-            <p>“We discussed ways to strengthen bilateral relations between the two friendly countries and develop cooperation in the security and police fields,” Sheikh Saif said in a post on X, referring to his meeting with Remulla.</p>
-            <p>“This underscores our shared commitment to supporting effective international institutional cooperation to enhance the security and stability of societies,” he added.</p>
-            <p>Cybercrime and trafficking have been growing concerns for countries like the Philippines. More than 200 Filipinos were among several thousand people freed in late February and March from online scam centers run by syndicates operating along Myanmar’s border with Thailand, where many of them are believed to have been recruited and trafficked by criminal gangs.</p>
-            <p>Lured by well-paid job offers in Thailand, they were released in a weeks-long, highly publicized crackdown by Thai, Myanmar, and Chinese forces.</p>
-            <a href="https://arab.news/v2jem" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://files01.pna.gov.ph/category-list/2025/04/10/040325-dict-secretary-henry-aguda.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>DICT Comprehensive Policy to Counter Online Disinformation, Threats</h2>
-                <div class="news-meta">Raymond Carl Dela Cruz - PNA | April 21, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA – Department of Information and Communications Technology (DICT) Secretary Henry Aguda on Monday endorsed a sweeping policy that targets online disinformation, cyber scams, and other online threats.</p>
-            <p>The policy is part of the upcoming “Good Vibes sa Internet” initiative that aims to build a safer and more trustworthy online environment by eliminating digital threats and protecting the public from online abuse, according to a news release.</p>
-            <p>“We must create a safer and more responsible cyberspace for every Filipino. We can no longer stand idly by as false information erodes the trust that binds our nation,” Aguda said during his first meeting with the executive committee as chair of the Cybercrime Investigation and Coordinating Center (CICC).</p>
-            <p>The policy builds on the Cybercrime Prevention Act and introduces new measures such as the formation of a multi-agency task force to “swiftly respond” against online disinformation.</p>
-            <p>“Through digital bayanihan (cooperation), the DICT will work closely with social media platforms, law enforcement, and civil society to detect and dismantle digital lies before they spread,” he said.</p>
-            <p>Aside from disinformation or fake news, the policy will address the escalating threats of cyberterrorism by reclassifying certain cybercrimes as acts of cyberterrorism.</p>
-            <p>“This move aims to deter malicious actors, recognize cybercrimes as continuing offenses, and strengthen national security and public safety in today’s increasingly digital landscape,” he said.</p>
-            <p>Aguda said the policies form part of the government’s broader commitment to shaping an online space that “fosters meaningful engagement, upholds truth, and safeguards the collective well-being of every Filipino online.”</p>
-            <p>“Cybercriminals must be held accountable with the full force of the law. We are taking a strong stance to ensure that the digital space is no place for fear, fraud, or extremism,” he said.</p>
-            <a href="https://www.pna.gov.ph/articles/1248375" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://pia.gov.ph/wp-content/uploads/2025/04/Thumbnail-photo-10-1024x769.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Smishing, Quishing, Phishing, Vishing: Visayas Media Navigate ‘Shing-a-Ling’ of Cyber Threats</h2>
-                <div class="news-meta">PIA | April 18, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>CEBU CITY – Media practitioners across the Visayas gathered for a cybersecurity forum to tackle the growing wave of cyber threats, including smishing (SMS phishing), quishing (QR code phishing), phishing (email scams), and vishing (voice phishing), collectively dubbed the "shing-a-ling" of digital fraud.</p>
-            <p>The forum, organized by the Philippine Information Agency (PIA), featured experts from the Department of Information and Communications Technology (DICT) who warned of the increasing sophistication of these scams, often targeting unsuspecting individuals through fake messages and fraudulent links.</p>
-            <p>"These threats are evolving rapidly, and media professionals need to be equipped to identify and report them," said a DICT spokesperson. The event also included workshops on spotting fraudulent communications and protecting personal data online.</p>
-            <p>Participants were urged to educate the public on safe digital practices, such as avoiding suspicious links and verifying the authenticity of messages before taking action.</p>
-            <a href="https://pia.gov.ph/smishing-quishing-phishing-vishing-visayas-media-navigate-shing-a-ling-of-cyber-threats/" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://od2-image-api.abs-cbn.com/prod/2025041608048/9e80e1ba82e2cb61282f70495a648388ce7198356dfaed65f77628d465429e35.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Cybercrime Council Eyes Task Force Against Online and Text Scams</h2>
-                <div class="news-meta">Pia Gutierrez - ABS-CBN News | April 16, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA – The Cybercrime Investigation Coordination Council (CICC) is considering forming a dedicated task force to go after online and text scammers, an official said Wednesday.</p>
-            <p>Department of Information and Communications Technology (DICT) Assistant Secretary Renato Paraiso said the council would meet later in the day to discuss the plan.</p>
-            <p>"We're strengthening the CICC in terms of investigation and apprehension. The council, led by the DICT Secretary and joined by other agencies, will meet today to discuss forming a task force to crack down on online and text scams," Paraiso said in a televised interview.</p>
-            <p>He also said the CICC is enhancing its Inter-Agency Response Center (I-ARC) Hotline 1326, where the public can report online scam incidents.</p>
-            <p>According to Paraiso, while the SIM Card Registration Act has helped discourage text scams by removing anonymity, many scammers have adapted by shifting to online messaging apps that don't require SIM registration.</p>
-            <p>"The SIM card registration removed their anonymity, but scammers have adapted. They no longer use calls or texts. They've moved to internet-based services like Viber and Messenger, which don't require valid SIM cards," he said.</p>
-            <p>Paraiso reminded the public to stay alert for online scams, avoid clicking suspicious links, and never share one-time passwords (OTPs), which scammers can use to access financial accounts and records.</p>
-            <a href="https://www.abs-cbn.com/news/business/2025/4/16/cybercrime-council-studying-task-force-against-online-and-text-scams-1509" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://od2-image-api.abs-cbn.com/prod/2025041613040/d27eef3ab9282c58f9d73b2b496fec6bc80f684f0c33b0f9323360e4ce42a303.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Publiko, Pinag-iingat sa Vacation Scam</h2>
-                <div class="news-meta">ABS-CBN News | April 16, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA – Pinag-iingat ng Cybercrime Investigation and Coordination Center (CICC) ang publiko laban sa mga scam na gumagamit ng mga pekeng promo ng bakasyon, lalo na ngayong panahon ng tag-init.</p>
-            <p>Ayon sa CICC, maraming insidente na ng panloloko ang naiulat kung saan ang mga biktima ay hinikayat na magbayad para sa mga discounted travel packages na hindi naman totoo.</p>
-            <p>"Huwag basta-basta magbibigay ng personal na impormasyon o magbabayad online nang hindi na-verify ang legitimacy ng offer," babala ng CICC sa isang pahayag.</p>
-            <p>Hinihikayat din ng ahensya ang publiko na i-report ang anumang kahina-hinalang mensahe o tawag sa kanilang hotline upang mapigilan ang mga ganitong uri ng scam.</p>
-            <a href="https://www.abs-cbn.com/news/business/2025/4/16/tv-patrol-publiko-pinag-iingat-sa-vacation-scam-2005" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="3">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://newsinfo.inquirer.net/files/2025/04/Jaime-Santiago-23April2025.jpg.avif" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>NBI Files Raps vs Vloggers Outside PH for Disinformation</h2>
-                <div class="news-meta">Inquirer.net | April 15, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA, Philippines — The National Bureau of Investigation (NBI) has filed charges against several vloggers based abroad for allegedly spreading disinformation that caused public alarm in the Philippines.</p>
-            <p>The NBI Cybercrime Division identified the suspects after a months-long investigation into fake news videos that went viral, falsely claiming a national emergency involving government officials.</p>
-            <p>"These vloggers used their platforms to spread lies, causing panic and mistrust," said an NBI official. The charges include violations of the Cybercrime Prevention Act of 2012, specifically for online libel and spreading false information.</p>
-            <p>The NBI is coordinating with international authorities to apprehend the suspects, who are believed to be operating from countries like the United States and Canada.</p>
-            <a href="https://newsinfo.inquirer.net/2055033/nbi-files-raps-vs-vloggers-outside-ph-for-disinformation" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <!-- Page 3 Articles (Formerly Page 2) -->
-    <div class="news-item" data-page="4">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://i.imgur.com/y0ZVR1S.jpeg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Philippine Cybercrime Center Gains Global Recognition for Anti-Scam Efforts</h2>
-                <div class="news-meta">Bilyonaryo | April 1, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>The Cybercrime Investigation and Coordinating Center (CICC) has earned international praise for its robust efforts in combating online scams, positioning the Philippines as a leader in Southeast Asia’s fight against cybercrime.</p>
-            <p>At a recent global cybersecurity conference, the CICC was lauded for its innovative strategies, including the use of advanced technology to track and dismantle scam networks, as well as its public awareness campaigns that have educated millions on how to avoid online fraud.</p>
-            <p>"The Philippines is setting a benchmark in the region," said an international cybersecurity expert at the conference. The CICC’s efforts have led to a significant reduction in scam-related losses, with several high-profile arrests made in the past year.</p>
-            <p>The agency continues to collaborate with global partners to tackle transnational cybercrime, focusing on emerging threats like AI-driven fraud and deepfake scams.</p>
-            <a href="https://bilyonaryo.com/2025/04/01/philippine-cybercrime-center-gains-global-recognition-for-anti-scam-efforts/scams/" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="4">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://media.philstar.com/photos/2025/03/18/fake_2025-03-18_23-29-47.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>How is 'Fake News' Punishable by Law? Anti-Cybercrime Officers Explain</h2>
-                <div class="news-meta">Dominique Nicole Flores - Philstar.com | March 21, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>During the third House Tri-Committee hearing on Friday, March 21, Rep. Zia Alonto Adiong (Lanao del Sur, 1st District) asked government agencies responsible for investigating false information on social media to explain how an ordinary citizen can report and navigate the process.</p>
-            <p>Agencies with this capability include the National Bureau of Investigation (NBI), the PNP Anti-Cybercrime Group (PNP-ACG) and the Department of Information and Communications Technology (DICT).</p>
-            <p>Many are familiar with the Cybercrime Prevention Act of 2012 (Republic Act 10175), which penalizes online libel — defamatory statements made through digital platforms — under Article 355 of the Revised Penal Code.</p>
-            <p>However, police colonel Andres Simbajon Jr., deputy director for administration of the PNP-ACG, told the committee that "fake news" can still be legally addressed, as it is classified as a crime under the Revised Penal Code.</p>
-            <p>One in particular is Article 154, which penalizes the "unlawful use of means of publication and unlawful utterances."</p>
-            <p>The Revised Penal Code prescribes a penalty of arresto mayor — imprisonment ranging from one month and one day to six months — for unlawful publication perspective, this comes with an additional fine ranging from P40,000 to P200,000.</p>
-            <p>Police lieutenant colonel Anacleto Daliva, assistant chief of the PNP-ACG's legal affairs division, explained that false information can also be penalized under the Cybercrime Prevention Act through Section 6, which covers crimes under the Revised Penal Code and special laws when committed through a computer system.</p>
-            <p>Meanwhile, core cybercrimes such as libel and online fraud fall under Section 4. "These are crimes where perpetrators use IT equipment, such as a cellphone or computer," Daliva said.</p>
-            <a href="https://www.philstar.com/headlines/2025/03/21/2430091/how-fake-news-punishable-law-anti-cybercrime-officers-explain" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="4">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://radyopilipinas.ph/wp-content/uploads/2023/09/Digital-Wallet-Security-Updates-How-to-Report-a-Cybercrime-to-PNP-ACG.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>ACG Nabs 126 for Cybercrimes</h2>
-                <div class="news-meta">Emmanuel Tupas - The Philippine Star | March 19, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA, Philippines — Up to 126 people were arrested across the country in February for cybercrimes, the police Anti-Cybercrime Group reported yesterday.</p>
-            <p>ACG director Brig. Gen. Bernard Yang said the figure is higher by 240.54 percent compared to the 37 people arrested in January.</p>
-            <p>The suspects were apprehended in 132 law enforcement operations nationwide. Seven victims were rescued, the ACG said.</p>
-            <p>Two other suspects, who are minors, were placed under the custody of social welfare officers.</p>
-            <p>"The ACG remains steadfast in its commitment to enhancing efforts to combat cybercrime and ensure that criminals online are brought to justice," Yang said in a statement.</p>
-            <p>He said 75 suspects were arrested in entrapment operations. Seven others were nabbed through the implementation of warrants to search, seize and examine computer data and 44 in the implementation of warrants of arrest.</p>
-            <p>The top five offenses committed by the suspects are estafa, grave coercion, libel, violation of Republic Act 11934, the Subscriber Identity Module Registration Act, and RA 12010 or the Anti-Financial Account Scamming Act.</p>
-            <p>Yang urged the public to report to authorities people who are involved in cybercrimes.</p>
-            <a href="https://www.philstar.com/nation/2025/03/19/2429397/acg-nabs-126-cybercrimes?fbclid=IwY2xjawJQnzpleHRuA2FlbQIxMAABHX_69CAyo9IM6J6GvZkki-ccpgRoBcqpiKdKnNytIovBZoZMv3hiU6g04w_aem_ef1xmZ7tZsQM8pvy7v06fQ" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="4">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://itbutler.sa/wp-content/uploads/2025/04/The-Role-of-Proactive-Cybersecurity-in-Saudi-Digital-Transformation.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Saudi Arabia Among Top Cybercrime Targets in 2024 as Digital Fraud Surges: Report</h2>
-                <div class="news-meta">Arab News | March 13, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>RIYADH: Saudi Arabia was among the top 10 countries targeted by cybercriminals in 2024, with digital fraud attempts surging by 35 percent compared to the previous year, according to a new report by cybersecurity firm Kaspersky.</p>
-            <p>The report, released on Wednesday, highlighted that the Kingdom faced over 20 million cyber attacks last year, with phishing emails, ransomware, and online scams being the most common threats.</p>
-            <p>"The rapid digital transformation in Saudi Arabia has made it a lucrative target for cybercriminals," said a Kaspersky spokesperson. The report noted that many attacks were linked to international crime syndicates operating out of Southeast Asia and Eastern Europe.</p>
-            <p>Saudi authorities have responded by strengthening cybersecurity measures, including public awareness campaigns and increased collaboration with global tech firms to combat digital fraud.</p>
-            <a href="https://www.arabnews.com/node/2597991/amp" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="4">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://files01.pna.gov.ph/category-list/2022/07/11/doj-seal.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>DOJ, UNODC Link Up for Capacity Building vs. Cybercrime</h2>
-                <div class="news-meta">Benjamin Pulta - PNA | February 13, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>MANILA – The Department of Justice's Office of Cybercrime and the United Nations Office on Drugs and Crime (UNODC) are in talks to collaborate in various projects to strengthen criminal justice, especially on the intensified enforcement of cybercrime laws in the Philippines.</p>
-            <p>In a news release on Thursday, the DOJ said among the activities that the two agencies intend to undertake is increasing the government's pool of digital forensic experts and boosting their capacities of cybercrime investigators and prosecutors.</p>
-            <p>DOJ Secretary Jesus Crispin Remulla highlighted this need due to the steady increase in cybercrimes and cyber-enabled offenses or incidents in the country.</p>
-            <p>To negotiate on the details of this partnership, Remulla will be leading a small delegation of DOJ officials to the UNODC headquarters in Vienna, Austria to sit down with its Executive Director, Ghada Fathi Waly.</p>
-            <p>The delegation will also visit UNODC's Crime Laboratory.</p>
-            <p>The meeting and visit will be conducted on the sidelines of the 68th Session of the UN Commission on Narcotic Drugs on March 10 to 14.</p>
-            <p>The DOJ said the activities are in line with the Marcos administration's commitment to human rights and the rule of law.</p>
-            <p>Meanwhile, Undersecretary Jesse Hermogenes Andres, head of DOJ's Law Enforcement Cluster, is leading the conversations with UNODC's team in the Philippines.</p>
-            <p>Andres said he envisions to institutionalize the government's ability to procure and utilize the necessary digital forensic tools and software applications used in cybercrime investigations.</p>
-            <p>He said funding for the renewal of licenses of these important investigative tools must always be given priority.</p>
-            <p>The DOJ and the UNODC are looking at signing a comprehensive memorandum of agreement to cover the various justice sector programs, including prison reform and forensics, in May this year. (PNA)</p>
-            <a href="https://www.pna.gov.ph/articles/1244021" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-    <div class="news-item" data-page="4">
-        <div class="news-header" onclick="toggleDetails(this)">
-            <img src="https://venturebeat.com/wp-content/uploads/2024/06/Deepfakes-will-cost-40B-by-2027-as-adversarial-AI-gains-momentum-hero-image.jpg" alt="News Image" class="news-image">
-            <div class="news-title">
-                <h2>Guarding Against Cybercrime and Fraud in the Age of Deepfakes</h2>
-                <div class="news-meta">Justin Herring, Gina M. Parlovecchio, Rajesh De - Mayer Brown | February 5, 2025</div>
-            </div>
-            <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="news-details">
-            <p>Generative AI is starting to transform many sectors, both legitimate and illicit. Criminals have been early adopters, exploiting technology like deepfakes to turbo-charge existing methods to commit cybercrime and fraud—and invent entirely new ones. AI has made it increasingly challenging to verify the true identities of customers, investors, vendors, and even colleagues.</p>
-            <p>Companies and their counsel need to understand how to avoid deepfake-related risks, how to address them effectively when they arise, and how to stay within the bounds of their ethical responsibilities. Our panel, comprised of both current and former government officials, will discuss:</p>
-            <ul>
-                <p style="margin-left: 20px;">• Deepfake fraud in the workplace, and knowing who you're talking to online</p>
-                <p style="margin-left: 20px;">• Fake employees and remote-work scams</p>
-                <p style="margin-left: 20px;">• Meeting professional responsibilities to protect electronic data and communications</p>
-                <p style="margin-left: 20px;">• How regulators and law enforcement are confronting these new threats</p>
-            </ul>
-            <a href="https://www.mayerbrown.com/en/insights/events/2025/02/guarding-against-cybercrime-and-fraud-in-the-age-of-deepfakes" target="_blank" class="read-more">Read more</a>
-        </div>
-    </div>
-
-<div class="news-item" data-page="4">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://od2-image-api.abs-cbn.com/prod/2025013108014/fbd75639688f7cff92a9bfe441dd9b9dcba5dbacd973d286d076ec0309a9c443.png?w=1200&h=800" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>CICC Records Over 10,000 Cybercrime Complaints in 2024</h2>
-            <div class="news-meta">Ched Rick Gatchalian - ABS-CBN News | January 31, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>MANILA — A total of 10,004 cybercrime complaints were recorded in 2024, marking a threefold increase compared to 3,317 complaints in 2023, the Cybercrime Investigation and Coordinating Center (CICC) reported on Friday.</p>
-        <p>The agency also announced P198 million in losses from the recorded cybercrime incidents.</p>
-        <p>But this does not necessarily translate to a rise in cybercrime prevalence, as CICC Executive Director Alexander K. Ramos described the increase as an indicator of "growing cybercrime awareness of the public and their willingness to report".</p>
-        <p>"In previous years, people were not aware that they were being scammed and many were not also aware of where to file their complaints," he said.</p>
-        <a href="https://www.abs-cbn.com/news/technology/2025/1/31/cicc-records-over-10-000-cybercrime-complaints-in-2024-1628" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-
-<div class="news-item" data-page="4">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://files01.pna.gov.ph/category-list/2024/08/03/doj-usec-vasquez-satnewsforum-2024aug3-jbondoc-2.jpg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>DOJ to Improve Anti-Cybercrime Capacity in 2025</h2>
-            <div class="news-meta">Benjamin Pulta - PNA | January 23, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>MANILA – The Department of Justice (DOJ) will embark on capacity-building this year to improve its anti-cybercrime efforts, according to a senior official.</p>
-        <p>In an interview on PTV-4's "Bagong Pilipinas Ngayon" on Wednesday, DOJ Undersecretary Raul Vasquez said that for 2025, they will "take major strides in strengthening the DOJ's fight against cybercrime by conducting advanced technological and forensic trainings for its personnel and law enforcement units."</p>
-        <p>The DOJ has an Office of Cybercrime (OOC) created under Republic Act No. 10175 or the Cybercrime Prevention Act of 2012 that serves as the central authority in all matters relating to international mutual assistance and extradition for cybercrime and cyber-related matters.</p>
-        <p>The OOC also acts as "the focal agency in formulating and implementing law enforcement investigation and prosecution strategies in curbing cybercrime and cyber-related offenses nationwide," according to the DOJ.</p>
-        <p>Vasquez made the statement following the arrest of a foreign national and two Filipinos suspected of engaging in months-long electronic intelligence-surveillance-reconnaissance (ISR) operations in key military and civilian infrastructures in the country.</p>
-        <p>The DOJ confirmed that it is pursuing other members of the group who may have procured equipment used in the eavesdropping operations, even as the military said it is monitoring the role played by Philippine Online Gaming Operators (POGOs) in the alleged spying activities.</p>
-        <p>The National Bureau of Investigation (NBI) on Wednesday likewise announced the arrest of eight foreigners in Parañaque City allegedly engaged in online phishing operations.</p>
-        <a href="https://www.pna.gov.ph/articles/1242480" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-
-<div class="news-item" data-page="4">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://bilyonaryo.com/wp-content/uploads/2025/01/Thiang-Choon-Wee.jpg" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>Malaysian Supplier of Text Scam Device Arrested in Cybercrime Sting</h2>
-            <div class="news-meta">Max Torres Anaten - Brigada News | January 22, ieks2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>A Malaysian national believed to be a key supplier of a device used in large-scale text scams was arrested in a joint operation by the Philippine National Police Anti-Cybercrime Group (PNP-ACG) and the Cybercrime Investigation and Coordinating Center (CICC).</p>
-        <p>Authorities identified the suspect as the alleged leader of a syndicate selling International Mobile Subscriber Identity (IMSI) catchers, electronic tools designed to trace and intercept mobile phone communications.</p>
-        <p>The CICC began monitoring the suspect's company in October last year, carefully tracking its activities until they were certain of the suspect's involvement before executing the operation.</p>
-        <p>IMSI catchers, also known as "Stingrays" or rogue cell towers, function by imitating legitimate cell towers to deceive nearby mobile devices into connecting with them. Once connected, the device collects IMSI numbers, enabling the operator to track location, monitor activity, and intercept text messages, calls, and data traffic.</p>
-        <p>Investigators revealed that these devices are commonly used in text scams, tricking victims into sharing personal information and enabling large-scale fraud operations.</p>
-        <p>"This arrest is a significant breakthrough in our fight against cybercrime and text scams that target the public," said a CICC representative.</p>
-        <p>Authorities vowed to continue cracking down on syndicates using advanced technology to commit crimes, urging the public to remain vigilant against scams.</p>
-        <a href="https://www.brigadanews.ph/malaysian-supplier-of-text-scam-device-arrested-in-cybercrime-sting/" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-
-<div class="news-item" data-page="4">
-    <div class="news-header" onclick="toggleDetails(this)">
-        <img src="https://files01.pna.gov.ph/category-list/2025/01/17/4-nabbed-for-sale-of-pre-registered-sim-cards.png" alt="News Image" class="news-image">
-        <div class="news-title">
-            <h2>4 Nabbed in 2-Day Crackdown vs. Sale of Pre-Registered SIM Cards</h2>
-            <div class="news-meta">Christopher Lloyd Caliwan - PNA | January 17, 2025</div>
-        </div>
-        <i class="fas fa-chevron-down toggle-icon"></i>
-    </div>
-    <div class="news-details">
-        <p>MANILA – Operatives of the Philippine National Police Anti-Cybercrime Group (PNP-ACG) have arrested four persons involved in the illegal online sale of pre-registered subscriber identity module (SIM) cards in separate operations in Laguna province and Quezon City.</p>
-        <p>In a statement Friday, ACG acting chief Brig. Gen. Bernard Yang said cyberpatrolling activities led to an engagement with the online sellers and their eventual arrest on Jan. 13 to 14.</p>
-        <p>The Calabarzon police's anti-cybercrime unit spotted a suspect advertising online a bundle of a fully verified e-wallet account and a SIM card priced at PHP800.</p>
-        <p>An officer arranged to meet up with the suspect and an accomplice, both of whom the ACG did not identify, which resulted in their arrest in Cabuyao town, Laguna at 4:40 p.m. on Jan. 13.</p>
-        <p>Meanwhile, the ACG's Cyber Financial Crime Unit (CFCU) said another suspect, alias "JP," was selling an e-wallet account with an automated teller machine (ATM) card as well as an online banking account worth PHP3,000.</p>
-        <p>The suspect was arrested after meeting up with a police officer who acted as a buyer along Mayon Street in Quezon City at around 12:58 p.m. on Jan. 14.</p>
-        <p>Around 2:32 p.m. on the same date, the anti-cybercrime units of Northern Police District and Quezon City Police District arrested a suspect, alias Arvin, for selling his registered SIM card, along General Araneta Avenue in Cubao, Quezon City.</p>
-        <p>The SIM card was linked to a verified e-wallet account and was priced at PHP2,300, the ACG said in a separate report.</p>
-        <p>All four suspects were charged with violations of the SIM Registration Act, the Anti-Financial Account Scamming Act, and the Cybercrime Prevention Act.</p>
-        <p>The SIM card can be used for text scams or to create a social media account for scamming activities.</p>
-        <p>Yang reminded the public that the illegal online sale of SIM cards is punishable by law, with significant fines and imprisonment.</p>
-        <p>"It is crucial to adhere to the law and avoid involvement in such online illegal transactions to protect oneself and prevent the spread of cybercrime," he added. (PNA)</p>
-        <a href="https://www.pna.gov.ph/articles/1242003" target="_blank" class="read-more">Read more</a>
-    </div>
-</div>
-
-<div class="pagination">
-    <button id="prevPage" onclick="changePage(-1)">Previous</button>
-    <div class="page-numbers" id="pageNumbers"></div>
-    <button id="nextPage" onclick="changePage(1)">Next</button>
-</div>
-</div>
+                    <div class="pagination">
+                        <button id="prevPage" onclick="changePage(-1)">Previous</button>
+                        <div class="page-numbers" id="pageNumbers"></div>
+                        <button id="nextPage" onclick="changePage(1)">Next</button>
+                    </div>
+                </div>
 
                 <div class="insights-content">
                     <div class="card-container">
@@ -2406,27 +1545,28 @@
                 </div>
 
                 <div class="laws-content">
-                    <div class="laws-header">
-                        <div class="laws-search-container">
-                            <input type="text" id="lawsSearchInput" class="laws-search-input" placeholder="Search laws...">
-                            <i class="fas fa-search laws-search-icon"></i>
-                        </div>
-                        <div class="laws-sort-container">
-                            <label class="laws-sort-label">Sort by:</label>
-                            <select id="lawsSortSelect" class="laws-sort-select">
-                                <option value="alphabetical">Alphabetical</option>
-                                <option value="seriousness">Serious Punishment</option>
-                                <option value="similarity">Similarities</option>
-                                <option value="relevance">Relevance</option>
-                            </select>
-                        </div>
+                    <div class="laws-controls">
+                        <select id="sortBy">
+                            <option value="alphabetical">Sort by: Alphabetical</option>
+                            <option value="punishment">Sort by: Severe Punishment</option>
+                            <option value="relevance">Sort by: Relevance</option>
+                        </select>
+                        <select id="filterByTag">
+                            <option value="all">Filter by Tag: All</option>
+                            <option value="Cybercrime">Cybercrime</option>
+                            <option value="Privacy">Privacy</option>
+                            <option value="Fraud">Fraud</option>
+                            <option value="Child Protection">Child Protection</option>
+                            <option value="Financial">Financial</option>
+                            <option value="Terrorism">Terrorism</option>
+                            <option value="Harassment">Harassment</option>
+                            <option value="Intellectual Property">Intellectual Property</option>
+                            <option value="Telecommunications">Telecommunications</option>
+                            <option value="Consumer Protection">Consumer Protection</option>
+                            <option value="Cybersecurity">Cybersecurity</option>
+                        </select>
                     </div>
-                    <div id="lawsContainer"></div>
-                    <div class="pagination">
-                        <button id="prevLawsPage" onclick="changeLawsPage(-1)">Previous</button>
-                        <div class="page-numbers" id="lawsPageNumbers"></div>
-                        <button id="nextLawsPage" onclick="changeLawsPage(1)">Next</button>
-                    </div>
+                    <div class="laws-grid" id="lawsGrid"></div>
                 </div>
             </section>
         </main>
@@ -2478,365 +1618,222 @@
         const cardCounter = document.getElementById('cardCounter');
         const prevCardBtn = document.getElementById('prevCardBtn');
         const nextCardBtn = document.getElementById('nextCardBtn');
-        const lawsSearchInput = document.getElementById('lawsSearchInput');
-        const lawsSortSelect = document.getElementById('lawsSortSelect');
-        const lawsContainer = document.getElementById('lawsContainer');
-        const prevLawsPageBtn = document.getElementById('prevLawsPage');
-        const nextLawsPageBtn = document.getElementById('nextLawsPage');
-        const lawsPageNumbersContainer = document.getElementById('lawsPageNumbers');
+        const lawsGrid = document.getElementById('lawsGrid');
+        const sortBySelect = document.getElementById('sortBy');
+        const filterByTagSelect = document.getElementById('filterByTag');
 
         const laws = [
             {
                 title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
-                description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems. The act establishes a legal framework for electronic commerce, ensuring the validity and enforceability of electronic transactions, documents, and signatures, while promoting consumer protection and cybersecurity in digital commerce activities.",
-                tags: ["cybercrime", "electronic transactions", "hacking", "unauthorized access"],
-                punishmentSeverity: 3
+                description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
+                punishment: "Penalties for offenses include fines and imprisonment, ranging from a minimum of PHP 100,000 and six months to three years imprisonment for online fraud and scams, and a maximum penalty of PHP 1,000,000 or six years imprisonment for other violations.",
+                image: "https://i.imgur.com/LmyboLf.png",
+                tags: ["Cybercrime", "Fraud"],
+                severity: 3
             },
             {
                 title: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
-                description: "Criminalizes the production, distribution, and possession of child pornography in the Philippines. It imposes strict penalties to protect minors from exploitation and ensures mechanisms for law enforcement to investigate and prosecute offenders involved in such illegal activities, both online and offline.",
-                tags: ["child protection", "pornography", "cybercrime", "exploitation"],
-                punishmentSeverity: 7
+                description: "Criminalizes the production, distribution, and possession of child pornography in the Philippines.",
+                punishment: "Shall suffer the penalty of reclusion perpetua and a fine of not less than Two million pesos (Php2,000,000.00) but not more than Five million pesos (Php5,000,000.00).",
+                image: "https://i.imgur.com/plDR615.png",
+                tags: ["Child Protection", "Cybercrime"],
+                severity: 8
             },
             {
                 title: "Access Devices Regulation Act of 1998 (Republic Act No. 8484)",
                 description: "The law defines 'access devices' broadly, including credit cards, debit cards, ATM cards, account numbers, passwords, PINs, and other means of accessing financial accounts or electronic transactions. Criminalizes the unauthorized possession, use, and trafficking of access devices, aiming to deter fraudulent transactions and protect against identity theft.",
-                tags: ["financial crime", "identity theft", "fraud", "access devices"],
-                punishmentSeverity: 5
+                punishment: "-A fine of ₱10,000 or twice the value obtained by the offense, whichever is greater, and imprisonment of 6 to 10 years shall be imposed. -A fine of ₱10,000 or twice the value obtained and imprisonment of 10 to 12 years shall be imposed for producing or trafficking counterfeit access devices and using access devices to embezzle or defraud. -A fine of ₱ 10,000 or twice the value obtained by the offense, or imprisonment for not less than 12 years and not more than 20 years, or both, shall be imposed for any of the above offenses committed after a prior conviction or attempted commission of the same.",
+                image: "https://i.imgur.com/3POCjh1.png",
+                tags: ["Fraud", "Financial", "Cybercrime"],
+                severity: 6
             },
             {
                 title: "Anti-Financial Account Scamming Act (AFASA) (Republic Act No. 12010)",
-                description: "AFASA aims to combat online fraud and scams, introducing stricter requirements for banks to enhance fraud prevention systems and protect customers. It addresses issues like money muling, social engineering, and economic sabotage through financial accounts, ensuring robust measures to safeguard the financial system.",
-                tags: ["financial scam", "online fraud", "banking", "money muling"],
-                punishmentSeverity: 6
+                description: "AFASA aims to combat online fraud and scams, introducing stricter requirements for banks to enhance fraud prevention systems and protect customers.",
+                punishment: "-Money Muling are penalized with 6 to 8 years imprisonment or a ₱100,000 to ₱500,000 fine, plus account closure. -Social Engineering carries 10 to 12 years or ₱500,000 to ₱1,000,000 fine, or 12 to 14 years or ₱1,000,000 to ₱2,000,000 if the victim is a senior. -Economic Sabotage involves life imprisonment or a ₱1M to ₱5M fine. aiding or attempting scams, or using fake identities)result in 4 to 6 years or ₱100,000 to ₱200,000 fines. - False reports, obstruction, and info leaks are punishable by 1 to 5 years or ₱50,000 to ₱200,000. -Juridical entities face up to ₱10M in fines, and convicted public officials are permanently disqualified from office.",
+                image: "https://i.imgur.com/yp2FjFp.png",
+                tags: ["Fraud", "Financial", "Cybercrime"],
+                severity: 7
             },
             {
                 title: "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
-                description: "The law aimed at preventing, investigating, and suppressing cybercrimes. It covers offenses related to computer data, systems, and content, including those committed using information and communication technologies, such as the internet and computer systems. It addresses a wide range of cybercrimes, from hacking to cybersex and online libel.",
-                tags: ["cybercrime", "hacking", "online libel", "data interference"],
-                punishmentSeverity: 5
+                description: "The law aimed at preventing, investigating, and suppressing cybercrimes. It covers offenses related to computer data, systems, and content, including those committed using information and communication technologies, such as the internet and computer systems.",
+                punishment: "- Individuals found guilty of offenses such as Illegal Access, Illegal Interception, Data Interference, System Interference, Misuse of Devices, Cyber-Squatting, Computer-Related Forgery, Computer-Related Fraud, and Computer-Related Identity Theft face prisión mayor (6 years and 1 day to 12 years), a fine of at least ₱200,000, or both, depending on the damage caused. - For violations related to Misuse of Devices, the penalty is prisión mayor or a fine of up to ₱500,000, or both. - If the crimes are committed against critical infrastructure, the penalty increases to reclusión temporal (12 years and 1 day to 20 years) or a fine starting at ₱500,000, or both. - For offenses such as Cybersex, the punishment is prisión mayor or a fine ranging from ₱200,000 to ₱1,000,000, or both. - Crimes like Child Pornography are penalized based on RA 9775 (Anti-Child Pornography Act of 2009), but with one degree higher penalty if committed through a computer system. - Crimes like Unsolicited Commercial Communications are punished with arresto mayor (1 month and 1 day to 6 months) or a fine between ₱50,000 to ₱250,000, or both. -Violations such as aiding or abetting cybercrimes, and attempting to commit cybercrimes, carry a penalty one degree lower than the original offense, or a fine of ₱100,000 to ₱500,000, or both.",
+                image: "https://i.imgur.com/vAJvsIk.png",
+                tags: ["Cybercrime", "Child Protection", "Fraud"],
+                severity: 6
             },
             {
                 title: "Data Privacy Act of 2012 (Republic Act No. 10173)",
-                description: "A law that aims to protect the fundamental right to privacy while ensuring the free flow of information to promote innovation and growth. It regulates the collection, processing, and storage of personal data in both the government and private sectors, establishing standards for data protection and accountability.",
-                tags: ["data privacy", "personal information", "data protection", "cybersecurity"],
-                punishmentSeverity: 4
+                description: "A law that aims to protect the fundamental right to privacy while ensuring the free flow of information to promote innovation and growth. It regulates the collection, processing, and storage of personal data in both the government and private sectors.",
+                punishment: "- Unauthorized processing of personal sensitive information is punishable by imprisonment of 3 to 6 years and a fine ranging from ₱500,000 to ₱4,000,000. - Unauthorized access carries a penalty of 1 to 6 years of imprisonment and a fine of ₱1,000,000 to ₱2,000,000. - For improper disposal of personal data, the law imposes fines of up to ₱1,000,000 and imprisonment of up to one year. - Data breaches may result in penalties of up to ₱5,000,000 and imprisonment of up to six years. - Other violations may be penalized with 6 months to 7 years of imprisonment, along with fines ranging from ₱100,000 to ₱4,000,000. In cases involving a combination of violations, the penalty is imprisonment between 3 and 6 years and a fine between ₱100,000 and ₱5,000,000.",
+                image: "https://i.imgur.com/9j90JCJ.png",
+                tags: ["Privacy", "Cybercrime"],
+                severity: 5
             },
             {
                 title: "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)",
-                description: "Criminalizes the unauthorized taking, distribution, and publication of photos or videos of a person's private area or performing sexual acts, especially when taken without consent and in a way that violates their privacy. The act defines 'private area' as the naked or undergarment-clad genitals, pubic area, buttocks, or female breast, aiming to protect individuals from non-consensual recordings.",
-                tags: ["voyeurism", "privacy", "sexual harassment", "non-consensual recording"],
-                punishmentSeverity: 4
+                description: "Criminalizes the unauthorized taking, distribution, and publication of photos or videos of a person's private area or performing sexual acts, especially when taken without consent and in a way that violates their privacy. The act defines 'private area' as the naked or undergarment-clad genitals, public area, buttocks, or female breast.",
+                punishment: "The law punishes offenders with imprisonment of 3 to 7 years, and a fine of ₱100,000 to ₱500,000, or both, at the discretion of the court. It also includes provisions for revoking licenses/franchises of juridical persons, administrative liability for public officers/employees/professionals, and deportation for alien offenders.",
+                image: "https://i.imgur.com/F7zG82b.png",
+                tags: ["Privacy", "Harassment"],
+                severity: 4
             },
             {
                 title: "Expanded Anti-Trafficking in Persons Act of 2012 (Republic Act No. 10364)",
-                description: "This law addresses various aspects of human trafficking. It aims to eliminate trafficking in persons, especially women and children, by establishing institutional mechanisms for protection and support of victims and providing penalties for violations, including online recruitment and exploitation.",
-                tags: ["human trafficking", "exploitation", "victim protection", "cybercrime"],
-                punishmentSeverity: 7
+                description: "This law addresses various aspects of human trafficking. It aims to eliminate trafficking in persons, especially women and children, by establishing institutional mechanisms for protection and support of victims and providing penalties for violations.",
+                punishment: "Any person found guilty of acts that promote Trafficking in Persons (TIP) faces imprisonment of 15 years and a fine of ₱500,000 to ₱1,000,000 pesos. Qualified trafficking, involving specific aggravating circumstances, carries a penalty of life imprisonment and a fine of ₱2,000,000 to ₱5,000,000 pesos.",
+                image: "https://i.imgur.com/e00z7Zc.png",
+                tags: ["Child Protection", "Harassment"],
+                severity: 8
             },
             {
                 title: "Subscriber Identity Module (SIM) Registration Act (Republic Act No. 11934)",
                 description: "The Philippines mandates that all SIM card users register their mobile phone numbers. This law, enacted in 2022, aims to enhance the security and integrity of the telecommunications network by requiring Public Telecommunications Entities (PTEs) to track and monitor SIM card usage, potentially curbing crimes like fraud, terrorism, and phishing.",
-                tags: ["telecommunications", "SIM registration", "fraud prevention", "cybersecurity"],
-                punishmentSeverity: 3
+                punishment: "-Public Telecommunications Entities (PTEs) that fail or refuse to register a SIM without valid reason, despite the end-user's compliance, face escalating fines: ₱100,000 to ₱300,000 for the first offense, ₱300,000 to ₱500,000 for the second, and ₱500,000 to ₱1,000,000 for subsequent offenses. - Breach of confidentiality, whether intentional or due to negligence, by PTEs, their agents, or employees, is punishable by fines ranging from ₱500,000 to ₱4,000,000. -Individuals who use false information or fraudulent documents to register a SIM may face imprisonment of 6 months to 2 years, a fine of ₱100,000 to ₱300,000, or both. - Spoofing a registered SIM to transmit misleading information with malicious intent is punishable by at least 6 years of imprisonment, a ₱200,000 fine, or both. -Selling a stolen SIM results in 6 months to two years of imprisonment, a fine of ₱100,000 to ₱300,000, or both. Corporations or juridical persons involved in violations may have penalties imposed on responsible officers. -Selling or transferring a registered SIM without following registration procedures is punishable by 6 months to 6 years of imprisonment, a fine of ₱100,000 to ₱300,000, or both.",
+                image: "https://i.imgur.com/KD324L7.png",
+                tags: ["Cybercrime", "Telecommunications", "Fraud"],
+                severity: 4
             },
             {
                 title: "Anti-Online Sexual Abuse or Exploitation of Children Act (Republic Act No. 11930)",
-                description: "A law enacted to protect children from online sexual abuse and exploitation. It aims to prevent, detect, and penalize these crimes, including stricter law enforcement protocols, international cooperation, and support services for victims, targeting activities like grooming and distribution of child sexual abuse materials.",
-                tags: ["child protection", "online abuse", "sexual exploitation", "cybercrime"],
-                punishmentSeverity: 7
+                description: "A law enacted to protect children from online sexual abuse and exploitation. It aims to prevent, detect, and penalize these crimes, including stricter law enforcement protocols, international cooperation, and support services for victims.",
+                punishment: "-The crimes like producing, distributing, or profiting from child sexual abuse materials is punishable by life imprisonment and fines of at least ₱2,000,000. - Grooming, online enticement, and coercion into sexual acts carry penalties of reclusion temporal to reclusion perpetua and fines up to ₱2,000,000. - Accessing, promoting, or possessing such materials results in reclusion temporal and fines from ₱500,000 to ₱1,000,000. -Lesser offenses like attempting access or misleading content use are punished with prisión mayor and fines from ₱100,000 to ₱500,000. -Large-scale or syndicated crimes result in life imprisonment and fines of ₱5,000,000 to ₱20,000,000. -Repeat offenders, those in authority, or those causing death or disability are denied parole. Attempted or frustrated crimes are penalized one or two degrees lower. -Violations by establishments may lead to imprisonment, fines up to ₱3,000,000, and business closure. Government officials who abuse authority face imprisonment, disqualification, and loss of benefits.",
+                image: "https://i.imgur.com/D5fcu9U.png",
+                tags: ["Child Protection", "Cybercrime"],
+                severity: 8
             },
             {
                 title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
-                description: "A law that protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs. It addresses issues like online piracy and unauthorized use of digital content, ensuring creators' rights in the digital age.",
-                tags: ["intellectual property", "copyright", "piracy", "digital content"],
-                punishmentSeverity: 4
+                description: "A law that protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs.",
+                punishment: "For the first offense: The penalty is imprisonment of one to three years and a fine ranging from PhP 50,000 to PhP 150,000. For the second offense: The penalty increases to imprisonment of three years and one day to six years, along with a fine of PhP 150,000 to PhP 500,000. For third and subsequent offenses: The most severe penalty is imprisonment of six years and one day to nine years, and a fine ranging from PhP 500,000 to PhP 1,500,000. In cases of insolvency, additional subsidiary imprisonment may be imposed.",
+                image: "https://i.imgur.com/iG0J6C5.png",
+                tags: ["Intellectual Property", "Cybercrime"],
+                severity: 4
             },
             {
                 title: "Terrorism Financing Prevention and Suppression Act (Republic Act No. 10168)",
-                description: "A law that criminalizes the financing of terrorism and related offenses, aiming to prevent and suppress such acts by freezing and forfeiting associated properties or funds. It also aims to protect life, liberty, and property from terrorism, including cyber-related terrorist financing activities.",
-                tags: ["terrorism financing", "financial crime", "cybercrime", "asset forfeiture"],
-                punishmentSeverity: 6
+                description: "A law that criminalizes the financing of terrorism and related offenses, aiming to prevent and suppress such acts by freezing and forfeiting associated properties or funds. It also aims to protect life, liberty, and property from terrorism.",
+                punishment: "-Individuals involved in financing terrorism results in imprisonment penalty ranges from reclusion temporal (maximum period) to reclusion perpetua, with fines ranging from Php 500,000.00 to Php 1,000,000.00. -Those attempting to commit the crime will receive a penalty two degrees lower than the actual crime, while conspirators face the same penalty as the principal offenders. -Accomplices receive a penalty one degree lower than that of the conspirators. -The Anti-Money Laundering Council (AMLC) has the authority to impose administrative penalties, including reprimands or fines from Php 100,000 to Php 500,000, for violations of the law or its rules. -The law permits the freezing and forfeiture of property or funds involved in terrorism financing.",
+                image: "https://i.imgur.com/xGWhFYJ.png",
+                tags: ["Terrorism", "Financial"],
+                severity: 7
             },
             {
                 title: "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
-                description: "A law that defines and criminalizes money laundering, aiming to prevent the use of the country's financial system for laundering the proceeds of illegal activities. It also includes provisions for asset freezing and international cooperation in combating money laundering, particularly in online financial transactions.",
-                tags: ["money laundering", "financial crime", "asset freezing", "cybercrime"],
-                punishmentSeverity: 5
+                description: "A law that defines and criminalizes money laundering, aiming to prevent the use of the country's financial system for laundering the proceeds of illegal activities. It also includes provisions for asset freezing and international cooperation in combating money laundering.",
+                punishment: "- A person who knowingly transacts or attempts to transact monetary instruments or property related to unlawful activity may face 7 to 14 years of imprisonment and a fine of at least ₱3,000,000 or up to twice the value of the asset involved. - If someone facilitates such transactions by action or inaction, they may be punished with 4 to 7 years of imprisonment and a fine ranging from ₱1,500,000 to ₱3,000,000. - Failure to disclose or file required information with the Anti-Money Laundering Council (AMLC) may result in 6 months to 4 years of imprisonment and a fine between ₱100,000 and ₱500,000, or both. -Failure to keep records is punishable by 6 months to 1 year of imprisonment or a fine of ₱100,000 to ₱500,000, or both. - Malicious or false reporting related to money laundering may lead to 6 months to 4 years of imprisonment and a fine within the same range, without eligibility for probation. -Responsible officers of corporations or organizations involved may also be penalized, and additional sanctions apply to aliens (deportation), public officials (disqualification), and those who refuse to testify. -Breach of confidentiality carries a penalty of 3 to 8 years of imprisonment and a fine of ₱500,000 to ₱1,000,000.",
+                image: "https://i.imgur.com/Jd2pX3x.png",
+                tags: ["Financial", "Fraud"],
+                severity: 5
             },
             {
                 title: "National Bureau of Investigation Reorganization Act (Republic Act No. 10867)",
-                description: "This law aims to enhance the NBI's investigative capabilities by reorganizing and modernizing the agency. It establishes a clear structure, expands the NBI's powers and functions, and sets qualification standards for personnel, particularly for investigating cybercrimes.",
-                tags: ["NBI", "cybercrime investigation", "law enforcement", "modernization"],
-                punishmentSeverity: 2
+                description: "This law aims to enhance the NBI's investigative capabilities by reorganizing and modernizing the agency. It establishes a clear structure, expands the NBI's powers and functions, and sets qualification standards for personnel. The Act also provides for funding and transition provisions to ensure continuity.",
+                punishment: "Administrative sanctions under Republic Act No. 6713, including suspension or dismissal, for NBI personnel failing to comply with investigative protocols.",
+                image: "https://i.imgur.com/82lztoi.png",
+                tags: ["Cybercrime"],
+                severity: 2
             },
             {
                 title: "Mobile Number Portability Act (Republic Act No. 11202)",
-                description: "This law allows mobile subscribers to switch telecommunications service providers while keeping their existing mobile numbers. This act promotes consumer welfare by allowing consumers to freely choose and switch providers without losing their phone number, while addressing potential misuse in cybercrimes.",
-                tags: ["telecommunications", "consumer welfare", "identity theft", "cybercrime"],
-                punishmentSeverity: 3
+                description: "This law allows mobile subscribers to switch telecommunications service providers while keeping their existing mobile numbers. This act promotes consumer welfare by allowing consumers to freely choose and switch providers without losing their phone number.",
+                punishment: "- An initial fine of ₱10,000 is imposed if number portability is not completed within the prescribed time frame but is eventually delivered either before a complaint is filed or after mediation. -Where a telecommunications provider unjustly refuses to perform portability even after mediation, fines ranging from ₱40,000 to ₱1,000,000 may be imposed. - For repeated offenses—specifically on the fifth and subsequent instances of unjust refusal after mediation—the penalties are ranging from ₱400,000 to ₱1,000,000 and the possible revocation of the Public Telecommunications Entity (PTE) franchise.",
+                image: "https://i.imgur.com/YpXa47l.png",
+                tags: ["Telecommunications", "Consumer Protection"],
+                severity: 3
             },
             {
                 title: "Safe Spaces Act (Republic Act No. 11313)",
-                description: "A law enacted to protect individuals from gender-based sexual harassment in public spaces, online, workplaces, and educational institutions. It defines and penalizes various forms of gender-based sexual harassment, including online harassment and cyberstalking.",
-                tags: ["sexual harassment", "online harassment", "cyberstalking", "gender-based"],
-                punishmentSeverity: 3
+                description: "A law enacted to protect individuals from gender-based sexual harassment in public spaces, online, workplaces, and educational institutions. It defines and penalizes various forms of gender-based sexual harassment in these settings.",
+                punishment: "-Verbal harassment such as cursing, wolf-whistling, catcalling, and sexist or homophobic slurs. The first offense results in a ₱1,000 fine and 12 hours of community service, including attending a Gender Sensitivity Seminar. The second offense is by 6 to 10 days of imprisonment or a ₱3,000 fine, while the third offense carries 11 to 30 days of imprisonment and a ₱10,000 fine. - Lewd acts like offensive body gestures, flashing, public masturbation, or groping. The first offense results in a ₱10,000 fine and 12 hours of community service with a Gender Sensitivity Seminar. The second offense carries 11 to 30 days of imprisonment or a ₱15,000 fine, the third offense results in 1 month and 1 day to 6 months of imprisonment and a ₱20,000 fine. -Stalking or unwanted physical contact such as pinching, brushing, or touching private areas.the first offense is punishable by 11 to 30 days of imprisonment or a ₱30,000 fine, along with a Gender Sensitivity Seminar. The second offense carries 1 month and 1 day to 6 months of imprisonment or a ₱50,000 fine, the third offense results in a maximum of 6 months imprisonment or a ₱100,000 fine.",
+                image: "https://i.imgur.com/bUgkWoQ.png",
+                tags: ["Harassment"],
+                severity: 3
             },
             {
                 title: "New Central Bank Act (Republic Act No. 7653)",
-                description: "The country's central monetary authority. It mandates the BSP to maintain price stability and promote financial stability, while also providing for fiscal and administrative autonomy. The act also outlines the structure and powers of the Monetary Board, including its membership and responsibilities, with provisions to combat financial cybercrimes.",
-                tags: ["financial stability", "central bank", "cybercrime", "monetary policy"],
-                punishmentSeverity: 5
+                description: "The country's central monetary authority. It mandates the BSP to maintain price stability and promote financial stability, while also providing for fiscal and administrative autonomy. The act also outlines the structure and powers of the Monetary Board, including its membership and responsibilities.",
+                punishment: "-Unauthorized issuance of Bangko Sentral notes or reproduction of their facsimiles is punishable by imprisonment not less than five (5) years but not more than ten (10) years. -Making false statements to the Monetary Board or Bangko Sentral examiners can lead to fines of up to ₱2 million, imprisonment for up to 5 years, or both. -Violating BSP regulations can result in imprisonment of not less than 5 years but not more than 10 years, or a greater penalty under the Revised Penal Code. -Maliciously reporting or filing false information leading to the temporary holding of funds is punishable under the Act. -Fraudulently overvaluing property or making false statements in loan applications can lead to imprisonment ranging from six months to four years and a fine of not less than ₱100,000 and in some cases, up to ₱500,000 pesos -Unauthorized disclosure of confidential BSP information can result in a fine of not less than ₱100,000 and not more than ₱200,000, or imprisonment of a maximum of 14 years. -The Monetary Board can impose ₱30,000 to ₱1,000,000 fines for non-compliance and take action on unlawful or unsafe operations.",
+                image: "https://i.imgur.com/zxLf5Fm.png",
+                tags: ["Financial", "Fraud"],
+                severity: 5
             },
             {
                 title: "Anti-Wire Tapping Act (Republic Act No. 4200)",
                 description: "The law prohibits and penalizes unauthorized wiretapping and other related violations of communication privacy. It makes it illegal to tap wires or cables, secretly overhear, intercept, or record communications or spoken words, and possess recordings of such actions without consent from all parties involved.",
-                tags: ["wiretapping", "privacy", "communication", "cybercrime"],
-                punishmentSeverity: 4
+                punishment: "Imprisonment for 6 months to 6 years, and perpetual disqualification from public office if the offender is a public official at the time of the offense. Additionally, if the offender is an alien, they can face deportation proceedings after serving their sentence.",
+                image: "https://i.imgur.com/2H5lVBF.jpeg",
+                tags: ["Privacy", "Cybercrime"],
+                severity: 4
             },
             {
                 title: "Human Security Act of 2007 (Republic Act No. 9372)",
-                description: "This law aimed to protect the Philippines from terrorism by defining the crime and providing mechanisms for its prevention and suppression. The act declared its state policy to protect life, liberty, and property from acts of terrorism and to address the issue through a comprehensive approach, including cyber-terrorism.",
-                tags: ["terrorism", "cyber-terrorism", "national security", "law enforcement"],
-                punishmentSeverity: 6
+                description: "This law aimed to protect the Philippines from terrorism by defining the crime and providing mechanisms for its prevention and suppression. The act declared its state policy to protect life, liberty, and property from acts of terrorism and to address the issue through a comprehensive approach encompassing legal, political, economic, diplomatic, and military means.",
+                punishment: "-Joining a proscribed organization or one formed for terrorism purposes is punishable by 12 years of imprisonment. -Assisting terrorists, such as harboring or aiding in the escape of a terrorist conspirator, carries a penalty of 10 years and one day to 12 years of imprisonment. - Attempted terrorism is penalized two degrees lower than the penalty for the full crime, while conspiracy to commit terrorism is punished the same as the crime itself. -Foreign terrorists committing acts of terrorism face life imprisonment without parole. -Conspiring to commit terrorism also results in life imprisonment without parole. - Police or law enforcement officials who fail to notify individuals of the termination of surveillance, interception, or recording activities face imprisonment of 10 years and one day to 12 years.",
+                image: "https://i.imgur.com/KjiiSt0.png",
+                tags: ["Terrorism"],
+                severity: 7
             },
             {
                 title: "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
-                description: "A law in the Philippines aimed at preventing, prohibiting, and penalizing terrorism. It defines terrorism and related offenses, outlines the powers and functions of the Anti-Terrorism Council (ATC), and provides for the detention and surveillance of suspected terrorists, including those involved in cyber-terrorism.",
-                tags: ["terrorism", "cyber-terrorism", "surveillance", "national security"],
-                punishmentSeverity: 7
-            },
-            {
-                title: "Anti-Bullying Act of 2013 (Republic Act No. 10627)",
-                description: "Schools are required to implement policies to prevent and address bullying within their institutions and set procedures for handling complaints. It defines bullying as any severe or repeated use of written, verbal, or physical acts or gestures directed at another student that causes fear or disrupts the education process, including cyberbullying.",
-                tags: ["bullying", "cyberbullying", "school safety", "student protection"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Department of Information and Communications Technology Act (Republic Act No. 10844)",
-                description: "It establishes the Department of Information and Communications Technology (DICT) as the primary government agency for developing and implementing ICT policies, plans, and programs. To provide oversight over agencies governing and regulating the ICT sector and ensure consumer protection and welfare, data privacy and security, foster competition and the growth of the ICT sector.",
-                tags: ["ICT", "cybersecurity", "data privacy", "consumer protection"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Strategic Trade Management Act (Republic Act No. 10697)",
-                description: "An Act Preventing the Proliferation of Weapons of Mass Destruction by Managing the Trade in Strategic Goods, the Provision of Related Services, and for Other Purposes. It regulates the export and trade of dual-use goods that could be used in cyber-related threats or weapons development.",
-                tags: ["strategic goods", "national security", "cyber-threats", "trade regulation"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Energy Virtual One-Stop Shop Act (Republic Act No. 11234)",
-                description: "A web-based filing and monitoring system for energy-related applications and a repository of information and permits issued for energy projects. It streamlines processes to prevent cyber-related disruptions in energy infrastructure.",
-                tags: ["energy", "cybersecurity", "infrastructure", "online system"],
-                punishmentSeverity: 2
+                description: "A law in the Philippines aimed at preventing, prohibiting, and penalizing terrorism. It defines terrorism and related offenses, outlines the powers and functions of the Anti-Terrorism Council (ATC), and provides for the detention and surveillance of suspected terrorists. The law also addresses the financing of terrorism and the forfeiture of assets.",
+                punishment: "-Terrorism is punishable by life imprisonment without parole, along with a fine ranging from one million pesos (₱1,000,000) to twenty-five million pesos (₱25,000,000). - Inciting to commit terrorism carries a penalty of 12 years to 20 years of imprisonment. - Recruitment to terrorist organizations is punishable by life imprisonment without parole and a fine of ₱500,000 to ₱10,000,000. - Providing material support to terrorists results in 12 years to 20 years of imprisonment and a fine of ₱500,000 to ₱5,000,000. - Attempt or conspiracy to commit terrorism is penalized with the same punishment as the completed act. - Accomplices face 10 years to 17 years of imprisonment, while accessories are punished with 6 years to 12 years of imprisonment.",
+                image: "https://i.imgur.com/5qZxYkL.png",
+                tags: ["Terrorism", "Cybercrime"],
+                severity: 8
             },
             {
                 title: "Consumer Act of the Philippines (Republic Act No. 7394)",
-                description: "The primary law governing consumer protection in the country. It aims to protect consumers from health and safety hazards, deceptive practices, and unfair sales. It also provides for consumer education and redress mechanisms, and includes consumer representatives in policy formulation, addressing online consumer fraud.",
-                tags: ["consumer protection", "online fraud", "deceptive practices", "cybercrime"],
-                punishmentSeverity: 3
+                description: "This law establishes standards for consumer protection, including regulations against deceptive, unfair, and unconscionable sales practices in online and offline transactions. It also covers product safety and liability.",
+                punishment: "- Violations such as deceptive sales practices or unsafe products are punishable by imprisonment of 1 month to 5 years, or a fine of ₱500 to ₱10,000, or both. - Administrative penalties may include fines up to ₱300,000 and revocation of business licenses. - For juridical persons, responsible officers may face the same penalties.",
+                image: "https://i.imgur.com/9kWvZ3m.png",
+                tags: ["Consumer Protection", "Fraud"],
+                severity: 3
             },
             {
-                title: "Optical Media Act of 2003 (Republic Act No. 9239)",
-                description: "It is hereby declared to be the policy of the State to ensure the protection and promotion of intellectual property rights. The unregulated mastering, manufacture, replication, importation and exportation of optical media in all forms is inimical to economic growth and public interest, particularly in combating digital piracy.",
-                tags: ["intellectual property", "digital piracy", "optical media", "cybercrime"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "National Cybersecurity Plan Framework (Executive Order No. 189, 2015)",
-                description: "A response to the growing concern about cyber threats and vulnerabilities in the Philippines. About the increasing number of cyber threats and vulnerabilities affecting government and commercial information systems, it outlines strategies to enhance national cybersecurity.",
-                tags: ["cybersecurity", "national security", "cyber threats", "policy"],
-                punishmentSeverity: 5
-            },
-            {
-                title: "Strengthening DICT’s Cybersecurity Role (Executive Order No. 82, 2022)",
-                description: "This plan aims to bolster the country's digital defenses while fostering a culture of cybersecurity awareness and responsibility. It enhances the DICT's role in coordinating and implementing cybersecurity measures across government agencies.",
-                tags: ["cybersecurity", "DICT", "national security", "awareness"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "National Cybersecurity Inter-Agency Committee (Executive Order No. 95, 2019)",
-                description: "It was created to strengthen the Philippines’ cybersecurity framework. Its main purpose is to coordinate, integrate, and harmonize all government efforts related to safeguarding the country’s information and communications technology (ICT) infrastructure.",
-                tags: ["cybersecurity", "ICT", "national security", "coordination"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Guidelines on IT Risk Management (BSP Circular No. 808, 2013)",
-                description: "This was designed to strengthen risk management, security operations and IT-related activities, as well as enforce consumer protection regulations in banks and other BSP-supervised institutions, ensuring robust cybersecurity in financial systems.",
-                tags: ["IT risk", "cybersecurity", "banking", "consumer protection"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Enhanced Information Security Management (BSP Circular No. 982, 2017)",
-                description: "It focuses on strengthening data security, requiring BSFIs to establish effective technology risk management processes, governance structures, and cybersecurity controls to protect financial institutions from cyber threats.",
-                tags: ["data security", "cybersecurity", "banking", "risk management"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Technology and Cyber-Risk Reporting (BSP Circular No. 1019, 2018)",
-                description: "This circular aims to strengthen the BSP's cyber-threat surveillance capabilities by tightening the reporting regime for technology and cyber-risk-related incidents and disruptions. It also emphasizes the importance of fostering safe, secure, efficient, and reliable retail payment systems, while protecting customer accounts and information, and upholding consumer protection.",
-                tags: ["cyber-risk", "banking", "reporting", "consumer protection"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Guidelines on Operational Risk Management (BSP Circular No. 900, 2015)",
-                description: "Its primary purpose is to ensure the safe and sound operation of BSFIs by promoting the adoption of effective risk management systems. The circular defines operational risk as the risk of loss stemming from inadequate or failed internal processes, people, systems, external events, and legal risk, including cyber-related risks.",
-                tags: ["operational risk", "cybersecurity", "banking", "risk management"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Guidelines on Business Continuity Management (BSP Circular No. 951, 2017)",
-                description: "It emphasizes the importance of a robust Business Continuity Management process, highlighting the responsibilities of the board of directors and senior management in establishing and promoting a culture that prioritizes business continuity, particularly in response to cyber incidents.",
-                tags: ["business continuity", "cybersecurity", "banking", "risk management"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Guidelines on Outsourcing Risk Management (BSP Circular No. 1039, 2019)",
-                description: "This circular primarily focuses on the operations and requirements of pawnshops and Money Service Businesses (MSBs), including remittance and transfer companies. It outlines guidelines for the submission of applications for licenses and authorizations for pawnshops, as well as the electronic submission of reports on remittance, money changing, and virtual currency exchange transactions, addressing cyber risks in outsourcing.",
-                tags: ["outsourcing", "cybersecurity", "banking", "risk management"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
-                description: "It focuses on the protection of Critical Information Infrastructure (CII) as outlined in the National Cybersecurity Plan (NCSP) 2022. It mandates the adoption of international security standards and outlines policies and regulations for safeguarding CII, as part of the NCSP. This circular also mandates the integration of the National IT Security Policy (NISP) with the NCSP framework.",
-                tags: ["cybersecurity", "CII", "security standards", "policy"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
-                description: "This focuses on protecting individuals by promoting cybersecurity awareness and implementing security measures. This includes measures like cybersecurity awareness programs like the CyberSecurity Caravan, and promoting the adoption of cybersecurity practices by individuals. The NCSP aims to enhance the security of critical information infrastructure and government networks, which directly contributes to the protection of individual data and information within these systems.",
-                tags: ["cybersecurity", "awareness", "individual protection", "policy"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Cloud First Policy (DICT Department Circular No. 2017-002)",
-                description: "This mandates government agencies to prioritize cloud computing solutions in their IT infrastructure planning and procurement. This policy aims to modernize government operations by leveraging cloud technology while maintaining data control and adhering to security standards to prevent cyber threats.",
-                tags: ["cloud computing", "cybersecurity", "government", "policy"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Value-Added Services Regulation (NTC Memorandum Circular No. 02-05-2008)",
-                description: "This circular defines Value-Added Services (VAS) as enhanced telecommunications services beyond basic offerings, including messaging, audio/video conferencing, voice mail, electronic mail, information services, and electronic gaming. It outlines registration requirements, service classifications, and regulatory compliance for VAS providers to prevent cyber-related misuse.",
-                tags: ["telecommunications", "VAS", "cybersecurity", "regulation"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Broadcast Messaging Regulation (NTC Memorandum Circular No. 03-03-2005-A)",
-                description: "Establishes guidelines for sending broadcast or push messages to subscribers, particularly regarding content providers and public telecommunications entities (PTEs). It aims to prevent unauthorized or deceptive messaging that could be used in cybercrimes like phishing.",
-                tags: ["telecommunications", "messaging", "cybercrime", "regulation"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Guidelines on Prepaid Load Expiry (NTC Memorandum Circular No. 01-04-2019)",
-                description: "Mandating a one-year expiration period for all prepaid loads, regardless of amount. This circular covers all prepaid loads of public telecommunications entities and ICT providers, aiming to protect consumers and prevent fraudulent practices in telecommunications.",
-                tags: ["telecommunications", "consumer protection", "cybercrime", "regulation"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Social Media and AI Election Guidelines (COMELEC Resolution No. 11064, 2024)",
-                description: "The resolution mandates candidates and political parties to register all digital campaign platforms by 13 December 2024, ensuring compliance with transparency requirements, including disclosing AI usage in campaign materials. The resolution applies to technology platforms and social media companies hosting political content, which must assist in removing unregistered platforms and monitoring for disinformation.",
-                tags: ["elections", "social media", "AI", "disinformation"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
-                description: "Aims to improve the quality of pharmaceutical products through stricter distribution and storage standards. The order also emphasizes the importance of aligning local practices with international standards for pharmaceutical distribution and storage, including online sales to prevent cyber-related fraud.",
-                tags: ["pharmaceuticals", "online sales", "cybercrime", "regulation"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "E-Commerce Protection Guidelines (DTI Administrative Order No. 22-01)",
-                description: "Aims to increase consumer confidence in e-commerce by ensuring online businesses understand their responsibilities and adhere to fair practices. It addresses deceptive practices and fraud in online transactions, promoting transparency and consumer protection.",
-                tags: ["e-commerce", "consumer protection", "online fraud", "regulation"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Guidelines on Cybercrime Prosecution (DOJ Circular No. 027, 2018)",
-                description: "The circular focuses on prosecuting crimes that violate the confidentiality, integrity, and availability of computer data and systems. It also addresses offenses like illegal access, interception of data, and data interference, providing guidelines for effective cybercrime prosecution.",
-                tags: ["cybercrime", "prosecution", "data integrity", "law enforcement"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "PNP Anti-Cybercrime Group Operational Guidelines (PNP Circular No. 2019-001)",
-                description: "This circular outlines operational guidelines for the PNP Anti-Cybercrime Group (ACG), focusing on the investigation and response to cybercrimes, including online fraud, hacking, and disinformation campaigns.",
-                tags: ["cybercrime", "PNP", "law enforcement", "investigation"],
-                punishmentSeverity: 4
-            },
-           {
-                title: "Rules on Cybercrime Warrants (Supreme Court A.M. No. 17-11-03-SC)",
-                description: "Establishes rules and procedures for the issuance and execution of warrants related to cybercrime investigations. It provides guidelines for law enforcement to obtain warrants for the interception, seizure, or examination of computer data, ensuring compliance with legal standards and protection of privacy rights.",
-                tags: ["cybercrime", "warrants", "law enforcement", "data privacy"],
-                punishmentSeverity: 4
+                title: "Cybersecurity Act of 2018 (Proposed, Not Enacted)",
+                description: "A proposed legislation aimed at establishing a national cybersecurity framework to protect critical information infrastructure, enhance cyber resilience, and promote cybersecurity awareness. Note: As of 2025, this has not been enacted into law.",
+                punishment: "N/A (Proposed legislation, penalties not yet defined).",
+                image: "https://i.imgur.com/4tYpN2k.png",
+                tags: ["Cybersecurity", "Cybercrime"],
+                severity: 0
             }
         ];
 
         let currentCardIndex = 0;
         let currentPage = 1;
-        let currentLawsPage = 1;
         const itemsPerPage = 5;
-        const lawsPerPage = 5;
-        let filteredLaws = [...laws];
-
 
         const cards = [
-    { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
-    { term: "Hacking", partOfSpeech: "noun", definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.", example: "Hacking is penalized under the Electronic Commerce Act of 2000 for unauthorized access to electronic transactions.", synonyms: "unauthorized access, cyber intrusion, data breach" },
-    { term: "Phishing", partOfSpeech: "noun", definition: "A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.", example: "The NBI Cybercrime Division raided a group operating a phishing scam using fake banking websites.", synonyms: "online scam, identity theft, social engineering" },
-    { term: "Fraud", partOfSpeech: "noun", definition: "Wrongful deception intended to result in financial or personal gain, often conducted online or through electronic means.", example: "The Anti-Financial Account Scamming Act penalizes fraud involving fake bank accounts for online scams.", synonyms: "deception, scam, swindle" },
-    { term: "Identity Theft", partOfSpeech: "noun", definition: "The deliberate use of someone else's identity, typically to gain financial advantage or obtain credit.", example: "The Access Devices Regulation Act criminalizes the use of stolen credit card information for identity theft.", synonyms: "impersonation, identity fraud, personal data theft" },
-    { term: "Data Breach", partOfSpeech: "noun", definition: "An incident where sensitive or confidential data is accessed or disclosed without authorization.", example: "The Data Privacy Act of 2012 imposes penalties for data breaches involving unauthorized access to personal information.", synonyms: "security breach, information leak, data exposure" },
-    { term: "Child Pornography", partOfSpeech: "noun", definition: "Illegal material depicting minors in sexual acts, often distributed online.", example: "The Anti-Child Pornography Act of 2009 criminalizes the production and distribution of child pornography.", synonyms: "child exploitation material, illegal content, explicit media" },
-    { term: "Money Laundering", partOfSpeech: "noun", definition: "The process of concealing the origins of illegally obtained money, often through financial transactions.", example: "The Anti-Money Laundering Act of 2001 aims to prevent the financial system from being used for laundering drug money.", synonyms: "financial crime, illicit funds, money washing" },
-    { term: "Cyber-Squatting", partOfSpeech: "noun", definition: "Registering or using a domain name with bad faith intent to profit from the goodwill of a trademark belonging to someone else.", example: "Cyber-squatting is penalized under the Cybercrime Prevention Act of 2012 for misusing domain names.", synonyms: "domain hijacking, trademark abuse, online squatting" },
-    { term: "Unauthorized Access", partOfSpeech: "noun", definition: "Gaining entry to a computer system or network without permission.", example: "Unauthorized access to customer data is punishable under the Data Privacy Act of 2012.", synonyms: "illegal entry, system breach, hacking" },
-    { term: "Electronic Transaction", partOfSpeech: "noun", definition: "A transaction conducted through electronic means, such as online payments or digital contracts.", example: "The Electronic Commerce Act of 2000 regulates electronic transactions to prevent fraud.", synonyms: "digital transaction, e-commerce, online exchange" },
-    { term: "Credit Card Skimming", partOfSpeech: "noun", definition: "The theft of credit card information using illegal devices attached to card readers.", example: "Credit card skimming at ATMs is addressed under the Access Devices Regulation Act of 1998.", synonyms: "card fraud, data theft, skimming scam" },
-    { term: "Money Muling", partOfSpeech: "noun", definition: "The act of using individuals to transfer illegally obtained money, often through fake accounts.", example: "Money muling is penalized under the Anti-Financial Account Scamming Act with imprisonment.", synonyms: "financial mule, illicit transfer, scam facilitator" },
-    { term: "Social Engineering", partOfSpeech: "noun", definition: "Manipulating individuals into divulging confidential information, often used in cyber scams.", example: "Social engineering schemes are heavily penalized under the Anti-Financial Account Scamming Act.", synonyms: "human hacking, manipulation scam, deception tactic" },
-    { term: "Economic Sabotage", partOfSpeech: "noun", definition: "Large-scale financial crimes that undermine the economy, often linked to terrorism or fraud.", example: "Economic sabotage under the Anti-Financial Account Scamming Act can lead to life imprisonment.", synonyms: "financial sabotage, economic crime, systemic fraud" },
-    { term: "Cybersex", partOfSpeech: "noun", definition: "Engaging in sexual activities through digital platforms, often illegally involving exploitation.", example: "Cybersex crimes are addressed under the Cybercrime Prevention Act with severe penalties.", synonyms: "online sexual exploitation, digital sex crime, virtual abuse" },
-    { term: "Data Interference", partOfSpeech: "noun", definition: "The intentional alteration, deletion, or corruption of computer data without authorization.", example: "Data interference is a punishable offense under the Cybercrime Prevention Act of 2012.", synonyms: "data tampering, information corruption, system disruption" },
-    { term: "System Interference", partOfSpeech: "noun", definition: "Disrupting the normal operation of a computer system, often through malware or attacks.", example: "System interference is criminalized under the Cybercrime Prevention Act to protect infrastructure.", synonyms: "cyber disruption, system sabotage, network interference" },
-    { term: "Misuse of Devices", partOfSpeech: "noun", definition: "Using tools or software to commit cybercrimes, such as hacking tools or malware.", example: "Misuse of devices carries heavy fines under the Cybercrime Prevention Act of 2012.", synonyms: "device abuse, illegal software use, cyber tool misuse" },
-    { term: "Computer-Related Forgery", partOfSpeech: "noun", definition: "Creating or altering digital data to deceive others, often for fraudulent purposes.", example: "Computer-related forgery is penalized under the Cybercrime Prevention Act for digital fraud.", synonyms: "digital forgery, electronic fraud, data falsification" },
-    { term: "Voyeurism", partOfSpeech: "noun", definition: "The act of secretly observing or recording someone in a private setting, often for sexual purposes.", example: "The Anti-Photo and Video Voyeurism Act of 2009 penalizes voyeurism involving unauthorized recordings.", synonyms: "peeping, privacy violation, secret recording" },
-    { term: "Human Trafficking", partOfSpeech: "noun", definition: "The illegal trade of humans for exploitation, often involving coercion or deception.", example: "The Expanded Anti-Trafficking in Persons Act addresses trafficking for prostitution or labor.", synonyms: "modern slavery, forced labor, exploitation trade" },
-    { term: "SIM Spoofing", partOfSpeech: "noun", definition: "Impersonating a legitimate SIM card to send misleading messages or commit fraud.", example: "SIM spoofing is penalized under the Subscriber Identity Module Registration Act.", synonyms: "SIM fraud, mobile impersonation, telecom scam" },
-    { term: "Online Sexual Abuse", partOfSpeech: "noun", definition: "Exploiting individuals, often minors, through digital platforms for sexual purposes.", example: "The Anti-Online Sexual Abuse or Exploitation of Children Act protects minors from online abuse.", synonyms: "digital exploitation, cyber abuse, online predation" },
-    { term: "Grooming", partOfSpeech: "noun", definition: "Building a relationship with a child to manipulate them into sexual activity, often online.", example: "Grooming is heavily penalized under the Anti-Online Sexual Abuse or Exploitation of Children Act.", synonyms: "online enticement, child manipulation, predator behavior" },
-    { term: "Intellectual Property", partOfSpeech: "noun", definition: "Creations of the mind, such as inventions, designs, or artistic works, protected by law.", example: "The Intellectual Property Code of the Philippines protects copyrights and trademarks.", synonyms: "IP rights, creative ownership, patent protection" },
-    { term: "Terrorism Financing", partOfSpeech: "noun", definition: "Providing or collecting funds to support terrorist activities or organizations.", example: "The Terrorism Financing Prevention and Suppression Act criminalizes funding terrorist groups.", synonyms: "terror funding, illicit financing, terrorism support" },
-    { term: "Asset Freezing", partOfSpeech: "noun", definition: "The legal process of restricting access to financial assets to prevent illegal use.", example: "Asset freezing is a provision under the Anti-Money Laundering Act to stop illicit transactions.", synonyms: "fund seizure, financial restriction, property lockdown" },
-    { term: "Phishing Attack", partOfSpeech: "noun", definition: "A targeted attempt to steal sensitive information through fraudulent emails or messages.", example: "A phishing attack on a government agency is addressed by the National Cybersecurity Inter-Agency Committee.", synonyms: "email scam, fraudulent message, cyber baiting" },
-    { term: "Number Portability", partOfSpeech: "noun", definition: "The ability to retain a mobile number when switching service providers.", example: "The Mobile Number Portability Act allows consumers to switch providers without losing their number.", synonyms: "mobile portability, number retention, telecom switching" },
-    { term: "Gender-Based Harassment", partOfSpeech: "noun", definition: "Unwanted behavior targeting someone based on their gender, often in public or online spaces.", example: "The Safe Spaces Act penalizes gender-based harassment in online group chats.", synonyms: "sexual harassment, gender discrimination, online abuse" },
-    { term: "Wiretapping", partOfSpeech: "noun", definition: "The act of secretly intercepting or recording private communications without consent.", example: "The Anti-Wire Tapping Act prohibits unauthorized wiretapping of business meetings.", synonyms: "eavesdropping, illegal interception, communication breach" },
-    { term: "Terrorism", partOfSpeech: "noun", definition: "The use of violence or threats to intimidate a population or government for political purposes.", example: "The Anti-Terrorism Act of 2020 penalizes acts of terrorism like bomb threats.", synonyms: "violent extremism, terror act, political violence" },
-    { term: "Bullying", partOfSpeech: "noun", definition: "Repeated aggressive behavior intended to harm or intimidate someone, often in schools.", example: "The Anti-Bullying Act of 2013 addresses bullying in schools, such as teasing over penmanship.", synonyms: "harassment, intimidation, peer abuse" },
-    { term: "Cybersecurity", partOfSpeech: "noun", definition: "Measures taken to protect computer systems and networks from cyber threats.", example: "The Department of Information and Communications Technology Act strengthens cybersecurity policies.", synonyms: "digital security, online protection, cyber defense" },
-    { term: "Strategic Goods", partOfSpeech: "noun", definition: "Items that can be used for both civilian and military purposes, regulated to prevent misuse.", example: "The Strategic Trade Management Act regulates the export of strategic goods like computer chips.", synonyms: "dual-use goods, controlled items, sensitive technology" },
-    { term: "Consumer Protection", partOfSpeech: "noun", definition: "Laws and regulations designed to safeguard consumers from unfair practices.", example: "The Consumer Act of the Philippines protects consumers from defective products.", synonyms: "buyer rights, consumer safety, fair trade" },
-    { term: "Piracy", partOfSpeech: "noun", definition: "The unauthorized reproduction or distribution of copyrighted material, such as movies or music.", example: "The Optical Media Act of 2003 penalizes piracy of DVDs and Blu-rays.", synonyms: "copyright infringement, illegal copying, content theft" },
-    { term: "Operational Risk", partOfSpeech: "noun", definition: "The risk of loss due to inadequate processes, systems, or human error.", example: "The Guidelines on Operational Risk Management address risks like accidental data leaks.", synonyms: "process risk, system failure, human error risk" },
-    { term: "Business Continuity", partOfSpeech: "noun", definition: "Planning to ensure critical operations continue during disruptions like natural disasters.", example: "The Guidelines on Business Continuity Management ensure banks operate during crises.", synonyms: "disaster recovery, operational resilience, continuity planning" },
-    { term: "Outsourcing Risk", partOfSpeech: "noun", definition: "Risks associated with delegating operations to third-party providers, such as security breaches.", example: "The Guidelines on Outsourcing Risk Management ensure secure outsourcing of customer support.", synonyms: "vendor risk, third-party risk, delegation risk" },
-    { term: "Critical Infrastructure", partOfSpeech: "noun", definition: "Essential systems like telecommunications or banking that, if disrupted, impact society.", example: "The Adoption of PNS ISO/IEC 27002 protects critical information infrastructure.", synonyms: "essential systems, vital infrastructure, key networks" },
-    { term: "Cloud Computing", partOfSpeech: "noun", definition: "The delivery of computing services over the internet, including storage and processing.", example: "The Cloud First Policy mandates government agencies to prioritize cloud solutions.", synonyms: "cloud services, online computing, virtual infrastructure" },
-    { term: "Value-Added Services", partOfSpeech: "noun", definition: "Enhanced telecommunications services beyond basic offerings, like messaging or VoIP.", example: "The Value-Added Services Regulation governs services like VoIP calls.", synonyms: "enhanced services, telecom extras, digital add-ons" },
-    { term: "Broadcast Messaging", partOfSpeech: "noun", definition: "Sending promotional or informational messages to a large group of subscribers.", example: "The Broadcast Messaging Regulation requires opt-in consent for promotional texts.", synonyms: "mass messaging, push notifications, bulk SMS" },
-    { term: "Prepaid Load", partOfSpeech: "noun", definition: "A monetary amount added to a mobile account for services like calls or data.", example: "The Guidelines on Prepaid Load Expiry set a one-year validity for prepaid loads.", synonyms: "mobile credit, top-up balance, prepaid funds" },
-    { term: "Deep Fake", partOfSpeech: "noun", definition: "AI-generated media that falsely depicts a person, often used to spread disinformation.", example: "The Social Media and AI Election Guidelines penalize the use of deep fakes in campaigns.", synonyms: "AI forgery, synthetic media, fake video" },
-    { term: "Online Pharmacy", partOfSpeech: "noun", definition: "A digital platform selling pharmaceutical products, regulated for safety and legality.", example: "The Online Pharmaceutical Sales Regulation ensures safe distribution of medicines online.", synonyms: "e-pharmacy, digital drugstore, virtual pharmacy" },
-    { term: "E-Commerce", partOfSpeech: "noun", definition: "The buying and selling of goods and services over the internet.", example: "The E-Commerce Protection Guidelines ensure fair practices in online shopping.", synonyms: "online trade, digital commerce, internet shopping" },
-    { term: "Cybercrime Warrant", partOfSpeech: "noun", definition: "A legal authorization to search, seize, or disclose computer data in cybercrime investigations.", example: "The Rules on Cybercrime Warrants allow law enforcement to obtain data in fraud cases.", synonyms: "digital warrant, cyber search order, data seizure warrant" },
-    { term: "Electronic Evidence", partOfSpeech: "noun", definition: "Digital information, such as emails or documents, admissible in court if authenticated.", example: "The Rules on Electronic Evidence allow emails to be used as evidence in trials.", synonyms: "digital evidence, e-evidence, online proof" }
-];
+            {
+                term: "Cybercrime",
+                partOfSpeech: "noun",
+                definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.",
+                example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.",
+                synonyms: "Synonyms: digital crime, internet crime, online fraud"
+            },
+            {
+                term: "Phishing",
+                partOfSpeech: "noun",
+                definition: "A fraudulent practice of sending emails or other messages purporting to be from reputable sources to induce individuals to reveal personal information.",
+                example: "She received a phishing email that appeared to be from her bank, asking for her login credentials.",
+                synonyms: "Synonyms: spoofing, scam, fraud"
+            },
+            {
+                term: "Hacking",
+                partOfSpeech: "noun",
+                definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.",
+                example: "The company's database was compromised due to hacking, leading to a massive data breach.",
+                synonyms: "Synonyms: cracking, intrusion, cyberattack"
+            }
+        ];
 
         function showLoader() {
             loaderOverlay.classList.add('active');
             setTimeout(() => {
                 loaderOverlay.classList.remove('active');
-            }, 1000);
+            }, 2000);
         }
 
         function toggleSidebar() {
@@ -2850,38 +1847,76 @@
             icon.classList.toggle('active');
         }
 
-        function toggleContent(section) {
+        function toggleContent(type) {
             document.querySelector('.news-content').classList.remove('active');
             document.querySelector('.insights-content').classList.remove('active');
             document.querySelector('.laws-content').classList.remove('active');
-            document.querySelector(`.${section}-content`).classList.add('active');
+            document.querySelector('.news-toggle').classList.remove('active');
+            document.querySelector('.insights-toggle').classList.remove('active');
+            document.querySelector('.laws-toggle').classList.remove('active');
 
-            document.querySelectorAll('.toggle-label').forEach(label => label.classList.remove('active'));
-            document.querySelector(`.${section}-toggle`).classList.add('active');
+            document.querySelector(`.${type}-content`).classList.add('active');
+            document.querySelector(`.${type}-toggle`).classList.add('active');
+
+            if (type === 'laws') {
+                renderLaws();
+            }
         }
 
-        function updateCardDisplay() {
-            const cardData = cards[currentCardIndex];
-            card.querySelector('.card-front h3').textContent = cardData.term;
-            card.querySelector('.card-back h3').textContent = cardData.term;
-            card.querySelector('.part-of-speech').textContent = cardData.partOfSpeech;
-            card.querySelector('.definition').textContent = cardData.definition;
-            card.querySelector('.example').textContent = cardData.example;
-            card.querySelector('.synonyms').textContent = `Synonyms: ${cardData.synonyms}`;
+        function updatePagination() {
+            const totalPages = Math.ceil(document.querySelectorAll('.news-item').length / itemsPerPage);
+            const pageNumbers = document.getElementById('pageNumbers');
+            pageNumbers.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageNumber = document.createElement('span');
+                pageNumber.classList.add('page-number');
+                pageNumber.textContent = i;
+                if (i === currentPage) pageNumber.classList.add('active');
+                pageNumber.addEventListener('click', () => goToPage(i));
+                pageNumbers.appendChild(pageNumber);
+            }
+
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+
+            document.querySelectorAll('.news-item').forEach(item => {
+                item.classList.remove('active');
+                const page = parseInt(item.getAttribute('data-page'));
+                if (page === currentPage) item.classList.add('active');
+            });
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            updatePagination();
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            updatePagination();
+        }
+
+        function updateCard() {
+            const currentCard = cards[currentCardIndex];
+            card.querySelector('.card-front h3').textContent = currentCard.term;
+            card.querySelector('.card-back h3').textContent = currentCard.term;
+            card.querySelector('.part-of-speech').textContent = currentCard.partOfSpeech;
+            card.querySelector('.definition').textContent = currentCard.definition;
+            card.querySelector('.example').textContent = currentCard.example;
+            card.querySelector('.synonyms').textContent = currentCard.synonyms;
             cardCounter.textContent = `Card ${currentCardIndex + 1} of ${cards.length}`;
             prevCardBtn.disabled = currentCardIndex === 0;
             nextCardBtn.disabled = currentCardIndex === cards.length - 1;
         }
 
         function navigateCard(direction) {
-            if (direction === -1 && currentCardIndex > 0) {
-                currentCardIndex--;
-            } else if (direction === 1 && currentCardIndex < cards.length - 1) {
-                currentCardIndex++;
-            }
             card.classList.add('fade-out');
             setTimeout(() => {
-                updateCardDisplay();
+                currentCardIndex += direction;
+                if (currentCardIndex < 0) currentCardIndex = 0;
+                if (currentCardIndex >= cards.length) currentCardIndex = cards.length - 1;
+                updateCard();
                 card.classList.remove('fade-out');
                 card.classList.add('fade-in');
                 setTimeout(() => card.classList.remove('fade-in'), 300);
@@ -2889,111 +1924,61 @@
         }
 
         function randomCard() {
-            const newIndex = Math.floor(Math.random() * cards.length);
-            if (newIndex !== currentCardIndex) {
-                currentCardIndex = newIndex;
-                card.classList.add('fade-out');
-                setTimeout(() => {
-                    updateCardDisplay();
-                    card.classList.remove('fade-out');
-                    card.classList.add('fade-in');
-                    setTimeout(() => card.classList.remove('fade-in'), 300);
-                }, 300);
-            }
+            card.classList.add('fade-out');
+            setTimeout(() => {
+                currentCardIndex = Math.floor(Math.random() * cards.length);
+                updateCard();
+                card.classList.remove('fade-out');
+                card.classList.add('fade-in');
+                setTimeout(() => card.classList.remove('fade-in'), 300);
+            }, 300);
         }
 
-        function displayLaws(page) {
-            lawsContainer.innerHTML = '';
-            const start = (page - 1) * lawsPerPage;
-            const end = start + lawsPerPage;
-            const paginatedLaws = filteredLaws.slice(start, end);
-
-            paginatedLaws.forEach(law => {
-                const lawElement = document.createElement('div');
-                lawElement.className = 'law-card';
-                lawElement.innerHTML = `
+        function renderLaws(lawsToRender = laws) {
+            lawsGrid.innerHTML = '';
+            lawsToRender.forEach(law => {
+                const lawCard = document.createElement('div');
+                lawCard.classList.add('law-card');
+                lawCard.innerHTML = `
                     <h3>${law.title}</h3>
-                    <p>${law.description}</p>
+                    <p><strong>Description:</strong> ${law.description}</p>
+                    <p><strong>Punishment:</strong> ${law.punishment}</p>
                     <div class="law-tags">
                         ${law.tags.map(tag => `<span class="law-tag">${tag}</span>`).join('')}
                     </div>
                 `;
-                lawElement.addEventListener('click', () => {
-                    const searchQuery = encodeURIComponent(law.title);
-                    window.open(`https://www.google.com/search?q=${searchQuery}`, '_blank');
+                lawCard.addEventListener('click', () => {
+                    window.location.href = `HomePage.html?search=${encodeURIComponent(law.title)}`;
                 });
-                lawsContainer.appendChild(lawElement);
+                lawsGrid.appendChild(lawCard);
             });
-
-            updateLawsPagination();
         }
 
-        function updateLawsPagination() {
-            const totalPages = Math.ceil(filteredLaws.length / lawsPerPage);
-            lawsPageNumbersContainer.innerHTML = '';
+        function sortLaws() {
+            const sortBy = sortBySelect.value;
+            let sortedLaws = [...laws];
 
-            const maxVisiblePages = 5;
-            let startPage = Math.max(1, currentLawsPage - Math.floor(maxVisiblePages / 2));
-            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-            if (endPage - startPage + 1 < maxVisiblePages) {
-                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            if (sortBy === 'alphabetical') {
+                sortedLaws.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (sortBy === 'punishment') {
+                sortedLaws.sort((a, b) => b.severity - a.severity);
+            } else if (sortBy === 'relevance') {
+                // Implement relevance sorting if needed
+                sortedLaws = laws;
             }
 
-            for (let i = startPage; i <= endPage; i++) {
-                const pageNumber = document.createElement('span');
-                pageNumber.className = `page-number ${i === currentLawsPage ? 'active' : ''}`;
-                pageNumber.textContent = i;
-                pageNumber.addEventListener('click', () => {
-                    currentLawsPage = i;
-                    displayLaws(currentLawsPage);
-                });
-                lawsPageNumbersContainer.appendChild(pageNumber);
-            }
-
-            prevLawsPageBtn.disabled = currentLawsPage === 1;
-            nextLawsPageBtn.disabled = currentLawsPage === totalPages;
+            renderLaws(sortedLaws);
         }
 
-        function changeLawsPage(direction) {
-            const totalPages = Math.ceil(filteredLaws.length / lawsPerPage);
-            currentLawsPage = Math.max(1, Math.min(totalPages, currentLawsPage + direction));
-            displayLaws(currentLawsPage);
-        }
+        function filterLaws() {
+            const filterByTag = filterByTagSelect.value;
+            let filteredLaws = laws;
 
-        function searchLaws(query) {
-            if (!query) {
-                filteredLaws = [...laws];
-            } else {
-                const fuse = new Fuse(laws, {
-                    keys: ['title', 'description', 'tags'],
-                    threshold: 0.3,
-                    includeScore: true
-                });
-                filteredLaws = fuse.search(query).map(result => result.item);
+            if (filterByTag !== 'all') {
+                filteredLaws = laws.filter(law => law.tags.includes(filterByTag));
             }
-            currentLawsPage = 1;
-            displayLaws(currentLawsPage);
-        }
 
-        function sortLaws(criteria) {
-            if (criteria === 'alphabetical') {
-                filteredLaws.sort((a, b) => a.title.localeCompare(b.title));
-            } else if (criteria === 'seriousness') {
-                filteredLaws.sort((a, b) => b.punishmentSeverity - a.punishmentSeverity);
-            } else if (criteria === 'similarity') {
-                // Placeholder: Implement similarity-based sorting (e.g., tag overlap)
-                filteredLaws.sort((a, b) => {
-                    const aTags = a.tags.join(' ');
-                    const bTags = b.tags.join(' ');
-                    return bTags.localeCompare(aTags);
-                });
-            } else if (criteria === 'relevance') {
-                // Placeholder: Implement relevance-based sorting (e.g., based on search query)
-                filteredLaws.sort((a, b) => a.title.localeCompare(b.title));
-            }
-            currentLawsPage = 1;
-            displayLaws(currentLawsPage);
+            sortLaws(filteredLaws);
         }
 
         themeToggle.addEventListener('change', () => {
@@ -3009,46 +1994,41 @@
 
         avatarInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
-            if (file && ['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+            if (file) {
                 avatarLoading.classList.add('active');
                 const reader = new FileReader();
-                reader.onload = () => {
-                    profilePic.src = reader.result;
-                    localStorage.setItem('avatar', reader.result);
+                reader.onload = (e) => {
+                    profilePic.src = e.target.result;
+                    localStorage.setItem('avatar', e.target.result);
                     setTimeout(() => avatarLoading.classList.remove('active'), 1000);
                 };
                 reader.readAsDataURL(file);
             }
         });
 
-        avatarBgColorPicker.addEventListener('input', () => {
-            profilePic.style.backgroundColor = avatarBgColorPicker.value;
-            localStorage.setItem('avatarBgColor', avatarBgColorPicker.value);
+        avatarBgColorPicker.addEventListener('input', (event) => {
+            profilePic.style.backgroundColor = event.target.value;
+            localStorage.setItem('avatarBgColor', event.target.value);
         });
 
-        borderColorPicker.addEventListener('input', () => {
-            profilePic.style.borderColor = borderColorPicker.value;
-            localStorage.setItem('borderColor', borderColorPicker.value);
+        borderColorPicker.addEventListener('input', (event) => {
+            profilePic.style.borderColor = event.target.value;
+            localStorage.setItem('borderColor', event.target.value);
         });
 
-        borderTypeSelect.addEventListener('change', () => {
-            profilePic.style.borderStyle = borderTypeSelect.value;
-            localStorage.setItem('borderType', borderTypeSelect.value);
+        borderTypeSelect.addEventListener('change', (event) => {
+            profilePic.style.borderStyle = event.target.value;
+            localStorage.setItem('borderType', event.target.value);
         });
+
+        sortBySelect.addEventListener('change', sortLaws);
+        filterByTagSelect.addEventListener('change', filterLaws);
 
         card.addEventListener('click', () => {
             card.classList.toggle('flipped');
         });
 
-        lawsSearchInput.addEventListener('input', (e) => {
-            searchLaws(e.target.value.trim());
-        });
-
-        lawsSortSelect.addEventListener('change', (e) => {
-            sortLaws(e.target.value);
-        });
-
-        auth.onAuthStateChanged(user => {
+        auth.onAuthStateChanged((user) => {
             if (user) {
                 usernameDisplay.textContent = user.displayName || 'Anonymous';
                 emailDisplay.textContent = user.email || 'No email';
@@ -3063,26 +2043,27 @@
 
         window.addEventListener('load', () => {
             showLoader();
-            if (localStorage.getItem('theme') === 'dark') {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
                 body.classList.add('dark-theme');
                 themeToggle.checked = true;
             }
-            if (localStorage.getItem('avatar')) {
-                profilePic.src = localStorage.getItem('avatar');
-            }
-            if (localStorage.getItem('avatarBgColor')) {
-                profilePic.style.backgroundColor = localStorage.getItem('avatarBgColor');
-                avatarBgColorPicker.value = localStorage.getItem('avatarBgColor');
-            }
-            if (localStorage.getItem('borderColor')) {
-                profilePic.style.borderColor = localStorage.getItem('borderColor');
-                borderColorPicker.value = localStorage.getItem('borderColor');
-            }
-            if (localStorage.getItem('borderType')) {
-                profilePic.style.borderStyle = localStorage.getItem('borderType');
-                borderTypeSelect.value = localStorage.getItem('borderType');
-            }
-            updateCardDisplay();
-            displayLaws(currentLawsPage);
+
+            const savedAvatar = localStorage.getItem('avatar');
+            if (savedAvatar) profilePic.src = savedAvatar;
+
+            const savedAvatarBgColor = localStorage.getItem('avatarBgColor');
+            if (savedAvatarBgColor) profilePic.style.backgroundColor = savedAvatarBgColor;
+
+            const savedBorderColor = localStorage.getItem('borderColor');
+            if (savedBorderColor) profilePic.style.borderColor = savedBorderColor;
+
+            const savedBorderType = localStorage.getItem('borderType');
+            if (savedBorderType) profilePic.style.borderStyle = savedBorderType;
+
+            updateCard();
+            updatePagination();
         });
     </script>
+</body>
+</html> 
