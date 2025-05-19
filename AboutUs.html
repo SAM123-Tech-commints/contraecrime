@@ -2406,69 +2406,69 @@
                 mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
-        function isElementInViewport(el) {
-            const rect = el.getBoundingClientRect();
-            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-            const windowWidth = window.innerWidth || document.documentElement.clientWidth;
-            const buffer = windowHeight * 0.2; 
-            return (
-                rect.top >= -buffer &&
-                rect.left >= 0 &&
-                rect.bottom <= windowHeight + buffer &&
-                rect.right <= windowWidth
-            );
+       function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+    // Add a larger buffer for smoother triggering on mobile
+    const buffer = windowHeight * 0.3; // 30% of viewport height as buffer
+    return (
+        rect.top >= -buffer &&
+        rect.left >= 0 &&
+        rect.bottom <= windowHeight + buffer &&
+        rect.right <= windowWidth
+    );
+}
+
+function handleScroll() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const growthItems = document.querySelectorAll('.growth-item');
+    const careersCard = document.querySelector('.careers-card');
+    const aboutCard = document.querySelector('.about-card');
+    const faqItems = document.querySelectorAll('.faq-item');
+    const leaderItems = document.querySelectorAll('.leader-item');
+    const isMobile = window.innerWidth <= 480;
+
+    timelineItems.forEach((item, index) => {
+        if (isMobile || isElementInViewport(item)) {
+            setTimeout(() => {
+                item.classList.add('visible');
+            }, index * 300);
         }
+    });
 
-        function handleScroll() {
-        const timelineItems = document.querySelectorAll('.timeline-item');
-        const growthItems = document.querySelectorAll('.growth-item');
-        const careersCard = document.querySelector('.careers-card');
-        const aboutCard = document.querySelector('.about-card');
-        const faqItems = document.querySelectorAll('.faq-item');
-        const leaderItems = document.querySelectorAll('.leader-item');
-        const isMobile = window.innerWidth <= 480;
-
-        timelineItems.forEach((item, index) => {
-            if (isMobile || isElementInViewport(item)) {
-                // Add a slight delay for staggered effect
-                setTimeout(() => {
-                    item.classList.add('visible');
-                }, index * 200); // 200ms delay per item
-            }
-        });
-
-        growthItems.forEach((item, index) => {
-            if (isMobile || isElementInViewport(item)) {
-                setTimeout(() => {
-                    item.classList.add('visible');
-                }, index * 200);
-            }
-        });
-
-        if (isMobile || isElementInViewport(careersCard)) {
-            careersCard.classList.add('visible');
+    growthItems.forEach((item, index) => {
+        if (isMobile || isElementInViewport(item)) {
+            setTimeout(() => {
+                item.classList.add('visible');
+            }, index * 300);
         }
+    });
 
-        if (isMobile || isElementInViewport(aboutCard)) {
-            aboutCard.classList.add('visible');
-        }
-
-        faqItems.forEach((item, index) => {
-            if (isMobile || isElementInViewport(item)) {
-                setTimeout(() => {
-                    item.classList.add('visible');
-                }, index * 200);
-            }
-        });
-
-        leaderItems.forEach((item, index) => {
-            if (isMobile || isElementInViewport(item)) {
-                setTimeout(() => {
-                    item.classList.add('visible');
-                }, index * 200);
-            }
-        });
+    if (isMobile || isElementInViewport(careersCard)) {
+        careersCard.classList.add('visible');
     }
+
+    if (isMobile || isElementInViewport(aboutCard)) {
+        aboutCard.classList.add('visible');
+    }
+
+    faqItems.forEach((item, index) => {
+        if (isMobile || isElementInViewport(item)) {
+            setTimeout(() => {
+                item.classList.add('visible');
+            }, index * 300);
+        }
+    });
+
+    leaderItems.forEach((item, index) => {
+        if (isMobile || isElementInViewport(item)) {
+            setTimeout(() => {
+                item.classList.add('visible');
+            }, index * 300);
+        }
+    });
+}
 
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('load', () => {
