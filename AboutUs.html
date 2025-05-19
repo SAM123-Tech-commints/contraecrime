@@ -1074,7 +1074,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.3s ease;
+            transition: 0.3s ease;
         }
 
         .faq-question:hover {
@@ -1652,11 +1652,14 @@
                 flex-direction: column;
                 align-items: flex-start;
                 margin-bottom: 60px;
+                opacity: 1 !important;
+                transform: translateX(0) !important;
             }
 
             .timeline-item.right {
                 flex-direction: column;
                 align-items: flex-start;
+                transform: translateX(0) !important;
             }
 
             .timeline-content {
@@ -1736,17 +1739,15 @@
             }
 
             .faq-question {
-                font-size: 14px;
-                padding: 15px;
+                padding: 15px 20px;
             }
-
             .faq-answer p {
+                padding: 15px 20px;
                 font-size: 12px;
-                padding: 15px;
             }
 
             .faq-item.active .faq-answer {
-                max-height: 300px;
+                max-height: 500px !important;
             }
 
             .leader-item img {
@@ -2423,35 +2424,36 @@
             const aboutCard = document.querySelector('.about-card');
             const faqItems = document.querySelectorAll('.faq-item');
             const leaderItems = document.querySelectorAll('.leader-item');
+            const isMobile = window.innerWidth <= 480;
 
             timelineItems.forEach(item => {
-                if (isElementInViewport(item)) {
+                if (isMobile || isElementInViewport(item)) {
                     item.classList.add('visible');
                 }
             });
 
             growthItems.forEach(item => {
-                if (isElementInViewport(item)) {
+                if (isMobile || isElementInViewport(item)) {
                     item.classList.add('visible');
                 }
             });
 
-            if (isElementInViewport(careersCard)) {
+            if (isMobile || isElementInViewport(careersCard)) {
                 careersCard.classList.add('visible');
             }
 
-            if (isElementInViewport(aboutCard)) {
+            if (isMobile || isElementInViewport(aboutCard)) {
                 aboutCard.classList.add('visible');
             }
 
             faqItems.forEach(item => {
-                if (isElementInViewport(item)) {
+                if (isMobile || isElementInViewport(item)) {
                     item.classList.add('visible');
                 }
             });
 
             leaderItems.forEach(item => {
-                if (isElementInViewport(item)) {
+                if (isMobile || isElementInViewport(item)) {
                     item.classList.add('visible');
                 }
             });
