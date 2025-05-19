@@ -2445,20 +2445,30 @@ function resetQuiz() {
     clearInterval(timerInterval);
 }
 
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
-        });
-
-        if (localStorage.getItem('darkTheme') === 'enabled') {
-            body.classList.add('dark-theme');
+// Initialize theme when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('darkTheme') === 'enabled') {
+        document.body.classList.add('dark-theme');
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
             themeToggle.checked = true;
         }
+    }
+
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('darkTheme', 'enabled');
+            } else {
+                document.body.classList.remove('dark-theme');
+                localStorage.setItem('darkTheme', 'disabled');
+            }
+            playSound('click');
+        });
+    }
+});
 
 document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
     link.addEventListener('click', function(e) {
