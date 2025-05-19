@@ -2134,348 +2134,360 @@
             }, stepTime);
         }
 
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
-        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
+const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
-        const sidebar = document.getElementById('sidebar');
-        const loaderOverlay = document.getElementById('loaderOverlay');
-        const profilePic = document.getElementById('profilePic');
-        const customizationMenu = document.getElementById('customizationMenu');
-        const avatarInput = document.getElementById('avatarInput');
-        const avatarLoading = document.getElementById('avatarLoading');
-        const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
-        const borderColorPicker = document.getElementById('borderColorPicker');
-        const borderTypeSelect = document.getElementById('borderTypeSelect');
-        const usernameDisplay = document.getElementById('usernameDisplay');
-        const emailDisplay = document.getElementById('emailDisplay');
-        const createdAtDisplay = document.getElementById('createdAtDisplay');
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+const sidebar = document.getElementById('sidebar');
+const loaderOverlay = document.getElementById('loaderOverlay');
+const profilePic = document.getElementById('profilePic');
+const customizationMenu = document.getElementById('customizationMenu');
+const avatarInput = document.getElementById('avatarInput');
+const avatarLoading = document.getElementById('avatarLoading');
+const avatarBgColorPicker = document.getElementById('avatarBgColorPicker');
+const borderColorPicker = document.getElementById('borderColorPicker');
+const borderTypeSelect = document.getElementById('borderTypeSelect');
+const usernameDisplay = document.getElementById('usernameDisplay');
+const emailDisplay = document.getElementById('emailDisplay');
+const createdAtDisplay = document.getElementById('createdAtDisplay');
 
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentUser = {
-                    username: user.displayName || 'User',
-                    email: user.email,
-                    createdAt: user.metadata.creationTime
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        const currentUser = {
+            username: user.displayName || 'User',
+            email: user.email,
+            createdAt: user.metadata.creationTime
+        };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-                usernameDisplay.textContent = `${currentUser.username}`;
-                emailDisplay.textContent = `${currentUser.email}`;
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
+        usernameDisplay.textContent = `${currentUser.username}`;
+        emailDisplay.textContent = `${currentUser.email}`;
+        createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
 
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
 
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
-                        if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
-                            avatarBgColorPicker.value = userData.avatarBgColor;
-                        }
-                        if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
-                            borderColorPicker.value = userData.borderColor;
-                        }
-                        if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
-                            borderTypeSelect.value = userData.borderType;
-                        }
-                    }
-                }, (error) => {
-                    console.error('Error loading user customization:', error);
-                    alert('Failed to load user customization: ' + error.message);
-                });
-            } else {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'index.html';
+        const userRef = database.ref(`users/${sanitizedEmail}`);
+        userRef.once('value', (snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+                if (userData.avatarUrl) {
+                    profilePic.src = userData.avatarUrl;
+                } else {
+                    profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                }
+                if (userData.avatarBgColor) {
+                    profilePic.style.backgroundColor = userData.avatarBgColor;
+                    avatarBgColorPicker.value = userData.avatarBgColor;
+                }
+                if (userData.borderColor) {
+                    profilePic.style.borderColor = userData.borderColor;
+                    borderColorPicker.value = userData.borderColor;
+                }
+                if (userData.borderType) {
+                    profilePic.style.borderStyle = userData.borderType;
+                    borderTypeSelect.value = userData.borderType;
+                }
             }
+        }, (error) => {
+            console.error('Error loading user customization:', error);
+            alert('Failed to load user customization: ' + error.message);
         });
+    } else {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    }
+});
 
-        profilePic.addEventListener('click', () => {
-            customizationMenu.classList.toggle('active');
-        });
+profilePic.addEventListener('click', () => {
+    customizationMenu.classList.toggle('active');
+});
 
-        document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
+document.addEventListener('click', (e) => {
+    if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+        customizationMenu.classList.remove('active');
+    }
+});
+
+avatarInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const maxSize = 2 * 1024 * 1024;
+    if (!validTypes.includes(file.type)) {
+        alert('Please upload a valid image (JPG, JPEG, PNG).');
+        return;
+    }
+    if (file.size > maxSize) {
+        alert('Image size must be less than 2MB.');
+        return;
+    }
+
+    const user = auth.currentUser;
+    if (!user) {
+        alert('You must be logged in to upload an avatar.');
+        avatarLoading.classList.remove('active');
+        return;
+    }
+
+    avatarLoading.classList.add('active');
+
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const maxDimension = 300;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+            if (width > maxDimension) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
             }
-        });
-
-        avatarInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPG, JPEG, PNG).');
-                return;
+        } else {
+            if (height > maxDimension) {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
             }
-            if (file.size > maxSize) {
-                alert('Image size must be less than 2MB.');
-                return;
-            }
+        }
 
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to upload an avatar.');
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob((blob) => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser || !currentUser.email) {
+                alert('User not logged in.');
                 avatarLoading.classList.remove('active');
                 return;
             }
 
-            avatarLoading.classList.add('active');
+            const formData = new FormData();
+            formData.append('file', blob);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('folder', `avatars/${currentUser.email}`);
 
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxDimension = 300;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxDimension) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    }
-                } else {
-                    if (height > maxDimension) {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        alert('User not logged in.');
-                        avatarLoading.classList.remove('active');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
-                                try {
-                                    const parsed = JSON.parse(text);
-                                    errorMessage = parsed.error?.message || text;
-                                } catch (e) {
-                                    errorMessage = text.includes('Invalid cloud name')
-                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
-                                        : text.includes('Invalid upload preset')
-                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                        : text.includes('Unsigned uploads are not allowed')
-                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                        : text || 'Unknown error occurred';
-                                }
-                                throw new Error(errorMessage);
-                            });
+            fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                        try {
+                            const parsed = JSON.parse(text);
+                            errorMessage = parsed.error?.message || text;
+                        } catch (e) {
+                            errorMessage = text.includes('Invalid cloud name')
+                                ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                : text.includes('Invalid upload preset')
+                                ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                : text.includes('Unsigned uploads are not allowed')
+                                ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                : text || 'Unknown error occurred';
                         }
-                        return response.json();
+                        throw new Error(errorMessage);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                const avatarUrl = data.secure_url;
+                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+
+                userRef.update({ avatarUrl })
+                    .then(() => {
+                        profilePic.src = avatarUrl;
+                        avatarLoading.classList.remove('active');
+                        customizationMenu.classList.remove('active');
+                        alert('Avatar updated successfully!');
                     })
-                    .then(data => {
-                            const avatarUrl = data.secure_url;
-                            const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-                            const userRef = database.ref(`users/${sanitizedEmail}`);
-
-                            userRef.update({ avatarUrl })
-                                .then(() => {
-                                    profilePic.src = avatarUrl;
-                                    avatarLoading.classList.remove('active');
-                                    customizationMenu.classList.remove('active');
-                                    alert('Avatar updated successfully!');
-                                })
-                                .catch(error => {
-                                    console.error('Error updating avatar URL in database:', error);
-                                    alert('Failed to update avatar in database: ' + error.message);
-                                    avatarLoading.classList.remove('active');
-                                });
-                        })
-                        .catch(error => {
-                            console.error('Error uploading avatar to Cloudinary:', error);
-                            alert('Failed to upload avatar: ' + error.message);
-                            avatarLoading.classList.remove('active');
-                        });
-                }, file.type);
-            };
-        });
-
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
-            profilePic.style.backgroundColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.update({ avatarBgColor: color })
                     .catch(error => {
-                        console.error('Error updating avatar background color:', error);
-                        alert('Failed to update avatar background color: ' + error.message);
+                        console.error('Error updating avatar URL in database:', error);
+                        alert('Failed to update avatar in database: ' + error.message);
+                        avatarLoading.classList.remove('active');
                     });
-            }
-        });
+            })
+            .catch(error => {
+                console.error('Error uploading avatar to Cloudinary:', error);
+                alert('Failed to upload avatar: ' + error.message);
+                avatarLoading.classList.remove('active');
+            });
+        }, file.type);
+    };
+});
 
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
-            profilePic.style.borderColor = color;
+avatarBgColorPicker.addEventListener('change', () => {
+    const color = avatarBgColorPicker.value;
+    profilePic.style.backgroundColor = color;
 
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.update({ borderColor: color })
-                    .catch(error => {
-                        console.error('Error updating border color:', error);
-                        alert('Failed to update border color: ' + error.message);
-                    });
-            }
-        });
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        const userRef = database.ref(`users/${sanitizedEmail}`);
+        userRef.update({ avatarBgColor: color })
+            .catch(error => {
+                console.error('Error updating avatar background color:', error);
+                alert('Failed to update avatar background color: ' + error.message);
+            });
+    }
+});
 
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
+borderColorPicker.addEventListener('change', () => {
+    const color = borderColorPicker.value;
+    profilePic.style.borderColor = color;
 
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.update({ borderType })
-                    .catch(error => {
-                        console.error('Error updating border type:', error);
-                        alert('Failed to update border type: ' + error.message);
-                    });
-            }
-        });
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        const userRef = database.ref(`users/${sanitizedEmail}`);
+        userRef.update({ borderColor: color })
+            .catch(error => {
+                console.error('Error updating border color:', error);
+                alert('Failed to update border color: ' + error.message);
+            });
+    }
+});
 
-        themeToggle.addEventListener('change', () => {
-            body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-        });
+borderTypeSelect.addEventListener('change', () => {
+    const borderType = borderTypeSelect.value;
+    profilePic.style.borderStyle = borderType;
 
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
+    const user = auth.currentUser;
+    if (user) {
+        const sanitizedEmail = user.email.replace(/\./g, ',');
+        const userRef = database.ref(`users/${sanitizedEmail}`);
+        userRef.update({ borderType })
+            .catch(error => {
+                console.error('Error updating border type:', error);
+                alert('Failed to update border type: ' + error.message);
+            });
+    }
+});
+
+themeToggle.addEventListener('change', () => {
+    body.classList.toggle('dark-theme');
+    localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+});
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    body.classList.add('dark-theme');
+    themeToggle.checked = true;
+}
+
+mobileMenuIcon.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    mobileMenuIcon.innerHTML = sidebar.classList.contains('active')
+        ? '<i class="fas fa-times"></i>'
+        : '<i class="fas fa-bars"></i>';
+});
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+        mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+});
+
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+function handleScroll() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const growthItems = document.querySelectorAll('.growth-item');
+    const careersCard = document.querySelector('.careers-card');
+    const aboutCard = document.querySelector('.about-card');
+    const faqItems = document.querySelectorAll('.faq-item');
+    const leaderItems = document.querySelectorAll('.leader-item');
+
+    timelineItems.forEach(item => {
+        if (isElementInViewport(item)) {
+            item.classList.add('visible');
         }
+    });
 
-        mobileMenuIcon.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            mobileMenuIcon.innerHTML = sidebar.classList.contains('active')
-                ? '<i class="fas fa-times"></i>'
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 480 && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                mobileMenuIcon.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        });
-
-        function isElementInViewport(el) {
-            const rect = el.getBoundingClientRect();
-            return (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
+    growthItems.forEach(item => {
+        if (isElementInViewport(item)) {
+            item.classList.add('visible');
         }
+    });
 
-        function handleScroll() {
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            const growthItems = document.querySelectorAll('.growth-item');
-            const careersCard = document.querySelector('.careers-card');
-            const aboutCard = document.querySelector('.about-card');
-            const faqItems = document.querySelectorAll('.faq-item');
-            const leaderItems = document.querySelectorAll('.leader-item');
+    if (isElementInViewport(careersCard)) {
+        careersCard.classList.add('visible');
+    }
 
-            timelineItems.forEach(item => {
-                if (isElementInViewport(item)) {
-                    item.classList.add('visible');
-                }
-            });
+    if (isElementInViewport(aboutCard)) {
+        aboutCard.classList.add('visible');
+    }
 
-            growthItems.forEach(item => {
-                if (isElementInViewport(item)) {
-                    item.classList.add('visible');
-                }
-            });
-
-            if (isElementInViewport(careersCard)) {
-                careersCard.classList.add('visible');
-            }
-
-            if (isElementInViewport(aboutCard)) {
-                aboutCard.classList.add('visible');
-            }
-
-            faqItems.forEach(item => {
-                if (isElementInViewport(item)) {
-                    item.classList.add('visible');
-                }
-            });
-
-            leaderItems.forEach(item => {
-                if (isElementInViewport(item)) {
-                    item.classList.add('visible');
-                }
-            });
+    faqItems.forEach(item => {
+        if (isElementInViewport(item)) {
+            item.classList.add('visible');
         }
+    });
 
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('load', () => {
-            handleScroll();
-            updateUserCounts();
-            loaderOverlay.classList.remove('active');
+    leaderItems.forEach(item => {
+        if (isElementInViewport(item)) {
+            item.classList.add('visible');
+        }
+    });
+}
+
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('load', () => {
+    handleScroll();
+    updateUserCounts();
+    loaderOverlay.classList.remove('active');
+});
+
+const faqQuestions = document.querySelectorAll('.faq-question');
+faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        const isActive = faqItem.classList.contains('active');
+
+        faqQuestions.forEach(q => {
+            q.parentElement.classList.remove('active');
+            q.nextElementSibling.style.maxHeight = '0';
         });
 
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const isActive = faqItem.classList.contains('active');
+        if (!isActive) {
+            faqItem.classList.add('active');
+            const answer = question.nextElementSibling;
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+    });
+});
 
-                faqQuestions.forEach(q => {
-                    q.parentElement.classList.remove('active');
-                    q.nextElementSibling.style.maxHeight = '0';
-                });
-
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                    const answer = question.nextElementSibling;
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                }
-            });
-        });
-    </script>
+// Loader for Page Transitions
+document.querySelectorAll('.sidebar ul li a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        if (link.getAttribute('href') !== window.location.pathname.split('/').pop()) {
+            e.preventDefault();
+            loaderOverlay.classList.add('active');
+            setTimeout(() => {
+                window.location.href = link.getAttribute('href');
+            }, 500); // Adjust timing as needed
+        }
+    });
+});
