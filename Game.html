@@ -2445,11 +2445,20 @@ function resetQuiz() {
     clearInterval(timerInterval);
 }
 
-// Initialize theme from localStorage
-if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-theme');
-    themeToggle.checked = true;
-}
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('dark-theme');
+                localStorage.setItem('darkTheme', 'enabled');
+            } else {
+                body.classList.remove('dark-theme');
+                localStorage.setItem('darkTheme', 'disabled');
+            }
+        });
+
+        if (localStorage.getItem('darkTheme') === 'enabled') {
+            body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
 
 document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
     link.addEventListener('click', function(e) {
