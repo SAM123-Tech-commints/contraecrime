@@ -2452,10 +2452,17 @@ if (localStorage.getItem('theme') === 'dark') {
     themeToggle.checked = true;
 }
 
-loaderOverlay.classList.add('active');
-setTimeout(() => {
-    loaderOverlay.classList.remove('active');
-}, 1000);
-
+document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:')) return;
+        
+        e.preventDefault();
+        loaderOverlay.classList.add('active');
+        
+        setTimeout(() => {
+            window.location.href = this.href;
+        }, 150);
+    });
+});
 console.log('Quiz app initialized');
 </script>
