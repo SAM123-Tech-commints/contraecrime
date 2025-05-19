@@ -1519,344 +1519,345 @@
             console.error('Particles.js initialization failed:', error);
         }
 
-const questions = {
-    easy: [
-        {
-            text: "Which law addresses crimes like hacking and data interference?",
-            answer: "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
-            options: [
-                "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
-                "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
-                "Consumer Act of the Philippines (Republic Act No. 7394)",
-                "Safe Spaces Act (Republic Act No. 11313)"
+        // Questions data
+        const questions = {
+            easy: [
+                {
+                    text: "Which law addresses offenses related to electronic transactions?",
+                    answer: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                    options: [
+                        "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                        "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                        "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+                        "Data Privacy Act of 2012 (Republic Act No. 10173)"
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) establishes the legal framework for electronic transactions in the Philippines, addressing offenses like hacking and unauthorized access."
+                },
+                {
+                    text: "What does the Anti-Child Pornography Act of 2009 criminalize?",
+                    answer: "Production, distribution, and possession of child pornography",
+                    options: [
+                        "Hacking and cracking electronic systems",
+                        "Production, distribution, and possession of child pornography",
+                        "Manual filing of tax returns",
+                        "Unauthorized access to personal data"
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) specifically targets the production, distribution, and possession of child pornography to protect minors from exploitation."
+                },
+                {
+                    text: "Which law regulates the electronic filing of tax returns?",
+                    answer: "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+                    options: [
+                        "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                        "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                        "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+                        "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)"
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 mandates electronic filing of tax returns for certain taxpayers to streamline tax administration."
+                },
+                {
+                    text: "What is the main focus of the Electronic Commerce Act of 2000?",
+                    answer: "Electronic transactions and related offenses",
+                    options: [
+                        "Electronic transactions and related offenses",
+                        "Child pornography prevention",
+                        "Taxation of online businesses",
+                        "Data privacy protection"
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) focuses on facilitating electronic transactions while penalizing related cybercrimes like online fraud."
+                },
+                {
+                    text: "Which law deals with child-related cybercrimes?",
+                    answer: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                    options: [
+                        "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                        "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                        "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+                        "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)"
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) addresses cybercrimes involving child exploitation, such as producing or sharing child pornography."
+                },
+                {
+                    text: "What type of offenses does the Electronic Commerce Act address?",
+                    answer: "Hacking, cracking, and unauthorized access",
+                    options: [
+                        "Hacking, cracking, and unauthorized access",
+                        "Child pornography distribution",
+                        "Tax evasion through manual filing",
+                        "Identity theft and fraud"
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) penalizes offenses like hacking and unauthorized access to electronic systems."
+                },
+                {
+                    text: "Which law was promulgated in 2009 to protect children?",
+                    answer: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                    options: [
+                        "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                        "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                        "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+                        "Data Privacy Act of 2012 (Republic Act No. 10173)"
+                    ],
+                    explanation: "Promulgated in 2009, the Anti-Child Pornography Act (RA 9775) aims to protect children by criminalizing child pornography activities."
+                },
+                {
+                    text: "What is the purpose of BIR Revenue Regulation No. 9-2001?",
+                    answer: "Regulate electronic filing of tax returns",
+                    options: [
+                        "Prevent child pornography",
+                        "Regulate electronic filing of tax returns",
+                        "Address hacking and cracking",
+                        "Protect personal data privacy"
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 regulates the electronic filing of tax returns to enhance efficiency in tax compliance."
+                },
+                {
+                    text: "Which law imposes penalties for online fraud and scams?",
+                    answer: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                    options: [
+                        "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                        "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                        "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+                        "Anti-Bullying Act of 2013 (Republic Act No. 10627)"
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) imposes penalties for online fraud and scams to ensure trust in electronic transactions."
+                },
+                {
+                    text: "What does the Anti-Child Pornography Act aim to prevent?",
+                    answer: "Production and distribution of child pornography",
+                    options: [
+                        "Production and distribution of child pornography",
+                        "Unauthorized access to electronic systems",
+                        "Manual tax filing violations",
+                        "Online scams and fraud"
+                    ],
+                    explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) aims to prevent the production and distribution of child pornography to safeguard minors."
+                }
             ],
-            explanation: "The Cybercrime Prevention Act of 2012 (RA 10175) targets cybercrimes such as hacking, data interference, and identity theft to protect digital systems."
-        },
-        {
-            text: "What term describes stealing someone’s personal information for financial gain?",
-            answer: "Identity Theft",
-            options: [
-                "Identity Theft",
-                "Cyber-Squatting",
-                "Voyeurism",
-                "Phishing"
+            medium: [
+                {
+                    text: "What scenario might violate the Electronic Commerce Act of 2000?",
+                    answer: "An account on an e-commerce app is hacked, leading to unauthorized orders",
+                    options: [
+                        "Installing a secret camera in a child's bedroom",
+                        "An account on an e-commerce app is hacked, leading to unauthorized orders",
+                        "Filing taxes manually despite eFPS mandate",
+                        "Sharing personal data without consent"
+                    ],
+                    explanation: "Hacking an e-commerce account to place unauthorized orders violates the Electronic Commerce Act of 2000 (RA 8792), which addresses unauthorized access and fraud."
+                },
+                {
+                    text: "Which scenario describes a violation of the Anti-Child Pornography Act?",
+                    answer: "Installing a secret camera in a child's bedroom to observe them",
+                    options: [
+                        "Hacking an e-commerce account to place orders",
+                        "Installing a secret camera in a child's bedroom to observe them",
+                        "Filing taxes manually instead of using eFPS",
+                        "Selling counterfeit goods online"
+                    ],
+                    explanation: "Installing a secret camera to observe a child violates the Anti-Child Pornography Act of 2009 (RA 9775) if used to produce or distribute child pornography."
+                },
+                {
+                    text: "What might happen under BIR Revenue Regulation No. 9-2001?",
+                    answer: "An online seller is punished for filing taxes manually",
+                    options: [
+                        "A hacker is fined for unauthorized access",
+                        "A person is imprisoned for child pornography",
+                        "An online seller is punished for filing taxes manually",
+                        "A company is sued for data breach"
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 penalizes taxpayers, like online sellers, for failing to file taxes electronically when required."
+                },
+                {
+                    text: "Which scenario involves the Electronic Commerce Act?",
+                    answer: "Expensive products are ordered automatically due to a hacked account",
+                    options: [
+                        "Expensive products are ordered automatically due to a hacked account",
+                        "A secret camera records a child in their bedroom",
+                        "An online seller ignores eFPS requirements",
+                        "A website leaks user data"
+                    ],
+                    explanation: "Unauthorized orders due to a hacked account fall under the Electronic Commerce Act of 2000 (RA 8792), which covers cybercrimes like hacking."
+                },
+                {
+                    text: "What action violates the Anti-Child Pornography Act of 2009?",
+                    answer: "Observing a child via a secret camera in their bedroom",
+                    options: [
+                        "Hacking an online shopping account",
+                        "Observing a child via a secret camera in their bedroom",
+                        "Filing taxes manually despite notices",
+                        "Distributing fake news online"
+                    ],
+                    explanation: "Using a secret camera to observe a child for exploitative purposes violates the Anti-Child Pornography Act of 2009 (RA 9775)."
+                },
+                {
+                    text: "Under which law might an online seller face penalties for manual tax filing?",
+                    answer: "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+                    options: [
+                        "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                        "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                        "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+                        "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)"
+                    ],
+                    explanation: "BIR Revenue Regulation No. 9-2001 imposes penalties for non-compliance with electronic tax filing requirements."
+                },
+                {
+                    text: "What scenario might lead to penalties under the Electronic Commerce Act?",
+                    answer: "Unauthorized orders placed due to a hacked e-commerce account",
+                    options: [
+                        "Unauthorized orders placed due to a hacked e-commerce account",
+                        "Recording a child with a hidden camera",
+                        "Ignoring eFPS tax filing requirements",
+                        "Posting defamatory content online"
+                    ],
+                    explanation: "The Electronic Commerce Act of 2000 (RA 8792) penalizes unauthorized transactions caused by hacking, such as placing orders without consent."
+                },
+                {
+                    text: "Which scenario is related to the Anti-Child Pornography Act?",
+                    answer: "A suspect installs a camera to watch a child in their bedroom",
+                    options: [
+                        "A suspect installs a camera to watch a child in their bedroom",
+                        "An online seller files taxes manually",
+                        "A hacker places unauthorized orders",
+                        "A company fails to secure user data"
+                    ],
+                    explanation: "Installing a camera to watch a child for exploitative purposes violates the Anti-Child Pornography Act of 2009 (RA 9775)."
+                },
+                {
+                    text: "What might violate BIR Revenue Regulation No. 9-2001?",
+                    answer: "An online seller continuously files taxes manually",
+                    options: [
+                        "Hacking into an e-commerce platform",
+                        "Distributing child pornography",
+                        "An online seller continuously files taxes manually",
+                        "Sharing personal information without consent"
+                    ],
+                    explanation: "Continuous manual tax filing by an online seller violates BIR Revenue Regulation No. 9-2001, which mandates electronic filing."
+                },
+                {
+                    text: "Which scenario involves a potential violation of the Electronic Commerce Act?",
+                    answer: "A victim's account is hacked, leading to unauthorized purchases",
+                    options: [
+                        "A victim's account is hacked, leading to unauthorized purchases",
+                        "A child is recorded without consent",
+                        "An online seller avoids eFPS filing",
+                        "A website suffers a data breach"
+                    ],
+                    explanation: "Hacking leading to unauthorized purchases is a violation of the Electronic Commerce Act of 2000 (RA 8792)."
+                }
             ],
-            explanation: "Identity Theft involves using another person’s identity for financial advantage, often penalized under laws like the Access Devices Regulation Act."
-        },
-        {
-            text: "Which law protects consumers from defective products and unfair practices?",
-            answer: "Consumer Act of the Philippines (Republic Act No. 7394)",
-            options: [
-                "Consumer Act of the Philippines (Republic Act No. 7394)",
-                "Data Privacy Act of 2012 (Republic Act No. 10173)",
-                "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
-                "Optical Media Act of 2003 (Republic Act No. 9239)"
-            ],
-            explanation: "The Consumer Act of the Philippines (RA 7394) ensures consumer protection against defective products and deceptive sales practices."
-        },
-        {
-            text: "What does the Anti-Bullying Act of 2013 aim to prevent in schools?",
-            answer: "Bullying",
-            options: [
-                "Bullying",
-                "Wiretapping",
-                "Money Muling",
-                "Cybersex"
-            ],
-            explanation: "The Anti-Bullying Act of 2013 (RA 10627) addresses bullying in schools, such as repeated harassment or intimidation of students."
-        },
-        {
-            text: "Which law requires SIM card registration to curb telecom fraud?",
-            answer: "Subscriber Identity Module (SIM) Registration Act (Republic Act No. 11934)",
-            options: [
-                "Subscriber Identity Module (SIM) Registration Act (Republic Act No. 11934)",
-                "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
-                "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
-                "Safe Spaces Act (Republic Act No. 11313)"
-            ],
-            explanation: "The SIM Registration Act (RA 11934) mandates SIM card registration to enhance telecom security and prevent fraud."
-        },
-        {
-            text: "What term refers to secretly recording someone in a private setting?",
-            answer: "Voyeurism",
-            options: [
-                "Voyeurism",
-                "Grooming",
-                "SIM Spoofing",
-                "Data Breach"
-            ],
-            explanation: "Voyeurism involves unauthorized recording of someone in private, penalized under the Anti-Photo and Video Voyeurism Act."
-        },
-        {
-            text: "Which law criminalizes the distribution of pirated DVDs and Blu-rays?",
-            answer: "Optical Media Act of 2003 (Republic Act No. 9239)",
-            options: [
-                "Optical Media Act of 2003 (Republic Act No. 9239)",
-                "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
-                "Anti-Wire Tapping Act (Republic Act No. 4200)",
-                "Anti-Financial Account Scamming Act (Republic Act No. 12010)"
-            ],
-            explanation: "The Optical Media Act of 2003 (RA 9239) penalizes the illegal manufacture and distribution of pirated optical media."
-        },
-        {
-            text: "What is the main goal of the Safe Spaces Act?",
-            answer: "Prevent gender-based harassment",
-            options: [
-                "Prevent gender-based harassment",
-                "Regulate electronic tax filing",
-                "Protect intellectual property",
-                "Curb terrorism financing"
-            ],
-            explanation: "The Safe Spaces Act (RA 11313) aims to prevent gender-based sexual harassment in online, public, and workplace settings."
-        },
-        {
-            text: "Which law regulates online pharmaceutical sales for safety?",
-            answer: "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
-            options: [
-                "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
-                "E-Commerce Protection Guidelines (DTI Administrative Order No. 22-01)",
-                "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
-                "Strategic Trade Management Act (Republic Act No. 10697)"
-            ],
-            explanation: "The FDA’s Online Pharmaceutical Sales Regulation (AO 2013-0027) ensures safe distribution and storage of pharmaceuticals sold online."
-        },
-        {
-            text: "What term describes AI-generated fake media used in elections?",
-            answer: "Deep Fake",
-            options: [
-                "Deep Fake",
-                "Phishing Attack",
-                "System Interference",
-                "Electronic Evidence"
-            ],
-            explanation: "Deep Fake refers to AI-generated media falsely depicting individuals, regulated under COMELEC’s Social Media and AI Election Guidelines."
-        }
-    ],
-    medium: [
-        {
-            text: "Which scenario best illustrates a violation of the Anti-Money Laundering Act?",
-            answer: "Depositing drug trafficking proceeds into a legitimate business account",
-            options: [
-                "Depositing drug trafficking proceeds into a legitimate business account",
-                "Sending inappropriate messages in a group chat without consent",
-                "Using a copyrighted song in a commercial without permission",
-                "Installing a secret camera to record a child’s bedroom"
-            ],
-            explanation: "Depositing illicit drug money into a legitimate business to conceal its origins violates the Anti-Money Laundering Act (RA 9160), which targets financial crimes like money laundering."
-        },
-        {
-            text: "What scenario might prompt action by the National Bureau of Investigation under RA 10867?",
-            answer: "Investigating a phishing scam mimicking online banking portals",
-            options: [
-                "Investigating a phishing scam mimicking online banking portals",
-                "Exporting dual-use computer chips without a license",
-                "Sending promotional texts without subscriber opt-in",
-                "Teasing a student over their penmanship in class"
-            ],
-            explanation: "The NBI, empowered by the NBI Reorganization Act (RA 10867), investigates cybercrimes like phishing scams through its Cybercrime Division, targeting fake banking websites."
-        },
-        {
-            text: "Which scenario could violate the Anti-Online Sexual Abuse or Exploitation of Children Act?",
-            answer: "A relative coerces a minor to send explicit content for money",
-            options: [
-                "A relative coerces a minor to send explicit content for money",
-                "Using stolen credit card details for online purchases",
-                "Manually filing taxes despite eFPS mandates",
-                "Posting defamatory statements on social media"
-            ],
-            explanation: "Coercing a minor to produce explicit content online violates the Anti-Online Sexual Abuse or Exploitation of Children Act (RA 11930), which protects children from digital exploitation."
-        },
-        {
-            text: "What action might breach the Social Media and AI Election Guidelines?",
-            answer: "Distributing unregistered AI-generated campaign videos",
-            options: [
-                "Distributing unregistered AI-generated campaign videos",
-                "Hacking an e-commerce platform to place orders",
-                "Selling pirated DVDs in a local market",
-                "Ignoring cloud computing mandates for government systems"
-            ],
-            explanation: "Using unregistered AI-generated content, like deep fakes, in election campaigns violates COMELEC Resolution No. 11064 (2024), which requires transparency in digital platforms."
-        },
-        {
-            text: "Which scenario might involve the Anti-Terrorism Act of 2020?",
-            answer: "Releasing dangerous substances to intimidate the government",
-            options: [
-                "Releasing dangerous substances to intimidate the government",
-                "Using a fake ID to register multiple SIM cards",
-                "Secretly recording a business meeting",
-                "Selling counterfeit products online"
-            ],
-            explanation: "Releasing dangerous substances to intimidate is a terrorist act under the Anti-Terrorism Act (RA 11449), which addresses threats to public safety."
-        },
-        {
-            text: "What might violate the Access Devices Regulation Act?",
-            answer: "Installing illegal card readers on ATMs to steal data",
-            options: [
-                "Installing illegal card readers on ATMs to steal data",
-                "Observing a child via a hidden camera",
-                "Setting a prepaid load expiry shorter than one year",
-                "Failing to report a cyber incident to the BSP"
-            ],
-            explanation: "Credit card skimming via illegal ATM readers violates the Access Devices Regulation Act (RA 8484), which criminalizes unauthorized use of access devices."
-        },
-        {
-            text: "Which scenario could breach the Rules on Electronic Evidence?",
-            answer: "Presenting an unauthenticated email as evidence in court",
-            options: [
-                "Presenting an unauthenticated email as evidence in court",
-                "Laundering money through fake bank accounts",
-                "Bullying a student over their penmanship",
-                "Exporting strategic goods without approval"
-            ],
-            explanation: "Presenting an unauthenticated email violates the Rules on Electronic Evidence (A.M. No. 01-7-01-SC), which requires proper authentication for electronic documents to be admissible."
-        },
-        {
-            text: "What scenario might violate the Guidelines on Prepaid Load Expiry?",
-            answer: "A telecom sets a six-month expiry for a ₱100 prepaid load",
-            options: [
-                "A telecom sets a six-month expiry for a ₱100 prepaid load",
-                "A bank fails to implement multi-factor authentication",
-                "A company uses a copyrighted logo without permission",
-                "A suspect distributes deep fake election ads"
-            ],
-            explanation: "Setting a prepaid load expiry shorter than one year violates the NTC’s Guidelines on Prepaid Load Expiry (MC No. 01-04-2019), which mandates a one-year validity."
-        },
-        {
-            text: "Which scenario might involve the Anti-Financial Account Scamming Act?",
-            answer: "Opening fake accounts with stolen IDs for scam funds",
-            options: [
-                "Opening fake accounts with stolen IDs for scam funds",
-                "Recording a private conversation without consent",
-                "Sending inappropriate messages in a group chat",
-                "Using a mobile number to send smishing texts"
-            ],
-            explanation: "Opening fake accounts for scam funds, like money muling, violates the Anti-Financial Account Scamming Act (RA 12010), which targets online fraud schemes."
-        },
-        {
-            text: "What might violate the Anti-Photo and Video Voyeurism Act?",
-            answer: "Secretly recording someone showering and sharing it online",
-            options: [
-                "Secretly recording someone showering and sharing it online",
-                "Hacking a company’s network for customer data",
-                "Using a fake ID to register SIM cards",
-                "Ignoring BSP cybersecurity guidelines"
-            ],
-            explanation: "Secretly recording and distributing private footage violates the Anti-Photo and Video Voyeurism Act (RA 9995), which protects against unauthorized recordings."
-        }
-    ],
-    hard: [
-        {
-            text: "Which description best captures the Anti-Financial Account Scamming Act (RA 12010)?",
-            answer: "Strengthens bank fraud prevention and penalizes money muling and social engineering",
-            options: [
-                "Strengthens bank fraud prevention and penalizes money muling and social engineering",
-                "Protects personal data privacy through regulated data processing",
-                "Criminalizes unauthorized interception of private communications",
-                "Regulates the export of dual-use goods to prevent misuse"
-            ],
-            explanation: "The Anti-Financial Account Scamming Act (RA 12010) focuses on combating online fraud by enhancing bank fraud prevention systems and penalizing acts like money muling and social engineering, distinguishing it from data privacy or export laws."
-        },
-        {
-            text: "What unique provision does the Subscriber Identity Module (SIM) Registration Act include to curb fraud?",
-            answer: "Mandates Public Telecommunications Entities to track SIM usage",
-            options: [
-                "Mandates Public Telecommunications Entities to track SIM usage",
-                "Requires banks to implement multi-factor authentication",
-                "Prohibits the use of AI-generated content in elections",
-                "Allows asset freezing for suspected terrorist funds"
-            ],
-            explanation: "The SIM Registration Act (RA 11934) uniquely requires Public Telecommunications Entities to track SIM card usage to prevent fraud like smishing, unlike provisions in banking, election, or terrorism laws."
-        },
-        {
-            text: "Which scenario best distinguishes a violation of the Data Privacy Act from the Cybercrime Prevention Act?",
-            answer: "A BPO employee illegally accesses client data for fraud, without hacking the system",
-            options: [
-                "A hacker steals credit card data by breaching a company’s network",
-                "A BPO employee illegally accesses client data for fraud, without hacking the system",
-                "A suspect distributes child pornography via a computer system",
-                "A group uses fake SIM cards to send phishing texts"
-            ],
-            explanation: "Illegal access to client data by a BPO employee without hacking violates the Data Privacy Act (RA 10173) for unauthorized data processing, whereas hacking or child pornography distribution falls under the Cybercrime Prevention Act (RA 10175), making this scenario distinct."
-        },
-        {
-            text: "What penalty applies for producing child sexual abuse materials under the Anti-Online Sexual Abuse or Exploitation of Children Act?",
-            answer: "Life imprisonment and at least ₱2,000,000 fine",
-            options: [
-                "Life imprisonment and at least ₱2,000,000 fine",
-                "6 to 12 years imprisonment and ₱500,000 fine",
-                "3 to 7 years imprisonment and ₱100,000 fine",
-                "Reclusion temporal and ₱1,000,000 fine"
-            ],
-            explanation: "The Anti-Online Sexual Abuse or Exploitation of Children Act (RA 11930) imposes life imprisonment and a minimum ₱2,000,000 fine for producing child sexual abuse materials, reflecting its severe stance on child exploitation."
-        },
-        {
-            text: "Which law’s scope might be confused with the Anti-Wire Tapping Act due to overlapping privacy concerns?",
-            answer: "Anti-Photo and Video Voyeurism Act (Republic Act No. 9995)",
-            options: [
-                "Anti-Photo and Video Voyeurism Act (Republic Act No. 9995)",
-                "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
-                "Strategic Trade Management Act (Republic Act No. 10697)",
-                "Consumer Act of the Philippines (Republic Act No. 7394)"
-            ],
-            explanation: "The Anti-Photo and Video Voyeurism Act (RA 9995) overlaps with the Anti-Wire Tapping Act (RA 4200) in addressing unauthorized recordings, but focuses on visual privacy violations, creating potential confusion in privacy-related cases."
-        },
-        {
-            text: "What specific role does the Anti-Terrorism Council play under the Anti-Terrorism Act of 2020?",
-            answer: "Designates terrorists and oversees detention and surveillance",
-            options: [
-                "Designates terrorists and oversees detention and surveillance",
-                "Registers SIM cards to prevent telecom fraud",
-                "Authenticates electronic evidence for court cases",
-                "Conducts risk assessments for bank cybersecurity"
-            ],
-            explanation: "The Anti-Terrorism Act (RA 11449) empowers the Anti-Terrorism Council to designate terrorists and manage detention and surveillance, a unique role distinguishing it from telecom, evidence, or banking regulations."
-        },
-        {
-            text: "Which scenario might require distinguishing between the Intellectual Property Code and the Optical Media Act?",
-            answer: "A company illegally distributes pirated movies on DVDs without a license",
-            options: [
-                "A company illegally distributes pirated movies on DVDs without a license",
-                "A bank fails to report a cyber incident to the BSP",
-                "A suspect uses a fake ID to register SIM cards",
-                "A hacker steals customer data from a website"
-            ],
-            explanation: "Illegal DVD piracy could violate the Optical Media Act (RA 9239) for unlicensed distribution or the Intellectual Property Code (RA 8293) for copyright infringement, requiring careful distinction based on licensing vs. copyright issues."
-        },
-        {
-            text: "What penalty does the Safe Spaces Act impose for a third offense of lewd acts like groping?",
-            answer: "1 month and 1 day to 6 months imprisonment and ₱20,000 fine",
-            options: [
-                "1 month and 1 day to 6 months imprisonment and ₱20,000 fine",
-                "11 to 30 days imprisonment and ₱10,000 fine",
-                "6 months to 2 years imprisonment and ₱50,000 fine",
-                "Reclusion perpetua and ₱500,000 fine"
-            ],
-            explanation: "The Safe Spaces Act (RA 11313) specifies 1 month and 1 day to 6 months imprisonment and a ₱20,000 fine for a third offense of lewd acts, such as groping, escalating from lesser penalties."
-        },
-        {
-            text: "Which term from the Cybercrime Prevention Act might be confused with ‘Data Breach’ under the Data Privacy Act?",
-            answer: "Data Interference",
-            options: [
-                "Data Interference",
-                "Cyber-Squatting",
-                "Cybersex",
-                "System Interference"
-            ],
-            explanation: "Data Interference, involving intentional alteration or deletion of data, under the Cybercrime Prevention Act (RA 10175), may be confused with a Data Breach under the Data Privacy Act (RA 10173), as both involve data compromise but differ in intent and scope."
-        },
-        {
-            text: "What penalty applies for non-compliance with a cybercrime warrant under A.M. No. 17-11-03-SC?",
-            answer: "Penalties under the Cybercrime Prevention Act",
-            options: [
-                "Penalties under the Cybercrime Prevention Act",
-                "Fines up to ₱1,000 and 6 months imprisonment",
-                "Administrative sanctions only",
-                "Reclusion perpetua and ₱5,000,000 fine"
-            ],
-            explanation: "Non-compliance with a cybercrime warrant under A.M. No. 17-11-03-SC is penalized under the Cybercrime Prevention Act (RA 10175), which may include imprisonment or fines, depending on the offense."
-        }
-    ]
-};
+            hard: [
+            {
+                text: "What is the maximum penalty under the Electronic Commerce Act for violations?",
+                answer: "PHP 1,000,000 or six years imprisonment",
+                options: [
+                    "PHP 100,000 and six months imprisonment",
+                    "PHP 1,000,000 or six years imprisonment",
+                    "Reclusion perpetua and PHP 5,000,000 fine",
+                    "Fine up to ₱1,000 and six months imprisonment"
+                ],
+                explanation: "The Electronic Commerce Act of 2000 (RA 8792) specifies a maximum penalty of PHP 1,000,000 or up to six years imprisonment for violations."
+            },
+            {
+                text: "What penalty does the Anti-Child Pornography Act impose?",
+                answer: "Reclusion perpetua and a fine of PHP 2,000,000 to PHP 5,000,000",
+                options: [
+                    "PHP 100,000 and six months to three years imprisonment",
+                    "Reclusion perpetua and a fine of PHP 2,000,000 to PHP 5,000,000",
+                    "Fine up to ₱1,000 and six months imprisonment",
+                    "PHP 1,000,000 or six years imprisonment"
+                ],
+                explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) imposes reclusion perpetua and fines ranging from PHP 2,000,000 to PHP 5,000,000."
+            },
+            {
+                text: "What are the penalties for third and subsequent offenses under BIR Revenue Regulation No. 9-2001?",
+                answer: "Fine up to ₱1,000 and imprisonment up to 6 months",
+                options: [
+                    "PHP 100,000 and six months imprisonment",
+                    "Reclusion perpetua and PHP 5,000,000 fine",
+                    "Fine up to ₱1,000 and imprisonment up to 6 months",
+                    "PHP 1,000,000 or six years imprisonment"
+                ],
+                explanation: "BIR Revenue Regulation No. 9-2001 specifies a fine up to ₱1,000 and up to 6 months imprisonment for third and subsequent offenses."
+            },
+            {
+                text: "What is the minimum penalty for online fraud under the Electronic Commerce Act?",
+                answer: "PHP 100,000 and six months to three years imprisonment",
+                options: [
+                    "PHP 100,000 and six months to three years imprisonment",
+                    "Reclusion perpetua and PHP 2,000,000 fine",
+                    "Fine up to ₱1,000 and six months imprisonment",
+                    "PHP 1,000,000 or six years imprisonment"
+                ],
+                explanation: "The minimum penalty for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is PHP 100,000 and 6 months to 3 years imprisonment."
+            },
+            {
+                text: "What fine range does the Anti-Child Pornography Act specify?",
+                answer: "PHP 2,000,000 to PHP 5,000,000",
+                options: [
+                    "PHP 100,000 to PHP 1,000,000",
+                    "PHP 2,000,000 to PHP 5,000,000",
+                    "Up to ₱1,000",
+                    "PHP 500,000 to PHP 1,000,000"
+                ],
+                explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) specifies fines between PHP 2,000,000 and PHP 5,000,000."
+            },
+            {
+                text: "Under BIR Revenue Regulation No. 9-2001, what happens to first and second offenses?",
+                answer: "They may be settled through compromise penalties",
+                options: [
+                    "They may be settled through compromise penalties",
+                    "They result in reclusion perpetua",
+                    "They lead to a fine of PHP 1,000,000",
+                    "They are punished with six years imprisonment"
+                ],
+                explanation: "First and second offenses under BIR Revenue Regulation No. 9-2001 can be settled through compromise penalties."
+            },
+            {
+                text: "What is the imprisonment range for online fraud under the Electronic Commerce Act?",
+                answer: "Six months to three years",
+                options: [
+                    "Six months to three years",
+                    "Up to six months",
+                    "Three to six years",
+                    "Reclusion perpetua"
+                ],
+                explanation: "The imprisonment range for online fraud under the Electronic Commerce Act of 2000 (RA 8792) is 6 months to 3 years."
+            },
+            {
+                text: "What penalty does the Anti-Child Pornography Act include alongside a fine?",
+                answer: "Reclusion perpetua",
+                options: [
+                    "Six months to three years imprisonment",
+                    "Reclusion perpetua",
+                    "Up to six months imprisonment",
+                    "Three to six years imprisonment"
+                ],
+                explanation: "The Anti-Child Pornography Act of 2009 (RA 9775) includes reclusion perpetua as a penalty alongside fines of PHP 2,000,000 to PHP 5,000,000 for serious violations."
+            },
+            {
+                text: "What section of the Electronic Commerce Act defines hacking penalties?",
+                answer: "Section 33",
+                options: [
+                    "Section 10",
+                    "Section 33",
+                    "Section 15",
+                    "Section 25"
+                ],
+                explanation: "Section 33 of the Electronic Commerce Act of 2000 (RA 8792) defines penalties for hacking and unauthorized access, including fines and imprisonment."
+            },
+            {
+                text: "What is the penalty for non-compliance with BIR Revenue Regulation No. 9-2001 for large taxpayers?",
+                answer: "Fine of ₱1,000 per return",
+                options: [
+                    "Fine of ₱100,000 per return",
+                    "Reclusion perpetua",
+                    "Fine of ₱1,000 per return",
+                    "PHP 1,000,000 fine"
+                ],
+                explanation: "BIR Revenue Regulation No. 9-2001 imposes a fine of ₱1,000 per return for non-compliance with electronic filing requirements for large taxpayers."
+            }
+        ]
+    };
 // DOM elements
 const loaderOverlay = document.getElementById('loaderOverlay');
 const mobileMenuIcon = document.getElementById('mobileMenuIcon');
