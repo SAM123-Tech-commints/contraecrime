@@ -558,11 +558,11 @@
             border-bottom: 2px solid #ff6b6b;
         }
 
-        .news-content, .insights-content {
+        .news-content, .insights-content, .laws-content {
             display: none;
         }
 
-        .news-content.active, .insights-content.active {
+        .news-content.active, .insights-content.active, .laws-content.active {
             display: block;
         }
 
@@ -683,6 +683,165 @@
             margin: 0 auto;
             padding: 20px 0;
             text-align: center;
+        }
+
+        .laws-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .laws-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .laws-search-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        .laws-search-input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .laws-search-input:focus {
+            border-color: #8B0000;
+        }
+
+        .laws-search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 18px;
+        }
+
+        .laws-sort-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .laws-sort-label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .laws-sort-select {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .law-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .law-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .law-card h3 {
+            font-size: 18px;
+            color: #333;
+            margin: 0 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .law-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin: 0 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .law-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .law-tag {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .law-tag:hover {
+            background-color: #8B0000;
+            color: #fff;
+        }
+
+        .dark-theme .laws-search-input {
+            background-color: #3a3b3c;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .dark-theme .laws-search-input:focus {
+            border-color: #ff6b6b;
+        }
+
+        .dark-theme .laws-search-icon {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .laws-sort-label {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .laws-sort-select {
+            background-color: #3a3b3c;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .dark-theme .law-card {
+            background-color: #1e1e1e;
+            border-color: #444;
+        }
+
+        .dark-theme .law-card h3 {
+            color: #e0e0e0;
+        }
+
+        .dark-theme .law-card p {
+            color: #b0b0b0;
+        }
+
+        .dark-theme .law-tag {
+            background-color: #444;
+            color: #e0e0e0;
+        }
+
+        .dark-theme .law-tag:hover {
+            background-color: #ff6b6b;
+            color: #fff;
         }
 
         .card-container {
@@ -1246,6 +1405,19 @@
                 font-size: 10px;
                 padding: 3px;
             }
+
+            .laws-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .laws-search-container {
+                max-width: 100%;
+            }
+
+            .laws-sort-container {
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -1363,10 +1535,11 @@
                 <div class="toggle-container">
                     <span class="toggle-label news-toggle active" onclick="toggleContent('news')">News</span>
                     <span class="toggle-label insights-toggle" onclick="toggleContent('insights')">Insights</span>
+                    <span class="toggle-label laws-toggle" onclick="toggleContent('laws')">Laws</span>
                 </div>
 
                 <div class="news-content active">
-                 <!-- Page 1 Articles -->
+                     <!-- Page 1 Articles -->
 <div class="news-item" data-page="1">
     <div class="news-header" onclick="toggleDetails(this)">
         <img src="https://i.imgur.com/LgZmTZb.jpeg" alt="News Image" class="news-image">
@@ -2231,6 +2404,30 @@
                         <button class="nav-button" onclick="randomCard()" id="randomCardBtn">🎲</button>
                     </div>
                 </div>
+
+                <div class="laws-content">
+                    <div class="laws-header">
+                        <div class="laws-search-container">
+                            <input type="text" id="lawsSearchInput" class="laws-search-input" placeholder="Search laws...">
+                            <i class="fas fa-search laws-search-icon"></i>
+                        </div>
+                        <div class="laws-sort-container">
+                            <label class="laws-sort-label">Sort by:</label>
+                            <select id="lawsSortSelect" class="laws-sort-select">
+                                <option value="alphabetical">Alphabetical</option>
+                                <option value="seriousness">Serious Punishment</option>
+                                <option value="similarity">Similarities</option>
+                                <option value="relevance">Relevance</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="lawsContainer"></div>
+                    <div class="pagination">
+                        <button id="prevLawsPage" onclick="changeLawsPage(-1)">Previous</button>
+                        <div class="page-numbers" id="lawsPageNumbers"></div>
+                        <button id="nextLawsPage" onclick="changeLawsPage(1)">Next</button>
+                    </div>
+                </div>
             </section>
         </main>
         <footer>
@@ -2281,8 +2478,307 @@
         const cardCounter = document.getElementById('cardCounter');
         const prevCardBtn = document.getElementById('prevCardBtn');
         const nextCardBtn = document.getElementById('nextCardBtn');
+        const lawsSearchInput = document.getElementById('lawsSearchInput');
+        const lawsSortSelect = document.getElementById('lawsSortSelect');
+        const lawsContainer = document.getElementById('lawsContainer');
+        const prevLawsPageBtn = document.getElementById('prevLawsPage');
+        const nextLawsPageBtn = document.getElementById('nextLawsPage');
+        const lawsPageNumbersContainer = document.getElementById('lawsPageNumbers');
 
-        const cardsData = [
+        const laws = [
+            {
+                title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+                description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems. The act establishes a legal framework for electronic commerce, ensuring the validity and enforceability of electronic transactions, documents, and signatures, while promoting consumer protection and cybersecurity in digital commerce activities.",
+                tags: ["cybercrime", "electronic transactions", "hacking", "unauthorized access"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+                description: "Criminalizes the production, distribution, and possession of child pornography in the Philippines. It imposes strict penalties to protect minors from exploitation and ensures mechanisms for law enforcement to investigate and prosecute offenders involved in such illegal activities, both online and offline.",
+                tags: ["child protection", "pornography", "cybercrime", "exploitation"],
+                punishmentSeverity: 7
+            },
+            {
+                title: "Access Devices Regulation Act of 1998 (Republic Act No. 8484)",
+                description: "The law defines 'access devices' broadly, including credit cards, debit cards, ATM cards, account numbers, passwords, PINs, and other means of accessing financial accounts or electronic transactions. Criminalizes the unauthorized possession, use, and trafficking of access devices, aiming to deter fraudulent transactions and protect against identity theft.",
+                tags: ["financial crime", "identity theft", "fraud", "access devices"],
+                punishmentSeverity: 5
+            },
+            {
+                title: "Anti-Financial Account Scamming Act (AFASA) (Republic Act No. 12010)",
+                description: "AFASA aims to combat online fraud and scams, introducing stricter requirements for banks to enhance fraud prevention systems and protect customers. It addresses issues like money muling, social engineering, and economic sabotage through financial accounts, ensuring robust measures to safeguard the financial system.",
+                tags: ["financial scam", "online fraud", "banking", "money muling"],
+                punishmentSeverity: 6
+            },
+            {
+                title: "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
+                description: "The law aimed at preventing, investigating, and suppressing cybercrimes. It covers offenses related to computer data, systems, and content, including those committed using information and communication technologies, such as the internet and computer systems. It addresses a wide range of cybercrimes, from hacking to cybersex and online libel.",
+                tags: ["cybercrime", "hacking", "online libel", "data interference"],
+                punishmentSeverity: 5
+            },
+            {
+                title: "Data Privacy Act of 2012 (Republic Act No. 10173)",
+                description: "A law that aims to protect the fundamental right to privacy while ensuring the free flow of information to promote innovation and growth. It regulates the collection, processing, and storage of personal data in both the government and private sectors, establishing standards for data protection and accountability.",
+                tags: ["data privacy", "personal information", "data protection", "cybersecurity"],
+                punishmentSeverity: 4
+            },
+            {
+                title: "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)",
+                description: "Criminalizes the unauthorized taking, distribution, and publication of photos or videos of a person's private area or performing sexual acts, especially when taken without consent and in a way that violates their privacy. The act defines 'private area' as the naked or undergarment-clad genitals, pubic area, buttocks, or female breast, aiming to protect individuals from non-consensual recordings.",
+                tags: ["voyeurism", "privacy", "sexual harassment", "non-consensual recording"],
+                punishmentSeverity: 4
+            },
+            {
+                title: "Expanded Anti-Trafficking in Persons Act of 2012 (Republic Act No. 10364)",
+                description: "This law addresses various aspects of human trafficking. It aims to eliminate trafficking in persons, especially women and children, by establishing institutional mechanisms for protection and support of victims and providing penalties for violations, including online recruitment and exploitation.",
+                tags: ["human trafficking", "exploitation", "victim protection", "cybercrime"],
+                punishmentSeverity: 7
+            },
+            {
+                title: "Subscriber Identity Module (SIM) Registration Act (Republic Act No. 11934)",
+                description: "The Philippines mandates that all SIM card users register their mobile phone numbers. This law, enacted in 2022, aims to enhance the security and integrity of the telecommunications network by requiring Public Telecommunications Entities (PTEs) to track and monitor SIM card usage, potentially curbing crimes like fraud, terrorism, and phishing.",
+                tags: ["telecommunications", "SIM registration", "fraud prevention", "cybersecurity"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Anti-Online Sexual Abuse or Exploitation of Children Act (Republic Act No. 11930)",
+                description: "A law enacted to protect children from online sexual abuse and exploitation. It aims to prevent, detect, and penalize these crimes, including stricter law enforcement protocols, international cooperation, and support services for victims, targeting activities like grooming and distribution of child sexual abuse materials.",
+                tags: ["child protection", "online abuse", "sexual exploitation", "cybercrime"],
+                punishmentSeverity: 7
+            },
+            {
+                title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
+                description: "A law that protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs. It addresses issues like online piracy and unauthorized use of digital content, ensuring creators' rights in the digital age.",
+                tags: ["intellectual property", "copyright", "piracy", "digital content"],
+                punishmentSeverity: 4
+            },
+            {
+                title: "Terrorism Financing Prevention and Suppression Act (Republic Act No. 10168)",
+                description: "A law that criminalizes the financing of terrorism and related offenses, aiming to prevent and suppress such acts by freezing and forfeiting associated properties or funds. It also aims to protect life, liberty, and property from terrorism, including cyber-related terrorist financing activities.",
+                tags: ["terrorism financing", "financial crime", "cybercrime", "asset forfeiture"],
+                punishmentSeverity: 6
+            },
+            {
+                title: "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
+                description: "A law that defines and criminalizes money laundering, aiming to prevent the use of the country's financial system for laundering the proceeds of illegal activities. It also includes provisions for asset freezing and international cooperation in combating money laundering, particularly in online financial transactions.",
+                tags: ["money laundering", "financial crime", "asset freezing", "cybercrime"],
+                punishmentSeverity: 5
+            },
+            {
+                title: "National Bureau of Investigation Reorganization Act (Republic Act No. 10867)",
+                description: "This law aims to enhance the NBI's investigative capabilities by reorganizing and modernizing the agency. It establishes a clear structure, expands the NBI's powers and functions, and sets qualification standards for personnel, particularly for investigating cybercrimes.",
+                tags: ["NBI", "cybercrime investigation", "law enforcement", "modernization"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Mobile Number Portability Act (Republic Act No. 11202)",
+                description: "This law allows mobile subscribers to switch telecommunications service providers while keeping their existing mobile numbers. This act promotes consumer welfare by allowing consumers to freely choose and switch providers without losing their phone number, while addressing potential misuse in cybercrimes.",
+                tags: ["telecommunications", "consumer welfare", "identity theft", "cybercrime"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Safe Spaces Act (Republic Act No. 11313)",
+                description: "A law enacted to protect individuals from gender-based sexual harassment in public spaces, online, workplaces, and educational institutions. It defines and penalizes various forms of gender-based sexual harassment, including online harassment and cyberstalking.",
+                tags: ["sexual harassment", "online harassment", "cyberstalking", "gender-based"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "New Central Bank Act (Republic Act No. 7653)",
+                description: "The country's central monetary authority. It mandates the BSP to maintain price stability and promote financial stability, while also providing for fiscal and administrative autonomy. The act also outlines the structure and powers of the Monetary Board, including its membership and responsibilities, with provisions to combat financial cybercrimes.",
+                tags: ["financial stability", "central bank", "cybercrime", "monetary policy"],
+                punishmentSeverity: 5
+            },
+            {
+                title: "Anti-Wire Tapping Act (Republic Act No. 4200)",
+                description: "The law prohibits and penalizes unauthorized wiretapping and other related violations of communication privacy. It makes it illegal to tap wires or cables, secretly overhear, intercept, or record communications or spoken words, and possess recordings of such actions without consent from all parties involved.",
+                tags: ["wiretapping", "privacy", "communication", "cybercrime"],
+                punishmentSeverity: 4
+            },
+            {
+                title: "Human Security Act of 2007 (Republic Act No. 9372)",
+                description: "This law aimed to protect the Philippines from terrorism by defining the crime and providing mechanisms for its prevention and suppression. The act declared its state policy to protect life, liberty, and property from acts of terrorism and to address the issue through a comprehensive approach, including cyber-terrorism.",
+                tags: ["terrorism", "cyber-terrorism", "national security", "law enforcement"],
+                punishmentSeverity: 6
+            },
+            {
+                title: "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
+                description: "A law in the Philippines aimed at preventing, prohibiting, and penalizing terrorism. It defines terrorism and related offenses, outlines the powers and functions of the Anti-Terrorism Council (ATC), and provides for the detention and surveillance of suspected terrorists, including those involved in cyber-terrorism.",
+                tags: ["terrorism", "cyber-terrorism", "surveillance", "national security"],
+                punishmentSeverity: 7
+            },
+            {
+                title: "Anti-Bullying Act of 2013 (Republic Act No. 10627)",
+                description: "Schools are required to implement policies to prevent and address bullying within their institutions and set procedures for handling complaints. It defines bullying as any severe or repeated use of written, verbal, or physical acts or gestures directed at another student that causes fear or disrupts the education process, including cyberbullying.",
+                tags: ["bullying", "cyberbullying", "school safety", "student protection"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Department of Information and Communications Technology Act (Republic Act No. 10844)",
+                description: "It establishes the Department of Information and Communications Technology (DICT) as the primary government agency for developing and implementing ICT policies, plans, and programs. To provide oversight over agencies governing and regulating the ICT sector and ensure consumer protection and welfare, data privacy and security, foster competition and the growth of the ICT sector.",
+                tags: ["ICT", "cybersecurity", "data privacy", "consumer protection"],
+                punishmentSeverity: 4
+            },
+            {
+                title: "Strategic Trade Management Act (Republic Act No. 10697)",
+                description: "An Act Preventing the Proliferation of Weapons of Mass Destruction by Managing the Trade in Strategic Goods, the Provision of Related Services, and for Other Purposes. It regulates the export and trade of dual-use goods that could be used in cyber-related threats or weapons development.",
+                tags: ["strategic goods", "national security", "cyber-threats", "trade regulation"],
+                punishmentSeverity: 4
+            },
+            {
+                title: "Energy Virtual One-Stop Shop Act (Republic Act No. 11234)",
+                description: "A web-based filing and monitoring system for energy-related applications and a repository of information and permits issued for energy projects. It streamlines processes to prevent cyber-related disruptions in energy infrastructure.",
+                tags: ["energy", "cybersecurity", "infrastructure", "online system"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Consumer Act of the Philippines (Republic Act No. 7394)",
+                description: "The primary law governing consumer protection in the country. It aims to protect consumers from health and safety hazards, deceptive practices, and unfair sales. It also provides for consumer education and redress mechanisms, and includes consumer representatives in policy formulation, addressing online consumer fraud.",
+                tags: ["consumer protection", "online fraud", "deceptive practices", "cybercrime"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Optical Media Act of 2003 (Republic Act No. 9239)",
+                description: "It is hereby declared to be the policy of the State to ensure the protection and promotion of intellectual property rights. The unregulated mastering, manufacture, replication, importation and exportation of optical media in all forms is inimical to economic growth and public interest, particularly in combating digital piracy.",
+                tags: ["intellectual property", "digital piracy", "optical media", "cybercrime"],
+                punishmentSeverity: 4
+            },
+            {
+                title: "National Cybersecurity Plan Framework (Executive Order No. 189, 2015)",
+                description: "A response to the growing concern about cyber threats and vulnerabilities in the Philippines. About the increasing number of cyber threats and vulnerabilities affecting government and commercial information systems, it outlines strategies to enhance national cybersecurity.",
+                tags: ["cybersecurity", "national security", "cyber threats", "policy"],
+                punishmentSeverity: 5
+            },
+            {
+                title: "Strengthening DICT’s Cybersecurity Role (Executive Order No. 82, 2022)",
+                description: "This plan aims to bolster the country's digital defenses while fostering a culture of cybersecurity awareness and responsibility. It enhances the DICT's role in coordinating and implementing cybersecurity measures across government agencies.",
+                tags: ["cybersecurity", "DICT", "national security", "awareness"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "National Cybersecurity Inter-Agency Committee (Executive Order No. 95, 2019)",
+                description: "It was created to strengthen the Philippines’ cybersecurity framework. Its main purpose is to coordinate, integrate, and harmonize all government efforts related to safeguarding the country’s information and communications technology (ICT) infrastructure.",
+                tags: ["cybersecurity", "ICT", "national security", "coordination"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Guidelines on IT Risk Management (BSP Circular No. 808, 2013)",
+                description: "This was designed to strengthen risk management, security operations and IT-related activities, as well as enforce consumer protection regulations in banks and other BSP-supervised institutions, ensuring robust cybersecurity in financial systems.",
+                tags: ["IT risk", "cybersecurity", "banking", "consumer protection"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Enhanced Information Security Management (BSP Circular No. 982, 2017)",
+                description: "It focuses on strengthening data security, requiring BSFIs to establish effective technology risk management processes, governance structures, and cybersecurity controls to protect financial institutions from cyber threats.",
+                tags: ["data security", "cybersecurity", "banking", "risk management"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Technology and Cyber-Risk Reporting (BSP Circular No. 1019, 2018)",
+                description: "This circular aims to strengthen the BSP's cyber-threat surveillance capabilities by tightening the reporting regime for technology and cyber-risk-related incidents and disruptions. It also emphasizes the importance of fostering safe, secure, efficient, and reliable retail payment systems, while protecting customer accounts and information, and upholding consumer protection.",
+                tags: ["cyber-risk", "banking", "reporting", "consumer protection"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Guidelines on Operational Risk Management (BSP Circular No. 900, 2015)",
+                description: "Its primary purpose is to ensure the safe and sound operation of BSFIs by promoting the adoption of effective risk management systems. The circular defines operational risk as the risk of loss stemming from inadequate or failed internal processes, people, systems, external events, and legal risk, including cyber-related risks.",
+                tags: ["operational risk", "cybersecurity", "banking", "risk management"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Guidelines on Business Continuity Management (BSP Circular No. 951, 2017)",
+                description: "It emphasizes the importance of a robust Business Continuity Management process, highlighting the responsibilities of the board of directors and senior management in establishing and promoting a culture that prioritizes business continuity, particularly in response to cyber incidents.",
+                tags: ["business continuity", "cybersecurity", "banking", "risk management"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Guidelines on Outsourcing Risk Management (BSP Circular No. 1039, 2019)",
+                description: "This circular primarily focuses on the operations and requirements of pawnshops and Money Service Businesses (MSBs), including remittance and transfer companies. It outlines guidelines for the submission of applications for licenses and authorizations for pawnshops, as well as the electronic submission of reports on remittance, money changing, and virtual currency exchange transactions, addressing cyber risks in outsourcing.",
+                tags: ["outsourcing", "cybersecurity", "banking", "risk management"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
+                description: "It focuses on the protection of Critical Information Infrastructure (CII) as outlined in the National Cybersecurity Plan (NCSP) 2022. It mandates the adoption of international security standards and outlines policies and regulations for safeguarding CII, as part of the NCSP. This circular also mandates the integration of the National IT Security Policy (NISP) with the NCSP framework.",
+                tags: ["cybersecurity", "CII", "security standards", "policy"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
+                description: "This focuses on protecting individuals by promoting cybersecurity awareness and implementing security measures. This includes measures like cybersecurity awareness programs like the CyberSecurity Caravan, and promoting the adoption of cybersecurity practices by individuals. The NCSP aims to enhance the security of critical information infrastructure and government networks, which directly contributes to the protection of individual data and information within these systems.",
+                tags: ["cybersecurity", "awareness", "individual protection", "policy"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Cloud First Policy (DICT Department Circular No. 2017-002)",
+                description: "This mandates government agencies to prioritize cloud computing solutions in their IT infrastructure planning and procurement. This policy aims to modernize government operations by leveraging cloud technology while maintaining data control and adhering to security standards to prevent cyber threats.",
+                tags: ["cloud computing", "cybersecurity", "government", "policy"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Value-Added Services Regulation (NTC Memorandum Circular No. 02-05-2008)",
+                description: "This circular defines Value-Added Services (VAS) as enhanced telecommunications services beyond basic offerings, including messaging, audio/video conferencing, voice mail, electronic mail, information services, and electronic gaming. It outlines registration requirements, service classifications, and regulatory compliance for VAS providers to prevent cyber-related misuse.",
+                tags: ["telecommunications", "VAS", "cybersecurity", "regulation"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Broadcast Messaging Regulation (NTC Memorandum Circular No. 03-03-2005-A)",
+                description: "Establishes guidelines for sending broadcast or push messages to subscribers, particularly regarding content providers and public telecommunications entities (PTEs). It aims to prevent unauthorized or deceptive messaging that could be used in cybercrimes like phishing.",
+                tags: ["telecommunications", "messaging", "cybercrime", "regulation"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Guidelines on Prepaid Load Expiry (NTC Memorandum Circular No. 01-04-2019)",
+                description: "Mandating a one-year expiration period for all prepaid loads, regardless of amount. This circular covers all prepaid loads of public telecommunications entities and ICT providers, aiming to protect consumers and prevent fraudulent practices in telecommunications.",
+                tags: ["telecommunications", "consumer protection", "cybercrime", "regulation"],
+                punishmentSeverity: 2
+            },
+            {
+                title: "Social Media and AI Election Guidelines (COMELEC Resolution No. 11064, 2024)",
+                description: "The resolution mandates candidates and political parties to register all digital campaign platforms by 13 December 2024, ensuring compliance with transparency requirements, including disclosing AI usage in campaign materials. The resolution applies to technology platforms and social media companies hosting political content, which must assist in removing unregistered platforms and monitoring for disinformation.",
+                tags: ["elections", "social media", "AI", "disinformation"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
+                description: "Aims to improve the quality of pharmaceutical products through stricter distribution and storage standards. The order also emphasizes the importance of aligning local practices with international standards for pharmaceutical distribution and storage, including online sales to prevent cyber-related fraud.",
+                tags: ["pharmaceuticals", "online sales", "cybercrime", "regulation"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "E-Commerce Protection Guidelines (DTI Administrative Order No. 22-01)",
+                description: "Aims to increase consumer confidence in e-commerce by ensuring online businesses understand their responsibilities and adhere to fair practices. It addresses deceptive practices and fraud in online transactions, promoting transparency and consumer protection.",
+                tags: ["e-commerce", "consumer protection", "online fraud", "regulation"],
+                punishmentSeverity: 3
+            },
+            {
+                title: "Guidelines on Cybercrime Prosecution (DOJ Circular No. 027, 2018)",
+                description: "The circular focuses on prosecuting crimes that violate the confidentiality, integrity, and availability of computer data and systems. It also addresses offenses like illegal access, interception of data, and data interference, providing guidelines for effective cybercrime prosecution.",
+                tags: ["cybercrime", "prosecution", "data integrity", "law enforcement"],
+                punishmentSeverity: 4
+            },
+            {
+                title: "PNP Anti-Cybercrime Group Operational Guidelines (PNP Circular No. 2019-001)",
+                description: "This circular outlines operational guidelines for the PNP Anti-Cybercrime Group (ACG), focusing on the investigation and response to cybercrimes, including online fraud, hacking, and disinformation campaigns.",
+                tags: ["cybercrime", "PNP", "law enforcement", "investigation"],
+                punishmentSeverity: 4
+            },
+           {
+                title: "Rules on Cybercrime Warrants (Supreme Court A.M. No. 17-11-03-SC)",
+                description: "Establishes rules and procedures for the issuance and execution of warrants related to cybercrime investigations. It provides guidelines for law enforcement to obtain warrants for the interception, seizure, or examination of computer data, ensuring compliance with legal standards and protection of privacy rights.",
+                tags: ["cybercrime", "warrants", "law enforcement", "data privacy"],
+                punishmentSeverity: 4
+            }
+        ];
+
+        let currentCardIndex = 0;
+        let currentPage = 1;
+        let currentLawsPage = 1;
+        const itemsPerPage = 5;
+        const lawsPerPage = 5;
+        let filteredLaws = [...laws];
+
+
+        const cards = [
     { term: "Cybercrime", partOfSpeech: "noun", definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.", example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.", synonyms: "digital crime, internet crime, online fraud" },
     { term: "Hacking", partOfSpeech: "noun", definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.", example: "Hacking is penalized under the Electronic Commerce Act of 2000 for unauthorized access to electronic transactions.", synonyms: "unauthorized access, cyber intrusion, data breach" },
     { term: "Phishing", partOfSpeech: "noun", definition: "A fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communication.", example: "The NBI Cybercrime Division raided a group operating a phishing scam using fake banking websites.", synonyms: "online scam, identity theft, social engineering" },
@@ -2336,405 +2832,15 @@
     { term: "Electronic Evidence", partOfSpeech: "noun", definition: "Digital information, such as emails or documents, admissible in court if authenticated.", example: "The Rules on Electronic Evidence allow emails to be used as evidence in trials.", synonyms: "digital evidence, e-evidence, online proof" }
 ];
 
-        let currentCardIndex = 0;
-        let isFlipped = false;
-        let isTransitioning = false;
-
-        function updateCard(index) {
-            if (isTransitioning) return;
-
-            isTransitioning = true;
-            card.classList.add('fade-out');
-
+        function showLoader() {
+            loaderOverlay.classList.add('active');
             setTimeout(() => {
-                const data = cardsData[index];
-                const front = card.querySelector('.card-front');
-                const back = card.querySelector('.card-back');
-                front.innerHTML = `
-                    <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
-                    <h3>${data.term}</h3>
-                `;
-                back.innerHTML = `
-                    <h3>${data.term}</h3>
-                    <div class="part-of-speech">${data.partOfSpeech}</div>
-                    <div class="definition">${data.definition}</div>
-                    <div class="example">${data.example}</div>
-                    <div class="synonyms">Synonyms: ${data.synonyms}</div>
-                `;
-                card.classList.toggle('flipped', isFlipped);
-                cardCounter.textContent = `Card ${index + 1} of ${cardsData.length}`;
-
-                card.classList.remove('fade-out');
-                card.classList.add('fade-in');
-                isTransitioning = false;
-            }, 300); // Match the fade-out duration
+                loaderOverlay.classList.remove('active');
+            }, 1000);
         }
 
-        function navigateCard(direction) {
-            if (isTransitioning) return;
-            currentCardIndex = (currentCardIndex + direction + cardsData.length) % cardsData.length;
-            updateCard(currentCardIndex);
-        }
-
-        function randomCard() {
-            if (isTransitioning) return;
-            currentCardIndex = Math.floor(Math.random() * cardsData.length);
-            updateCard(currentCardIndex);
-        }
-
-        card.addEventListener('click', () => {
-            isFlipped = !isFlipped;
-            card.classList.toggle('flipped', isFlipped);
-        });
-
-        updateCard(currentCardIndex);
-
-        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
-        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
-
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentUser = {
-                    username: user.displayName || 'User',
-                    email: user.email,
-                    createdAt: user.metadata.creationTime
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-                usernameDisplay.textContent = `${currentUser.username}`; 
-                emailDisplay.textContent = `${currentUser.email}`; 
-                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`; 
-
-                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                const userRef = database.ref(`users/${sanitizedEmail}`);
-                userRef.once('value', (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.avatarUrl) {
-                            profilePic.src = userData.avatarUrl;
-                        } else {
-                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                        }
-                        if (userData.avatarBgColor) {
-                            profilePic.style.backgroundColor = userData.avatarBgColor;
-                            avatarBgColorPicker.value = userData.avatarBgColor;
-                        }
-                        if (userData.borderColor) {
-                            profilePic.style.borderColor = userData.borderColor;
-                            borderColorPicker.value = userData.borderColor;
-                        }
-                        if (userData.borderType) {
-                            profilePic.style.borderStyle = userData.borderType;
-                            borderTypeSelect.value = userData.borderType;
-                        }
-                    }
-                }, (error) => {
-                    console.error('Error loading user customization:', error);
-                    alert('Failed to load user customization: ' + error.message);
-                });
-            } else {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'index.html';
-            }
-        });
-
-        profilePic.addEventListener('click', () => {
-            customizationMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
-            }
-        });
-
-        avatarInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload a valid image (JPG, JPEG, PNG).');
-                return;
-            }
-            if (file.size > maxSize) {
-                alert('Image size must be less than 2MB.');
-                return;
-            }
-
-            const user = auth.currentUser;
-            if (!user) {
-                alert('You must be logged in to upload an avatar.');
-                avatarLoading.classList.remove('active');
-                return;
-            }
-
-            avatarLoading.classList.add('active');
-
-            const img = new Image();
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const maxDimension = 300;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxDimension) {
-                        height = Math.round((height * maxDimension) / width);
-                        width = maxDimension;
-                    }
-                } else {
-                    if (height > maxDimension) {
-                        width = Math.round((width * maxDimension) / height);
-                        height = maxDimension;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (!currentUser || !currentUser.email) {
-                        alert('User not logged in.');
-                        avatarLoading.classList.remove('active');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    formData.append('file', blob);
-                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-                    formData.append('folder', `avatars/${currentUser.email}`);
-
-                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
-                                try {
-                                    const parsed = JSON.parse(text);
-                                    errorMessage = parsed.error?.message || text;
-                                } catch (e) {
-                                    errorMessage = text.includes('Invalid cloud name')
-                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
-                                        : text.includes('Invalid upload preset')
-                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                        : text.includes('Unsigned uploads are not allowed')
-                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                        : text || 'Unknown error occurred';
-                                }
-                                throw new Error(errorMessage);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.error) {
-                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
-                        }
-
-                        const avatarUrl = data.secure_url;
-                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
-                        database.ref(`users/${sanitizedEmail}`).update({
-                            avatarUrl: avatarUrl,
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP
-                        })
-                        .then(() => {
-                            profilePic.src = avatarUrl;
-                            avatarLoading.classList.remove('active');
-                        })
-                        .catch(error => {
-                            console.error('Error saving avatar URL to Firebase:', error);
-                            alert('Failed to save avatar URL to Firebase: ' + error.message);
-                            avatarLoading.classList.remove('active');
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error uploading avatar to Cloudinary:', error);
-                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
-                        avatarLoading.classList.remove('active');
-                    });
-                }, file.type, 0.6);
-            };
-            img.onerror = () => {
-                alert('Failed to process the image. Please try a different file.');
-                avatarLoading.classList.remove('active');
-            };
-        });
-
-        avatarBgColorPicker.addEventListener('change', () => {
-            const color = avatarBgColorPicker.value;
-            profilePic.style.backgroundColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    avatarBgColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving avatar background color:', error);
-                    alert('Failed to save avatar background color: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the avatar background color.');
-            }
-        });
-
-        borderColorPicker.addEventListener('change', () => {
-            const color = borderColorPicker.value;
-            profilePic.style.borderColor = color;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderColor: color,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border color:', error);
-                    alert('Failed to save border color: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the border color.');
-            }
-        });
-
-        borderTypeSelect.addEventListener('change', () => {
-            const borderType = borderTypeSelect.value;
-            profilePic.style.borderStyle = borderType;
-
-            const user = auth.currentUser;
-            if (user) {
-                const sanitizedEmail = user.email.replace(/\./g, ',');
-                database.ref(`users/${sanitizedEmail}`).update({
-                    borderType: borderType,
-                    updatedAt: firebase.database.ServerValue.TIMESTAMP
-                })
-                .catch(error => {
-                    console.error('Error saving border type:', error);
-                    alert('Failed to save border type: ' + error.message);
-                });
-            } else {
-                alert('You must be logged in to change the border type.');
-            }
-        });
-
-        if (localStorage.getItem('darkTheme') === 'enabled') {
-            body.classList.add('dark-theme');
-            themeToggle.checked = true;
-        }
-
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-theme');
-                localStorage.setItem('darkTheme', 'enabled');
-            } else {
-                body.classList.remove('dark-theme');
-                localStorage.setItem('darkTheme', 'disabled');
-            }
-        });
-
-        mobileMenuIcon.addEventListener('click', function() {
+        function toggleSidebar() {
             sidebar.classList.toggle('active');
-            const icon = mobileMenuIcon.querySelector('i');
-            if (sidebar.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-
-        document.querySelectorAll('.read-more').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (!this.href.includes(window.location.hostname)) return;
-
-                e.preventDefault();
-                loaderOverlay.classList.add('active');
-                document.querySelector('.fingerprint-loader').style.display = 'flex';
-                document.querySelector('.loader').style.display = 'none';
-
-                setTimeout(() => {
-                    window.location.href = this.href;
-                }, 150);
-            });
-        });
-
-        document.querySelectorAll('.sidebar a[href]:not(.read-more)').forEach(link => {
-            if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
-                link.addEventListener('click', function(e) {
-                    if (!this.href.includes(window.location.hostname)) return;
-
-                    e.preventDefault();
-                    loaderOverlay.classList.add('active');
-                    document.querySelector('.fingerprint-loader').style.display = 'none';
-                    document.querySelector('.loader').style.display = 'block';
-
-                    setTimeout(() => {
-                        window.location.href = this.href;
-                    }, 150);
-                });
-            }
-        });
-
-let currentPage = 1;
-const itemsPerPage = 10;
-const newsItems = document.querySelectorAll('.news-item');
-const totalPages = Math.ceil(newsItems.length / itemsPerPage);
-const pageNumbersContainer = document.getElementById('pageNumbers');
-const prevPageBtn = document.getElementById('prevPage');
-const nextPageBtn = document.getElementById('nextPage');
-
-        function displayNewsItems(page) {
-            newsItems.forEach(item => {
-                item.classList.remove('active');
-                if (parseInt(item.getAttribute('data-page')) === page) {
-                    item.classList.add('active');
-                }
-            });
-
-            prevPageBtn.disabled = page === 1;
-            nextPageBtn.disabled = page === totalPages;
-
-            pageNumbersContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const pageNumber = document.createElement('span');
-                pageNumber.classList.add('page-number');
-                pageNumber.textContent = i;
-                if (i === page) {
-                    pageNumber.classList.add('active');
-                }
-                pageNumber.addEventListener('click', () => {
-                    currentPage = i;
-                    displayNewsItems(currentPage);
-                });
-                pageNumbersContainer.appendChild(pageNumber);
-            }
-        }
-
-        function changePage(direction) {
-            currentPage += direction;
-            if (currentPage < 1) currentPage = 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-            displayNewsItems(currentPage);
         }
 
         function toggleDetails(header) {
@@ -2744,26 +2850,239 @@ const nextPageBtn = document.getElementById('nextPage');
             icon.classList.toggle('active');
         }
 
-        function toggleContent(type) {
-            const newsContent = document.querySelector('.news-content');
-            const insightsContent = document.querySelector('.insights-content');
-            const newsToggle = document.querySelector('.news-toggle');
-            const insightsToggle = document.querySelector('.insights-toggle');
+        function toggleContent(section) {
+            document.querySelector('.news-content').classList.remove('active');
+            document.querySelector('.insights-content').classList.remove('active');
+            document.querySelector('.laws-content').classList.remove('active');
+            document.querySelector(`.${section}-content`).classList.add('active');
 
-            if (type === 'news') {
-                newsContent.classList.add('active');
-                insightsContent.classList.remove('active');
-                newsToggle.classList.add('active');
-                insightsToggle.classList.remove('active');
-            } else {
-                newsContent.classList.remove('active');
-                insightsContent.classList.add('active');
-                newsToggle.classList.remove('active');
-                insightsToggle.classList.add('active');
+            document.querySelectorAll('.toggle-label').forEach(label => label.classList.remove('active'));
+            document.querySelector(`.${section}-toggle`).classList.add('active');
+        }
+
+        function updateCardDisplay() {
+            const cardData = cards[currentCardIndex];
+            card.querySelector('.card-front h3').textContent = cardData.term;
+            card.querySelector('.card-back h3').textContent = cardData.term;
+            card.querySelector('.part-of-speech').textContent = cardData.partOfSpeech;
+            card.querySelector('.definition').textContent = cardData.definition;
+            card.querySelector('.example').textContent = cardData.example;
+            card.querySelector('.synonyms').textContent = `Synonyms: ${cardData.synonyms}`;
+            cardCounter.textContent = `Card ${currentCardIndex + 1} of ${cards.length}`;
+            prevCardBtn.disabled = currentCardIndex === 0;
+            nextCardBtn.disabled = currentCardIndex === cards.length - 1;
+        }
+
+        function navigateCard(direction) {
+            if (direction === -1 && currentCardIndex > 0) {
+                currentCardIndex--;
+            } else if (direction === 1 && currentCardIndex < cards.length - 1) {
+                currentCardIndex++;
+            }
+            card.classList.add('fade-out');
+            setTimeout(() => {
+                updateCardDisplay();
+                card.classList.remove('fade-out');
+                card.classList.add('fade-in');
+                setTimeout(() => card.classList.remove('fade-in'), 300);
+            }, 300);
+        }
+
+        function randomCard() {
+            const newIndex = Math.floor(Math.random() * cards.length);
+            if (newIndex !== currentCardIndex) {
+                currentCardIndex = newIndex;
+                card.classList.add('fade-out');
+                setTimeout(() => {
+                    updateCardDisplay();
+                    card.classList.remove('fade-out');
+                    card.classList.add('fade-in');
+                    setTimeout(() => card.classList.remove('fade-in'), 300);
+                }, 300);
             }
         }
 
-        displayNewsItems(currentPage);
+        function displayLaws(page) {
+            lawsContainer.innerHTML = '';
+            const start = (page - 1) * lawsPerPage;
+            const end = start + lawsPerPage;
+            const paginatedLaws = filteredLaws.slice(start, end);
+
+            paginatedLaws.forEach(law => {
+                const lawElement = document.createElement('div');
+                lawElement.className = 'law-card';
+                lawElement.innerHTML = `
+                    <h3>${law.title}</h3>
+                    <p>${law.description}</p>
+                    <div class="law-tags">
+                        ${law.tags.map(tag => `<span class="law-tag">${tag}</span>`).join('')}
+                    </div>
+                `;
+                lawElement.addEventListener('click', () => {
+                    const searchQuery = encodeURIComponent(law.title);
+                    window.open(`https://www.google.com/search?q=${searchQuery}`, '_blank');
+                });
+                lawsContainer.appendChild(lawElement);
+            });
+
+            updateLawsPagination();
+        }
+
+        function updateLawsPagination() {
+            const totalPages = Math.ceil(filteredLaws.length / lawsPerPage);
+            lawsPageNumbersContainer.innerHTML = '';
+
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentLawsPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageNumber = document.createElement('span');
+                pageNumber.className = `page-number ${i === currentLawsPage ? 'active' : ''}`;
+                pageNumber.textContent = i;
+                pageNumber.addEventListener('click', () => {
+                    currentLawsPage = i;
+                    displayLaws(currentLawsPage);
+                });
+                lawsPageNumbersContainer.appendChild(pageNumber);
+            }
+
+            prevLawsPageBtn.disabled = currentLawsPage === 1;
+            nextLawsPageBtn.disabled = currentLawsPage === totalPages;
+        }
+
+        function changeLawsPage(direction) {
+            const totalPages = Math.ceil(filteredLaws.length / lawsPerPage);
+            currentLawsPage = Math.max(1, Math.min(totalPages, currentLawsPage + direction));
+            displayLaws(currentLawsPage);
+        }
+
+        function searchLaws(query) {
+            if (!query) {
+                filteredLaws = [...laws];
+            } else {
+                const fuse = new Fuse(laws, {
+                    keys: ['title', 'description', 'tags'],
+                    threshold: 0.3,
+                    includeScore: true
+                });
+                filteredLaws = fuse.search(query).map(result => result.item);
+            }
+            currentLawsPage = 1;
+            displayLaws(currentLawsPage);
+        }
+
+        function sortLaws(criteria) {
+            if (criteria === 'alphabetical') {
+                filteredLaws.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (criteria === 'seriousness') {
+                filteredLaws.sort((a, b) => b.punishmentSeverity - a.punishmentSeverity);
+            } else if (criteria === 'similarity') {
+                // Placeholder: Implement similarity-based sorting (e.g., tag overlap)
+                filteredLaws.sort((a, b) => {
+                    const aTags = a.tags.join(' ');
+                    const bTags = b.tags.join(' ');
+                    return bTags.localeCompare(aTags);
+                });
+            } else if (criteria === 'relevance') {
+                // Placeholder: Implement relevance-based sorting (e.g., based on search query)
+                filteredLaws.sort((a, b) => a.title.localeCompare(b.title));
+            }
+            currentLawsPage = 1;
+            displayLaws(currentLawsPage);
+        }
+
+        themeToggle.addEventListener('change', () => {
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+        });
+
+        mobileMenuIcon.addEventListener('click', toggleSidebar);
+
+        profilePic.addEventListener('click', () => {
+            customizationMenu.classList.toggle('active');
+        });
+
+        avatarInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file && ['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+                avatarLoading.classList.add('active');
+                const reader = new FileReader();
+                reader.onload = () => {
+                    profilePic.src = reader.result;
+                    localStorage.setItem('avatar', reader.result);
+                    setTimeout(() => avatarLoading.classList.remove('active'), 1000);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        avatarBgColorPicker.addEventListener('input', () => {
+            profilePic.style.backgroundColor = avatarBgColorPicker.value;
+            localStorage.setItem('avatarBgColor', avatarBgColorPicker.value);
+        });
+
+        borderColorPicker.addEventListener('input', () => {
+            profilePic.style.borderColor = borderColorPicker.value;
+            localStorage.setItem('borderColor', borderColorPicker.value);
+        });
+
+        borderTypeSelect.addEventListener('change', () => {
+            profilePic.style.borderStyle = borderTypeSelect.value;
+            localStorage.setItem('borderType', borderTypeSelect.value);
+        });
+
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
+
+        lawsSearchInput.addEventListener('input', (e) => {
+            searchLaws(e.target.value.trim());
+        });
+
+        lawsSortSelect.addEventListener('change', (e) => {
+            sortLaws(e.target.value);
+        });
+
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                usernameDisplay.textContent = user.displayName || 'Anonymous';
+                emailDisplay.textContent = user.email || 'No email';
+                createdAtDisplay.textContent = user.metadata.creationTime || 'Unknown';
+                if (user.photoURL) {
+                    profilePic.src = user.photoURL;
+                }
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        window.addEventListener('load', () => {
+            showLoader();
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark-theme');
+                themeToggle.checked = true;
+            }
+            if (localStorage.getItem('avatar')) {
+                profilePic.src = localStorage.getItem('avatar');
+            }
+            if (localStorage.getItem('avatarBgColor')) {
+                profilePic.style.backgroundColor = localStorage.getItem('avatarBgColor');
+                avatarBgColorPicker.value = localStorage.getItem('avatarBgColor');
+            }
+            if (localStorage.getItem('borderColor')) {
+                profilePic.style.borderColor = localStorage.getItem('borderColor');
+                borderColorPicker.value = localStorage.getItem('borderColor');
+            }
+            if (localStorage.getItem('borderType')) {
+                profilePic.style.borderStyle = localStorage.getItem('borderType');
+                borderTypeSelect.value = localStorage.getItem('borderType');
+            }
+            updateCardDisplay();
+            displayLaws(currentLawsPage);
+        });
     </script>
-</body>
-</html>
