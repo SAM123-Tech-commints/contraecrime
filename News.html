@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra E-Crime</title>
+    <title>Laws - Contra E-Crime</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/Dccn8pc.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -23,7 +26,7 @@
 
         body.dark-theme {
             background-color: #121212;
-            color: #fff;
+            color: #e0e0e0;
         }
 
         .loader-overlay {
@@ -68,57 +71,12 @@
             border-bottom-color: transparent;
         }
 
-        .fingerprint-loader {
-            width: 150px;
-            height: 150px;
-            background: url('https://static.thenounproject.com/png/1238269-200.png') no-repeat center center;
-            background-size: contain;
-            position: relative;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            animation: pulse 1.5s infinite ease-in-out;
-            filter: brightness(1);
-        }
-
-        .fingerprint-loader::before {
-            content: "";
-            position: absolute;
-            width: 138px;
-            height: 140px;
-            border: 3px solid #d7b15c;
-            border-radius: 50%;
-            z-index: 0;
-            animation: pulseBorder 1.5s infinite ease-in-out;
-        }
-
-        .dark-theme .fingerprint-loader {
-            filter: brightness(2) invert(1);
-        }
-
-        .dark-theme .fingerprint-loader::before {
-            border: 3px solid #FFFF00;
-            filter: none;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes pulseBorder {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
         .avatar-loading {
             position: absolute;
             top: 0;
             left: 0;
-            width: 50px;
-            height: 50px;
+            width: 100%;
+            height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
             display: none;
@@ -297,11 +255,12 @@
         .content {
             flex: 1;
             margin-left: 290px;
-            padding: 30px;
+            padding: 0 30px 15px;
             position: relative;
-            background: url('https://via.placeholder.com/1920x1080?text=Cityscape+Background') no-repeat center center;
-            background-size: cover;
             transition: background-color 0.3s ease, margin-left 0.3s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .content::before {
@@ -316,11 +275,27 @@
             transition: background-color 0.3s ease;
         }
 
+        .dark-theme .content {
+            background-color: #28292c;
+        }
+
+        .dark-theme .content::before {
+            background-color: rgba(40, 41, 44, 0.9);
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 3000;
+        }
+
         .account-customization {
             position: fixed;
             top: 10px;
             right: 20px;
-            z-index: 1000;
+            z-index: 3001;
         }
 
         .user-details {
@@ -349,7 +324,7 @@
 
         .customization-options {
             position: absolute;
-            top: 50px;
+            top: 60px;
             right: 0;
             background-color: #fff;
             border: 1px solid #ddd;
@@ -358,7 +333,7 @@
             display: none;
             flex-direction: column;
             padding: 8px;
-            z-index: 100;
+            z-index: 3002;
             align-items: flex-start;
             width: 300px;
         }
@@ -497,575 +472,333 @@
             border-color: #555;
         }
 
-        .news-section {
-            max-width: 800px;
-            margin: 0 auto;
+        .laws-section {
+            flex: 1;
             position: relative;
             z-index: 1;
-        }
-
-        .news-section h1 {
-            font-size: 60px;
-            color: #333;
-            text-transform: uppercase;
-            margin-top: 80px;
-            transition: color 0.3s ease;
-        }
-
-        .news-section p.tagline {
-            font-size: 22px;
-            color: #666;
-            margin-bottom: 50px;
-            transition: color 0.3s ease;
-        }
-
-        .toggle-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
-        .toggle-label {
-            font-size: 18px;
-            color: #333;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-label:hover {
-            transform: scale(1.05);
-            color: #8B0000;
-        }
-
-        .toggle-label.active {
-            color: #8B0000;
-            font-weight: bold;
-            border-bottom: 2px solid #8B0000;
-        }
-
-        .dark-theme .toggle-label {
-            color: #e0e0e0;
-        }
-
-        .dark-theme .toggle-label:hover {
-            color: #ff6b6b;
-            transform: scale(1.05);
-        }
-
-        .dark-theme .toggle-label.active {
-            color: #ff6b6b;
-            border-bottom: 2px solid #ff6b6b;
-        }
-
-        .news-content, .insights-content, .laws-content {
-            display: none;
-        }
-
-        .news-content.active, .insights-content.active, .laws-content.active {
-            display: block;
-        }
-
-        .news-item {
-            background-color: #fff;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            display: none;
-        }
-
-        .news-item.active {
-            display: block;
-        }
-
-        .news-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .news-header {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            cursor: pointer;
-        }
-
-        .news-image {
-            width: 150px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-right: 15px;
-        }
-
-        .news-title {
-            flex: 1;
-        }
-
-        .news-title h2 {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 5px;
-            transition: color 0.3s ease;
-        }
-
-        .news-meta {
-            font-size: 14px;
-            color: #666;
-            transition: color 0.3s ease;
-        }
-
-        .toggle-icon {
-            font-size: 18px;
-            color: #8B0000;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .toggle-icon.active {
-            transform: rotate(180deg);
-        }
-
-        .news-details {
-            max-height: 0;
-            overflow: hidden;
-            padding: 0 15px;
-            transition: max-height 0.5s ease, padding 0.5s ease, background-color 0.3s ease;
-            background-color: #f9f9f9;
-            border-top: 1px solid #eee;
-        }
-
-        .news-details.active {
-            max-height: 300px;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .news-details.active::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .news-details.active::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .news-details.active::-webkit-scrollbar-thumb {
-            background: #8B0000;
-            border-radius: 4px;
-        }
-
-        .news-details.active::-webkit-scrollbar-thumb:hover {
-            background: #6d0000;
-        }
-
-        .news-details p {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.6;
-            text-align: justify;
-            margin-bottom: 10px;
-            transition: color 0.3s ease;
-        }
-
-        .news-details a {
-            color: #8B0000;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .news-details a:hover {
-            text-decoration: underline;
-        }
-
-        .insights-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        .laws-content {
             max-width: 1200px;
             margin: 0 auto;
+            width: 100%;
             padding: 20px 0;
         }
 
-        .laws-controls {
+        .laws-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
         }
 
-        .laws-controls select {
-            padding: 8px;
+        .laws-title-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-theme .laws-title-container {
+            background-color: rgba(45, 55, 72, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .laws-title-container h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            color: #2d3748;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .dark-theme .laws-title-container h2 {
+            color: #e2e8f0;
+        }
+
+        .laws-title-container i {
+            font-size: 20px;
+            color: #2d3748;
+        }
+
+        .dark-theme .laws-title-container i {
+            color: #e2e8f0;
+        }
+
+        .search-sort-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
             font-size: 14px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            cursor: pointer;
             background-color: #fff;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .dark-theme .laws-controls select {
-            background-color: #3a3b3c;
-            color: #e0e0e0;
-            border-color: #555;
-        }
-
-        .laws-controls select:focus {
+        .search-bar input:focus {
             outline: none;
-            border-color: #8B0000;
+            border-color: #d7b15c;
+            box-shadow: 0 0 5px rgba(215, 177, 92, 0.3);
         }
 
-        .laws-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        .dark-theme .search-bar input {
+            background-color: #3a3b3c;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #718096;
+        }
+
+        .dark-theme .search-bar i {
+            color: #a0aec0;
+        }
+
+        .sort-select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: #d7b15c;
+        }
+
+        .dark-theme .sort-select {
+            background-color: #3a3b3c;
+            border-color: #555;
+            color: #e0e0e0;
+        }
+
+        .laws-list {
+            display: flex;
+            flex-direction: column;
             gap: 20px;
         }
 
         .law-card {
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
             cursor: pointer;
         }
 
         .law-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .dark-theme .law-card {
-            background-color: #1e1e1e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            background-color: #2d3748;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .law-card h3 {
-            font-size: 18px;
-            color: #333;
-            margin: 0 0 10px;
-            transition: color 0.3s ease;
+        .dark-theme .law-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
         }
 
-        .dark-theme .law-card h3 {
-            color: #e0e0e0;
+        .law-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background-color: #d7b15c;
+            transition: width 0.3s ease;
         }
 
-        .law-card p {
-            font-size: 14px;
-            color: #666;
-            margin: 0 0 10px;
-            line-height: 1.5;
-            transition: color 0.3s ease;
+        .law-card:hover::before {
+            width: 10px;
         }
 
-        .dark-theme .law-card p {
-            color: #b0b0b0;
-        }
-
-        .law-tags {
+        .law-card-content {
             display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
+            align-items: stretch;
         }
 
-        .law-tag {
-            background-color: #f0f0f0;
-            color: #333;
-            font-size: 12px;
-            padding: 5px 10px;
-            border-radius: 12px;
-            transition: background-color 0.3s ease, color 0.3s ease;
+        .law-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            flex-shrink: 0;
         }
 
-        .dark-theme .law-tag {
-            background-color: #444;
-            color: #e0e0e0;
-        }
-
-        .card-container {
-            position: relative;
-            width: 300px;
-            height: 400px;
-            margin: 0 auto;
-            perspective: 1000px;
-        }
-
-        .card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.6s ease-in-out, opacity 0.3s ease;
-            cursor: pointer;
-            opacity: 1;
-        }
-
-        .card.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .card.fade-out {
-            opacity: 0;
-        }
-
-        .card.fade-in {
-            opacity: 1;
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            background: linear-gradient(135deg, #8B0000, #FF4040);
-            color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        .law-details {
             padding: 20px;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-between;
         }
 
-        .card-front img {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 15px;
-        }
-
-        .card-back {
-            transform: rotateY(180deg);
-        }
-
-        .card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #d7b15c;
-            text-transform: uppercase;
-        }
-
-        .card .definition, .card .example, .card .synonyms {
-            font-size: 16px;
-            margin-bottom: 10px;
-            line-height: 1.5;
-            text-align: center;
-        }
-
-        .card .example {
-            font-style: italic;
-            color: #ecf0f1;
-        }
-
-        .dark-theme .card-front, .dark-theme .card-back {
-            background: linear-gradient(135deg, #121212, #28292c);
-        }
-
-        .dark-theme .card h3 {
-            color: #d7b15c;
-        }
-
-        .dark-theme .card .example {
-            color: #bdc3c7;
-        }
-
-        .flip-instruction {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            transition: color 0.3s ease;
-        }
-
-        .dark-theme .flip-instruction {
-            color: #e0e0e0;
-        }
-
-        .flip-arrow {
-            font-size: 16px;
-            animation: flipPulse 1.5s infinite ease-in-out;
-        }
-
-        @keyframes flipPulse {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(180deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        .card-counter {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #333;
-            transition: color 0.3s ease;
-        }
-
-        .dark-theme .card-counter {
-            color: #e0e0e0;
-        }
-
-        .navigation-buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .nav-button {
-            background-color: #8B0000;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+        .law-title {
             font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 0 0 10px;
+        }
+
+        .dark-theme .law-title {
+            color: #e2e8f0;
+        }
+
+        .law-description {
+            font-size: 14px;
+            color: #718096;
+            margin: 0 0 15px;
+            line-height: 1.5;
+        }
+
+        .dark-theme .law-description {
+            color: #a0aec0;
+        }
+
+        .law-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .law-action-btn {
+            background-color: transparent;
+            border: 1px solid #d7b15c;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #d7b15c;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .nav-button:hover {
-            background-color: #FF4040;
+        .law-action-btn:hover {
+            background-color: #d7b15c;
+            color: #fff;
+            transform: scale(1.05);
         }
 
-        .dark-theme .nav-button {
-            background-color: #28292c;
+        .dark-theme .law-action-btn {
+            border-color: #ecc94b;
+            color: #ecc94b;
         }
 
-        .dark-theme .nav-button:hover {
-            background-color: #1a1a1a;
+        .dark-theme .law-action-btn:hover {
+            background-color: #ecc94b;
+            color: #2d3748;
+        }
+
+        .save-btn.saved {
+            background-color: #d7b15c;
+            color: #fff;
+        }
+
+        .dark-theme .save-btn.saved {
+            background-color: #ecc94b;
+            color: #2d3748;
         }
 
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 10px;
             margin-top: 30px;
-            margin-bottom: 50px;
-            font-family: 'Montserrat', sans-serif;
         }
 
-        .pagination button {
-            padding: 10px 20px;
-            margin: 0 5px;
-            background-color: #8B0000;
-            color: white;
-            border: none;
-            border-radius: 5px;
+        .pagination-btn {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .pagination button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .pagination button:hover:not(:disabled) {
-            background-color: #6d0000;
-        }
-
-        .pagination span {
-            margin: 0 10px;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .pagination .page-numbers {
-            display: flex;
-            gap: 5px;
-        }
-
-        .pagination .page-number {
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            color: #333;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .pagination .page-number.active {
-            background-color: #8B0000;
-            color: white;
-        }
-
-        .pagination .page-number:hover:not(.active) {
+        .pagination-btn:hover {
             background-color: #f0f0f0;
+            transform: scale(1.05);
         }
 
-        body.dark-theme {
-            background-color: #121212;
+        .pagination-btn:disabled {
+            background-color: #f7f7f7;
+            color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .dark-theme .pagination-btn {
+            background-color: #3a3b3c;
+            border-color: #555;
             color: #e0e0e0;
         }
 
-        .dark-theme .content {
-            background-color: #28292c;
+        .dark-theme .pagination-btn:hover {
+            background-color: #4a4b4c;
         }
 
-        .dark-theme .content::before {
-            background-color: rgba(40, 41, 44, 0.9);
+        .dark-theme .pagination-btn:disabled {
+            background-color: #2d3748;
+            color: #666;
         }
 
-        body.dark-theme .news-section h1,
-        body.dark-theme .news-title h2,
-        body.dark-theme .news-details p {
-            color: #e0e0e0;
+        .pagination-info {
+            font-size: 14px;
+            color: #718096;
         }
 
-        body.dark-theme .news-section p.tagline,
-        body.dark-theme .news-meta {
-            color: #b0b0b0;
+        .dark-theme .pagination-info {
+            color: #a0aec0;
         }
 
-        body.dark-theme .pagination span {
-            color: #e0e0e0;
+        .no-results {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            color: #718096;
+            margin-top: 40px;
+            background-color: #edf2f7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
-        body.dark-theme .pagination .page-number {
-            color: #e0e0e0;
-        }
-
-        body.dark-theme .pagination .page-number:hover:not(.active) {
-            background-color: #444;
-        }
-
-        body.dark-theme .news-item {
-            background-color: #1e1e1e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        body.dark-theme .news-details {
-            background-color: #252525;
-            border-top: 1px solid #333;
-        }
-
-        body.dark-theme .toggle-icon {
-            color: #ff6b6b;
-        }
-
-        body.dark-theme .news-details a {
-            color: #ff6b6b;
-        }
-
-        body.dark-theme .news-details.active::-webkit-scrollbar-track {
-            background: #252525;
-        }
-
-        body.dark-theme .news-details.active::-webkit-scrollbar-thumb {
-            background: #fff;
-        }
-
-        body.dark-theme .news-details.active::-webkit-scrollbar-thumb:hover {
-            background: #fff;
+        .dark-theme .no-results {
+            color: #a0aec0;
+            background-color: #2d3748;
+            box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.3);
         }
 
         footer {
@@ -1108,7 +841,7 @@
             padding: 15px;
             position: fixed;
             width: 100%;
-            z-index: 1000;
+            z-index: 3000;
         }
 
         .mobile-nav .logo {
@@ -1152,14 +885,6 @@
                 margin-left: 250px;
             }
 
-            .news-section h1 {
-                font-size: 48px;
-            }
-
-            .news-section p.tagline {
-                font-size: 18px;
-            }
-
             .account-customization {
                 right: 10px;
             }
@@ -1174,13 +899,36 @@
                 height: 35px;
             }
 
+            .avatar-loading .loader {
+                width: 18px;
+                height: 18px;
+                border-width: 2px;
+            }
+
             .customization-options {
                 top: 45px;
                 width: 220px;
             }
 
-            .laws-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            .laws-title-container h2 {
+                font-size: 24px;
+            }
+
+            .laws-title-container i {
+                font-size: 18px;
+            }
+
+            .search-bar {
+                width: 250px;
+            }
+
+            .law-card-content {
+                flex-direction: column;
+            }
+
+            .law-image {
+                width: 100%;
+                height: 200px;
             }
         }
 
@@ -1204,23 +952,11 @@
 
             .content {
                 margin-left: 200px;
-                padding: 10px;
+                padding: 20px;
             }
 
             footer {
                 margin-left: 200px;
-            }
-
-            .news-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .news-image {
-                width: 100%;
-                height: 150px;
-                margin-right: 0;
-                margin-bottom: 10px;
             }
 
             .avatar-container .profile-pic {
@@ -1233,22 +969,37 @@
                 height: 30px;
             }
 
+            .avatar-loading .loader {
+                width: 15px;
+                height: 15px;
+                border-width: 2px;
+            }
+
             .customization-options {
                 top: 40px;
                 width: 200px;
             }
 
-            .laws-controls {
+            .laws-title-container h2 {
+                font-size: 22px;
+            }
+
+            .laws-title-container i {
+                font-size: 16px;
+            }
+
+            .search-bar {
+                width: 200px;
+            }
+
+            .laws-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
 
-            .laws-controls select {
+            .search-sort-container {
                 width: 100%;
-            }
-
-            .laws-grid {
-                grid-template-columns: 1fr;
+                justify-content: space-between;
             }
         }
 
@@ -1267,7 +1018,7 @@
                 position: fixed;
                 padding: 10px;
                 transform: translateX(-100%);
-                z-index: 999;
+                z-index: 2999;
                 top: 60px;
                 height: calc(100vh - 60px);
                 overflow-y: auto;
@@ -1275,6 +1026,7 @@
 
             .sidebar.active {
                 transform: translateX(0);
+                z-index: 3000;
             }
 
             .sidebar h1 {
@@ -1313,18 +1065,6 @@
                 margin: 0 8px;
             }
 
-            .header {
-                justify-content: center;
-            }
-
-            .news-section h1 {
-                font-size: 36px;
-            }
-
-            .news-section p.tagline {
-                font-size: 16px;
-            }
-
             .account-customization {
                 top: 70px;
                 right: 10px;
@@ -1351,6 +1091,7 @@
             .customization-options {
                 top: 40px;
                 width: 180px;
+                z-index: 3002;
             }
 
             .customization-options .user-info p {
@@ -1367,12 +1108,57 @@
                 font-size: 10px;
                 padding: 3px;
             }
+
+            .sidebar.active ~ .content .account-customization {
+                display: none;
+            }
+
+            .laws-title-container h2 {
+                font-size: 20px;
+            }
+
+            .laws-title-container i {
+                font-size: 14px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .sort-select {
+                width: 100%;
+            }
+
+            .law-image {
+                height: 150px;
+            }
+
+            .law-title {
+                font-size: 16px;
+            }
+
+            .law-description {
+                font-size: 13px;
+            }
+
+            .law-action-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .pagination-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .pagination-info {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="loader-overlay" id="loaderOverlay">
-        <div class="fingerprint-loader"></div>
         <div class="loader"></div>
     </div>
     <div class="mobile-nav">
@@ -1429,7 +1215,6 @@
                     </a>
                 </li>
             </ul>
-
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -1444,129 +1229,62 @@
             </div>
         </nav>
         <main class="content">
-            <div class="account-customization">
-                <div class="user-details">
-                    <!-- Hidden by default -->
-                </div>
-                <div class="avatar-container">
-                    <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
-                    <div class="avatar-loading" id="avatarLoading">
-                        <div class="loader"></div>
-                    </div>
-                    <div class="customization-options" id="customizationMenu">
-                        <div class="user-info" id="userInfo">
-                            <p id="usernameDisplay" data-label="Username:">Loading...</p>
-                            <p id="emailDisplay" data-label="Email:">Loading...</p>
-                            <p id="createdAtDisplay" data-label="Account Created:">Loading...</p>
+            <header class="header">
+                <div class="account-customization">
+                    <div class="user-details"></div>
+                    <div class="avatar-container">
+                        <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
+                        <div class="avatar-loading" id="avatarLoading">
+                            <div class="loader"></div>
                         </div>
-                        <label class="file-input-label" for="avatarInput">Change Avatar</label>
-                        <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
-                        <label for="avatarBgColorPicker">Avatar Background Color</label>
-                        <input type="color" id="avatarBgColorPicker" value="#cccccc">
-                        <label for="borderColorPicker">Border Color</label>
-                        <input type="color" id="borderColorPicker" value="#000000">
-                        <label for="borderTypeSelect">Border Type</label>
-                        <select id="borderTypeSelect">
-                            <option value="solid">Solid</option>
-                            <option value="dashed">Dashed</option>
-                            <option value="dotted">Dotted</option>
-                            <option value="double">Double</option>
+                        <div class="customization-options" id="customizationMenu">
+                            <div class="user-info" id="userInfo">
+                                <p id="usernameDisplay" data-label="Username:">Loading...</p>
+                                <p id="emailDisplay" data-label="Email:">Loading...</p>
+                                <p id="createdAtDisplay" data-label="Account Created:">Loading...</p>
+                            </div>
+                            <label class="file-input-label" for="avatarInput">Change Avatar</label>
+                            <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg">
+                            <label for="avatarBgColorPicker">Avatar Background Color</label>
+                            <input type="color" id="avatarBgColorPicker" value="#cccccc">
+                            <label for="borderColorPicker">Border Color</label>
+                            <input type="color" id="borderColorPicker" value="#000000">
+                            <label for="borderTypeSelect">Border Type</label>
+                            <select id="borderTypeSelect">
+                                <option value="solid">Solid</option>
+                                <option value="dashed">Dashed</option>
+                                <option value="dotted">Dotted</option>
+                                <option value="double">Double</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <section class="laws-section">
+                <div class="laws-header">
+                    <div class="laws-title-container">
+                        <h2>LAWS</h2>
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <div class="search-sort-container">
+                        <div class="search-bar">
+                            <input type="text" id="searchInput" placeholder="Search laws...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <select class="sort-select" id="sortSelect">
+                            <option value="title-asc">Title (A-Z)</option>
+                            <option value="title-desc">Title (Z-A)</option>
+                            <option value="year-asc">Year (Oldest First)</option>
+                            <option value="year-desc">Year (Newest First)</option>
+                            <option value="relevance">Relevance</option>
                         </select>
                     </div>
                 </div>
-            </div>
-            <section class="news-section">
-                <h1>
-                    TRENDING CYBERCRIME NEWS <img src="https://i.imgur.com/VStcaPo.png" alt="Logo" style="width: 200px; height: 200px; vertical-align: middle; margin-right: 10px;">
-                </h1>
-                <p class="tagline">Stay updated with the latest in cybercrime</p>
-
-                <div class="toggle-container">
-                    <span class="toggle-label news-toggle active" onclick="toggleContent('news')">News</span>
-                    <span class="toggle-label insights-toggle" onclick="toggleContent('insights')">Insights</span>
-                    <span class="toggle-label laws-toggle" onclick="toggleContent('laws')">Laws</span>
-                </div>
-
-                <div class="news-content active">
-                    <!-- Page 1 Articles -->
-                    <div class="news-item" data-page="1">
-                        <div class="news-header" onclick="toggleDetails(this)">
-                            <img src="https://i.imgur.com/LgZmTZb.jpeg" alt="News Image" class="news-image">
-                            <div class="news-title">
-                                <h2>False information! Masungi Georeserve denies labor dispute allegations</h2>
-                                <div class="news-meta">BILYONARYO.COM | May 19, 2025</div>
-                            </div>
-                            <i class="fas fa-chevron-down toggle-icon"></i>
-                        </div>
-                        <div class="news-details">
-                            <p>The operator of Masungi Georeserve, a well-known conservation site in the Philippines, has strongly denied allegations related to a long-running labor dispute involving a former caretaker.</p>
-                            <p>The case, which has lasted for seven years, involves an alleged former employee who filed a claim against First United Constructors Corporation and Gina Lopez Dumaliang for ₱4,700 in back pay.</p>
-                            <p>The dispute has drawn public attention following commentary by columnist Victor Agustin, who raised concerns about labor practices at the site.</p>
-                            <p>RELATED STORY: ADVERTISEMENT Agustin noted that although the caretaker won favorable rulings from the Court of Appeals and the National Labor Relations Commission (NLRC), he declined reinstatement and sought work elsewhere, suggesting potential issues in how the organization treats its workers.</p>
-                            <p>Masungi issued a statement vehemently denying the claims.</p>
-                            <p>“This is false information! This person has never been an employee of Masungi, nor was he involved in Masungi in any way,” the statement said, calling on the public and media to help combat disinformation against environmental defenders.</p>
-                            <a href="https://bilyonaryo.com/2025/05/19/false-information-masungi-georeserve-denies-labor-dispute-allegations/nature/" target="_blank" class="read-more">Read more</a>
-                        </div>
-                    </div>
-
-                    <div class="pagination">
-                        <button id="prevPage" onclick="changePage(-1)">Previous</button>
-                        <div class="page-numbers" id="pageNumbers"></div>
-                        <button id="nextPage" onclick="changePage(1)">Next</button>
-                    </div>
-                </div>
-
-                <div class="insights-content">
-                    <div class="card-container">
-                        <div class="card" id="card">
-                            <div class="card-front">
-                                <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
-                                <h3>Cybercrime</h3>
-                            </div>
-                            <div class="card-back">
-                                <h3>Cybercrime</h3>
-                                <div class="part-of-speech">noun</div>
-                                <div class="definition">Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.</div>
-                                <div class="example">The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.</div>
-                                <div class="synonyms">Synonyms: digital crime, internet crime, online fraud</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flip-instruction">
-                        <span>Click to flip card</span>
-                        <i class="fas fa-sync-alt flip-arrow"></i>
-                    </div>
-                    <div class="card-counter" id="cardCounter"></div>
-                    <div class="navigation-buttons">
-                        <button class="nav-button" onclick="navigateCard(-1)" id="prevCardBtn"><i class="fas fa-arrow-left"></i></button>
-                        <button class="nav-button" onclick="navigateCard(1)" id="nextCardBtn"><i class="fas fa-arrow-right"></i></button>
-                        <button class="nav-button" onclick="randomCard()" id="randomCardBtn">🎲</button>
-                    </div>
-                </div>
-
-                <div class="laws-content">
-                    <div class="laws-controls">
-                        <select id="sortBy">
-                            <option value="alphabetical">Sort by: Alphabetical</option>
-                            <option value="punishment">Sort by: Severe Punishment</option>
-                            <option value="relevance">Sort by: Relevance</option>
-                        </select>
-                        <select id="filterByTag">
-                            <option value="all">Filter by Tag: All</option>
-                            <option value="Cybercrime">Cybercrime</option>
-                            <option value="Privacy">Privacy</option>
-                            <option value="Fraud">Fraud</option>
-                            <option value="Child Protection">Child Protection</option>
-                            <option value="Financial">Financial</option>
-                            <option value="Terrorism">Terrorism</option>
-                            <option value="Harassment">Harassment</option>
-                            <option value="Intellectual Property">Intellectual Property</option>
-                            <option value="Telecommunications">Telecommunications</option>
-                            <option value="Consumer Protection">Consumer Protection</option>
-                            <option value="Cybersecurity">Cybersecurity</option>
-                        </select>
-                    </div>
-                    <div class="laws-grid" id="lawsGrid"></div>
+                <div class="laws-list" id="lawsList"></div>
+                <div class="pagination" id="pagination">
+                    <button class="pagination-btn" id="prevPage" disabled>Previous</button>
+                    <span class="pagination-info" id="paginationInfo"></span>
+                    <button class="pagination-btn" id="nextPage">Next</button>
                 </div>
             </section>
         </main>
@@ -1580,10 +1298,6 @@
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
@@ -1598,6 +1312,9 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
+
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
+        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
@@ -1614,456 +1331,525 @@
         const usernameDisplay = document.getElementById('usernameDisplay');
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
-        const card = document.getElementById('card');
-        const cardCounter = document.getElementById('cardCounter');
-        const prevCardBtn = document.getElementById('prevCardBtn');
-        const nextCardBtn = document.getElementById('nextCardBtn');
-        const lawsGrid = document.getElementById('lawsGrid');
-        const sortBySelect = document.getElementById('sortBy');
-        const filterByTagSelect = document.getElementById('filterByTag');
+        const lawsList = document.getElementById('lawsList');
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sortSelect');
+        const prevPage = document.getElementById('prevPage');
+        const nextPage = document.getElementById('nextPage');
+        const paginationInfo = document.getElementById('paginationInfo');
 
         const laws = [
             {
                 title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
                 description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
+                scenario: "Someone’s account on one of the electronic commerce apps were unawarely hacked by an unknown person because expensive products from online were automatically placed in order by the victim.",
                 punishment: "Penalties for offenses include fines and imprisonment, ranging from a minimum of PHP 100,000 and six months to three years imprisonment for online fraud and scams, and a maximum penalty of PHP 1,000,000 or six years imprisonment for other violations.",
                 image: "https://i.imgur.com/LmyboLf.png",
-                tags: ["Cybercrime", "Fraud"],
-                severity: 3
+                pdf: "https://drive.google.com/uc?export=download&id=19eKpQ6LF8gXcNSHUJP5PRbTc3an0-Ttj",
+                pdfwebsite: "https://www.bsp.gov.ph/PaymentAndSettlement/RA8792.pdf",
+                year: 2000
             },
             {
                 title: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
                 description: "Criminalizes the production, distribution, and possession of child pornography in the Philippines.",
+                scenario: "When a secret camera was installed inside a child’s bedroom to mainly observe and watch the child by the suspect to what the child is doing in his or her everyday scenario inside the bedroom.",
                 punishment: "Shall suffer the penalty of reclusion perpetua and a fine of not less than Two million pesos (Php2,000,000.00) but not more than Five million pesos (Php5,000,000.00).",
                 image: "https://i.imgur.com/plDR615.png",
-                tags: ["Child Protection", "Cybercrime"],
-                severity: 8
+                pdf: "https://drive.google.com/uc?export=download&id=19fqznBKhcapfQWA6NIzKSwqO9lT6Q9ty",
+                pdfwebsite: "http://hrlibrary.umn.edu/research/Philippines/RA%209775%20-%20Anti-Child%20Pornography%20Act%20of%202009.pdf",
+                year: 2009
             },
             {
                 title: "Access Devices Regulation Act of 1998 (Republic Act No. 8484)",
                 description: "The law defines 'access devices' broadly, including credit cards, debit cards, ATM cards, account numbers, passwords, PINs, and other means of accessing financial accounts or electronic transactions. Criminalizes the unauthorized possession, use, and trafficking of access devices, aiming to deter fraudulent transactions and protect against identity theft.",
+                scenario: "Credit Card Skimming - Where someone installed illegal card readers on ATMs to steal card information from unsuspecting customers. This information was then used to make unauthorized transactions online and withdraw funds from bank accounts. ATM Card Fraud - When someone created duplicate cards and used them to withdraw money from victims accounts without their knowledge.",
                 punishment: "-A fine of ₱10,000 or twice the value obtained by the offense, whichever is greater, and imprisonment of 6 to 10 years shall be imposed. -A fine of ₱10,000 or twice the value obtained and imprisonment of 10 to 12 years shall be imposed for producing or trafficking counterfeit access devices and using access devices to embezzle or defraud. -A fine of ₱ 10,000 or twice the value obtained by the offense, or imprisonment for not less than 12 years and not more than 20 years, or both, shall be imposed for any of the above offenses committed after a prior conviction or attempted commission of the same.",
                 image: "https://i.imgur.com/3POCjh1.png",
-                tags: ["Fraud", "Financial", "Cybercrime"],
-                severity: 6
+                pdf: "https://drive.google.com/uc?export=download&id=1YymAGQcFx-bNO0vyAf90bti7q-WEyxs0",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4601",
+                year: 1998
             },
             {
                 title: "Anti-Financial Account Scamming Act (AFASA) (Republic Act No. 12010)",
                 description: "AFASA aims to combat online fraud and scams, introducing stricter requirements for banks to enhance fraud prevention systems and protect customers.",
+                scenario: "When a group of individuals, acting as 'money mules,' opens multiple fake bank accounts using stolen or fake IDs. They then use these accounts to receive funds from online scams, specifically targeting unsuspecting individuals lured into fake investment schemes.",
                 punishment: "-Money Muling are penalized with 6 to 8 years imprisonment or a ₱100,000 to ₱500,000 fine, plus account closure. -Social Engineering carries 10 to 12 years or ₱500,000 to ₱1,000,000 fine, or 12 to 14 years or ₱1,000,000 to ₱2,000,000 if the victim is a senior. -Economic Sabotage involves life imprisonment or a ₱1M to ₱5M fine. aiding or attempting scams, or using fake identities)result in 4 to 6 years or ₱100,000 to ₱200,000 fines. - False reports, obstruction, and info leaks are punishable by 1 to 5 years or ₱50,000 to ₱200,000. -Juridical entities face up to ₱10M in fines, and convicted public officials are permanently disqualified from office.",
                 image: "https://i.imgur.com/yp2FjFp.png",
-                tags: ["Fraud", "Financial", "Cybercrime"],
-                severity: 7
+                pdf: "https://drive.google.com/uc?export=download&id=1yGJwCAfxi20_C0LMlwFTDtNBttZBLGM7",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/97690",
+                year: 2024
             },
             {
                 title: "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
                 description: "The law aimed at preventing, investigating, and suppressing cybercrimes. It covers offenses related to computer data, systems, and content, including those committed using information and communication technologies, such as the internet and computer systems.",
+                scenario: "a. A hacker gains unauthorized access to a company's computer network and steals sensitive customer data, such as credit card numbers and personal information. b.Someone posts a defamatory statement about another person online, such as a fabricated story or false accusation on social media. c.Someone creates, distributes, or possesses child pornography online.",
                 punishment: "- Individuals found guilty of offenses such as Illegal Access, Illegal Interception, Data Interference, System Interference, Misuse of Devices, Cyber-Squatting, Computer-Related Forgery, Computer-Related Fraud, and Computer-Related Identity Theft face prisión mayor (6 years and 1 day to 12 years), a fine of at least ₱200,000, or both, depending on the damage caused. - For violations related to Misuse of Devices, the penalty is prisión mayor or a fine of up to ₱500,000, or both. - If the crimes are committed against critical infrastructure, the penalty increases to reclusión temporal (12 years and 1 day to 20 years) or a fine starting at ₱500,000, or both. - For offenses such as Cybersex, the punishment is prisión mayor or a fine ranging from ₱200,000 to ₱1,000,000, or both. - Crimes like Child Pornography are penalized based on RA 9775 (Anti-Child Pornography Act of 2009), but with one degree higher penalty if committed through a computer system. - Crimes like Unsolicited Commercial Communications are punished with arresto mayor (1 month and 1 day to 6 months) or a fine between ₱50,000 to ₱250,000, or both. -Violations such as aiding or abetting cybercrimes, and attempting to commit cybercrimes, carry a penalty one degree lower than the original offense, or a fine of ₱100,000 to ₱500,000, or both.",
                 image: "https://i.imgur.com/vAJvsIk.png",
-                tags: ["Cybercrime", "Child Protection", "Fraud"],
-                severity: 6
+                pdf: "https://drive.google.com/uc?export=download&id=1sVVM6uZ3mD5yH0uLiv1hgdFWhVfmVL2y",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/50264",
+                year: 2012
             },
             {
                 title: "Data Privacy Act of 2012 (Republic Act No. 10173)",
                 description: "A law that aims to protect the fundamental right to privacy while ensuring the free flow of information to promote innovation and growth. It regulates the collection, processing, and storage of personal data in both the government and private sectors.",
+                scenario: "When a customer care professional at a BPO company illegally accessed clients' credit card information and personal identification cards without authorization, potentially for fraudulent purposes.",
                 punishment: "- Unauthorized processing of personal sensitive information is punishable by imprisonment of 3 to 6 years and a fine ranging from ₱500,000 to ₱4,000,000. - Unauthorized access carries a penalty of 1 to 6 years of imprisonment and a fine of ₱1,000,000 to ₱2,000,000. - For improper disposal of personal data, the law imposes fines of up to ₱1,000,000 and imprisonment of up to one year. - Data breaches may result in penalties of up to ₱5,000,000 and imprisonment of up to six years. - Other violations may be penalized with 6 months to 7 years of imprisonment, along with fines ranging from ₱100,000 to ₱4,000,000. In cases involving a combination of violations, the penalty is imprisonment between 3 and 6 years and a fine between ₱100,000 and ₱5,000,000.",
                 image: "https://i.imgur.com/9j90JCJ.png",
-                tags: ["Privacy", "Cybercrime"],
-                severity: 5
+                pdf: "https://drive.google.com/uc?export=download&id=1fmdjVWeMfagBmWi9UKDRX1Gol3kISPo5",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/50253",
+                year: 2012
             },
             {
                 title: "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)",
                 description: "Criminalizes the unauthorized taking, distribution, and publication of photos or videos of a person's private area or performing sexual acts, especially when taken without consent and in a way that violates their privacy. The act defines 'private area' as the naked or undergarment-clad genitals, public area, buttocks, or female breast.",
+                scenario: "Someone secretly recording a person showering at home, then distributing the recording online.",
                 punishment: "The law punishes offenders with imprisonment of 3 to 7 years, and a fine of ₱100,000 to ₱500,000, or both, at the discretion of the court. It also includes provisions for revoking licenses/franchises of juridical persons, administrative liability for public officers/employees/professionals, and deportation for alien offenders.",
                 image: "https://i.imgur.com/F7zG82b.png",
-                tags: ["Privacy", "Harassment"],
-                severity: 4
+                pdf: "https://drive.google.com/uc?export=download&id=1MAp-mHsMnbNH7FdBZPg9qCi6BJK6ztJW",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/17036",
+                year: 2009
             },
             {
                 title: "Expanded Anti-Trafficking in Persons Act of 2012 (Republic Act No. 10364)",
                 description: "This law addresses various aspects of human trafficking. It aims to eliminate trafficking in persons, especially women and children, by establishing institutional mechanisms for protection and support of victims and providing penalties for violations.",
+                scenario: "Could involve a woman being lured into a foreign country with promises of a good job, only to be forced into prostitution or debt bondage.",
                 punishment: "Any person found guilty of acts that promote Trafficking in Persons (TIP) faces imprisonment of 15 years and a fine of ₱500,000 to ₱1,000,000 pesos. Qualified trafficking, involving specific aggravating circumstances, carries a penalty of life imprisonment and a fine of ₱2,000,000 to ₱5,000,000 pesos.",
                 image: "https://i.imgur.com/e00z7Zc.png",
-                tags: ["Child Protection", "Harassment"],
-                severity: 8
+                pdf: "https://drive.google.com/uc?export=download&id=1veUl839xlZ5Z22bD2B4-RMZzOR1al0yP",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/52337",
+                year: 2012
             },
             {
                 title: "Subscriber Identity Module (SIM) Registration Act (Republic Act No. 11934)",
                 description: "The Philippines mandates that all SIM card users register their mobile phone numbers. This law, enacted in 2022, aims to enhance the security and integrity of the telecommunications network by requiring Public Telecommunications Entities (PTEs) to track and monitor SIM card usage, potentially curbing crimes like fraud, terrorism, and phishing.",
+                scenario: "Could involve a scammer using a fake ID to register multiple SIM cards, then selling them to criminals who use them for fraudulent activities like smishing, phishing, or identity theft.",
                 punishment: "-Public Telecommunications Entities (PTEs) that fail or refuse to register a SIM without valid reason, despite the end-user's compliance, face escalating fines: ₱100,000 to ₱300,000 for the first offense, ₱300,000 to ₱500,000 for the second, and ₱500,000 to ₱1,000,000 for subsequent offenses. - Breach of confidentiality, whether intentional or due to negligence, by PTEs, their agents, or employees, is punishable by fines ranging from ₱500,000 to ₱4,000,000. -Individuals who use false information or fraudulent documents to register a SIM may face imprisonment of 6 months to 2 years, a fine of ₱100,000 to ₱300,000, or both. - Spoofing a registered SIM to transmit misleading information with malicious intent is punishable by at least 6 years of imprisonment, a ₱200,000 fine, or both. -Selling a stolen SIM results in 6 months to two years of imprisonment, a fine of ₱100,000 to ₱300,000, or both. Corporations or juridical persons involved in violations may have penalties imposed on responsible officers. -Selling or transferring a registered SIM without following registration procedures is punishable by 6 months to 6 years of imprisonment, a fine of ₱100,000 to ₱300,000, or both.",
                 image: "https://i.imgur.com/KD324L7.png",
-                tags: ["Cybercrime", "Telecommunications", "Fraud"],
-                severity: 4
+                pdf: "https://drive.google.com/uc?export=download&id=1Q9iaqyhrzItF0dPJtX0BOACEsxgG7E2h",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/95890",
+                year: 2022
             },
             {
                 title: "Anti-Online Sexual Abuse or Exploitation of Children Act (Republic Act No. 11930)",
                 description: "A law enacted to protect children from online sexual abuse and exploitation. It aims to prevent, detect, and penalize these crimes, including stricter law enforcement protocols, international cooperation, and support services for victims.",
+                scenario: "A minor was given a smartphone by a relative who instructed the child to regularly send photos and videos through a messaging app in exchange for money. The content later turned out to be sexually explicit and was being shared online without the child’s full understanding of its consequences.",
                 punishment: "-The crimes like producing, distributing, or profiting from child sexual abuse materials is punishable by life imprisonment and fines of at least ₱2,000,000. - Grooming, online enticement, and coercion into sexual acts carry penalties of reclusion temporal to reclusion perpetua and fines up to ₱2,000,000. - Accessing, promoting, or possessing such materials results in reclusion temporal and fines from ₱500,000 to ₱1,000,000. -Lesser offenses like attempting access or misleading content use are punished with prisión mayor and fines from ₱100,000 to ₱500,000. -Large-scale or syndicated crimes result in life imprisonment and fines of ₱5,000,000 to ₱20,000,000. -Repeat offenders, those in authority, or those causing death or disability are denied parole. Attempted or frustrated crimes are penalized one or two degrees lower. -Violations by establishments may lead to imprisonment, fines up to ₱3,000,000, and business closure. Government officials who abuse authority face imprisonment, disqualification, and loss of benefits.",
                 image: "https://i.imgur.com/D5fcu9U.png",
-                tags: ["Child Protection", "Cybercrime"],
-                severity: 8
+                pdf: "https://drive.google.com/uc?export=download&id=1eN7KaTxydkquvH5oaOK4SuDtDUPPYUv0",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/95572",
+                year: 2022
             },
             {
                 title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
                 description: "A law that protects and enforces the rights of creators and owners of intellectual property, including copyrights, trademarks, patents, and industrial designs.",
+                scenario: "A business using a copyrighted song in its marketing materials without permission from the copyright holder.",
                 punishment: "For the first offense: The penalty is imprisonment of one to three years and a fine ranging from PhP 50,000 to PhP 150,000. For the second offense: The penalty increases to imprisonment of three years and one day to six years, along with a fine of PhP 150,000 to PhP 500,000. For third and subsequent offenses: The most severe penalty is imprisonment of six years and one day to nine years, and a fine ranging from PhP 500,000 to PhP 1,500,000. In cases of insolvency, additional subsidiary imprisonment may be imposed.",
                 image: "https://i.imgur.com/iG0J6C5.png",
-                tags: ["Intellectual Property", "Cybercrime"],
-                severity: 4
+                pdf: "https://drive.google.com/uc?export=download&id=1GWkIED1oTO-6q0_Oc3WnsLE6JQDNI7la",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4371",
+                year: 1997
             },
             {
                 title: "Terrorism Financing Prevention and Suppression Act (Republic Act No. 10168)",
                 description: "A law that criminalizes the financing of terrorism and related offenses, aiming to prevent and suppress such acts by freezing and forfeiting associated properties or funds. It also aims to protect life, liberty, and property from terrorism.",
+                scenario: "Could involve a group of individuals using a legitimate business to funnel funds to terrorist organizations.",
                 punishment: "-Individuals involved in financing terrorism results in imprisonment penalty ranges from reclusion temporal (maximum period) to reclusion perpetua, with fines ranging from Php 500,000.00 to Php 1,000,000.00. -Those attempting to commit the crime will receive a penalty two degrees lower than the actual crime, while conspirators face the same penalty as the principal offenders. -Accomplices receive a penalty one degree lower than that of the conspirators. -The Anti-Money Laundering Council (AMLC) has the authority to impose administrative penalties, including reprimands or fines from Php 100,000 to Php 500,000, for violations of the law or its rules. -The law permits the freezing and forfeiture of property or funds involved in terrorism financing.",
                 image: "https://i.imgur.com/xGWhFYJ.png",
-                tags: ["Terrorism", "Financial"],
-                severity: 7
+                pdf: "https://drive.google.com/uc?export=download&id=19eu0OUggR8dWZVdTXO7bqWxlLzzyBxrq",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/37689",
+                year: 2012
             },
             {
                 title: "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
                 description: "A law that defines and criminalizes money laundering, aiming to prevent the use of the country's financial system for laundering the proceeds of illegal activities. It also includes provisions for asset freezing and international cooperation in combating money laundering.",
+                scenario: "A criminal who gains a large sum of money from drug trafficking (a predicate crime). To launder this money, He might deposit the cash into a legitimate business account, then use that business account to purchase real estate and other assets.",
                 punishment: "- A person who knowingly transacts or attempts to transact monetary instruments or property related to unlawful activity may face 7 to 14 years of imprisonment and a fine of at least ₱3,000,000 or up to twice the value of the asset involved. - If someone facilitates such transactions by action or inaction, they may be punished with 4 to 7 years of imprisonment and a fine ranging from ₱1,500,000 to ₱3,000,000. - Failure to disclose or file required information with the Anti-Money Laundering Council (AMLC) may result in 6 months to 4 years of imprisonment and a fine between ₱100,000 and ₱500,000, or both. -Failure to keep records is punishable by 6 months to 1 year of imprisonment or a fine of ₱100,000 to ₱500,000, or both. - Malicious or false reporting related to money laundering may lead to 6 months to 4 years of imprisonment and a fine within the same range, without eligibility for probation. -Responsible officers of corporations or organizations involved may also be penalized, and additional sanctions apply to aliens (deportation), public officials (disqualification), and those who refuse to testify. -Breach of confidentiality carries a penalty of 3 to 8 years of imprisonment and a fine of ₱500,000 to ₱1,000,000.",
                 image: "https://i.imgur.com/Jd2pX3x.png",
-                tags: ["Financial", "Fraud"],
-                severity: 5
+                pdf: "https://drive.google.com/uc?export=download&id=1P8iqEQZR-KyoujasXhyuKwOSDCnEkgVJ",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/10/44124",
+                year: 2001
             },
             {
                 title: "National Bureau of Investigation Reorganization Act (Republic Act No. 10867)",
                 description: "This law aims to enhance the NBI's investigative capabilities by reorganizing and modernizing the agency. It establishes a clear structure, expands the NBI's powers and functions, and sets qualification standards for personnel. The Act also provides for funding and transition provisions to ensure continuity.",
+                scenario: "The NBI Cybercrime Division conducted a raid on a group operating a phishing scam, where suspects created fake websites that mimicked legitimate online banking portals.",
                 punishment: "Administrative sanctions under Republic Act No. 6713, including suspension or dismissal, for NBI personnel failing to comply with investigative protocols.",
                 image: "https://i.imgur.com/82lztoi.png",
-                tags: ["Cybercrime"],
-                severity: 2
+                pdf: "https://drive.google.com/uc?export=download&id=1CaogPHeuVeuYVz2qwwrDzmysU2pAFyMe",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/67908",
+                year: 2016
             },
             {
                 title: "Mobile Number Portability Act (Republic Act No. 11202)",
                 description: "This law allows mobile subscribers to switch telecommunications service providers while keeping their existing mobile numbers. This act promotes consumer welfare by allowing consumers to freely choose and switch providers without losing their phone number.",
+                scenario: "A person could port a number known to be associated with a legitimate business or individual to create a false identity, potentially for scams, identity theft, or other illegal activities.",
                 punishment: "- An initial fine of ₱10,000 is imposed if number portability is not completed within the prescribed time frame but is eventually delivered either before a complaint is filed or after mediation. -Where a telecommunications provider unjustly refuses to perform portability even after mediation, fines ranging from ₱40,000 to ₱1,000,000 may be imposed. - For repeated offenses—specifically on the fifth and subsequent instances of unjust refusal after mediation—the penalties are ranging from ₱400,000 to ₱1,000,000 and the possible revocation of the Public Telecommunications Entity (PTE) franchise.",
                 image: "https://i.imgur.com/YpXa47l.png",
-                tags: ["Telecommunications", "Consumer Protection"],
-                severity: 3
+                pdf: "https://drive.google.com/uc?export=download&id=1jGQdiO-amxQ_lgH3WHLUaEZ5uvl4mogR",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/89307",
+                year: 2019
             },
             {
                 title: "Safe Spaces Act (Republic Act No. 11313)",
                 description: "A law enacted to protect individuals from gender-based sexual harassment in public spaces, online, workplaces, and educational institutions. It defines and penalizes various forms of gender-based sexual harassment in these settings.",
+                scenario: "A person receives inappropriate, sexual messages from someone in a group chat, despite not expressing interest.",
                 punishment: "-Verbal harassment such as cursing, wolf-whistling, catcalling, and sexist or homophobic slurs. The first offense results in a ₱1,000 fine and 12 hours of community service, including attending a Gender Sensitivity Seminar. The second offense is by 6 to 10 days of imprisonment or a ₱3,000 fine, while the third offense carries 11 to 30 days of imprisonment and a ₱10,000 fine. - Lewd acts like offensive body gestures, flashing, public masturbation, or groping. The first offense results in a ₱10,000 fine and 12 hours of community service with a Gender Sensitivity Seminar. The second offense carries 11 to 30 days of imprisonment or a ₱15,000 fine, the third offense results in 1 month and 1 day to 6 months of imprisonment and a ₱20,000 fine. -Stalking or unwanted physical contact such as pinching, brushing, or touching private areas.the first offense is punishable by 11 to 30 days of imprisonment or a ₱30,000 fine, along with a Gender Sensitivity Seminar. The second offense carries 1 month and 1 day to 6 months of imprisonment or a ₱50,000 fine, the third offense results in a maximum of 6 months imprisonment or a ₱100,000 fine.",
                 image: "https://i.imgur.com/bUgkWoQ.png",
-                tags: ["Harassment"],
-                severity: 3
+                pdf: "https://drive.google.com/uc?export=download&id=1xIzlG57PfQVSTTFae4jTrzIU7EFXtulR",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/96805",
+                year: 2019
             },
             {
                 title: "New Central Bank Act (Republic Act No. 7653)",
                 description: "The country's central monetary authority. It mandates the BSP to maintain price stability and promote financial stability, while also providing for fiscal and administrative autonomy. The act also outlines the structure and powers of the Monetary Board, including its membership and responsibilities.",
+                scenario: "Could involve a bank director or officer engaging in a conflict of interest by taking a loan from the bank they oversee, without disclosing it to the Monetary Board, or violating the confidentiality of bank deposits by revealing information obtained during supervision.",
                 punishment: "-Unauthorized issuance of Bangko Sentral notes or reproduction of their facsimiles is punishable by imprisonment not less than five (5) years but not more than ten (10) years. -Making false statements to the Monetary Board or Bangko Sentral examiners can lead to fines of up to ₱2 million, imprisonment for up to 5 years, or both. -Violating BSP regulations can result in imprisonment of not less than 5 years but not more than 10 years, or a greater penalty under the Revised Penal Code. -Maliciously reporting or filing false information leading to the temporary holding of funds is punishable under the Act. -Fraudulently overvaluing property or making false statements in loan applications can lead to imprisonment ranging from six months to four years and a fine of not less than ₱100,000 and in some cases, up to ₱500,000 pesos -Unauthorized disclosure of confidential BSP information can result in a fine of not less than ₱100,000 and not more than ₱200,000, or imprisonment of a maximum of 14 years. -The Monetary Board can impose ₱30,000 to ₱1,000,000 fines for non-compliance and take action on unlawful or unsafe operations.",
                 image: "https://i.imgur.com/zxLf5Fm.png",
-                tags: ["Financial", "Fraud"],
-                severity: 5
+                pdf: "https://drive.google.com/uc?export=download&id=1huXOn7fZIKwRaaunW16YqVxq7fgqGL9x",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/2027",
+                year: 1993
             },
             {
                 title: "Anti-Wire Tapping Act (Republic Act No. 4200)",
                 description: "The law prohibits and penalizes unauthorized wiretapping and other related violations of communication privacy. It makes it illegal to tap wires or cables, secretly overhear, intercept, or record communications or spoken words, and possess recordings of such actions without consent from all parties involved.",
+                scenario: "Involves a confidential business meeting where a person secretly records the conversation using a dictaphone without the knowledge or consent of the other participants.",
                 punishment: "Imprisonment for 6 months to 6 years, and perpetual disqualification from public office if the offender is a public official at the time of the offense. Additionally, if the offender is an alien, they can face deportation proceedings after serving their sentence.",
                 image: "https://i.imgur.com/2H5lVBF.jpeg",
-                tags: ["Privacy", "Cybercrime"],
-                severity: 4
+                pdf: "https://drive.google.com/uc?export=download&id=1ou2ATqbJsBXc8v9AD44hsn9oWsHtY7Lo",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/4442",
+                year: 1965
             },
             {
                 title: "Human Security Act of 2007 (Republic Act No. 9372)",
                 description: "This law aimed to protect the Philippines from terrorism by defining the crime and providing mechanisms for its prevention and suppression. The act declared its state policy to protect life, liberty, and property from acts of terrorism and to address the issue through a comprehensive approach encompassing legal, political, economic, diplomatic, and military means.",
+                scenario: "Could involve a bomb threat reported at a crowded public event, leading to the arrest and detention of a suspect based on the law's provisions.",
                 punishment: "-Joining a proscribed organization or one formed for terrorism purposes is punishable by 12 years of imprisonment. -Assisting terrorists, such as harboring or aiding in the escape of a terrorist conspirator, carries a penalty of 10 years and one day to 12 years of imprisonment. - Attempted terrorism is penalized two degrees lower than the penalty for the full crime, while conspiracy to commit terrorism is punished the same as the crime itself. -Foreign terrorists committing acts of terrorism face life imprisonment without parole. -Conspiring to commit terrorism also results in life imprisonment without parole. - Police or law enforcement officials who fail to notify individuals of the termination of surveillance, interception, or recording activities face imprisonment of 10 years and one day to 12 years.",
                 image: "https://i.imgur.com/KjiiSt0.png",
-                tags: ["Terrorism"],
-                severity: 7
+                pdf: "https://drive.google.com/uc?export=download&id=1GmkMUipXouSzaxc5nhGHRrhsV30Hz_ho",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/5340",
+                year: 2007
             },
             {
                 title: "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
                 description: "A law in the Philippines aimed at preventing, prohibiting, and penalizing terrorism. It defines terrorism and related offenses, outlines the powers and functions of the Anti-Terrorism Council (ATC), and provides for the detention and surveillance of suspected terrorists. The law also addresses the financing of terrorism and the forfeiture of assets.",
-                punishment: "-Terrorism is punishable by life imprisonment without parole, along with a fine ranging from one million pesos (₱1,000,000) to twenty-five million pesos (₱25,000,000). - Inciting to commit terrorism carries a penalty of 12 years to 20 years of imprisonment. - Recruitment to terrorist organizations is punishable by life imprisonment without parole and a fine of ₱500,000 to ₱10,000,000. - Providing material support to terrorists results in 12 years to 20 years of imprisonment and a fine of ₱500,000 to ₱5,000,000. - Attempt or conspiracy to commit terrorism is penalized with the same punishment as the completed act. - Accomplices face 10 years to 17 years of imprisonment, while accessories are punished with 6 years to 12 years of imprisonment.",
-                image: "https://i.imgur.com/5qZxYkL.png",
-                tags: ["Terrorism", "Cybercrime"],
-                severity: 8
+                scenario: "Could involve individuals or groups who, with the intent to intimidate the public or government, release dangerous substances or cause fire, floods, or explosion",
+                punishment: "-Terrorism is punishable by life imprisonment without parole, along with a fine ranging from one million pesos (₱1,000,000.00) to five million pesos (₱5,000,000.00). -Attempting to commit terrorism carries the same penalty as the completed act, including life imprisonment without parole. -Conspiracy to commit terrorism is also penalized with the same sentence as the completed crime. -Financing terrorism results in reclusion temporal (maximum period) to reclusion perpetua, and a fine between five hundred thousand pesos (₱500,000.00) and one million pesos (₱1,000,000.00). -An accomplice in terrorism financing faces a penalty one degree lower than the conspirator. -Economic sabotage related to terrorism is punishable by life imprisonment and a fine between one million pesos (₱1,000,000.00) and five million pesos (₱5,000,000.00). -Other violations are punishable by imprisonment ranging from 10 to 20 years, with fines ranging from ₱500,000 to ₱800,000, depending on the offense's severity.",
+                image: "https://i.imgur.com/iDq4tR2.png",
+                pdf: "https://drive.google.com/uc?export=download&id=1bcz-gRb0P9I3C6gYukO9yjM5OzHk_WSK",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/92597",
+                year: 2020
             },
             {
-                title: "Consumer Act of the Philippines (Republic Act No. 7394)",
-                description: "This law establishes standards for consumer protection, including regulations against deceptive, unfair, and unconscionable sales practices in online and offline transactions. It also covers product safety and liability.",
-                punishment: "- Violations such as deceptive sales practices or unsafe products are punishable by imprisonment of 1 month to 5 years, or a fine of ₱500 to ₱10,000, or both. - Administrative penalties may include fines up to ₱300,000 and revocation of business licenses. - For juridical persons, responsible officers may face the same penalties.",
-                image: "https://i.imgur.com/9kWvZ3m.png",
-                tags: ["Consumer Protection", "Fraud"],
-                severity: 3
+                title: "Anti-Bullying Act of 2013 (Republic Act No. 10627)",
+                description: "Schools are required to implement policies to prevent and address bullying within their institutions and set procedures for handling complaints. It defines bullying as any severe or repeated use of written, verbal, or physical acts or gestures directed at another student that causes fear or disrupts the education process. The law also outlines reporting requirements and sanctions for non-compliance.",
+                scenario: "An elementary student teased by his classmates because of how they do not like his penmanship. They always distract him by writing anything in his notebook while he takes note of their lessons peacefully.",
+                punishment: "School Employees: A fine of 50,000 to 100,000 pesos or imprisonment from 6 months to 1 year, or both, for bullying. Private Schools: Suspension or revocation of their permits to operate for non-compliance. Public School Personnel: Subject to administrative disciplinary proceedings under Civil Service or Department rules. Private School Personnel: Subject to administrative disciplinary actions imposed by the school.",
+                image: "https://i.imgur.com/fcW8tiE.png",
+                pdf: "https://drive.google.com/uc?export=download&id=1aJ6iXb5YxZ1z9v9zL4oXz5jYk6z7Q8rS",
+                pdfwebsite: "https://elibrary.judiciary.gov.ph/thebookshelf/showdocsfriendly/2/61475",
+                year: 2013
             },
-            {
-                title: "Cybersecurity Act of 2018 (Proposed, Not Enacted)",
-                description: "A proposed legislation aimed at establishing a national cybersecurity framework to protect critical information infrastructure, enhance cyber resilience, and promote cybersecurity awareness. Note: As of 2025, this has not been enacted into law.",
-                punishment: "N/A (Proposed legislation, penalties not yet defined).",
-                image: "https://i.imgur.com/4tYpN2k.png",
-                tags: ["Cybersecurity", "Cybercrime"],
-                severity: 0
-            }
+            // Add more laws here as needed to reach 50+
         ];
 
-        let currentCardIndex = 0;
         let currentPage = 1;
-        const itemsPerPage = 5;
+        const lawsPerPage = 10;
+        let filteredLaws = [...laws];
+        let savedLaws = [];
 
-        const cards = [
-            {
-                term: "Cybercrime",
-                partOfSpeech: "noun",
-                definition: "Criminal activities carried out by means of computers or the internet, such as hacking, phishing, or identity theft.",
-                example: "The Cybercrime Prevention Act of 2012 addresses various forms of cybercrime, including unauthorized access to computer systems.",
-                synonyms: "Synonyms: digital crime, internet crime, online fraud"
-            },
-            {
-                term: "Phishing",
-                partOfSpeech: "noun",
-                definition: "A fraudulent practice of sending emails or other messages purporting to be from reputable sources to induce individuals to reveal personal information.",
-                example: "She received a phishing email that appeared to be from her bank, asking for her login credentials.",
-                synonyms: "Synonyms: spoofing, scam, fraud"
-            },
-            {
-                term: "Hacking",
-                partOfSpeech: "noun",
-                definition: "The act of gaining unauthorized access to computer systems or networks to steal, alter, or destroy data.",
-                example: "The company's database was compromised due to hacking, leading to a massive data breach.",
-                synonyms: "Synonyms: cracking, intrusion, cyberattack"
-            }
-        ];
-
-        function showLoader() {
-            loaderOverlay.classList.add('active');
-            setTimeout(() => {
-                loaderOverlay.classList.remove('active');
-            }, 2000);
+        // Load theme preference
+        function loadTheme() {
+            const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
+            body.classList.toggle('dark-theme', isDarkTheme);
+            themeToggle.checked = isDarkTheme;
         }
 
-        function toggleSidebar() {
-            sidebar.classList.toggle('active');
-        }
-
-        function toggleDetails(header) {
-            const details = header.nextElementSibling;
-            const icon = header.querySelector('.toggle-icon');
-            details.classList.toggle('active');
-            icon.classList.toggle('active');
-        }
-
-        function toggleContent(type) {
-            document.querySelector('.news-content').classList.remove('active');
-            document.querySelector('.insights-content').classList.remove('active');
-            document.querySelector('.laws-content').classList.remove('active');
-            document.querySelector('.news-toggle').classList.remove('active');
-            document.querySelector('.insights-toggle').classList.remove('active');
-            document.querySelector('.laws-toggle').classList.remove('active');
-
-            document.querySelector(`.${type}-content`).classList.add('active');
-            document.querySelector(`.${type}-toggle`).classList.add('active');
-
-            if (type === 'laws') {
-                renderLaws();
-            }
-        }
-
-        function updatePagination() {
-            const totalPages = Math.ceil(document.querySelectorAll('.news-item').length / itemsPerPage);
-            const pageNumbers = document.getElementById('pageNumbers');
-            pageNumbers.innerHTML = '';
-
-            for (let i = 1; i <= totalPages; i++) {
-                const pageNumber = document.createElement('span');
-                pageNumber.classList.add('page-number');
-                pageNumber.textContent = i;
-                if (i === currentPage) pageNumber.classList.add('active');
-                pageNumber.addEventListener('click', () => goToPage(i));
-                pageNumbers.appendChild(pageNumber);
-            }
-
-            document.getElementById('prevPage').disabled = currentPage === 1;
-            document.getElementById('nextPage').disabled = currentPage === totalPages;
-
-            document.querySelectorAll('.news-item').forEach(item => {
-                item.classList.remove('active');
-                const page = parseInt(item.getAttribute('data-page'));
-                if (page === currentPage) item.classList.add('active');
-            });
-        }
-
-        function changePage(direction) {
-            currentPage += direction;
-            updatePagination();
-        }
-
-        function goToPage(page) {
-            currentPage = page;
-            updatePagination();
-        }
-
-        function updateCard() {
-            const currentCard = cards[currentCardIndex];
-            card.querySelector('.card-front h3').textContent = currentCard.term;
-            card.querySelector('.card-back h3').textContent = currentCard.term;
-            card.querySelector('.part-of-speech').textContent = currentCard.partOfSpeech;
-            card.querySelector('.definition').textContent = currentCard.definition;
-            card.querySelector('.example').textContent = currentCard.example;
-            card.querySelector('.synonyms').textContent = currentCard.synonyms;
-            cardCounter.textContent = `Card ${currentCardIndex + 1} of ${cards.length}`;
-            prevCardBtn.disabled = currentCardIndex === 0;
-            nextCardBtn.disabled = currentCardIndex === cards.length - 1;
-        }
-
-        function navigateCard(direction) {
-            card.classList.add('fade-out');
-            setTimeout(() => {
-                currentCardIndex += direction;
-                if (currentCardIndex < 0) currentCardIndex = 0;
-                if (currentCardIndex >= cards.length) currentCardIndex = cards.length - 1;
-                updateCard();
-                card.classList.remove('fade-out');
-                card.classList.add('fade-in');
-                setTimeout(() => card.classList.remove('fade-in'), 300);
-            }, 300);
-        }
-
-        function randomCard() {
-            card.classList.add('fade-out');
-            setTimeout(() => {
-                currentCardIndex = Math.floor(Math.random() * cards.length);
-                updateCard();
-                card.classList.remove('fade-out');
-                card.classList.add('fade-in');
-                setTimeout(() => card.classList.remove('fade-in'), 300);
-            }, 300);
-        }
-
-        function renderLaws(lawsToRender = laws) {
-            lawsGrid.innerHTML = '';
-            lawsToRender.forEach(law => {
-                const lawCard = document.createElement('div');
-                lawCard.classList.add('law-card');
-                lawCard.innerHTML = `
-                    <h3>${law.title}</h3>
-                    <p><strong>Description:</strong> ${law.description}</p>
-                    <p><strong>Punishment:</strong> ${law.punishment}</p>
-                    <div class="law-tags">
-                        ${law.tags.map(tag => `<span class="law-tag">${tag}</span>`).join('')}
-                    </div>
-                `;
-                lawCard.addEventListener('click', () => {
-                    window.location.href = `HomePage.html?search=${encodeURIComponent(law.title)}`;
-                });
-                lawsGrid.appendChild(lawCard);
-            });
-        }
-
-        function sortLaws() {
-            const sortBy = sortBySelect.value;
-            let sortedLaws = [...laws];
-
-            if (sortBy === 'alphabetical') {
-                sortedLaws.sort((a, b) => a.title.localeCompare(b.title));
-            } else if (sortBy === 'punishment') {
-                sortedLaws.sort((a, b) => b.severity - a.severity);
-            } else if (sortBy === 'relevance') {
-                // Implement relevance sorting if needed
-                sortedLaws = laws;
-            }
-
-            renderLaws(sortedLaws);
-        }
-
-        function filterLaws() {
-            const filterByTag = filterByTagSelect.value;
-            let filteredLaws = laws;
-
-            if (filterByTag !== 'all') {
-                filteredLaws = laws.filter(law => law.tags.includes(filterByTag));
-            }
-
-            sortLaws(filteredLaws);
-        }
-
+        // Toggle theme
         themeToggle.addEventListener('change', () => {
             body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+            localStorage.setItem('darkTheme', themeToggle.checked);
         });
 
-        mobileMenuIcon.addEventListener('click', toggleSidebar);
-
-        profilePic.addEventListener('click', () => {
-            customizationMenu.classList.toggle('active');
+        // Mobile menu toggle
+        mobileMenuIcon.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
         });
 
-        avatarInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                avatarLoading.classList.add('active');
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    profilePic.src = e.target.result;
-                    localStorage.setItem('avatar', e.target.result);
-                    setTimeout(() => avatarLoading.classList.remove('active'), 1000);
-                };
-                reader.readAsDataURL(file);
-            }
+        // Close mobile menu when clicking a link
+        sidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+            });
         });
 
-        avatarBgColorPicker.addEventListener('input', (event) => {
-            profilePic.style.backgroundColor = event.target.value;
-            localStorage.setItem('avatarBgColor', event.target.value);
-        });
+        // Show loader
+        function showLoader() {
+            loaderOverlay.classList.add('active');
+        }
 
-        borderColorPicker.addEventListener('input', (event) => {
-            profilePic.style.borderColor = event.target.value;
-            localStorage.setItem('borderColor', event.target.value);
-        });
+        // Hide loader
+        function hideLoader() {
+            loaderOverlay.classList.remove('active');
+        }
 
-        borderTypeSelect.addEventListener('change', (event) => {
-            profilePic.style.borderStyle = event.target.value;
-            localStorage.setItem('borderType', event.target.value);
-        });
-
-        sortBySelect.addEventListener('change', sortLaws);
-        filterByTagSelect.addEventListener('change', filterLaws);
-
-        card.addEventListener('click', () => {
-            card.classList.toggle('flipped');
-        });
-
-        auth.onAuthStateChanged((user) => {
+        // Firebase auth state change
+        auth.onAuthStateChanged(user => {
             if (user) {
-                usernameDisplay.textContent = user.displayName || 'Anonymous';
-                emailDisplay.textContent = user.email || 'No email';
-                createdAtDisplay.textContent = user.metadata.creationTime || 'Unknown';
-                if (user.photoURL) {
-                    profilePic.src = user.photoURL;
-                }
+                loadUserData(user);
+                loadSavedLaws(user.uid);
             } else {
                 window.location.href = 'index.html';
             }
         });
 
-        window.addEventListener('load', () => {
+        // Load user data
+        function loadUserData(user) {
+            usernameDisplay.textContent = user.displayName || 'User';
+            emailDisplay.textContent = user.email || 'No email';
+            createdAtDisplay.textContent = user.metadata.creationTime
+                ? new Date(user.metadata.creationTime).toLocaleDateString()
+                : 'Unknown';
+            if (user.photoURL) {
+                profilePic.src = user.photoURL;
+            }
+            loadUserCustomization(user.uid);
+        }
+
+        // Load user customization
+        function loadUserCustomization(uid) {
+            database.ref(`users/${uid}/customization`).once('value').then(snapshot => {
+                const data = snapshot.val();
+                if (data) {
+                    profilePic.style.backgroundColor = data.avatarBgColor || '#cccccc';
+                    profilePic.style.borderColor = data.borderColor || '#000000';
+                    profilePic.style.borderStyle = data.borderType || 'solid';
+                    avatarBgColorPicker.value = data.avatarBgColor || '#cccccc';
+                    borderColorPicker.value = data.borderColor || '#000000';
+                    borderTypeSelect.value = data.borderType || 'solid';
+                }
+            });
+        }
+
+        // Toggle customization menu
+        profilePic.addEventListener('click', () => {
+            customizationMenu.classList.toggle('active');
+        });
+
+        // Close customization menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
+                customizationMenu.classList.remove('active');
+            }
+        });
+
+        // Upload avatar to Cloudinary
+        avatarInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
             showLoader();
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-theme');
-                themeToggle.checked = true;
+            avatarLoading.classList.add('active');
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+            try {
+                const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                const imageUrl = data.secure_url;
+
+                await auth.currentUser.updateProfile({ photoURL: imageUrl });
+                profilePic.src = imageUrl;
+
+                await database.ref(`users/${auth.currentUser.uid}/customization`).update({
+                    photoURL: imageUrl
+                });
+            } catch (error) {
+                console.error('Error uploading avatar:', error);
+                alert('Failed to upload avatar. Please try again.');
+            } finally {
+                hideLoader();
+                avatarLoading.classList.remove('active');
+            }
+        });
+
+        // Update avatar background color
+        avatarBgColorPicker.addEventListener('change', async () => {
+            profilePic.style.backgroundColor = avatarBgColorPicker.value;
+            await database.ref(`users/${auth.currentUser.uid}/customization`).update({
+                avatarBgColor: avatarBgColorPicker.value
+            });
+        });
+
+        // Update border color
+        borderColorPicker.addEventListener('change', async () => {
+            profilePic.style.borderColor = borderColorPicker.value;
+            await database.ref(`users/${auth.currentUser.uid}/customization`).update({
+                borderColor: borderColorPicker.value
+            });
+        });
+
+        // Update border type
+        borderTypeSelect.addEventListener('change', async () => {
+            profilePic.style.borderStyle = borderTypeSelect.value;
+            await database.ref(`users/${auth.currentUser.uid}/customization`).update({
+                borderType: borderTypeSelect.value
+            });
+        });
+
+        // Load saved laws
+        function loadSavedLaws(uid) {
+            database.ref(`users/${uid}/savedLaws`).on('value', snapshot => {
+                savedLaws = snapshot.val() ? Object.values(snapshot.val()) : [];
+                renderLaws();
+            });
+        }
+
+        // Save or unsave law
+        async function toggleSaveLaw(law) {
+            const userId = auth.currentUser.uid;
+            const isSaved = savedLaws.some(saved => saved.title === law.title);
+
+            if (isSaved) {
+                const key = Object.keys(database.ref(`users/${userId}/savedLaws`).once('value').then(snap => snap.val()))
+                    .find(k => database.ref(`users/${userId}/savedLaws/${k}`).once('value').then(snap => snap.val().title === law.title));
+                await database.ref(`users/${userId}/savedLaws/${key}`).remove();
+            } else {
+                await database.ref(`users/${userId}/savedLaws`).push(law);
+            }
+        }
+
+        // Render laws
+        function renderLaws() {
+            lawsList.innerHTML = '';
+            const start = (currentPage - 1) * lawsPerPage;
+            const end = start + lawsPerPage;
+            const paginatedLaws = filteredLaws.slice(start, end);
+
+            if (paginatedLaws.length === 0) {
+                lawsList.innerHTML = '<div class="no-results">No laws found.</div>';
+            } else {
+                paginatedLaws.forEach(law => {
+                    const isSaved = savedLaws.some(saved => saved.title === law.title);
+                    const lawElement = document.createElement('div');
+                    lawElement.classList.add('law-card');
+                    lawElement.innerHTML = `
+                        <div class="law-card-content">
+                            <img src="${law.image}" alt="${law.title}" class="law-image">
+                            <div class="law-details">
+                                <h3 class="law-title">${law.title}</h3>
+                                <p class="law-description">${law.description}</p>
+                                <div class="law-actions">
+                                    <button class="law-action-btn save-btn ${isSaved ? 'saved' : ''}" data-title="${law.title}">
+                                        <i class="fas ${isSaved ? 'fa-bookmark' : 'fa-bookmark'}"></i>
+                                        ${isSaved ? 'Saved' : 'Save'}
+                                    </button>
+                                    <a href="${law.pdf}" class="law-action-btn" target="_blank">
+                                        <i class="fas fa-file-pdf"></i>
+                                        View PDF
+                                    </a>
+                                    <a href="${law.pdfwebsite}" class="law-action-btn" target="_blank">
+                                        <i class="fas fa-globe"></i>
+                                        Visit Website
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    lawsList.appendChild(lawElement);
+
+                    // Handle law card click
+                    lawElement.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('law-action-btn') || e.target.closest('.law-action-btn')) return;
+                        const cleanTitle = law.title.replace(/\(Republic Act No\. \d+\)/, '').trim();
+                        window.location.href = `HomePage.html?search=${encodeURIComponent(cleanTitle)}`;
+                    });
+
+                    // Handle save button click
+                    const saveBtn = lawElement.querySelector('.save-btn');
+                    saveBtn.addEventListener('click', async () => {
+                        await toggleSaveLaw(law);
+                    });
+                });
             }
 
-            const savedAvatar = localStorage.getItem('avatar');
-            if (savedAvatar) profilePic.src = savedAvatar;
-
-            const savedAvatarBgColor = localStorage.getItem('avatarBgColor');
-            if (savedAvatarBgColor) profilePic.style.backgroundColor = savedAvatarBgColor;
-
-            const savedBorderColor = localStorage.getItem('borderColor');
-            if (savedBorderColor) profilePic.style.borderColor = savedBorderColor;
-
-            const savedBorderType = localStorage.getItem('borderType');
-            if (savedBorderType) profilePic.style.borderStyle = savedBorderType;
-
-            updateCard();
             updatePagination();
+        }
+
+        // Update pagination
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredLaws.length / lawsPerPage);
+            prevPage.disabled = currentPage === 1;
+            nextPage.disabled = currentPage === totalPages || totalPages === 0;
+            paginationInfo.textContent = `Page ${currentPage} of ${totalPages || 1}`;
+        }
+
+        // Search and filter laws
+        function filterLaws() {
+            const query = searchInput.value.toLowerCase().trim();
+            filteredLaws = laws.filter(law =>
+                law.title.toLowerCase().includes(query) ||
+                law.description.toLowerCase().includes(query) ||
+                law.scenario.toLowerCase().includes(query) ||
+                law.punishment.toLowerCase().includes(query)
+            );
+            sortLaws();
+            currentPage = 1;
+            renderLaws();
+        }
+
+        // Sort laws
+        function sortLaws() {
+            const sortValue = sortSelect.value;
+            filteredLaws.sort((a, b) => {
+                if (sortValue === 'title-asc') {
+                    return a.title.localeCompare(b.title);
+                } else if (sortValue === 'title-desc') {
+                    return b.title.localeCompare(a.title);
+                } else if (sortValue === 'year-asc') {
+                    return a.year - b.year;
+                } else if (sortValue === 'year-desc') {
+                    return b.year - a.year;
+                } else if (sortValue === 'relevance' && searchInput.value.trim()) {
+                    const query = searchInput.value.toLowerCase().trim();
+                    const scoreA = (a.title.toLowerCase().match(new RegExp(query, 'g')) || []).length +
+                                  (a.description.toLowerCase().match(new RegExp(query, 'g')) || []).length;
+                    const scoreB = (b.title.toLowerCase().match(new RegExp(query, 'g')) || []).length +
+                                  (b.description.toLowerCase().match(new RegExp(query, 'g')) || []).length;
+                    return scoreB - scoreA;
+                }
+                return 0;
+            });
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', filterLaws);
+        sortSelect.addEventListener('change', () => {
+            sortLaws();
+            renderLaws();
         });
+        prevPage.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderLaws();
+            }
+        });
+        nextPage.addEventListener('click', () => {
+            const totalPages = Math.ceil(filteredLaws.length / lawsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderLaws();
+            }
+        });
+
+        // Initial setup
+        loadTheme();
+        renderLaws();
     </script>
 </body>
-</html> 
+</html>
+</xaiArtifact>
