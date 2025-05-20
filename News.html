@@ -3352,48 +3352,50 @@ const laws = [
 
             // News pagination
             let currentPage = 1;
-            const itemsPerPage = 3;
-            const newsItems = document.querySelectorAll('.news-item');
-            const totalPages = Math.ceil(newsItems.length / itemsPerPage);
+            const itemsPerPage = 10;
+            const newsItems = document.querySelectorAll('.news-content .news-item'); // Scoped to news-content only
+            const totalPages = 4; // Fixed to 4 pages
             const pageNumbersContainer = document.getElementById('pageNumbers');
+            const prevPageBtn = document.getElementById('prevPage');
+            const nextPageBtn = document.getElementById('nextPage');
 
             function updatePagination() {
-            newsItems.forEach(item => {
-            item.style.display = 'none';
-            item.classList.remove('active');
-            });
+                newsItems.forEach(item => {
+                    item.style.display = 'none';
+                    item.classList.remove('active');
+                });
 
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
 
-            newsItems.forEach((item, index) => {
-            if (index >= start && index < end) {
-            item.style.display = 'block';
-            item.classList.add('active');
-            }
-            });
+                newsItems.forEach((item, index) => {
+                    if (index >= start && index < end) {
+                        item.style.display = 'block';
+                        item.classList.add('active');
+                    }
+                });
 
-            pageNumbersContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-            const pageNumber = document.createElement('span');
-            pageNumber.className = `page-number ${i === currentPage ? 'active' : ''}`;
-            pageNumber.textContent = i;
-            pageNumber.addEventListener('click', () => {
-            currentPage = i;
-            updatePagination();
-            });
-            pageNumbersContainer.appendChild(pageNumber);
-            }
+                pageNumbersContainer.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageNumber = document.createElement('span');
+                    pageNumber.className = `page-number ${i === currentPage ? 'active' : ''}`;
+                    pageNumber.textContent = i;
+                    pageNumber.addEventListener('click', () => {
+                        currentPage = i;
+                        updatePagination();
+                    });
+                    pageNumbersContainer.appendChild(pageNumber);
+                }
 
-            document.getElementById('prevPage').disabled = currentPage === 1;
-            document.getElementById('nextPage').disabled = currentPage === totalPages;
+                document.getElementById('prevPage').disabled = currentPage === 1;
+                document.getElementById('nextPage').disabled = currentPage === totalPages;
             }
 
             function changePage(direction) {
-            currentPage += direction;
-            if (currentPage < 1) currentPage = 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-            updatePagination();
+                currentPage += direction;
+                if (currentPage < 1) currentPage = 1;
+                if (currentPage > totalPages) currentPage = totalPages;
+                updatePagination();
             }
 
             // Initialize
@@ -3404,14 +3406,14 @@ const laws = [
 
             // Close customization menu when clicking outside
             document.addEventListener('click', (event) => {
-            if (!customizationMenu.contains(event.target) && !profilePic.contains(event.target)) {
-            customizationMenu.classList.remove('active');
-            }
+                if (!customizationMenu.contains(event.target) && !profilePic.contains(event.target)) {
+                    customizationMenu.classList.remove('active');
+                }
             });
 
             // Prevent customization menu from closing when clicking inside
             customizationMenu.addEventListener('click', (event) => {
-            event.stopPropagation();
+                event.stopPropagation();
             });
         </script>
     </body>
