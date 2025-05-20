@@ -2436,7 +2436,7 @@ function normalizeQuery(query) {
     return { normalized, corrected };
 }
 
-function expandQueryWithSynonyms(query) {
+function expandQueryWithContext(query) {
     const doc = nlp(query);
     const terms = doc.terms().data();
     let expandedQuery = query.split(/\s+/);
@@ -2444,12 +2444,17 @@ function expandQueryWithSynonyms(query) {
     terms.forEach(term => {
         if (term.tags.includes('Noun') || term.tags.includes('Verb')) {
             const synonyms = nlp(term.text).nouns().toPlural().text().split(/\s+/)
-                .concat(nlp(term.text).verbs().conjugate().map(v => v.PastTense || v.PresentTense || v.Infinitive))
+                .concat(nlp(term.text).verbs().conjugate().map(v => v.PastTense || v.PresentTense))
                 .filter(s => s !== term.text);
             expandedQuery = [...expandedQuery, ...synonyms];
         }
     });
-    
+
+    const topics = doc.topics().out('array');
+    if (topics.length > 0) {
+        expandedQuery = [...expandedQuery, ...topics];
+    }
+
     return [...new Set(expandedQuery)].join(' ');
 }
 
@@ -2458,7 +2463,7 @@ function detectIntent(query) {
     const topics = doc.topics().out('array');
     const verbs = doc.verbs().out('array');
     const intent = {
-        keywords: topics.length > 0 ? topics : query.split(/\s+/),
+        topics: topics.length > 0 ? topics : query.split(/\s+/),
         action: verbs.length > 0 ? verbs[0] : 'search',
         isQuestion: doc.has('#QuestionWord'),
         isComplex: query.length > 50 || query.split(/\s+/).length > 10
@@ -2467,25 +2472,33 @@ function detectIntent(query) {
 }
 
 function localSearchFallback(query) {
-    const { normalized } = normalizeQuery(query);
-    const keywords = normalized.split(/\s+/).filter(k => k.length > 1);
+    const { normalized, corrected } = normalizeQuery(query);
+    const intent = detectIntent(query);
+    const expandedQuery = intent.isComplex ? expandQueryWithContext(normalized) : normalized;
+    const keywords = expandedQuery.split(/\s+/).filter(k => k.length > 1);
+
     if (keywords.length === 0) {
-        return { mainLaw: null, alternativeLaws: [], correctedQuery: query };
+        return { mainLaw: null, alternativeLaws: [], correctedQuery: corrected };
     }
 
     const matches = laws
         .map(law => {
-            const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
+            const text = `${law.title} ${law.description} ${law.scenario} ${law.content || ''}`.toLowerCase();
             let score = 0;
             keywords.forEach(keyword => {
-                const regex = new RegExp(`\\b${keyword}\\b`, 'i');
-                if (regex.test(text)) {
-                    score += 3;
-                } else if (text.includes(keyword)) {
-                    score += 1;
+                if (text.includes(keyword)) {
+                    score += 2;
                 }
-                if (law.title.toLowerCase().match(regex)) {
+                if (law.title.toLowerCase().includes(keyword)) {
                     score += 5;
+                }
+                if (law.description.toLowerCase().includes(keyword)) {
+                    score += 3;
+                }
+            });
+            intent.topics.forEach(topic => {
+                if (text.includes(topic.toLowerCase())) {
+                    score += 4;
                 }
             });
             return { law, score };
@@ -2494,7 +2507,7 @@ function localSearchFallback(query) {
         .sort((a, b) => b.score - a.score);
 
     if (matches.length === 0) {
-        return { mainLaw: null, alternativeLaws: [], correctedQuery: query };
+        return { mainLaw: null, alternativeLaws: [], correctedQuery: corrected };
     }
 
     const mainLaw = matches[0].law.title;
@@ -2512,7 +2525,7 @@ function localSearchFallback(query) {
         alternativeLaws.push(availableLaws[randomIndex]);
     }
 
-    return { mainLaw, alternativeLaws, correctedQuery: query };
+    return { mainLaw, alternativeLaws, correctedQuery };
 }
 
 async function fetchLawsFromAI(query) {
@@ -2523,7 +2536,7 @@ async function fetchLawsFromAI(query) {
         }
 
         const intent = detectIntent(query);
-        const expandedQuery = intent.isComplex ? expandQueryWithSynonyms(normalized) : normalized;
+        const expandedQuery = intent.isComplex ? expandQueryWithContext(normalized) : normalized;
 
         if (searchCache.has(normalized)) {
             return { ...searchCache.get(normalized), correctedQuery: corrected };
@@ -2549,7 +2562,6 @@ async function fetchLawsFromAI(query) {
             per_page: 5,
             typo_tokens_threshold: 2,
             num_typos: 3,
-            include_fields: 'title,description,scenario,content',
             sort_by: '_text_match:desc,_relevance:desc',
             prefix: true,
             infix: 'always',
@@ -2558,14 +2570,9 @@ async function fetchLawsFromAI(query) {
             synonyms: true,
             phrase_match: true,
             split_join_tokens: 'always',
-            vector_query: intent.isComplex ? `vector_field:[]` : null,
+            semantic_search: true,
             max_candidates: 1000,
-            filter_by: intent.isQuestion ? 'type:law' : '',
-            highlight_fields: 'title,description,scenario,content',
-            highlight_full_fields: 'title',
-            highlight_affix_num_tokens: 1,
-            highlight_start_tag: '<span style="background-color: yellow; color: black;">',
-            highlight_end_tag: '</span>'
+            filter_by: intent.isQuestion ? 'type:law' : ''
         };
 
         const results = await client.collections('laws').documents().search(searchParameters);
@@ -2625,7 +2632,6 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
         correctionNote.textContent = `Showing results for corrected query: "${correctedQuery}"`;
         correctionNote.style.color = '#555';
         correctionNote.style.marginBottom = '10px';
-        correctionNote.style.fontFamily = 'Montserrat, sans-serif';
         cardsContainer.appendChild(correctionNote);
     }
 
@@ -2633,7 +2639,7 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
         const mainLaw = laws.find(law => law.title === mainLawTitle);
         if (mainLaw) {
             const mainCard = document.createElement('div');
-            mainCard.className = 'card main-law highlight';
+            mainCard.className = 'card main-law';
             mainCard.innerHTML = `
                 <div class="image_container">
                     <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
@@ -2650,26 +2656,18 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
                     ${mainLaw.pdfwebsite ? `
                     <a href="${mainLaw.pdfwebsite}" class="border-button" target="_blank">
                         <span class="button-text">Read More</span>
-                        <span class="iconer"><i class="fas fa-arrow-right"></i></span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                     </a>` : ''}
                     <button class="save-button" data-title="${mainLaw.title}">
                         <span class="button-text">Save Law</span>
-                        <span class="iconer"><i class="fas fa-bookmark"></i></span>
+                        <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
                     </button>
                 </div>
             `;
             cardsContainer.appendChild(mainCard);
-
-            const keywords = normalizeQuery(searchInput.value.trim()).normalized.split(/\s+/);
-            keywords.forEach(keyword => {
-                ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
-                    const element = mainCard.querySelector(`.${className}`);
-                    if (element) highlightText(element, keyword);
-                });
-            });
         }
     } else {
-        cardsContainer.innerHTML = '<p style="font-family: Montserrat, sans-serif;">No relevant laws found for your search. Try a different query.</p>';
+        cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
         fingerprintIcon.classList.add('glow');
         fingerprintIcon.style.opacity = '1';
         return;
@@ -2677,7 +2675,7 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
 
     if (alternativeLawTitles.length > 0) {
         const alternativesSection = document.createElement('div');
-        alternativesSection.innerHTML = '<h2 style="font-family: Montserrat, sans-serif;">Alternative Laws Suggested</h2>';
+        alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
         alternativesSection.style.width = '100%';
         alternativesSection.style.textAlign = 'center';
         alternativesSection.style.marginTop = '40px';
@@ -2711,23 +2709,15 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
                         ${law.pdfwebsite ? `
                         <a href="${law.pdfwebsite}" class="border-button" target="_blank">
                             <span class="button-text">Read More</span>
-                            <span class="iconer"><i class="fas fa-arrow-right"></i></span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
                         </a>` : ''}
                         <button class="save-button" data-title="${law.title}">
                             <span class="button-text">Save Law</span>
-                            <span class="iconer"><i class="fas fa-bookmark"></i></span>
+                            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 3H7a2 2 0 0 0-2 2v16l7-4 7 4V5a2 2 0 0 0-2-2z" fill="currentColor"></path></svg></span>
                         </button>
                     </div>
                 `;
                 alternativesContainer.appendChild(card);
-
-                const keywords = normalizeQuery(searchInput.value.trim()).normalized.split(/\s+/);
-                keywords.forEach(keyword => {
-                    ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
-                        const element = card.querySelector(`.${className}`);
-                        if (element) highlightText(element, keyword);
-                    });
-                });
             }
         });
         cardsContainer.appendChild(alternativesContainer);
@@ -2781,7 +2771,7 @@ defaultCards.forEach(cardData => {
         </div>
         <a href="News.html" class="border-button">
             <span class="button-text">Read More</span>
-            <span class="iconer"><i class="fas fa-arrow-right"></i></span>
+            <span class="iconer"><svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path></svg></span>
         </a>
     `;
     cardsContainer.appendChild(card);
@@ -2808,7 +2798,7 @@ async function performSearch(query) {
             if (mainLaw) {
                 renderLawCards(mainLaw, alternativeLaws, correctedQuery);
             } else {
-                cardsContainer.innerHTML = '<p style="font-family: Montserrat, sans-serif;">No relevant laws found for your search. Try a different query.</p>';
+                cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
                 fingerprintIcon.style.opacity = '1';
             }
@@ -2833,7 +2823,12 @@ async function performSearch(query) {
                     </div>
                     <a href="News.html" class="border-button">
                         <span class="button-text">Read More</span>
-                        <span class="iconer"><i class="fas fa-arrow-right"></i></span>
+                        <span class="iconer">
+                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" fill="currentColor"></path>
+                            </svg>
+                        </span>
                     </a>
                 `;
                 cardsContainer.appendChild(card);
@@ -2841,7 +2836,7 @@ async function performSearch(query) {
         }
     } catch (error) {
         console.error('Search error:', error.message);
-        cardsContainer.innerHTML = `<p style="font-family: Montserrat, sans-serif;">Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
+        cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
         fingerprintIcon.classList.add('glow');
         fingerprintIcon.style.opacity = '1';
     } finally {
@@ -2860,13 +2855,6 @@ document.querySelector('.search-icon').addEventListener('click', function() {
     const query = searchInput.value.trim();
     performSearch(query);
 });
-
-function highlightText(element, keyword) {
-    if (!element || !keyword) return;
-    const text = element.textContent;
-    const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
-    element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$&</span>');
-}
 
 function updateClock() {
     const now = new Date();
