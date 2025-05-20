@@ -2383,7 +2383,8 @@
                         <div class="laws-search-container">
                             <input type="text" id="lawsSearchInput" placeholder="Search laws...">
                             <select id="lawsSortSelect">
-                                <option value="alphabetical">Sort: Alphabetical</option>
+                                <option value="a-z">Sort: A-Z</option>
+                                <option value="z-a">Sort: Z-A</option>
                                 <option value="seriousness">Sort: Seriousness</option>
                                 <option value="similarity">Sort: Similarity</option>
                                 <option value="relevance">Sort: Relevance</option>
@@ -2918,8 +2919,10 @@ const laws = [
         // Sort laws
         lawsSortSelect.addEventListener('change', () => {
             const sortBy = lawsSortSelect.value;
-            if (sortBy === 'alphabetical') {
+            if (sortBy === 'a-z') {
                 filteredLaws.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (sortBy === 'z-a') {
+                filteredLaws.sort((a, b) => b.title.localeCompare(a.title));
             } else if (sortBy === 'seriousness') {
                 filteredLaws.sort((a, b) => b.punishmentSeverity - a.punishmentSeverity);
             } else if (sortBy === 'similarity') {
@@ -3353,7 +3356,7 @@ const laws = [
             // News pagination
             let currentPage = 1;
             const itemsPerPage = 10;
-            const newsItems = document.querySelectorAll('.news-content .news-item'); // Scoped to news-content only
+            const newsItems = document.querySelectorAll('.news-content .news-item'); 
             const totalPages = 4; // Fixed to 4 pages
             const pageNumbersContainer = document.getElementById('pageNumbers');
             const prevPageBtn = document.getElementById('prevPage');
