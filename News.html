@@ -844,7 +844,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px 0;
-            width: 100%; /* Ensure it doesn't exceed parent */
+            width: 100%; 
             box-sizing: border-box;
         }
 
@@ -968,9 +968,9 @@
             margin-top: 30px;
             margin-bottom: 50px;
             font-family: 'Montserrat', sans-serif;
-            flex-wrap: wrap; /* Allow wrapping to prevent overflow */
+            flex-wrap: wrap; 
             width: 100%;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-x: hidden; 
         }
 
         .pagination button {
@@ -1003,7 +1003,7 @@
         .pagination .page-numbers, .laws-page-numbers {
             display: flex;
             gap: 5px;
-            flex-wrap: wrap; /* Wrap page numbers to prevent overflow */
+            flex-wrap: wrap;
             justify-content: center;
         }
 
@@ -2897,13 +2897,11 @@ const laws = [
             nextLawsPageBtn.disabled = currentLawsPage === totalPages;
         }
 
-        // Change laws page
         function changeLawsPage(direction) {
             currentLawsPage += direction;
             renderLaws();
         }
 
-        // Search laws
         lawsSearchInput.addEventListener('input', () => {
             const query = lawsSearchInput.value.trim();
             if (query) {
@@ -2963,13 +2961,11 @@ const laws = [
             renderLaws();
         });
 
-        // Theme toggle
         themeToggle.addEventListener('change', () => {
             body.classList.toggle('dark-theme');
             localStorage.setItem('darkTheme', body.classList.contains('dark-theme') ? 'enabled' : 'disabled');
         });
 
-        // Mobile menu toggle
         mobileMenuIcon.addEventListener('click', () => {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -2982,13 +2978,24 @@ const laws = [
             }
         });
 
-        // Load theme
+        document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (!this.href.includes(window.location.hostname) && !this.href.startsWith('mailto:')) return;
+                
+                e.preventDefault();
+                loaderOverlay.classList.add('active');
+                
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 150);
+            });
+        });
+
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
         }
 
-        // Toggle content sections
         function toggleContent(section) {
             document.querySelectorAll('.toggle-label').forEach(label => label.classList.remove('active'));
             document.querySelectorAll('.news-content, .insights-content, .laws-content').forEach(content => content.classList.remove('active'));
@@ -3001,7 +3008,6 @@ const laws = [
             }
         }
 
-        // Toggle news details
         function toggleDetails(header) {
             const details = header.nextElementSibling;
             const icon = header.querySelector('.toggle-icon');
@@ -3009,7 +3015,6 @@ const laws = [
             icon.classList.toggle('active');
         }
 
-        // Firebase auth state
         auth.onAuthStateChanged((user) => {
             if (user) {
                 const currentUser = {
@@ -3057,12 +3062,10 @@ const laws = [
             }
         });
 
-        // Avatar customization menu toggle
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
 
-        // Handle avatar upload
         avatarInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
@@ -3190,7 +3193,6 @@ const laws = [
             };
         });
 
-        // Handle avatar background color change
         avatarBgColorPicker.addEventListener('change', () => {
             const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
@@ -3211,7 +3213,6 @@ const laws = [
             }
         });
 
-        // Handle border color change
         borderColorPicker.addEventListener('change', () => {
             const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
@@ -3232,7 +3233,6 @@ const laws = [
             }
         });
 
-        // Handle border type change
         borderTypeSelect.addEventListener('change', () => {
             const borderType = borderTypeSelect.value;
             profilePic.style.borderStyle = borderType;
@@ -3253,7 +3253,6 @@ const laws = [
             }
         });
 
-        // Card navigation
         let currentCardIndex = 0;
         let isFlipped = false;
         let isTransitioning = false;
@@ -3311,7 +3310,6 @@ const laws = [
     { term: "Electronic Evidence", partOfSpeech: "noun", definition: "Digital information, such as emails or documents, admissible in court if authenticated.", example: "The Rules on Electronic Evidence allow emails to be used as evidence in trials.", synonyms: "digital evidence, e-evidence, online proof" }
 ];
 
-            // Update card content
             function updateCard() {
             const cardData = cards[currentCardIndex];
             card.querySelector('.card-front h3').textContent = cardData.term;
@@ -3325,7 +3323,6 @@ const laws = [
             nextCardBtn.disabled = currentCardIndex === cards.length - 1;
             }
 
-            // Navigate cards
             function navigateCard(direction) {
             if (isTransitioning) return;
             isTransitioning = true;
@@ -3344,7 +3341,6 @@ const laws = [
             }, 300);
             }
 
-            // Random card
             function randomCard() {
             if (isTransitioning) return;
             isTransitioning = true;
@@ -3366,18 +3362,16 @@ const laws = [
             }, 300);
             }
 
-            // Flip card
             card.addEventListener('click', () => {
             if (isTransitioning) return;
             isFlipped = !isFlipped;
             card.classList.toggle('flipped', isFlipped);
             });
 
-            // News pagination
             let currentPage = 1;
             const itemsPerPage = 10;
             const newsItems = document.querySelectorAll('.news-content .news-item'); 
-            const totalPages = 4; // Fixed to 4 pages
+            const totalPages = 4; 
             const pageNumbersContainer = document.getElementById('pageNumbers');
             const prevPageBtn = document.getElementById('prevPage');
             const nextPageBtn = document.getElementById('nextPage');
@@ -3421,20 +3415,17 @@ const laws = [
                 updatePagination();
             }
 
-            // Initialize
             initializeFuse();
             updateCard();
             updatePagination();
             renderLaws();
 
-            // Close customization menu when clicking outside
             document.addEventListener('click', (event) => {
                 if (!customizationMenu.contains(event.target) && !profilePic.contains(event.target)) {
                     customizationMenu.classList.remove('active');
                 }
             });
 
-            // Prevent customization menu from closing when clicking inside
             customizationMenu.addEventListener('click', (event) => {
                 event.stopPropagation();
             });
