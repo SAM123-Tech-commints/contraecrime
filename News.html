@@ -2916,7 +2916,26 @@ const laws = [
             renderLaws();
         });
 
-        // Sort laws
+       function calculateSimilarity(lawA, lawB) {
+            const tagsA = new Set(lawA.tags);
+            const tagsB = new Set(lawB.tags);
+            const commonTags = [...tagsA].filter(tag => tagsB.has(tag)).length;
+            const totalTags = new Set([...tagsA, ...tagsB]).size;
+            const tagSimilarity = totalTags > 0 ? commonTags / totalTags : 0;
+
+            const wordsA = new Set(
+                `${lawA.title} ${lawA.description}`.toLowerCase().split(/\W+/).filter(word => word.length > 2)
+            );
+            const wordsB = new Set(
+                `${lawB.title} ${lawB.description}`.toLowerCase().split(/\W+/).filter(word => word.length > 2)
+            );
+            const commonWords = [...wordsA].filter(word => wordsB.has(word)).length;
+            const totalWords = new Set([...wordsA, ...wordsB]).size;
+            const textSimilarity = totalWords > 0 ? commonWords / totalWords : 0;
+
+            return (tagSimilarity + textSimilarity) / 2;
+        }
+
         lawsSortSelect.addEventListener('change', () => {
             const sortBy = lawsSortSelect.value;
             if (sortBy === 'a-z') {
@@ -2926,10 +2945,11 @@ const laws = [
             } else if (sortBy === 'seriousness') {
                 filteredLaws.sort((a, b) => b.punishmentSeverity - a.punishmentSeverity);
             } else if (sortBy === 'similarity') {
+                const referenceLaw = filteredLaws[0] || laws[0];
                 filteredLaws.sort((a, b) => {
-                    const aTags = a.tags.join('').toLowerCase();
-                    const bTags = b.tags.join('').toLowerCase();
-                    return aTags.localeCompare(bTags);
+                    const simA = calculateSimilarity(referenceLaw, a);
+                    const simB = calculateSimilarity(referenceLaw, b);
+                    return simB - simA;
                 });
             } else if (sortBy === 'relevance') {
                 if (lawsSearchInput.value) {
