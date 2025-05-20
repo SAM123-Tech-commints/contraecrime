@@ -2086,7 +2086,6 @@ const clock = document.getElementById('clock');
     }
 ];
 
-
 const searchCache = new Map();
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -2516,7 +2515,7 @@ async function fetchLawsFromAI(query) {
     try {
         const { normalized, corrected } = normalizeQuery(query);
         if (!normalized) {
-            throw new Error('Empty or invalid query');
+            return { mainLaw: null, alternativeLaws: [], correctedQuery: corrected };
         }
 
         const intent = detectIntent(query);
@@ -2536,7 +2535,7 @@ async function fetchLawsFromAI(query) {
         try {
             await client.collections('laws').retrieve();
         } catch (err) {
-            throw new Error('Typesense collection "laws" not found or inaccessible');
+            return localSearchFallback(query);
         }
 
         const searchParameters = {
@@ -2611,7 +2610,7 @@ async function fetchLawsFromAI(query) {
 function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
     cardsContainer.innerHTML = '';
 
-    if (correctedQuery !== searchInput.value.trim()) {
+    if (correctedQuery && correctedQuery !== searchInput.value.trim()) {
         searchInput.value = correctedQuery;
         const correctionNote = document.createElement('p');
         correctionNote.textContent = `Showing results for corrected query: "${correctedQuery}"`;
@@ -2781,7 +2780,7 @@ async function performSearch(query) {
 
             const { mainLaw, alternativeLaws, correctedQuery } = await fetchLawsFromAI(query);
             if (mainLaw) {
-                renderLawCards(mainLaw, alternativeLaws, correctedQuery);
+                renderLawCards(mainLaw, alternativeLaws, correctedQuery || query);
             } else {
                 cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
@@ -2821,9 +2820,14 @@ async function performSearch(query) {
         }
     } catch (error) {
         console.error('Search error:', error.message);
-        cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
-        fingerprintIcon.classList.add('glow');
-        fingerprintIcon.style.opacity = '1';
+        const { mainLaw, alternativeLaws, correctedQuery } = localSearchFallback(query);
+        if (mainLaw) {
+            renderLawCards(mainLaw, alternativeLaws, correctedQuery || query);
+        } else {
+            cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
+            fingerprintIcon.classList.add('glow');
+            fingerprintIcon.style.opacity = '1';
+        }
     } finally {
         loaderOverlay.classList.remove('active');
     }
