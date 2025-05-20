@@ -2089,15 +2089,14 @@ const clock = document.getElementById('clock');
 
 const searchCache = new Map();
 
-// Auto-search logic for handling queries from History.html
 document.addEventListener('DOMContentLoaded', () => {
     const autoSearchQuery = localStorage.getItem('autoSearchQuery');
     if (autoSearchQuery && searchInput) {
-        searchInput.value = autoSearchQuery; // Populate the search bar
+        searchInput.value = autoSearchQuery;
         auth.onAuthStateChanged((user) => {
             if (user) {
-                performSearch(autoSearchQuery); 
-                localStorage.removeItem('autoSearchQuery'); 
+                performSearch(autoSearchQuery);
+                localStorage.removeItem('autoSearchQuery');
             }
         });
     }
@@ -2108,7 +2107,6 @@ fingerprintIcon.addEventListener('click', () => {
     setTimeout(() => {
         window.location.href = 'HomePage.html';
     }, 150);
-
 });
 
 auth.onAuthStateChanged((user) => {
@@ -2119,22 +2117,16 @@ auth.onAuthStateChanged((user) => {
             createdAt: user.metadata.creationTime
         };
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
         usernameDisplay.textContent = `${currentUser.username}`;
         emailDisplay.textContent = `${currentUser.email}`;
         createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
-
         const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
         const userRef = database.ref(`users/${sanitizedEmail}`);
         userRef.once('value', (snapshot) => {
             const userData = snapshot.val();
             if (userData) {
-                if (userData.avatarUrl) {
-                    profilePic.src = userData.avatarUrl;
-                } else {
-                    profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
-                }
+                if (userData.avatarUrl) profilePic.src = userData.avatarUrl;
+                else profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
                 if (userData.avatarBgColor) {
                     profilePic.style.backgroundColor = userData.avatarBgColor;
                     avatarBgColorPicker.value = userData.avatarBgColor;
@@ -2171,7 +2163,6 @@ document.addEventListener('click', (e) => {
 avatarInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (!file) return;
-
     const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
     const maxSize = 2 * 1024 * 1024;
     if (!validTypes.includes(file.type)) {
@@ -2182,30 +2173,25 @@ avatarInput.addEventListener('change', (event) => {
         alert('Image size must be less than 2MB.');
         return;
     }
-
     const user = auth.currentUser;
     if (!user) {
         alert('You must be logged in to upload an avatar.');
         avatarLoading.classList.remove('active');
         return;
     }
-
     avatarLoading.classList.add('active');
-
     const img = new Image();
     const reader = new FileReader();
     reader.onload = (e) => {
         img.src = e.target.result;
     };
     reader.readAsDataURL(file);
-
     img.onload = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         const maxDimension = 300;
         let width = img.width;
         let height = img.height;
-
         if (width > height) {
             if (width > maxDimension) {
                 height = Math.round((height * maxDimension) / width);
@@ -2217,11 +2203,9 @@ avatarInput.addEventListener('change', (event) => {
                 height = maxDimension;
             }
         }
-
         canvas.width = width;
         canvas.height = height;
         ctx.drawImage(img, 0, 0, width, height);
-
         canvas.toBlob((blob) => {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (!currentUser || !currentUser.email) {
@@ -2229,12 +2213,10 @@ avatarInput.addEventListener('change', (event) => {
                 avatarLoading.classList.remove('active');
                 return;
             }
-
             const formData = new FormData();
             formData.append('file', blob);
             formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
             formData.append('folder', `avatars/${currentUser.email}`);
-
             fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
                 method: 'POST',
                 body: formData
@@ -2247,13 +2229,9 @@ avatarInput.addEventListener('change', (event) => {
                             const parsed = JSON.parse(text);
                             errorMessage = parsed.error?.message || text;
                         } catch (e) {
-                            errorMessage = text.includes('Invalid cloud name')
-                                ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
-                                : text.includes('Invalid upload preset')
-                                ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
-                                : text.includes('Unsigned uploads are not allowed')
-                                ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
-                                : text || 'Unknown error occurred';
+                            errorMessage = text.includes('Invalid cloud name') ? 'Invalid Cloudinary cloud name.' :
+                                text.includes('Invalid upload preset') ? 'Invalid upload preset.' :
+                                text.includes('Unsigned uploads are not allowed') ? 'Unsigned uploads are not allowed.' : text || 'Unknown error occurred';
                         }
                         throw new Error(errorMessage);
                     });
@@ -2261,13 +2239,9 @@ avatarInput.addEventListener('change', (event) => {
                 return response.json();
             })
             .then(data => {
-                if (data.error) {
-                    throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
-                }
-
+                if (data.error) throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
                 const avatarUrl = data.secure_url;
                 const sanitizedEmail = currentUser.email.replace(/\./g, ',');
-
                 database.ref(`users/${sanitizedEmail}`).update({
                     avatarUrl: avatarUrl,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
@@ -2298,7 +2272,6 @@ avatarInput.addEventListener('change', (event) => {
 avatarBgColorPicker.addEventListener('change', () => {
     const color = avatarBgColorPicker.value;
     profilePic.style.backgroundColor = color;
-
     const user = auth.currentUser;
     if (user) {
         const sanitizedEmail = user.email.replace(/\./g, ',');
@@ -2318,7 +2291,6 @@ avatarBgColorPicker.addEventListener('change', () => {
 borderColorPicker.addEventListener('change', () => {
     const color = borderColorPicker.value;
     profilePic.style.borderColor = color;
-
     const user = auth.currentUser;
     if (user) {
         const sanitizedEmail = user.email.replace(/\./g, ',');
@@ -2338,7 +2310,6 @@ borderColorPicker.addEventListener('change', () => {
 borderTypeSelect.addEventListener('change', () => {
     const borderType = borderTypeSelect.value;
     profilePic.style.borderStyle = borderType;
-
     const user = auth.currentUser;
     if (user) {
         const sanitizedEmail = user.email.replace(/\./g, ',');
@@ -2386,10 +2357,8 @@ document.querySelectorAll('a[href]').forEach(link => {
     if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
         link.addEventListener('click', function(e) {
             if (!this.href.includes(window.location.hostname)) return;
-
             e.preventDefault();
             loaderOverlay.classList.add('active');
-
             setTimeout(() => {
                 window.location.href = this.href;
             }, 150);
@@ -2403,7 +2372,6 @@ function saveLaw(lawTitle) {
         alert('You must be logged in to save a law.');
         return;
     }
-
     const sanitizedEmail = user.email.replace(/\./g, ',');
     const lawRef = database.ref(`users/${sanitizedEmail}/savedLaws`).push();
     lawRef.set({
@@ -2425,164 +2393,136 @@ okSuccess.addEventListener('click', () => {
 
 function normalizeQuery(query) {
     if (!query || typeof query !== 'string') return '';
-    // Enhanced normalization with Compromise
     const doc = nlp(query.trim().toLowerCase());
-    const normalized = doc
-        .normalize({ punctuation: true, possessives: true, plurals: true, contractions: true })
-        .text()
-        .replace(/[^a-z0-9\s]/g, ' ') 
-        .split(/\s+/) 
-        .filter(word => word.length > 1) 
-        .join(' '); // Rejoin for Typesense
-    return normalized;
+    const terms = doc.terms().normalize({
+        punctuation: true,
+        possessives: true,
+        plurals: true,
+        contractions: true,
+        case: true
+    });
+    const topics = doc.topics().data().map(t => t.text);
+    const verbs = doc.verbs().toInfinitive().out('array');
+    const synonyms = doc.nouns().toSingular().out('array').map(n => nlp(n).nouns().synonyms().out('array')).flat();
+    const normalized = [...terms.out('array'), ...topics, ...verbs, ...synonyms]
+        .filter(word => word && word.length > 1)
+        .join(' ');
+    return normalized || query.trim().toLowerCase();
 }
 
 function localSearchFallback(query) {
     const normalizedQuery = normalizeQuery(query);
-    const keywords = normalizedQuery.split(/\s+/).filter(k => k.length > 1); // Split into keywords
-    if (keywords.length === 0) {
-        return { mainLaw: null, alternativeLaws: [] };
-    }
-
-    const matches = laws
-        .map(law => {
-            const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
-            // Score based on keyword matches (exact and partial)
-            let score = 0;
-            keywords.forEach(keyword => {
-                const regex = new RegExp(`\\b${keyword}\\b`, 'i'); // Exact word match
-                if (regex.test(text)) {
-                    score += 2; // Higher weight for exact matches
-                } else if (text.includes(keyword)) {
-                    score += 1; // Partial match
-                }
-                // Boost score for title matches
-                if (law.title.toLowerCase().match(regex)) {
-                    score += 3;
-                }
-            });
-            return { law, score };
-        })
-        .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score); // Sort by score descending
-
-    if (matches.length === 0) {
-        return { mainLaw: null, alternativeLaws: [] };
-    }
-
+    const keywords = normalizedQuery.split(/\s+/).filter(k => k.length > 1);
+    if (keywords.length === 0) return { mainLaw: null, alternativeLaws: [], correctedQuery: '' };
+    const matches = laws.map(law => {
+        const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
+        let score = 0;
+        keywords.forEach(keyword => {
+            const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+            if (regex.test(text)) score += 3;
+            else if (text.includes(keyword)) score += 1;
+            if (law.title.toLowerCase().match(regex)) score += 5;
+            const doc = nlp(text);
+            const lawTopics = doc.topics().data().map(t => t.text);
+            if (lawTopics.some(topic => keywords.includes(topic))) score += 2;
+        });
+        return { law, score };
+    }).filter(item => item.score > 0).sort((a, b) => b.score - a.score);
+    if (matches.length === 0) return { mainLaw: null, alternativeLaws: [], correctedQuery: '' };
     const mainLaw = matches[0].law.title;
-    let alternativeLaws = matches
-        .slice(1, 5)
-        .map(item => item.law.title)
-        .slice(0, 4);
-
-    // Fill remaining slots with random laws if needed
+    let alternativeLaws = matches.slice(1, 5).map(item => item.law.title).slice(0, 4);
     while (alternativeLaws.length < 4 && laws.length > 0) {
-        const availableLaws = laws
-            .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
-            .map(law => law.title);
+        const availableLaws = laws.filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title)).map(law => law.title);
         if (availableLaws.length === 0) break;
         const randomIndex = Math.floor(Math.random() * availableLaws.length);
         alternativeLaws.push(availableLaws[randomIndex]);
     }
-
-    return { mainLaw, alternativeLaws };
+    const correctedQuery = nlp(query).sentences().toCorrect().text() || query;
+    return { mainLaw, alternativeLaws, correctedQuery };
 }
 
 async function fetchLawsFromAI(query) {
     try {
         const normalizedQuery = normalizeQuery(query);
-        if (!normalizedQuery) {
-            throw new Error('Empty or invalid query');
-        }
-
-        if (searchCache.has(normalizedQuery)) {
-            return searchCache.get(normalizedQuery);
-        }
-
+        if (!normalizedQuery) throw new Error('Empty or invalid query');
+        if (searchCache.has(normalizedQuery)) return searchCache.get(normalizedQuery);
         const client = new Typesense.Client({
             nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
             apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
             connectionTimeoutSeconds: 5
         });
-
-        try {
-            await client.collections('laws').retrieve();
-        } catch (err) {
-            throw new Error('Typesense collection "laws" not found or inaccessible');
-        }
-
+        await client.collections('laws').retrieve();
+        const doc = nlp(query);
+        const intent = doc.sentences().toCorrect().text() || query;
         const searchParameters = {
             q: normalizedQuery,
-            query_by: 'title,description,scenario',
-            query_by_weights: '4,3,2',
+            query_by: 'title,description,scenario,keywords',
+            query_by_weights: '5,4,3,2',
             per_page: 5,
-            typo_tokens_threshold: 1,
-            num_typos: 2,
+            typo_tokens_threshold: 0,
+            num_typos: 3,
             include_fields: 'title,description,scenario',
-            sort_by: '_text_match:desc',
+            sort_by: '_text_match:desc,relevance:desc',
             prefix: true,
             infix: 'always',
-            drop_tokens_threshold: 1,
+            drop_tokens_threshold: 0,
             locale: 'auto',
             synonyms: true,
             phrase_match: true,
-            split_join_tokens: 'always' // Enable keyword splitting
+            split_join_tokens: 'always',
+            filter_by: '',
+            boost_fields: 'title:2,description:1.5,scenario:1',
+            semantic_search: true,
+            max_candidates: 1000
         };
-
         const results = await client.collections('laws').documents().search(searchParameters);
-
         let mainLaw = null;
         let alternativeLaws = [];
-
+        let correctedQuery = intent;
         if (results.hits && results.hits.length > 0) {
             mainLaw = results.hits[0].document.title;
-            alternativeLaws = results.hits
-                .slice(1, 5)
-                .map(hit => hit.document.title)
-                .filter(title => title !== mainLaw)
-                .slice(0, 4);
+            alternativeLaws = results.hits.slice(1, 5).map(hit => hit.document.title).filter(title => title !== mainLaw).slice(0, 4);
         }
-
         if (!mainLaw || alternativeLaws.length < 4) {
             const fallback = localSearchFallback(query);
-            if (fallback.mainLaw && !mainLaw) {
-                mainLaw = fallback.mainLaw;
-            }
-            alternativeLaws = [
-                ...alternativeLaws,
-                ...fallback.alternativeLaws.filter(title => !alternativeLaws.includes(title) && title !== mainLaw)
-            ].slice(0, 4);
+            if (fallback.mainLaw && !mainLaw) mainLaw = fallback.mainLaw;
+            alternativeLaws = [...alternativeLaws, ...fallback.alternativeLaws.filter(title => !alternativeLaws.includes(title) && title !== mainLaw)].slice(0, 4);
+            correctedQuery = fallback.correctedQuery || intent;
         }
-
         while (alternativeLaws.length < 4 && laws.length > 0) {
-            const availableLaws = laws
-                .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
-                .map(law => law.title);
+            const availableLaws = laws.filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title)).map(law => law.title);
             if (availableLaws.length === 0) break;
             const randomIndex = Math.floor(Math.random() * availableLaws.length);
             alternativeLaws.push(availableLaws[randomIndex]);
         }
-
-        const result = { mainLaw, alternativeLaws };
+        const result = { mainLaw, alternativeLaws, correctedQuery };
         searchCache.set(normalizedQuery, result);
         if (searchCache.size > 50) {
             const oldestKey = searchCache.keys().next().value;
             searchCache.delete(oldestKey);
         }
-
         return result;
     } catch (error) {
         console.error('Typesense search error:', error.message);
-        return localSearchFallback(query);
+        const fallback = localSearchFallback(query);
+        return { ...fallback, correctedQuery: fallback.correctedQuery || query };
     }
 }
 
-function renderLawCards(mainLawTitle, alternativeLawTitles) {
+function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
     cardsContainer.innerHTML = '';
-
     const query = searchInput.value.trim();
-
+    if (correctedQuery && correctedQuery !== query) {
+        const correctionNotice = document.createElement('p');
+        correctionNotice.textContent = `Did you mean: ${correctedQuery}?`;
+        correctionNotice.style.color = '#007bff';
+        correctionNotice.style.cursor = 'pointer';
+        correctionNotice.addEventListener('click', () => {
+            searchInput.value = correctedQuery;
+            performSearch(correctedQuery);
+        });
+        cardsContainer.appendChild(correctionNotice);
+    }
     if (mainLawTitle) {
         const mainLaw = laws.find(law => law.title === mainLawTitle);
         if (mainLaw) {
@@ -2596,9 +2536,9 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                     <span>${mainLaw.title.trim()}</span>
                 </div>
                 <div class="cybercrime-description">
-                    <p><strong>Description:</strong> ${mainLaw.description.trim()}</p>
-                    <p><strong>Scenario:</strong> ${mainLaw.scenario.trim()}</p>
-                    <p><strong>Punishment:</strong> ${mainLaw.punishment.trim()}</p>
+                    <p class="description-text"><strong>Description:</strong> ${mainLaw.description.trim()}</p>
+                    <p class="scenario-text"><strong>Scenario:</strong> ${mainLaw.scenario.trim()}</p>
+                    <p class="punishment-text"><strong>Punishment:</strong> ${mainLaw.punishment.trim()}</p>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
                     ${mainLaw.pdfwebsite ? `
@@ -2613,7 +2553,6 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                 </div>
             `;
             cardsContainer.appendChild(mainCard);
-
             if (query) {
                 ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
                     const element = mainCard.querySelector(`.${className}`);
@@ -2627,7 +2566,6 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
         fingerprintIcon.style.opacity = '1';
         return;
     }
-
     if (alternativeLawTitles.length > 0) {
         const alternativesSection = document.createElement('div');
         alternativesSection.innerHTML = '<h2>Alternative Laws Suggested</h2>';
@@ -2635,14 +2573,12 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
         alternativesSection.style.textAlign = 'center';
         alternativesSection.style.marginTop = '40px';
         cardsContainer.appendChild(alternativesSection);
-
         const alternativesContainer = document.createElement('div');
         alternativesContainer.className = 'cards-container';
         alternativesContainer.style.display = 'flex';
         alternativesContainer.style.flexWrap = 'wrap';
         alternativesContainer.style.gap = '20px';
         alternativesContainer.style.justifyContent = 'center';
-
         alternativeLawTitles.forEach(title => {
             const law = laws.find(l => l.title === title);
             if (law) {
@@ -2656,9 +2592,9 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                         <span>${law.title.trim()}</span>
                     </div>
                     <div class="cybercrime-description">
-                        <p><strong>Description:</strong> ${law.description.trim()}</p>
-                        <p><strong>Scenario:</strong> ${law.scenario.trim()}</p>
-                        <p><strong>Punishment:</strong> ${law.punishment.trim()}</p>
+                        <p class="description-text"><strong>Description:</strong> ${law.description.trim()}</p>
+                        <p class="scenario-text"><strong>Scenario:</strong> ${law.scenario.trim()}</p>
+                        <p class="punishment-text"><strong>Punishment:</strong> ${law.punishment.trim()}</p>
                     </div>
                     <div style="display: flex; gap: 10px; justify-content: flex-end; padding: 10px;">
                         ${law.pdfwebsite ? `
@@ -2673,7 +2609,6 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
                     </div>
                 `;
                 alternativesContainer.appendChild(card);
-
                 if (query) {
                     ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
                         const element = card.querySelector(`.${className}`);
@@ -2684,12 +2619,10 @@ function renderLawCards(mainLawTitle, alternativeLawTitles) {
         });
         cardsContainer.appendChild(alternativesContainer);
     }
-
     document.querySelectorAll('.save-button').forEach(button => {
         button.removeEventListener('click', saveLawHandler);
         button.addEventListener('click', saveLawHandler);
     });
-
     fingerprintIcon.classList.add('glow');
     fingerprintIcon.style.opacity = '1';
 }
@@ -2746,7 +2679,6 @@ async function performSearch(query) {
             fingerprintIcon.style.opacity = '1';
             sectionTitle.textContent = 'RELEVANT LAW';
             loaderOverlay.classList.add('active');
-
             const user = auth.currentUser;
             if (user) {
                 const sanitizedEmail = user.email.replace(/\./g, ',');
@@ -2755,10 +2687,9 @@ async function performSearch(query) {
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
             }
-
-            const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
+            const { mainLaw, alternativeLaws, correctedQuery } = await fetchLawsFromAI(query);
             if (mainLaw) {
-                renderLawCards(mainLaw, alternativeLaws);
+                renderLawCards(mainLaw, alternativeLaws, correctedQuery);
             } else {
                 cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
@@ -2820,9 +2751,13 @@ document.querySelector('.search-icon').addEventListener('click', function() {
 
 function highlightText(element, query) {
     if (!element || !query) return;
-    const text = element.textContent;
-    const regex = new RegExp(`(${query})`, 'gi');
-    element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
+    const words = query.trim().split(/\s+/).filter(word => word.length > 1);
+    let text = element.innerHTML;
+    words.forEach(word => {
+        const regex = new RegExp(`\\b${word}\\b`, 'gi');
+        text = text.replace(regex, `<span style="background-color: yellow; color: black;">${word}</span>`);
+    });
+    element.innerHTML = text;
 }
 
 function updateClock() {
