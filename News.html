@@ -2415,6 +2415,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script>
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
@@ -2425,10 +2426,16 @@
             databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
         };
 
+        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
 
+        // Cloudinary Configuration
+        const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
+        const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
+
+        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -2454,6 +2461,7 @@
         const prevLawsPageBtn = document.getElementById('prevLawsPage');
         const nextLawsPageBtn = document.getElementById('nextLawsPage');
         const lawsPageNumbersContainer = document.getElementById('lawsPageNumbers');
+
 
 const laws = [
     {
@@ -2978,56 +2986,248 @@ const laws = [
             icon.classList.toggle('active');
         }
 
-        // Initialize
-        initializeFuse();
-        renderLaws();
-
         // Firebase auth state
-        auth.onAuthStateChanged(user => {
+        auth.onAuthStateChanged((user) => {
             if (user) {
-                usernameDisplay.textContent = user.displayName || 'User';
-                emailDisplay.textContent = user.email;
-                createdAtDisplay.textContent = new Date(user.metadata.creationTime).toLocaleDateString();
-                if (user.photoURL) {
-                    profilePic.src = user.photoURL;
-                }
+                const currentUser = {
+                    username: user.displayName || 'User',
+                    email: user.email,
+                    createdAt: user.metadata.creationTime
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                usernameDisplay.textContent = `${currentUser.username}`;
+                emailDisplay.textContent = `${currentUser.email}`;
+                createdAtDisplay.textContent = `${new Date(currentUser.createdAt).toLocaleString()}`;
+
+                const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+                const userRef = database.ref(`users/${sanitizedEmail}`);
+                userRef.once('value', (snapshot) => {
+                    const userData = snapshot.val();
+                    if (userData) {
+                        if (userData.avatarUrl) {
+                            profilePic.src = userData.avatarUrl;
+                        } else {
+                            profilePic.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=';
+                        }
+                        if (userData.avatarBgColor) {
+                            profilePic.style.backgroundColor = userData.avatarBgColor;
+                            avatarBgColorPicker.value = userData.avatarBgColor;
+                        }
+                        if (userData.borderColor) {
+                            profilePic.style.borderColor = userData.borderColor;
+                            borderColorPicker.value = userData.borderColor;
+                        }
+                        if (userData.borderType) {
+                            profilePic.style.borderStyle = userData.borderType;
+                            borderTypeSelect.value = userData.borderType;
+                        }
+                    }
+                }, (error) => {
+                    console.error('Error loading user customization:', error);
+                    alert('Failed to load user customization: ' + error.message);
+                });
             } else {
+                localStorage.removeItem('currentUser');
                 window.location.href = 'index.html';
             }
         });
 
-        // Customization menu toggle
+        // Avatar customization menu toggle
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
 
-        // Avatar upload
-        avatarInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                avatarLoading.classList.add('active');
-                const reader = new FileReader();
-                reader.onload = async () => {
-                    profilePic.src = reader.result;
-                    await auth.currentUser.updateProfile({ photoURL: reader.result });
-                    avatarLoading.classList.remove('active');
-                };
-                reader.readAsDataURL(file);
+        // Handle avatar upload
+        avatarInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            const maxSize = 2 * 1024 * 1024; // 2MB
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload a valid image (JPG, JPEG, PNG).');
+                return;
+            }
+            if (file.size > maxSize) {
+                alert('Image size must be less than 2MB.');
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert('You must be logged in to upload an avatar.');
+                avatarLoading.classList.remove('active');
+                return;
+            }
+
+            avatarLoading.classList.add('active');
+
+            const img = new Image();
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const maxDimension = 300;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > maxDimension) {
+                        height = Math.round((height * maxDimension) / width);
+                        width = maxDimension;
+                    }
+                } else {
+                    if (height > maxDimension) {
+                        width = Math.round((width * maxDimension) / height);
+                        height = maxDimension;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob((blob) => {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (!currentUser || !currentUser.email) {
+                        alert('User not logged in.');
+                        avatarLoading.classList.remove('active');
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('file', blob);
+                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                    formData.append('folder', `avatars/${currentUser.email}`);
+
+                    fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                let errorMessage = `Cloudinary upload failed with status ${response.status}`;
+                                try {
+                                    const parsed = JSON.parse(text);
+                                    errorMessage = parsed.error?.message || text;
+                                } catch (e) {
+                                    errorMessage = text.includes('Invalid cloud name')
+                                        ? 'Invalid Cloudinary cloud name. Please check the CLOUDINARY_CLOUD_NAME.'
+                                        : text.includes('Invalid upload preset')
+                                        ? 'Invalid upload preset. Please check the preset name in Cloudinary.'
+                                        : text.includes('Unsigned uploads are not allowed')
+                                        ? 'Unsigned uploads are not allowed. Please set the upload preset to Unsigned in Cloudinary.'
+                                        : text || 'Unknown error occurred';
+                                }
+                                throw new Error(errorMessage);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error.message || 'Failed to upload image to Cloudinary');
+                        }
+
+                        const avatarUrl = data.secure_url;
+                        const sanitizedEmail = currentUser.email.replace(/\./g, ',');
+
+                        database.ref(`users/${sanitizedEmail}`).update({
+                            avatarUrl: avatarUrl,
+                            updatedAt: firebase.database.ServerValue.TIMESTAMP
+                        })
+                        .then(() => {
+                            profilePic.src = avatarUrl;
+                            avatarLoading.classList.remove('active');
+                        })
+                        .catch(error => {
+                            console.error('Error saving avatar URL to Firebase:', error);
+                            alert('Failed to save avatar URL to Firebase: ' + error.message);
+                            avatarLoading.classList.remove('active');
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error uploading avatar to Cloudinary:', error);
+                        alert(`Failed to upload avatar to Cloudinary: ${error.message}`);
+                        avatarLoading.classList.remove('active');
+                    });
+                }, file.type, 0.6);
+            };
+            img.onerror = () => {
+                alert('Failed to process the image. Please try a different file.');
+                avatarLoading.classList.remove('active');
+            };
+        });
+
+        // Handle avatar background color change
+        avatarBgColorPicker.addEventListener('change', () => {
+            const color = avatarBgColorPicker.value;
+            profilePic.style.backgroundColor = color;
+
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    avatarBgColor: color,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving avatar background color:', error);
+                    alert('Failed to save avatar background color: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the avatar background color.');
             }
         });
 
-        // Avatar background color
-        avatarBgColorPicker.addEventListener('change', () => {
-            profilePic.style.backgroundColor = avatarBgColorPicker.value;
-        });
-
-        // Border color and type
+        // Handle border color change
         borderColorPicker.addEventListener('change', () => {
-            profilePic.style.borderColor = borderColorPicker.value;
+            const color = borderColorPicker.value;
+            profilePic.style.borderColor = color;
+
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderColor: color,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving border color:', error);
+                    alert('Failed to save border color: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the border color.');
+            }
         });
 
+        // Handle border type change
         borderTypeSelect.addEventListener('change', () => {
-            profilePic.style.borderStyle = borderTypeSelect.value;
+            const borderType = borderTypeSelect.value;
+            profilePic.style.borderStyle = borderType;
+
+            const user = auth.currentUser;
+            if (user) {
+                const sanitizedEmail = user.email.replace(/\./g, ',');
+                database.ref(`users/${sanitizedEmail}`).update({
+                    borderType: borderType,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                })
+                .catch(error => {
+                    console.error('Error saving border type:', error);
+                    alert('Failed to save border type: ' + error.message);
+                });
+            } else {
+                alert('You must be logged in to change the border type.');
+            }
         });
 
         // Card navigation
@@ -3088,106 +3288,131 @@ const laws = [
     { term: "Electronic Evidence", partOfSpeech: "noun", definition: "Digital information, such as emails or documents, admissible in court if authenticated.", example: "The Rules on Electronic Evidence allow emails to be used as evidence in trials.", synonyms: "digital evidence, e-evidence, online proof" }
 ];
 
-        // Update card content
-        function updateCard(index) {
-            if (isTransitioning) return;
+            // Update card content
+            function updateCard() {
+            const cardData = cards[currentCardIndex];
+            card.querySelector('.card-front h3').textContent = cardData.term;
+            card.querySelector('.card-back h3').textContent = cardData.term;
+            card.querySelector('.part-of-speech').textContent = cardData.partOfSpeech;
+            card.querySelector('.definition').textContent = cardData.definition;
+            card.querySelector('.example').textContent = cardData.example;
+            card.querySelector('.synonyms').textContent = `Synonyms: ${cardData.synonyms}`;
+            cardCounter.textContent = `Card ${currentCardIndex + 1} of ${cards.length}`;
+            prevCardBtn.disabled = currentCardIndex === 0;
+            nextCardBtn.disabled = currentCardIndex === cards.length - 1;
+            }
 
+            // Navigate cards
+            function navigateCard(direction) {
+            if (isTransitioning) return;
             isTransitioning = true;
             card.classList.add('fade-out');
-
             setTimeout(() => {
-                const cardData = cards[index];
-                const cardFront = card.querySelector('.card-front');
-                const cardBack = card.querySelector('.card-back');
-                cardFront.innerHTML = `
-                    <img src="https://i.imgur.com/VStcaPo.png" alt="Cybercrime Logo">
-                    <h3>${cardData.term}</h3>
-                `;
-                cardBack.innerHTML = `
-                    <h3>${cardData.term}</h3>
-                    <div class="part-of-speech">${cardData.partOfSpeech}</div>
-                    <div class="definition">${cardData.definition}</div>
-                    <div class="example">${cardData.example}</div>
-                    <div class="synonyms">${cardData.synonyms}</div>
-                `;
-                card.classList.toggle('flipped', isFlipped);
-                cardCounter.textContent = `${index + 1} of ${cards.length}`;
-                prevCardBtn.disabled = index === 0;
-                nextCardBtn.disabled = index === cards.length - 1;
-
-                card.classList.remove('fade-out');
-                card.classList.add('fade-in');
-                isTransitioning = false;
+            currentCardIndex += direction;
+            if (currentCardIndex < 0) currentCardIndex = 0;
+            if (currentCardIndex >= cards.length) currentCardIndex = cards.length - 1;
+            updateCard();
+            card.classList.remove('fade-out');
+            card.classList.add('fade-in');
+            setTimeout(() => {
+            card.classList.remove('fade-in');
+            isTransitioning = false;
             }, 300);
-        }
+            }, 300);
+            }
 
-        // Navigate cards
-        function navigateCard(direction) {
+            // Random card
+            function randomCard() {
             if (isTransitioning) return;
-            currentCardIndex = (currentCardIndex + direction + cards.length) % cards.length;
-            updateCard(currentCardIndex);
-        }
+            isTransitioning = true;
+            card.classList.add('fade-out');
+            setTimeout(() => {
+            const newIndex = Math.floor(Math.random() * cards.length);
+            if (newIndex === currentCardIndex) {
+            randomCard();
+            return;
+            }
+            currentCardIndex = newIndex;
+            updateCard();
+            card.classList.remove('fade-out');
+            card.classList.add('fade-in');
+            setTimeout(() => {
+            card.classList.remove('fade-in');
+            isTransitioning = false;
+            }, 300);
+            }, 300);
+            }
 
-        // Random card
-        function randomCard() {
+            // Flip card
+            card.addEventListener('click', () => {
             if (isTransitioning) return;
-            currentCardIndex = Math.floor(Math.random() * cards.length);
-            updateCard(currentCardIndex);
-        }
-
-        // Card flip on click
-        card.addEventListener('click', () => {
             isFlipped = !isFlipped;
             card.classList.toggle('flipped', isFlipped);
-        });
+            });
 
-        // News pagination
-        let currentPage = 1;
-        const totalPages = 4; // Fixed to 4 pages
-        const pageNumbersContainer = document.getElementById('pageNumbers');
-        const prevPageBtn = document.getElementById('prevPage');
-        const nextPageBtn = document.getElementById('nextPage');
+            // News pagination
+            let currentPage = 1;
+            const itemsPerPage = 3;
+            const newsItems = document.querySelectorAll('.news-item');
+            const totalPages = Math.ceil(newsItems.length / itemsPerPage);
+            const pageNumbersContainer = document.getElementById('pageNumbers');
 
-        function updateNewsPagination() {
+            function updatePagination() {
+            newsItems.forEach(item => {
+            item.style.display = 'none';
+            item.classList.remove('active');
+            });
+
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+
+            newsItems.forEach((item, index) => {
+            if (index >= start && index < end) {
+            item.style.display = 'block';
+            item.classList.add('active');
+            }
+            });
+
             pageNumbersContainer.innerHTML = '';
             for (let i = 1; i <= totalPages; i++) {
-                const pageNumber = document.createElement('span');
-                pageNumber.className = `page-number ${i === currentPage ? 'active' : ''}`;
-                pageNumber.textContent = i;
-                pageNumber.addEventListener('click', () => {
-                    currentPage = i;
-                    updateNewsDisplay();
-                });
-                pageNumbersContainer.appendChild(pageNumber);
-            }
-            prevPageBtn.disabled = currentPage === 1;
-            nextPageBtn.disabled = currentPage === totalPages;
-            document.querySelectorAll('.news-item').forEach(item => {
-                item.classList.toggle('active', parseInt(item.dataset.page) === currentPage);
+            const pageNumber = document.createElement('span');
+            pageNumber.className = `page-number ${i === currentPage ? 'active' : ''}`;
+            pageNumber.textContent = i;
+            pageNumber.addEventListener('click', () => {
+            currentPage = i;
+            updatePagination();
             });
-        }
+            pageNumbersContainer.appendChild(pageNumber);
+            }
 
-        function changePage(direction) {
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+            }
+
+            function changePage(direction) {
             currentPage += direction;
             if (currentPage < 1) currentPage = 1;
             if (currentPage > totalPages) currentPage = totalPages;
-            updateNewsDisplay();
-        }
-
-        function updateNewsDisplay() {
-            updateNewsPagination();
-        }
-
-        // Initialize card and news
-        updateCard(currentCardIndex);
-        updateNewsDisplay();
-
-        // Close customization menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!customizationMenu.contains(e.target) && e.target !== profilePic) {
-                customizationMenu.classList.remove('active');
+            updatePagination();
             }
-        });
-    </script>
-</body>
+
+            // Initialize
+            initializeFuse();
+            updateCard();
+            updatePagination();
+            renderLaws();
+
+            // Close customization menu when clicking outside
+            document.addEventListener('click', (event) => {
+            if (!customizationMenu.contains(event.target) && !profilePic.contains(event.target)) {
+            customizationMenu.classList.remove('active');
+            }
+            });
+
+            // Prevent customization menu from closing when clicking inside
+            customizationMenu.addEventListener('click', (event) => {
+            event.stopPropagation();
+            });
+        </script>
+    </body>
 </html>
