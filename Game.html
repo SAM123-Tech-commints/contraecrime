@@ -1862,7 +1862,6 @@ const questions = {
         }
     ]
 };
-
 // DOM elements
 const loaderOverlay = document.getElementById('loaderOverlay');
 const mobileMenuIcon = document.getElementById('mobileMenuIcon');
@@ -2483,4 +2482,81 @@ document.querySelectorAll('a[href]:not([href^="#"])').forEach(link => {
     });
 });
 console.log('Quiz app initialized');
+
+// START OF ADDED CODE
+function shuffleArray(array) {
+    // Fisher-Yates shuffle algorithm
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+}
+
+function loadQuestion() {
+    try {
+        const questionList = isRedemption ? wrongAnswers : questions[selectedDifficulty];
+        console.log('Loading question:', { currentQuestionIndex, questionListLength: questionList.length, isRedemption });
+
+        if (!questionList || questionList.length === 0) {
+            console.warn('Question list is empty or undefined');
+            showResult();
+            return;
+        }
+
+        if (currentQuestionIndex >= questionList.length) {
+            console.log('Reached end of questions');
+            if (isRedemption) {
+                showResult();
+            } else {
+                showRedemptionModal();
+            }
+            return;
+        }
+
+        const question = questionList[currentQuestionIndex];
+        questionText.textContent = question.text;
+        options.innerHTML = '';
+        explanation.textContent = '';
+        explanation.classList.remove('visible');
+        nextBtn.classList.remove('visible');
+        exitGameBtn.classList.remove('visible');
+
+        // Create a shuffled copy of options
+        const shuffledOptions = shuffleArray([...question.options]);
+
+        shuffledOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.innerHTML = `<i class="fas fa-circle"></i> ${option}`;
+            button.addEventListener('click', () => checkAnswer(option, question.answer));
+            options.appendChild(button);
+        });
+
+        progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questionList.length}`;
+        progressBar.style.width = `${((currentQuestionIndex + 1) / questionList.length) * 100}%`;
+
+        timeLeft = selectedDifficulty === 'easy' ? 40 : selectedDifficulty === 'medium' ? 35 : 20;
+        timerText.textContent = `${timeLeft}s`;
+        timerCircle.style.strokeDashoffset = 0;
+        questionStartTime = Date.now();
+
+        isFrozen = false;
+
+        clearInterval(timerInterval);
+        if (!isFrozen) {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        extraTime1.disabled = extraTime1Used;
+        extraTime2.disabled = extraTime2Used;
+        timeFreeze.disabled = timeFreezeUsed;
+
+        console.log('Loaded question:', question.text);
+    } catch (error) {
+        console.error('Error loading question:', error);
+        showNotification('Error loading question. Ending quiz.');
+        showResult();
+    }
+}
 </script>
