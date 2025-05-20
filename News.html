@@ -2455,330 +2455,372 @@
         const nextLawsPageBtn = document.getElementById('nextLawsPage');
         const lawsPageNumbersContainer = document.getElementById('lawsPageNumbers');
 
-                const laws = [
-            {
-                title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
-                description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
-                punishment: "Penalties include fines and imprisonment, ranging from a minimum of PHP 100,000 and six months to three years for online fraud and scams, and a maximum penalty of PHP 1,000,000 or six years for other violations.",
-                tags: ["E-Commerce", "Hacking", "Fraud", "Cybercrime"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
-                description: "Criminalizes the production, distribution, and possession of child pornography in the Philippines.",
-                punishment: "Shall suffer the penalty of reclusion perpetua and a fine of not less than Two million pesos (Php2,000,000.00) but not more than Five million pesos (Php5,000,000.00).",
-                tags: ["Child Protection", "Pornography", "Cybercrime"],
-                punishmentSeverity: 8
-            },
-            {
-                title: "Access Devices Regulation Act of 1998 (Republic Act No. 8484)",
-                description: "Criminalizes the unauthorized possession, use, and trafficking of access devices, aiming to deter fraudulent transactions and protect against identity theft.",
-                punishment: "A fine of ₱10,000 or twice the value obtained by the offense, and imprisonment of 6 to 20 years depending on the offense and prior convictions.",
-                tags: ["Fraud", "Identity Theft", "Financial Crime"],
-                punishmentSeverity: 5
-            },
-            {
-                title: "Anti-Financial Account Scamming Act (AFASA) (Republic Act No. 12010)",
-                description: "Aims to combat online fraud and scams, introducing stricter requirements for banks to enhance fraud prevention systems and protect customers.",
-                punishment: "Penalties range from 4 to 14 years imprisonment or fines from ₱50,000 to ₱10,000,000, with life imprisonment for economic sabotage.",
-                tags: ["Fraud", "Banking", "Scams", "Cybercrime"],
-                punishmentSeverity: 7
-            },
-            {
-                title: "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
-                description: "Covers offenses related to computer data, systems, and content, including those committed using information and communication technologies.",
-                punishment: "Penalties range from prisión mayor (6 to 12 years) to reclusión temporal (12 to 20 years), with fines from ₱50,000 to ₱1,000,000.",
-                tags: ["Cybercrime", "Hacking", "Identity Theft", "Fraud"],
-                punishmentSeverity: 6
-            },
-            {
-                title: "Data Privacy Act of 2012 (Republic Act No. 10173)",
-                description: "Regulates the collection, processing, and storage of personal data in both the government and private sectors.",
-                punishment: "Imprisonment of 6 months to 7 years and fines from ₱100,000 to ₱5,000,000 for unauthorized processing, access, or breaches.",
-                tags: ["Privacy", "Data Protection", "Cybersecurity"],
-                punishmentSeverity: 5
-            },
-            {
-                title: "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)",
-                description: "Criminalizes unauthorized taking, distribution, and publication of photos or videos of a person's private area or sexual acts.",
-                punishment: "Imprisonment of 3 to 7 years and a fine of ₱100,000 to ₱500,000, with additional provisions for license revocation and deportation.",
-                tags: ["Voyeurism", "Privacy", "Cybercrime"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Expanded Anti-Trafficking in Persons Act of 2012 (Republic Act No. 10364)",
-                description: "Aims to eliminate trafficking in persons, especially women and children, with mechanisms for victim protection.",
-                punishment: "Imprisonment of 15 years and fines of ₱500,000 to ₱5,000,000, with life imprisonment for qualified trafficking.",
-                tags: ["Trafficking", "Human Rights", "Cybercrime"],
-                punishmentSeverity: 8
-            },
-            {
-                title: "Subscriber Identity Module (SIM) Registration Act (Republic Act No. 11934)",
-                description: "Mandates SIM card registration to enhance telecommunications security and curb crimes like fraud and phishing.",
-                punishment: "Imprisonment of 6 months to 6 years and fines from ₱100,000 to ₱4,000,000 for violations like spoofing or fraudulent registration.",
-                tags: ["Telecommunications", "Fraud", "Cybersecurity"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Anti-Online Sexual Abuse or Exploitation of Children Act (Republic Act No. 11930)",
-                description: "Protects children from online sexual abuse and exploitation with strict penalties and support services.",
-                punishment: "Penalties include life imprisonment and fines from ₱100,000 to ₱20,000,000 for producing or distributing child sexual abuse materials.",
-                tags: ["Child Protection", "Sexual Abuse", "Cybercrime"],
-                punishmentSeverity: 9
-            },
-            {
-                title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
-                description: "Protects and enforces rights of creators and owners of intellectual property, including copyrights and trademarks.",
-                punishment: "Imprisonment of 1 to 9 years and fines from ₱50,000 to ₱1,500,000, with additional subsidiary imprisonment in cases of insolvency.",
-                tags: ["Intellectual Property", "Copyright", "Cybercrime"],
-                punishmentSeverity: 5
-            },
-            {
-                title: "Terrorism Financing Prevention and Suppression Act (Republic Act No. 10168)",
-                description: "Criminalizes financing of terrorism, with provisions for freezing and forfeiting associated funds.",
-                punishment: "Imprisonment from reclusion temporal to reclusion perpetua and fines from ₱100,000 to ₱1,000,000.",
-                tags: ["Terrorism", "Financial Crime", "Security"],
-                punishmentSeverity: 8
-            },
-            {
-                title: "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
-                description: "Criminalizes money laundering to prevent the use of the financial system for illegal proceeds.",
-                punishment: "Imprisonment of 6 months to 14 years and fines from ₱100,000 to twice the value of the asset involved.",
-                tags: ["Money Laundering", "Financial Crime", "Cybercrime"],
-                punishmentSeverity: 6
-            },
-            {
-                title: "National Bureau of Investigation Reorganization Act (Republic Act No. 10867)",
-                description: "Enhances NBI's investigative capabilities by reorganizing and modernizing the agency.",
-                punishment: "Administrative sanctions including suspension or dismissal for NBI personnel failing to comply with protocols.",
-                tags: ["Investigation", "Cybercrime", "Government"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Mobile Number Portability Act (Republic Act No. 11202)",
-                description: "Allows mobile subscribers to switch providers while keeping their numbers, promoting consumer welfare.",
-                punishment: "Fines from ₱10,000 to ₱1,000,000 and possible revocation of PTE franchise for repeated offenses.",
-                tags: ["Telecommunications", "Consumer Rights"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Safe Spaces Act (Republic Act No. 11313)",
-                description: "Protects individuals from gender-based sexual harassment in public spaces, online, and institutions.",
-                punishment: "Fines from ₱1,000 to ₱100,000 and imprisonment from 6 days to 6 months, with community service for minor offenses.",
-                tags: ["Harassment", "Gender Rights", "Cybercrime"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "New Central Bank Act (Republic Act No. 7653)",
-                description: "Mandates BSP to maintain price and financial stability, outlining Monetary Board responsibilities.",
-                punishment: "Imprisonment of 6 months to 14 years and fines from ₱100,000 to ₱2,000,000 for violations like false statements.",
-                tags: ["Banking", "Financial Regulation", "Cybercrime"],
-                punishmentSeverity: 5
-            },
-            {
-                title: "Anti-Wire Tapping Act (Republic Act No. 4200)",
-                description: "Prohibits unauthorized wiretapping and violations of communication privacy.",
-                punishment: "Imprisonment for 6 months to 6 years, with disqualification or deportation for offenders.",
-                tags: ["Privacy", "Wiretapping", "Cybercrime"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Human Security Act of 2007 (Republic Act No. 9372)",
-                description: "Protects the Philippines from terrorism by defining and preventing terrorist acts.",
-                punishment: "Imprisonment of 10 to 12 years for assisting terrorists, with life imprisonment for foreign terrorists.",
-                tags: ["Terrorism", "Security", "Cybercrime"],
-                punishmentSeverity: 7
-            },
-            {
-                title: "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
-                description: "Aims to prevent and penalize terrorism, addressing financing and asset forfeiture.",
-                punishment: "Life imprisonment without parole and fines from ₱500,000 to ₱5,000,000 for terrorism-related offenses.",
-                tags: ["Terrorism", "Security", "Cybercrime"],
-                punishmentSeverity: 9
-            },
-            {
-                title: "Anti-Bullying Act of 2013 (Republic Act No. 10627)",
-                description: "Requires schools to implement anti-bullying policies and procedures.",
-                punishment: "Fines from ₱50,000 to ₱100,000 or imprisonment from 6 months to 1 year for school employees.",
-                tags: ["Bullying", "Education", "Cybercrime"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Department of Information and Communications Technology Act (Republic Act No. 10844)",
-                description: "Establishes DICT to develop and implement ICT policies and ensure consumer protection.",
-                punishment: "Imprisonment of 3 to 6 years and fines from ₱500,000 to ₱4,000,000 for unauthorized data processing.",
-                tags: ["ICT", "Cybersecurity", "Government"],
-                punishmentSeverity: 5
-            },
-            {
-                title: "Strategic Trade Management Act (Republic Act No. 10697)",
-                description: "Prevents proliferation of weapons of mass destruction by managing trade in strategic goods.",
-                punishment: "Imprisonment from 6 months to 12 years and fines up to ₱250,000 or twice the value of the goods.",
-                tags: ["Trade", "Security", "Weapons"],
-                punishmentSeverity: 5
-            },
-            {
-                title: "Energy Virtual One-Stop Shop Act (Republic Act No. 11234)",
-                description: "Provides a web-based system for energy-related applications and permits.",
-                punishment: "A fine of ₱100,000 for every day of delay.",
-                tags: ["Energy", "Technology", "Government"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Consumer Act of the Philippines (Republic Act No. 7394)",
-                description: "Protects consumers from health hazards, deceptive practices, and unfair sales.",
-                punishment: "Fines from ₱500 to ₱300,000 or imprisonment of 2 months to 5 years for deceptive sales and violations.",
-                tags: ["Consumer Rights", "Fraud", "Cybercrime"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Optical Media Act of 2003 (Republic Act No. 9239)",
-                description: "Protects intellectual property rights by regulating optical media production and distribution.",
-                punishment: "Imprisonment of 3 to 6 years and fines from ₱500,000 to ₱1,500,000 for unauthorized activities.",
-                tags: ["Intellectual Property", "Piracy", "Cybercrime"],
-                punishmentSeverity: 5
-            },
-            {
-                title: "National Cybersecurity Plan Framework (Executive Order No. 189, 2015)",
-                description: "Addresses cyber threats affecting government and commercial information systems.",
-                punishment: "Imprisonment of 6 to 12 years and fines from ₱200,000 to ₱10,000,000 for cybercrime offenses.",
-                tags: ["Cybersecurity", "Government", "Cybercrime"],
-                punishmentSeverity: 6
-            },
-            {
-                title: "Strengthening DICT’s Cybersecurity Role (Executive Order No. 82, 2022)",
-                description: "Bolsters digital defenses and promotes cybersecurity awareness.",
-                punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
-                tags: ["Cybersecurity", "Government"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "National Cybersecurity Inter-Agency Committee (Executive Order No. 95, 2019)",
-                description: "Coordinates government efforts to safeguard ICT infrastructure.",
-                punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
-                tags: ["Cybersecurity", "Government"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Guidelines on IT Risk Management (BSP Circular No. 808, 2013)",
-                description: "Strengthens risk management and security in BSP-supervised institutions.",
-                punishment: "Monetary penalties, restrictions on operations, or contract invalidation for non-compliance.",
-                tags: ["Banking", "Cybersecurity", "Risk Management"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Enhanced Information Security Management (BSP Circular No. 982, 2017)",
-                description: "Requires BSFIs to establish robust cybersecurity frameworks and risk management processes.",
-                punishment: "Fines, license suspension, or action against officers for non-compliance.",
-                tags: ["Banking", "Cybersecurity", "Information Security"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Technology and Cyber-Risk Reporting (BSP Circular No. 1019, 2018)",
-                description: "Tightens reporting for technology and cyber-risk incidents in BSP-supervised institutions.",
-                punishment: "Fines, suspension of product offerings, or license revocation for non-compliance.",
-                tags: ["Banking", "Cybersecurity", "Reporting"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Guidelines on Operational Risk Management (BSP Circular No. 900, 2015)",
-                description: "Promotes effective risk management systems in BSFIs to ensure safe operations.",
-                punishment: "Suspension of privileges or restrictions on operations for non-compliance.",
-                tags: ["Banking", "Risk Management", "Cybersecurity"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Guidelines on Business Continuity Management (BSP Circular No. 951, 2017)",
-                description: "Emphasizes robust business continuity processes in BSFIs.",
-                punishment: "Fines up to ₱500,000 or suspension of operations for non-compliance.",
-                tags: ["Banking", "Business Continuity", "Cybersecurity"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Guidelines on Outsourcing Risk Management (BSP Circular No. 1039, 2019)",
-                description: "Outlines guidelines for pawnshops and MSBs regarding licensing and reporting.",
-                punishment: "Fines or license revocation for non-compliance.",
-                tags: ["Banking", "Outsourcing", "Risk Management"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
-                description: "Mandates adoption of international security standards for critical information infrastructure.",
-                punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
-                tags: ["Cybersecurity", "Government", "Standards"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
-                description: "Promotes cybersecurity awareness and measures to protect individuals.",
-                punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
-                tags: ["Cybersecurity", "Awareness", "Government"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Cloud First Policy (DICT Department Circular No. 2017-002)",
-                description: "Mandates government agencies to prioritize cloud computing solutions.",
-                punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
-                tags: ["Cloud Computing", "Government", "Technology"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Value-Added Services Regulation (NTC Memorandum Circular No. 02-05-2008)",
-                description: "Regulates enhanced telecommunications services like messaging and VoIP.",
-                punishment: "Revocation or cancellation of registration for violations.",
-                tags: ["Telecommunications", "Regulation"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Broadcast Messaging Regulation (NTC Memorandum Circular No. 03-03-2005-A)",
-                description: "Establishes guidelines for broadcast or push messages, requiring opt-in consent.",
-                punishment: "Fines, blacklisting, or permit revocation for violations.",
-                tags: ["Telecommunications", "Messaging", "Regulation"],
-                punishmentSeverity: 3
-            },
-            {
-                title: "Guidelines on Prepaid Load Expiry (NTC Memorandum Circular No. 01-04-2019)",
-                description: "Mandates a one-year expiration period for prepaid loads.",
-                punishment: "Penalties under relevant telecommunications laws for violations.",
-                tags: ["Telecommunications", "Consumer Rights"],
-                punishmentSeverity: 2
-            },
-            {
-                title: "Social Media and AI Election Guidelines (COMELEC Resolution No. 11064, 2024)",
-                description: "Mandates registration of digital campaign platforms and transparency in AI usage.",
-                punishment: "Penalties for coordinated inauthentic behavior, deep fakes, or unregistered accounts.",
-                tags: ["Elections", "Social Media", "AI", "Cybercrime"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
-                description: "Regulates distribution and storage of pharmaceutical products, including online sales.",
-                punishment: "Fines, suspension of licenses, or other penalties under RA 9711 for violations.",
-                tags: ["Pharmaceuticals", "E-Commerce", "Regulation"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "E-Commerce Protection Guidelines (DTI Administrative Order No. 22-01)",
-                description: "Ensures consumer protection in e-commerce by enforcing fair practices.",
-                punishment: "Fines, permit revocation, or legal action for violations.",
-                tags: ["E-Commerce", "Consumer Rights", "Cybercrime"],
-                punishmentSeverity: 4
-            },
-            {
-                title: "Guidelines on Cybercrime Prosecution (DOJ Circular No. 027, 2018)",
-                description: "Focuses on prosecuting crimes violating computer data confidentiality and integrity.",
-                punishment: "Imprisonment from 6 months to 12 years depending on the offense.",
-                tags: ["Cybercrime", "Prosecution", "Government"],
-                punishmentSeverity: 5
-            },
-{
-            title: "PNP Anti-Cybercrime Group Operational Guidelines (PNP Circular No. 2019-001)",
-            description: "Outlines operational guidelines for the PNP Anti-Cybercrime Group to investigate and combat cybercrimes effectively.",
-            punishment: "Administrative sanctions for non-compliance, including suspension or fines up to ₱100,000, with criminal penalties based on applicable laws.",
-            tags: ["Cybercrime", "Law Enforcement", "Government"],
-            punishmentSeverity: 3
-        }
-    ];
+const laws = [
+    {
+        title: "Electronic Commerce Act of 2000 (Republic Act No. 8792)",
+        description: "Addresses offenses related to electronic transactions, including those involving hacking, cracking, and unauthorized access to computer systems.",
+        punishment: "Penalties include fines and imprisonment, ranging from a minimum of PHP 100,000 and six months to three years for online fraud and scams, and a maximum penalty of PHP 1,000,000 or six years for other violations.",
+        tags: ["E-Commerce", "Hacking", "Fraud", "Cybercrime"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Anti-Child Pornography Act of 2009 (Republic Act No. 9775)",
+        description: "Criminalizes the production, distribution, and possession of child pornography in the Philippines.",
+        punishment: "Shall suffer the penalty of reclusion perpetua and a fine of not less than Two million pesos (Php2,000,000.00) but not more than Five million pesos (Php5,000,000.00).",
+        tags: ["Child Protection", "Pornography", "Cybercrime"],
+        punishmentSeverity: 8
+    },
+    {
+        title: "Access Devices Regulation Act of 1998 (Republic Act No. 8484)",
+        description: "Criminalizes the unauthorized possession, use, and trafficking of access devices, aiming to deter fraudulent transactions and protect against identity theft.",
+        punishment: "A fine of ₱10,000 or twice the value obtained by the offense, and imprisonment of 6 to 20 years depending on the offense and prior convictions.",
+        tags: ["Fraud", "Identity Theft", "Financial Crime"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "Anti-Financial Account Scamming Act (AFASA) (Republic Act No. 12010)",
+        description: "Aims to combat online fraud and scams, introducing stricter requirements for banks to enhance fraud prevention systems and protect customers.",
+        punishment: "Penalties range from 4 to 14 years imprisonment or fines from ₱50,000 to ₱10,000,000, with life imprisonment for economic sabotage.",
+        tags: ["Fraud", "Banking", "Scams", "Cybercrime"],
+        punishmentSeverity: 7
+    },
+    {
+        title: "Cybercrime Prevention Act of 2012 (Republic Act No. 10175)",
+        description: "Covers offenses related to computer data, systems, and content, including those committed using information and communication technologies.",
+        punishment: "Penalties range from prisión mayor (6 to 12 years) to reclusión temporal (12 to 20 years), with fines from ₱50,000 to ₱1,000,000.",
+        tags: ["Cybercrime", "Hacking", "Identity Theft", "Fraud"],
+        punishmentSeverity: 6
+    },
+    {
+        title: "Data Privacy Act of 2012 (Republic Act No. 10173)",
+        description: "Regulates the collection, processing, and storage of personal data in both the government and private sectors.",
+        punishment: "Imprisonment of 6 months to 7 years and fines from ₱100,000 to ₱5,000,000 for unauthorized processing, access, or breaches.",
+        tags: ["Privacy", "Data Protection", "Cybersecurity"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "Anti-Photo and Video Voyeurism Act of 2009 (Republic Act No. 9995)",
+        description: "Criminalizes unauthorized taking, distribution, and publication of photos or videos of a person's private area or sexual acts.",
+        punishment: "Imprisonment of 3 to 7 years and a fine of ₱100,000 to ₱500,000, with additional provisions for license revocation and deportation.",
+        tags: ["Voyeurism", "Privacy", "Cybercrime"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Expanded Anti-Trafficking in Persons Act of 2012 (Republic Act No. 10364)",
+        description: "Aims to eliminate trafficking in persons, especially women and children, with mechanisms for victim protection.",
+        punishment: "Imprisonment of 15 years and fines of ₱500,000 to ₱5,000,000, with life imprisonment for qualified trafficking.",
+        tags: ["Trafficking", "Human Rights", "Cybercrime"],
+        punishmentSeverity: 8
+    },
+    {
+        title: "Subscriber Identity Module (SIM) Registration Act (Republic Act No. 11934)",
+        description: "Mandates SIM card registration to enhance telecommunications security and curb crimes like fraud and phishing.",
+        punishment: "Imprisonment of 6 months to 6 years and fines from ₱100,000 to ₱4,000,000 for violations like spoofing or fraudulent registration.",
+        tags: ["Telecommunications", "Fraud", "Cybersecurity"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Anti-Online Sexual Abuse or Exploitation of Children Act (Republic Act No. 11930)",
+        description: "Protects children from online sexual abuse and exploitation with strict penalties and support services.",
+        punishment: "Penalties include life imprisonment and fines from ₱100,000 to ₱20,000,000 for producing or distributing child sexual abuse materials.",
+        tags: ["Child Protection", "Sexual Abuse", "Cybercrime"],
+        punishmentSeverity: 9
+    },
+    {
+        title: "Intellectual Property Code of the Philippines (Republic Act No. 8293)",
+        description: "Protects and enforces rights of creators and owners of intellectual property, including copyrights and trademarks.",
+        punishment: "Imprisonment of 1 to 9 years and fines from ₱50,000 to ₱1,500,000, with additional subsidiary imprisonment in cases of insolvency.",
+        tags: ["Intellectual Property", "Copyright", "Cybercrime"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "Terrorism Financing Prevention and Suppression Act (Republic Act No. 10168)",
+        description: "Criminalizes financing of terrorism, with provisions for freezing and forfeiting associated funds.",
+        punishment: "Imprisonment from reclusion temporal to reclusion perpetua and fines from ₱100,000 to ₱1,000,000.",
+        tags: ["Terrorism", "Financial Crime", "Security"],
+        punishmentSeverity: 8
+    },
+    {
+        title: "Anti-Money Laundering Act of 2001 (Republic Act No. 9160)",
+        description: "Criminalizes money laundering to prevent the use of the financial system for illegal proceeds.",
+        punishment: "Imprisonment of 6 months to 14 years and fines from ₱100,000 to twice the value of the asset involved.",
+        tags: ["Money Laundering", "Financial Crime", "Cybercrime"],
+        punishmentSeverity: 6
+    },
+    {
+        title: "National Bureau of Investigation Reorganization Act (Republic Act No. 10867)",
+        description: "Enhances NBI's investigative capabilities by reorganizing and modernizing the agency.",
+        punishment: "Administrative sanctions including suspension or dismissal for NBI personnel failing to comply with protocols.",
+        tags: ["Investigation", "Cybercrime", "Government"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Mobile Number Portability Act (Republic Act No. 11202)",
+        description: "Allows mobile subscribers to switch providers while keeping their numbers, promoting consumer welfare.",
+        punishment: "Fines from ₱10,000 to ₱1,000,000 and possible revocation of PTE franchise for repeated offenses.",
+        tags: ["Telecommunications", "Consumer Rights"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Safe Spaces Act (Republic Act No. 11313)",
+        description: "Protects individuals from gender-based sexual harassment in public spaces, online, and institutions.",
+        punishment: "Fines from ₱1,000 to ₱100,000 and imprisonment from 6 days to 6 months, with community service for minor offenses.",
+        tags: ["Harassment", "Gender Rights", "Cybercrime"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "New Central Bank Act (Republic Act No. 7653)",
+        description: "Mandates BSP to maintain price and financial stability, outlining Monetary Board responsibilities.",
+        punishment: "Imprisonment of 6 months to 14 years and fines from ₱100,000 to ₱2,000,000 for violations like false statements.",
+        tags: ["Banking", "Financial Regulation", "Cybercrime"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "Anti-Wire Tapping Act (Republic Act No. 4200)",
+        description: "Prohibits unauthorized wiretapping and violations of communication privacy.",
+        punishment: "Imprisonment for 6 months to 6 years, with disqualification or deportation for offenders.",
+        tags: ["Privacy", "Wiretapping", "Cybercrime"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Human Security Act of 2007 (Republic Act No. 9372)",
+        description: "Protects the Philippines from terrorism by defining and preventing terrorist acts.",
+        punishment: "Imprisonment of 10 to 12 years for assisting terrorists, with life imprisonment for foreign terrorists.",
+        tags: ["Terrorism", "Security", "Cybercrime"],
+        punishmentSeverity: 7
+    },
+    {
+        title: "Anti-Terrorism Act of 2020 (Republic Act No. 11449)",
+        description: "Aims to prevent and penalize terrorism, addressing financing and asset forfeiture.",
+        punishment: "Life imprisonment without parole and fines from ₱500,000 to ₱5,000,000 for terrorism-related offenses.",
+        tags: ["Terrorism", "Security", "Cybercrime"],
+        punishmentSeverity: 9
+    },
+    {
+        title: "Anti-Bullying Act of 2013 (Republic Act No. 10627)",
+        description: "Requires schools to implement anti-bullying policies and procedures.",
+        punishment: "Fines from ₱50,000 to ₱100,000 or imprisonment from 6 months to 1 year for school employees.",
+        tags: ["Bullying", "Education", "Cybercrime"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Department of Information and Communications Technology Act (Republic Act No. 10844)",
+        description: "Establishes DICT to develop and implement ICT policies and ensure consumer protection.",
+        punishment: "Imprisonment of 3 to 6 years and fines from ₱500,000 to ₱4,000,000 for unauthorized data processing.",
+        tags: ["ICT", "Cybersecurity", "Government"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "Strategic Trade Management Act (Republic Act No. 10697)",
+        description: "Prevents proliferation of weapons of mass destruction by managing trade in strategic goods.",
+        punishment: "Imprisonment from 6 months to 12 years and fines up to ₱250,000 or twice the value of the goods.",
+        tags: ["Trade", "Security", "Weapons"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "Energy Virtual One-Stop Shop Act (Republic Act No. 11234)",
+        description: "Provides a web-based system for energy-related applications and permits.",
+        punishment: "A fine of ₱100,000 for every day of delay.",
+        tags: ["Energy", "Technology", "Government"],
+        punishmentSeverity: 2
+    },
+    {
+        title: "Consumer Act of the Philippines (Republic Act No. 7394)",
+        description: "Protects consumers from health hazards, deceptive practices, and unfair sales.",
+        punishment: "Fines from ₱500 to ₱300,000 or imprisonment of 2 months to 5 years for deceptive sales and violations.",
+        tags: ["Consumer Rights", "Fraud", "Cybercrime"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Optical Media Act of 2003 (Republic Act No. 9239)",
+        description: "Protects intellectual property rights by regulating optical media production and distribution.",
+        punishment: "Imprisonment of 3 to 6 years and fines from ₱500,000 to ₱1,500,000 for unauthorized activities.",
+        tags: ["Intellectual Property", "Piracy", "Cybercrime"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "National Cybersecurity Plan Framework (Executive Order No. 189, 2015)",
+        description: "Addresses cyber threats affecting government and commercial information systems.",
+        punishment: "Imprisonment of 6 to 12 years and fines from ₱200,000 to ₱10,000,000 for cybercrime offenses.",
+        tags: ["Cybersecurity", "Government", "Cybercrime"],
+        punishmentSeverity: 6
+    },
+    {
+        title: "Strengthening DICT’s Cybersecurity Role (Executive Order No. 82, 2022)",
+        description: "Bolsters digital defenses and promotes cybersecurity awareness.",
+        punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
+        tags: ["Cybersecurity", "Government"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "National Cybersecurity Inter-Agency Committee (Executive Order No. 95, 2019)",
+        description: "Coordinates government efforts to safeguard ICT infrastructure.",
+        punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
+        tags: ["Cybersecurity", "Government"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Guidelines on IT Risk Management (BSP Circular No. 808, 2013)",
+        description: "Strengthens risk management and security in BSP-supervised institutions.",
+        punishment: "Monetary penalties, restrictions on operations, or contract invalidation for non-compliance.",
+        tags: ["Banking", "Cybersecurity", "Risk Management"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Enhanced Information Security Management (BSP Circular No. 982, 2017)",
+        description: "Requires BSFIs to establish robust cybersecurity frameworks and risk management processes.",
+        punishment: "Fines, license suspension, or action against officers for non-compliance.",
+        tags: ["Banking", "Cybersecurity", "Information Security"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Technology and Cyber-Risk Reporting (BSP Circular No. 1019, 2018)",
+        description: "Tightens reporting for technology and cyber-risk incidents in BSP-supervised institutions.",
+        punishment: "Fines, suspension of product offerings, or license revocation for non-compliance.",
+        tags: ["Banking", "Cybersecurity", "Reporting"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Guidelines on Operational Risk Management (BSP Circular No. 900, 2015)",
+        description: "Promotes effective risk management systems in BSFIs to ensure safe operations.",
+        punishment: "Suspension of privileges or restrictions on operations for non-compliance.",
+        tags: ["Banking", "Risk Management", "Cybersecurity"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Guidelines on Business Continuity Management (BSP Circular No. 951, 2017)",
+        description: "Emphasizes robust business continuity processes in BSFIs.",
+        punishment: "Fines up to ₱500,000 or suspension of operations for non-compliance.",
+        tags: ["Banking", "Business Continuity", "Cybersecurity"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Guidelines on Outsourcing Risk Management (BSP Circular No. 1039, 2019)",
+        description: "Outlines guidelines for pawnshops and MSBs regarding licensing and reporting.",
+        punishment: "Fines or license revocation for non-compliance.",
+        tags: ["Banking", "Outsourcing", "Risk Management"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Adoption of PNS ISO/IEC 27002 (DICT Memorandum Circular No. 005, 2017)",
+        description: "Mandates adoption of international security standards for critical information infrastructure.",
+        punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
+        tags: ["Cybersecurity", "Government", "Standards"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Protection of Individuals under Cybersecurity Plan (DICT Memorandum Circular No. 007, 2022)",
+        description: "Promotes cybersecurity awareness and measures to protect individuals.",
+        punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
+        tags: ["Cybersecurity", "Awareness", "Government"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Cloud First Policy (DICT Department Circular No. 2017-002)",
+        description: "Mandates government agencies to prioritize cloud computing solutions.",
+        punishment: "Administrative sanctions including suspension or fines up to ₱100,000 for non-compliance.",
+        tags: ["Cloud Computing", "Government", "Technology"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Value-Added Services Regulation (NTC Memorandum Circular No. 02-05-2008)",
+        description: "Regulates enhanced telecommunications services like messaging and VoIP.",
+        punishment: "Revocation or cancellation of registration for violations.",
+        tags: ["Telecommunications", "Regulation"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Broadcast Messaging Regulation (NTC Memorandum Circular No. 03-03-2005-A)",
+        description: "Establishes guidelines for broadcast or push messages, requiring opt-in consent.",
+        punishment: "Fines, blacklisting, or permit revocation for violations.",
+        tags: ["Telecommunications", "Messaging", "Regulation"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Guidelines on Prepaid Load Expiry (NTC Memorandum Circular No. 01-04-2019)",
+        description: "Mandates a one-year expiration period for prepaid loads.",
+        punishment: "Penalties under relevant telecommunications laws for violations.",
+        tags: ["Telecommunications", "Consumer Rights"],
+        punishmentSeverity: 2
+    },
+    {
+        title: "Social Media and AI Election Guidelines (COMELEC Resolution No. 11064, 2024)",
+        description: "Mandates registration of digital campaign platforms and transparency in AI usage.",
+        punishment: "Penalties for coordinated inauthentic behavior, deep fakes, or unregistered accounts.",
+        tags: ["Elections", "Social Media", "AI", "Cybercrime"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Online Pharmaceutical Sales Regulation (FDA Administrative Order No. 2013-0027)",
+        description: "Regulates distribution and storage of pharmaceutical products, including online sales.",
+        punishment: "Fines, suspension of licenses, or other penalties under RA 9711 for violations.",
+        tags: ["Pharmaceuticals", "E-Commerce", "Regulation"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "E-Commerce Protection Guidelines (DTI Administrative Order No. 22-01)",
+        description: "Ensures consumer protection in e-commerce by enforcing fair practices.",
+        punishment: "Fines, permit revocation, or legal action for violations.",
+        tags: ["E-Commerce", "Consumer Rights", "Cybercrime"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Guidelines on Cybercrime Prosecution (DOJ Circular No. 027, 2018)",
+        description: "Focuses on prosecuting crimes violating computer data confidentiality and integrity.",
+        punishment: "Imprisonment from 6 months to 12 years depending on the offense.",
+        tags: ["Cybercrime", "Prosecution", "Government"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "PNP Anti-Cybercrime Group Operational Guidelines (PNP Circular No. 2019-001)",
+        description: "Outlines operational guidelines for the PNP Anti-Cybercrime Group to investigate and combat cybercrimes effectively.",
+        punishment: "Administrative sanctions for non-compliance, including suspension or fines up to ₱100,000, with criminal penalties based on applicable laws.",
+        tags: ["Cybercrime", "Law Enforcement", "Government"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Rules on Cybercrime Warrants (Supreme Court A.M. No. 17-11-03-SC)",
+        description: "Outlines procedures for obtaining and executing warrants related to cybercrimes, including search, seizure, and data disclosure.",
+        punishment: "Contempt or criminal charges under the Cybercrime Prevention Act for non-compliance.",
+        tags: ["Cybercrime", "Warrants", "Law"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "Rules on Electronic Evidence (Supreme Court A.M. No. 01-7-01-SC)",
+        description: "Establishes admissibility of electronic signatures and documents in legal proceedings.",
+        punishment: "Exclusion of evidence or charges like perjury for false or misleading information.",
+        tags: ["Evidence", "Cybercrime", "Law"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Revised Rules of Civil Procedure (Supreme Court A.M. No. 19-08-06-SC)",
+        description: "Outlines procedures for administrative searches and inspections by the Philippine Competition Commission.",
+        punishment: "Fines, orders to comply, or payment of attorney’s fees for violations.",
+        tags: ["Civil Procedure", "Competition", "Law"],
+        punishmentSeverity: 3
+    },
+    {
+        title: "Rule on Cybercrime Investigation (Supreme Court A.M. No. 17-11-03-SC)",
+        description: "Outlines procedures for investigating cybercrimes, including warrants for data examination and interception.",
+        punishment: "Contempt or criminal charges under the Cybercrime Prevention Act for non-compliance.",
+        tags: ["Cybercrime", "Investigation", "Law"],
+        punishmentSeverity: 5
+    },
+    {
+        title: "Guidelines on Consumer Protection in E-Commerce (DTI Department Order No. 18-05)",
+        description: "Ensures consumer protection in e-commerce transactions with rules on pre-purchase and post-purchase services.",
+        punishment: "Fines, permit revocation, or legal/civil actions for violations.",
+        tags: ["E-Commerce", "Consumer Rights", "Cybercrime"],
+        punishmentSeverity: 4
+    },
+    {
+        title: "Taxation of Electronic Transactions (BIR Revenue Regulation No. 9-2001)",
+        description: "Regulates electronic filing of tax returns and payment of taxes.",
+        punishment: "Fines up to ₱1,000 or imprisonment up to 6 months for non-compliance.",
+        tags: ["Taxation", "E-Commerce", "Regulation"],
+        punishmentSeverity: 2
+    }
+];
 
         let currentLawsPage = 1;
         const lawsPerPage = 10;
