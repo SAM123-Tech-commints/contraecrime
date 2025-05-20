@@ -2086,16 +2086,18 @@ const clock = document.getElementById('clock');
     }
 ];
 
+
 const searchCache = new Map();
 
+// Auto-search logic for handling queries from History.html
 document.addEventListener('DOMContentLoaded', () => {
     const autoSearchQuery = localStorage.getItem('autoSearchQuery');
     if (autoSearchQuery && searchInput) {
-        searchInput.value = autoSearchQuery;
+        searchInput.value = autoSearchQuery; // Populate the search bar
         auth.onAuthStateChanged((user) => {
             if (user) {
-                performSearch(autoSearchQuery);
-                localStorage.removeItem('autoSearchQuery');
+                performSearch(autoSearchQuery); 
+                localStorage.removeItem('autoSearchQuery'); 
             }
         });
     }
@@ -2106,6 +2108,7 @@ fingerprintIcon.addEventListener('click', () => {
     setTimeout(() => {
         window.location.href = 'HomePage.html';
     }, 150);
+
 });
 
 auth.onAuthStateChanged((user) => {
@@ -2421,76 +2424,50 @@ okSuccess.addEventListener('click', () => {
 });
 
 function normalizeQuery(query) {
-    if (!query || typeof query !== 'string') return { normalized: '', corrected: '' };
-    const doc = nlp(query.trim());
-    const corrected = doc.text();
+    if (!query || typeof query !== 'string') return '';
+    // Enhanced normalization with Compromise
+    const doc = nlp(query.trim().toLowerCase());
     const normalized = doc
-        .normalize({ punctuation: true, possessives: true, plurals: true, contractions: true, unicode: true })
+        .normalize({ punctuation: true, possessives: true, plurals: true, contractions: true })
         .text()
-        .toLowerCase()
-        .replace(/[^\w\s]/g, ' ')
-        .split(/\s+/)
-        .filter(word => word.length > 1)
-        .join(' ');
-    return { normalized, corrected };
-}
-
-function expandQueryWithSynonyms(query) {
-    const doc = nlp(query);
-    const terms = doc.terms().data();
-    let expandedQuery = query.split(/\s+/);
-    
-    terms.forEach(term => {
-        if (term.tags.includes('Noun') || term.tags.includes('Verb')) {
-            const synonyms = nlp(term.text).nouns().toPlural().text().split(/\s+/)
-                .concat(nlp(term.text).verbs().conjugate().map(v => v.PastTense || v.PresentTense))
-                .filter(s => s !== term.text);
-            expandedQuery = [...expandedQuery, ...synonyms];
-        }
-    });
-    
-    return [...new Set(expandedQuery)].join(' ');
-}
-
-function detectIntent(query) {
-    const doc = nlp(query);
-    const topics = doc.topics().out('array');
-    const verbs = doc.verbs().out('array');
-    const intent = {
-        keywords: topics.length > 0 ? topics : query.split(/\s+/),
-        action: verbs.length > 0 ? verbs[0] : 'search',
-        isQuestion: doc.has('#QuestionWord'),
-        isComplex: query.length > 50 || query.split(/\s+/).length > 10
-    };
-    return intent;
+        .replace(/[^a-z0-9\s]/g, ' ') 
+        .split(/\s+/) 
+        .filter(word => word.length > 1) 
+        .join(' '); // Rejoin for Typesense
+    return normalized;
 }
 
 function localSearchFallback(query) {
-    const { normalized, corrected } = normalizeQuery(query);
-    const keywords = normalized.split(/\s+/).filter(k => k.length > 1);
+    const normalizedQuery = normalizeQuery(query);
+    const keywords = normalizedQuery.split(/\s+/).filter(k => k.length > 1); // Split into keywords
     if (keywords.length === 0) {
-        return { mainLaw: null, alternativeLaws: [], correctedQuery: corrected };
+        return { mainLaw: null, alternativeLaws: [] };
     }
 
     const matches = laws
         .map(law => {
-            const text = `${law.title} ${law.description} ${law.scenario} ${law.content}`.toLowerCase();
+            const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
+            // Score based on keyword matches (exact and partial)
             let score = 0;
             keywords.forEach(keyword => {
-                if (text.includes(keyword)) {
-                    score += 3;
+                const regex = new RegExp(`\\b${keyword}\\b`, 'i'); // Exact word match
+                if (regex.test(text)) {
+                    score += 2; // Higher weight for exact matches
+                } else if (text.includes(keyword)) {
+                    score += 1; // Partial match
                 }
-                if (law.title.toLowerCase().includes(keyword)) {
-                    score += 5;
+                // Boost score for title matches
+                if (law.title.toLowerCase().match(regex)) {
+                    score += 3;
                 }
             });
             return { law, score };
         })
         .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score);
+        .sort((a, b) => b.score - a.score); // Sort by score descending
 
     if (matches.length === 0) {
-        return { mainLaw: null, alternativeLaws: [], correctedQuery: corrected };
+        return { mainLaw: null, alternativeLaws: [] };
     }
 
     const mainLaw = matches[0].law.title;
@@ -2499,6 +2476,7 @@ function localSearchFallback(query) {
         .map(item => item.law.title)
         .slice(0, 4);
 
+    // Fill remaining slots with random laws if needed
     while (alternativeLaws.length < 4 && laws.length > 0) {
         const availableLaws = laws
             .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
@@ -2508,55 +2486,48 @@ function localSearchFallback(query) {
         alternativeLaws.push(availableLaws[randomIndex]);
     }
 
-    return { mainLaw, alternativeLaws, correctedQuery };
+    return { mainLaw, alternativeLaws };
 }
 
 async function fetchLawsFromAI(query) {
     try {
-        const { normalized, corrected } = normalizeQuery(query);
-        if (!normalized) {
-            return { mainLaw: null, alternativeLaws: [], correctedQuery: corrected };
+        const normalizedQuery = normalizeQuery(query);
+        if (!normalizedQuery) {
+            throw new Error('Empty or invalid query');
         }
 
-        const intent = detectIntent(query);
-        const expandedQuery = intent.isComplex ? expandQueryWithSynonyms(normalized) : normalized;
-
-        if (searchCache.has(normalized)) {
-            return { ...searchCache.get(normalized), correctedQuery: corrected };
+        if (searchCache.has(normalizedQuery)) {
+            return searchCache.get(normalizedQuery);
         }
 
         const client = new Typesense.Client({
             nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
             apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
-            connectionTimeoutSeconds: 5,
-            languages: ['en', 'tl', 'auto']
+            connectionTimeoutSeconds: 5
         });
 
         try {
             await client.collections('laws').retrieve();
         } catch (err) {
-            return localSearchFallback(query);
+            throw new Error('Typesense collection "laws" not found or inaccessible');
         }
 
         const searchParameters = {
-            q: expandedQuery,
-            query_by: 'title,description,scenario,content',
-            query_by_weights: '5,4,3,2',
+            q: normalizedQuery,
+            query_by: 'title,description,scenario',
+            query_by_weights: '4,3,2',
             per_page: 5,
-            typo_tokens_threshold: 2,
-            num_typos: 3,
-            include_fields: 'title,description,scenario,content',
-            sort_by: '_text_match:desc,_relevance:desc',
+            typo_tokens_threshold: 1,
+            num_typos: 2,
+            include_fields: 'title,description,scenario',
+            sort_by: '_text_match:desc',
             prefix: true,
             infix: 'always',
-            drop_tokens_threshold: 0,
+            drop_tokens_threshold: 1,
             locale: 'auto',
             synonyms: true,
             phrase_match: true,
-            split_join_tokens: 'always',
-            vector_query: `embedding:(${expandedQuery}, k:5)`,
-            max_candidates: 1000,
-            filter_by: intent.isQuestion ? 'type:law' : ''
+            split_join_tokens: 'always' // Enable keyword splitting
         };
 
         const results = await client.collections('laws').documents().search(searchParameters);
@@ -2593,9 +2564,9 @@ async function fetchLawsFromAI(query) {
             alternativeLaws.push(availableLaws[randomIndex]);
         }
 
-        const result = { mainLaw, alternativeLaws, correctedQuery: corrected };
-        searchCache.set(normalized, result);
-        if (searchCache.size > 100) {
+        const result = { mainLaw, alternativeLaws };
+        searchCache.set(normalizedQuery, result);
+        if (searchCache.size > 50) {
             const oldestKey = searchCache.keys().next().value;
             searchCache.delete(oldestKey);
         }
@@ -2607,23 +2578,16 @@ async function fetchLawsFromAI(query) {
     }
 }
 
-function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
+function renderLawCards(mainLawTitle, alternativeLawTitles) {
     cardsContainer.innerHTML = '';
 
-    if (correctedQuery && correctedQuery !== searchInput.value.trim()) {
-        searchInput.value = correctedQuery;
-        const correctionNote = document.createElement('p');
-        correctionNote.textContent = `Showing results for corrected query: "${correctedQuery}"`;
-        correctionNote.style.color = '#555';
-        correctionNote.style.marginBottom = '10px';
-        cardsContainer.appendChild(correctionNote);
-    }
+    const query = searchInput.value.trim();
 
     if (mainLawTitle) {
         const mainLaw = laws.find(law => law.title === mainLawTitle);
         if (mainLaw) {
             const mainCard = document.createElement('div');
-            mainCard.className = 'card main-law';
+            mainCard.className = 'card main-law highlight';
             mainCard.innerHTML = `
                 <div class="image_container">
                     <img src="${mainLaw.image}" alt="Law Image" onerror="this.src='https://via.placeholder.com/200?text=Image+Not+Found';">
@@ -2649,6 +2613,13 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
                 </div>
             `;
             cardsContainer.appendChild(mainCard);
+
+            if (query) {
+                ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
+                    const element = mainCard.querySelector(`.${className}`);
+                    if (element) highlightText(element, query);
+                });
+            }
         }
     } else {
         cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
@@ -2702,6 +2673,13 @@ function renderLawCards(mainLawTitle, alternativeLawTitles, correctedQuery) {
                     </div>
                 `;
                 alternativesContainer.appendChild(card);
+
+                if (query) {
+                    ['description-text', 'scenario-text', 'punishment-text'].forEach(className => {
+                        const element = card.querySelector(`.${className}`);
+                        if (element) highlightText(element, query);
+                    });
+                }
             }
         });
         cardsContainer.appendChild(alternativesContainer);
@@ -2778,9 +2756,9 @@ async function performSearch(query) {
                 });
             }
 
-            const { mainLaw, alternativeLaws, correctedQuery } = await fetchLawsFromAI(query);
+            const { mainLaw, alternativeLaws } = await fetchLawsFromAI(query);
             if (mainLaw) {
-                renderLawCards(mainLaw, alternativeLaws, correctedQuery || query);
+                renderLawCards(mainLaw, alternativeLaws);
             } else {
                 cardsContainer.innerHTML = '<p>No relevant laws found for your search. Try a different query.</p>';
                 fingerprintIcon.classList.add('glow');
@@ -2820,14 +2798,9 @@ async function performSearch(query) {
         }
     } catch (error) {
         console.error('Search error:', error.message);
-        const { mainLaw, alternativeLaws, correctedQuery } = localSearchFallback(query);
-        if (mainLaw) {
-            renderLawCards(mainLaw, alternativeLaws, correctedQuery || query);
-        } else {
-            cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
-            fingerprintIcon.classList.add('glow');
-            fingerprintIcon.style.opacity = '1';
-        }
+        cardsContainer.innerHTML = `<p>Error fetching laws: ${error.message}. Please check your connection or try again.</p>`;
+        fingerprintIcon.classList.add('glow');
+        fingerprintIcon.style.opacity = '1';
     } finally {
         loaderOverlay.classList.remove('active');
     }
@@ -2844,6 +2817,13 @@ document.querySelector('.search-icon').addEventListener('click', function() {
     const query = searchInput.value.trim();
     performSearch(query);
 });
+
+function highlightText(element, query) {
+    if (!element || !query) return;
+    const text = element.textContent;
+    const regex = new RegExp(`(${query})`, 'gi');
+    element.innerHTML = text.replace(regex, '<span style="background-color: yellow; color: black;">$1</span>');
+}
 
 function updateClock() {
     const now = new Date();
