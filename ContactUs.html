@@ -428,9 +428,9 @@
         }
 
         .dark-theme .customization-options .user-info {
-            background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
-            color: #e0e0e0; 
-        }
+    background: linear-gradient(135deg, #5a6268 0%, #454b50 50%, #2f3539 100%);
+    color: #e0e0e0; 
+}
 
         .dark-theme .customization-options .user-info p {
             color: #e0e0e0;
@@ -595,100 +595,40 @@
             background-color: #580100;
         }
 
-        .confirmation-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .confirmation-modal.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-
         .confirmation-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
             background-color: #2e7d32;
             border: 1px solid #c3e6c3;
             border-radius: 6px;
             font-size: 18px;
             color: #ffffff;
             text-align: center;
-            padding: 20px;
-            width: 100%;
             max-width: 100%;
             box-sizing: border-box;
-            transform: scale(0.7);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            width: 180px; 
+            word-wrap: break-word; 
         }
 
-        .confirmation-modal.visible .confirmation-message {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .dark-theme .confirmation-message {
-            background-color: #2e4b2e;
-            border-color: #4a704a;
-            color: #a5d6a7;
-        }
-
-        .error-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .error-modal.visible {
-            opacity: 1;
-            pointer-events: all;
+        .confirmation-message.visible {
+            display: block;
         }
 
         .error-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
             border-radius: 6px;
             font-size: 18px;
             color: #721c24;
             text-align: center;
-            padding: 20px;
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-            transform: scale(0.7);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        .error-modal.visible .error-message {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        .dark-theme .error-message {
-            background-color: #5a1e24;
-            border-color: #80343a;
-            color: #f5c6cb;
+        .error-message.visible {
+            display: block;
         }
 
         footer {
@@ -725,6 +665,7 @@
             background-color: #1a1a1a;
         }
 
+        /* Dark Theme Styles */
         body.dark-theme {
             background-color: #28292c;
             color: #d8dbe0;
@@ -780,6 +721,19 @@
             background-color: #c19d4f;
         }
 
+        .dark-theme .confirmation-message {
+            background-color: #2e4b2e;
+            border-color: #4a704a;
+            color: #a5d6a7;
+        }
+
+        .dark-theme .error-message {
+            background-color: #5a1e24;
+            border-color: #80343a;
+            color: #f5c6cb;
+        }
+
+        /* Mobile Navigation Styles */
         .mobile-nav {
             display: none;
             background-image: url('https://i.imgur.com/bNRxAhZ.png');
@@ -805,6 +759,7 @@
             top: 15px;
         }
 
+        /* Media Queries for Responsive Design */
         @media (max-width: 1024px) {
             .sidebar {
                 width: 250px;
@@ -1109,6 +1064,7 @@
                 padding: 3px;
             }
 
+            /* Hide account-customization when sidebar is active */
             .sidebar.active ~ .content .account-customization {
                 display: none;
             }
@@ -1119,6 +1075,7 @@
     <div class="loader-overlay" id="loaderOverlay">
         <div class="loader"></div>
     </div>
+    <!-- Mobile Navigation Bar -->
     <div class="mobile-nav">
         <a href="HomePage.html" class="logo">Contra E-Crime</a>
         <div class="menu-icon" id="mobileMenuIcon">
@@ -1174,6 +1131,7 @@
                 </li>
             </ul>
 
+            <!-- Dark Theme Container -->
             <div class="dark-theme-container">
                 <div class="dark-theme-label">
                     <img src="https://i.imgur.com/vEKpOsq.png" alt="Dark Theme">
@@ -1191,6 +1149,7 @@
             <header class="header">
                 <div class="account-customization">
                     <div class="user-details">
+                        <!-- Hidden by default -->
                     </div>
                     <div class="avatar-container">
                         <img class="profile-pic" id="profilePic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/4L1mGQAAAAASUVORK5CYII=" alt="User Avatar">
@@ -1264,15 +1223,11 @@
                             <textarea name="message" placeholder="Message" required></textarea>
                             <button type="submit">Send Messages</button>
                         </form>
-                        <div class="confirmation-modal" id="confirmationModal">
-                            <div class="confirmation-message" id="confirmationMessage">
-                                Message sent successfully!
-                            </div>
+                        <div class="confirmation-message" id="confirmationMessage">
+                            Your message has been submitted and will be sent to our Official Members.
                         </div>
-                        <div class="error-modal" id="errorModal">
-                            <div class="error-message" id="errorMessage">
-                                There was an error sending your message. Please try again later.
-                            </div>
+                        <div class="error-message" id="errorMessage">
+                            There was an error sending your message. Please try again later.
                         </div>
                     </div>
                 </div>
@@ -1289,10 +1244,12 @@
     </div>
 
     <script>
+        // Initialize EmailJS
         (function() {
             emailjs.init("xhI4LOp07Z_Z80qHU");
         })();
 
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCDNmxNOV7rr_qfM_mTeYTaUIkkLvRaf80",
             authDomain: "contra-e-crime.firebaseapp.com",
@@ -1303,19 +1260,19 @@
             databaseURL: "https://contra-e-crime-default-rtdb.firebaseio.com"
         };
 
+        // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
 
+        // DOM Elements
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         const mobileMenuIcon = document.getElementById('mobileMenuIcon');
         const sidebar = document.getElementById('sidebar');
         const loaderOverlay = document.getElementById('loaderOverlay');
         const contactForm = document.getElementById('contactForm');
-        const confirmationModal = document.getElementById('confirmationModal');
         const confirmationMessage = document.getElementById('confirmationMessage');
-        const errorModal = document.getElementById('errorModal');
         const errorMessage = document.getElementById('errorMessage');
         const profilePic = document.getElementById('profilePic');
         const customizationMenu = document.getElementById('customizationMenu');
@@ -1328,6 +1285,7 @@
         const emailDisplay = document.getElementById('emailDisplay');
         const createdAtDisplay = document.getElementById('createdAtDisplay');
 
+        // Cloudinary Configuration
         const CLOUDINARY_CLOUD_NAME = 'dkxtbukta';
         const CLOUDINARY_UPLOAD_PRESET = 'contraecrime';
 
@@ -1378,6 +1336,7 @@
             }
         });
 
+        // Avatar customization menu toggle
         profilePic.addEventListener('click', () => {
             customizationMenu.classList.toggle('active');
         });
@@ -1388,6 +1347,7 @@
             }
         });
 
+        // Handle avatar upload
         avatarInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
@@ -1515,6 +1475,7 @@
             };
         });
 
+        // Handle avatar background color change
         avatarBgColorPicker.addEventListener('change', () => {
             const color = avatarBgColorPicker.value;
             profilePic.style.backgroundColor = color;
@@ -1535,6 +1496,7 @@
             }
         });
 
+        // Handle border color change
         borderColorPicker.addEventListener('change', () => {
             const color = borderColorPicker.value;
             profilePic.style.borderColor = color;
@@ -1555,6 +1517,7 @@
             }
         });
 
+        // Handle border type change
         borderTypeSelect.addEventListener('change', () => {
             const borderType = borderTypeSelect.value;
             profilePic.style.borderStyle = borderType;
@@ -1575,6 +1538,7 @@
             }
         });
 
+        // Theme toggle
         if (localStorage.getItem('darkTheme') === 'enabled') {
             body.classList.add('dark-theme');
             themeToggle.checked = true;
@@ -1590,6 +1554,7 @@
             }
         });
 
+        // Mobile menu toggle
         mobileMenuIcon.addEventListener('click', function() {
             sidebar.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
@@ -1602,6 +1567,7 @@
             }
         });
 
+        // Page transition loader
         document.querySelectorAll('a[href]').forEach(link => {
             if (link.href && !link.href.startsWith('javascript:') && !link.href.startsWith('#')) {
                 link.addEventListener('click', function(e) {
@@ -1617,11 +1583,12 @@
             }
         });
 
+        // Contact form submission
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            confirmationModal.classList.remove('visible');
-            errorModal.classList.remove('visible');
+            confirmationMessage.classList.remove('visible');
+            errorMessage.classList.remove('visible');
 
             const formData = {
                 name: contactForm.querySelector('input[name="name"]').value,
@@ -1633,26 +1600,12 @@
             emailjs.send("service_u73ui1i", "template_ctzw4rk", formData)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
-                    confirmationModal.classList.add('visible');
+                    confirmationMessage.classList.add('visible');
                     contactForm.reset();
-                    setTimeout(() => {
-                        confirmationModal.classList.remove('visible');
-                    }, 3000);
                 }, function(error) {
                     console.log('FAILED...', error);
-                    errorModal.classList.add('visible');
-                    setTimeout(() => {
-                        errorModal.classList.remove('visible');
-                    }, 3000);
+                    errorMessage.classList.add('visible');
                 });
-        });
-
-        confirmationModal.addEventListener('click', () => {
-            confirmationModal.classList.remove('visible');
-        });
-
-        errorModal.addEventListener('click', () => {
-            errorModal.classList.remove('visible');
         });
     </script>
 </body>
