@@ -104,10 +104,12 @@
         .banner-slider {
             position: relative;
             width: 100%;
-            height: 600px;
-            margin: 20px 0;
+            max-width: 1200px;
+            height: 300px;
+            margin: 30px auto;
             overflow: hidden;
             border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .slider-wrapper {
@@ -115,6 +117,7 @@
             width: 400%;
             height: 100%;
             transition: transform 0.5s ease-in-out;
+            margin: 0;
         }
 
         .slide {
@@ -127,8 +130,30 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
             border-radius: 15px;
+            display: block;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #bbb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dot.active {
+            background-color: #d7b15c;
         }
 
         .sidebar {
@@ -1583,7 +1608,7 @@
                 <!-- Laws will be dynamically populated here -->
             </div>
         </section>
-        <div class="banner-slider" id="bannerSlider">
+       <div class="banner-slider" id="bannerSlider">
             <div class="slider-wrapper" id="sliderWrapper">
                 <div class="slide">
                     <img src="https://i.imgur.com/BR3XTFl.jpeg" alt="Banner 1">
@@ -1597,6 +1622,12 @@
                 <div class="slide">
                     <img src="https://i.imgur.com/qeN6qOd.jpeg" alt="Banner 4">
                 </div>
+            </div>
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+                <span class="dot" data-slide="3"></span>
             </div>
         </div>
         <div class="clock" id="clock"></div>
@@ -1667,15 +1698,32 @@ const okSuccess = document.getElementById('okSuccess');
 const clock = document.getElementById('clock');
 
 const sliderWrapper = document.getElementById('sliderWrapper');
+const dots = document.querySelectorAll('.dot');
 let currentSlide = 0;
 const totalSlides = 4;
 
-function moveSlider() {
-    currentSlide = (currentSlide + 1) % totalSlides;
+function updateSlider() {
     sliderWrapper.style.transform = `translateX(-${currentSlide * 25}%)`;
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
 }
 
-setInterval(moveSlider, 5000);
+function moveSlider() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlider();
+}
+
+dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+        currentSlide = parseInt(dot.getAttribute('data-slide'));
+        updateSlider();
+        clearInterval(sliderInterval);
+        sliderInterval = setInterval(moveSlider, 9000);
+    });
+});
+
+let sliderInterval = setInterval(moveSlider, 9000);
 
   const laws = [
     {
