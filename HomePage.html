@@ -2089,83 +2089,6 @@ const clock = document.getElementById('clock');
 
 const searchCache = new Map();
 
-const typesenseClient = new Typesense.Client({
-  nodes: [{
-    host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net',
-    port: '443',
-    protocol: 'https'
-  }],
-  apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
-  connectionTimeoutSeconds: 10,
-  numRetries: 3,
-  retryIntervalSeconds: 1
-});
-
-function detectLanguage(text) {
-    const tagalogWords = ['ng', 'sa', 'ang', 'mga', 'ako', 'ko', 'mo', 'kami', 'tayo', 'sila'];
-    const englishWords = ['the', 'and', 'for', 'with', 'this', 'that', 'these', 'those'];
-    const words = text.toLowerCase().split(/\s+/);
-    const tagalogCount = words.filter(word => tagalogWords.includes(word)).length;
-    const englishCount = words.filter(word => englishWords.includes(word)).length;
-    if (tagalogCount > englishCount) return 'tl';
-    if (englishCount > tagalogCount) return 'en';
-    return 'mixed';
-}
-
-async function processQuery(rawQuery) {
-    let correctedQuery = await correctGrammar(rawQuery);
-    const language = detectLanguage(correctedQuery);
-    const expandedQuery = await expandQuery(correctedQuery, language);
-    const intent = detectIntent(correctedQuery);
-    return {
-        original: rawQuery,
-        corrected: correctedQuery,
-        expanded: expandedQuery,
-        language: language,
-        intent: intent
-    };
-}
-
-async function correctGrammar(text) {
-    const doc = nlp(text);
-    doc.contractions().expand();
-    doc.normalize({ plurals: true, possessives: true });
-    return doc.out('text');
-}
-
-async function expandQuery(query, language) {
-    const doc = nlp(query);
-    const terms = doc.terms().out('array');
-    let expandedTerms = [];
-    
-    for (const term of terms) {
-        expandedTerms.push(term);
-        const synonyms = await getSynonyms(term, language);
-        expandedTerms = [...expandedTerms, ...synonyms];
-    }
-    
-    return [...new Set(expandedTerms)].join(' ');
-}
-
-function detectIntent(query) {
-    const doc = nlp(query);
-    if (doc.has('#Question')) return 'question';
-    if (doc.has('#Person')) return 'person';
-    if (doc.has('#Place')) return 'location';
-    if (doc.has('#Organization')) return 'organization';
-    return 'general';
-}
-
-async function getSynonyms(term, language) {
-    try {
-        const response = await fetch(`https://api.datamuse.com/words?rel_syn=${term}&max=3`);
-        const data = await response.json();
-        return data.map(item => item.word);
-    } catch (error) {
-        return [];
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     const autoSearchQuery = localStorage.getItem('autoSearchQuery');
     if (autoSearchQuery && searchInput) {
@@ -2184,6 +2107,7 @@ fingerprintIcon.addEventListener('click', () => {
     setTimeout(() => {
         window.location.href = 'HomePage.html';
     }, 150);
+
 });
 
 auth.onAuthStateChanged((user) => {
@@ -2500,6 +2424,7 @@ okSuccess.addEventListener('click', () => {
 
 function normalizeQuery(query) {
     if (!query || typeof query !== 'string') return '';
+    // Enhanced normalization with Compromise
     const doc = nlp(query.trim().toLowerCase());
     const normalized = doc
         .normalize({ punctuation: true, possessives: true, plurals: true, contractions: true })
@@ -2507,13 +2432,13 @@ function normalizeQuery(query) {
         .replace(/[^a-z0-9\s]/g, ' ') 
         .split(/\s+/) 
         .filter(word => word.length > 1) 
-        .join(' ');
+        .join(' '); // Rejoin for Typesense
     return normalized;
 }
 
 function localSearchFallback(query) {
     const normalizedQuery = normalizeQuery(query);
-    const keywords = normalizedQuery.split(/\s+/).filter(k => k.length > 1);
+    const keywords = normalizedQuery.split(/\s+/).filter(k => k.length > 1); // Split into keywords
     if (keywords.length === 0) {
         return { mainLaw: null, alternativeLaws: [] };
     }
@@ -2521,14 +2446,16 @@ function localSearchFallback(query) {
     const matches = laws
         .map(law => {
             const text = `${law.title} ${law.description} ${law.scenario}`.toLowerCase();
+            // Score based on keyword matches (exact and partial)
             let score = 0;
             keywords.forEach(keyword => {
-                const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+                const regex = new RegExp(`\\b${keyword}\\b`, 'i'); // Exact word match
                 if (regex.test(text)) {
-                    score += 2;
+                    score += 2; // Higher weight for exact matches
                 } else if (text.includes(keyword)) {
-                    score += 1;
+                    score += 1; // Partial match
                 }
+                // Boost score for title matches
                 if (law.title.toLowerCase().match(regex)) {
                     score += 3;
                 }
@@ -2536,7 +2463,7 @@ function localSearchFallback(query) {
             return { law, score };
         })
         .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score);
+        .sort((a, b) => b.score - a.score); // Sort by score descending
 
     if (matches.length === 0) {
         return { mainLaw: null, alternativeLaws: [] };
@@ -2548,6 +2475,7 @@ function localSearchFallback(query) {
         .map(item => item.law.title)
         .slice(0, 4);
 
+    // Fill remaining slots with random laws if needed
     while (alternativeLaws.length < 4 && laws.length > 0) {
         const availableLaws = laws
             .filter(law => law.title !== mainLaw && !alternativeLaws.includes(law.title))
@@ -2562,11 +2490,25 @@ function localSearchFallback(query) {
 
 async function fetchLawsFromAI(query) {
     try {
-        const processedQuery = await processQuery(query);
-        const normalizedQuery = normalizeQuery(processedQuery.expanded);
-        
+        const normalizedQuery = normalizeQuery(query);
+        if (!normalizedQuery) {
+            throw new Error('Empty or invalid query');
+        }
+
         if (searchCache.has(normalizedQuery)) {
             return searchCache.get(normalizedQuery);
+        }
+
+        const client = new Typesense.Client({
+            nodes: [{ host: 'b0rxqzsgv81w3anjp-1.a1.typesense.net', port: '443', protocol: 'https' }],
+            apiKey: 'y65G6Iy0S5DdpagXK02Y4o8YAt7xesge',
+            connectionTimeoutSeconds: 5
+        });
+
+        try {
+            await client.collections('laws').retrieve();
+        } catch (err) {
+            throw new Error('Typesense collection "laws" not found or inaccessible');
         }
 
         const searchParameters = {
@@ -2581,13 +2523,13 @@ async function fetchLawsFromAI(query) {
             prefix: true,
             infix: 'always',
             drop_tokens_threshold: 1,
-            locale: processedQuery.language === 'tl' ? 'tl' : 'en',
+            locale: 'auto',
             synonyms: true,
             phrase_match: true,
-            split_join_tokens: 'always'
+            split_join_tokens: 'always' // Enable keyword splitting
         };
 
-        const results = await typesenseClient.collections('laws').documents().search(searchParameters);
+        const results = await client.collections('laws').documents().search(searchParameters);
 
         let mainLaw = null;
         let alternativeLaws = [];
@@ -2768,7 +2710,7 @@ const defaultCards = [
         description: "The United Nations Office on Drugs and Crime (UNODC) released a report detailing the alarming global expansion of Southeast Asian cyber-fraud operations, which have evolved into a transnational organized crime threat affecting every continent."
     },
     {
-        title: "Southeast Asia Cyber Fraud at 'Inflection Point' as Scam Networks Go Global",
+        title: "Southeast Asia Cyber Fraud at ‘Inflection Point’ as Scam Networks Go Global",
         image: "https://cms.therecord.media/uploads/format_webp/large_myanmar_scam_arrest_07972d5702.jpg",
         description: "A new United Nations report warns that cyber fraud originating in Southeast Asia has reached an 'inflection point,' with criminal networks expanding globally and generating billions in illicit profits, often through the exploitation of trafficked workers."
     }
