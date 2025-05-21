@@ -1585,7 +1585,6 @@
             }
         });
 
-        // Contact form submission
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -1599,9 +1598,14 @@
                 message: contactForm.querySelector('textarea[name="message"]').value
             };
 
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const buttonWidth = submitButton.offsetWidth;
+            confirmationMessage.style.width = `${buttonWidth}px`;
+
             emailjs.send("service_u73ui1i", "template_ctzw4rk", formData)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
+                    confirmationMessage.textContent = 'Your message has been submitted and will be sent to our Official Members.';
                     confirmationMessage.classList.add('visible');
                     contactForm.reset();
                 }, function(error) {
