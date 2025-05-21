@@ -101,6 +101,35 @@
             min-height: 100vh;
             flex-direction: column;
         }
+        .banner-slider {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 500px;
+            margin: 30px auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            width: 400%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            width: 25%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
 
         .sidebar {
             width: 290px;
@@ -1197,6 +1226,9 @@
                 width: 200px;
                 padding: 10px;
             }
+            .banner-slider {
+                height: 300px;
+            }
 
             .sidebar h1 {
                 font-size: 20px;
@@ -1266,6 +1298,9 @@
         @media (max-width: 480px) {
             .container {
                 flex-direction: column;
+            }
+            .banner-slider {
+                height: 200px;
             }
 
             .mobile-nav {
@@ -1542,13 +1577,29 @@
                 </div>
                 <p>Find the right law for you!</p>
             </div>
-            <section class="articles">
-                <h2 id="sectionTitle">TOP ARTICLES</h2>
-                <div class="cards-container" id="cardsContainer">
-                    <!-- Laws will be dynamically populated here -->
+        <section class="articles">
+            <h2 id="sectionTitle">TOP ARTICLES</h2>
+            <div class="cards-container" id="cardsContainer">
+                <!-- Laws will be dynamically populated here -->
+            </div>
+        </section>
+        <div class="banner-slider" id="bannerSlider">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <div class="slide">
+                    <img src="https://i.imgur.com/BR3XTFl.jpeg" alt="Banner 1">
                 </div>
-            </section>
-            <div class="clock" id="clock"></div>
+                <div class="slide">
+                    <img src="https://i.imgur.com/W6TVF4G.jpeg" alt="Banner 2">
+                </div>
+                <div class="slide">
+                    <img src="https://i.imgur.com/cOJLSTC.png" alt="Banner 3">
+                </div>
+                <div class="slide">
+                    <img src="https://i.imgur.com/qeN6qOd.jpeg" alt="Banner 4">
+                </div>
+            </div>
+        </div>
+        <div class="clock" id="clock"></div>
             <div class="success-modal" id="successModal">
                 <div class="modal-content">
                     <h3>Success</h3>
@@ -1614,6 +1665,17 @@ const sectionTitle = document.getElementById('sectionTitle');
 const successModal = document.getElementById('successModal');
 const okSuccess = document.getElementById('okSuccess');
 const clock = document.getElementById('clock');
+
+const sliderWrapper = document.getElementById('sliderWrapper');
+let currentSlide = 0;
+const totalSlides = 4;
+
+function moveSlider() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    sliderWrapper.style.transform = `translateX(-${currentSlide * 25}%)`;
+}
+
+setInterval(moveSlider, 5000);
 
   const laws = [
     {
