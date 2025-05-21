@@ -599,7 +599,7 @@
             display: none;
             margin-top: 20px;
             margin-left: auto;
-            margin-right: auto; 
+            margin-right: auto;
             padding: 15px;
             background-color: #2e7d32;
             border: 1px solid #c3e6c3;
@@ -609,8 +609,9 @@
             text-align: center;
             max-width: 100%;
             box-sizing: border-box;
-            width: 175px; 
-            word-wrap: break-word; 
+            width: 100%; 
+            max-width: 400px;
+            word-wrap: break-word;
         }
 
         .confirmation-message.visible {
@@ -1002,6 +1003,11 @@
                 font-size: 20px;
                 width: 35px;
                 height: 35px;
+            }
+
+            .confirmation-message {
+                font-size: 14px;
+                max-width: 100%; 
             }
 
             .contact-form input,
@@ -1586,33 +1592,29 @@
         });
 
         contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+        event.preventDefault();
 
-            confirmationMessage.classList.remove('visible');
-            errorMessage.classList.remove('visible');
+        confirmationMessage.classList.remove('visible');
+        errorMessage.classList.remove('visible');
 
-            const formData = {
-                name: contactForm.querySelector('input[name="name"]').value,
-                email: contactForm.querySelector('input[name="email"]').value,
-                phone: contactForm.querySelector('input[name="phone"]').value,
-                message: contactForm.querySelector('textarea[name="message"]').value
-            };
+        const formData = {
+            name: contactForm.querySelector('input[name="name"]').value,
+            email: contactForm.querySelector('input[name="email"]').value,
+            phone: contactForm.querySelector('input[name="phone"]').value,
+            message: contactForm.querySelector('textarea[name="message"]').value
+        };
 
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const buttonWidth = submitButton.offsetWidth;
-            confirmationMessage.style.width = `${buttonWidth}px`;
-
-            emailjs.send("service_u73ui1i", "template_ctzw4rk", formData)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    confirmationMessage.textContent = 'Your message has been submitted and will be sent to our Official Members.';
-                    confirmationMessage.classList.add('visible');
-                    contactForm.reset();
-                }, function(error) {
-                    console.log('FAILED...', error);
-                    errorMessage.classList.add('visible');
-                });
-        });
+        emailjs.send("service_u73ui1i", "template_ctzw4rk", formData)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                confirmationMessage.textContent = 'Your message has been submitted and will be sent to our Official Members.';
+                confirmationMessage.classList.add('visible');
+                contactForm.reset();
+            }, function(error) {
+                console.log('FAILED...', error);
+                errorMessage.classList.add('visible');
+            });
+    });
     </script>
 </body>
 </html>
